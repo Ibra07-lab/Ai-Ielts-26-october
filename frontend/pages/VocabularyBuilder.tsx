@@ -23,7 +23,7 @@ export default function VocabularyBuilder() {
     queryFn: backend.ielts.getVocabularyTopics,
   });
 
-  const { data: wordsData, refetch: getNewWords } = useQuery({
+  const { data: wordsData, refetch: refetchWords } = useQuery({
     queryKey: ["vocabularyWords", user?.id, selectedTopic],
     queryFn: () => user ? backend.ielts.getVocabularyWords({ 
       userId: user.id, 
@@ -68,7 +68,7 @@ export default function VocabularyBuilder() {
       setCurrentWordIndex(prev => prev + 1);
     } else {
       // Get new set of words
-      getNewWords();
+      refetchWords();
     }
     setShowAnswer(false);
   };
@@ -89,6 +89,10 @@ export default function VocabularyBuilder() {
       title: "🔊 Audio",
       description: `Playing pronunciation for "${currentWord?.word}"`,
     });
+  };
+
+  const getNewWords = () => {
+    refetchWords();
   };
 
   const progressPercentage = progress 
@@ -164,7 +168,7 @@ export default function VocabularyBuilder() {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => getNewWords()}
+              onClick={getNewWords}
             >
               <RotateCcw className="h-4 w-4 mr-2" />
               New Words
@@ -272,7 +276,7 @@ export default function VocabularyBuilder() {
             <p className="text-gray-600 dark:text-gray-300 mb-4">
               You've completed all available words for this topic.
             </p>
-            <Button onClick={() => getNewWords()}>
+            <Button onClick={getNewWords}>
               <RotateCcw className="h-4 w-4 mr-2" />
               Get New Words
             </Button>

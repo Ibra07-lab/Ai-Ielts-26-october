@@ -19,7 +19,7 @@ export default function ReadingPractice() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const { data: passage, refetch: getNewPassage } = useQuery({
+  const { data: passage, refetch: refetchPassage } = useQuery({
     queryKey: ["readingPassage"],
     queryFn: backend.ielts.getReadingPassage,
     onSuccess: () => {
@@ -69,7 +69,7 @@ export default function ReadingPractice() {
   };
 
   const getNewPassage = () => {
-    getNewPassage();
+    refetchPassage();
   };
 
   const renderQuestion = (question: any) => {

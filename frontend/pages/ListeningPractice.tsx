@@ -24,7 +24,7 @@ export default function ListeningPractice() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const { data: audio, refetch: getNewAudio } = useQuery({
+  const { data: audio, refetch: refetchAudio } = useQuery({
     queryKey: ["listeningAudio"],
     queryFn: backend.ielts.getListeningAudio,
     onSuccess: () => {
@@ -108,6 +108,10 @@ export default function ListeningPractice() {
 
   const handleAnswerChange = (questionId: number, answer: string) => {
     setAnswers(prev => ({ ...prev, [questionId]: answer }));
+  };
+
+  const getNewAudio = () => {
+    refetchAudio();
   };
 
   const formatTime = (time: number) => {
