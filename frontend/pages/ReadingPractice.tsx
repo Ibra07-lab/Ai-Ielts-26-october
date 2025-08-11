@@ -1,20 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { BookOpen, Clock, Send, RotateCcw } from "lucide-react";
+import { BookOpen, Clock, Send, RotateCcw, Highlighter } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "../contexts/UserContext";
+import TextHighlighter from "../components/TextHighlighter";
 import backend from "~backend/client";
+
+interface Highlight {
+  id: number;
+  highlightedText: string;
+  startPosition: number;
+  endPosition: number;
+  highlightType: string;
+  highlightColor: string;
+}
 
 export default function ReadingPractice() {
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [startTime, setStartTime] = useState<number | null>(null);
   const [result, setResult] = useState<any>(null);
+  const [highlights, setHighlights] = useState<Highlight[]>([]);
+  const [activeTab, setActiveTab] = useState("passage");
   const { user } = useUser();
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -26,6 +39,22 @@ export default function ReadingPractice() {
       setStartTime(Date.now());
       setAnswers({});
       setResult(null);
+      setHighlights([]);
+    },
+  });
+
+  // Load highlights for the current passage
+  const { data: highlightsData } = useQuery({
+    queryKey: ["readingHighlights", user?.id, passage?.title],
+    queryFn: () => user && passage ? backend.ielts.getHighlights({ 
+      userId: user.id, 
+      passageTitle: passage.title 
+    }) : null,
+    enabled: !!user && !!passage,
+    onSuccess: (data) => {
+      if (data?.highlights) {
+        setHighlights(data.highlights);
+      }
     },
   });
 
@@ -70,6 +99,10 @@ export default function ReadingPractice() {
 
   const getNewPassage = () => {
     refetchPassage();
+  };
+
+  const handleHighlightsChange = (newHighlights: Highlight[]) => {
+    setHighlights(newHighlights);
   };
 
   const renderQuestion = (question: any) => {
@@ -136,85 +169,119 @@ export default function ReadingPractice() {
   const totalQuestions = passage?.questions.length || 0;
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-6">
       <div>
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
           Reading Practice
         </h1>
         <p className="text-gray-600 dark:text-gray-300">
-          Practice IELTS reading comprehension with authentic passages and questions.
+          Practice IELTS reading comprehension with authentic passages and questions. Highlight text to add to vocabulary or get translations.
         </p>
       </div>
 
       {passage && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Reading Passage */}
-          <Card className="h-fit">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <BookOpen className="h-5 w-5" />
-                {passage.title}
-              </CardTitle>
-              <CardDescription>
-                Read the passage carefully and answer the questions.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="prose prose-sm max-w-none dark:prose-invert">
-                {passage.content.split('\n\n').map((paragraph, index) => (
-                  <p key={index} className="mb-4 text-gray-700 dark:text-gray-300 leading-relaxed">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Questions */}
-          <Card className="h-fit">
-            <CardHeader>
-              <CardTitle>Questions</CardTitle>
-              <CardDescription>
-                <div className="flex items-center justify-between">
-                  <span>Answer all questions based on the passage.</span>
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4" />
-                    <span className="text-sm">Recommended: 20 minutes</span>
-                  </div>
-                </div>
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="flex justify-between items-center">
-                <Badge variant={answeredQuestions === totalQuestions ? "default" : "secondary"}>
-                  {answeredQuestions}/{totalQuestions} answered
-                </Badge>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={getNewPassage}
-                  disabled={submitReadingMutation.isPending}
-                >
-                  <RotateCcw className="h-4 w-4 mr-2" />
-                  New Passage
-                </Button>
-              </div>
-
-              <div className="space-y-6">
-                {passage.questions.map(renderQuestion)}
-              </div>
-
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          <div className="flex items-center justify-between">
+            <TabsList>
+              <TabsTrigger value="passage">
+                <BookOpen className="h-4 w-4 mr-2" />
+                Reading Passage
+              </TabsTrigger>
+              <TabsTrigger value="questions">
+                Questions ({answeredQuestions}/{totalQuestions})
+              </TabsTrigger>
+            </TabsList>
+            
+            <div className="flex items-center gap-2">
+              <Badge variant="outline" className="flex items-center gap-1">
+                <Highlighter className="h-3 w-3" />
+                {highlights.length} highlights
+              </Badge>
               <Button
-                onClick={handleSubmit}
-                disabled={answeredQuestions === 0 || submitReadingMutation.isPending}
-                className="w-full"
+                variant="outline"
+                size="sm"
+                onClick={getNewPassage}
+                disabled={submitReadingMutation.isPending}
               >
-                <Send className="h-4 w-4 mr-2" />
-                {submitReadingMutation.isPending ? "Submitting..." : "Submit Answers"}
+                <RotateCcw className="h-4 w-4 mr-2" />
+                New Passage
               </Button>
-            </CardContent>
-          </Card>
-        </div>
+            </div>
+          </div>
+
+          <TabsContent value="passage">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <BookOpen className="h-5 w-5" />
+                  {passage.title}
+                </CardTitle>
+                <CardDescription>
+                  <div className="flex items-center justify-between">
+                    <span>Select text to highlight, translate, or add to vocabulary.</span>
+                    <div className="flex items-center gap-2">
+                      <Clock className="h-4 w-4" />
+                      <span className="text-sm">Recommended: 20 minutes</span>
+                    </div>
+                  </div>
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg">
+                  <TextHighlighter
+                    content={passage.content}
+                    passageTitle={passage.title}
+                    highlights={highlights}
+                    onHighlightsChange={handleHighlightsChange}
+                  />
+                </div>
+                
+                {highlights.length > 0 && (
+                  <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                    <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">
+                      💡 Tip: Your highlights are saved automatically
+                    </h4>
+                    <p className="text-sm text-blue-800 dark:text-blue-200">
+                      You have {highlights.length} highlighted {highlights.length === 1 ? 'item' : 'items'} in this passage. 
+                      They will be available when you return to this passage.
+                    </p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="questions">
+            <Card>
+              <CardHeader>
+                <CardTitle>Questions</CardTitle>
+                <CardDescription>
+                  Answer all questions based on the passage you just read.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="flex justify-between items-center">
+                  <Badge variant={answeredQuestions === totalQuestions ? "default" : "secondary"}>
+                    {answeredQuestions}/{totalQuestions} answered
+                  </Badge>
+                </div>
+
+                <div className="space-y-6">
+                  {passage.questions.map(renderQuestion)}
+                </div>
+
+                <Button
+                  onClick={handleSubmit}
+                  disabled={answeredQuestions === 0 || submitReadingMutation.isPending}
+                  className="w-full"
+                >
+                  <Send className="h-4 w-4 mr-2" />
+                  {submitReadingMutation.isPending ? "Submitting..." : "Submit Answers"}
+                </Button>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       )}
 
       {result && (
