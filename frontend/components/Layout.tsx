@@ -2,27 +2,18 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { 
   Home, 
-  Mic, 
-  PenTool, 
-  BookOpen, 
-  Headphones, 
-  BookMarked, 
   TrendingUp, 
   Settings, 
   MessageCircle,
   Menu,
-  X
+  X,
+  CreditCard
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useUser } from "../contexts/UserContext";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: Home },
-  { name: "Speaking", href: "/speaking", icon: Mic },
-  { name: "Writing", href: "/writing", icon: PenTool },
-  { name: "Reading", href: "/reading", icon: BookOpen },
-  { name: "Listening", href: "/listening", icon: Headphones },
-  { name: "Vocabulary", href: "/vocabulary", icon: BookMarked },
   { name: "Progress", href: "/progress", icon: TrendingUp },
   { name: "AI Coach", href: "/coach", icon: MessageCircle },
   { name: "Settings", href: "/settings", icon: Settings },
@@ -73,8 +64,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
       </div>
 
-      {/* Desktop sidebar */}
-      <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
+      {/* Desktop sidebar - Hidden on larger screens */}
+      <div className="hidden">
         <div className="flex flex-col flex-grow bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700">
           <div className="flex h-16 items-center px-4">
             <h1 className="text-xl font-bold text-sky-600 dark:text-sky-400">IELTS AI</h1>
@@ -102,8 +93,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
       </div>
 
-      {/* Main content */}
-      <div className="lg:pl-64">
+      {/* Main content - Full width */}
+      <div className="w-full">
         {/* Top bar */}
         <div className="sticky top-0 z-40 flex h-16 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:gap-x-6 sm:px-6 lg:px-8">
           <Button
@@ -117,8 +108,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
           <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
             <div className="flex flex-1 items-center">
+              <h1 className="text-xl font-bold text-sky-600 dark:text-sky-400 lg:block hidden">IELTS AI</h1>
               {user && (
-                <div className="text-sm text-gray-600 dark:text-gray-300">
+                <div className="text-sm text-gray-600 dark:text-gray-300 ml-auto">
                   Welcome back, <span className="font-medium">{user.name}</span>
                 </div>
               )}

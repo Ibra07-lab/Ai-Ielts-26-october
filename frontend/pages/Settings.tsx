@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "../contexts/UserContext";
 import { useTheme } from "../contexts/ThemeContext";
+import DiamondNavigation from "../components/DiamondNavigation";
 import backend from "~backend/client";
 
 export default function Settings() {
@@ -125,266 +126,270 @@ export default function Settings() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-          Settings
-        </h1>
-        <p className="text-gray-600 dark:text-gray-300">
-          Manage your profile and app preferences.
-        </p>
-      </div>
+    <>
+      <div className="max-w-2xl mx-auto space-y-6 pb-32">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            Settings
+          </h1>
+          <p className="text-gray-600 dark:text-gray-300">
+            Manage your profile and app preferences.
+          </p>
+        </div>
 
-      {/* Profile Settings */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <User className="h-5 w-5" />
-            Profile Information
-          </CardTitle>
-          <CardDescription>
-            Set up your IELTS preparation profile and goals.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
-              <Input
-                id="name"
-                value={formData.name}
-                onChange={(e) => handleInputChange("name", e.target.value)}
-                placeholder="Enter your full name"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="targetBand">Target Band Score</Label>
-              <Select
-                value={formData.targetBand.toString()}
-                onValueChange={(value) => handleInputChange("targetBand", value)}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="5.0">5.0</SelectItem>
-                  <SelectItem value="5.5">5.5</SelectItem>
-                  <SelectItem value="6.0">6.0</SelectItem>
-                  <SelectItem value="6.5">6.5</SelectItem>
-                  <SelectItem value="7.0">7.0</SelectItem>
-                  <SelectItem value="7.5">7.5</SelectItem>
-                  <SelectItem value="8.0">8.0</SelectItem>
-                  <SelectItem value="8.5">8.5</SelectItem>
-                  <SelectItem value="9.0">9.0</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="examDate">Exam Date (Optional)</Label>
-              <Input
-                id="examDate"
-                type="date"
-                value={formData.examDate}
-                onChange={(e) => handleInputChange("examDate", e.target.value)}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="language">App Language</Label>
-              <Select
-                value={formData.language}
-                onValueChange={(value) => handleInputChange("language", value)}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="en">English</SelectItem>
-                  <SelectItem value="uz">Uzbek</SelectItem>
-                  <SelectItem value="ru">Russian</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <Button
-              type="submit"
-              disabled={createUserMutation.isPending || updateUserMutation.isPending}
-              className="w-full"
-            >
-              {createUserMutation.isPending || updateUserMutation.isPending
-                ? "Saving..."
-                : user
-                ? "Update Profile"
-                : "Create Profile"
-              }
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
-
-      {/* Highlighting Preferences */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Highlighter className="h-5 w-5" />
-            Text Highlighting
-          </CardTitle>
-          <CardDescription>
-            Customize your text highlighting experience in reading passages.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label>Word Highlight Color</Label>
-            <Select
-              value={highlightSettings.wordColor}
-              onValueChange={(value) => handleHighlightSettingChange("wordColor", value)}
-            >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="yellow">Yellow</SelectItem>
-                <SelectItem value="green">Green</SelectItem>
-                <SelectItem value="pink">Pink</SelectItem>
-                <SelectItem value="orange">Orange</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Sentence Highlight Color</Label>
-            <Select
-              value={highlightSettings.sentenceColor}
-              onValueChange={(value) => handleHighlightSettingChange("sentenceColor", value)}
-            >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="lightblue">Light Blue</SelectItem>
-                <SelectItem value="lightgreen">Light Green</SelectItem>
-                <SelectItem value="lightpurple">Light Purple</SelectItem>
-                <SelectItem value="lightgray">Light Gray</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
-            <h4 className="font-medium mb-2">Preview</h4>
-            <p className="text-sm">
-              This is a sample text with a{" "}
-              <span className={`px-1 rounded ${
-                highlightSettings.wordColor === 'yellow' ? 'bg-yellow-200 dark:bg-yellow-800' :
-                highlightSettings.wordColor === 'green' ? 'bg-green-200 dark:bg-green-800' :
-                highlightSettings.wordColor === 'pink' ? 'bg-pink-200 dark:bg-pink-800' :
-                'bg-orange-200 dark:bg-orange-800'
-              }`}>
-                highlighted word
-              </span>{" "}
-              and{" "}
-              <span className={`px-1 rounded ${
-                highlightSettings.sentenceColor === 'lightblue' ? 'bg-blue-200 dark:bg-blue-800' :
-                highlightSettings.sentenceColor === 'lightgreen' ? 'bg-green-200 dark:bg-green-800' :
-                highlightSettings.sentenceColor === 'lightpurple' ? 'bg-purple-200 dark:bg-purple-800' :
-                'bg-gray-200 dark:bg-gray-800'
-              }`}>
-                this is a highlighted sentence
-              </span>.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* App Preferences */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Palette className="h-5 w-5" />
-            App Preferences
-          </CardTitle>
-          <CardDescription>
-            Customize your app experience.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label>Theme</Label>
-            <Select value={theme} onValueChange={handleThemeChange}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="light">Light Mode</SelectItem>
-                <SelectItem value="dark">Dark Mode</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Study Goals */}
-      {user && (
+        {/* Profile Settings */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Target className="h-5 w-5" />
-              Study Goals
+              <User className="h-5 w-5" />
+              Profile Information
             </CardTitle>
             <CardDescription>
-              Your current IELTS preparation targets.
+              Set up your IELTS preparation profile and goals.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Full Name</Label>
+                <Input
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => handleInputChange("name", e.target.value)}
+                  placeholder="Enter your full name"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="targetBand">Target Band Score</Label>
+                <Select
+                  value={formData.targetBand.toString()}
+                  onValueChange={(value) => handleInputChange("targetBand", value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="5.0">5.0</SelectItem>
+                    <SelectItem value="5.5">5.5</SelectItem>
+                    <SelectItem value="6.0">6.0</SelectItem>
+                    <SelectItem value="6.5">6.5</SelectItem>
+                    <SelectItem value="7.0">7.0</SelectItem>
+                    <SelectItem value="7.5">7.5</SelectItem>
+                    <SelectItem value="8.0">8.0</SelectItem>
+                    <SelectItem value="8.5">8.5</SelectItem>
+                    <SelectItem value="9.0">9.0</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="examDate">Exam Date (Optional)</Label>
+                <Input
+                  id="examDate"
+                  type="date"
+                  value={formData.examDate}
+                  onChange={(e) => handleInputChange("examDate", e.target.value)}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="language">App Language</Label>
+                <Select
+                  value={formData.language}
+                  onValueChange={(value) => handleInputChange("language", value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="en">English</SelectItem>
+                    <SelectItem value="uz">Uzbek</SelectItem>
+                    <SelectItem value="ru">Russian</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <Button
+                type="submit"
+                disabled={createUserMutation.isPending || updateUserMutation.isPending}
+                className="w-full"
+              >
+                {createUserMutation.isPending || updateUserMutation.isPending
+                  ? "Saving..."
+                  : user
+                  ? "Update Profile"
+                  : "Create Profile"
+                }
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+
+        {/* Highlighting Preferences */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Highlighter className="h-5 w-5" />
+              Text Highlighting
+            </CardTitle>
+            <CardDescription>
+              Customize your text highlighting experience in reading passages.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="flex items-center gap-3 p-3 bg-sky-50 dark:bg-sky-900/20 rounded-lg">
-                <Target className="h-8 w-8 text-sky-600" />
-                <div>
-                  <p className="font-medium">Target Band</p>
-                  <p className="text-2xl font-bold text-sky-600">{user.targetBand}</p>
-                </div>
-              </div>
-              
-              {user.examDate && (
-                <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                  <Calendar className="h-8 w-8 text-green-600" />
-                  <div>
-                    <p className="font-medium">Exam Date</p>
-                    <p className="text-sm text-green-600">
-                      {new Date(user.examDate).toLocaleDateString()}
-                    </p>
-                  </div>
-                </div>
-              )}
+            <div className="space-y-2">
+              <Label>Word Highlight Color</Label>
+              <Select
+                value={highlightSettings.wordColor}
+                onValueChange={(value) => handleHighlightSettingChange("wordColor", value)}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="yellow">Yellow</SelectItem>
+                  <SelectItem value="green">Green</SelectItem>
+                  <SelectItem value="pink">Pink</SelectItem>
+                  <SelectItem value="orange">Orange</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Sentence Highlight Color</Label>
+              <Select
+                value={highlightSettings.sentenceColor}
+                onValueChange={(value) => handleHighlightSettingChange("sentenceColor", value)}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="lightblue">Light Blue</SelectItem>
+                  <SelectItem value="lightgreen">Light Green</SelectItem>
+                  <SelectItem value="lightpurple">Light Purple</SelectItem>
+                  <SelectItem value="lightgray">Light Gray</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+              <h4 className="font-medium mb-2">Preview</h4>
+              <p className="text-sm">
+                This is a sample text with a{" "}
+                <span className={`px-1 rounded ${
+                  highlightSettings.wordColor === 'yellow' ? 'bg-yellow-200 dark:bg-yellow-800' :
+                  highlightSettings.wordColor === 'green' ? 'bg-green-200 dark:bg-green-800' :
+                  highlightSettings.wordColor === 'pink' ? 'bg-pink-200 dark:bg-pink-800' :
+                  'bg-orange-200 dark:bg-orange-800'
+                }`}>
+                  highlighted word
+                </span>{" "}
+                and{" "}
+                <span className={`px-1 rounded ${
+                  highlightSettings.sentenceColor === 'lightblue' ? 'bg-blue-200 dark:bg-blue-800' :
+                  highlightSettings.sentenceColor === 'lightgreen' ? 'bg-green-200 dark:bg-green-800' :
+                  highlightSettings.sentenceColor === 'lightpurple' ? 'bg-purple-200 dark:bg-purple-800' :
+                  'bg-gray-200 dark:bg-gray-800'
+                }`}>
+                  this is a highlighted sentence
+                </span>.
+              </p>
             </div>
           </CardContent>
         </Card>
-      )}
 
-      {/* Support */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Support & Help</CardTitle>
-          <CardDescription>
-            Get help with using the IELTS AI app.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="text-sm text-gray-600 dark:text-gray-300">
-            <p className="mb-2">
-              <strong>Need help?</strong> Contact our support team for assistance with your IELTS preparation.
-            </p>
-            <p className="mb-2">
-              <strong>App Version:</strong> 1.0.0
-            </p>
-            <p>
-              <strong>Last Updated:</strong> {new Date().toLocaleDateString()}
-            </p>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+        {/* App Preferences */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Palette className="h-5 w-5" />
+              App Preferences
+            </CardTitle>
+            <CardDescription>
+              Customize your app experience.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label>Theme</Label>
+              <Select value={theme} onValueChange={handleThemeChange}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="light">Light Mode</SelectItem>
+                  <SelectItem value="dark">Dark Mode</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Study Goals */}
+        {user && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Target className="h-5 w-5" />
+                Study Goals
+              </CardTitle>
+              <CardDescription>
+                Your current IELTS preparation targets.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex items-center gap-3 p-3 bg-sky-50 dark:bg-sky-900/20 rounded-lg">
+                  <Target className="h-8 w-8 text-sky-600" />
+                  <div>
+                    <p className="font-medium">Target Band</p>
+                    <p className="text-2xl font-bold text-sky-600">{user.targetBand}</p>
+                  </div>
+                </div>
+                
+                {user.examDate && (
+                  <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                    <Calendar className="h-8 w-8 text-green-600" />
+                    <div>
+                      <p className="font-medium">Exam Date</p>
+                      <p className="text-sm text-green-600">
+                        {new Date(user.examDate).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Support */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Support & Help</CardTitle>
+            <CardDescription>
+              Get help with using the IELTS AI app.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="text-sm text-gray-600 dark:text-gray-300">
+              <p className="mb-2">
+                <strong>Need help?</strong> Contact our support team for assistance with your IELTS preparation.
+              </p>
+              <p className="mb-2">
+                <strong>App Version:</strong> 1.0.0
+              </p>
+              <p>
+                <strong>Last Updated:</strong> {new Date().toLocaleDateString()}
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+      
+      <DiamondNavigation />
+    </>
   );
 }
