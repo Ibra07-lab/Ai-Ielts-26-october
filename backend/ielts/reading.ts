@@ -41,6 +41,50 @@ export interface ReadingSession {
   createdAt: string;
 }
 
+export interface ReadingHighlight {
+  id: number;
+  highlightedText: string;
+  startPosition: number;
+  endPosition: number;
+  highlightType: string;
+  highlightColor: string;
+  createdAt: string;
+}
+
+export interface CreateHighlightRequest {
+  userId: number;
+  passageTitle: string;
+  highlightedText: string;
+  startPosition: number;
+  endPosition: number;
+  highlightType: string;
+  highlightColor?: string;
+}
+
+export interface TranslationRequest {
+  text: string;
+  targetLanguage: string;
+}
+
+export interface TranslationResponse {
+  originalText: string;
+  translatedText: string;
+  targetLanguage: string;
+  definition?: string;
+  exampleSentence?: string;
+  audioUrl?: string;
+}
+
+export interface AddToVocabularyRequest {
+  userId: number;
+  text: string;
+  definition: string;
+  translation: string;
+  targetLanguage: string;
+  exampleSentence: string;
+  topic?: string;
+}
+
 const samplePassages: ReadingPassage[] = [
   {
     title: "The Impact of Social Media on Modern Communication",
@@ -156,5 +200,185 @@ export const getReadingSessions = api<{ userId: number }, { sessions: ReadingSes
     `;
 
     return { sessions };
+  }
+);
+
+// Creates a new highlight for a reading passage.
+export const createHighlight = api<CreateHighlightRequest, ReadingHighlight>(
+  { expose: true, method: "POST", path: "/reading/highlights" },
+  async (req) => {
+    const highlight = await ieltsDB.queryRow<ReadingHighlight>`
+      INSERT INTO reading_highlights 
+      (user_id, passage_title, highlighted_text, start_position, end_position, highlight_type, highlight_color)
+      VALUES (${req.userId}, ${req.passageTitle}, ${req.highlightedText}, 
+              ${req.startPosition}, ${req.endPosition}, ${req.highlightType}, 
+              ${req.highlightColor || 'yellow'})
+      ON CONFLICT (user_id, passage_title, start_position, end_position)
+      DO UPDATE SET 
+        highlighted_text = ${req.highlightedText},
+        highlight_type = ${req.highlightType},
+        highlight_color = ${req.highlightColor || 'yellow'}
+      RETURNING id, highlighted_text as "highlightedText", start_position as "startPosition",
+                end_position as "endPosition", highlight_type as "highlightType",
+                highlight_color as "highlightColor", created_at as "createdAt"
+    `;
+
+    if (!highlight) {
+      throw new Error("Failed to create highlight");
+    }
+
+    return highlight;
+  }
+);
+
+// Retrieves highlights for a specific passage and user.
+export const getHighlights = api<{ userId: number; passageTitle: string }, { highlights: ReadingHighlight[] }>(
+  { expose: true, method: "GET", path: "/users/:userId/reading/highlights/:passageTitle" },
+  async ({ userId, passageTitle }) => {
+    const highlights = await ieltsDB.queryAll<ReadingHighlight>`
+      SELECT id, highlighted_text as "highlightedText", start_position as "startPosition",
+             end_position as "endPosition", highlight_type as "highlightType",
+             highlight_color as "highlightColor", created_at as "createdAt"
+      FROM reading_highlights 
+      WHERE user_id = ${userId} AND passage_title = ${passageTitle}
+      ORDER BY start_position ASC
+    `;
+
+    return { highlights };
+  }
+);
+
+// Deletes a highlight.
+export const deleteHighlight = api<{ userId: number; highlightId: number }, void>(
+  { expose: true, method: "DELETE", path: "/users/:userId/reading/highlights/:highlightId" },
+  async ({ userId, highlightId }) => {
+    await ieltsDB.exec`
+      DELETE FROM reading_highlights 
+      WHERE id = ${highlightId} AND user_id = ${userId}
+    `;
+  }
+);
+
+// Translates text to the target language.
+export const translateText = api<TranslationRequest, TranslationResponse>(
+  { expose: true, method: "POST", path: "/reading/translate" },
+  async (req) => {
+    // Mock translation service - in a real app, this would call a translation API
+    const translations: Record<string, Record<string, string>> = {
+      "social media": {
+        "uz": "ijtimoiy tarmoqlar",
+        "ru": "социальные сети",
+        "en": "social media"
+      },
+      "communication": {
+        "uz": "aloqa",
+        "ru": "общение",
+        "en": "communication"
+      },
+      "technology": {
+        "uz": "texnologiya",
+        "ru": "технология",
+        "en": "technology"
+      },
+      "platform": {
+        "uz": "platforma",
+        "ru": "платформа",
+        "en": "platform"
+      },
+      "digital": {
+        "uz": "raqamli",
+        "ru": "цифровой",
+        "en": "digital"
+      },
+      "revolution": {
+        "uz": "inqilob",
+        "ru": "революция",
+        "en": "revolution"
+      },
+      "misinformation": {
+        "uz": "noto'g'ri ma'lumot",
+        "ru": "дезинформация",
+        "en": "misinformation"
+      },
+      "isolation": {
+        "uz": "izolyatsiya",
+        "ru": "изоляция",
+        "en": "isolation"
+      },
+      "depression": {
+        "uz": "depressiya",
+        "ru": "депрессия",
+        "en": "depression"
+      },
+      "engagement": {
+        "uz": "jalb qilish",
+        "ru": "вовлечение",
+        "en": "engagement"
+      }
+    };
+
+    const lowerText = req.text.toLowerCase().trim();
+    const translatedText = translations[lowerText]?.[req.targetLanguage] || `[Translation for "${req.text}" not available]`;
+
+    // Mock definition and example
+    const definition = `Definition of "${req.text}" - a comprehensive explanation would be provided here.`;
+    const exampleSentence = `Example: "${req.text}" is commonly used in modern contexts.`;
+
+    return {
+      originalText: req.text,
+      translatedText,
+      targetLanguage: req.targetLanguage,
+      definition,
+      exampleSentence,
+      audioUrl: `/audio/${req.text.toLowerCase().replace(/\s+/g, '-')}.mp3`
+    };
+  }
+);
+
+// Adds highlighted text to user's vocabulary.
+export const addToVocabulary = api<AddToVocabularyRequest, { success: boolean; wordId: number }>(
+  { expose: true, method: "POST", path: "/reading/add-to-vocabulary" },
+  async (req) => {
+    // First, check if the word already exists
+    let word = await ieltsDB.queryRow<{ id: number }>`
+      SELECT id FROM vocabulary_words WHERE LOWER(word) = LOWER(${req.text})
+    `;
+
+    let wordId: number;
+
+    if (!word) {
+      // Create new vocabulary word
+      const newWord = await ieltsDB.queryRow<{ id: number }>`
+        INSERT INTO vocabulary_words (word, definition, example_sentence, topic, difficulty_level)
+        VALUES (${req.text}, ${req.definition}, ${req.exampleSentence}, ${req.topic || 'Reading'}, 2)
+        RETURNING id
+      `;
+      
+      if (!newWord) {
+        throw new Error("Failed to create vocabulary word");
+      }
+      
+      wordId = newWord.id;
+    } else {
+      wordId = word.id;
+    }
+
+    // Add translation
+    await ieltsDB.exec`
+      INSERT INTO vocabulary_translations (word_id, language, translation)
+      VALUES (${wordId}, ${req.targetLanguage}, ${req.translation})
+      ON CONFLICT (word_id, language)
+      DO UPDATE SET translation = ${req.translation}
+    `;
+
+    // Add to user's vocabulary
+    await ieltsDB.exec`
+      INSERT INTO user_vocabulary (user_id, word_id, status)
+      VALUES (${req.userId}, ${wordId}, 'learning')
+      ON CONFLICT (user_id, word_id)
+      DO NOTHING
+    `;
+
+    return { success: true, wordId };
   }
 );

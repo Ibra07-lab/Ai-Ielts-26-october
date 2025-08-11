@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { User, Globe, Palette, Target, Calendar } from "lucide-react";
+import { User, Globe, Palette, Target, Calendar, Highlighter } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,6 +22,12 @@ export default function Settings() {
     targetBand: user?.targetBand || 7.0,
     examDate: user?.examDate || "",
     language: user?.language || "en",
+  });
+
+  const [highlightSettings, setHighlightSettings] = useState({
+    wordColor: "yellow",
+    sentenceColor: "lightblue",
+    autoSaveToVocab: false,
   });
 
   const createUserMutation = useMutation({
@@ -107,6 +113,15 @@ export default function Settings() {
         theme: newTheme,
       });
     }
+  };
+
+  const handleHighlightSettingChange = (setting: string, value: any) => {
+    setHighlightSettings(prev => ({ ...prev, [setting]: value }));
+    // In a real app, this would save to user preferences
+    toast({
+      title: "Highlight Settings Updated",
+      description: "Your highlighting preferences have been saved.",
+    });
   };
 
   return (
@@ -206,6 +221,80 @@ export default function Settings() {
               }
             </Button>
           </form>
+        </CardContent>
+      </Card>
+
+      {/* Highlighting Preferences */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Highlighter className="h-5 w-5" />
+            Text Highlighting
+          </CardTitle>
+          <CardDescription>
+            Customize your text highlighting experience in reading passages.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label>Word Highlight Color</Label>
+            <Select
+              value={highlightSettings.wordColor}
+              onValueChange={(value) => handleHighlightSettingChange("wordColor", value)}
+            >
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="yellow">Yellow</SelectItem>
+                <SelectItem value="green">Green</SelectItem>
+                <SelectItem value="pink">Pink</SelectItem>
+                <SelectItem value="orange">Orange</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label>Sentence Highlight Color</Label>
+            <Select
+              value={highlightSettings.sentenceColor}
+              onValueChange={(value) => handleHighlightSettingChange("sentenceColor", value)}
+            >
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="lightblue">Light Blue</SelectItem>
+                <SelectItem value="lightgreen">Light Green</SelectItem>
+                <SelectItem value="lightpurple">Light Purple</SelectItem>
+                <SelectItem value="lightgray">Light Gray</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+            <h4 className="font-medium mb-2">Preview</h4>
+            <p className="text-sm">
+              This is a sample text with a{" "}
+              <span className={`px-1 rounded ${
+                highlightSettings.wordColor === 'yellow' ? 'bg-yellow-200 dark:bg-yellow-800' :
+                highlightSettings.wordColor === 'green' ? 'bg-green-200 dark:bg-green-800' :
+                highlightSettings.wordColor === 'pink' ? 'bg-pink-200 dark:bg-pink-800' :
+                'bg-orange-200 dark:bg-orange-800'
+              }`}>
+                highlighted word
+              </span>{" "}
+              and{" "}
+              <span className={`px-1 rounded ${
+                highlightSettings.sentenceColor === 'lightblue' ? 'bg-blue-200 dark:bg-blue-800' :
+                highlightSettings.sentenceColor === 'lightgreen' ? 'bg-green-200 dark:bg-green-800' :
+                highlightSettings.sentenceColor === 'lightpurple' ? 'bg-purple-200 dark:bg-purple-800' :
+                'bg-gray-200 dark:bg-gray-800'
+              }`}>
+                this is a highlighted sentence
+              </span>.
+            </p>
+          </div>
         </CardContent>
       </Card>
 
