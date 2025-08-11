@@ -76,18 +76,27 @@ export default function Settings() {
       return;
     }
 
+    // Ensure targetBand is a number
+    const submissionData = {
+      ...formData,
+      targetBand: Number(formData.targetBand),
+    };
+
     if (user) {
       updateUserMutation.mutate({
         id: user.id,
-        ...formData,
+        ...submissionData,
       });
     } else {
-      createUserMutation.mutate(formData);
+      createUserMutation.mutate(submissionData);
     }
   };
 
   const handleInputChange = (field: string, value: string | number) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData(prev => ({ 
+      ...prev, 
+      [field]: field === 'targetBand' ? Number(value) : value 
+    }));
   };
 
   const handleThemeChange = (newTheme: "light" | "dark") => {
@@ -138,7 +147,7 @@ export default function Settings() {
               <Label htmlFor="targetBand">Target Band Score</Label>
               <Select
                 value={formData.targetBand.toString()}
-                onValueChange={(value) => handleInputChange("targetBand", parseFloat(value))}
+                onValueChange={(value) => handleInputChange("targetBand", value)}
               >
                 <SelectTrigger>
                   <SelectValue />
