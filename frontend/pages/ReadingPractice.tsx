@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "../contexts/UserContext";
 import TextHighlighter from "../components/TextHighlighter";
+import DiamondNavigation from "../components/DiamondNavigation";
 import backend from "~backend/client";
 
 interface Highlight {
@@ -169,162 +170,166 @@ export default function ReadingPractice() {
   const totalQuestions = passage?.questions.length || 0;
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-          Reading Practice
-        </h1>
-        <p className="text-gray-600 dark:text-gray-300">
-          Practice IELTS reading comprehension with authentic passages and questions. Highlight text to add to vocabulary or get translations.
-        </p>
-      </div>
+    <>
+      <div className="max-w-7xl mx-auto space-y-6 pb-32">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            Reading Practice
+          </h1>
+          <p className="text-gray-600 dark:text-gray-300">
+            Practice IELTS reading comprehension with authentic passages and questions. Highlight text to add to vocabulary or get translations.
+          </p>
+        </div>
 
-      {passage && (
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <div className="flex items-center justify-between">
-            <TabsList>
-              <TabsTrigger value="passage">
-                <BookOpen className="h-4 w-4 mr-2" />
-                Reading Passage
-              </TabsTrigger>
-              <TabsTrigger value="questions">
-                Questions ({answeredQuestions}/{totalQuestions})
-              </TabsTrigger>
-            </TabsList>
-            
-            <div className="flex items-center gap-2">
-              <Badge variant="outline" className="flex items-center gap-1">
-                <Highlighter className="h-3 w-3" />
-                {highlights.length} highlights
-              </Badge>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={getNewPassage}
-                disabled={submitReadingMutation.isPending}
-              >
-                <RotateCcw className="h-4 w-4 mr-2" />
-                New Passage
-              </Button>
+        {passage && (
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+            <div className="flex items-center justify-between">
+              <TabsList>
+                <TabsTrigger value="passage">
+                  <BookOpen className="h-4 w-4 mr-2" />
+                  Reading Passage
+                </TabsTrigger>
+                <TabsTrigger value="questions">
+                  Questions ({answeredQuestions}/{totalQuestions})
+                </TabsTrigger>
+              </TabsList>
+              
+              <div className="flex items-center gap-2">
+                <Badge variant="outline" className="flex items-center gap-1">
+                  <Highlighter className="h-3 w-3" />
+                  {highlights.length} highlights
+                </Badge>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={getNewPassage}
+                  disabled={submitReadingMutation.isPending}
+                >
+                  <RotateCcw className="h-4 w-4 mr-2" />
+                  New Passage
+                </Button>
+              </div>
             </div>
-          </div>
 
-          <TabsContent value="passage">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <BookOpen className="h-5 w-5" />
-                  {passage.title}
-                </CardTitle>
-                <CardDescription>
-                  <div className="flex items-center justify-between">
-                    <span>Select text to highlight, translate, or add to vocabulary.</span>
-                    <div className="flex items-center gap-2">
-                      <Clock className="h-4 w-4" />
-                      <span className="text-sm">Recommended: 20 minutes</span>
+            <TabsContent value="passage">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <BookOpen className="h-5 w-5" />
+                    {passage.title}
+                  </CardTitle>
+                  <CardDescription>
+                    <div className="flex items-center justify-between">
+                      <span>Select text to highlight, translate, or add to vocabulary.</span>
+                      <div className="flex items-center gap-2">
+                        <Clock className="h-4 w-4" />
+                        <span className="text-sm">Recommended: 20 minutes</span>
+                      </div>
                     </div>
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg">
+                    <TextHighlighter
+                      content={passage.content}
+                      passageTitle={passage.title}
+                      highlights={highlights}
+                      onHighlightsChange={handleHighlightsChange}
+                    />
                   </div>
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg">
-                  <TextHighlighter
-                    content={passage.content}
-                    passageTitle={passage.title}
-                    highlights={highlights}
-                    onHighlightsChange={handleHighlightsChange}
-                  />
-                </div>
-                
-                {highlights.length > 0 && (
-                  <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                    <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">
-                      💡 Tip: Your highlights are saved automatically
-                    </h4>
-                    <p className="text-sm text-blue-800 dark:text-blue-200">
-                      You have {highlights.length} highlighted {highlights.length === 1 ? 'item' : 'items'} in this passage. 
-                      They will be available when you return to this passage.
+                  
+                  {highlights.length > 0 && (
+                    <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                      <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">
+                        💡 Tip: Your highlights are saved automatically
+                      </h4>
+                      <p className="text-sm text-blue-800 dark:text-blue-200">
+                        You have {highlights.length} highlighted {highlights.length === 1 ? 'item' : 'items'} in this passage. 
+                        They will be available when you return to this passage.
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="questions">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Questions</CardTitle>
+                  <CardDescription>
+                    Answer all questions based on the passage you just read.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="flex justify-between items-center">
+                    <Badge variant={answeredQuestions === totalQuestions ? "default" : "secondary"}>
+                      {answeredQuestions}/{totalQuestions} answered
+                    </Badge>
+                  </div>
+
+                  <div className="space-y-6">
+                    {passage.questions.map(renderQuestion)}
+                  </div>
+
+                  <Button
+                    onClick={handleSubmit}
+                    disabled={answeredQuestions === 0 || submitReadingMutation.isPending}
+                    className="w-full"
+                  >
+                    <Send className="h-4 w-4 mr-2" />
+                    {submitReadingMutation.isPending ? "Submitting..." : "Submit Answers"}
+                  </Button>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+        )}
+
+        {result && (
+          <Card className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800">
+            <CardHeader>
+              <CardTitle className="text-green-800 dark:text-green-200">
+                Results
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="text-center">
+                <Badge className="mb-2">Score</Badge>
+                <p className="text-3xl font-bold text-green-700 dark:text-green-300">
+                  {result.score}/{result.totalQuestions}
+                </p>
+                <p className="text-sm text-gray-600 dark:text-gray-300">
+                  {Math.round((result.score / result.totalQuestions) * 100)}% correct
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                <h4 className="font-semibold text-green-800 dark:text-green-200">
+                  Answer Review:
+                </h4>
+                {passage?.questions.map((question) => (
+                  <div key={question.id} className="border-l-4 border-gray-200 pl-4">
+                    <p className="font-medium text-sm">
+                      Question {question.id}: {question.question}
+                    </p>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      Your answer: {answers[question.id] || "Not answered"}
+                    </p>
+                    <p className="text-sm">
+                      <span className={answers[question.id] === result.correctAnswers[question.id] ? "text-green-600" : "text-red-600"}>
+                        {result.explanations[question.id]}
+                      </span>
                     </p>
                   </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="questions">
-            <Card>
-              <CardHeader>
-                <CardTitle>Questions</CardTitle>
-                <CardDescription>
-                  Answer all questions based on the passage you just read.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex justify-between items-center">
-                  <Badge variant={answeredQuestions === totalQuestions ? "default" : "secondary"}>
-                    {answeredQuestions}/{totalQuestions} answered
-                  </Badge>
-                </div>
-
-                <div className="space-y-6">
-                  {passage.questions.map(renderQuestion)}
-                </div>
-
-                <Button
-                  onClick={handleSubmit}
-                  disabled={answeredQuestions === 0 || submitReadingMutation.isPending}
-                  className="w-full"
-                >
-                  <Send className="h-4 w-4 mr-2" />
-                  {submitReadingMutation.isPending ? "Submitting..." : "Submit Answers"}
-                </Button>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
-      )}
-
-      {result && (
-        <Card className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800">
-          <CardHeader>
-            <CardTitle className="text-green-800 dark:text-green-200">
-              Results
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="text-center">
-              <Badge className="mb-2">Score</Badge>
-              <p className="text-3xl font-bold text-green-700 dark:text-green-300">
-                {result.score}/{result.totalQuestions}
-              </p>
-              <p className="text-sm text-gray-600 dark:text-gray-300">
-                {Math.round((result.score / result.totalQuestions) * 100)}% correct
-              </p>
-            </div>
-
-            <div className="space-y-3">
-              <h4 className="font-semibold text-green-800 dark:text-green-200">
-                Answer Review:
-              </h4>
-              {passage?.questions.map((question) => (
-                <div key={question.id} className="border-l-4 border-gray-200 pl-4">
-                  <p className="font-medium text-sm">
-                    Question {question.id}: {question.question}
-                  </p>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
-                    Your answer: {answers[question.id] || "Not answered"}
-                  </p>
-                  <p className="text-sm">
-                    <span className={answers[question.id] === result.correctAnswers[question.id] ? "text-green-600" : "text-red-600"}>
-                      {result.explanations[question.id]}
-                    </span>
-                  </p>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
-    </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+      </div>
+      
+      <DiamondNavigation />
+    </>
   );
 }

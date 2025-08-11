@@ -13,6 +13,7 @@ import VocabularyBuilder from "./pages/VocabularyBuilder";
 import Progress from "./pages/Progress";
 import Settings from "./pages/Settings";
 import AICoach from "./pages/AICoach";
+import Subscription from "./pages/Subscription";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -37,6 +38,7 @@ function AppInner() {
           <Route path="/progress" element={<Progress />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/coach" element={<AICoach />} />
+          <Route path="/subscription" element={<Subscription />} />
         </Routes>
       </Layout>
     </Router>
