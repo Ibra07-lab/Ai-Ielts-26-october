@@ -1,0 +1,516 @@
+{
+  "testId": 3,
+  "testName": "Test 3",
+  "passages": [
+    {
+      "id": 1,
+  "title": "The Transformative Influence of Artificial Intelligence on the Global Labor Market",
+  "level": "academic",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "P1",
+      "text": "The advent of artificial intelligence (AI) has ushered in an era of unprecedented technological advancement, profoundly reshaping the landscape of employment worldwide. As algorithms capable of learning from data proliferate, the integration of AI into various industries promises enhanced efficiency and innovation, yet it simultaneously raises concerns about job displacement and the obsolescence of certain skill sets. Central to this discourse is the notion that while AI automates routine tasks, it also fosters the emergence of novel roles that demand human ingenuity and adaptability. This duality underscores the need for strategic workforce development to mitigate potential disruptions. According to a 2023 report by the World Economic Forum, an estimated 85 million jobs may be displaced by AI by 2025, contrasted by the creation of 97 million new positions, highlighting a net positive shift contingent upon proactive reskilling initiatives."
+    },
+    {
+      "id": "P2",
+      "text": "Historically, technological revolutions have mirrored similar patterns of upheaval and renewal, with the Industrial Revolution of the late 18th century serving as a poignant analogy. During that period, mechanization supplanted artisanal labor in textile manufacturing, leading to widespread unemployment among handloom weavers; however, it eventually spurred urbanization and the growth of factory-based economies, engendering diverse employment opportunities. In contemporary terms, AI's incursion into the manufacturing sector exemplifies this trajectory. A case study from the automotive industry illustrates how Ford Motor Company, in collaboration with AI firm Cognizant, implemented predictive maintenance systems in 2022. These systems, leveraging machine learning to forecast equipment failures, reduced downtime by 30 percent and augmented productivity, thereby necessitating fewer manual inspectors but elevating demand for data analysts and AI ethicists to oversee algorithmic fairness."
+    },
+    {
+      "id": "P3",
+      "text": "Beyond manufacturing, the service sector faces equally transformative pressures from AI-driven automation. Customer service, once reliant on human agents for interpersonal interactions, now increasingly incorporates chatbots and virtual assistants that handle routine inquiries with remarkable speed and accuracy. A notable example is the deployment of IBM's Watson Assistant by JPMorgan Chase in 2021, which processed over 1.7 million client queries annually, achieving a 95 percent resolution rate without human intervention. This innovation not only curtails operational costs by an estimated 20 percent but also liberates employees to engage in higher-value tasks such as complex financial advising. Nevertheless, the transition has not been seamless; frontline workers, particularly in developing economies, report skill mismatches, prompting calls for inclusive training programs to bridge the digital divide."
+    },
+    {
+      "id": "P4",
+      "text": "The broader implications of AI's rise extend to socioeconomic equity and policy formulation. As automation disproportionately affects low-skilled occupations, income inequality may exacerbate, with projections from Oxford University's 2019 study indicating that up to 47 percent of jobs in the United States are at high risk of automation. To counteract this, governments and corporations are exploring universal basic income pilots and lifelong learning subsidies. In Singapore, for instance, the SkillsFuture initiative, launched in 2015 and enhanced with AI-focused modules by 2024, has empowered over 500,000 workers to upskill, fostering a resilient labor market. Such interventions underscore the imperative for collaborative efforts to harness AI's potential while safeguarding employment stability."
+    }
+  ],
+      "questions": [
+        {
+          "id": 1,
+          "type": "multiple-choice",
+          "title": "Questions 1–4",
+          "instructions": "Choose the correct letter, A, B, C or D.",
+          "questions": [
+            {
+              "id": 1,
+              "questionText": "According to the passage, what is the dual effect of AI integration?",
+              "options": [
+                "It only creates new jobs",
+                "It promises efficiency but raises concerns about job displacement",
+                "It completely eliminates all manual labor",
+                "It has no impact on employment"
+              ],
+              "correctAnswer": "It promises efficiency but raises concerns about job displacement"
+            },
+            {
+              "id": 2,
+              "questionText": "What historical period does the passage compare to the current AI revolution?",
+              "options": [
+                "The Renaissance",
+                "The Industrial Revolution",
+                "The Digital Age",
+                "The Space Age"
+              ],
+              "correctAnswer": "The Industrial Revolution"
+            },
+            {
+              "id": 3,
+              "questionText": "According to the passage, what percentage of jobs in the US are at high risk of automation?",
+              "options": [
+                "30 percent",
+                "38 percent",
+                "47 percent",
+                "85 percent"
+              ],
+              "correctAnswer": "47 percent"
+            },
+            {
+              "id": 4,
+              "questionText": "What is mentioned as a potential solution to income inequality caused by automation?",
+              "options": [
+                "Banning AI technology",
+                "Universal basic income pilots and lifelong learning subsidies",
+                "Reducing corporate taxes",
+                "Eliminating all automated systems"
+              ],
+              "correctAnswer": "Universal basic income pilots and lifelong learning subsidies"
+            }
+          ]
+        },
+        {
+          "id": 1,
+          "type": "sentence completion",
+          "title": "Questions 5-9",
+          "instructions": "Complete each sentence with the correct ending, A–G, below.",
+          "questions": [
+            {
+              "id": 5,
+              "sentenceBeginning": "The integration of AI into industries promises",
+              "options": {
+                "A": "immediate elimination of all routine employment",
+                "B": "enhanced efficiency alongside potential job losses",
+                "C": "a complete halt to technological innovation",
+                "D": "exclusive benefits for unskilled labourers",
+                "E": "reduced need for human adaptability skills",
+                "F": "uniform impacts across all economic sectors",
+                "G": "short-term disruptions without long-term gains"
+              },
+              "correctAnswer": "B"
+            },
+            {
+              "id": 6,
+              "sentenceBeginning": "During the Industrial Revolution, mechanisation primarily caused",
+              "options": {
+                "A": "a permanent decline in urban populations",
+                "B": "initial unemployment followed by economic diversification",
+                "C": "immediate growth in artisanal crafts",
+                "D": "no changes to factory-based employment",
+                "E": "exclusive advantages for rural workers",
+                "F": "a shift away from textile production entirely",
+                "G": "sustained prosperity without social upheaval"
+              },
+              "correctAnswer": "B"
+            },
+            {
+              "id": 7,
+              "sentenceBeginning": "The deployment of IBM's Watson Assistant by JPMorgan Chase resulted in",
+              "options": {
+                "A": "a decrease in overall client satisfaction levels",
+                "B": "processing millions of queries with high resolution rates",
+                "C": "increased reliance on human agents for all tasks",
+                "D": "no measurable impact on operational expenses",
+                "E": "elimination of financial advising positions entirely",
+                "F": "a focus solely on complex inquiries from the start",
+                "G": "rejection due to algorithmic inaccuracies"
+              },
+              "correctAnswer": "B"
+            },
+            {
+              "id": 8,
+              "sentenceBeginning": "AI-driven predictive maintenance systems in the automotive sector, as used by Ford, compare to traditional methods by",
+              "options": {
+                "A": "requiring more manual inspections overall",
+                "B": "forecasting failures to boost productivity significantly",
+                "C": "ignoring data analysis in favour of intuition",
+                "D": "increasing equipment downtime for safety checks",
+                "E": "limiting roles to ethicists only",
+                "F": "mirroring the pace of 18th-century mechanisation",
+                "G": "prioritising cost increases over efficiency gains"
+              },
+              "correctAnswer": "B"
+            },
+            {
+              "id": 9,
+              "sentenceBeginning": "The SkillsFuture initiative demonstrates that government interventions can",
+              "options": {
+                "A": "worsen income inequality through selective subsidies",
+                "B": "empower workers via upskilling for labour resilience",
+                "C": "delay AI adoption in favour of traditional jobs",
+                "D": "focus exclusively on high-income professionals",
+                "E": "ignore collaborative efforts with corporations",
+                "F": "exacerbate the digital divide in urban areas",
+                "G": "undermine the need for universal basic income"
+              },
+              "correctAnswer": "B"
+            }
+          ]
+        },
+        {
+          "id": 1,
+          "type": "short-answer",
+          "title": "Questions 10–13",
+          "instructions": "Answer the questions below. Choose NO MORE THAN THREE WORDS from the passage for each answer.",
+          "questions": [
+            {
+              "id": 10,
+              "questionText": "What does AI automate according to the passage?",
+              "correctAnswer": "routine tasks",
+              "alternativeAnswers": ["routine tasks", "tasks"]
+            },
+            {
+              "id": 11,
+              "questionText": "Who collaborated with Ford Motor Company on predictive maintenance?",
+              "correctAnswer": "AI firm Cognizant",
+              "alternativeAnswers": ["Cognizant", "AI firm Cognizant"]
+            },
+            {
+              "id": 12,
+              "questionText": "When was IBM's Watson Assistant deployed by JPMorgan Chase?",
+              "correctAnswer": "2021",
+              "alternativeAnswers": ["in 2021", "2021"]
+            },
+            {
+              "id": 13,
+              "questionText": "Where is the SkillsFuture initiative mentioned as an example?",
+              "correctAnswer": "Singapore",
+              "alternativeAnswers": ["in Singapore", "Singapore"]
+            }
+          ]
+        }
+      ]
+    },
+      {
+        "id": 2,
+        "title": "The Printing Press: Revolutionizing the Dissemination of Knowledge",
+        "level": "academic",
+        "estimatedTime": 20,
+        "paragraphs": [
+          {
+            "id": "P1",
+            "text": "The invention of the movable-type printing press in the mid-15th century marked a pivotal turning point in the history of human knowledge, fundamentally altering the mechanisms of information production and distribution. Prior to this innovation, the replication of texts relied predominantly on laborious manual copying by scribes, a process that was not only time-consuming but also prone to errors and limited in scale. Johannes Gutenberg's groundbreaking press, operational by approximately 1450 in Mainz, Germany, introduced an assembly-line approach utilizing reusable metal type, ink, and paper, thereby enabling the mass production of books at a fraction of the previous cost and time. This technological leap democratized access to written materials, shifting knowledge from the exclusive domain of ecclesiastical and aristocratic elites to a broader populace. A statistical milestone underscores this transformation: by the year 1500, European presses had produced an estimated 20 million volumes, compared to fewer than 100,000 manuscripts circulating in the preceding millennium, illustrating the exponential acceleration in textual output."
+          },
+          {
+            "id": "P2",
+            "text": "The ramifications of this invention extended profoundly into the realm of education and literacy, fostering an environment conducive to widespread intellectual awakening. In the decades following Gutenberg's debut, the proliferation of printed textbooks and scholarly treatises facilitated the standardization of curricula in burgeoning universities across Europe. A compelling case study emerges from the University of Paris, where, by the 1470s, the availability of affordable printed legal and theological texts reduced the dependency on rare handwritten codices, allowing students from modest backgrounds to engage with complex doctrines previously inaccessible. This democratization not only elevated literacy rates—rising from around 10 percent in the early 1400s to over 30 percent by the mid-16th century in urban centers—but also stimulated critical thinking and debate, as readers could now own and annotate personal copies. Such developments laid the groundwork for the Renaissance humanism movement, wherein the rediscovery of classical Greek and Roman works, disseminated through print, ignited a cultural renaissance emphasizing empirical inquiry over dogmatic adherence."
+          },
+          {
+            "id": "P3",
+            "text": "Beyond academia, the printing press exerted a transformative influence on scientific progress, accelerating the validation and dissemination of empirical findings. Prior to mechanized printing, scientific knowledge advanced sluggishly due to the scarcity of shared resources; however, the press enabled the rapid circulation of illustrated diagrams and experimental reports, fostering collaborative networks among scholars. Nicolaus Copernicus's seminal 1543 treatise, 'De revolutionibus orbium coelestium,' exemplifies this catalytic role: printed in Nuremberg by Johannes Petreius, it challenged the geocentric model of the universe, reaching astronomers and mathematicians across continents within months rather than generations. This swift propagation not only corroborated Copernicus's heliocentric theory through subsequent peer reviews but also inspired figures like Galileo Galilei, whose own printed defenses amplified the Scientific Revolution. Historians attribute a significant portion of the era's innovations—such as advancements in anatomy and navigation—to the press's capacity for visual and textual precision, which minimized interpretive discrepancies and promoted methodological rigor."
+          },
+          {
+            "id": "P4",
+            "text": "The socio-political dimensions of the printing press's impact were equally profound, as it empowered reformist voices and reshaped power dynamics in society. In the context of the Protestant Reformation, Martin Luther's Ninety-Five Theses, penned in 1517 and swiftly printed as pamphlets, circulated widely, igniting public discourse and challenging the Catholic Church's monopoly on religious interpretation. This case study reveals how print technology amplified dissenting opinions, with over 300,000 copies of Luther's works distributed by 1520, fueling a schism that fragmented Christendom and promoted vernacular translations of the Bible, thereby enhancing lay comprehension. Yet, this accessibility also precipitated challenges, including the spread of misinformation and censorship efforts by authorities wary of uncontrolled narratives. Ultimately, the press's legacy resides in its facilitation of ideological pluralism, which not only eroded feudal hierarchies but also sowed the seeds for modern of individual agency and informed citizenship, influencing Enlightenment thinkers and the foundations of democratic governance."
+          }
+        ],
+      "questions": [
+        {
+          "id": 2,
+          "type": "true-false-not-given",
+          "title": "Questions 14-20",
+          "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
+          "questions": [
+            { 
+              "id": 14, 
+              "questionText": "Johannes Gutenberg's printing press was operational by approximately 1450 in Mainz, Germany.", 
+              "correctAnswer": "TRUE" 
+            },
+            { 
+              "id": 15, 
+              "questionText": "Prior to the printing press, scribes produced more than 100,000 manuscripts in Europe.", 
+              "correctAnswer": "FALSE" 
+            },
+            { 
+              "id": 16, 
+              "questionText": "By the year 1500, European presses had produced an estimated 20 million volumes.", 
+              "correctAnswer": "TRUE" 
+            },
+            { 
+              "id": 17, 
+              "questionText": "The printing press initially lowered literacy rates in rural areas.", 
+              "correctAnswer": "FALSE" 
+            },
+            { 
+              "id": 18, 
+              "questionText": "Nicolaus Copernicus's 1543 treatise was printed in Nuremberg.", 
+              "correctAnswer": "TRUE" 
+            },
+            { 
+              "id": 19, 
+              "questionText": "Martin Luther's Ninety-Five Theses were distributed as handwritten letters only.", 
+              "correctAnswer": "FALSE" 
+            },
+            { 
+              "id": 20, 
+              "questionText": "Galileo Galilei collaborated directly with Johannes Petreius on printing.", 
+              "correctAnswer": "NOT GIVEN" 
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "type": "matching-features",
+          "title": "Questions 21-24",
+          "instructions": "Look at the following statements (Questions 21-24) and the list of people/institutions below. Match each statement with the correct person/institution, A–D. Write the correct letter, A–D, in boxes 8–11 on your answer sheet.",
+          "features": [
+            {
+              "letter": "A",
+              "name": "Johannes Gutenberg"
+            },
+            {
+              "letter": "B",
+              "name": "University of Paris"
+            },
+            {
+              "letter": "C",
+              "name": "Nicolaus Copernicus"
+            },
+            {
+              "letter": "D",
+              "name": "Martin Luther"
+            }
+          ],
+          "questions": [
+            {
+              "id": 21,
+              "questionText": "Invented the movable-type printing press around 1450",
+              "correctAnswer": "A",
+              "explanation": "P1 explicitly states Gutenberg's press was operational by approximately 1450 in Mainz, Germany",
+              "evidenceQuote": "Johannes Gutenberg's groundbreaking press, operational by approximately 1450 in Mainz, Germany",
+              "evidenceLocation": "P1"
+            },
+            {
+              "id": 22,
+              "questionText": "Reduced dependency on rare handwritten codices by the 1470s",
+              "correctAnswer": "B",
+              "explanation": "P2 describes how University of Paris reduced dependency on rare handwritten codices by the 1470s",
+              "evidenceQuote": "University of Paris, where, by the 1470s, the availability of affordable printed legal and theological texts reduced the dependency on rare handwritten codices",
+              "evidenceLocation": "P2"
+            },
+            {
+              "id": 23,
+              "questionText": "Challenged the geocentric model with a 1543 treatise",
+              "correctAnswer": "C",
+              "explanation": "P3 states Copernicus's 1543 treatise challenged the geocentric model of the universe",
+              "evidenceQuote": "Nicolaus Copernicus's seminal 1543 treatise...challenged the geocentric model of the universe",
+              "evidenceLocation": "P3"
+            },
+            {
+              "id": 24,
+              "questionText": "Distributed over 300,000 copies of works by 1520",
+              "correctAnswer": "D",
+              "explanation": "P4 mentions over 300,000 copies of Luther's works distributed by 1520",
+              "evidenceQuote": "over 300,000 copies of Luther's works distributed by 1520",
+              "evidenceLocation": "P4"
+            }
+          ],
+          "distractorStatements": [
+            "Promoted empirical inquiry during the Renaissance",
+            "Authored defenses that amplified the Scientific Revolution"
+          ]
+        },
+        {
+          "id": 2,
+          "type": "short-answer",
+          "title": "Questions 25-27",
+          "instructions": "Answer the questions below. Choose NO MORE THAN THREE WORDS AND/OR A NUMBER from the passage for each answer.",
+          "questions": [
+            {
+              "id": 25,
+              "questionText": "Where was Gutenberg's press operational?",
+              "correctAnswer": "Mainz, Germany",
+              "alternativeAnswers": ["Mainz", "Germany"]
+            },
+            {
+              "id": 26,
+              "questionText": "How many volumes were produced by European presses by 1500?",
+              "correctAnswer": "20 million",
+              "alternativeAnswers": ["20 million volumes"]
+            },
+            {
+              "id": 27,
+              "questionText": "In which decade did Paris begin printing affordable textbooks?",
+              "correctAnswer": "1470s",
+              "alternativeAnswers": ["the 1470s"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Mars Colonization: Overcoming the Barriers to Human Settlement",
+      "level": "academic",
+      "estimatedTime": 20,
+      "paragraphs": [
+        {
+          "id": "P1",
+          "text": "The prospect of establishing permanent human settlements on Mars has captivated scientists and policymakers for decades, yet the technical and physiological obstacles remain formidable. Unlike the Apollo missions to the Moon, which required only short-term survival in hostile environments, Martian colonization demands sustainable life-support systems capable of functioning independently for years. The Red Planet's atmospheric composition, consisting of 95% carbon dioxide with negligible oxygen, necessitates sophisticated terraforming technologies or enclosed habitation modules. According to the International Mars Research Consortium's 2019 feasibility study, the estimated cost of transporting essential materials to Mars exceeds $2.4 billion per metric ton, making self-sufficiency a critical prerequisite for any viable colony. This economic reality underscores the imperative for developing in-situ resource utilization techniques that can harness Martian materials for construction, fuel production, and sustenance."
+        },
+        {
+          "id": "P2",
+          "text": "The physiological challenges confronting prospective Martian colonists are equally daunting, with prolonged exposure to reduced gravity and cosmic radiation posing significant health risks. Mars' gravitational force is approximately 38% of Earth's, leading to rapid bone density loss and muscle atrophy in human subjects. Dr. Elena Vasquez's longitudinal study at the European Space Medicine Institute, conducted between 2020 and 2023, documented a 12% decrease in bone mass among astronauts after just six months in simulated Martian gravity conditions. Furthermore, the planet's thin atmosphere provides minimal protection against galactic cosmic rays, exposing inhabitants to radiation levels 100 times higher than those experienced on Earth. These findings suggest that effective countermeasures, including artificial gravity generation and radiation shielding, are indispensable for maintaining colonist health over extended periods."
+        },
+        {
+          "id": "P3",
+          "text": "Technological innovations in life support systems represent another critical frontier in Mars colonization efforts, with closed-loop ecological systems emerging as a promising solution. The Mars Habitat Simulation Project, initiated by the Planetary Settlement Foundation in 2021, successfully demonstrated a self-sustaining ecosystem capable of supporting four individuals for 18 months. This breakthrough utilized advanced hydroponic cultivation methods and atmospheric recycling technologies to achieve 94% resource efficiency. However, the psychological implications of prolonged isolation in confined spaces remain inadequately understood. Preliminary observations from the simulation revealed elevated stress hormones and interpersonal conflicts among participants after the 12-month mark, highlighting the need for comprehensive mental health support systems."
+        },
+        {
+          "id": "P4",
+          "text": "The logistical complexities of establishing supply chains between Earth and Mars present additional obstacles that must be addressed through innovative transportation solutions. Current propulsion technologies require approximately nine months for interplanetary transit, creating narrow launch windows that occur only every 26 months due to orbital mechanics. The Aerospace Engineering Collaborative's 2022 analysis projected that nuclear thermal propulsion could reduce travel time to four months while increasing payload capacity by 40%. Nevertheless, the development and testing of such advanced propulsion systems demand substantial financial investment and international cooperation. Historical precedents, such as the International Space Station partnership established in 1998, demonstrate that collaborative frameworks can overcome technical and political barriers to ambitious space ventures."
+        },
+        {
+          "id": "P5",
+          "text": "Despite these multifaceted challenges, recent technological advances and growing international interest suggest that Mars colonization may transition from science fiction to reality within the next three decades. The successful deployment of autonomous rovers and the extraction of oxygen from Martian atmosphere by NASA's Perseverance mission in 2021 marked significant milestones in demonstrating the feasibility of resource utilization. Moreover, private sector involvement, exemplified by companies investing in reusable launch vehicles and habitat construction technologies, has accelerated innovation timelines. The convergence of these developments indicates that while the path to Mars colonization remains arduous, the fundamental barriers are gradually yielding to human ingenuity and determination. Success will ultimately depend on sustained commitment to addressing the interconnected challenges of transportation, life support, human health, and international cooperation."
+        }
+      ],
+        "questions": [
+          {
+            "id": 3,
+            "type": "multiple-choice",
+            "title": "Questions 28-33",
+            "instructions": "Choose the correct answer A, B, C or D.",
+            "questions": [
+              {
+                "id": 28,
+                "questionText": "According to the passage, what makes Mars colonization economically challenging compared to lunar missions?",
+                "options": [
+                  "A) The enormous expense of shipping materials to Mars",
+                  "B) The lack of international funding partnerships",
+                  "C) The failure of previous robotic missions",
+                  "D) The absence of valuable minerals on Mars"
+                ],
+                "correctAnswer": "A",
+                "justification": "The passage explicitly states the high cost of transporting materials to Mars as a major economic barrier.",
+                "evidence_quote": "estimated cost of transporting essential materials to Mars exceeds $2.4 billion per metric ton",
+                "evidence_location": "P1 L4"
+              },
+              {
+                "id": 29,
+                "questionText": "What can be inferred about the health effects of Mars' gravitational conditions on human colonists?",
+                "options": [
+                  "A) They would be immediately life-threatening",
+                  "B) They would require ongoing medical intervention",
+                  "C) They would only affect elderly colonists",
+                  "D) They would improve cardiovascular fitness"
+                ],
+                "correctAnswer": "B",
+                "justification": "The passage describes bone density loss and muscle atrophy, implying need for continuous countermeasures and medical support.",
+                "evidence_quote": "effective countermeasures, including artificial gravity generation and radiation shielding, are indispensable",
+                "evidence_location": "P2 L10"
+              },
+              {
+                "id": 30,
+                "questionText": "The primary focus of the passage is to:",
+                "options": [
+                  "A) Advocate for increased government funding of Mars missions",
+                  "B) Compare Mars colonization with lunar exploration programs",
+                  "C) Examine the major obstacles facing Mars settlement efforts",
+                  "D) Describe the timeline for establishing Mars colonies"
+                ],
+              "correctAnswer": "C",
+              "justification": "The passage systematically discusses various challenges including economic, physiological, technological, and logistical barriers to Mars colonization.",
+              "evidence_quote": "technical and physiological obstacles remain formidable",
+              "evidence_location": "P1 L1"
+            },
+            {
+                "id": 31,
+                "questionText": "Based on information from multiple paragraphs, what appears to be the most critical factor for successful Mars colonization?",
+                "options": [
+                  "A) Developing faster spacecraft propulsion systems",
+                  "B) Achieving complete resource independence from Earth",
+                  "C) Recruiting psychologically stable colonists",
+                  "D) Establishing communication networks with Earth"
+                ],
+                "correctAnswer": "B",
+                "justification": "Multiple paragraphs emphasize self-sufficiency due to high transport costs, long travel times, and limited launch windows.",
+                "evidence_quote": "making self-sufficiency a critical prerequisite for any viable colony",
+                "evidence_location": "P1 L4"
+              },
+              {
+                "id": 32,
+                "questionText": "In the context of the passage, what does 'formidable' most likely mean?",
+                "options": [
+                  "A) Impressive and admirable",
+                  "B) Extremely difficult to overcome",
+                  "C) Requiring advanced technology",
+                  "D) Previously unsolved by scientists"
+                ],
+                "correctAnswer": "B",
+                "justification": "The word appears in context of describing obstacles and challenges, indicating something very difficult to surmount.",
+                "evidence_quote": "technical and physiological obstacles remain formidable",
+                "evidence_location": "P1 L1"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "type": "true-false-not-given",
+            "title": "Questions 33-36",
+            "instructions": "Do the following statements agree with the information in the passage? Write YES, NO or NOT GIVEN.",
+            "questions": [
+              {
+                "id": 33,
+                "questionText": "Mars colonization requires longer-term survival systems than the Apollo Moon missions.",
+                "correctAnswer": "YES"
+              },
+              {
+                "id": 34,
+                "questionText": "Dr. Elena Vasquez's study was conducted over a three-year period.",
+                "correctAnswer": "YES"
+              },
+              {
+                "id": 35,
+                "questionText": "The Mars Habitat Simulation Project achieved 100% resource efficiency.",
+                "correctAnswer": "NO"
+              },
+              {
+                "id": 36,
+                "questionText": "Nuclear thermal propulsion has already been successfully tested for Mars missions.",
+                "correctAnswer": "NOT GIVEN"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "type": "gap-fill",
+            "title": "Questions 37-40",
+            "instructions": "Complete the sentences. Choose NO MORE THAN THREE WORDS from the passage.",
+            "questions": [
+              {
+                "id": 37,
+                "questionText": "According to a 2019 study, transporting materials to Mars costs more than _______ per metric ton.",
+                "correctAnswer": "$2.4 billion"
+              },
+              {
+                "id": 38,
+                "questionText": "Mars' gravitational force is approximately _______ of Earth's gravitational strength.",
+                "correctAnswer": "38%"
+              },
+              {
+                "id": 39,
+                "questionText": "The Mars Habitat Simulation Project achieved _______ resource efficiency using advanced cultivation and recycling methods.",
+                "correctAnswer": "94%"
+              },
+              {
+                "id": 40,
+                "questionText": "Current space travel technology requires approximately _______ for the journey between Earth and Mars.",
+                "correctAnswer": "nine months"
+              }
+            ]
+          }
+        ]
+      }
+      ]
+    }
+    

@@ -9,14 +9,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "../contexts/UserContext";
 import { useTheme } from "../contexts/ThemeContext";
-import DiamondNavigation from "../components/DiamondNavigation";
 import backend from "~backend/client";
+import { useNavigate } from "react-router-dom";
+import type { UpdateUserRequest } from "~backend/ielts/user";
 
 export default function Settings() {
   const { user, setUser } = useUser();
   const { theme, setTheme } = useTheme();
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: user?.name || "",
@@ -40,6 +42,7 @@ export default function Settings() {
         title: "Profile created successfully!",
         description: "Your IELTS preparation journey begins now.",
       });
+      navigate("/");
     },
     onError: (error) => {
       console.error("Failed to create user:", error);
@@ -52,7 +55,8 @@ export default function Settings() {
   });
 
   const updateUserMutation = useMutation({
-    mutationFn: backend.ielts.updateUser,
+    mutationFn: ({ id, ...params }: { id: number } & Omit<UpdateUserRequest, "id">) =>
+      backend.ielts.updateUser(id, params),
     onSuccess: (data) => {
       setUser(data);
       queryClient.invalidateQueries({ queryKey: ["progress"] });
@@ -60,6 +64,7 @@ export default function Settings() {
         title: "Profile updated successfully!",
         description: "Your changes have been saved.",
       });
+      navigate("/");
     },
     onError: (error) => {
       console.error("Failed to update user:", error);
@@ -137,6 +142,15 @@ export default function Settings() {
           </p>
         </div>
 
+        <div className="flex justify-end">
+          <Button
+            onClick={() => navigate('/')}
+            aria-label="Go to Home"
+          >
+            Go to Home
+          </Button>
+        </div>
+
         {/* Profile Settings */}
         <Card>
           <CardHeader>
@@ -163,7 +177,7 @@ export default function Settings() {
               <div className="space-y-2">
                 <Label htmlFor="targetBand">Target Band Score</Label>
                 <Select
-                  value={formData.targetBand.toString()}
+                  value={formData.targetBand.toFixed(1)}
                   onValueChange={(value) => handleInputChange("targetBand", value)}
                 >
                   <SelectTrigger>
@@ -389,7 +403,6 @@ export default function Settings() {
         </Card>
       </div>
       
-      <DiamondNavigation />
     </>
   );
 }

@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Mic, MicOff, Play, RotateCcw, Clock } from "lucide-react";
+import { Mic, MicOff, Play, RotateCcw, Clock, TrendingUp, BarChart, Star, Target } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "../contexts/UserContext";
-import DiamondNavigation from "../components/DiamondNavigation";
 import backend from "~backend/client";
 
 export default function SpeakingPractice() {
@@ -16,13 +16,15 @@ export default function SpeakingPractice() {
   const [recordingTime, setRecordingTime] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState<string>("");
   const [feedback, setFeedback] = useState<any>(null);
+  const [aiAnalysis, setAiAnalysis] = useState<any>(null);
+  const [transcription, setTranscription] = useState<string>("");
   const { user } = useUser();
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
   const { data: question, refetch: getNewQuestion } = useQuery({
     queryKey: ["speakingQuestion", selectedPart],
-    queryFn: () => backend.ielts.getSpeakingQuestion({ part: selectedPart }),
+    queryFn: () => backend.ielts.getSpeakingQuestion(selectedPart),
     enabled: true,
   });
 
@@ -43,6 +45,27 @@ export default function SpeakingPractice() {
       toast({
         title: "Error",
         description: "Failed to submit your speaking response. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // AI Speaking Analysis Mutation
+  const aiSpeakingAnalysisMutation = useMutation({
+    mutationFn: backend.ielts.analyzeSpeaking,
+    onSuccess: (data) => {
+      setAiAnalysis(data);
+      queryClient.invalidateQueries({ queryKey: ["progress"] });
+      toast({
+        title: "AI Analysis Complete!",
+        description: `Overall band score: ${data.overallBand}`,
+      });
+    },
+    onError: (error) => {
+      console.error("Failed to analyze speaking:", error);
+      toast({
+        title: "Error",
+        description: "Failed to analyze your speaking. Please try again.",
         variant: "destructive",
       });
     },
@@ -79,12 +102,25 @@ export default function SpeakingPractice() {
 
     // Mock transcription - in a real app, this would use speech-to-text
     const mockTranscription = "This is a mock transcription of the user's speaking response. In a real application, this would be generated using speech-to-text technology.";
+    
+    setTranscription(mockTranscription);
 
     submitSpeakingMutation.mutate({
       userId: user.id,
       part: selectedPart,
       question: currentQuestion,
       transcription: mockTranscription,
+    });
+  };
+
+  const handleAiAnalysis = () => {
+    if (!user || !question || !transcription) return;
+
+    aiSpeakingAnalysisMutation.mutate({
+      transcription: transcription,
+      question: question.question,
+      part: selectedPart,
+      userId: user.id,
     });
   };
 
@@ -183,6 +219,16 @@ export default function SpeakingPractice() {
                         <RotateCcw className="h-5 w-5 mr-2" />
                         New Question
                       </Button>
+                      
+                      {transcription && (
+                        <Button
+                          onClick={handleAiAnalysis}
+                          disabled={aiSpeakingAnalysisMutation.isPending || isRecording}
+                        >
+                          <TrendingUp className="h-5 w-5 mr-2" />
+                          {aiSpeakingAnalysisMutation.isPending ? "Analyzing..." : "AI Analysis"}
+                        </Button>
+                      )}
                     </div>
 
                     {part === 2 && (
@@ -196,7 +242,7 @@ export default function SpeakingPractice() {
                     <Card className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800">
                       <CardHeader>
                         <CardTitle className="text-green-800 dark:text-green-200">
-                          AI Feedback
+                          Basic Feedback
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-4">
@@ -261,14 +307,138 @@ export default function SpeakingPractice() {
                       </CardContent>
                     </Card>
                   )}
+
+                  {aiAnalysis && (
+                    <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-2 text-blue-800 dark:text-blue-200">
+                          <BarChart className="h-5 w-5" />
+                          Advanced AI Analysis
+                        </CardTitle>
+                        <CardDescription className="text-blue-700 dark:text-blue-300">
+                          Detailed IELTS speaking assessment
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-6">
+                        <div className="text-center">
+                          <Badge className="mb-2 bg-blue-600 text-white">Overall Band Score</Badge>
+                          <p className="text-4xl font-bold text-blue-700 dark:text-blue-300">
+                            {aiAnalysis.overallBand}
+                          </p>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <div className="flex justify-between items-center">
+                              <span className="text-sm font-medium">Fluency & Coherence</span>
+                              <Badge variant="outline">{aiAnalysis.fluencyCoherence}</Badge>
+                            </div>
+                            <Progress 
+                              value={(aiAnalysis.fluencyCoherence / 9) * 100} 
+                              className="h-2"
+                              aria-label={`Fluency & Coherence score: ${aiAnalysis.fluencyCoherence} out of 9`}
+                            />
+                          </div>
+
+                          <div className="space-y-2">
+                            <div className="flex justify-between items-center">
+                              <span className="text-sm font-medium">Lexical Resource</span>
+                              <Badge variant="outline">{aiAnalysis.lexicalResource}</Badge>
+                            </div>
+                            <Progress 
+                              value={(aiAnalysis.lexicalResource / 9) * 100} 
+                              className="h-2"
+                              aria-label={`Lexical Resource score: ${aiAnalysis.lexicalResource} out of 9`}
+                            />
+                          </div>
+
+                          <div className="space-y-2">
+                            <div className="flex justify-between items-center">
+                              <span className="text-sm font-medium">Grammatical Range</span>
+                              <Badge variant="outline">{aiAnalysis.grammaticalRange}</Badge>
+                            </div>
+                            <Progress 
+                              value={(aiAnalysis.grammaticalRange / 9) * 100} 
+                              className="h-2"
+                              aria-label={`Grammatical Range score: ${aiAnalysis.grammaticalRange} out of 9`}
+                            />
+                          </div>
+
+                          <div className="space-y-2">
+                            <div className="flex justify-between items-center">
+                              <span className="text-sm font-medium">Pronunciation</span>
+                              <Badge variant="outline">{aiAnalysis.pronunciation}</Badge>
+                            </div>
+                            <Progress 
+                              value={(aiAnalysis.pronunciation / 9) * 100} 
+                              className="h-2"
+                              aria-label={`Pronunciation score: ${aiAnalysis.pronunciation} out of 9`}
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <h4 className="font-semibold mb-2 text-blue-800 dark:text-blue-200 flex items-center gap-2">
+                            <Target className="h-4 w-4" />
+                            Detailed Feedback:
+                          </h4>
+                          <div className="bg-white dark:bg-gray-800 p-4 rounded-lg border">
+                            <p className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
+                              {aiAnalysis.feedback}
+                            </p>
+                          </div>
+                        </div>
+
+                        {aiAnalysis.strengths && aiAnalysis.strengths.length > 0 && (
+                          <div>
+                            <h4 className="font-semibold mb-2 text-blue-800 dark:text-blue-200 flex items-center gap-2">
+                              <Star className="h-4 w-4" />
+                              Strengths:
+                            </h4>
+                            <div className="grid gap-2">
+                              {aiAnalysis.strengths.map((strength: string, index: number) => (
+                                <div key={index} className="flex items-start gap-2 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                                  <Badge variant="secondary" className="mt-0.5 text-xs bg-green-600 text-white">
+                                    ✓
+                                  </Badge>
+                                  <p className="text-sm text-gray-700 dark:text-gray-300">
+                                    {strength}
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {aiAnalysis.improvements && aiAnalysis.improvements.length > 0 && (
+                          <div>
+                            <h4 className="font-semibold mb-2 text-blue-800 dark:text-blue-200 flex items-center gap-2">
+                              <Target className="h-4 w-4" />
+                              Areas for Improvement:
+                            </h4>
+                            <div className="grid gap-2">
+                              {aiAnalysis.improvements.map((improvement: string, index: number) => (
+                                <div key={index} className="flex items-start gap-2 p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg border border-orange-200 dark:border-orange-800">
+                                  <Badge variant="secondary" className="mt-0.5 text-xs bg-orange-600 text-white">
+                                    {index + 1}
+                                  </Badge>
+                                  <p className="text-sm text-gray-700 dark:text-gray-300">
+                                    {improvement}
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  )}
                 </CardContent>
               </Card>
             </TabsContent>
           ))}
         </Tabs>
       </div>
-      
-      <DiamondNavigation />
     </>
   );
 }

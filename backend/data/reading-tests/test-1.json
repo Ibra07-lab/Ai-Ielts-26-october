@@ -1,0 +1,596 @@
+{
+  "testId": 1,
+  "testName": "Test 1",
+  "passages": [
+    {
+      "id": 1,
+  "title": "The Silk Road: Pathways of Trade and Cultural Fusion",
+  "level": "academic",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "P1",
+      "text": "The Silk Road, a vast network of trade routes spanning Eurasia from the second century BCE to the fourteenth century CE, facilitated the exchange of goods, ideas, and technologies across continents. Originating in the Han Dynasty of China, this intricate web of overland and maritime paths connected the East with the Mediterranean world. Merchants traversed deserts, mountains, and steppes, enduring perils to transport silk, spices, and porcelain westward. Beyond commerce, the routes served as conduits for cultural diffusion, profoundly shaping civilizations along their course."
+    },
+    {
+      "id": "P2",
+      "text": "Economically, the Silk Road revolutionized global trade by introducing luxury commodities to distant markets. Chinese silk, prized for its luster and durability, became a symbol of wealth in Roman society, where it fetched prices equivalent to gold. In return, Europe supplied glassware and woolen textiles, while Central Asian bazaars buzzed with the barter of precious metals and horses. A pivotal example is the city of Samarkand in modern-day Uzbekistan, which flourished as a Silk Road hub under Timurid rule in the fifteenth century. This oasis city not only amassed fortunes through tariffs on caravans but also spurred innovations in irrigation and caravan serails."
+    },
+    {
+      "id": "P3",
+      "text": "Statistical records from medieval chronicles indicate that by the thirteenth century, annual silk exports from China exceeded 10,000 bolts, underscoring the route's commercial vitality. Yet, the Silk Road's influence extended far beyond material exchange, fostering intercultural dialogues that enriched artistic and intellectual traditions. Buddhism, for instance, spread from India to China via these routes, with monasteries dotting the path and translating sutras into local tongues. Similarly, the transmission of papermaking technology from China to the Islamic world in the eighth century transformed knowledge dissemination in Baghdad's House of Wisdom. These exchanges highlight how the network bridged disparate worlds, blending Persian motifs into Chinese ceramics and Greek astronomical knowledge into Indian treatises."
+    },
+    {
+      "id": "P4",
+      "text": "The decline of the Silk Road, precipitated by the rise of maritime routes and Mongol fragmentation in the fourteenth century, did not erase its legacy. Instead, it laid the groundwork for modern globalization, with echoes in contemporary Belt and Road initiatives. In the city of Xi'an, once the eastern terminus, archaeological digs have unearthed artifacts illustrating this enduring fusion. Today, UNESCO's designation of Silk Road sites as World Heritage locations preserves these tangible links to a shared human heritage. Ultimately, the Silk Road exemplifies how interconnected trade pathways can catalyze not just economic prosperity but also profound cultural synergies."
+    }
+  ],
+      "questions": [
+     {   
+      "id": 1,
+  "type": "matching-headings",
+  "title": "Questions 1–4",
+  "instructions": "Choose the correct heading for paragraphs A-D from the list of headings below.",
+  "questions": [
+    {
+      "id": 1,
+      "questionText": "Paragraph A",
+      "options": [
+        "Economic transformations through trade",
+        "Origins and geographical scope",
+        "Lasting impacts and modern parallels",
+        "Cultural and technological exchanges",
+        "Decline and archaeological evidence"
+      ],
+      "correctAnswer": "Origins and geographical scope"
+    },
+    {
+      "id": 2,
+      "questionText": "Paragraph B",
+      "options": [
+        "Economic transformations through trade",
+        "Origins and geographical scope",
+        "Lasting impacts and modern parallels",
+        "Cultural and technological exchanges",
+        "Decline and archaeological evidence"
+      ],
+      "correctAnswer": "Economic transformations through trade"
+    },
+    {
+      "id": 3,
+      "questionText": "Paragraph C",
+      "options": [
+        "Economic transformations through trade",
+        "Origins and geographical scope",
+        "Lasting impacts and modern parallels",
+        "Cultural and technological exchanges",
+        "Decline and archaeological evidence"
+      ],
+      "correctAnswer": "Cultural and technological exchanges"
+    },
+    {
+      "id": 4,
+      "questionText": "Paragraph D",
+      "options": [
+        "Economic transformations through trade",
+        "Origins and geographical scope",
+        "Lasting impacts and modern parallels",
+        "Cultural and technological exchanges",
+        "Decline and archaeological evidence"
+      ],
+      "correctAnswer": "Lasting impacts and modern parallels"
+    }
+          ]
+        },
+        {
+          "id": 1,
+  "type": "summary-completion",
+  "completion_type": "summary",
+  "title": "Questions 5-7",
+  "word_limit": "NO MORE THAN TWO WORDS",
+  "instructions": "Complete the summary below using words from the passage.",
+  "structure": "<div class='completion-summary'><p>The Silk Road not only enabled the trade of luxury items like <strong>(13)_____</strong> but also facilitated the <strong>(14)_____</strong> of technologies such as papermaking. Its legacy continues through modern efforts like UNESCO's preservation of <strong>(15)_____</strong>.</p></div>",
+          "questions": [
+            { 
+      "id":5,
+      "gap_number": 5,
+      "questionText": "Gap 5",
+      "context": "luxury items like (5)_____",
+      "correctAnswer": "Chinese silk",
+      "evidence_quote": "Chinese silk, prized for its luster and durability, became a symbol of wealth in Roman society",
+      "evidence_location": "P2",
+      "answer_type": "noun"
+            },
+            { 
+              "id": 6, 
+      "gap_number": 6,
+      "questionText": "Gap 6",
+      "context": "facilitated the (6)_____ of technologies",
+      "correctAnswer": "transmission",
+      "evidence_quote": "the transmission of papermaking technology from China to the Islamic world in the eighth century",
+      "evidence_location": "P3",
+      "answer_type": "noun"
+            },
+            { 
+              "id": 7, 
+      "gap_number": 7,
+      "questionText": "Gap 7",
+      "context": "preservation of (7)_____",
+      "correctAnswer": "World Heritage locations",
+      "evidence_quote": "UNESCO's designation of Silk Road sites as World Heritage locations",
+      "evidence_location": "P4",
+      "answer_type": "noun"
+    }
+          ]
+        },
+        {
+          "id": 1,
+  "type": "multiple-choice",
+  "title": "Questions 8-10",
+  "instructions": "Choose the correct letter, A, B, C or D.",
+  "questions": [
+    {
+      "id": 8,
+      "questionText": "What was a key commodity transported westward along the Silk Road?",
+      "options": [
+        "A: Glassware",
+        "B: Precious metals",
+        "C: Silk",
+        "D: Woolen textiles"
+      ],
+      "correctAnswer": "C: Silk",
+      "explanation": "The passage mentions 'Merchants traversed deserts, mountains, and steppes, enduring perils to transport silk, spices, and porcelain westward.'"
+    },
+    {
+      "id": 9,
+      "questionText": "According to the passage, the spread of Buddhism along the Silk Road involved:",
+      "options": [
+        "A: Military conquests",
+        "B: Translation of texts",
+        "C: Trade embargoes",
+        "D: Maritime voyages only"
+      ],
+      "correctAnswer": "B: Translation of texts",
+      "explanation": "The passage states 'Buddhism, for instance, spread from India to China via these routes, with monasteries dotting the path and translating sutras into local tongues.'"
+    },
+    {
+      "id": 10,
+      "questionText": "What factor contributed to the decline of the Silk Road?",
+      "options": [
+        "A: Rise of air travel",
+        "B: Mongol unification",
+        "C: Emergence of sea routes",
+        "D: Depletion of silk resources"
+      ],
+      "correctAnswer": "C: Emergence of sea routes",
+      "explanation": "The passage states 'The decline of the Silk Road, precipitated by the rise of maritime routes and Mongol fragmentation in the fourteenth century.'"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Renewable Energy: How Wind and Solar Are Reshaping the Future",
+      "level": "academic",
+      "estimatedTime": 20,
+      "paragraphs": [
+    {
+      "id": "P1",
+      "text": "The transition to renewable energy sources represents a critical response to escalating environmental concerns and finite fossil fuel reserves. Among these, wind and solar power stand out for their abundance, scalability, and decreasing costs, fundamentally altering global energy paradigms. Wind energy captures kinetic force from atmospheric movements through turbines, converting it into electrical power with minimal emissions. Solar technology, meanwhile, utilizes photovoltaic panels or concentrated systems to transform sunlight directly into usable electricity. A pivotal historical milestone occurred in 1887 when Scottish engineer James Blyth constructed the first electricity-generating wind turbine, laying groundwork for modern developments. Today, according to a 2023 assessment by the Fictional International Energy Observatory, wind and solar collectively contributed to 12 percent of global electricity generation in 2022, a figure projected to triple by 2040."
+    },
+    {
+      "id": "P2",
+      "text": "Technological innovations in wind energy have propelled its adoption, particularly in offshore environments where wind speeds are consistently higher. Larger turbine designs, featuring blades exceeding 100 meters in length, have increased energy capture efficiency by up to 50 percent compared to earlier models. A compelling case study is Denmark's Horns Rev 3 offshore wind farm, operational since 2019 and developed by Vattenfall, which generates 407 megawatts—enough to power 425,000 households annually. This project exemplifies how strategic site selection and advanced engineering can optimize output while minimizing land use conflicts. Furthermore, floating wind platforms are emerging as a solution for deep-water locations, expanding viable areas beyond shallow coastal zones. Such advancements not only enhance energy yield but also contribute to job creation in manufacturing and maintenance sectors."
+    },
+    {
+      "id": "P3",
+      "text": "Solar power's trajectory has been marked by dramatic cost reductions and efficiency gains, making it increasingly competitive with conventional sources. The average levelized cost of solar electricity has fallen by 85 percent since 2010, as reported in a 2021 analysis by the Fictional Solar Innovation Center. In arid regions, large-scale solar installations capitalize on abundant sunlight to achieve high capacity factors. For instance, the Noor Complex in Morocco, completed in phases between 2016 and 2019, employs concentrated solar power technology to produce 580 megawatts. Managed by Masen, this facility integrates thermal storage, allowing energy dispatch during non-sunlight hours and reducing reliance on backup fossil fuels. These attributes underscore solar's versatility in addressing peak demand and grid stability challenges."
+    },
+    {
+      "id": "P4",
+      "text": "The integration of wind and solar into existing energy systems presents hurdles, including variability in generation and the need for robust infrastructure upgrades. Energy storage technologies, such as lithium-ion batteries, are pivotal in mitigating intermittency by storing surplus power for later use. Hybrid systems combining wind and solar further optimize reliability, as their complementary production patterns—wind often stronger at night, solar during the day—smooth overall output. A 2024 projection from the Fictional Global Renewables Alliance estimates that with sustained investment, wind and solar could supply 60 percent of worldwide electricity by 2050, averting significant carbon emissions. Policy frameworks, including incentives and international agreements, play a crucial role in accelerating deployment. Ultimately, the reshaping of energy futures through wind and solar hinges on continued innovation and collaborative efforts to overcome barriers."
+    }
+  ],
+      "questions": [
+        {
+          "id": 2,
+  "type": "matching-features",
+  "title": "Questions 11-14",
+  "instructions": "Look at the following statements (Questions 11-14) and the list of people/institutions below. Match each statement with the correct person/institution, A–F. Write the correct letter, A–F, in boxes 1-4 on your answer sheet.",
+  "features": [
+    {
+      "letter": "A",
+      "name": "James Blyth"
+    },
+    {
+      "letter": "B",
+      "name": "Vattenfall"
+    },
+    {
+      "letter": "C",
+      "name": "Masen"
+    },
+    {
+      "letter": "D",
+      "name": "Fictional Solar Innovation Center"
+    },
+    {
+      "letter": "E",
+      "name": "Fictional International Energy Observatory"
+    },
+    {
+      "letter": "F",
+      "name": "Fictional Global Renewables Alliance"
+    }
+  ],
+      "questions": [
+        {
+          "id": 11,
+      "questionText": "Pioneered the construction of an early wind turbine for power generation",
+      "correctAnswer": "A",
+      "explanation": "Attribute linked to Scottish engineer who built the first electricity-generating turbine in 1887",
+      "evidenceQuote": "Scottish engineer James Blyth constructed the first electricity-generating wind turbine",
+      "evidenceLocation": "P1"
+    },
+    {
+      "id": 12,
+      "questionText": "Developed a large offshore wind facility in Scandinavia",
+      "correctAnswer": "B",
+      "explanation": "Company responsible for Denmark's Horns Rev 3 project since 2019",
+      "evidenceQuote": "Denmark's Horns Rev 3 offshore wind farm, operational since 2019 and developed by Vattenfall",
+      "evidenceLocation": "P2"
+    },
+    {
+      "id": 13,
+      "questionText": "Manages a major solar installation with energy storage capabilities",
+      "correctAnswer": "C",
+      "explanation": "Entity overseeing Morocco's Noor Complex with thermal storage",
+      "evidenceQuote": "Managed by Masen, this facility integrates thermal storage",
+      "evidenceLocation": "P3"
+    },
+    {
+      "id": 14,
+      "questionText": "Provided data on significant declines in solar energy expenses",
+      "correctAnswer": "D",
+      "explanation": "Organization's 2021 analysis on 85% cost drop since 2010",
+      "evidenceQuote": "The average levelized cost of solar electricity has fallen by 85 percent since 2010, as reported in a 2021 analysis by the Fictional Solar Innovation Center",
+      "evidenceLocation": "P3"
+    }
+          ]
+        },
+        {
+          "id": 2,
+  "type": "multiple-choice",
+  "title": "Questions 15-18",
+  "instructions": "Choose the correct letter, A, B, C or D.",
+          "questions": [
+    {
+      "id": 15,
+      "questionText": "According to the passage, what is the annual household power capacity of Denmark's Horns Rev 3 offshore wind farm?",
+      "options": [
+        "A) Sufficient for 425,000 homes",
+        "B) Enough to supply 580,000 residences",
+        "C) Capable of energizing 100,000 dwellings",
+        "D) Adequate for 300,000 households"
+      ],
+      "correctAnswer": "A) Sufficient for 425,000 homes",
+      "explanation": "The passage specifies 'generates 407 megawatts—enough to power 425,000 households annually'.",
+      "evidenceQuote": "generates 407 megawatts—enough to power 425,000 households annually",
+      "evidenceLocation": "P2"
+    },
+    {
+      "id": 16,
+      "questionText": "What can be inferred about combining wind and solar power systems from the information across the passage?",
+      "options": [
+        "A) It helps balance daily energy fluctuations effectively",
+        "B) It increases overall costs due to complex integration",
+        "C) It relies solely on advancements in turbine design",
+        "D) It eliminates the need for energy storage solutions"
+      ],
+      "correctAnswer": "A) It helps balance daily energy fluctuations effectively",
+      "explanation": "The passage describes 'Hybrid systems combining wind and solar further optimize reliability, as their complementary production patterns—wind often stronger at night, solar during the day—smooth overall output'.",
+      "evidenceQuote": "Hybrid systems combining wind and solar further optimize reliability, as their complementary production patterns—wind often stronger at night, solar during the day—smooth overall output",
+      "evidenceLocation": "P4"
+    },
+    {
+      "id": 17,
+      "questionText": "What is the primary purpose of the passage?",
+      "options": [
+        "A) To outline the historical and modern roles of wind and solar in sustainable energy shifts",
+        "B) To compare the environmental harms of fossil fuels versus renewables",
+        "C) To advocate for immediate global bans on non-renewable sources",
+        "D) To detail engineering flaws in early renewable technologies"
+      ],
+      "correctAnswer": "A) To outline the historical and modern roles of wind and solar in sustainable energy shifts",
+      "explanation": "The passage traces developments, examples, and projections for wind and solar, emphasizing their transformative effects on energy systems as stated in 'The transition to renewable energy sources represents a critical response... wind and solar collectively contributed to 12 percent of global electricity generation'.",
+      "evidenceQuote": "The transition to renewable energy sources represents a critical response... wind and solar collectively contributed to 12 percent of global electricity generation",
+      "evidenceLocation": "P1"
+    },
+    {
+      "id":18,
+      "questionText": "In the passage, the term 'levelized cost' most closely refers to",
+      "options": [
+        "A) The average price of electricity over a system's lifetime",
+        "B) The initial investment required for turbine installation",
+        "C) The daily operational expenses of solar panels",
+        "D) The projected revenue from energy sales annually"
+      ],
+      "correctAnswer": "A) The average price of electricity over a system's lifetime",
+      "explanation": "The context uses 'levelized cost of solar electricity' to indicate long-term pricing reductions as stated in 'The average levelized cost of solar electricity has fallen by 85 percent since 2010'.",
+      "evidenceQuote": "The average levelized cost of solar electricity has fallen by 85 percent since 2010",
+      "evidenceLocation": "P3"
+    }
+          ]
+        },
+        {
+          "id": 2,
+  "type": "summary-completion",
+  "completion_type": "summary",
+  "title": "Questions 19-21",
+  "word_limit": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+  "instructions": "Complete the summary below using words from the passage.",
+  "structure": "<div class='completion-summary'><p>Renewable energy sources such as wind and solar are transforming global power systems due to their <strong>(9)_____</strong> and scalability. A historical milestone was the first wind turbine built in <strong>(10)_____</strong>. Projects like offshore wind farms demonstrate capacity to power <strong>(11)_____</strong> households, while solar costs have fallen by 85 percent since 2010.</p></div>",
+  "questions": [
+    {
+      "id": 19,
+      "gap_number": 19,
+      "questionText": "Gap 19",
+      "context": "due to their (19)_____ and scalability",
+      "correctAnswer": "abundance",
+      "evidence_quote": "wind and solar power stand out for their abundance, scalability",
+      "evidence_location": "P1",
+      "answer_type": "noun"
+    },
+    {
+      "id": 20,
+      "gap_number": 20,
+      "questionText": "Gap 20",
+      "context": "first wind turbine built in (20)_____",
+      "correctAnswer": "1887",
+      "evidence_quote": "A pivotal historical milestone occurred in 1887",
+      "evidence_location": "P1",
+      "answer_type": "date"
+    },
+    {
+      "id": 21,
+      "gap_number": 21,
+      "questionText": "Gap 21",
+      "context": "capacity to power (21)_____ households",
+      "correctAnswer": "425,000",
+      "evidence_quote": "enough to power 425,000 households annually",
+      "evidence_location": "P2",
+      "answer_type": "number"
+    } 
+      ]
+        },
+    {
+      "id": 2,
+      "type": "short-answer",
+      "title": "Questions 22-25",
+      "instructions": "Answer the questions below. Choose NO MORE THAN THREE WORDS from the passage for each answer.",
+          "questions": [
+            {
+              "id": 22,
+          "questionText": "When was the first electricity-generating wind turbine constructed?",
+          "correctAnswer": "1887",
+          "alternativeAnswers": ["1887", "in 1887"]
+            },
+            {
+              "id": 23,
+          "questionText": "Who developed Denmark's Horns Rev 3 offshore wind farm?",
+          "correctAnswer": "Vattenfall",
+          "alternativeAnswers": ["Vattenfall", "by Vattenfall"]
+        },
+        {
+          "id": 24,
+          "questionText": "How much has the average levelized cost of solar electricity fallen since 2010?",
+          "correctAnswer": "85 percent",
+          "alternativeAnswers": ["85 percent", "85%", "by 85 percent"]
+        },
+        {
+          "id": 25,
+          "questionText": "What percentage of worldwide electricity could wind and solar supply by 2050?",
+          "correctAnswer": "60 percent",
+          "alternativeAnswers": ["60 percent", "60%", "60 percent of worldwide"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+  "title": "Ancient Civilizations: The Engineering Marvels of Pyramid Construction",
+      "level": "academic",
+      "estimatedTime": 20,
+  "wordCount": 742,
+  "difficultyBand": "7",
+      "paragraphs": [
+        {
+          "id": "P1",
+      "text": "The construction of pyramids in ancient civilizations exemplifies remarkable engineering prowess, blending astronomical knowledge, mathematical precision, and organizational ingenuity. These monumental structures, primarily serving as tombs or ceremonial centers, dominated landscapes across continents from Egypt to Mesoamerica. In ancient Egypt, the pyramids of the Giza plateau, built during the Fourth Dynasty around 2580–2565 BCE, represent the zenith of Old Kingdom architecture. The Great Pyramid of Khufu, the largest of these, originally stood at 146.6 meters and comprised approximately 2.3 million limestone blocks, each weighing between 2 and 15 tons. Such feats were achieved without modern machinery, relying instead on ramps, levers, and a vast workforce estimated at 20,000 laborers over two decades. A 2017 analysis by the Fictional Archaeological Engineering Society posits that the alignment of the Great Pyramid with cardinal directions deviated by less than 0.05 degrees, underscoring profound surveying techniques."
+        },
+        {
+          "id": "P2",
+      "text": "Engineering innovations underpinned the pyramids' stability and grandeur, with internal chambers and passageways designed to withstand seismic activity. Workers quarried stone from nearby sites, transporting blocks via sledges lubricated with water to reduce friction on sand paths. Recent simulations suggest that straight ramps, possibly spiraling around the structure, facilitated block placement up to heights exceeding 100 meters. Copper chisels and dolerite pounders served as primary tools for shaping limestone, while mortar derived from gypsum cemented the blocks. The pyramid's stepped core, overlaid with smooth casing stones, distributed weight evenly, preventing collapse under immense pressure. This layered approach not only enhanced durability but also allowed for precise astronomical observations through aligned shafts pointing to key stars."
+        },
+        {
+          "id": "P3",
+      "text": "Beyond Egypt, pyramid-building traditions flourished in Mesoamerican civilizations, adapting similar principles to local materials and cultural imperatives. The Pyramid of the Sun at Teotihuacan, Mexico, constructed around 200 CE by the Teotihuacanos, rises 65 meters and covers a base spanning 225 meters per side. Unlike Egyptian true pyramids, Mesoamerican versions featured stepped platforms supporting temples, emphasizing ritual functions over burial. Adobe bricks and volcanic stone formed the bulk, with clay cores packed tightly to achieve structural integrity amid frequent earthquakes. A case study of the nearby Pyramid of the Moon reveals integrated drainage systems, channeling rainwater to prevent erosion and foundation weakening. These adaptations highlight how environmental constraints influenced engineering choices, fostering resilience in seismic-prone regions."
+        },
+        {
+          "id": "P4",
+      "text": "The enduring legacy of ancient pyramid engineering lies in its demonstration of societal coordination and technological foresight. Logistical challenges, including food supply for laborers and Nile River flooding for material transport, necessitated sophisticated planning. Modern excavations, such as those at Giza in the 1990s, uncovered workers' villages with bakeries and breweries, indicating well-fed, skilled teams rather than enslaved masses. Comparative studies reveal that while Egyptian pyramids prioritized permanence, Mesoamerican ones incorporated symbolic alignments with celestial events. Such divergences underscore the versatility of pyramid design in serving diverse ideological and practical purposes. Ultimately, these structures continue to inspire contemporary engineers, offering insights into sustainable construction amid resource limitations."
+        }
+      ],
+      "questions": [
+    {
+      "id": 3,
+      "type": "true-false-not-given",
+      "title": "Questions 26-31",
+      "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
+      "questions": [
+        {
+          "id": 26,
+          "questionText": "Monumental structures like pyramids functioned mainly as burial sites in ancient Egypt.",
+          "correctAnswer": "TRUE"
+        },
+        {
+          "id": 27,
+          "questionText": "The Great Pyramid's orientation to the points of the compass shows exceptional accuracy.",
+          "correctAnswer": "TRUE"
+        },
+        {
+          "id": 28,
+          "questionText": "The Pyramid of the Sun was erected approximately 200 years before the Common Era.",
+          "correctAnswer": "FALSE"
+        },
+        {
+          "id": 29,
+          "questionText": "Stone blocks for Egyptian pyramids were hauled from remote quarries using sledges.",
+          "correctAnswer": "FALSE"
+        },
+        {
+          "id": 30,
+          "questionText": "Aztecs influenced the design of stepped platforms in Mesoamerican pyramids.",
+          "correctAnswer": "NOT GIVEN"
+        },
+        {
+          "id": 31,
+          "questionText": "Internal shafts in pyramids were aligned for earthquake resistance rather than stellar viewing.",
+          "correctAnswer": "NOT GIVEN"  
+        }  
+        ]
+      },
+        {
+          "id": 3,
+          "type": "matching-headings",
+          "title": "Questions 32-35",
+          "instructions": "Choose the correct heading for paragraphs A-D from the list below.",
+          "questions": [
+            {
+              "id": 32,
+          "questionText": "Paragraph A",
+              "options": [
+            "Achievements in early Egyptian monumental architecture",
+            "Techniques ensuring structural integrity and precision",
+            "Regional adaptations in stepped temple platforms",
+            "Logistical and cultural insights from pyramid legacies",
+            "Exclusive reliance on advanced metal implements",
+            "Universal astronomical functions across all sites",
+            "Evidence of forced labour in workforce operations"
+          ],
+          "correctAnswer": "Achievements in early Egyptian monumental architecture"
+            },
+            {
+              "id": 33,
+          "questionText": "Paragraph B",
+              "options": [
+            "Achievements in early Egyptian monumental architecture",
+            "Techniques ensuring structural integrity and precision",
+            "Regional adaptations in stepped temple platforms",
+            "Logistical and cultural insights from pyramid legacies",
+            "Exclusive reliance on advanced metal implements",
+            "Universal astronomical functions across all sites",
+            "Evidence of forced labour in workforce operations"
+          ],
+          "correctAnswer": "Techniques ensuring structural integrity and precision"
+            },
+            {
+              "id": 34,
+          "questionText": "Paragraph C",
+              "options": [
+            "Achievements in early Egyptian monumental architecture",
+            "Techniques ensuring structural integrity and precision",
+            "Regional adaptations in stepped temple platforms",
+            "Logistical and cultural insights from pyramid legacies",
+            "Exclusive reliance on advanced metal implements",
+            "Universal astronomical functions across all sites",
+            "Evidence of forced labour in workforce operations"
+          ],
+          "correctAnswer": "Regional adaptations in stepped temple platforms"
+            },
+            {
+              "id": 35,
+          "questionText": "Paragraph D",
+              "options": [
+            "Achievements in early Egyptian monumental architecture",
+            "Techniques ensuring structural integrity and precision",
+            "Regional adaptations in stepped temple platforms",
+            "Logistical and cultural insights from pyramid legacies",
+            "Exclusive reliance on advanced metal implements",
+            "Universal astronomical functions across all sites",
+            "Evidence of forced labour in workforce operations"
+          ],
+          "correctAnswer": "Logistical and cultural insights from pyramid legacies"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "type": "multiple-choice",
+      "title": "Questions 36-40",
+          "instructions": "Choose the correct letter, A, B, C or D.",
+          "questions": [
+            {
+              "id": 36,
+          "questionText": "What approximate number of stone blocks formed the largest pyramid at Giza?",
+              "options": [
+            "Around 2.3 million",
+            "Over 3 million",
+            "Fewer than 1 million",
+            "Exactly 2 million"
+          ],
+          "correctAnswer": "Around 2.3 million"
+            },
+            {
+              "id": 37,
+          "questionText": "Based on the passage, what can be deduced about the purpose of pyramid shafts in Egyptian designs?",
+              "options": [
+            "To enable celestial alignments for observations",
+            "Primarily to transport materials during building",
+            "Mainly for storing ceremonial artifacts inside",
+            "Exclusively to improve air circulation below"
+          ],
+          "correctAnswer": "To enable celestial alignments for observations"
+            },
+            {
+              "id": 38,
+          "questionText": "What is the central focus of the entire passage?",
+              "options": [
+            "Advanced techniques in ancient pyramid building worldwide",
+            "Economic factors behind pyramid construction projects",
+            "Religious myths associated with pyramid structures",
+            "Modern recreations of ancient engineering methods"
+          ],
+          "correctAnswer": "Advanced techniques in ancient pyramid building worldwide"
+            },
+            {
+              "id": 39,
+          "questionText": "The word 'zenith' in the passage refers to the",
+              "options": [
+            "Peak of architectural accomplishment",
+            "Base level of construction foundations",
+            "Decline in building technologies",
+            "Central chamber within the structure"
+          ],
+          "correctAnswer": "Peak of architectural accomplishment"
+            },
+            {
+              "id": 40,
+          "questionText": "From details in the passage, what difference in pyramid styles can be inferred between Egyptian and Mesoamerican builders?",
+              "options": [
+            "Emphasis on smooth surfaces versus terraced levels",
+            "Use of metal tools versus wooden levers only",
+            "Focus on burial tombs versus ritual temples",
+            "Construction in deserts versus coastal areas"
+          ],
+          "correctAnswer": "Focus on burial tombs versus ritual temples"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+

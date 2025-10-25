@@ -1,20 +1,22 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { BookMarked, RotateCcw, Check, X, Volume2, TrendingUp } from "lucide-react";
+import { BookMarked, RotateCcw, Check, X, Volume2, TrendingUp, Sparkles, BookOpen, MessageSquare } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "../contexts/UserContext";
-import DiamondNavigation from "../components/DiamondNavigation";
 import backend from "~backend/client";
 
 export default function VocabularyBuilder() {
   const [selectedTopic, setSelectedTopic] = useState<string>("all");
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
+  const [aiEnhancement, setAiEnhancement] = useState<any>(null);
+  const [showAiEnhancement, setShowAiEnhancement] = useState(false);
   const { user } = useUser();
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -26,26 +28,30 @@ export default function VocabularyBuilder() {
 
   const { data: wordsData, refetch: refetchWords } = useQuery({
     queryKey: ["vocabularyWords", user?.id, selectedTopic],
-    queryFn: () => user ? backend.ielts.getVocabularyWords({ 
-      userId: user.id, 
+    queryFn: () => user ? backend.ielts.getVocabularyWords(user.id, { 
       topic: selectedTopic === "all" ? undefined : selectedTopic,
       limit: 10 
     }) : null,
     enabled: !!user,
-    onSuccess: () => {
+  });
+
+  // Reset state when words data changes
+  useState(() => {
+    if (wordsData) {
       setCurrentWordIndex(0);
       setShowAnswer(false);
-    },
+    }
   });
 
   const { data: progress } = useQuery({
     queryKey: ["vocabularyProgress", user?.id],
-    queryFn: () => user ? backend.ielts.getVocabularyProgress({ userId: user.id }) : null,
+    queryFn: () => user ? backend.ielts.getVocabularyProgress(user.id) : null,
     enabled: !!user,
   });
 
   const updateStatusMutation = useMutation({
-    mutationFn: backend.ielts.updateVocabularyStatus,
+    mutationFn: ({ userId, wordId, status }: { userId: number; wordId: number; status: string }) => 
+      backend.ielts.updateVocabularyStatus(userId, wordId, { status }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["vocabularyProgress"] });
       nextWord();
@@ -55,6 +61,27 @@ export default function VocabularyBuilder() {
       toast({
         title: "Error",
         description: "Failed to update word status. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // AI Vocabulary Enhancement Mutation
+  const aiEnhancementMutation = useMutation({
+    mutationFn: backend.ielts.getVocabularyEnhancement,
+    onSuccess: (data) => {
+      setAiEnhancement(data);
+      setShowAiEnhancement(true);
+      toast({
+        title: "AI Enhancement Ready!",
+        description: "Advanced vocabulary insights generated.",
+      });
+    },
+    onError: (error) => {
+      console.error("Failed to get AI enhancement:", error);
+      toast({
+        title: "Error",
+        description: "Failed to get AI enhancement. Please try again.",
         variant: "destructive",
       });
     },
@@ -72,6 +99,14 @@ export default function VocabularyBuilder() {
       refetchWords();
     }
     setShowAnswer(false);
+    setShowAiEnhancement(false);
+    setAiEnhancement(null);
+  };
+
+  const handleAiEnhancement = () => {
+    if (!currentWord) return;
+
+    aiEnhancementMutation.mutate(currentWord.word);
   };
 
   const handleWordStatus = (status: string) => {
@@ -128,7 +163,11 @@ export default function VocabularyBuilder() {
                     <span>Words Mastered</span>
                     <span>{progress.knownWords} / {progress.totalWords}</span>
                   </div>
-                  <Progress value={progressPercentage} className="h-2" />
+                  <Progress 
+                    value={progressPercentage} 
+                    className="h-2" 
+                    aria-label={`Vocabulary progress: ${progress.knownWords} out of ${progress.totalWords} words mastered (${Math.round(progressPercentage)}%)`}
+                  />
                 </div>
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div>
@@ -206,35 +245,137 @@ export default function VocabularyBuilder() {
                     variant="outline"
                     size="sm"
                     onClick={playAudio}
+                    aria-label={`Play pronunciation of ${currentWord.word}`}
                   >
                     <Volume2 className="h-4 w-4" />
                   </Button>
                 </div>
 
                 {!showAnswer && (
-                  <Button
-                    onClick={() => setShowAnswer(true)}
-                    className="mt-6"
-                  >
-                    Show Definition
-                  </Button>
+                  <div className="flex gap-2 justify-center mt-6">
+                    <Button
+                      onClick={() => setShowAnswer(true)}
+                      className=""
+                    >
+                      Show Definition
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={handleAiEnhancement}
+                      disabled={aiEnhancementMutation.isPending}
+                    >
+                      <Sparkles className="h-4 w-4 mr-2" />
+                      {aiEnhancementMutation.isPending ? "Getting AI Insights..." : "AI Insights"}
+                    </Button>
+                  </div>
                 )}
 
-                {showAnswer && (
-                  <div className="space-y-4 animate-in fade-in duration-300">
-                    <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
-                      <h3 className="font-semibold mb-2">Definition:</h3>
-                      <p className="text-gray-700 dark:text-gray-300">
-                        {currentWord.definition}
-                      </p>
-                    </div>
+                {(showAnswer || showAiEnhancement) && (
+                  <Tabs defaultValue="basic" className="space-y-4 animate-in fade-in duration-300">
+                    <TabsList className="grid w-full grid-cols-2">
+                      <TabsTrigger value="basic" className="flex items-center gap-2">
+                        <BookOpen className="h-4 w-4" />
+                        Basic Info
+                      </TabsTrigger>
+                      <TabsTrigger value="ai" className="flex items-center gap-2" disabled={!aiEnhancement}>
+                        <Sparkles className="h-4 w-4" />
+                        AI Insights
+                      </TabsTrigger>
+                    </TabsList>
 
-                    <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-                      <h3 className="font-semibold mb-2">Example:</h3>
-                      <p className="text-gray-700 dark:text-gray-300 italic">
-                        "{currentWord.exampleSentence}"
-                      </p>
-                    </div>
+                    <TabsContent value="basic" className="space-y-4">
+                      <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                        <h3 className="font-semibold mb-2">Definition:</h3>
+                        <p className="text-gray-700 dark:text-gray-300">
+                          {currentWord.definition}
+                        </p>
+                      </div>
+
+                      <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+                        <h3 className="font-semibold mb-2">Example:</h3>
+                        <p className="text-gray-700 dark:text-gray-300 italic">
+                          "{currentWord.exampleSentence}"
+                        </p>
+                      </div>
+
+                      {!aiEnhancement && (
+                        <div className="text-center py-4">
+                          <Button
+                            variant="outline"
+                            onClick={handleAiEnhancement}
+                            disabled={aiEnhancementMutation.isPending}
+                          >
+                            <Sparkles className="h-4 w-4 mr-2" />
+                            {aiEnhancementMutation.isPending ? "Getting AI Insights..." : "Get AI Insights"}
+                          </Button>
+                        </div>
+                      )}
+                    </TabsContent>
+
+                    <TabsContent value="ai" className="space-y-4">
+                      {aiEnhancement ? (
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between mb-4">
+                            <Badge variant="secondary" className="text-xs">
+                              Difficulty: {aiEnhancement.difficulty}
+                            </Badge>
+                          </div>
+
+                          <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg">
+                            <h3 className="font-semibold mb-2 flex items-center gap-2">
+                              <BookOpen className="h-4 w-4" />
+                              IELTS Examples:
+                            </h3>
+                            <div className="space-y-2">
+                              {aiEnhancement.examples.map((example: string, index: number) => (
+                                <p key={index} className="text-gray-700 dark:text-gray-300 italic text-sm">
+                                  "{example}"
+                                </p>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
+                            <h3 className="font-semibold mb-2 flex items-center gap-2">
+                              <MessageSquare className="h-4 w-4" />
+                              Synonyms:
+                            </h3>
+                            <div className="flex flex-wrap gap-2">
+                              {aiEnhancement.synonyms.map((synonym: string, index: number) => (
+                                <Badge key={index} variant="outline" className="text-xs">
+                                  {synonym}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div className="bg-orange-50 dark:bg-orange-900/20 p-4 rounded-lg">
+                            <h3 className="font-semibold mb-2">Collocations:</h3>
+                            <div className="flex flex-wrap gap-2">
+                              {aiEnhancement.collocations.map((collocation: string, index: number) => (
+                                <Badge key={index} variant="secondary" className="text-xs">
+                                  {collocation}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="text-center py-8">
+                          <Sparkles className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                          <p className="text-gray-600 dark:text-gray-300 mb-4">
+                            Get AI-powered vocabulary insights including examples, synonyms, and collocations.
+                          </p>
+                          <Button
+                            onClick={handleAiEnhancement}
+                            disabled={aiEnhancementMutation.isPending}
+                          >
+                            <Sparkles className="h-4 w-4 mr-2" />
+                            {aiEnhancementMutation.isPending ? "Getting AI Insights..." : "Get AI Insights"}
+                          </Button>
+                        </div>
+                      )}
+                    </TabsContent>
 
                     <div className="flex justify-center gap-4 pt-4">
                       <Button
@@ -261,7 +402,7 @@ export default function VocabularyBuilder() {
                         I Know This
                       </Button>
                     </div>
-                  </div>
+                  </Tabs>
                 )}
               </div>
             </CardContent>
@@ -286,7 +427,6 @@ export default function VocabularyBuilder() {
           </Card>
         )}
       </div>
-      <DiamondNavigation />
     </>
   );
 }
