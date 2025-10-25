@@ -1,0 +1,480 @@
+{
+    "testId": 5,
+    "testName": "Test 5",
+    "passages": [
+        {
+         "id": 1,
+  "title": "Predicting the Unpredictable: The Science of Earthquake Forecasting",
+  "level": "academic",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "P1",
+      "text": "Few natural phenomena inspire as much fear and fascination as earthquakes. These sudden ruptures of the Earth's crust can devastate entire regions within seconds, yet despite decades of intensive research, scientists remain unable to predict them with any reliable accuracy. Each year, approximately 500,000 detectable earthquakes occur worldwide, with roughly 100 of these causing significant damage to infrastructure and communities. The challenge lies not in understanding why earthquakes happen—plate tectonics provides a clear explanation—but in determining precisely when and where the next major event will strike. This fundamental gap between scientific knowledge and predictive capability has driven researchers to explore everything from ancient folklore to cutting-edge machine learning algorithms."
+    },
+    {
+      "id": "P2",
+      "text": "Understanding how earthquakes occur has advanced considerably since the acceptance of plate tectonic theory in the 1960s. Most earthquakes result from the movement of massive crustal plates that float on the Earth's semi-molten mantle. When these plates grind past, collide with, or slide beneath one another, stress accumulates along fault lines until the rock fractures suddenly, releasing energy in the form of seismic waves. These waves travel through the Earth at different speeds: primary waves (P-waves) move at approximately 6 kilometers per second through the crust, while slower secondary waves (S-waves) follow at roughly 3.5 kilometers per second. Modern seismograph networks can detect even minor tremors, and the global monitoring system has expanded dramatically over recent decades. According to the International Seismological Centre, the number of permanent seismic stations increased from fewer than 1,000 in the 1960s to over 16,000 by 2020. This enhanced detection capability means scientists can now observe patterns and behaviors that were previously invisible, yet it has not translated into the ability to forecast specific earthquakes. Dr. Emily Zhang's research team at the University of Tokyo found that while seismologists can identify high-risk zones with considerable accuracy, pinpointing the timing of future events remains elusive."
+    },
+    {
+      "id": "P3",
+      "text": "Throughout history, various methods have been proposed for predicting earthquakes, with varying degrees of scientific credibility. Some researchers have investigated precursor phenomena—observable changes that might signal an imminent earthquake. These include unusual animal behavior, fluctuations in groundwater levels, the emission of radon gas from the Earth's crust, and patterns in smaller foreshocks. The most celebrated apparent success occurred in 1975 when Chinese officials evacuated the city of Haicheng just days before a magnitude 7.3 earthquake struck. This decision, based partly on observations of unusual animal behavior and a series of foreshocks, potentially saved thousands of lives. However, the following year, a devastating earthquake in Tangshan arrived without warning, killing an estimated 240,000 people. A comprehensive study published in the Journal of Geophysical Research analyzed 50 years of claimed earthquake predictions and found that success rates were barely better than random chance. The problem, many scientists argue, is that potential precursors occur frequently without subsequent earthquakes, leading to numerous false alarms. In fact, research conducted between 2010 and 2018 in California revealed that only 3 percent of identified precursor signals were followed by significant seismic events within the predicted timeframe."
+    },
+    {
+      "id": "P4",
+      "text": "While long-term prediction remains problematic, scientists have achieved remarkable success with earthquake early warning systems, which operate on an entirely different principle. These systems detect the initial P-waves from an earthquake and send alerts before the more destructive S-waves and surface waves arrive. Japan's sophisticated network, established following extensive investment after the 1995 Kobe earthquake, can provide warnings ranging from several seconds to approximately two minutes, depending on distance from the epicenter. Although this timeframe seems brief, it allows automated systems to halt trains, shut down industrial processes, and give people crucial seconds to take cover. During the 2011 magnitude 9.0 Tohoku earthquake, the system issued warnings that reached Tokyo roughly one minute before the strongest shaking began. Similarly, California's ShakeAlert system, which became publicly available in 2019, uses data from more than 1,600 seismic sensors across the state. Dr. Richard Allen, who leads the seismology laboratory at UC Berkeley, notes that even a 10-second warning can reduce casualties by up to 20 percent in urban areas. Yet these systems represent detection rather than prediction—they identify earthquakes that have already started, not those yet to occur. The distinction is significant: early warning provides tactical response time, while true prediction would enable strategic preparation and evacuation."
+    },
+    {
+      "id": "P5",
+      "text": "The ongoing challenge of earthquake prediction has prompted debate within the scientific community about research priorities. Some experts argue that resources would be better spent on improving building codes, retrofitting vulnerable structures, and enhancing public preparedness rather than pursuing prediction methods that may prove fundamentally impossible. Others maintain that emerging technologies, particularly machine learning algorithms capable of detecting subtle patterns in vast datasets, might finally unlock predictive capabilities. A 2021 study by researchers at Los Alamos National Laboratory demonstrated that artificial intelligence could identify precursor signals in laboratory-induced earthquakes with 67 percent accuracy, though whether this translates to real-world conditions remains uncertain. What seems clear is that earthquake science is shifting toward a probabilistic framework—estimating the likelihood of earthquakes within certain regions over specific time periods—rather than deterministic prediction of individual events. For communities living in seismically active zones, this means that preparedness, not prediction, remains the most reliable defense against nature's most sudden and devastating force."            }
+],
+"questions": [
+  {
+   "id": 1,
+  "type": "true-false-not-given",
+  "title": "Questions 1–7",
+  "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
+  "questions": [
+    {
+      "id": 1,
+      "questionText": "Each year, around half a million earthquakes are detected globally, though only approximately one hundred result in substantial damage to infrastructure.",
+      "correctAnswer": "TRUE"
+    },
+    {
+      "id": 2,
+      "questionText": "Chinese officials successfully evacuated Tangshan in 1976 after observing unusual animal behavior and foreshock patterns.",
+      "correctAnswer": "FALSE"
+    },
+    {
+      "id": 3,
+      "questionText": "The economic cost of implementing earthquake early warning systems exceeds the financial value of infrastructure damage they prevent.",
+      "correctAnswer": "NOT GIVEN"
+    },
+    {
+      "id": 4,
+      "questionText": "The global network of permanent seismic monitoring stations expanded more than fifteen-fold between the 1960s and 2020.",
+      "correctAnswer": "TRUE"
+    },
+    {
+      "id": 5,
+      "questionText": "California research conducted from 2010 to 2018 revealed that approximately 13 percent of identified precursor signals preceded significant seismic events.",
+      "correctAnswer": "FALSE"
+    },
+    {
+      "id": 6,
+      "questionText": "Japan's earthquake early warning network provides more accurate predictions than California's ShakeAlert system.",
+      "correctAnswer": "NOT GIVEN"
+    },
+    {
+      "id": 7,
+      "questionText": "Early warning systems identify seismic events that have already commenced rather than forecasting future earthquakes.",
+      "correctAnswer": "TRUE"
+      }
+    ]
+  },
+  {"id": 1,
+  "type": "short-answer",
+  "title": "Questions 8–13",
+  "instructions": "Answer the questions below. Choose NO MORE THAN THREE WORDS AND/OR A NUMBER from the passage for each answer.",
+  "questions": [
+    {
+      "id": 8,
+      "questionText": "What provides a clear explanation for why earthquakes happen?",
+      "correctAnswer": "plate tectonics"
+    },
+    {
+      "id": 9,
+      "questionText": "Who found that pinpointing the timing of future earthquakes remains elusive?",
+      "correctAnswer": "Dr. Emily Zhang"
+    },
+    {
+      "id": 10,
+      "questionText": "What percentage of California's precursor signals were followed by significant seismic events?",
+      "correctAnswer": "3 percent"
+    },
+    {
+      "id": 11,
+      "questionText": "In what year was the city of Haicheng evacuated before an earthquake struck?",
+      "correctAnswer": "1975"
+    },
+    {
+      "id": 12,
+      "questionText": "Where does Dr. Richard Allen lead a seismology laboratory?",
+      "correctAnswer": "UC Berkeley"
+    },
+    {
+      "id": 13,
+      "questionText": "According to the passage, what is shifting toward a probabilistic framework?",
+      "correctAnswer": "earthquake science"
+    }
+]
+  }
+]
+},
+{
+    "id": 2,
+    "title": "National Parks and Modern Conservation: Evolving Roles in Biodiversity Protection",
+    "level": "academic",
+    "estimatedTime": 20,
+    "paragraphs": [
+      {
+        "id": "P1",
+        "text": "National parks have become synonymous with conservation in the public imagination, yet their actual effectiveness in protecting biodiversity remains a subject of considerable scientific debate. Globally, protected areas—which include national parks, nature reserves, and wilderness areas—now cover approximately 15.4 percent of terrestrial environments and 7.7 percent of marine zones. While these figures represent substantial progress toward international conservation targets, they mask significant variation in how well different parks fulfill their conservation mandates. The concept originated in 1872 with the establishment of Yellowstone National Park in the United States, founded on the dual principles of preserving spectacular scenery and protecting wildlife for future generations. Since then, the role of national parks has evolved considerably, expanding beyond simple preservation to encompass complex functions including ecosystem restoration, genetic reservoir maintenance, and climate change mitigation."
+      },
+      {
+        "id": "P2",
+        "text": "The primary conservation value of national parks lies in their capacity to maintain viable populations of species that would otherwise face extinction in fragmented landscapes. Research conducted by Dr. James Morrison's team at the Smithsonian Conservation Biology Institute found that large protected areas harbor, on average, 67 percent more species than comparable unprotected regions. This difference becomes even more pronounced for wide-ranging mammals and apex predators, which require extensive territories. Yellowstone's wolf reintroduction program, implemented in 1995 after a 70-year absence, exemplifies how parks can facilitate species recovery. Within two decades, wolf populations stabilized at approximately 100 individuals, triggering what ecologists term a 'trophic cascade'—a series of ecological effects that rippled through the entire ecosystem. The presence of wolves altered elk behavior, reduced browsing pressure on streamside vegetation, and ultimately led to the recovery of riparian habitats and the species dependent upon them. However, such successes depend critically on adequate park size. A comprehensive analysis published in Nature in 2019 examined 447 protected areas across six continents and concluded that only those exceeding 1,000 square kilometers effectively maintained large mammal diversity over multi-decade timescales. Smaller parks, while valuable, often function more as biodiversity repositories than as fully functioning ecosystems."
+      },
+      {
+        "id": "P3",
+        "text": "Beyond protecting individual species, national parks serve as critical benchmarks for understanding environmental change in human-modified landscapes. Tanzania's Serengeti National Park, established in 1951, has provided researchers with nearly seven decades of continuous ecological monitoring data—an invaluable resource for detecting long-term environmental trends. Studies utilizing this data have revealed that the park's wildebeest population, which numbered approximately 250,000 in the 1960s, increased to over 1.3 million by the early 2000s following the eradication of rinderpest disease. This dramatic recovery demonstrated that even severely depleted populations can rebound when threats are removed and suitable habitat remains available. National parks also generate substantial economic value through ecosystem services—the benefits that humans derive from functioning ecosystems. Research by economists at Duke University estimated that Yellowstone alone provides ecosystem services valued at between $970 million and $1.1 billion annually, including water purification, carbon sequestration, and pollination. These figures dwarf the park's tourism revenue of approximately $650 million per year, suggesting that the economic argument for conservation extends well beyond visitor spending. Interestingly, many of these ecosystem services benefit communities far beyond park boundaries, creating what some researchers call 'conservation externalities'—positive effects that accrue to society at large rather than to local stakeholders alone."
+      },
+      {
+        "id": "P4",
+        "text": "Despite their conservation value, national parks face mounting challenges that threaten their long-term effectiveness. The issue of 'fortress conservation'—the historical practice of excluding indigenous and local communities from protected areas—has generated particular controversy. In parts of Africa and Asia, park establishment has sometimes displaced traditional inhabitants, creating hardship and resentment while potentially undermining conservation goals. A 2020 study examining 36 African protected areas found that community support for conservation was 40 percent lower in areas where local people had been forcibly relocated compared to parks that maintained community access. This finding has prompted a fundamental rethinking of park management strategies. Modern approaches increasingly emphasize collaborative management models that integrate local communities as conservation partners rather than treating them as threats to be excluded. Tourism pressure presents another significant challenge, particularly in iconic parks. Thailand's Maya Bay, made famous by the film 'The Beach,' received up to 5,000 visitors daily before authorities closed it indefinitely in 2018 to allow ecosystem recovery. Marine surveys conducted after the closure revealed that coral cover increased from 10 percent to 63 percent within just three years, demonstrating both the severe impact of overtourism and the remarkable resilience of natural systems when pressure is removed. Climate change poses perhaps the most fundamental threat, as shifting temperature and precipitation patterns push species ranges beyond park boundaries, rendering even the largest protected areas potentially inadequate for long-term conservation."
+      },
+      {
+        "id": "P5",
+        "text": "The future effectiveness of national parks in conservation will likely depend on their integration into broader landscape-scale strategies. Transboundary protected areas—conservation zones that span international borders—have emerged as one promising approach. The Kavango-Zambezi Transfrontier Conservation Area, which links protected areas across five southern African nations and encompasses 520,000 square kilometers, represents the world's largest terrestrial conservation complex. Such initiatives allow wildlife populations to move across their full historical ranges while facilitating cooperation on shared conservation challenges. Some conservation scientists argue that the traditional national park model, focused primarily on protecting pristine wilderness, must evolve to address 21st-century realities. Dr. Emma Rodriguez, writing in the journal Biological Conservation, advocates for a more flexible framework that recognizes the conservation value of working landscapes where human activities and biodiversity protection coexist. This perspective suggests that while traditional national parks will remain essential anchors for conservation efforts, achieving global biodiversity targets will require diverse protected area types, innovative governance arrangements, and genuine partnerships with the communities whose lands harbor the world's remaining biodiversity."
+      }
+    ],
+    "questions": [
+  {
+    "id": 2,
+    "type": "short-answer",
+    "title": "Questions 14–17",
+    "instructions": "Answer the questions below. Choose NO MORE THAN THREE WORDS AND/OR A NUMBER from the passage for each answer.",
+    "questions": [
+      {
+        "id": 14,
+        "questionText": "In what year was Yellowstone National Park established?",
+        "correctAnswer": "1872"
+      },
+      {
+        "id": 15,
+        "questionText": "What percentage more species do large protected areas harbor compared to unprotected regions?",
+        "correctAnswer": "67 percent"
+      },
+      {
+        "id": 16,
+        "questionText": "What disease was eradicated, leading to the recovery of Serengeti's wildebeest population?",
+        "correctAnswer": "rinderpest disease"
+      },
+      {
+        "id": 17,
+        "questionText": "What percentage did coral cover increase to at Maya Bay after the closure?",
+        "correctAnswer": "63 percent"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "type": "matching-information",
+    "title": "Questions 18–22",
+    "instructions": "Which paragraph contains the following information? Write the correct letter, A–E, in boxes 5–9 on your answer sheet.",
+    "paragraphs_list": ["A", "B", "C", "D", "E"],
+    "questions": [
+      {
+        "id": 18,
+        "questionText": "quantitative data on the proportion of Earth's land and ocean currently designated for preservation",
+        "correctAnswer": "A"
+      },
+      {
+        "id": 19,
+        "questionText": "an instance where reintroducing a predator species generated cascading ecological transformations across an entire habitat",
+        "correctAnswer": "B"
+      },
+      {
+        "id": 20,
+        "questionText": "evidence demonstrating that natural ecosystem functions provide substantially greater monetary value than recreational visitation",
+        "correctAnswer": "C"
+      },
+      {
+        "id": 21,
+        "questionText": "findings showing that forcibly displacing traditional inhabitants from conservation zones significantly reduces local backing for preservation initiatives",
+        "correctAnswer": "D"
+      },
+      {
+        "id": 22,
+        "questionText": "an expert perspective advocating that conservation frameworks must evolve to recognize habitats where human economic activities and wildlife preservation coexist",
+        "correctAnswer": "E"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "type": "short-answer",
+    "title": "Questions 23–25",
+    "instructions": "Answer the questions below. Choose NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer.",
+    "questions": [
+      {
+        "id": 23,
+        "questionText": "In what year was Yellowstone National Park established?",
+        "correctAnswer": "1872"
+      },
+      {
+        "id": 24,
+        "questionText": "What ecological phenomenon did Yellowstone's wolf reintroduction trigger throughout the ecosystem?",
+        "correctAnswer": "trophic cascade"
+      },
+      {
+        "id": 25,
+        "questionText": "What term describes positive effects of parks that benefit society at large rather than local stakeholders?",
+        "correctAnswer": "conservation externalities"
+      }
+    ]
+  }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Amazon Deforestation and the Global Climate System: Feedbacks and Tipping Points",
+    "level": "academic",
+    "estimatedTime": 20,
+    "paragraphs": [
+      {
+        "id": "P1",
+        "text": "The Amazon rainforest, often characterized as the planet's lungs, has undergone unprecedented transformation over recent decades, with profound implications for global climate regulation. Spanning approximately 5.5 million square kilometers across nine South American nations, this vast ecosystem stores an estimated 150 to 200 billion tonnes of carbon in its biomass and soils—equivalent to roughly fifteen years of current global anthropogenic emissions. However, satellite data analyzed by Brazil's National Institute for Space Research reveals that deforestation rates, while fluctuating considerably, have removed approximately 17 percent of the original forest cover since systematic monitoring began in the 1970s. This transformation represents not merely a regional environmental concern but a critical perturbation to planetary biogeochemical cycles, with cascading effects that extend far beyond the basin itself. Understanding the mechanisms through which Amazon deforestation influences climate—and how climate change, in turn, amplifies forest vulnerability—has emerged as a priority for Earth system scientists seeking to constrain uncertainty in future climate projections."
+      },
+      {
+        "id": "P2",
+        "text": "The carbon cycle implications of Amazon deforestation operate through multiple, interconnected pathways. Direct emissions from forest clearance, primarily through burning and decomposition, constitute the most immediately quantifiable impact. Research conducted by Dr. Philip Fearnside at Brazil's National Institute for Amazonian Research estimated that deforestation and forest degradation in the Brazilian Amazon alone contributed approximately 1.5 billion tonnes of CO2 equivalent annually during the period from 2003 to 2015. Yet this figure captures only part of the carbon dynamics. Intact tropical forests function as significant carbon sinks, with mature Amazon forests historically sequestering an estimated 0.5 billion tonnes of carbon per year through photosynthetic uptake that exceeds respiratory losses. Deforestation thus generates a dual climate penalty: cessation of this ongoing sequestration service combined with pulse emissions from biomass combustion. Moreover, the fate of remaining carbon stocks in degraded forests presents considerable uncertainty. A comprehensive study published in Nature Climate Change in 2021, utilizing a network of 590 forest plots monitored over three decades, demonstrated that Amazon forests have experienced declining carbon uptake capacity since the early 1990s. The authors attributed this trend to intensifying drought stress and increasing tree mortality, suggesting that portions of the basin may have already transitioned from net carbon sink to net source even in the absence of direct deforestation."
+      },
+      {
+        "id": "P3",
+        "text": "Beyond carbon cycle perturbations, Amazon deforestation fundamentally alters regional and extra-regional hydrological dynamics through modifications to evapotranspiration—the process by which water is transferred from land to atmosphere through soil evaporation and plant transpiration. The Amazon basin's prodigious rainfall, averaging approximately 2,300 millimeters annually, exists in a delicate equilibrium with forest cover. Trees function as biological pumps, extracting moisture from deep soil layers and releasing it to the atmosphere through leaf stomata, where it contributes to cloud formation and subsequent precipitation. Research by Dr. Antonio Nobre and colleagues at Brazil's Center for Earth System Science has demonstrated that this moisture recycling sustains up to 75 percent of rainfall in certain western Amazon regions during the dry season. Deforestation disrupts this mechanism through multiple pathways: reduced leaf area decreases transpiration rates, altered surface albedo modifies energy balance, and changes in surface roughness affect atmospheric circulation patterns. The consequences manifest both locally and at considerable distances. Modeling studies suggest that extensive deforestation could reduce regional precipitation by 12 to 21 percent, with particularly severe impacts during the already-stressed dry season months. Furthermore, moisture transported southeastward from the Amazon basin via atmospheric rivers—sometimes termed 'flying rivers' in Brazilian discourse—supplies crucial rainfall to agricultural regions of southern Brazil, Paraguay, and northern Argentina. A 2020 study published in the Proceedings of the National Academy of Sciences found statistically significant correlations between deforestation extent in the Amazon and precipitation deficits in these distant agricultural zones, suggesting teleconnections that could affect food security for over 70 million people."
+      },
+      {
+        "id": "P4",
+        "text": "Perhaps most concerning to climate scientists are potential nonlinear responses embedded in Amazon-climate interactions—the prospect that gradual deforestation might trigger abrupt, potentially irreversible transitions in forest state. Dr. Thomas Lovejoy and Dr. Carlos Nobre articulated the concept of an Amazon 'tipping point' in a widely cited 2018 analysis, positing that removal of 20 to 25 percent of original forest cover could initiate self-reinforcing feedbacks leading to widespread die-back and savannization. The mechanism centers on moisture recycling: reduced forest coverage diminishes rainfall, which in turn stresses remaining trees, increasing mortality and fire susceptibility, thereby accelerating further forest loss independent of human intervention. While the existence and precise location of such a threshold remain subjects of active scientific debate, recent observational evidence has lent credence to these concerns. Satellite-based measurements of vegetation greenness in southeastern Amazonia have revealed declining trends since approximately 2000, with the most pronounced changes occurring during dry season months when moisture limitation is most acute. Some researchers interpret these patterns as early warning signals of approaching critical transitions. However, others caution that attributing causality remains challenging given the confounding influences of climate variability, particularly the El Niño-Southern Oscillation, which generates substantial interannual variation in Amazon precipitation and temperature. What seems increasingly clear from both observational data and Earth system models is that the trajectory toward any potential tipping point is not determined by deforestation alone but emerges from the interaction of land-use change with anthropogenic climate change. Regional warming, which has already reached approximately 1°C above pre-industrial levels in parts of the basin, intensifies moisture stress even in intact forests, potentially lowering the threshold at which destabilization occurs."
+      },
+      {
+        "id": "P5",
+        "text": "The intricate coupling between Amazon deforestation and global climate presents profound challenges for both scientific understanding and policy formulation. Unlike discrete environmental problems amenable to isolated solutions, the Amazon-climate nexus exemplifies Earth system complexity, characterized by multiple feedbacks operating across spatial and temporal scales. Recent deforestation trends offer grounds for both concern and cautious optimism. While annual forest loss peaked at approximately 27,800 square kilometers in 2004, enhanced monitoring and enforcement mechanisms contributed to an 83 percent reduction by 2012. However, this progress has proven fragile, with deforestation rates increasing substantially after 2019, reaching 13,235 square kilometers in 2021. Some climate scientists argue that conventional mitigation frameworks, focused primarily on reducing emissions from fossil fuel combustion, inadequately address the urgency of tropical forest protection. Dr. Johan Rockström at the Potsdam Institute for Climate Impact Research contends that maintaining Amazon forest integrity should be recognized as a critical planetary boundary—a biophysical threshold whose transgression could fundamentally alter Earth system functioning. This perspective implies that Amazon conservation merits consideration not merely as a climate change mitigation strategy but as a prerequisite for maintaining climatic conditions conducive to organized human societies."
+      }
+    ],
+  "questions": [
+    {
+    "id": 3,
+    "type": "true-false-not-given",
+    "title": "Questions 26-31",
+    "instructions": "Do the following statements agree with the information in the Reading Passage? Write YES if the statement agrees with the views of the writer, NO if the statement contradicts the views of the writer, NOT GIVEN if it is impossible to say what the writer thinks about this.",
+    "questions": [
+      {
+        "id": 26,
+        "questionText": "The writer believes that Amazon deforestation constitutes a disruption to global environmental systems rather than merely a localized ecological problem.",
+        "correctAnswer": "YES"
+      },
+      {
+        "id": 27,
+        "questionText": "The writer considers the climate impact of deforestation to be twofold, involving both the cessation of carbon absorption and the release of stored carbon.",
+        "correctAnswer": "YES"
+      },
+      {
+        "id": 28,
+        "questionText": "According to Dr. Johan Rockström, maintaining Amazon forest integrity should be viewed as essential for preserving conditions that support human civilization, not simply as one climate mitigation option among many.",
+        "correctAnswer": "YES"
+      },
+      {
+        "id": 29,
+        "questionText": "The writer suggests that Amazon deforestation should be primarily understood as a regional South American environmental issue.",
+        "correctAnswer": "NO"
+      },
+      {
+        "id": 30,
+        "questionText": "The writer believes that deforestation alone, independent of other climate factors, determines whether the Amazon will reach a critical tipping point.",
+        "correctAnswer": "NO"
+      },
+      {
+        "id": 31,
+        "questionText": "The writer considers current international climate mitigation strategies to adequately address the urgent need for tropical forest protection.",
+        "correctAnswer": "NO"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "type": "matching-features",
+    "title": "Questions 32–36",
+    "instructions": "Look at the following statements (Questions 32–36) and the list of researchers/organizations below. Match each statement with the correct researcher/organization, A–G. Write the correct letter, A–G, in boxes 32-36 on your answer sheet. NB: You may use any letter more than once.",
+    "features": [
+      {
+        "letter": "A",
+        "name": "Dr. Philip Fearnside"
+      },
+      {
+        "letter": "B",
+        "name": "Brazil's National Institute for Space Research"
+      },
+      {
+        "letter": "C",
+        "name": "Dr. Antonio Nobre and colleagues"
+      },
+      {
+        "letter": "D",
+        "name": "Dr. Thomas Lovejoy and Dr. Carlos Nobre"
+      },
+      {
+        "letter": "E",
+        "name": "Dr. Johan Rockström"
+      },
+      {
+        "letter": "F",
+        "name": "Nature Climate Change study (2021)"
+      },
+      {
+        "letter": "G",
+        "name": "Proceedings of the National Academy of Sciences study (2020)"
+      }
+    ],
+    "questions": [
+      {
+        "id": 32,
+        "questionText": "quantified annual carbon dioxide emissions from forest loss at approximately 1.5 billion tonnes over a twelve-year monitoring period",
+        "correctAnswer": "A",
+        "explanation": "Dr. Philip Fearnside's research estimated that deforestation contributed approximately 1.5 billion tonnes of CO2 equivalent annually from 2003 to 2015",
+        "evidenceQuote": "Research conducted by Dr. Philip Fearnside at Brazil's National Institute for Amazonian Research estimated that deforestation and forest degradation in the Brazilian Amazon alone contributed approximately 1.5 billion tonnes of CO2 equivalent annually during the period from 2003 to 2015",
+        "evidenceLocation": "P2"
+      },
+      {
+        "id": 33,
+        "questionText": "demonstrated that water vapor recycling maintains approximately three-quarters of precipitation in specific western regions during dry periods",
+        "correctAnswer": "C",
+        "explanation": "Dr. Antonio Nobre and colleagues demonstrated that moisture recycling sustains up to 75 percent of rainfall in western Amazon regions during the dry season",
+        "evidenceQuote": "Research by Dr. Antonio Nobre and colleagues at Brazil's Center for Earth System Science has demonstrated that this moisture recycling sustains up to 75 percent of rainfall in certain western Amazon regions during the dry season",
+        "evidenceLocation": "P3"
+      },
+      {
+        "id": 34,
+        "questionText": "proposed that clearance of one-fifth to one-quarter of original forest extent could trigger self-perpetuating degradation processes",
+        "correctAnswer": "D",
+        "explanation": "Dr. Thomas Lovejoy and Dr. Carlos Nobre proposed that removal of 20 to 25 percent of original forest cover could initiate self-reinforcing feedbacks",
+        "evidenceQuote": "Dr. Thomas Lovejoy and Dr. Carlos Nobre articulated the concept of an Amazon 'tipping point'...positing that removal of 20 to 25 percent of original forest cover could initiate self-reinforcing feedbacks",
+        "evidenceLocation": "P4"
+      },
+      {
+        "id": 35,
+        "questionText": "analyzed nearly 600 monitoring sites across three decades, revealing diminishing carbon absorption capacity since the early 1990s",
+        "correctAnswer": "F",
+        "explanation": "The 2021 Nature Climate Change study utilized a network of 590 forest plots monitored over three decades, showing declining carbon uptake capacity",
+        "evidenceQuote": "A comprehensive study published in Nature Climate Change in 2021, utilizing a network of 590 forest plots monitored over three decades, demonstrated that Amazon forests have experienced declining carbon uptake capacity since the early 1990s",
+        "evidenceLocation": "P2"
+      },
+      {
+        "id": 36,
+        "questionText": "advocates recognizing forest preservation as a critical biophysical threshold essential for maintaining Earth system stability",
+        "correctAnswer": "E",
+        "explanation": "Dr. Johan Rockström advocates that maintaining Amazon forest integrity should be recognized as a critical planetary boundary",
+        "evidenceQuote": "Dr. Johan Rockström at the Potsdam Institute for Climate Impact Research contends that maintaining Amazon forest integrity should be recognized as a critical planetary boundary—a biophysical threshold whose transgression could fundamentally alter Earth system functioning",
+        "evidenceLocation": "P5"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "type": "flow-chart-completion",
+    "title": "Questions 37-40",
+    "instructions": "Complete the flow chart below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+    "word_limit": "NO MORE THAN TWO WORDS",
+    "flow_chart": {
+      "title": "The Amazon Tipping Point: Self-Reinforcing Deforestation Feedback Cycle",
+      "orientation": "vertical",
+      "nodes": [
+        {
+          "id": "node1",
+          "type": "stage",
+          "content": "Initial deforestation reaches critical threshold (20-25% of original area removed)",
+          "position": 1
+        },
+        {
+          "id": "gap37",
+          "type": "gap",
+          "content": "Reduced __________ disrupts moisture recycling mechanism",
+          "gapNumber": 37,
+          "correctAnswer": "forest coverage",
+          "position": 2
+        },
+        {
+          "id": "node2",
+          "type": "stage",
+          "content": "The hydrological cycle is affected throughout the region",
+          "position": 3
+        },
+        {
+          "id": "gap38",
+          "type": "gap",
+          "content": "Regional precipitation levels __________",
+          "gapNumber": 38,
+          "correctAnswer": "diminish",
+          "position": 4
+        },
+        {
+          "id": "node3",
+          "type": "stage",
+          "content": "Surviving trees experience increased environmental stress",
+          "position": 5
+        },
+        {
+          "id": "gap39",
+          "type": "gap",
+          "content": "Tree __________ rates increase significantly",
+          "gapNumber": 39,
+          "correctAnswer": "mortality",
+          "position": 6
+        },
+        {
+          "id": "gap40",
+          "type": "gap",
+          "content": "Stressed forests become more vulnerable to __________",
+          "gapNumber": 40,
+          "correctAnswer": "fire",
+          "position": 7
+        },
+        {
+          "id": "node4",
+          "type": "stage",
+          "content": "Combined effects accelerate degradation",
+          "position": 8
+        }
+      ],
+      "connections": [
+        { "from": "node1", "to": "gap37", "style": "solid" },
+        { "from": "gap37", "to": "node2", "style": "solid" },
+        { "from": "node2", "to": "gap38", "style": "solid" },
+        { "from": "gap38", "to": "node3", "style": "solid" },
+        { "from": "node3", "to": "gap39", "style": "solid" },
+        { "from": "gap39", "to": "gap40", "style": "solid" },
+        { "from": "gap40", "to": "node4", "style": "solid" }
+      ]
+    },
+    "questions": [
+      {
+        "id": 37,
+        "gap_number": 37,
+        "correctAnswer": "forest coverage",
+        "explanation": "The passage explicitly states 'reduced forest coverage diminishes rainfall' (P4) when describing the tipping point mechanism. 'Forest cover' is also acceptable."
+      },
+      {
+        "id": 38,
+        "gap_number": 38,
+        "correctAnswer": "diminish",
+        "explanation": "The passage states 'reduced forest coverage diminishes rainfall' (P4) when explaining the tipping point mechanism. Both 'diminish' and 'diminishes' are acceptable."
+      },
+      {
+        "id": 39,
+        "gap_number": 39,
+        "correctAnswer": "mortality",
+        "explanation": "The passage explicitly describes 'increasing mortality and fire susceptibility' (P4) as consequences of rainfall reduction stressing trees."
+      },
+      {
+        "id": 40,
+        "gap_number": 40,
+        "correctAnswer": "fire",
+        "explanation": "The passage states that stressed trees experience 'increasing mortality and fire susceptibility' (P4). Both 'fire' and 'fires' are acceptable."
+      }
+    ]
+  }
+  ]
+  }
+  ]
+  }

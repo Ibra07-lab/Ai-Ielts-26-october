@@ -1,0 +1,24 @@
+# IELTS Reading Feedback Service - Python Dependencies
+# Simplified to avoid compilation issues on Windows
+
+# LangChain - let pip resolve compatible versions
+langchain>=0.1.0
+langchain-openai>=0.0.5
+langchain-community>=0.0.21
+
+# OpenAI
+openai>=1.12.0
+
+# FastAPI
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.6.0
+
+# Vector Store - FAISS (no compiler needed)
+faiss-cpu>=1.9.0
+
+# Utilities
+python-dotenv>=1.0.0
+
+# Optional (for production)
+gunicorn>=21.2.0

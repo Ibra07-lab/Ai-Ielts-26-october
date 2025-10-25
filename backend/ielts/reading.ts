@@ -19,15 +19,41 @@ export interface PassageParagraph {
   text: string;
 }
 
+export interface FlowChartNode {
+  id: string;           // e.g., "node1", "gap27"
+  type: 'stage' | 'gap' | 'decision';
+  content?: string;     // For stage nodes
+  gapNumber?: number;   // For gap nodes (e.g., 27)
+  correctAnswer?: string;
+  position?: number;    // Sequential order for linear charts
+}
+
+export interface FlowChartConnection {
+  from: string;         // Node ID
+  to: string;           // Node ID  
+  label?: string;       // e.g., "then", "if condition met"
+  style?: 'solid' | 'dashed';
+}
+
+export interface FlowChartStructure {
+  title: string;        // e.g., "The Process of Coral Bleaching"
+  orientation: 'vertical' | 'horizontal';
+  nodes: FlowChartNode[];
+  connections: FlowChartConnection[];
+}
+
 export interface ReadingQuestionGroup {
   id: number;
-  type: 'matching-headings' | 'true-false-not-given' | 'gap-fill' | 'multiple-choice' | 'short-answer' | 'sentence-completion' | 'matching-features' | 'summary-completion' | 'note-completion' | 'table-completion' | 'flow-chart-completion'|'matching-information';
+  type: 'matching-headings' | 'true-false-not-given' | 'gap-fill' | 'multiple-choice' | 'short-answer' | 'sentence-completion' | 'matching-features' | 'summary-completion' | 'note-completion' | 'table-completion' | 'flow-chart-completion'|'matching-information' | 'matching-sentence-endings';
   title: string;
   instructions: string;
   questions: ReadingQuestion[];
   completion_type?: 'summary' | 'notes' | 'table' | 'flow-chart';
   word_limit?: string;
   structure?: string;
+  sentence_beginnings?: string[];  // Array of sentence beginnings
+  sentence_endings?: Array<{ letter: string; text: string }>;  // Array of endings with letters
+  flow_chart?: FlowChartStructure;
 }
 
 // Test APIs types

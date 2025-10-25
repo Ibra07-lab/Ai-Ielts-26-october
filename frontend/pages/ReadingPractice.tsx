@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { BookOpen, Clock, Send, RotateCcw, Highlighter } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,6 +13,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "../contexts/UserContext";
 import TextHighlighter from "../components/TextHighlighter";
 import backend from "~backend/client";
+import { getAIFeedback } from '../services/aiFeedback';
 
 interface Highlight {
   id: number;
@@ -23,17 +24,49 @@ interface Highlight {
   highlightColor: string;
 }
 
+interface TableCell {
+  type: 'text' | 'gap';
+  content?: string;        // For text cells
+  gapNumber?: number;      // For gap cells
+  correctAnswer?: string;  // For gap cells
+}
+
+interface TableRow {
+  cells: TableCell[];
+}
+
+interface TableCompletionQuestion {
+  id: number;
+  type: 'table-completion';
+  title: string;
+  instructions: string;
+  word_limit: string;      // e.g., "NO MORE THAN TWO WORDS"
+  headers: string[];
+  rows: TableRow[];
+  questions: Array<{
+    id: number;
+    gap_number: number;
+    correctAnswer: string;
+  }>;
+}
+
 // Collapsible question result component
 function QuestionResult({ 
   question, 
   answer, 
   correctAnswer, 
-  explanation 
+  explanation,
+  aiFeedback,
+  onGetAIFeedback,
+  isLoadingFeedback
 }: { 
   question: any; 
   answer: string; 
   correctAnswer: string; 
   explanation: string;
+  aiFeedback?: any;
+  onGetAIFeedback?: () => void;
+  isLoadingFeedback?: boolean;
 }) {
   const [expanded, setExpanded] = useState(false);
   const isCorrect = answer === correctAnswer;
@@ -71,6 +104,73 @@ function QuestionResult({
           <p className={isCorrect ? "text-green-700 dark:text-green-400" : "text-red-700 dark:text-red-400"}>
             {explanation}
           </p>
+          
+          {/* NEW: AI Feedback Section */}
+          {!isCorrect && onGetAIFeedback && (
+            <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+              {!aiFeedback && !isLoadingFeedback && (
+                <Button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onGetAIFeedback();
+                  }}
+                  size="sm"
+                  variant="outline"
+                  className="w-full bg-white hover:bg-blue-50"
+                >
+                  🤖 Get AI Tutor Feedback
+                </Button>
+              )}
+              
+              {isLoadingFeedback && (
+                <div className="text-center py-2">
+                  <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+                  <p className="text-sm text-blue-700 dark:text-blue-300 mt-2">AI is analyzing...</p>
+                </div>
+              )}
+              
+              {aiFeedback && (
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">🤖</span>
+                    <h4 className="font-semibold text-blue-700 dark:text-blue-300">AI Tutor Feedback</h4>
+                  </div>
+                  
+                  <div className="bg-white dark:bg-gray-800 p-3 rounded border">
+                    <p className="text-sm">{aiFeedback.feedback}</p>
+                  </div>
+                  
+                  <details className="cursor-pointer">
+                    <summary className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline">
+                      📖 View Detailed Analysis
+                    </summary>
+                    <div className="mt-3 space-y-3 pl-4">
+                      <div>
+                        <strong className="text-xs uppercase text-gray-500">Reasoning:</strong>
+                        <p className="text-sm text-gray-700 dark:text-gray-300 mt-1 whitespace-pre-line">
+                          {aiFeedback.reasoning}
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <strong className="text-xs uppercase text-gray-500">Strategy Tip:</strong>
+                        <p className="text-sm text-blue-700 dark:text-blue-300 mt-1">
+                          💡 {aiFeedback.strategy_tip}
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <strong className="text-xs uppercase text-gray-500">Passage Reference:</strong>
+                        <p className="text-sm italic text-gray-600 dark:text-gray-400 mt-1 border-l-2 border-gray-300 pl-3">
+                          "{aiFeedback.passage_reference}"
+                        </p>
+                      </div>
+                    </div>
+                  </details>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -93,6 +193,488 @@ function TrueFalseExplanation({ format }: { format: 'TRUE/FALSE' | 'YES/NO' }) {
   );
 }
 
+// Summary Completion component (moved outside to prevent recreation on re-render)
+function SummaryCompletion({ 
+  group, 
+  answers, 
+  result, 
+  handleAnswerChange, 
+  summaryInputRefs 
+}: { 
+  group: any; 
+  answers: Record<number, string>; 
+  result: any; 
+  handleAnswerChange: (qid: number, value: string) => void;
+  summaryInputRefs: React.MutableRefObject<Record<number, HTMLInputElement | null>>;
+}) {
+  const raw: string = group?.structure || "";
+  const normalized = raw.replace(/<strong>\((\d+)\)_____<\/strong>/g, "($1)_____");
+  const stripped = normalized
+    .replace(/<\/?div[^>]*>/g, "")
+    .replace(/<\/?p[^>]*>/g, "");
+  const parts = stripped.split(/(\(\d+\)_____)/g);
+  let gapIndex = 0;
+
+  return (
+    <div className="space-y-2">
+      {group?.word_limit && (
+        <p className="text-xs italic text-gray-500">{group.word_limit}</p>
+      )}
+      <div className="bg-gray-50 dark:bg-gray-800 p-3 rounded relative z-0">
+        <div className="text-sm leading-6">
+          {parts.map((part: string, idx: number) => {
+            const match = part.match(/^\((\d+)\)_____$/);
+            if (match) {
+              const labelNum = match[1];
+              const q = Array.isArray(group?.questions) ? group.questions[gapIndex++] : null;
+              const qid = q?.id as number | undefined;
+              return (
+                <span 
+                  key={`gap-${idx}`} 
+                  className="inline-flex items-center gap-1 mx-1 align-baseline relative z-10 pointer-events-auto"
+                  onMouseDown={(e) => e.stopPropagation()}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <span className="text-[10px] text-gray-500">{labelNum})</span>
+                  <input
+                    type="text"
+                    tabIndex={0}
+                    disabled={!!result}
+                    className="px-2 py-1 border rounded text-xs w-28 bg-white dark:bg-gray-900 relative z-20 pointer-events-auto focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={(qid ? (answers[qid] || "") : "") as string}
+                    ref={(el) => {
+                      if (qid != null) summaryInputRefs.current[qid] = el;
+                    }}
+                    onFocus={(e) => {
+                      e.stopPropagation();
+                      if (qid != null) summaryInputRefs.current[qid] = e.target;
+                    }}
+                    onChange={(e) => {
+                      if (qid) {
+                        handleAnswerChange(qid, e.target.value);
+                        requestAnimationFrame(() => summaryInputRefs.current[qid]?.focus());
+                      }
+                    }}
+                    onMouseDown={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      e.currentTarget.focus();
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.currentTarget.focus();
+                    }}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    onKeyUp={(e) => e.stopPropagation()}
+                  />
+                </span>
+              );
+            }
+            return <span key={`txt-${idx}`} dangerouslySetInnerHTML={{ __html: part }} />;
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Table Completion component
+function TableCompletion({
+  group,
+  answers,
+  result,
+  setAnswers
+}: {
+  group: TableCompletionQuestion;
+  answers: Record<number, string>;
+  result: any;
+  setAnswers: (setter: (prev: Record<number, string>) => Record<number, string>) => void;
+}) {
+  const wordLimit = parseInt(group.word_limit.match(/\d+/)?.[0] || "2");
+  
+  const countWords = (text: string) => {
+    return text.trim().split(/\s+/).filter(word => word.length > 0).length;
+  };
+  
+  const getCellState = (gapNumber: number) => {
+    const answer = answers[gapNumber] || "";
+    const wordCount = countWords(answer);
+    
+    if (result) {
+      const correctAnswer = group.questions.find(q => q.gap_number === gapNumber)?.correctAnswer || "";
+      return answer.trim().toLowerCase() === correctAnswer.toLowerCase() ? 'correct' : 'incorrect';
+    }
+    
+    if (!answer) return 'empty';
+    if (wordCount > wordLimit) return 'exceeded';
+    return 'filled';
+  };
+
+  return (
+    <div className="space-y-4">
+      {/* Sticky Instructions */}
+      <div className="sticky top-0 z-10 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-3 shadow-sm">
+        <p className="text-sm font-medium text-blue-900 dark:text-blue-100">
+          {group.instructions}
+        </p>
+        <p className="text-xs text-blue-700 dark:text-blue-300 mt-1">
+          {group.word_limit}
+        </p>
+      </div>
+
+      {/* Table */}
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse border border-gray-300 dark:border-gray-600">
+          {/* Headers */}
+          <thead>
+            <tr className="bg-gray-100 dark:bg-gray-800">
+              {group.headers.map((header, idx) => (
+                <th key={idx} className="border border-gray-300 dark:border-gray-600 p-3 text-left font-semibold text-sm">
+                  {header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          
+          {/* Body */}
+          <tbody>
+            {group.rows.map((row, rowIdx) => (
+              <tr key={rowIdx} className="hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                {row.cells.map((cell, cellIdx) => (
+                  <td key={cellIdx} className="border border-gray-300 dark:border-gray-600 p-3">
+                    {cell.type === 'text' ? (
+                      <span className="text-sm">{cell.content}</span>
+                    ) : (
+                      <div className="space-y-1">
+                        <Input
+                          value={answers[cell.gapNumber!] || ""}
+                          onChange={(e) => {
+                            const newValue = e.target.value;
+                            setAnswers(prev => ({
+                              ...prev,
+                              [cell.gapNumber!]: newValue
+                            }));
+                          }}
+                          disabled={!!result}
+                          placeholder={`Gap ${cell.gapNumber}`}
+                          className={`
+                            ${getCellState(cell.gapNumber!) === 'empty' ? 'border-gray-300' : ''}
+                            ${getCellState(cell.gapNumber!) === 'filled' ? 'border-green-500 bg-green-50 dark:bg-green-900/20' : ''}
+                            ${getCellState(cell.gapNumber!) === 'exceeded' ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : ''}
+                            ${getCellState(cell.gapNumber!) === 'correct' ? 'border-green-500 bg-green-100 dark:bg-green-900/40' : ''}
+                            ${getCellState(cell.gapNumber!) === 'incorrect' ? 'border-red-500 bg-red-100 dark:bg-red-900/40' : ''}
+                          `}
+                        />
+                        {/* Word count indicator */}
+                        {answers[cell.gapNumber!] && (
+                          <p className={`text-xs ${
+                            countWords(answers[cell.gapNumber!]) > wordLimit 
+                              ? 'text-red-600 dark:text-red-400 font-semibold' 
+                              : 'text-gray-500'
+                          }`}>
+                            {countWords(answers[cell.gapNumber!])} / {wordLimit} words
+                          </p>
+                        )}
+                        {/* Show correct answer in review mode */}
+                        {result && getCellState(cell.gapNumber!) === 'incorrect' && (
+                          <p className="text-xs text-green-600 dark:text-green-400">
+                            Correct: {cell.correctAnswer}
+                          </p>
+                        )}
+                      </div>
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+// FlowChart Completion Component
+interface FlowChartNode {
+  id: string;
+  type: 'stage' | 'gap' | 'decision';
+  content?: string;
+  gapNumber?: number;
+  correctAnswer?: string;
+  position?: number;
+}
+
+interface FlowChartConnection {
+  from: string;
+  to: string;
+  label?: string;
+  style?: 'solid' | 'dashed';
+}
+
+interface FlowChartStructure {
+  title: string;
+  orientation: 'vertical' | 'horizontal';
+  nodes: FlowChartNode[];
+  connections: FlowChartConnection[];
+}
+
+interface FlowChartCompletionQuestion {
+  id: number;
+  type: 'flow-chart-completion';
+  title: string;
+  instructions: string;
+  word_limit: string;
+  flow_chart: FlowChartStructure;
+  questions: Array<{
+    id: number;
+    gap_number: number;
+    correctAnswer: string;
+    explanation?: string;
+  }>;
+}
+
+function FlowChartCompletion({
+  group,
+  answers,
+  result,
+  setAnswers
+}: {
+  group: FlowChartCompletionQuestion;
+  answers: Record<number, string>;
+  result: any;
+  setAnswers: (setter: (prev: Record<number, string>) => Record<number, string>) => void;
+}) {
+  const wordLimit = parseInt(group.word_limit.match(/\d+/)?.[0] || "2");
+  
+  const countWords = (text: string) => {
+    return text.trim().split(/\s+/).filter(word => word.length > 0).length;
+  };
+  
+  const getNodeState = (gapNumber: number) => {
+    const answer = answers[gapNumber] || "";
+    const wordCount = countWords(answer);
+    
+    if (result) {
+      const correctAnswer = group.questions.find(q => q.gap_number === gapNumber)?.correctAnswer || "";
+      return answer.trim().toLowerCase() === correctAnswer.toLowerCase() ? 'correct' : 'incorrect';
+    }
+    
+    if (!answer) return 'empty';
+    if (wordCount > wordLimit) return 'exceeded';
+    return 'filled';
+  };
+
+  // Sort nodes by position for linear display
+  const sortedNodes = [...group.flow_chart.nodes].sort((a, b) => (a.position || 0) - (b.position || 0));
+
+  // Find connection between two nodes
+  const getConnection = (fromNodeId: string) => {
+    return group.flow_chart.connections.find(conn => conn.from === fromNodeId);
+  };
+
+  return (
+    <div className="space-y-4">
+      {/* Sticky Instructions Banner */}
+      <div className="sticky top-0 z-10 bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 rounded-lg p-4 shadow-sm">
+        <p className="text-sm font-medium text-blue-900 dark:text-blue-100">
+          {group.instructions}
+        </p>
+        <p className="text-xs text-blue-700 dark:text-blue-300 mt-1">
+          {group.word_limit}
+        </p>
+      </div>
+
+      {/* Flow Chart Title */}
+      {group.flow_chart.title && (
+        <h3 className="text-lg font-bold text-center text-gray-900 dark:text-white">
+          {group.flow_chart.title}
+        </h3>
+      )}
+
+      {/* Flow Chart Container */}
+      <div 
+        className={`flex ${group.flow_chart.orientation === 'horizontal' ? 'flex-row overflow-x-auto' : 'flex-col'} items-center gap-3 p-4`}
+        role="figure"
+        aria-label={`Flow chart: ${group.flow_chart.title}`}
+      >
+        {sortedNodes.map((node, index) => {
+          const connection = getConnection(node.id);
+          
+          return (
+            <div key={node.id} className="flex flex-col items-center w-full max-w-md">
+              {/* Node Box */}
+              {node.type === 'stage' ? (
+                // Stage Node - Filled box
+                <div className="w-full rounded-lg border border-gray-300 dark:border-gray-600 p-4 bg-gray-50 dark:bg-gray-800 shadow-sm">
+                  <p className="text-sm text-center text-gray-900 dark:text-white">
+                    {node.content}
+                  </p>
+                </div>
+              ) : node.type === 'gap' ? (
+                // Gap Node - Input box with content
+                <div className="w-full space-y-2">
+                  <div className="relative">
+                    {/* Gap Number Badge */}
+                    <div className="absolute -top-2 -left-2 bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold shadow-md z-10">
+                      {node.gapNumber}
+                    </div>
+                    
+                    {node.content ? (
+                      // If content exists, display it with inline gap
+                      <div className="border border-gray-300 dark:border-gray-600 rounded-lg p-4 bg-gray-50 dark:bg-gray-800">
+                        <p className="text-sm text-gray-900 dark:text-white flex flex-wrap items-center gap-2">
+                          {node.content.split('__________').map((part, idx, arr) => (
+                            <span key={idx} className="inline-flex items-center gap-2">
+                              <span>{part}</span>
+                              {idx < arr.length - 1 && (
+                                <Input
+                                  value={answers[node.gapNumber!] || ""}
+                                  onChange={(e) => {
+                                    const newValue = e.target.value;
+                                    setAnswers(prev => ({
+                                      ...prev,
+                                      [node.gapNumber!]: newValue
+                                    }));
+                                  }}
+                                  disabled={!!result}
+                                  placeholder="..."
+                                  aria-label={`Question ${node.gapNumber}: Enter answer`}
+                                  className={`
+                                    inline-block min-w-[150px] max-w-[250px] px-3 py-1 text-center rounded transition-all
+                                    ${getNodeState(node.gapNumber!) === 'empty' ? 'border-2 border-dashed border-gray-400 bg-white dark:bg-gray-900' : ''}
+                                    ${getNodeState(node.gapNumber!) === 'filled' ? 'border-2 border-green-500 bg-green-50 dark:bg-green-900/20' : ''}
+                                    ${getNodeState(node.gapNumber!) === 'exceeded' ? 'border-2 border-red-500 bg-red-50 dark:bg-red-900/20' : ''}
+                                    ${getNodeState(node.gapNumber!) === 'correct' ? 'border-2 border-green-600 bg-green-100 dark:bg-green-900/40' : ''}
+                                    ${getNodeState(node.gapNumber!) === 'incorrect' ? 'border-2 border-red-600 bg-red-100 dark:bg-red-900/40' : ''}
+                                    focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                                  `}
+                                />
+                              )}
+                            </span>
+                          ))}
+                        </p>
+                      </div>
+                    ) : (
+                      // Fallback: standalone input (backward compatibility)
+                      <Input
+                        value={answers[node.gapNumber!] || ""}
+                        onChange={(e) => {
+                          const newValue = e.target.value;
+                          setAnswers(prev => ({
+                            ...prev,
+                            [node.gapNumber!]: newValue
+                          }));
+                        }}
+                        disabled={!!result}
+                        placeholder="Type your answer..."
+                        aria-label={`Question ${node.gapNumber}: Enter answer`}
+                        className={`
+                          w-full pl-4 pr-4 py-3 text-center rounded-lg transition-all
+                          ${getNodeState(node.gapNumber!) === 'empty' ? 'border-2 border-dashed border-gray-400 bg-white dark:bg-gray-900' : ''}
+                          ${getNodeState(node.gapNumber!) === 'filled' ? 'border-2 border-green-500 bg-green-50 dark:bg-green-900/20 shadow-sm' : ''}
+                          ${getNodeState(node.gapNumber!) === 'exceeded' ? 'border-2 border-red-500 bg-red-50 dark:bg-red-900/20' : ''}
+                          ${getNodeState(node.gapNumber!) === 'correct' ? 'border-2 border-green-600 bg-green-100 dark:bg-green-900/40' : ''}
+                          ${getNodeState(node.gapNumber!) === 'incorrect' ? 'border-2 border-red-600 bg-red-100 dark:bg-red-900/40' : ''}
+                          focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                        `}
+                      />
+                    )}
+                  </div>
+                  
+                  {/* Word Count Indicator */}
+                  {answers[node.gapNumber!] && !result && (
+                    <div className="flex justify-center">
+                      <p className={`text-xs font-medium ${
+                        countWords(answers[node.gapNumber!]) > wordLimit 
+                          ? 'text-red-600 dark:text-red-400' 
+                          : 'text-green-600 dark:text-green-400'
+                      }`}>
+                        {countWords(answers[node.gapNumber!])} / {wordLimit} words
+                        {countWords(answers[node.gapNumber!]) > wordLimit && ' - Exceeds limit!'}
+                      </p>
+                    </div>
+                  )}
+                  
+                  {/* Review Mode - Show Correct Answer */}
+                  {result && getNodeState(node.gapNumber!) === 'incorrect' && (
+                    <div className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg p-3 shadow-sm">
+                      <div className="space-y-1">
+                        <p className="text-xs text-gray-500 dark:text-gray-400">Your answer:</p>
+                        <p className="text-sm text-red-600 dark:text-red-400 line-through">
+                          {answers[node.gapNumber!]}
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">Correct answer:</p>
+                        <p className="text-sm text-green-600 dark:text-green-400 font-semibold">
+                          {node.correctAnswer}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {result && getNodeState(node.gapNumber!) === 'correct' && (
+                    <div className="flex justify-center">
+                      <p className="text-xs text-green-600 dark:text-green-400 font-medium flex items-center gap-1">
+                        <span className="text-base">✓</span> Correct!
+                      </p>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                // Decision Node - Diamond shape (future enhancement)
+                <div className="w-full rounded-lg border-2 border-yellow-500 p-4 bg-yellow-50 dark:bg-yellow-900/20 shadow-sm">
+                  <p className="text-sm text-center text-gray-900 dark:text-white font-semibold">
+                    {node.content}
+                  </p>
+                </div>
+              )}
+              
+              {/* Connection Arrow (if not last node) */}
+              {connection && (
+                <div className="flex flex-col items-center my-2">
+                  {connection.label && (
+                    <span className="text-xs text-gray-500 dark:text-gray-400 italic mb-1">
+                      {connection.label}
+                    </span>
+                  )}
+                  <div className={`text-2xl ${connection.style === 'dashed' ? 'opacity-50' : ''} text-blue-600 dark:text-blue-400`}>
+                    {group.flow_chart.orientation === 'horizontal' ? '→' : '↓'}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Explanations in Review Mode */}
+      {result && (
+        <div className="mt-6 space-y-3">
+          <h4 className="font-semibold text-gray-900 dark:text-white">Explanations:</h4>
+          {group.questions.map((q) => {
+            const isCorrect = getNodeState(q.gap_number) === 'correct';
+            return (
+              <details key={q.id} className="border border-gray-300 dark:border-gray-600 rounded-lg p-3">
+                <summary className="cursor-pointer font-medium text-sm flex items-center gap-2">
+                  <span className={`${isCorrect ? 'text-green-600' : 'text-red-600'}`}>
+                    Q{q.gap_number}: {isCorrect ? '✓' : '✗'}
+                  </span>
+                  <span className="text-gray-700 dark:text-gray-300">View Explanation</span>
+                </summary>
+                <div className="mt-2 text-sm text-gray-600 dark:text-gray-400 pl-4">
+                  <p className="font-medium">Correct answer: <span className="text-green-600">{q.correctAnswer}</span></p>
+                  {q.explanation && (
+                    <p className="mt-1">{q.explanation}</p>
+                  )}
+                </div>
+              </details>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function ReadingPractice() {
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [startTime, setStartTime] = useState<number | null>(null);
@@ -103,9 +685,13 @@ export default function ReadingPractice() {
   const [selectedTestIndex, setSelectedTestIndex] = useState<number | null>(null);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [remainingSeconds, setRemainingSeconds] = useState(60 * 60);
+  const [aiFeedback, setAIFeedback] = useState<Record<number, any>>({});
+  const [loadingFeedback, setLoadingFeedback] = useState<Set<number>>(new Set());
   const { user } = useUser();
   const { toast } = useToast();
   const queryClient = useQueryClient();
+
+  const summaryInputRefs = useRef<Record<number, HTMLInputElement | null>>({});
 
   const formatTime = (secs: number) => {
     const m = Math.floor(secs / 60);
@@ -179,6 +765,43 @@ export default function ReadingPractice() {
     setHighlights([]);
     setRemainingSeconds(60 * 60);
     setStartTime(null);
+  };
+
+  const handleGetAIFeedback = async (questionId: number, question: any, studentAnswer: string, correctAnswer: string) => {
+    setLoadingFeedback(prev => new Set(prev).add(questionId));
+    
+    try {
+      const feedback = await getAIFeedback({
+        passage: passage?.paragraphs?.map(p => p.text).join('\n\n') || '',
+        question: question.questionText || question.sentenceBeginning || '',
+        question_type: question.type || 'Multiple Choice',
+        correct_answer: correctAnswer,
+        student_answer: studentAnswer
+      });
+      
+      setAIFeedback(prev => ({
+        ...prev,
+        [questionId]: feedback
+      }));
+      
+      toast({
+        title: "AI Feedback Ready",
+        description: "Scroll down to see detailed feedback",
+      });
+    } catch (error) {
+      console.error('Error getting AI feedback:', error);
+      toast({
+        title: "Error",
+        description: "Failed to get AI feedback. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setLoadingFeedback(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(questionId);
+        return newSet;
+      });
+    }
   };
 
   // Build a flat list of questions for rendering and results
@@ -273,6 +896,46 @@ export default function ReadingPractice() {
         )
         : []
     );
+
+    // Validate table-completion word limits
+    const allTableGroups = tests.flatMap((passage) => 
+      passage?.questions?.filter((g: any) => g.type === 'table-completion') || []
+    );
+    for (const group of allTableGroups) {
+      const wordLimit = parseInt((group as any).word_limit?.match(/\d+/)?.[0] || "2");
+      for (const q of (group as any).questions || []) {
+        const answer = answers[q.gap_number] || "";
+        const wordCount = answer.trim().split(/\s+/).filter((w: string) => w.length > 0).length;
+        if (wordCount > wordLimit) {
+          toast({
+            title: "Word Limit Exceeded",
+            description: `Gap ${q.gap_number} exceeds the word limit (${wordCount}/${wordLimit} words)`,
+            variant: "destructive"
+          });
+          return;
+        }
+      }
+    }
+
+    // Validate flow-chart-completion word limits
+    const allFlowChartGroups = tests.flatMap((passage) => 
+      passage?.questions?.filter((g: any) => g.type === 'flow-chart-completion') || []
+    );
+    for (const group of allFlowChartGroups) {
+      const wordLimit = parseInt((group as any).word_limit?.match(/\d+/)?.[0] || "2");
+      for (const q of (group as any).questions || []) {
+        const answer = answers[q.gap_number] || "";
+        const wordCount = answer.trim().split(/\s+/).filter((w: string) => w.length > 0).length;
+        if (wordCount > wordLimit) {
+          toast({
+            title: "Word Limit Exceeded",
+            description: `Gap ${q.gap_number} exceeds the word limit (${wordCount}/${wordLimit} words)`,
+            variant: "destructive"
+          });
+          return;
+        }
+      }
+    }
 
     // Combine all passages content
     const allPassagesContent = tests.map(p => p.paragraphs?.map((par: any) => par.text).join("\n\n")).join("\n\n---\n\n");
@@ -797,6 +1460,73 @@ export default function ReadingPractice() {
                                   ))}
                                 </div>
                               </div>
+                            ) : questionGroup.type === "matching-sentence-endings" ? (
+                              // Render matching-sentence-endings questions
+                              <div className="space-y-6">
+                                {/* Display available endings (A-E) */}
+                                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                                  <h4 className="font-medium mb-3">Possible Endings:</h4>
+                                  <div className="space-y-2">
+                                    {questionGroup.sentence_endings?.map((ending: any, idx: number) => (
+                                      <div key={idx} className="text-sm">
+                                        <strong>{ending.letter}.</strong> {ending.text}
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                                
+                                {/* Sentence beginnings to match */}
+                                <div className="space-y-4">
+                                  {questionGroup.questions?.map((question: any) => (
+                                    <div key={question.id} className="space-y-2">
+                                      <h4 className="font-medium">{question.id}. {question.questionText}</h4>
+                                      <RadioGroup
+                                        value={answers[question.id] || ""}
+                                        onValueChange={(value) => handleAnswerChange(question.id, value)}
+                                      >
+                                        {questionGroup.sentence_endings?.map((ending: any) => (
+                                          <div 
+                                            key={ending.letter} 
+                                            className="flex items-center space-x-2 cursor-pointer"
+                                            onClick={() => {
+                                              if (answers[question.id] === ending.letter) {
+                                                handleAnswerChange(question.id, "");
+                                              }
+                                            }}
+                                          >
+                                            <RadioGroupItem value={ending.letter} id={`q${question.id}-${ending.letter}`} />
+                                            <Label htmlFor={`q${question.id}-${ending.letter}`} className="text-sm">
+                                              {ending.letter}
+                                            </Label>
+                                          </div>
+                                        ))}
+                                      </RadioGroup>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            ) : questionGroup.type === "summary-completion" ? (
+                              <SummaryCompletion 
+                                group={questionGroup} 
+                                answers={answers}
+                                result={result}
+                                handleAnswerChange={handleAnswerChange}
+                                summaryInputRefs={summaryInputRefs}
+                              />
+                            ) : questionGroup.type === "table-completion" ? (
+                              <TableCompletion
+                                group={questionGroup as any}
+                                answers={answers}
+                                result={result}
+                                setAnswers={setAnswers}
+                              />
+                            ) : questionGroup.type === "flow-chart-completion" ? (
+                              <FlowChartCompletion
+                                group={questionGroup as any}
+                                answers={answers}
+                                result={result}
+                                setAnswers={setAnswers}
+                              />
                             ) : questionGroup.type === "matching-information" ? (
                               // Render matching-information questions
                               <div className="space-y-4">
@@ -1031,11 +1761,72 @@ export default function ReadingPractice() {
                                     ))}
                                   </div>
                                 </div>
-                              ) : questionGroup.type === "summary-completion" || 
-                                 questionGroup.type === "note-completion" || 
-                                 questionGroup.type === "table-completion" || 
-                                 questionGroup.type === "flow-chart-completion" ||
-                                questionGroup.type === "matching-information" ? (
+                              ) : questionGroup.type === "matching-sentence-endings" ? (
+                                <div className="space-y-4">
+                                  <div className="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg">
+                                    <h4 className="font-medium text-xs mb-2">Possible Endings:</h4>
+                                    <div className="space-y-1">
+                                      {questionGroup.sentence_endings?.map((ending: any, idx: number) => (
+                                        <div key={idx} className="text-xs">
+                                          <strong>{ending.letter}.</strong> {ending.text}
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                  
+                                  <div className="space-y-3">
+                                    {questionGroup.questions?.map((question: any) => (
+                                      <div key={question.id} className="space-y-1.5">
+                                        <h4 className="font-medium text-xs">{question.id}. {question.questionText}</h4>
+                                        <RadioGroup
+                                          value={answers[question.id] || ""}
+                                          onValueChange={(value) => handleAnswerChange(question.id, value)}
+                                          className="space-y-1"
+                                        >
+                                          {questionGroup.sentence_endings?.map((ending: any) => (
+                                            <div 
+                                              key={ending.letter} 
+                                              className="flex items-center space-x-2 cursor-pointer"
+                                              onClick={() => {
+                                                if (answers[question.id] === ending.letter) {
+                                                  handleAnswerChange(question.id, "");
+                                                }
+                                              }}
+                                            >
+                                              <RadioGroupItem value={ending.letter} id={`split-q${question.id}-${ending.letter}`} className="h-3 w-3" />
+                                              <Label htmlFor={`split-q${question.id}-${ending.letter}`} className="text-xs leading-tight">
+                                                {ending.letter}
+                                              </Label>
+                                            </div>
+                                          ))}
+                                        </RadioGroup>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              ) : questionGroup.type === "summary-completion" ? (
+                                <SummaryCompletion 
+                                  group={questionGroup} 
+                                  answers={answers}
+                                  result={result}
+                                  handleAnswerChange={handleAnswerChange}
+                                  summaryInputRefs={summaryInputRefs}
+                                />
+                              ) : questionGroup.type === "table-completion" ? (
+                                <TableCompletion
+                                  group={questionGroup as any}
+                                  answers={answers}
+                                  result={result}
+                                  setAnswers={setAnswers}
+                                />
+                              ) : questionGroup.type === "flow-chart-completion" ? (
+                                <FlowChartCompletion
+                                  group={questionGroup as any}
+                                  answers={answers}
+                                  result={result}
+                                  setAnswers={setAnswers}
+                                />
+                              ) : questionGroup.type === "matching-information" ? (
                                 // Render matching-information questions (split view)
                                 <div className="space-y-3">
                                   {/* Paragraph Reference Box */}
@@ -1337,6 +2128,14 @@ export default function ReadingPractice() {
                                 answer={answers[q.id]}
                                 correctAnswer={result.correctAnswers[q.id]}
                                 explanation={result.explanations[q.id]}
+                                aiFeedback={aiFeedback[q.id]}
+                                onGetAIFeedback={() => handleGetAIFeedback(
+                                  q.id,
+                                  q,
+                                  answers[q.id],
+                                  result.correctAnswers[q.id]
+                                )}
+                                isLoadingFeedback={loadingFeedback.has(q.id)}
                               />
                             ))
                           : []

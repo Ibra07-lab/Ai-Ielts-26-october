@@ -3,27 +3,487 @@
     "testName": "Test 4",
     "passages": [
         {
+          "id": 1,
+          "title": "The History of Written Language: From Symbols to Scripts",
+          "level": "academic",
+          "estimatedTime": 20,
+          "paragraphs": [
+            {
+              "id": "P1",
+              "text": "The advent of written language represents a pivotal milestone in human cognition, enabling the preservation and dissemination of knowledge beyond oral traditions. Emerging around 3200 BCE in Mesopotamia, early writing systems transitioned from rudimentary pictographs to more abstract notations, facilitating administrative and ritual functions. This evolution not only recorded transactions but also encapsulated myths and laws, laying the groundwork for complex societies. Sumerian cuneiform, impressed on clay tablets with wedge-shaped marks, exemplifies this nascent phase, initially denoting quantities in trade ledgers. Over time, phonetic elements were incorporated, allowing representation of spoken words and expanding expressive capacities. Such innovations underscore writing's role in transcending temporal and spatial barriers, fostering enduring cultural legacies."
+            },
+            {
+              "id": "P2",
+              "text": "A compelling case study is the development of Egyptian hieroglyphs, which combined logographic and alphabetic features for monumental inscriptions. Dating to circa 3100 BCE, these intricate symbols adorned temple walls and tombs, conveying religious narratives and royal decrees. Hieroglyphs' dual nature—ideographic for concepts and phonetic for sounds—permitted nuanced communication, though decipherment eluded scholars until the 19th century. Jean-François Champollion's 1822 breakthrough, leveraging the Rosetta Stone, unlocked this script, revealing insights into ancient governance and afterlife beliefs. Despite their sophistication, hieroglyphs remained elite tools, contrasting with the democratizing potential of later alphabetic systems. This exclusivity highlights writing's initial alignment with power structures, gradually yielding to broader accessibility."
+            },
+            {
+              "id": "P3",
+              "text": "The Phoenician alphabet, originating around 1200 BCE, marked a revolutionary simplification, comprising 22 consonantal signs adaptable to diverse tongues. As maritime traders, Phoenicians disseminated this script across the Mediterranean, influencing Greek adaptations that introduced vowels circa 800 BCE. Greek letters, refined for literary purposes, underpinned epic poetry and philosophical treatises, propelling intellectual advancements. Subsequent evolutions yielded the Latin alphabet, adopted by Romans for legal codices and spreading via empire to Europe. A 2019 analysis by the Fictional Epigraphy Consortium estimates that over 90 percent of contemporary global scripts derive from this Semitic prototype. This proliferation illustrates alphabetic efficiency in capturing phonetic diversity, supplanting logographic complexity in most vernaculars."
+            },
+            {
+              "id": "P4",
+              "text": "Modern writing systems grapple with digital transformations, where emojis revive pictographic elements amid textual dominance. Case in point, the Unicode standard, established in 1991, accommodates 149,000 characters across 161 scripts, bridging ancient and algorithmic expressions. Yet, challenges persist in preserving endangered orthographies, with UNESCO reporting 40 percent of the world's 7,000 languages at risk of extinction. Revitalization efforts, such as Maori script revival in New Zealand, demonstrate writing's adaptability to cultural resurgence. Ultimately, the trajectory from cuneiform wedges to keyboard inputs reflects humanity's quest for precise, inclusive communication. As conduits of identity and innovation, written languages continue to shape collective memory and future discourses."
+            }
+],
+"questions": [
+  {
+    "id": 1,
+    "type": "true-false-not-given",
+    "title": "Questions 1–4",
+    "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
+    "questions": [
+      {
         "id": 1,
-    "title": "The Transformative Influence of Artificial Intelligence on the Global Labor Market",
-    "level": "academic",
-    "estimatedTime": 20,
-    "paragraphs": [
-      {
-        "id": "P1",
-        "text": "The advent of artificial intelligence (AI) has ushered in an era of unprecedented technological advancement, profoundly reshaping the landscape of employment worldwide. As algorithms capable of learning from data proliferate, the integration of AI into various industries promises enhanced efficiency and innovation, yet it simultaneously raises concerns about job displacement and the obsolescence of certain skill sets. Central to this discourse is the notion that while AI automates routine tasks, it also fosters the emergence of novel roles that demand human ingenuity and adaptability. This duality underscores the need for strategic workforce development to mitigate potential disruptions. According to a 2023 report by the World Economic Forum, an estimated 85 million jobs may be displaced by AI by 2025, contrasted by the creation of 97 million new positions, highlighting a net positive shift contingent upon proactive reskilling initiatives."
+        "questionText": "Early writing in Mesopotamia began with simple drawings that evolved into symbolic representations for recording economic activities.",
+        "correctAnswer": "TRUE"
       },
       {
-        "id": "P2",
-        "text": "Historically, technological revolutions have mirrored similar patterns of upheaval and renewal, with the Industrial Revolution of the late 18th century serving as a poignant analogy. During that period, mechanization supplanted artisanal labor in textile manufacturing, leading to widespread unemployment among handloom weavers; however, it eventually spurred urbanization and the growth of factory-based economies, engendering diverse employment opportunities. In contemporary terms, AI's incursion into the manufacturing sector exemplifies this trajectory. A case study from the automotive industry illustrates how Ford Motor Company, in collaboration with AI firm Cognizant, implemented predictive maintenance systems in 2022. These systems, leveraging machine learning to forecast equipment failures, reduced downtime by 30 percent and augmented productivity, thereby necessitating fewer manual inspectors but elevating demand for data analysts and AI ethicists to oversee algorithmic fairness."
+        "id": 2,
+        "questionText": "The Rosetta Stone was utilized by Jean-François Champollion in 1722 to interpret Egyptian hieroglyphs.",
+        "correctAnswer": "FALSE"
       },
       {
-        "id": "P3",
-        "text": "Beyond manufacturing, the service sector faces equally transformative pressures from AI-driven automation. Customer service, once reliant on human agents for interpersonal interactions, now increasingly incorporates chatbots and virtual assistants that handle routine inquiries with remarkable speed and accuracy. A notable example is the deployment of IBM's Watson Assistant by JPMorgan Chase in 2021, which processed over 1.7 million client queries annually, achieving a 95 percent resolution rate without human intervention. This innovation not only curtails operational costs by an estimated 20 percent but also liberates employees to engage in higher-value tasks such as complex financial advising. Nevertheless, the transition has not been seamless; frontline workers, particularly in developing economies, report skill mismatches, prompting calls for inclusive training programs to bridge the digital divide."
+        "id": 3,
+        "questionText": "The addition of vowel symbols to the Phoenician alphabet occurred around 800 BCE during its adaptation by the Greeks.",
+        "correctAnswer": "TRUE"
       },
       {
-        "id": "P4",
-        "text": "The broader implications of AI's rise extend to socioeconomic equity and policy formulation. As automation disproportionately affects low-skilled occupations, income inequality may exacerbate, with projections from Oxford University's 2019 study indicating that up to 47 percent of jobs in the United States are at high risk of automation. To counteract this, governments and corporations are exploring universal basic income pilots and lifelong learning subsidies. In Singapore, for instance, the SkillsFuture initiative, launched in 2015 and enhanced with AI-focused modules by 2024, has empowered over 500,000 workers to upskill, fostering a resilient labor market. Such interventions underscore the imperative for collaborative efforts to harness AI's potential while safeguarding employment stability."
+        "id": 4,
+        "questionText": "Digital platforms have largely supplanted traditional alphabetic writing with pictographic emojis as the dominant form.",
+        "correctAnswer": "NOT GIVEN"
       }
+    ]
+  },
+    {
+      "id": 1,
+  "type": "matching-headings",
+  "title": "Questions 5–8",
+  "instructions": "Choose the correct heading for paragraphs 1–4 from the list of headings below. Write the correct number, i–vii, in boxes 5–8 on your answer sheet.",
+  "questions": [
+    {
+      "id": 5,
+      "questionText": "Paragraph 1",
+      "options": [
+        "Dawn of record-keeping through evolving visual marks in early urban centers",
+        "Sophisticated emblematic writing and its late decoding in Nile Valley",
+        "Phonetic simplification spreads via seafaring merchants to classical scribes",
+        "Mathematical notations dominate administrative clay imprints",
+        "Algorithmic encodings confront vanishing dialects in today's interconnected world",
+        "Universal adoption of scripts accelerates industrial revolutions",
+        "Vowel-less designs hinder literary expression in archaic societies"
+      ],
+      "correctAnswer": "Dawn of record-keeping through evolving visual marks in early urban centers"
+    },
+    {
+      "id": 6,
+      "questionText": "Paragraph 2",
+      "options": [
+        "Dawn of record-keeping through evolving visual marks in early urban centers",
+        "Sophisticated emblematic writing and its late decoding in Nile Valley",
+        "Phonetic simplification spreads via seafaring merchants to classical scribes",
+        "Mathematical notations dominate administrative clay imprints",
+        "Algorithmic encodings confront vanishing dialects in today's interconnected world",
+        "Universal adoption of scripts accelerates industrial revolutions",
+        "Vowel-less designs hinder literary expression in archaic societies"
+      ],
+      "correctAnswer": "Sophisticated emblematic writing and its late decoding in Nile Valley"
+    },
+    {
+      "id": 7,
+      "questionText": "Paragraph 3",
+      "options": [
+        "Dawn of record-keeping through evolving visual marks in early urban centers",
+        "Sophisticated emblematic writing and its late decoding in Nile Valley",
+        "Phonetic simplification spreads via seafaring merchants to classical scribes",
+        "Mathematical notations dominate administrative clay imprints",
+        "Algorithmic encodings confront vanishing dialects in today's interconnected world",
+        "Universal adoption of scripts accelerates industrial revolutions",
+        "Vowel-less designs hinder literary expression in archaic societies"
+      ],
+      "correctAnswer": "Phonetic simplification spreads via seafaring merchants to classical scribes"
+    },
+    {
+      "id": 8,
+      "questionText": "Paragraph 4",
+      "options": [
+        "Dawn of record-keeping through evolving visual marks in early urban centers",
+        "Sophisticated emblematic writing and its late decoding in Nile Valley",
+        "Phonetic simplification spreads via seafaring merchants to classical scribes",
+        "Mathematical notations dominate administrative clay imprints",
+        "Algorithmic encodings confront vanishing dialects in today's interconnected world",
+        "Universal adoption of scripts accelerates industrial revolutions",
+        "Vowel-less designs hinder literary expression in archaic societies"
+      ],
+      "correctAnswer": "Algorithmic encodings confront vanishing dialects in today's interconnected world"
+    }
+  ]
+},
+  {
+    "id": 1,
+    "type": "summary-completion",
+    "completion_type": "summary",
+    "title": "Questions 9–11",
+    "word_limit": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+    "instructions": "Complete the summary below using words from the passage.",
+    "structure": "<div class='completion-summary'><p>Written language emerged in Mesopotamia around 3200 BCE, evolving from pictographs to include <strong>(9)_____</strong> elements for broader expression. Egyptian hieroglyphs, dating to about 3100 BCE, blended logographic and alphabetic features for <strong>(10)_____</strong> inscriptions. The Phoenician alphabet simplified to 22 <strong>(11)_____</strong> signs, influencing later adaptations across regions.</p></div>",
+    "questions": [
+      {
+        "id": 9,
+        "gap_number": 9,
+        "questionText": "Gap 9",
+        "context": "evolving from pictographs to include (9)_____ elements",
+        "correctAnswer": "phonetic",
+        "evidence_quote": "Over time, phonetic elements were incorporated",
+        "evidence_location": "P1",
+        "answer_type": "adjective"
+      },
+      {
+        "id": 10,
+        "gap_number": 10,
+        "questionText": "Gap 10",
+        "context": "blended logographic and alphabetic features for (10)_____ inscriptions",
+        "correctAnswer": "monumental",
+        "evidence_quote": "combined logographic and alphabetic features for monumental inscriptions",
+        "evidence_location": "P2",
+        "answer_type": "adjective"
+      },
+      {
+        "id": 11,
+        "gap_number": 11,
+        "questionText": "Gap 11",
+        "context": "simplified to 22 (11)_____ signs",
+        "correctAnswer": "consonantal",
+        "evidence_quote": "comprising 22 consonantal signs adaptable to diverse tongues",
+        "evidence_location": "P3",
+        "answer_type": "adjective"
+      }
+    ]
+  },
+  {
+    "id": 1,
+  "type": "matching-sentence-endings",
+  "title": "Questions 12–14",
+  "instructions": "Complete each sentence with the correct ending, A–E.",
+  "sentence_endings": [
+    { "letter": "A", "text": "facilitate the notation of quantities in commercial exchanges." },
+    { "letter": "B", "text": "adorn sacred structures with symbolic depictions of deities." },
+    { "letter": "C", "text": "decode multilingual inscriptions for scholarly interpretation." },
+    { "letter": "D", "text": "disseminate consonantal characters through seafaring commerce." },
+    { "letter": "E", "text": "revitalise endangered dialects via computational frameworks." }
+  ],
+  "questions": [
+    { "id": 12, "questionText": "Sumerian cuneiform, as an early writing system, was initially developed to", "correctAnswer": "A" },
+    { "id": 13, "questionText": "The dual characteristics of Egyptian hieroglyphs allowed them to function effectively in", "correctAnswer": "B" },
+    { "id": 14, "questionText": "The Phoenician contribution to writing evolution is evident in its impact on subsequent systems, primarily through", "correctAnswer": "D" }
+]
+}
+]
+},
+{
+  "id": 2,
+  "title": "The Decline of Coral Reefs and Its Ramifications for Marine Biodiversity",
+  "level": "academic",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "P1",
+      "text": "Coral reefs, often dubbed the rainforests of the sea, constitute biodiverse ecosystems underpinning marine life and human economies alike. Spanning less than one percent of the ocean floor, these structures harbor approximately 25 percent of all marine species, from microscopic plankton to apex predators. However, anthropogenic pressures have precipitated a precipitous decline, with global reef coverage diminishing by over 50 percent since the mid-20th century. This degradation manifests through bleaching events, where symbiotic algae expel from coral polyps, rendering them pallid and vulnerable to disease. Beyond ecological losses, such erosion imperils fisheries yielding annual catches worth billions and coastal protections averting erosion in vulnerable regions. A 2022 assessment by the Fictional Oceanic Biodiversity Consortium projects that, absent intervention, 90 percent of reefs could vanish by 2050. Understanding these trajectories necessitates examination of causative factors and emblematic case studies illuminating broader patterns."
+    },
+    {
+      "id": "P2",
+      "text": "Climate change emerges as the paramount driver, elevating sea temperatures and ocean acidity via carbon dioxide absorption. Thermal stress induces mass bleaching, as documented during the 2014-2017 global event affecting 75 percent of reef systems worldwide. Concurrently, acidification hampers calcification processes essential for coral skeleton formation, stunting growth and resilience. Pollution exacerbates vulnerabilities; nutrient runoff from agriculture fosters algal overgrowth, outcompeting corals for sunlight and space. In coastal zones, plastic debris and chemical effluents introduce toxins, disrupting microbial communities symbiotic with reef organisms. Overfishing compounds these threats by depleting herbivorous species that regulate algal proliferation, thereby accelerating phase shifts to seaweed-dominated habitats. These synergistic stressors underscore the multifaceted nature of reef decline, where isolated impacts amplify into systemic collapses."
+    },
+    {
+      "id": "P3",
+      "text": "The Great Barrier Reef, a UNESCO World Heritage site off Australia's Queensland coast, exemplifies acute degradation amid localized conservation paradoxes. Encompassing 344,000 square kilometers, this reef system once teemed with over 1,500 fish species and 411 coral types, sustaining indigenous and tourism economies. Yet, successive bleaching episodes since 1998 have bleached up to 50 percent of corals in some sectors, with crown-of-thorns starfish outbreaks further decimating live cover. A 2019 study by the Fictional Reef Resilience Institute attributes 48 percent mortality to warming events, while crown-of-thorns proliferation stems from overharvested natural predators. Mitigation endeavors, including aerial seeding of heat-tolerant coral strains, yield mixed outcomes, hampered by ongoing cyclone disturbances and upstream agricultural siltation. This case illustrates how emblematic ecosystems, despite protective designations, falter under cumulative pressures, portending diminished biodiversity hotspots."
+    },
+    {
+      "id": "P4",
+      "text": "In the Caribbean, another poignant vignette unfolds, where reef assemblages have dwindled by 80 percent over the past four decades, eroding marine trophic structures. Stony corals, foundational to habitat complexity, succumb to white-band disease and invasive lionfish, the latter preying on juvenile reef fish and disrupting food webs. Biodiversity cascades ensue; herbivore scarcity permits macroalgal dominance, reducing fish nurseries and invertebrate refugia, with parrotfish populations plummeting 70 percent in affected areas. Historical precedents, such as the 1980s die-off linked to hurricane El Niño synergies, presage current trajectories, wherein recovery lags behind perturbation frequency. Remedial strategies encompass marine protected areas and lionfish culling programs, yet socioeconomic dependencies on reefs for livelihoods complicate enforcement and compliance. Collectively, these exemplars reveal the interdependence of coral health and marine biodiversity, advocating integrated governance transcending national boundaries. Sustaining these underwater metropolises demands curbing emissions, fortifying water quality, and harnessing biotechnological innovations to bolster adaptive capacities."    }
+  ],
+  "questions": [
+    {
+      "id": 2,
+      "type": "multiple-choice",
+      "title": "Questions 1–5",
+      "instructions": "Choose the correct letter, A, B, C or D.",
+      "questions": [
+        {
+          "id": 15,
+          "questionText": "What proportion of marine species are supported by coral reef ecosystems, despite their limited ocean coverage?",
+          "options": [
+            "Nearly a quarter of all species",
+            "Less than five percent of total marine life",
+            "Over half of oceanic biodiversity",
+            "Exactly one percent of fish varieties"
+          ],
+          "correctAnswer": "Nearly a quarter of all species"
+        },
+        {
+          "id": 16,
+          "questionText": "According to projections cited in the text, what fate awaits most coral reefs by mid-century without action?",
+          "options": [
+            "Disappearance of the majority of global coverage",
+            "Expansion due to adaptive species migration",
+            "Stabilization through natural recovery processes",
+            "Reduction limited to coastal zones only"
+          ],
+          "correctAnswer": "Disappearance of the majority of global coverage"
+        },
+        {
+          "id": 17,
+          "questionText": "From the case studies of major reef systems, it can be inferred that conservation measures often fall short because of",
+          "options": [
+            "Interconnected environmental and human pressures overwhelming isolated efforts",
+            "Insufficient funding directed solely at scientific research",
+            "Overreliance on indigenous knowledge without technological aids",
+            "Exclusive emphasis on tourism revenue generation"
+          ],
+          "correctAnswer": "Interconnected environmental and human pressures overwhelming isolated efforts"
+        },
+        {
+          "id": 18,
+          "questionText": "What is the core argument presented across the entire passage regarding coral reef deterioration?",
+          "options": [
+            "Multifactor human-induced threats severely undermine vital marine habitats and dependent species",
+            "Natural cycles alone account for observed changes in reef structures",
+            "Economic benefits from reefs outweigh any ecological concerns",
+            "Localized protections suffice to reverse global biodiversity losses"
+          ],
+          "correctAnswer": "Multifactor human-induced threats severely undermine vital marine habitats and dependent species"
+        },
+        {
+          "id": 19,
+          "questionText": "In the passage, 'synergistic' as applied to reef stressors most nearly means",
+          "options": [
+            "Interacting to intensify overall effects",
+            "Occurring in complete isolation from one another",
+            "Gradually diminishing in potency over time",
+            "Solely attributable to climatic variations"
+          ],
+          "correctAnswer": "Interacting to intensify overall effects"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "table-completion",
+      "title": "Questions 20-24",
+      "instructions": "Complete the table below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+      "word_limit": "NO MORE THAN TWO WORDS",
+      "headers": ["Reef System", "Primary Threat", "Conservation Effort", "Limiting Factor", "Additional Impact"],
+      "rows": [
+        {
+          "cells": [
+            { "type": "text", "content": "Great Barrier Reef" },
+            { "type": "gap", "gapNumber": 20, "correctAnswer": "bleaching episodes" },
+            { "type": "gap", "gapNumber": 21, "correctAnswer": "aerial seeding" },
+            { "type": "gap", "gapNumber": 22, "correctAnswer": "cyclone disturbances" },
+            { "type": "text", "content": "decimating live cover" }
+          ]
+        },
+        {
+          "cells": [
+            { "type": "text", "content": "Caribbean Reefs" },
+            { "type": "gap", "gapNumber": 23, "correctAnswer": "white-band disease" },
+            { "type": "text", "content": "marine protected areas" },
+            { "type": "gap", "gapNumber": 24, "correctAnswer": "socioeconomic dependencies" },
+            { "type": "text", "content": "macroalgal dominance" }
+          ]
+        }
+      ],
+      "questions": [
+        { "id": 20, "gap_number": 20, "correctAnswer": "bleaching episodes" },
+        { "id": 21, "gap_number": 21, "correctAnswer": "aerial seeding" },
+        { "id": 22, "gap_number": 22, "correctAnswer": "cyclone disturbances" },
+        { "id": 23, "gap_number": 23, "correctAnswer": "white-band disease" },
+        { "id": 24, "gap_number": 24, "correctAnswer": "socioeconomic dependencies" }
+      ]
+    },
+    {
+    "id": 2,
+  "type": "matching-features",
+  "title": "Questions 25-29",
+  "instructions": "Look at the following statements (Questions 25-29) and the list of threat factors below. Match each statement with the correct threat factor, A–F. Write the correct letter, A–F, in boxes 25-29 on your answer sheet. NB: You may use any letter more than once.",
+  "features": [
+    {
+      "letter": "A",
+      "name": "Climate change"
+    },
+    {
+      "letter": "B",
+      "name": "Crown-of-thorns starfish outbreaks"
+    },
+    {
+      "letter": "C",
+      "name": "Invasive lionfish populations"
+    },
+    {
+      "letter": "D",
+      "name": "Agricultural nutrient pollution"
+    },
+    {
+      "letter": "E",
+      "name": "Overfishing practices"
+    },
+    {
+      "letter": "F",
+      "name": "White-band disease"
+    }
+  ],
+  "questions": [
+    {
+      "id": 25,
+      "questionText": "Disrupts skeletal development processes through altered ocean chemistry",
+      "correctAnswer": "A",
+      "explanation": "Climate change causes ocean acidification which hampers calcification processes essential for coral skeleton formation",
+      "evidenceQuote": "Concurrently, acidification hampers calcification processes essential for coral skeleton formation, stunting growth and resilience",
+      "evidenceLocation": "P2"
+    },
+    {
+      "id": 26,
+      "questionText": "Population explosion attributed to removal of controlling predator species",
+      "correctAnswer": "B",
+      "explanation": "Crown-of-thorns starfish proliferation stems from overharvested natural predators",
+      "evidenceQuote": "crown-of-thorns proliferation stems from overharvested natural predators",
+      "evidenceLocation": "P3"
+    },
+    {
+      "id": 27,
+      "questionText": "Targets immature fish populations, destabilizing marine food networks",
+      "correctAnswer": "C",
+      "explanation": "Invasive lionfish prey on juvenile reef fish and disrupt food webs in the Caribbean",
+      "evidenceQuote": "invasive lionfish, the latter preying on juvenile reef fish and disrupting food webs",
+      "evidenceLocation": "P4"
+    },
+    {
+      "id": 28,
+      "questionText": "Leads to seaweed predominance by removing natural grazing organisms",
+      "correctAnswer": "E",
+      "explanation": "Overfishing depletes herbivorous species that regulate algal proliferation, accelerating shifts to seaweed-dominated habitats",
+      "evidenceQuote": "Overfishing compounds these threats by depleting herbivorous species that regulate algal proliferation, thereby accelerating phase shifts to seaweed-dominated habitats",
+      "evidenceLocation": "P2"
+    },
+    {
+      "id": 29,
+      "questionText": "Triggers widespread coral whitening through elevated water temperatures",
+      "correctAnswer": "A",
+      "explanation": "Climate change through thermal stress induces mass bleaching events",
+      "evidenceQuote": "Thermal stress induces mass bleaching, as documented during the 2014-2017 global event",
+      "evidenceLocation": "P2"
+    }
+  ]
+}
+  ]
+},
+{
+  "id": 3,
+  "title": "The Critical Role of Honeybees in Global Food Security",
+  "level": "academic",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "P1",
+      "text": "While honeybees are commonly associated with honey production, their most significant contribution to human welfare lies in a far less visible function: pollination. These industrious insects facilitate the reproduction of approximately 75 percent of the world's food crops, a service that underpins agricultural systems across every continent except Antarctica. The economic ramifications of this ecological service are staggering, with estimates placing the annual global value of insect pollination at between $235 billion and $577 billion. Yet despite this extraordinary contribution, honeybee populations face mounting pressures from habitat degradation, pesticide exposure, and emerging diseases, raising profound questions about the resilience of contemporary agricultural systems."
+    },
+    {
+      "id": "P2",
+      "text": "The dependency of modern agriculture on bee pollination varies considerably across crop types, though certain sectors exhibit particularly acute reliance on these insects. Research conducted by scientists at the University of Reading between 2017 and 2020 identified 87 major food crops that demonstrate substantial dependence on animal pollination, with honeybees serving as the primary pollinating agent for the majority. Almonds represent perhaps the most dramatic example of this interdependence; commercial almond production is essentially impossible without managed honeybee colonies, as the crop requires cross-pollination and blooms during periods when wild pollinators remain largely inactive. California's almond industry, which produces approximately 80 percent of the world's supply, requires the annual deployment of nearly 2 million honeybee colonies—a logistical undertaking that involves transporting hives from across North America. Similarly pronounced dependencies exist for crops including apples, where bee pollination increases yields by 40-60 percent, blueberries, which can see production improvements of up to 70 percent, and cherries, cucurbits, and numerous other fruits and vegetables. Interestingly, some staple crops like wheat, rice, and corn rely primarily on wind pollination, rendering them less vulnerable to pollinator decline, though this does not diminish the overall significance of bees to dietary diversity and nutritional security."
+    },
+    {
+      "id": "P3",
+      "text": "The efficacy of honeybees as pollinators stems from several behavioral and physiological characteristics that distinguish them from other pollinating species. Unlike many solitary insects that visit flowers opportunistically, honeybees demonstrate remarkable fidelity to particular plant species during individual foraging trips, a phenomenon termed 'floral constancy.' This behavioral trait enhances pollination efficiency because pollen transfer occurs between flowers of the same species rather than being deposited wastefully on incompatible plants. Furthermore, the social organization of honeybee colonies generates large populations of foragers—a single robust colony may contain 40,000 to 60,000 workers during peak season—creating pollination intensity that few wild species can match. The insects' physical morphology also contributes to their pollinating prowess; their branched body hairs accumulate substantial pollen loads, while their active grooming behaviors inadvertently facilitate pollen transfer as they move among blossoms. Research published in the Journal of Applied Ecology in 2021 demonstrated that honeybee visitation frequency correlates strongly with fruit set rates, with optimal pollination typically requiring between 8 and 12 bee visits per flower for crops such as apples and pears. This finding has significant implications for orchard management, as it establishes quantifiable benchmarks for adequate pollination service."
+    },
+    {
+      "id": "P4",
+      "text": "The stability of this agricultural symbiosis has been severely challenged over recent decades by a constellation of threats that have precipitated substantial bee population declines in numerous regions. Perhaps most alarming was the emergence of Colony Collapse Disorder (CCD), first systematically documented in 2006, when commercial beekeepers in the United States began reporting unprecedented colony losses, with some operations losing 30-90 percent of their hives over a single winter. While CCD has since diminished in frequency, managed honeybee populations continue to experience elevated mortality rates, with annual losses in Europe and North America frequently exceeding 30 percent—a figure that far surpasses the 10-15 percent threshold considered economically sustainable. Multiple factors appear to contribute synergistically to these declines. Neonicotinoid pesticides, a class of systemic insecticides introduced in the 1990s, have been implicated in sublethal effects that impair bee navigation, foraging efficiency, and immune function, even at field-realistic exposure levels. A comprehensive meta-analysis conducted by researchers at Cornell University, synthesizing data from 198 studies, found that neonicotinoid exposure reduced colony growth rates by an average of 23 percent. Simultaneously, the parasitic Varroa mite, which reached European honeybee populations in the mid-twentieth century, has become endemic worldwide, vectoring viral pathogens while directly weakening individual bees through parasitism. Nutritional stress resulting from agricultural intensification and habitat homogenization represents another critical pressure, as the replacement of diverse flowering landscapes with monoculture cropping systems reduces the availability of pollen and nectar resources across the foraging season."
+    },
+    {
+      "id": "P5",
+      "text": "Recognition of honeybees' indispensable role in agriculture has catalyzed various conservation and management initiatives, though significant challenges remain in reconciling productive farming with pollinator health. Some European nations have implemented partial restrictions on neonicotinoid applications, while precision agriculture technologies are enabling more spatially and temporally targeted pesticide use that may reduce pollinator exposure. Concurrently, researchers are exploring genetic selection for disease-resistant bee strains and developing alternative pollination strategies, including the deployment of managed wild bee species such as mason bees and bumblebees for specific crops. However, most experts emphasize that technological solutions alone cannot substitute for landscape-level interventions that restore floral diversity and nesting habitats. As Dr. Thomas Seeley of Cornell University observed in a 2020 review, maintaining viable honeybee populations will ultimately require transforming agricultural landscapes to support not merely crop production, but the complex ecological networks upon which that production fundamentally depends. The trajectory of honeybee conservation may thus serve as a crucial indicator of humanity's capacity to develop genuinely sustainable food systems."
+    }
+    ],
+  "questions": [
+    {
+      "id": 3,
+  "type": "true-false-not-given",
+  "title": "Questions 30-34",
+  "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
+  "questions": [
+    {
+      "id": 30,
+      "questionText": "Commercial almond production in California, which accounts for roughly four-fifths of global supply, necessitates the annual mobilization of approximately 2 million bee colonies.",
+      "correctAnswer": "TRUE"
+    },
+    {
+      "id": 31,
+      "questionText": "A comprehensive Cornell University meta-analysis found that exposure to neonicotinoid pesticides reduced honeybee colony growth rates by an average of 32 percent.",
+      "correctAnswer": "FALSE"
+    },
+    {
+      "id": 32 ,
+      "questionText": "Colony Collapse Disorder was first systematically documented in 2006 among commercial beekeepers throughout Europe and North America.",
+      "correctAnswer": "FALSE"
+    },
+    {
+      "id": 33,
+      "questionText": "Optimal pollination of apple and pear crops typically requires each individual flower to be visited by honeybees between eight and twelve times.",
+      "correctAnswer": "TRUE"
+    },
+    {
+      "id": 34,
+      "questionText": "Mason bees demonstrate higher pollination efficiency rates than honeybees for apple orchard production.",
+      "correctAnswer": "NOT GIVEN"
+        }
+      ]
+    },
+    {
+      "id": 3,
+  "type": "short-answer",
+  "title": "Questions 35-37",
+  "instructions": "Answer the questions below. Choose NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer.",
+  "questions": [
+    {
+      "id": 35,
+      "questionText": "Approximately what percentage of the world's food crops do honeybees facilitate the reproduction of?",
+      "correctAnswer": "75 percent"
+    },
+    {
+      "id": 36,
+      "questionText": "What percentage of the world's almond supply does California's almond industry produce?",
+      "correctAnswer": "80 percent"
+    },
+    {
+      "id": 37,
+      "questionText": "What term describes honeybees' behavioral fidelity to particular plant species during foraging?",
+      "correctAnswer": "floral constancy"
+        }
+      ]
+    },
+    {
+      "id": 3,
+  "type": "matching-information",
+  "title": "Questions 38-40",
+  "instructions": "Which paragraph contains the following information? Write the correct letter, A–E, in boxes 9–11 on your answer sheet.",
+  "paragraphs_list": ["A", "B", "C", "D", "E"],
+  "questions": [
+    {
+      "id": 38,
+      "questionText": "the estimated monetary worth of a natural process on a worldwide scale",
+      "correctAnswer": "A"
+    },
+    {
+      "id": 39,
+      "questionText": "an agricultural product whose commercial cultivation is impossible without managed insect colonies",
+      "correctAnswer": "B"
+    },
+    {
+      "id": 40,
+      "questionText": "a behavioral pattern that prevents wasted pollen distribution to incompatible species",
+      "correctAnswer": "C"
+    }
+  ]
+}
 ]
 }
 ]
