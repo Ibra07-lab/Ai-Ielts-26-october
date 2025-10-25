@@ -4,3 +4,10 @@ encore.gen.cue
 /.encore
 node_modules
 /encore.gen
+
+# Env files (never commit secrets)
+.env
+.env.local
+.env.*.local
+backend/.env
+frontend/.env

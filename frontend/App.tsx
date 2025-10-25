@@ -14,6 +14,8 @@ import Progress from "./pages/Progress";
 import Settings from "./pages/Settings";
 import AICoach from "./pages/AICoach";
 import Subscription from "./pages/Subscription";
+import Register from "./pages/Register";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -39,6 +41,7 @@ function AppInner() {
           <Route path="/settings" element={<Settings />} />
           <Route path="/coach" element={<AICoach />} />
           <Route path="/subscription" element={<Subscription />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </Layout>
     </Router>
@@ -50,7 +53,9 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <UserProvider>
-          <AppInner />
+          <ErrorBoundary>
+            <AppInner />
+          </ErrorBoundary>
           <Toaster />
         </UserProvider>
       </ThemeProvider>

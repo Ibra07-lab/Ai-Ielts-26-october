@@ -1,0 +1,459 @@
+{
+  "testId": 2,
+  "testName": "Test 2",
+  "passages": [
+    {
+      "id": 1,
+  "title": "The History of Vaccines and Their Pivotal Role in Global Health",
+  "level": "academic",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "P1",
+      "text": "The development of vaccines constitutes one of the most transformative achievements in medical history, drastically reducing morbidity and mortality from infectious diseases worldwide. By stimulating the immune system to recognize and combat pathogens, vaccines have averted countless epidemics and fostered healthier populations. Their origins trace back to rudimentary practices in ancient societies, evolving into sophisticated biotechnological interventions over centuries. A landmark statistical reference emerges from a 2020 evaluation by the Fictional Global Health Consortium, estimating that immunization programs prevent 2 to 3 million deaths annually. This efficacy underscores vaccines' indispensable contribution to public health infrastructure, particularly in vulnerable communities. Yet, their journey from empirical trials to global deployment reveals persistent challenges in equity and acceptance."
+    },
+    {
+      "id": "P2",
+      "text": "Early immunization efforts relied on variolation, a technique involving deliberate exposure to mild disease forms to confer resistance. Documented in 10th-century China and 17th-century Ottoman practices, variolation targeted smallpox by inhaling powdered scabs from infected individuals. Though effective in reducing fatality rates by up to 80 percent, it carried risks of full-blown infection and transmission. The breakthrough arrived in 1796 with Edward Jenner's smallpox vaccine, derived from cowpox exposure in dairy workers. Jenner's controlled experiments demonstrated cross-immunity, coining the term 'vaccine' from the Latin for cowpox. This innovation marked the inception of modern vaccinology, shifting paradigms from hazard to controlled prophylaxis."
+    },
+    {
+      "id": "P3",
+      "text": "Subsequent advancements in the 19th and 20th centuries expanded vaccine portfolios against diverse pathogens. Louis Pasteur's 1885 rabies vaccine, using attenuated virus strains, exemplified attenuation techniques for safer administration. A compelling case study is the global smallpox eradication campaign, initiated by the World Health Organization in 1967. Through ring vaccination—targeting contacts of cases—combined with surveillance, the last natural case occurred in Somalia in 1977. This triumph, certifying eradication in 1980, saved an estimated 300 million lives in the 20th century alone. Similarly, the polio vaccine, developed by Jonas Salk in 1955, has curtailed cases from 350,000 annually in 1988 to fewer than 100 by 2023."
+    },
+    {
+      "id": "P4",
+      "text": "Vaccines' role in global health extends beyond eradication to herd immunity and economic productivity. Routine childhood schedules now shield against measles, diphtheria, and pertussis, averting outbreaks in densely populated areas. However, disparities persist; low-income regions face vaccine hesitancy fueled by misinformation and logistical barriers. The COVID-19 pandemic accelerated mRNA vaccine platforms, with trials yielding over 90 percent efficacy against severe disease. Such rapid innovations highlight biotechnology's potential, yet underscore needs for equitable distribution via initiatives like COVAX. Ultimately, sustained investment in vaccine research promises to address emerging threats, securing a resilient global health landscape."
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "type": "matching-information",
+      "title": "Questions 1-4",
+      "instructions": "Which paragraph (A, B, C or D) contains the following information? Write the correct letter in boxes 1-4 on your answer sheet.",
+      "paragraphs_list": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "questions": [
+        {
+          "id": 1,
+          "questionText": "Account of the British doctor's experiment using animal-derived material to protect against a contagious outbreak",
+          "correctAnswer": "B"
+        },
+        {
+          "id": 2,
+          "questionText": "Projection on annual fatalities avoided due to routine protection programs globally",
+          "correctAnswer": "A"
+        },
+        {
+          "id": 3,
+          "questionText": "Drop in occurrences of a crippling condition from hundreds of thousands in the 1980s to under a hundred now",
+          "correctAnswer": "C"
+        },
+        {
+          "id": 4,
+          "questionText": "Obstacles like false information and supply issues hindering uptake in underprivileged locales",
+          "correctAnswer": "D"
+        }
+          ]
+        },
+        {
+          "id": 1,
+      "type": "true-false-not-given",
+      "title": "Questions 5–10",
+      "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
+      "questions": [
+        {
+          "id": 5,
+          "questionText": "Immunisation initiatives worldwide avert between two and three million fatalities each year.",
+          "correctAnswer": "TRUE"
+        },
+        {
+          "id": 6,
+          "questionText": "The final occurrence of naturally transmitted smallpox was recorded in 1977.",
+          "correctAnswer": "TRUE"
+        },
+        {
+          "id": 7,
+          "questionText": "Edward Jenner's pioneering work on cowpox immunity was conducted in 1896.",
+          "correctAnswer": "FALSE"
+        },
+        {
+          "id": 8,
+          "questionText": "Incidence of polio has risen from under 100 cases yearly in 1988 to 350,000 by 2023.",
+          "correctAnswer": "FALSE"
+        },
+        {
+          "id": 9,
+          "questionText": "Variolation techniques were first documented in ancient European medical texts.",
+          "correctAnswer": "NOT GIVEN"
+        },
+        {
+          "id": 10,
+          "questionText": "Herd immunity achieved through vaccines primarily benefits economic output in high-income countries.",
+          "correctAnswer": "NOT GIVEN"
+        }
+         ]
+        },
+      {
+          "id": 1,
+      "type": "short-answer",
+      "title": "Questions 11–14",
+      "instructions": "Answer the questions below. Choose NO MORE THAN THREE WORDS from the passage for each answer.",
+      "questions": [
+        {
+          "id": 11,
+          "questionText": "What number of deaths do immunization programs prevent annually?",
+          "correctAnswer": "2 to 3 million",
+          "alternativeAnswers": ["2 to 3 million", "2-3 million"]
+        },
+        {
+          "id": 12,
+          "questionText": "When was Edward Jenner's smallpox vaccine developed?",
+          "correctAnswer": "1796",
+          "alternativeAnswers": ["1796", "in 1796"]
+        },
+        {
+          "id": 13,
+          "questionText": "Who developed the rabies vaccine in 1885?",
+          "correctAnswer": "Louis Pasteur",
+          "alternativeAnswers": ["Louis Pasteur", "Pasteur"]
+        },
+        {
+          "id": 14,
+          "questionText": "Where did the last natural smallpox case occur?",
+          "correctAnswer": "Somalia",
+          "alternativeAnswers": ["Somalia", "in Somalia"]
+        }
+      ]
+    }
+  ]
+},
+    {
+      "id": 2,
+  "title": "The Spread of Coffee Culture Around the World",
+  "level": "academic",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "P1",
+      "text": "Coffee culture, encompassing cultivation, preparation, and social consumption practices, has evolved from regional traditions into a ubiquitous global phenomenon. Originating in the Ethiopian highlands around the 9th century, where shepherds observed energizing effects on goats consuming red berries, coffee's stimulating properties were soon harnessed by humans. By the 15th century, cultivation had migrated to the Arabian Peninsula, particularly Yemen, where Sufi monks brewed the beverage to sustain nocturnal prayers. This transition facilitated the establishment of the first public coffee houses in Mecca, fostering intellectual discourse and communal gatherings. A historical milestone occurred in 1555 with the opening of Kiva Han in Constantinople, marking the beverage's integration into Ottoman society. These venues, often dubbed 'schools of the wise', became hubs for political debate and cultural exchange, laying foundations for coffee's expansive influence."
+    },
+    {
+      "id": "P2",
+      "text": "The dissemination to Europe ensued through trade routes, with Venetian merchants introducing coffee beans in the early 17th century. Initial reception was mixed, as religious authorities decried it as a 'Muslim drink', yet its popularity surged amid growing curiosity. London's first coffee house, established in 1652 by Pasqua Rosée, exemplified this trend, attracting merchants and intellectuals for animated discussions. A case study of Viennese coffee culture highlights adaptation; following the 1683 siege, captured Ottoman supplies inspired the creation of Kaffeehäuser, blending local pastries with filtered brews. These establishments evolved into refined social spaces, patronized by artists like Mozart, underscoring coffee's role in fostering creativity. By the 18th century, coffee houses proliferated across Europe, influencing Enlightenment ideals through unfettered dialogue."
+    },
+    {
+      "id": "P3",
+      "text": "Colonial expansion propelled coffee's global production, transplanting Arabica plants to new terrains in the Americas and Asia. Dutch colonists smuggled seedlings to Java in 1699, establishing plantations that supplied European markets and diversified genetic strains. In Brazil, which by 1820 dominated world output, vast fazendas employed innovative processing techniques to enhance yield and quality. A 2022 survey by the Fictional International Beverage Institute estimates daily global consumption at 2.25 billion cups, reflecting sustained demand. This proliferation coincided with cultural hybridizations, such as Vietnamese cà phê sữa đá, combining robusta beans with condensed milk over ice. Such adaptations illustrate how local climates and preferences reshaped coffee rituals, embedding the beverage in diverse societal fabrics."
+    },
+    {
+      "id": "P4",
+      "text": "Contemporary coffee culture manifests in multinational chains and artisanal roasteries, bridging traditional and modern consumption patterns. The Starbucks phenomenon, originating in Seattle in 1971, exemplifies globalization, with over 30,000 outlets adapting menus to regional tastes. In Italy, espresso bars preserve purist traditions, emphasizing quick, standing consumption over leisurely lattes. Economic implications are profound, as fair-trade initiatives address exploitation in supply chains, promoting sustainable farming in origin countries. Environmental concerns, including deforestation for plantations, prompt innovations like shade-grown methods to mitigate biodiversity loss. Thus, coffee's worldwide spread continues to evolve, intertwining commerce, culture, and conservation in an interconnected global narrative."
+    }
+  ],
+      "questions": [
+        {
+          "id": 2,
+  "type": "matching-headings",
+  "title": "Questions 15-18",
+  "instructions": "Choose the correct heading for paragraphs 15-18 from the list of headings below. Write the correct number, i–vii, in boxes 1–4 on your answer sheet.",
+  "questions": [
+    {
+      "id": 15,
+      "questionText": "Paragraph 1",
+      "options": [
+        "Foundations of communal brewing sites in the Middle East",
+        "Continental integration via commerce and conflict",
+        "Plantation growth in distant colonies",
+        "Legendary tales of animal stimulation by berries",
+        "Statistical overview of beverage intake patterns",
+        "Universal impacts of stimulating infusions",
+        "Rejection of exotic imports by colonial powers"
+      ],
+      "correctAnswer": "Foundations of communal brewing sites in the Middle East"
+    },
+    {
+      "id": 16,
+      "questionText": "Paragraph 2",
+      "options": [
+        "Foundations of communal brewing sites in the Middle East",
+        "Continental integration via commerce and conflict",
+        "Plantation growth in distant colonies",
+        "Legendary tales of animal stimulation by berries",
+        "Statistical overview of beverage intake patterns",
+        "Universal impacts of stimulating infusions",
+        "Rejection of exotic imports by colonial powers"
+      ],
+      "correctAnswer": "Continental integration via commerce and conflict"
+    },
+    {
+      "id": 17,
+      "questionText": "Paragraph 3",
+      "options": [
+        "Foundations of communal brewing sites in the Middle East",
+        "Continental integration via commerce and conflict",
+        "Plantation growth in distant colonies",
+        "Legendary tales of animal stimulation by berries",
+        "Statistical overview of beverage intake patterns",
+        "Universal impacts of stimulating infusions",
+        "Rejection of exotic imports by colonial powers"
+      ],
+      "correctAnswer": "Plantation growth in distant colonies"
+    },
+    {
+      "id": 18,
+      "questionText": "Paragraph 4",
+      "options": [
+        "Foundations of communal brewing sites in the Middle East",
+        "Continental integration via commerce and conflict",
+        "Plantation growth in distant colonies",
+        "Legendary tales of animal stimulation by berries",
+        "Statistical overview of beverage intake patterns",
+        "Universal impacts of stimulating infusions",
+        "Rejection of exotic imports by colonial powers"
+      ],
+      "correctAnswer": "Statistical overview of beverage intake patterns"
+    }
+          ]
+        },
+        {
+          "id": 2,
+  "type": "multiple-choice",
+  "title": "Questions 19-23",
+  "instructions": "Choose the correct letter, A, B, C or D.",
+  "questions": [
+    {
+      "id": 19,
+      "questionText": "According to the passage, in what year did the initial coffee venue open in the Ottoman capital?",
+      "options": [
+        "A) Mid-16th century",
+        "B) Late 17th century",
+        "C) Early 18th century",
+        "D) Around 1650"
+      ],
+      "correctAnswer": "A) Mid-16th century",
+      "explanation": "The text specifies this date as a pivotal moment in Ottoman adoption of the beverage. This detail highlights the timeline of early institutionalization in the region.",
+      "evidenceQuote": "A historical milestone occurred in 1555 with the opening of Kiva Han in Constantinople",
+      "evidenceLocation": "P1"
+    },
+    {
+      "id": 20,
+      "questionText": "What is the estimated worldwide daily intake of the beverage as per recent research?",
+      "options": [
+        "A) More than two billion servings",
+        "B) Under one billion portions",
+        "C) Exactly 1.5 billion units",
+        "D) Around 3 billion measures"
+      ],
+      "correctAnswer": "A) More than two billion servings",
+      "explanation": "The passage cites this figure to demonstrate ongoing global popularity. It serves as a quantitative marker of consumption scale in modern times.",
+      "evidenceQuote": "A 2022 survey by the Fictional International Beverage Institute estimates daily global consumption at 2.25 billion cups",
+      "evidenceLocation": "P3"
+    },
+    {
+      "id": 21,
+      "questionText": "From the descriptions throughout the passage, what role did communal drinking spots play in intellectual and artistic development?",
+      "options": [
+        "A) They promoted open exchanges and innovative thinking",
+        "B) They mainly served as exclusive venues for elites",
+        "C) They focused primarily on commercial transactions",
+        "D) They discouraged social interactions among patrons"
+      ],
+      "correctAnswer": "A) They promoted open exchanges and innovative thinking",
+      "explanation": "Synthesizing examples from early Middle Eastern houses to European adaptations implies facilitation of dialogue and creativity across regions. This inference connects historical and cultural impacts spanning multiple sections.",
+      "evidenceQuote": "fostering intellectual discourse and communal gatherings... attracting merchants and intellectuals for animated discussions",
+      "evidenceLocation": "P1, P2"
+    },
+    {
+      "id": 22,
+      "questionText": "What overarching theme does the passage explore regarding the beverage's global journey?",
+      "options": [
+        "A) Transformation through trade, adaptation, and modern commercialization",
+        "B) Decline in traditional methods due to industrial farming",
+        "C) Conflicts arising from colonial exploitation of resources",
+        "D) Isolation of consumption practices in origin regions"
+      ],
+      "correctAnswer": "A) Transformation through trade, adaptation, and modern commercialization",
+      "explanation": "The narrative traces evolution from origins to contemporary chains, emphasizing integration and change. This captures the central progression without narrowing to specifics.",
+      "evidenceQuote": "Coffee culture... has evolved from regional traditions into a ubiquitous global phenomenon",
+      "evidenceLocation": "P1"
+    },
+    {
+      "id": 23,
+      "questionText": "In the passage, the term 'proliferation' most nearly means",
+      "options": [
+        "A) Rapid increase in numbers",
+        "B) Gradual disappearance over time",
+        "C) Strict regulation of distribution",
+        "D) Limited availability in markets"
+      ],
+      "correctAnswer": "A) Rapid increase in numbers",
+      "explanation": "The context applies it to the expansion of venues in Europe, indicating widespread growth. This tests grasp of academic terms in a historical setting.",
+      "evidenceQuote": "By the 18th century, coffee houses proliferated across Europe",
+      "evidenceLocation": "P2"
+      }
+      ]
+        },
+        {
+          "id": 3,
+          "type": "multiple-choice",
+          "title": "Questions 11–13",
+          "instructions": "Choose the correct letter, A, B, C or D.",
+          "questions": [
+            {
+              "id": 11,
+              "questionText": "What advantage do AUVs have over ROVs?",
+              "options": [
+                "They can descend deeper",
+                "They operate without tethers",
+                "They have better cameras",
+                "They are less expensive"
+              ],
+              "correctAnswer": "They operate without tethers"
+            },
+            {
+              "id": 12,
+              "questionText": "How many new fish species were detected using eDNA in Antarctica?",
+              "options": [
+                "5",
+                "10",
+                "16",
+                "95"
+              ],
+              "correctAnswer": "16"
+            },
+            {
+              "id": 13,
+              "questionText": "What does NASA's PACE mission monitor?",
+              "options": [
+                "Underwater volcanoes",
+                "Shipwrecks",
+                "Phytoplankton blooms",
+                "Marine mammals"
+              ],
+              "correctAnswer": "Phytoplankton blooms"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "The History and Impact of Coffee Culture",
+      "level": "general",
+      "estimatedTime": 20,
+      "paragraphs": [
+        {
+          "id": "P1",
+          "text": "Coffee has evolved from an obscure Ethiopian discovery to become the world's second-most traded commodity after petroleum, with over 2.25 billion cups consumed daily worldwide. Legend attributes coffee's discovery to an Ethiopian goat herder named Kaldi around 850 CE, who noticed his goats became energized after eating berries from a particular tree. The stimulating properties of these berries, containing the alkaloid caffeine, were subsequently harnessed by Sufi monks in Yemen who brewed the roasted beans to stay alert during extended prayer sessions. By the 15th century, coffee cultivation had spread throughout the Arabian Peninsula, with the port city of Mocha becoming a major trading center. Coffee's introduction to Europe in the 17th century initially met resistance from religious authorities who deemed it the 'bitter invention of Satan,' until Pope Clement VIII allegedly tasted it and declared it too delicious to leave to infidels, thereby granting Catholic approval."
+        },
+        {
+          "id": "P2",
+          "text": "Coffeehouses emerged as vital social institutions that fundamentally shaped intellectual and commercial life in European cities. London's first coffeehouse opened in 1652, and by 1700, the city boasted over 2,000 such establishments. Unlike taverns that served alcohol, coffeehouses promoted clear-headed conversation and became known as 'penny universities' because for the price of a cup of coffee (one penny), patrons could engage in stimulating discussions and access newspapers and pamphlets. These venues facilitated exchange between merchants, artists, scientists, and philosophers, fostering innovations across multiple domains. Lloyd's of London, now a global insurance market, originated in Edward Lloyd's coffeehouse in 1686, where ship owners and merchants gathered to discuss maritime insurance. The scientific revolution also benefited from coffeehouse culture; the Royal Society, Britain's premier scientific organization, held meetings in coffeehouses where members debated natural philosophy."
+        },
+        {
+          "id": "P3",
+          "text": "Coffee's colonial history reveals the darker aspects of its global expansion, intrinsically linked to exploitation and environmental destruction. European powers established vast coffee plantations in tropical colonies using slave labor and, later, indentured workers under harsh conditions. Brazil became the world's dominant coffee producer in the 19th century through extensive plantation agriculture that decimated Atlantic rainforest ecosystems. The economic importance of coffee to colonial powers was such that the Dutch transported coffee plants from Yemen to Java in 1696, closely guarding them as valuable commercial secrets. This monopolistic control eventually broke when a French naval officer smuggled a single coffee plant to Martinique in 1720, from which most coffee plants in Latin America descended. The boom-and-bust cycles of coffee prices have caused economic instability in producer nations, with smallholder farmers bearing disproportionate risks while multinational corporations capture most profits."
+        },
+        {
+          "id": "P4",
+          "text": "Contemporary coffee culture reflects increasing consumer awareness of ethical and quality considerations. The Fair Trade movement, which began in the 1980s, aims to ensure farmers receive fair prices and work in decent conditions by establishing minimum purchase prices and prohibiting child labor. Specialty coffee, emphasizing bean origin, processing methods, and brewing techniques, has grown into a $30 billion global industry. This 'third wave' coffee movement treats coffee as an artisanal product comparable to wine, with consumers paying premium prices for single-origin beans from specific farms. Environmental sustainability has also become central to modern coffee production, as climate change threatens traditional growing regions; arabica coffee, which accounts for 60% of global production, requires specific temperature and rainfall conditions that are shifting due to global warming. Initiatives promoting shade-grown coffee, which preserves forest canopy, and organic certification reflect efforts to balance economic needs with ecological responsibility."
+        }
+      ],
+      "questions": [
+        {
+          "id": 1,
+          "type": "true-false-not-given",
+          "title": "Questions 1–6",
+          "instructions": "Do the following statements agree with the information in the passage? Write YES, NO or NOT GIVEN.",
+          "questions": [
+            { "id": 1, "questionText": "Coffee is the most traded commodity globally.", "correctAnswer": "NO" },
+            { "id": 2, "questionText": "Sufi monks used coffee to stay awake during prayers.", "correctAnswer": "YES" },
+            { "id": 3, "questionText": "Pope Clement VIII initially banned coffee consumption.", "correctAnswer": "NOT GIVEN" },
+            { "id": 4, "questionText": "London had over 2,000 coffeehouses by 1700.", "correctAnswer": "YES" },
+            { "id": 5, "questionText": "All coffee plants in Latin America descended from the Martinique plant.", "correctAnswer": "NOT GIVEN" },
+            { "id": 6, "questionText": "Arabica coffee requires specific temperature conditions.", "correctAnswer": "YES" }
+          ]
+        },
+        {
+          "id": 2,
+          "type": "multiple-choice",
+          "title": "Questions 7–11",
+          "instructions": "Choose the correct letter, A, B, C or D.",
+          "questions": [
+            {
+              "id": 7,
+              "questionText": "Why were coffeehouses called 'penny universities'?",
+              "options": [
+                "They charged students reduced prices",
+                "They offered educational lectures",
+                "They provided intellectual exchange for the price of coffee",
+                "They were owned by universities"
+              ],
+              "correctAnswer": "They provided intellectual exchange for the price of coffee"
+            },
+            {
+              "id": 8,
+              "questionText": "What originated in Edward Lloyd's coffeehouse?",
+              "options": [
+                "The Royal Society",
+                "A maritime insurance market",
+                "The first newspaper",
+                "Scientific journals"
+              ],
+              "correctAnswer": "A maritime insurance market"
+            },
+            {
+              "id": 9,
+              "questionText": "When did the Dutch transport coffee plants to Java?",
+              "options": [
+                "1652",
+                "1686",
+                "1696",
+                "1720"
+              ],
+              "correctAnswer": "1696"
+            },
+            {
+              "id": 10,
+              "questionText": "What does the Fair Trade movement prohibit?",
+              "options": [
+                "Coffee imports",
+                "Child labor",
+                "Organic farming",
+                "Premium pricing"
+              ],
+              "correctAnswer": "Child labor"
+            },
+            {
+              "id": 11,
+              "questionText": "What percentage of global coffee production is arabica?",
+              "options": [
+                "30%",
+                "40%",
+                "60%",
+                "80%"
+              ],
+              "correctAnswer": "60%"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "type": "gap-fill",
+          "title": "Questions 12–14",
+          "instructions": "Complete the sentences. Choose NO MORE THAN TWO WORDS from the passage.",
+          "questions": [
+            { "id": 12, "questionText": "Coffee contains the alkaloid ___.", "correctAnswer": "caffeine" },
+            { "id": 13, "questionText": "Brazil became dominant through extensive ___ agriculture.", "correctAnswer": "plantation" },
+            { "id": 14, "questionText": "Specialty coffee has grown into a $30 billion global ___.", "correctAnswer": "industry" }
+          ]
+        }
+      ]
+    }
+  ]
+}

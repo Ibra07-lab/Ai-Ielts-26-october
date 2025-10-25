@@ -10,7 +10,6 @@ import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "../contexts/UserContext";
-import DiamondNavigation from "../components/DiamondNavigation";
 import backend from "~backend/client";
 
 export default function ListeningPractice() {
@@ -27,12 +26,13 @@ export default function ListeningPractice() {
 
   const { data: audio, refetch: refetchAudio } = useQuery({
     queryKey: ["listeningAudio"],
-    queryFn: backend.ielts.getListeningAudio,
-    onSuccess: () => {
+    queryFn: async () => {
+      const data = await backend.ielts.getListeningAudio();
       setAnswers({});
       setResult(null);
       setCurrentTime(0);
       setIsPlaying(false);
+      return data;
     },
   });
 
@@ -99,9 +99,9 @@ export default function ListeningPractice() {
 
     submitListeningMutation.mutate({
       userId: user.id,
-      audioTitle: audio.title,
-      audioUrl: audio.audioUrl,
-      questions: audio.questions,
+      audioTitle: audio?.title ?? "",
+      audioUrl: audio?.audioUrl ?? "",
+      questions: audio?.questions ?? [],
       userAnswers: answers,
       timeTaken: Math.floor(currentTime),
     });
@@ -202,9 +202,9 @@ export default function ListeningPractice() {
                 </audio>
 
                 <div className="flex items-center gap-4">
-                  <Button
-                    variant="outline"
-                    size="sm"
+                  <button
+                    type="button"
+                    className="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white dark:bg-gray-900 px-3 py-1.5 text-sm font-medium text-gray-900 dark:text-white shadow-sm hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition"
                     onClick={togglePlayback}
                   >
                     {isPlaying ? (
@@ -212,7 +212,7 @@ export default function ListeningPractice() {
                     ) : (
                       <Play className="h-4 w-4" />
                     )}
-                  </Button>
+                  </button>
 
                   <div className="flex-1">
                     <Slider
@@ -337,7 +337,6 @@ export default function ListeningPractice() {
           </div>
         )}
       </div>
-      <DiamondNavigation />
     </>
   );
 }

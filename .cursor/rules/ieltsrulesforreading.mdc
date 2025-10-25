@@ -1,0 +1,330 @@
+---
+alwaysApply: true
+---# Cursor AI Rule: IELTS Reading Practice - Multi-Test System with 3 Slides
+
+**Use this prompt as-is for the agent.**
+
+## Context
+- **App Stack**: Encore backend + React/Vite frontend
+- **Existing Backend**:
+  - Data file: `backend/data/reading-passages.json`
+  - Service: `backend/ielts/reading.ts`
+  - Endpoints: `getReadingPassages`, `getReadingPassageById`, `submitReading`, `highlights`, `translate`, `addToVocabulary`
+- **Existing Frontend**:
+  - Page: `frontend/pages/ReadingPractice.tsx`
+  - Fetches: `backend.ielts.getReadingPassages()`
+  - Currently uses: `passagesData.passages[0]`
+  - Renders: Paragraphs via TextHighlighter with A., B., C., ... labels and grouped questions
+
+---
+
+## Goal
+Implement a **multi-test system** where:
+1. Each test contains **exactly 3 slides** (passages)
+2. Each slide contains **9-14 questions** (totaling ~40 questions per test)
+3. Tests are numbered sequentially: **Test 1, Test 2, Test 3, ... Test 100**
+4. Users select a test from a list/dropdown, then navigate through its 3 slides
+5. All existing functionality (highlights, submission, vocabulary) remains intact
+6. No breaking changes to current behavior
+
+---
+
+## Data Structure Requirements
+
+### File Organization
+Change from single file to test-based structure:
+- **Option A**: Single file with test grouping
+  - `backend/data/reading-passages.json` contains:
+    ```json
+    {
+      "tests": [
+        {
+          "testId": 1,
+          "testName": "Test 1",
+          "passages": [ /* 3 passages */ ]
+        },
+        {
+          "testId": 2,
+          "testName": "Test 2",
+          "passages": [ /* 3 passages */ ]
+        }
+      ]
+    }
+    ```
+
+- **Option B**: Separate files per test
+  - `backend/data/reading-tests/test-1.json`
+  - `backend/data/reading-tests/test-2.json`
+  - Each contains 3 passages
+
+### ReadingPassage Schema
+Each passage must follow this structure:
+
+```typescript
+{
+  id: number,                    // Unique within test (1, 2, 3)
+  title: string,
+  level: "academic" | "general",
+  estimatedTime: number,         // Minutes (20 per slide recommended)
+  paragraphs: [
+    { id: "P1", text: string },  // DO NOT prefix text with "A. "
+    { id: "P2", text: string },
+    { id: "P3", text: string },
+    { id: "P4", text: string }
+  ],
+  questions: [
+    {
+      id: number,
+      type: "matching-headings" | "true-false-not-given" | "gap-fill" | "multiple-choice" | "short-answer",
+      title: string,
+      instructions: string,
+      questions: [
+        {
+          id: number,            // Unique within passage
+          questionText: string,
+          options?: string[],    // Required for matching-headings, multiple-choice
+          correctAnswer: string | string[],
+          explanation?: string
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Question Distribution Per Test
+- **Total per test**: ~40 questions across 3 slides
+- **Per slide**: 9-14 questions
+:
+ 
+
+---
+
+## Implementation Requirements
+
+### 1. Backend Changes
+
+#### A. Data Structure
+Create test-based storage:
+- Generate **at least 3 tests** initially (Test 1, Test 2, Test 3)
+- Each test contains **exactly 3 passages** (Slide 1, 2, 3)
+- Each passage has ~9-14 questions
+- Use appropriate file structure (single file with tests array OR separate test files)
+
+#### B. Update `backend/ielts/reading.ts`
+Add new endpoints while keeping existing ones:
+
+```typescript
+// NEW: Get list of all tests
+export const getReadingTests = api(
+  { expose: true, method: "GET", path: "/reading/tests" },
+  async (): Promise<{ tests: Array<{ testId: number; testName: string; totalQuestions: number }> }> => {
+    // Return test metadata
+  }
+);
+
+// NEW: Get passages for a specific test
+export const getReadingTestById = api(
+  { expose: true, method: "GET", path: "/reading/tests/:testId" },
+  async ({ testId }: { testId: number }): Promise<{ testId: number; testName: string; passages: ReadingPassage[] }> => {
+    // Return 3 passages for the test
+  }
+);
+
+// KEEP: Existing getReadingPassages (for backward compatibility)
+// Can default to Test 1 or deprecate gradually
+```
+
+#### C. Validation Rules
+- Ensure each test has **exactly 3 passages**
+- Verify total questions per test = 40 (9-14 per slide)
+- All question IDs unique within their passage
+- All passage IDs within test are 1, 2, 3
+
+### 2. Frontend Changes
+
+#### A. Update `frontend/pages/ReadingPractice.tsx`
+
+**Add state management**:
+```typescript
+const [selectedTestId, setSelectedTestId] = useState<number>(1);
+const [activeSlideIndex, setActiveSlideIndex] = useState<number>(0); // 0, 1, 2
+```
+
+**Update data fetching**:
+```typescript
+// Fetch test list on mount
+const { data: testsData } = useQuery({
+  queryKey: ['reading-tests'],
+  queryFn: () => backend.ielts.getReadingTests()
+});
+
+// Fetch specific test passages
+const { data: testData } = useQuery({
+  queryKey: ['reading-test', selectedTestId],
+  queryFn: () => backend.ielts.getReadingTestById({ testId: selectedTestId })
+});
+
+const passage = testData?.passages?.[activeSlideIndex];
+```
+
+**Add UI components**:
+
+1. **Test Selector** (above slide navigation):
+```tsx
+<Select 
+  value={selectedTestId} 
+  onChange={(testId) => {
+    setSelectedTestId(testId);
+    setActiveSlideIndex(0);
+    resetTestState(); // Clear answers, highlights, timer
+  }}
+>
+  {testsData?.tests.map(test => (
+    <Option key={test.testId} value={test.testId}>
+      {test.testName} ({test.totalQuestions} questions)
+    </Option>
+  ))}
+</Select>
+```
+
+2. **Slide Navigation** (below test selector):
+```tsx
+<Segmented
+  value={activeSlideIndex}
+  onChange={(index) => {
+    setActiveSlideIndex(index as number);
+    resetSlideState(); // Clear slide-specific state
+  }}
+  options={[
+    { label: 'Slide 1', value: 0 },
+    { label: 'Slide 2', value: 1 },
+    { label: 'Slide 3', value: 2 }
+  ]}
+/>
+```
+
+3. **Progress Indicator**:
+```tsx
+<div>
+  Test {selectedTestId} - Slide {activeSlideIndex + 1}/3
+  ({passage?.questions.flatMap(g => g.questions).length || 0} questions)
+</div>
+```
+
+#### B. State Reset Logic
+When changing tests or slides:
+```typescript
+const resetTestState = () => {
+  setActiveSlideIndex(0);
+  setAnswers({});
+  setHighlights([]);
+  setResult(null);
+  setStartTime(Date.now());
+};
+
+const resetSlideState = () => {
+  // Only reset slide-specific state, keep test-level data
+  setAnswers({});
+  setResult(null);
+};
+```
+
+#### C. Submission Handling
+- Keep existing `submitReading` logic
+- Ensure it only submits current slide's answers
+- Optionally track progress across all 3 slides in session storage
+
+### 3. Data Generation Requirements
+
+#### Generate Initial Tests
+Create **Test 1, Test 2, Test 3** with:
+- **Test 1**:
+  - Slide 1: Academic passage about technology (13 questions)
+  - Slide 2: Academic passage about environment (14 questions)
+  - Slide 3: Academic passage about society (13 questions)
+  
+- **Test 2**:
+  - Slide 1: General passage about workplace (14 questions)
+  - Slide 2: General passage about health (13 questions)
+  - Slide 3: General passage about education (13 questions)
+
+- **Test 3**:
+  - Slide 1: Academic passage about science (13 questions)
+  - Slide 2: Academic passage about history (14 questions)
+  - Slide 3: Academic passage about culture (13 questions)
+
+#### Question Type Distribution Per Slide
+- **Group 1**: Matching headings (4-5 questions, 6-7 heading options)
+- **Group 2**: True/False/Not Given (5-6 statements)
+- **Group 3**: Multiple-choice (2-3 questions)
+- **Group 4**: Gap-fill or short answer (2-3 questions)
+
+---
+
+## Constraints and Pitfalls
+
+### Critical Rules
+1. **DO NOT** prefix paragraph text with "A. ", "B. ", etc. — UI generates these
+2. **DO NOT** change existing endpoint signatures
+3. **DO NOT** remove `getReadingPassages` endpoint (backward compatibility)
+4. **DO NOT** break existing highlight, submission, vocabulary features
+5. **ENSURE** exactly 3 slides per test (no more, no less)
+6. **ENSURE** ~40 total questions per test (13-14 per slide)
+7. **ENSURE** all question IDs are unique numbers within their passage
+8. **ENSURE** correctAnswer is string for single answers, array for multi-blank gap-fill
+9. **ENSURE** test selector resets all state when switching tests
+10. **ENSURE** slide navigation preserves test-level context
+
+### Data Integrity
+- Validate JSON structure matches TypeScript interfaces
+- Test with missing/partial data to ensure no crashes
+- Handle loading states for test list and test data separately
+- Add error boundaries for malformed test data
+
+### User Experience
+- Show loading spinner when switching tests
+- Disable slide navigation while test is loading
+- Show question count per slide in navigation
+- Persist selected test in localStorage (optional)
+- Add "Next Slide" / "Previous Slide" buttons
+- Show completion status for each slide
+
+---
+
+## Migration Path
+
+### Phase 1: Add Test Structure (No Breaking Changes)
+1. Create test-based data files
+2. Add new endpoints (`getReadingTests`, `getReadingTestById`)
+3. Keep existing `getReadingPassages` pointing to Test 1, Slide 1
+
+### Phase 2: Update Frontend
+1. Add test selector UI (defaults to Test 1)
+2. Add slide navigation (defaults to Slide 1)
+3. Update data fetching to use new endpoints
+4. Test all existing features work with Test 1, Slide 1
+
+### Phase 3: Expand Content
+1. Add Test 2 and Test 3
+2. Verify navigation works across all tests and slides
+3. Add more tests (Test 4, 5, ... up to 100 as needed)
+
+---
+
+## Testing Checklist
+- [ ] Test 1, 2, 3 each have exactly 3 slides
+- [ ] Each slide has 13-14 questions (~40 per test)
+- [ ] Test selector switches between tests correctly
+- [ ] Slide navigation works within each test
+- [ ] State resets properly when changing tests/slides
+- [ ] Submission works for each slide independently
+- [ ] Highlights persist within a slide but reset between slides
+- [ ] Vocabulary addition works from any slide
+- [ ] Timer resets appropriately
+- [ ] No console errors or crashes with partial data
+- [ ] Backward compatibility: existing code can still access Test 1, Slide 1
+
+---
+
+**End of Cursor AI Rule**

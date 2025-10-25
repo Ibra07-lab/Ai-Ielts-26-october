@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { BookMarked, Languages, X, Volume2, Trash2 } from "lucide-react";
+import { BookMarked, X, Volume2, Trash2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "../contexts/UserContext";
 import backend from "~backend/client";
@@ -48,6 +48,7 @@ export default function TextHighlighter({
   onHighlightsChange 
 }: TextHighlighterProps) {
   const [popupMenu, setPopupMenu] = useState<PopupMenu | null>(null);
+  const [deletePopup, setDeletePopup] = useState<{ x: number; y: number; highlightId: number } | null>(null);
   const [translation, setTranslation] = useState<Translation | null>(null);
   const [isTranslating, setIsTranslating] = useState(false);
   const [isAddingToVocab, setIsAddingToVocab] = useState(false);
@@ -70,12 +71,34 @@ export default function TextHighlighter({
     const range = selection.getRangeAt(0);
     const contentElement = contentRef.current;
     
-    // Calculate positions relative to the content
-    const preCaretRange = range.cloneRange();
-    preCaretRange.selectNodeContents(contentElement);
-    preCaretRange.setEnd(range.startContainer, range.startOffset);
-    const startPosition = preCaretRange.toString().length;
-    const endPosition = startPosition + selectedText.length;
+    // Find nearest paragraph body wrapper to compute offsets relative to raw content
+    let containerForOffset: HTMLElement | null = null;
+    const startNode = range.startContainer as Node;
+    if ((startNode as any).nodeType === 3) {
+      containerForOffset = (startNode.parentElement || null);
+    } else {
+      containerForOffset = (startNode as HTMLElement);
+    }
+    const paragraphBody = containerForOffset?.closest('[data-segment-start]') as HTMLElement | null;
+
+    let startPosition = 0;
+    let endPosition = 0;
+    if (paragraphBody && paragraphBody.dataset.segmentStart) {
+      const segmentStart = parseInt(paragraphBody.dataset.segmentStart, 10) || 0;
+      const preCaretRange = range.cloneRange();
+      preCaretRange.selectNodeContents(paragraphBody);
+      preCaretRange.setEnd(range.startContainer, range.startOffset);
+      const relStart = preCaretRange.toString().length;
+      startPosition = segmentStart + relStart;
+      endPosition = startPosition + selectedText.length;
+    } else {
+      // Fallback: calculate positions relative to entire content block (may be offset by labels)
+      const preCaretRange = range.cloneRange();
+      preCaretRange.selectNodeContents(contentElement);
+      preCaretRange.setEnd(range.startContainer, range.startOffset);
+      startPosition = preCaretRange.toString().length;
+      endPosition = startPosition + selectedText.length;
+    }
 
     // Determine if it's a word or sentence
     const isWord = !selectedText.includes(' ') || selectedText.split(' ').length <= 3;
@@ -84,10 +107,16 @@ export default function TextHighlighter({
     // Get selection coordinates for popup positioning
     const rect = range.getBoundingClientRect();
     const containerRect = contentElement.getBoundingClientRect();
-    
+    const topWithin = rect.top - containerRect.top;
+    const bottomWithin = rect.bottom - containerRect.top;
+    let popupY = topWithin - 36; // try above selection first
+    if (popupY < 0) {
+      popupY = bottomWithin + 8; // place below if not enough space above
+    }
+
     setPopupMenu({
       x: rect.left - containerRect.left + rect.width / 2,
-      y: rect.top - containerRect.top - 10,
+      y: popupY,
       selectedText,
       startPosition,
       endPosition,
@@ -96,29 +125,10 @@ export default function TextHighlighter({
 
     // Clear selection
     selection.removeAllRanges();
+    setDeletePopup(null);
   };
 
-  const handleTranslate = async () => {
-    if (!popupMenu || !user) return;
-
-    setIsTranslating(true);
-    try {
-      const result = await backend.ielts.translateText({
-        text: popupMenu.selectedText,
-        targetLanguage: user.language,
-      });
-      setTranslation(result);
-    } catch (error) {
-      console.error("Translation failed:", error);
-      toast({
-        title: "Translation Error",
-        description: "Failed to translate text. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsTranslating(false);
-    }
-  };
+  // Note: Translate action removed from selection popup per new minimalist UI
 
   const handleAddToVocabulary = async (translationData?: Translation) => {
     if (!popupMenu || !user) return;
@@ -165,7 +175,7 @@ export default function TextHighlighter({
     }
   };
 
-  const createHighlight = async () => {
+  const createHighlight = async (color: 'yellow' | 'blue' | 'green' = 'yellow') => {
     if (!popupMenu || !user) return;
 
     try {
@@ -176,7 +186,7 @@ export default function TextHighlighter({
         startPosition: popupMenu.startPosition,
         endPosition: popupMenu.endPosition,
         highlightType: popupMenu.highlightType,
-        highlightColor: popupMenu.highlightType === 'word' ? 'yellow' : 'lightblue',
+        highlightColor: color,
       });
 
       const newHighlights = [...currentHighlights, highlight];
@@ -198,10 +208,7 @@ export default function TextHighlighter({
     if (!user) return;
 
     try {
-      await backend.ielts.deleteHighlight({
-        userId: user.id,
-        highlightId,
-      });
+      await backend.ielts.deleteHighlight({ userId: user.id, highlightId });
 
       const newHighlights = currentHighlights.filter(h => h.id !== highlightId);
       setCurrentHighlights(newHighlights);
@@ -231,113 +238,146 @@ export default function TextHighlighter({
     }
   };
 
-  const renderHighlightedContent = () => {
-    if (currentHighlights.length === 0) {
-      return content;
-    }
+  const renderSegmentWithHighlights = (segmentText: string, segmentStart: number) => {
+    const segmentEnd = segmentStart + segmentText.length;
+    const overlapping = currentHighlights
+      .filter(h => h.endPosition > segmentStart && h.startPosition < segmentEnd)
+      .sort((a, b) => a.startPosition - b.startPosition);
 
-    // Sort highlights by start position
-    const sortedHighlights = [...currentHighlights].sort((a, b) => a.startPosition - b.startPosition);
-    
-    let result = [];
+    if (overlapping.length === 0) return segmentText as any;
+
+    const colorClassMap: Record<string, string> = {
+      yellow: 'bg-yellow-200 dark:bg-yellow-800',
+      blue: 'bg-blue-200 dark:bg-blue-800',
+      lightblue: 'bg-blue-200 dark:bg-blue-800', // legacy stored value
+      green: 'bg-green-200 dark:bg-green-800',
+    };
+
+    let result: any[] = [];
     let lastIndex = 0;
-
-    sortedHighlights.forEach((highlight, index) => {
-      // Add text before highlight
-      if (highlight.startPosition > lastIndex) {
-        result.push(content.slice(lastIndex, highlight.startPosition));
+    overlapping.forEach((h) => {
+      const start = Math.max(h.startPosition, segmentStart) - segmentStart;
+      const end = Math.min(h.endPosition, segmentEnd) - segmentStart;
+      if (start > lastIndex) {
+        result.push(segmentText.slice(lastIndex, start));
       }
-
-      // Add highlighted text
-      const highlightClass = highlight.highlightType === 'word' 
-        ? 'bg-yellow-200 dark:bg-yellow-800' 
-        : 'bg-blue-200 dark:bg-blue-800';
-      
+      const highlightClass = colorClassMap[h.highlightColor] || 'bg-yellow-200 dark:bg-yellow-800';
       result.push(
         <span
-          key={`highlight-${highlight.id}`}
-          className={`${highlightClass} cursor-pointer relative group px-1 rounded`}
+          key={`highlight-${h.id}-${segmentStart}`}
+          className={`${highlightClass} cursor-pointer relative px-1 rounded`}
           onClick={(e) => {
             e.stopPropagation();
-            // Show delete option on click
+            if (!contentRef.current) return;
+            const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+            const containerRect = contentRef.current.getBoundingClientRect();
+            const topWithin = rect.top - containerRect.top;
+            let y = topWithin - 36;
+            if (y < 0) y = rect.bottom - containerRect.top + 8;
+            setDeletePopup({
+              x: rect.left - containerRect.left + rect.width / 2,
+              y,
+              highlightId: h.id,
+            });
           }}
         >
-          {highlight.highlightedText}
-          <button
-            className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs"
-            onClick={(e) => {
-              e.stopPropagation();
-              deleteHighlight(highlight.id);
-            }}
-          >
-            <X className="w-2 h-2" />
-          </button>
+          {segmentText.slice(start, end)}
         </span>
       );
-
-      lastIndex = highlight.endPosition;
+      lastIndex = end;
     });
-
-    // Add remaining text
-    if (lastIndex < content.length) {
-      result.push(content.slice(lastIndex));
+    if (lastIndex < segmentText.length) {
+      result.push(segmentText.slice(lastIndex));
     }
-
     return result;
   };
 
   return (
-    <div className="relative">
-      <div
-        ref={contentRef}
-        className="prose prose-sm max-w-none dark:prose-invert leading-relaxed select-text cursor-text"
-        onMouseUp={handleTextSelection}
-        onTouchEnd={handleTextSelection}
-      >
-        {content.split('\n\n').map((paragraph, index) => (
-          <p key={index} className="mb-4 text-gray-700 dark:text-gray-300">
-            {index === 0 ? renderHighlightedContent() : paragraph}
-          </p>
-        ))}
-      </div>
+    <div
+      ref={contentRef}
+      className="prose prose-sm max-w-none dark:prose-invert leading-relaxed select-text cursor-text relative"
+      onMouseUp={handleTextSelection}
+      onTouchEnd={handleTextSelection}
+    >
+      {(() => {
+        const parts = content.split('\n\n');
+        let searchFrom = 0;
+        return parts.map((paragraph, index) => {
+        // remove any existing "A. ", "B. ", etc. at the start to avoid duplication
+        const clean = paragraph.replace(/^[A-Za-z][.)]\s+|^[A-Za-z]\.\s+/, '');
+        const label = String.fromCharCode(65 + index) + "."; // A., B., C., ...
+          const paraStart = content.indexOf(paragraph, searchFrom);
+          const paraEnd = paraStart >= 0 ? paraStart + paragraph.length : searchFrom + paragraph.length;
+          searchFrom = paraEnd + 2; // skip past this part and the two newlines
+          const body = renderSegmentWithHighlights(clean, paraStart);
 
-      {/* Popup Menu */}
+          return (
+            <p key={index} className="mb-4 text-gray-700 dark:text-gray-300">
+              <span className="mr-2 font-semibold">{label}</span>
+              <span data-segment-start={paraStart}>{body}</span>
+            </p>
+          );
+        });
+      })()}
+
+      {/* Selection Popup Menu - Minimalist: Green, Blue, Yellow, Trash */}
       {popupMenu && (
         <div
           className="absolute z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-2"
           style={{
-            left: `${popupMenu.x}px`,
-            top: `${popupMenu.y}px`,
+            left: `${popupMenu!.x}px`,
+            top: `${popupMenu!.y}px`,
             transform: 'translateX(-50%)',
           }}
         >
-          <div className="flex gap-2">
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={handleTranslate}
-              disabled={isTranslating}
-            >
-              <Languages className="h-3 w-3 mr-1" />
-              {isTranslating ? "..." : "Translate"}
-            </Button>
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => handleAddToVocabulary()}
-              disabled={isAddingToVocab}
-            >
-              <BookMarked className="h-3 w-3 mr-1" />
-              {isAddingToVocab ? "..." : "Add to Vocab"}
-            </Button>
-            <Button
-              size="sm"
-              variant="ghost"
+          <div className="flex items-center gap-2">
+            <button
+              aria-label="Apply Green Highlight"
+              className="w-6 h-6 rounded-full bg-green-400 dark:bg-green-500 border border-green-600/40"
+              onClick={() => createHighlight('green')}
+            />
+            <button
+              aria-label="Apply Blue Highlight"
+              className="w-6 h-6 rounded-full bg-blue-400 dark:bg-blue-500 border border-blue-600/40"
+              onClick={() => createHighlight('blue')}
+            />
+            <button
+              aria-label="Apply Yellow Highlight"
+              className="w-6 h-6 rounded-full bg-yellow-400 dark:bg-yellow-500 border border-yellow-600/40"
+              onClick={() => createHighlight('yellow')}
+            />
+            <button
+              aria-label="Clear selection"
+              className="w-6 h-6 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
               onClick={() => setPopupMenu(null)}
             >
-              <X className="h-3 w-3" />
-            </Button>
+              <Trash2 className="h-3 w-3" />
+            </button>
           </div>
+        </div>
+      )}
+
+      {/* Delete-only Popup when clicking existing highlight */}
+      {deletePopup && (
+        <div
+          className="absolute z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-1"
+          style={{
+            left: `${deletePopup.x}px`,
+            top: `${deletePopup.y}px`,
+            transform: 'translateX(-50%)',
+          }}
+        >
+          <button
+            aria-label="Remove this highlight"
+            className="w-7 h-7 rounded-md border border-red-300 text-red-600 hover:bg-red-50 dark:border-red-700 dark:text-red-400 dark:hover:bg-red-900/30 flex items-center justify-center"
+            onClick={(e) => {
+              e.stopPropagation();
+              deleteHighlight(deletePopup.highlightId);
+              setDeletePopup(null);
+            }}
+          >
+            <Trash2 className="h-4 w-4" />
+          </button>
         </div>
       )}
 
@@ -360,20 +400,20 @@ export default function TextHighlighter({
               <div className="space-y-4">
                 <div>
                   <Badge variant="outline" className="mb-2">Original</Badge>
-                  <p className="text-sm font-medium">{translation.originalText}</p>
+                  <p className="text-sm font-medium">{translation?.originalText}</p>
                 </div>
 
                 <div>
                   <Badge variant="outline" className="mb-2">Translation</Badge>
                   <div className="flex items-center gap-2">
                     <p className="text-sm text-blue-600 dark:text-blue-400 font-medium">
-                      {translation.translatedText}
+                      {translation?.translatedText}
                     </p>
-                    {translation.audioUrl && (
+                    {translation?.audioUrl && (
                       <Button
                         size="sm"
                         variant="ghost"
-                        onClick={() => playAudio(translation.audioUrl)}
+                        onClick={() => playAudio(translation?.audioUrl)}
                       >
                         <Volume2 className="h-3 w-3" />
                       </Button>
@@ -381,27 +421,27 @@ export default function TextHighlighter({
                   </div>
                 </div>
 
-                {translation.definition && (
+                {translation?.definition && (
                   <div>
                     <Badge variant="outline" className="mb-2">Definition</Badge>
                     <p className="text-sm text-gray-600 dark:text-gray-300">
-                      {translation.definition}
+                      {translation?.definition}
                     </p>
                   </div>
                 )}
 
-                {translation.exampleSentence && (
+                {translation?.exampleSentence && (
                   <div>
                     <Badge variant="outline" className="mb-2">Example</Badge>
                     <p className="text-sm text-gray-600 dark:text-gray-300 italic">
-                      {translation.exampleSentence}
+                      {translation?.exampleSentence}
                     </p>
                   </div>
                 )}
 
                 <div className="flex gap-2 pt-4">
                   <Button
-                    onClick={() => handleAddToVocabulary(translation)}
+                    onClick={() => handleAddToVocabulary(translation || undefined)}
                     disabled={isAddingToVocab}
                     className="flex-1"
                   >

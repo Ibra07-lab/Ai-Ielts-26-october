@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { Progress as ProgressBar } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useUser } from "../contexts/UserContext";
-import DiamondNavigation from "../components/DiamondNavigation";
 import backend from "~backend/client";
 
 export default function Progress() {
@@ -13,37 +12,37 @@ export default function Progress() {
 
   const { data: progress } = useQuery({
     queryKey: ["progress", user?.id],
-    queryFn: () => user ? backend.ielts.getProgress({ userId: user.id }) : null,
+    queryFn: () => user ? backend.ielts.getProgress(user.id) : null,
     enabled: !!user,
   });
 
   const { data: speakingSessions } = useQuery({
     queryKey: ["speakingSessions", user?.id],
-    queryFn: () => user ? backend.ielts.getSpeakingSessions({ userId: user.id }) : null,
+    queryFn: () => user ? backend.ielts.getSpeakingSessions(user.id) : null,
     enabled: !!user,
   });
 
   const { data: writingSessions } = useQuery({
     queryKey: ["writingSessions", user?.id],
-    queryFn: () => user ? backend.ielts.getWritingSessions({ userId: user.id }) : null,
+    queryFn: () => user ? backend.ielts.getWritingSessions(user.id) : null,
     enabled: !!user,
   });
 
   const { data: readingSessions } = useQuery({
     queryKey: ["readingSessions", user?.id],
-    queryFn: () => user ? backend.ielts.getReadingSessions({ userId: user.id }) : null,
+    queryFn: () => user ? backend.ielts.getReadingSessions(user.id) : null,
     enabled: !!user,
   });
 
   const { data: listeningSessions } = useQuery({
     queryKey: ["listeningSessions", user?.id],
-    queryFn: () => user ? backend.ielts.getListeningSessions({ userId: user.id }) : null,
+    queryFn: () => user ? backend.ielts.getListeningSessions(user.id) : null,
     enabled: !!user,
   });
 
   const { data: vocabularyProgress } = useQuery({
     queryKey: ["vocabularyProgress", user?.id],
-    queryFn: () => user ? backend.ielts.getVocabularyProgress({ userId: user.id }) : null,
+    queryFn: () => user ? backend.ielts.getVocabularyProgress(user.id) : null,
     enabled: !!user,
   });
 
@@ -53,7 +52,6 @@ export default function Progress() {
         <div className="flex items-center justify-center min-h-[400px]">
           <p className="text-gray-600 dark:text-gray-300">Please set up your profile to view progress.</p>
         </div>
-        <DiamondNavigation />
       </>
     );
   }
@@ -182,7 +180,11 @@ export default function Progress() {
                   <span>Overall Progress</span>
                   <span>{Math.round(progressToTarget)}%</span>
                 </div>
-                <ProgressBar value={progressToTarget} className="h-3" />
+                <ProgressBar 
+                  value={progressToTarget} 
+                  className="h-3" 
+                  aria-label={`Overall progress to target band score: ${Math.round(progressToTarget)}%`}
+                />
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-300">
                 {overallBand >= targetBand 
@@ -417,8 +419,6 @@ export default function Progress() {
           </Card>
         )}
       </div>
-      
-      <DiamondNavigation />
     </>
   );
 }

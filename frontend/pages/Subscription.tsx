@@ -4,7 +4,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/use-toast";
-import DiamondNavigation from "../components/DiamondNavigation";
 
 export default function Subscription() {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
@@ -273,7 +272,6 @@ export default function Subscription() {
         </div>
       </div>
       
-      <DiamondNavigation />
     </>
   );
 }

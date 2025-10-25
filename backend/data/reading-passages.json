@@ -1,0 +1,1227 @@
+[
+  {
+    "id": 1,
+    "title": "The Transformative Influence of Artificial Intelligence on the Global Labor Market",
+    "level": "academic",
+    "estimatedTime": 20,
+    "paragraphs": [
+      {
+        "id": "P1",
+        "text": "A. The advent of artificial intelligence (AI) has ushered in an era of unprecedented technological advancement, profoundly reshaping the landscape of employment worldwide. As algorithms capable of learning from data proliferate, the integration of AI into various industries promises enhanced efficiency and innovation, yet it simultaneously raises concerns about job displacement and the obsolescence of certain skill sets. Central to this discourse is the notion that while AI automates routine tasks, it also fosters the emergence of novel roles that demand human ingenuity and adaptability. This duality underscores the need for strategic workforce development to mitigate potential disruptions. According to a 2023 report by the World Economic Forum, an estimated 85 million jobs may be displaced by AI by 2025, contrasted by the creation of 97 million new positions, highlighting a net positive shift contingent upon proactive reskilling initiatives."
+      },
+      {
+        "id": "P2",
+        "text": "B. Historically, technological revolutions have mirrored similar patterns of upheaval and renewal, with the Industrial Revolution of the late 18th century serving as a poignant analogy. During that period, mechanization supplanted artisanal labor in textile manufacturing, leading to widespread unemployment among handloom weavers; however, it eventually spurred urbanization and the growth of factory-based economies, engendering diverse employment opportunities. In contemporary terms, AI's incursion into the manufacturing sector exemplifies this trajectory. A case study from the automotive industry illustrates how Ford Motor Company, in collaboration with AI firm Cognizant, implemented predictive maintenance systems in 2022. These systems, leveraging machine learning to forecast equipment failures, reduced downtime by 30 percent and augmented productivity, thereby necessitating fewer manual inspectors but elevating demand for data analysts and AI ethicists to oversee algorithmic fairness."
+      },
+      {
+        "id": "P3",
+        "text": "C. Beyond manufacturing, the service sector faces equally transformative pressures from AI-driven automation. Customer service, once reliant on human agents for interpersonal interactions, now increasingly incorporates chatbots and virtual assistants that handle routine inquiries with remarkable speed and accuracy. A notable example is the deployment of IBM's Watson Assistant by JPMorgan Chase in 2021, which processed over 1.7 million client queries annually, achieving a 95 percent resolution rate without human intervention. This innovation not only curtails operational costs by an estimated 20 percent but also liberates employees to engage in higher-value tasks such as complex financial advising. Nevertheless, the transition has not been seamless; frontline workers, particularly in developing economies, report skill mismatches, prompting calls for inclusive training programs to bridge the digital divide."
+      },
+      {
+        "id": "P4",
+        "text": "D. The broader implications of AI's rise extend to socioeconomic equity and policy formulation. As automation disproportionately affects low-skilled occupations, income inequality may exacerbate, with projections from Oxford University's 2019 study indicating that up to 47 percent of jobs in the United States are at high risk of automation. To counteract this, governments and corporations are exploring universal basic income pilots and lifelong learning subsidies. In Singapore, for instance, the SkillsFuture initiative, launched in 2015 and enhanced with AI-focused modules by 2024, has empowered over 500,000 workers to upskill, fostering a resilient labor market. Such interventions underscore the imperative for collaborative efforts to harness AI's potential while safeguarding employment stability."
+      }
+    ],
+    "questions": [
+      {
+        "id": 1,
+        "type": "matching-headings",
+        "title": "Questions 1–4",
+        "instructions": "Choose the correct heading for paragraphs P1–P4 from the list of headings below. Write the correct number, i–vii, in boxes 1–4 on your answer sheet.",
+        "questions": [
+          {
+            "id": 1,
+            "questionText": "Paragraph A",
+            "options": [
+              "AI's dual impact on employment",
+              "Historical parallels in manufacturing",
+              "Automation transforming service roles",
+              "Policy measures against job inequality",
+              "AI advancements in medical diagnostics",
+              "Erosion of artistic professions",
+              "Worldwide standards for AI governance"
+            ],
+            "correctAnswer": "AI's dual impact on employment"
+          },
+          {
+            "id": 2,
+            "questionText": "Paragraph B",
+            "options": [
+              "AI's dual impact on employment",
+              "Historical parallels in manufacturing",
+              "Automation transforming service roles",
+              "Policy measures against job inequality",
+              "AI advancements in medical diagnostics",
+              "Erosion of artistic professions",
+              "Worldwide standards for AI governance"
+            ],
+            "correctAnswer": "Historical parallels in manufacturing"
+          },
+          {
+            "id": 3,
+            "questionText": "Paragraph C",
+            "options": [
+              "AI's dual impact on employment",
+              "Historical parallels in manufacturing",
+              "Automation transforming service roles",
+              "Policy measures against job inequality",
+              "AI advancements in medical diagnostics",
+              "Erosion of artistic professions",
+              "Worldwide standards for AI governance"
+            ],
+            "correctAnswer": "Automation transforming service roles"
+          },
+          {
+            "id": 4,
+            "questionText": "Paragraph D",
+            "options": [
+              "AI's dual impact on employment",
+              "Historical parallels in manufacturing",
+              "Automation transforming service roles",
+              "Policy measures against job inequality",
+              "AI advancements in medical diagnostics",
+              "Erosion of artistic professions",
+              "Worldwide standards for AI governance"
+            ],
+            "correctAnswer": "Policy measures against job inequality"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "type": "true-false-not-given",
+        "title": "Questions 5–9",
+        "instructions": "Do the following statements agree with the information in the Reading Passage? Write YES if the statement agrees with the views of the writer, NO if the statement contradicts the views of the writer, NOT GIVEN if it is impossible to say what the writer thinks about this.",
+        "questions": [
+          {
+            "id": 5,
+            "questionText": "AI will lead to a net loss of jobs globally by 2025.",
+            "correctAnswer": "NO",
+            "explanation": "The passage states that 85 million jobs may be displaced but 97 million new positions will be created, resulting in a net positive shift."
+          },
+          {
+            "id": 6,
+            "questionText": "Technological revolutions always cause long-term unemployment.",
+            "correctAnswer": "NO",
+            "explanation": "The passage mentions that the Industrial Revolution eventually led to diverse employment opportunities despite initial unemployment."
+          },
+          {
+            "id": 7,
+            "questionText": "AI automation primarily benefits high-skilled workers.",
+            "correctAnswer": "NOT GIVEN",
+            "explanation": "The passage doesn't specifically state that AI primarily benefits high-skilled workers."
+          },
+          {
+            "id": 8,
+            "questionText": "Governments should implement universal basic income to address AI impacts.",
+            "correctAnswer": "NOT GIVEN",
+            "explanation": "The passage mentions that governments are exploring UBI but doesn't state they should implement it."
+          },
+          {
+            "id": 9,
+            "questionText": "The SkillsFuture program has failed to upskill workers effectively.",
+            "correctAnswer": "NO",
+            "explanation": "The passage states that SkillsFuture has empowered over 500,000 workers to upskill."
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "type": "gap-fill",
+        "title": "Questions 10–14",
+        "instructions": "Complete the sentences below. Choose ONE WORD ONLY from the passage for each answer. Write your answers in boxes 10–14.",
+        "questions": [
+          {
+            "id": 10,
+            "questionText": "AI raises concerns about job displacement and the obsolescence of certain ___ sets.",
+            "correctAnswer": "skill"
+          },
+          {
+            "id": 11,
+            "questionText": "Mechanization in textile manufacturing caused unemployment among ___ weavers.",
+            "correctAnswer": "handloom"
+          },
+          {
+            "id": 12,
+            "questionText": "Increased automation created a need for data ___ and AI ethicists.",
+            "correctAnswer": "analysts"
+          },
+          {
+            "id": 13,
+            "questionText": "Employees were freed to focus on tasks such as ___ financial advising.",
+            "correctAnswer": "complex"
+          },
+          {
+            "id": 14,
+            "questionText": "Automation may worsen income inequality, which could ___ according to Oxford projections.",
+            "correctAnswer": "exacerbate"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "type": "short-answer",
+        "title": "Questions 15–18",
+        "instructions": "Answer the questions below. Choose NO MORE THAN THREE WORDS from the passage for each answer.",
+        "questions": [
+          {
+            "id": 15,
+            "questionText": "What does AI promise to enhance in various industries?",
+            "correctAnswer": "efficiency and innovation",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "The passage explicitly states AI integration promises 'enhanced efficiency and innovation' in various industries.",
+            "evidenceQuote": "the integration of AI into various industries promises enhanced efficiency and innovation",
+            "evidenceLocation": "P1 L3-4",
+            "confidence": 95,
+            "questionType": "specific_detail",
+            "alternativeAnswers": ["efficiency innovation"]
+          },
+          {
+            "id": 16,
+            "questionText": "When did Ford Motor Company implement predictive maintenance systems?",
+            "correctAnswer": "2022",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "The passage states Ford implemented these systems in collaboration with Cognizant in 2022.",
+            "evidenceQuote": "Ford Motor Company, in collaboration with AI firm Cognizant, implemented predictive maintenance systems in 2022",
+            "evidenceLocation": "P2 L7-8",
+            "confidence": 100,
+            "questionType": "factual",
+            "alternativeAnswers": ["in 2022"]
+          },
+          {
+            "id": 17,
+            "questionText": "Who deployed IBM's Watson Assistant in 2021?",
+            "correctAnswer": "JPMorgan Chase",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "The passage explicitly names JPMorgan Chase as the company that deployed Watson Assistant.",
+            "evidenceQuote": "the deployment of IBM's Watson Assistant by JPMorgan Chase in 2021",
+            "evidenceLocation": "P3 L4-5",
+            "confidence": 100,
+            "questionType": "identification",
+            "alternativeAnswers": ["JPMorgan"]
+          },
+          {
+            "id": 18,
+            "questionText": "Where was the SkillsFuture initiative launched?",
+            "correctAnswer": "Singapore",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "The passage clearly identifies Singapore as the location of the SkillsFuture initiative.",
+            "evidenceQuote": "In Singapore, for instance, the SkillsFuture initiative, launched in 2015",
+            "evidenceLocation": "P4 L6-7",
+            "confidence": 100,
+            "questionType": "identification",
+            "alternativeAnswers": ["in Singapore"]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "The Evolution of Vaccines: Pioneering Defenses Against Global Pandemics",
+    "level": "general",
+    "estimatedTime": 20,
+    "paragraphs": [
+      {
+        "id": "P1",
+        "text": "The history of vaccines represents a cornerstone in the advancement of public health, transforming humanity's ability to combat infectious diseases that once ravaged populations. Early immunization practices emerged in ancient civilizations, where individuals in China and India deliberately exposed themselves to mild forms of smallpox to confer immunity. Known as variolation, this rudimentary technique involved inhaling powdered scabs from infected individuals or scratching the skin with contaminated material. Although variolation reduced mortality rates from smallpox, it carried inherent dangers, including the risk of full-blown infection and death in up to 2 percent of cases. The transition to safer methods occurred in the late 18th century when English physician Edward Jenner observed that milkmaids exposed to cowpox appeared resistant to smallpox. In 1796, Jenner conducted experiments by inoculating an eight-year-old boy with cowpox pus, followed by a subsequent smallpox challenge, which proved successful in preventing the disease. This innovation, termed vaccination from the Latin 'vacca' for cow, laid the foundation for contemporary immunology and marked the dawn of evidence-based preventive medicine."
+      },
+      {
+        "id": "P2",
+        "text": "The 19th century witnessed rapid proliferation of vaccination technologies, spurred by scientific rigor and governmental mandates. French chemist Louis Pasteur expanded Jenner's principles in 1885 by developing a vaccine for rabies, using attenuated virus strains to safely stimulate immune responses. Pasteur's work not only saved the life of a boy bitten by a rabid dog but also established pasteurization techniques that extended vaccine stability. By the early 20th century, vaccines for diphtheria, tetanus, and pertussis were formulated, leading to the creation of the DTP combination vaccine in the 1940s. A pivotal case study in vaccine efficacy is the global smallpox eradication campaign, launched by the World Health Organization in 1967. Through ring vaccination strategies—targeting contacts of infected individuals—rather than mass campaigns, health workers systematically isolated and immunized communities. This approach culminated in the last naturally occurring smallpox case in 1977, with official eradication certified in 1980, averting an estimated 300 million deaths in that decade alone."
+      },
+      {
+        "id": "P3",
+        "text": "Vaccines have since assumed a central role in global health architecture, underpinning initiatives that have drastically curtailed morbidity and mortality from vaccine-preventable diseases. The introduction of the inactivated polio vaccine by Jonas Salk in 1955 revolutionized child health, reducing global polio incidence from 350,000 cases in 1988 to fewer than 100 by 2023. Complementing Salk's efforts, Albert Sabin's oral polio vaccine, deployed in 1961, facilitated easier administration in resource-limited settings, accelerating eradication progress in developing regions. A comprehensive 2019 analysis by the Institute for Health Metrics and Evaluation quantified vaccines' impact, revealing that immunization programs averted 154 million lives over the past 50 years. During the COVID-19 pandemic, which emerged in 2019, vaccines exemplified accelerated innovation under Operation Warp Speed, a collaborative effort yielding mRNA-based candidates within months. Platforms like those from Pfizer-BioNTech and Moderna, authorized for emergency use in December 2020, demonstrated over 90 percent efficacy against severe disease, enabling societal reopening."
+      },
+      {
+        "id": "P4",
+        "text": "Despite these triumphs, persistent challenges in vaccine equity and acceptance underscore the fragility of global health gains. In sub-Saharan Africa, where infrastructure deficits hinder cold-chain logistics, coverage rates for routine immunizations hover below 70 percent, per a 2022 UNICEF report. Vaccine hesitancy, fueled by misinformation and historical mistrust—such as the 1998 retracted Lancet study falsely linking MMR vaccine to autism—has led to measles resurgence in several countries. Addressing these barriers requires multifaceted strategies, including community engagement and transparent communication from health authorities. Looking ahead, research into universal vaccines capable of targeting multiple influenza strains or broadly neutralizing HIV antibodies holds promise for preempting future outbreaks. Sustained international collaboration, exemplified by the Coalition for Epidemic Preparedness Innovations founded in 2017, will be essential to fortify defenses against emerging pathogens. Ultimately, the legacy of vaccines lies not merely in historical milestones but in their ongoing capacity to foster healthier, more resilient global populations."
+      }
+    ],
+    "questions": [
+      {
+        "id": 1,
+        "type": "matching-headings",
+        "title": "Questions 1–4",
+        "instructions": "Choose the correct heading for each paragraph from the list below.",
+        "questions": [
+          {
+            "id": 1,
+            "questionText": "Paragraph 1",
+            "options": [
+              "Heading A",
+              "Heading B",
+              "Heading C",
+              "Heading D",
+              "Heading E",
+              "Heading F"
+            ],
+            "correctAnswer": "Heading A"
+          },
+          {
+            "id": 2,
+            "questionText": "Paragraph 2",
+            "options": [
+              "Heading A",
+              "Heading B",
+              "Heading C",
+              "Heading D",
+              "Heading E",
+              "Heading F"
+            ],
+            "correctAnswer": "Heading B"
+          },
+          {
+            "id": 3,
+            "questionText": "Paragraph 3",
+            "options": [
+              "Heading A",
+              "Heading B",
+              "Heading C",
+              "Heading D",
+              "Heading E",
+              "Heading F"
+            ],
+            "correctAnswer": "Heading C"
+          },
+          {
+            "id": 4,
+            "questionText": "Paragraph 4",
+            "options": [
+              "Heading A",
+              "Heading B",
+              "Heading C",
+              "Heading D",
+              "Heading E",
+              "Heading F"
+            ],
+            "correctAnswer": "Heading D"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "type": "true-false-not-given",
+        "title": "Questions 5–10",
+        "instructions": "Do the following statements agree with the information in the passage?",
+        "questions": [
+          {
+            "id": 5,
+            "questionText": "Statement 5",
+            "correctAnswer": "YES"
+          },
+          {
+            "id": 6,
+            "questionText": "Statement 6",
+            "correctAnswer": "NO"
+          },
+          {
+            "id": 7,
+            "questionText": "Statement 7",
+            "correctAnswer": "NOT GIVEN"
+          },
+          {
+            "id": 8,
+            "questionText": "Statement 8",
+            "correctAnswer": "YES"
+          },
+          {
+            "id": 9,
+            "questionText": "Statement 9",
+            "correctAnswer": "NO"
+          },
+          {
+            "id": 10,
+            "questionText": "Statement 10",
+            "correctAnswer": "NOT GIVEN"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "type": "multiple-choice",
+        "title": "Questions 11–14",
+        "instructions": "Choose the correct answer.",
+        "questions": [
+          {
+            "id": 11,
+            "questionText": "Question 11",
+            "options": ["Option A", "Option B", "Option C", "Option D"],
+            "correctAnswer": "Option A"
+          },
+          {
+            "id": 12,
+            "questionText": "Question 12",
+            "options": ["Option A", "Option B", "Option C", "Option D"],
+            "correctAnswer": "Option B"
+          },
+          {
+            "id": 13,
+            "questionText": "Question 13",
+            "options": ["Option A", "Option B", "Option C", "Option D"],
+            "correctAnswer": "Option C"
+          },
+          {
+            "id": 14,
+            "questionText": "Question 14",
+            "options": ["Option A", "Option B", "Option C", "Option D"],
+            "correctAnswer": "Option D"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "type": "short-answer",
+        "title": "Questions 15–18",
+        "instructions": "Answer the questions below. Choose NO MORE THAN THREE WORDS from the passage for each answer.",
+        "questions": [
+          {
+            "id": 15,
+            "questionText": "Who developed a vaccine for rabies in 1885?",
+            "correctAnswer": "Louis Pasteur",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "The passage explicitly states that French chemist Louis Pasteur developed the rabies vaccine in 1885.",
+            "evidenceQuote": "French chemist Louis Pasteur expanded Jenner's principles in 1885 by developing a vaccine for rabies",
+            "evidenceLocation": "P2 L2-3",
+            "confidence": 100,
+            "questionType": "identification",
+            "alternativeAnswers": ["Pasteur"]
+          },
+          {
+            "id": 16,
+            "questionText": "When was the last naturally occurring smallpox case recorded?",
+            "correctAnswer": "1977",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "The passage clearly states the last naturally occurring case occurred in 1977.",
+            "evidenceQuote": "the last naturally occurring smallpox case in 1977",
+            "evidenceLocation": "P2 L12",
+            "confidence": 100,
+            "questionType": "factual",
+            "alternativeAnswers": ["in 1977"]
+          },
+          {
+            "id": 17,
+            "questionText": "What type of vaccine did Jonas Salk introduce in 1955?",
+            "correctAnswer": "inactivated polio vaccine",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "The passage identifies Salk's vaccine as the inactivated polio vaccine introduced in 1955.",
+            "evidenceQuote": "The introduction of the inactivated polio vaccine by Jonas Salk in 1955",
+            "evidenceLocation": "P3 L2",
+            "confidence": 100,
+            "questionType": "specific_detail",
+            "alternativeAnswers": ["inactivated polio", "polio vaccine"]
+          },
+          {
+            "id": 18,
+            "questionText": "When was the Coalition for Epidemic Preparedness Innovations founded?",
+            "correctAnswer": "2017",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "The passage explicitly mentions this organization was founded in 2017.",
+            "evidenceQuote": "the Coalition for Epidemic Preparedness Innovations founded in 2017",
+            "evidenceLocation": "P4 L10-11",
+            "confidence": 100,
+            "questionType": "factual",
+            "alternativeAnswers": ["in 2017"]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Healthy Lifestyle Choices",
+    "level": "general",
+    "estimatedTime": 20,
+    "paragraphs": [
+      {
+        "id": "P1",
+        "text": "[Health lifestyle paragraph 1 - to be added]"
+      },
+      {
+        "id": "P2",
+        "text": "[Health lifestyle paragraph 2 - to be added]"
+      },
+      {
+        "id": "P3",
+        "text": "[Health lifestyle paragraph 3 - to be added]"
+      },
+      {
+        "id": "P4",
+        "text": "[Health lifestyle paragraph 4 - to be added]"
+      }
+    ],
+    "questions": [
+      {
+        "id": 1,
+        "type": "true-false-not-given",
+        "title": "Questions 1–6",
+        "instructions": "Do the following statements agree with the information in the passage?",
+        "questions": [
+          {
+            "id": 1,
+            "questionText": "Statement 1",
+            "correctAnswer": "YES"
+          },
+          {
+            "id": 2,
+            "questionText": "Statement 2",
+            "correctAnswer": "NO"
+          },
+          {
+            "id": 3,
+            "questionText": "Statement 3",
+            "correctAnswer": "NOT GIVEN"
+          },
+          {
+            "id": 4,
+            "questionText": "Statement 4",
+            "correctAnswer": "YES"
+          },
+          {
+            "id": 5,
+            "questionText": "Statement 5",
+            "correctAnswer": "NO"
+          },
+          {
+            "id": 6,
+            "questionText": "Statement 6",
+            "correctAnswer": "NOT GIVEN"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "type": "multiple-choice",
+        "title": "Questions 7–10",
+        "instructions": "Choose the correct answer.",
+        "questions": [
+          {
+            "id": 7,
+            "questionText": "Question 7",
+            "options": ["Option A", "Option B", "Option C", "Option D"],
+            "correctAnswer": "Option A"
+          },
+          {
+            "id": 8,
+            "questionText": "Question 8",
+            "options": ["Option A", "Option B", "Option C", "Option D"],
+            "correctAnswer": "Option B"
+          },
+          {
+            "id": 9,
+            "questionText": "Question 9",
+            "options": ["Option A", "Option B", "Option C", "Option D"],
+            "correctAnswer": "Option C"
+          },
+          {
+            "id": 10,
+            "questionText": "Question 10",
+            "options": ["Option A", "Option B", "Option C", "Option D"],
+            "correctAnswer": "Option D"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "type": "gap-fill",
+        "title": "Questions 11–13",
+        "instructions": "Complete the sentences below. Choose NO MORE THAN TWO WORDS from the passage.",
+        "questions": [
+          {
+            "id": 11,
+            "questionText": "Fill in blank 11 ___.",
+            "correctAnswer": "answer"
+          },
+          {
+            "id": 12,
+            "questionText": "Fill in blank 12 ___.",
+            "correctAnswer": "answer"
+          },
+          {
+            "id": 13,
+            "questionText": "Fill in blank 13 ___.",
+            "correctAnswer": "answer"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "type": "short-answer",
+        "title": "Questions 14–17",
+        "instructions": "Answer the questions below. Choose NO MORE THAN THREE WORDS from the passage for each answer.",
+        "questions": [
+          {
+            "id": 14,
+            "questionText": "What is essential for maintaining good health?",
+            "correctAnswer": "[to be added]",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "Placeholder question for healthy lifestyle passage.",
+            "evidenceQuote": "[to be added]",
+            "evidenceLocation": "P1 L1-2",
+            "confidence": 85,
+            "questionType": "specific_detail",
+            "alternativeAnswers": []
+          },
+          {
+            "id": 15,
+            "questionText": "When should people exercise regularly?",
+            "correctAnswer": "[to be added]",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "Placeholder question for healthy lifestyle passage.",
+            "evidenceQuote": "[to be added]",
+            "evidenceLocation": "P2 L3-4",
+            "confidence": 85,
+            "questionType": "factual",
+            "alternativeAnswers": []
+          },
+          {
+            "id": 16,
+            "questionText": "Who benefits from a balanced diet?",
+            "correctAnswer": "[to be added]",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "Placeholder question for healthy lifestyle passage.",
+            "evidenceQuote": "[to be added]",
+            "evidenceLocation": "P3 L2-3",
+            "confidence": 85,
+            "questionType": "identification",
+            "alternativeAnswers": []
+          },
+          {
+            "id": 17,
+            "questionText": "Where can people find health information?",
+            "correctAnswer": "[to be added]",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "Placeholder question for healthy lifestyle passage.",
+            "evidenceQuote": "[to be added]",
+            "evidenceLocation": "P4 L1-2",
+            "confidence": 85,
+            "questionType": "identification",
+            "alternativeAnswers": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Modern Education Systems",
+    "level": "general",
+    "estimatedTime": 20,
+    "paragraphs": [
+      {
+        "id": "P1",
+        "text": "[Education systems paragraph 1 - to be added]"
+      },
+      {
+        "id": "P2",
+        "text": "[Education systems paragraph 2 - to be added]"
+      },
+      {
+        "id": "P3",
+        "text": "[Education systems paragraph 3 - to be added]"
+      },
+      {
+        "id": "P4",
+        "text": "[Education systems paragraph 4 - to be added]"
+      }
+    ],
+    "questions": [
+      {
+        "id": 1,
+        "type": "matching-headings",
+        "title": "Questions 1–4",
+        "instructions": "Choose the correct heading for each paragraph.",
+        "questions": [
+          {
+            "id": 1,
+            "questionText": "Paragraph 1",
+            "options": [
+              "Heading A",
+              "Heading B",
+              "Heading C",
+              "Heading D",
+              "Heading E",
+              "Heading F"
+            ],
+            "correctAnswer": "Heading A"
+          },
+          {
+            "id": 2,
+            "questionText": "Paragraph 2",
+            "options": [
+              "Heading A",
+              "Heading B",
+              "Heading C",
+              "Heading D",
+              "Heading E",
+              "Heading F"
+            ],
+            "correctAnswer": "Heading B"
+          },
+          {
+            "id": 3,
+            "questionText": "Paragraph 3",
+            "options": [
+              "Heading A",
+              "Heading B",
+              "Heading C",
+              "Heading D",
+              "Heading E",
+              "Heading F"
+            ],
+            "correctAnswer": "Heading C"
+          },
+          {
+            "id": 4,
+            "questionText": "Paragraph 4",
+            "options": [
+              "Heading A",
+              "Heading B",
+              "Heading C",
+              "Heading D",
+              "Heading E",
+              "Heading F"
+            ],
+            "correctAnswer": "Heading D"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "type": "multiple-choice",
+        "title": "Questions 5–9",
+        "instructions": "Choose the correct answer.",
+        "questions": [
+          {
+            "id": 5,
+            "questionText": "Question 5",
+            "options": ["Option A", "Option B", "Option C", "Option D"],
+            "correctAnswer": "Option A"
+          },
+          {
+            "id": 6,
+            "questionText": "Question 6",
+            "options": ["Option A", "Option B", "Option C", "Option D"],
+            "correctAnswer": "Option B"
+          },
+          {
+            "id": 7,
+            "questionText": "Question 7",
+            "options": ["Option A", "Option B", "Option C", "Option D"],
+            "correctAnswer": "Option C"
+          },
+          {
+            "id": 8,
+            "questionText": "Question 8",
+            "options": ["Option A", "Option B", "Option C", "Option D"],
+            "correctAnswer": "Option D"
+          },
+          {
+            "id": 9,
+            "questionText": "Question 9",
+            "options": ["Option A", "Option B", "Option C", "Option D"],
+            "correctAnswer": "Option A"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "type": "gap-fill",
+        "title": "Questions 10–13",
+        "instructions": "Complete the sentences. Choose NO MORE THAN TWO WORDS from the passage.",
+        "questions": [
+          {
+            "id": 10,
+            "questionText": "Fill in blank 10 ___.",
+            "correctAnswer": "answer"
+          },
+          {
+            "id": 11,
+            "questionText": "Fill in blank 11 ___.",
+            "correctAnswer": "answer"
+          },
+          {
+            "id": 12,
+            "questionText": "Fill in blank 12 ___.",
+            "correctAnswer": "answer"
+          },
+          {
+            "id": 13,
+            "questionText": "Fill in blank 13 ___.",
+            "correctAnswer": "answer"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "type": "short-answer",
+        "title": "Questions 14–17",
+        "instructions": "Answer the questions below. Choose NO MORE THAN THREE WORDS from the passage for each answer.",
+        "questions": [
+          {
+            "id": 14,
+            "questionText": "What has transformed modern education?",
+            "correctAnswer": "[to be added]",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "Placeholder question for modern education systems passage.",
+            "evidenceQuote": "[to be added]",
+            "evidenceLocation": "P1 L1-2",
+            "confidence": 85,
+            "questionType": "specific_detail",
+            "alternativeAnswers": []
+          },
+          {
+            "id": 15,
+            "questionText": "When did digital learning become widespread?",
+            "correctAnswer": "[to be added]",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "Placeholder question for modern education systems passage.",
+            "evidenceQuote": "[to be added]",
+            "evidenceLocation": "P2 L3-4",
+            "confidence": 85,
+            "questionType": "factual",
+            "alternativeAnswers": []
+          },
+          {
+            "id": 16,
+            "questionText": "Who benefits most from online courses?",
+            "correctAnswer": "[to be added]",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "Placeholder question for modern education systems passage.",
+            "evidenceQuote": "[to be added]",
+            "evidenceLocation": "P3 L2-3",
+            "confidence": 85,
+            "questionType": "identification",
+            "alternativeAnswers": []
+          },
+          {
+            "id": 17,
+            "questionText": "Where are students able to access resources?",
+            "correctAnswer": "[to be added]",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "Placeholder question for modern education systems passage.",
+            "evidenceQuote": "[to be added]",
+            "evidenceLocation": "P4 L1-2",
+            "confidence": 85,
+            "questionType": "identification",
+            "alternativeAnswers": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "The Architecture of Ancient Rome: Engineering Marvels That Shaped Civilization",
+    "level": "academic",
+    "estimatedTime": 20,
+    "paragraphs": [
+      {
+        "id": "P1",
+        "text": "The architectural achievements of Ancient Rome stand as enduring testaments to human ingenuity and engineering prowess, fundamentally transforming urban planning and construction techniques that persist to this day. Roman architects pioneered the extensive use of concrete, known as opus caementicium, around the 3rd century BCE, which allowed for unprecedented structural flexibility and durability. This revolutionary material, composed of volcanic ash called pozzolana mixed with lime and aggregate, enabled the construction of massive domes and vaults that defied previous limitations. The Pantheon, completed in 126 CE under Emperor Hadrian, exemplifies this mastery with its unreinforced concrete dome spanning 43.3 meters in diameter—a record that remained unbroken for over 1,300 years. According to architectural historian Diana E. Kleiner of Yale University, the Pantheon's oculus, a 9-meter opening at the dome's apex, not only reduced structural weight but also created dramatic lighting effects that symbolized the connection between earthly and divine realms."
+      },
+      {
+        "id": "P2",
+        "text": "Beyond monumental structures, Roman engineering excellence manifested in sophisticated infrastructure systems that supported urban populations of unprecedented scale. The aqueduct network, initiated with the Aqua Appia in 312 BCE by censor Appius Claudius Caecus, eventually comprised eleven major conduits delivering over 1 million cubic meters of fresh water daily to Rome by the 1st century CE. These engineering marvels relied on precise gradients, averaging just 0.5 percent slope, to transport water across valleys via towering arcades and through mountains via tunnels exceeding 50 kilometers in length. A case study of the Pont du Gard in southern France, constructed around 50 CE, demonstrates Roman hydraulic mastery: this three-tiered aqueduct bridge rises 49 meters above the Gardon River while maintaining a gradient of merely 1 in 3,000 over its 275-meter span. Professor Kevin Greene's 2008 analysis revealed that Roman water management systems exhibited efficiency rates comparable to modern municipal utilities, supporting bathhouses, fountains, and private households across the empire."
+      },
+      {
+        "id": "P3",
+        "text": "The Romans revolutionized public assembly spaces through innovative architectural forms that accommodated mass gatherings for entertainment and civic functions. The Colosseum, officially known as the Flavian Amphitheatre, was commissioned by Emperor Vespasian in 70 CE and completed by his son Titus in 80 CE. This elliptical structure, measuring 189 meters long and 156 meters wide, could accommodate an estimated 50,000 to 80,000 spectators who accessed their seats through a system of 80 entrance arches designed for rapid crowd dispersal—a feature modern stadiums still emulate. The building incorporated a complex network of underground passages called the hypogeum, where gladiators and wild animals awaited their arena appearances. Remarkably, the Colosseum's retractable awning system, the velarium, consisted of canvas sections operated by sailors from the imperial fleet, protecting spectators from sun and rain. Archaeological evidence from a 2015 excavation led by Dr. Rossella Rea uncovered mechanical lifting systems capable of hoisting scenery and combatants weighing up to 300 kilograms from the hypogeum to the arena floor within seconds."
+      },
+      {
+        "id": "P4",
+        "text": "Roman architectural influence extended throughout the empire via a standardized approach to urban planning known as the castrum layout, characterized by intersecting main streets—the cardo (north-south) and decumanus (east-west)—creating a grid pattern still visible in modern European cities. Public forums served as political, commercial, and religious centers, with Trajan's Forum, completed in 112 CE by architect Apollodorus of Damascus, representing the pinnacle of this tradition. Spanning 300 meters in length, it featured markets, basilicas, and libraries flanking a central plaza dominated by Trajan's Column, which spirals upward 35 meters and depicts over 2,500 figures narrating military campaigns in Dacia. The lasting impact of Roman architecture is evidenced in Renaissance revivals, with Andrea Palladio's 16th-century treatises directly citing Vitruvius's De Architectura as foundational texts. Contemporary architects continue to reference Roman principles of proportion, symmetry, and integration of form with function, demonstrating that these ancient innovations remain relevant nearly two millennia after Rome's decline."
+      }
+    ],
+    "questions": [
+      {
+        "id": 1,
+        "type": "matching-headings",
+        "title": "Questions 1–4",
+        "instructions": "Choose the correct heading for paragraphs P1–P4 from the list of headings below.",
+        "questions": [
+          {
+            "id": 1,
+            "questionText": "Paragraph P1",
+            "options": [
+              "Revolutionary building materials and techniques",
+              "Water supply infrastructure across the empire",
+              "Entertainment venues for public gatherings",
+              "Urban planning and lasting influence",
+              "Decorative elements in Roman buildings",
+              "Military fortifications and defense systems",
+              "Religious temples and sacred architecture"
+            ],
+            "correctAnswer": "Revolutionary building materials and techniques"
+          },
+          {
+            "id": 2,
+            "questionText": "Paragraph P2",
+            "options": [
+              "Revolutionary building materials and techniques",
+              "Water supply infrastructure across the empire",
+              "Entertainment venues for public gatherings",
+              "Urban planning and lasting influence",
+              "Decorative elements in Roman buildings",
+              "Military fortifications and defense systems",
+              "Religious temples and sacred architecture"
+            ],
+            "correctAnswer": "Water supply infrastructure across the empire"
+          },
+          {
+            "id": 3,
+            "questionText": "Paragraph P3",
+            "options": [
+              "Revolutionary building materials and techniques",
+              "Water supply infrastructure across the empire",
+              "Entertainment venues for public gatherings",
+              "Urban planning and lasting influence",
+              "Decorative elements in Roman buildings",
+              "Military fortifications and defense systems",
+              "Religious temples and sacred architecture"
+            ],
+            "correctAnswer": "Entertainment venues for public gatherings"
+          },
+          {
+            "id": 4,
+            "questionText": "Paragraph P4",
+            "options": [
+              "Revolutionary building materials and techniques",
+              "Water supply infrastructure across the empire",
+              "Entertainment venues for public gatherings",
+              "Urban planning and lasting influence",
+              "Decorative elements in Roman buildings",
+              "Military fortifications and defense systems",
+              "Religious temples and sacred architecture"
+            ],
+            "correctAnswer": "Urban planning and lasting influence"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "type": "true-false-not-given",
+        "title": "Questions 5–9",
+        "instructions": "Do the following statements agree with the information in the Reading Passage? Write YES if the statement agrees with the information, NO if the statement contradicts the information, NOT GIVEN if there is no information on this.",
+        "questions": [
+          {
+            "id": 5,
+            "questionText": "Roman concrete remained stronger than modern concrete for over a millennium.",
+            "correctAnswer": "NOT GIVEN",
+            "explanation": "The passage states the Pantheon's dome span remained unbroken for 1,300 years but doesn't compare concrete strength."
+          },
+          {
+            "id": 6,
+            "questionText": "The Roman aqueduct system could deliver over 1 million cubic meters of water daily by the 1st century CE.",
+            "correctAnswer": "YES",
+            "explanation": "The passage explicitly states this fact about Rome's eleven major aqueducts."
+          },
+          {
+            "id": 7,
+            "questionText": "The Colosseum was completed before Emperor Vespasian died.",
+            "correctAnswer": "NO",
+            "explanation": "The passage states Vespasian commissioned it in 70 CE but his son Titus completed it in 80 CE."
+          },
+          {
+            "id": 8,
+            "questionText": "The velarium system was operated by trained gladiators.",
+            "correctAnswer": "NO",
+            "explanation": "The passage states it was operated by sailors from the imperial fleet, not gladiators."
+          },
+          {
+            "id": 9,
+            "questionText": "Andrea Palladio visited Rome to study ancient buildings firsthand.",
+            "correctAnswer": "NOT GIVEN",
+            "explanation": "The passage mentions Palladio cited Vitruvius but doesn't state whether he visited Rome."
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "type": "gap-fill",
+        "title": "Questions 10–14",
+        "instructions": "Complete the sentences below. Choose ONE WORD ONLY from the passage for each answer.",
+        "questions": [
+          {
+            "id": 10,
+            "questionText": "Roman concrete incorporated volcanic ash called ___ to improve its properties.",
+            "correctAnswer": "pozzolana"
+          },
+          {
+            "id": 11,
+            "questionText": "The Pantheon's ___ is a 9-meter opening at the top of the dome.",
+            "correctAnswer": "oculus"
+          },
+          {
+            "id": 12,
+            "questionText": "Aqueducts required precise ___ to transport water across long distances.",
+            "correctAnswer": "gradients"
+          },
+          {
+            "id": 13,
+            "questionText": "The underground passages beneath the Colosseum were called the ___.",
+            "correctAnswer": "hypogeum"
+          },
+          {
+            "id": 14,
+            "questionText": "Roman urban planning followed a standardized ___ layout pattern.",
+            "correctAnswer": "castrum"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "type": "short-answer",
+        "title": "Questions 15–22",
+        "instructions": "Answer the questions below. Choose NO MORE THAN THREE WORDS AND/OR A NUMBER from the passage for each answer.",
+        "questions": [
+          {
+            "id": 15,
+            "questionText": "When was the Pantheon completed?",
+            "correctAnswer": "126 CE",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "The passage explicitly states the Pantheon was completed in 126 CE under Emperor Hadrian.",
+            "evidenceQuote": "The Pantheon, completed in 126 CE under Emperor Hadrian",
+            "evidenceLocation": "P1 L4",
+            "confidence": 100,
+            "questionType": "factual",
+            "alternativeAnswers": ["in 126 CE", "126CE"]
+          },
+          {
+            "id": 16,
+            "questionText": "What is the diameter of the Pantheon's dome?",
+            "correctAnswer": "43.3 meters",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "The passage provides the specific measurement of the dome's diameter.",
+            "evidenceQuote": "unreinforced concrete dome spanning 43.3 meters in diameter",
+            "evidenceLocation": "P1 L5",
+            "confidence": 100,
+            "questionType": "specific_detail",
+            "alternativeAnswers": ["43.3 metres", "43.3m"]
+          },
+          {
+            "id": 17,
+            "questionText": "Who initiated the first Roman aqueduct in 312 BCE?",
+            "correctAnswer": "Appius Claudius Caecus",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "The passage names the censor who built the Aqua Appia.",
+            "evidenceQuote": "initiated with the Aqua Appia in 312 BCE by censor Appius Claudius Caecus",
+            "evidenceLocation": "P2 L2-3",
+            "confidence": 100,
+            "questionType": "identification",
+            "alternativeAnswers": ["Appius Claudius"]
+          },
+          {
+            "id": 18,
+            "questionText": "How many major aqueducts eventually supplied Rome?",
+            "correctAnswer": "eleven",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "The passage states the aqueduct network comprised eleven major conduits.",
+            "evidenceQuote": "eventually comprised eleven major conduits",
+            "evidenceLocation": "P2 L3",
+            "confidence": 100,
+            "questionType": "factual",
+            "alternativeAnswers": ["11"]
+          },
+          {
+            "id": 19,
+            "questionText": "What is the height of the Pont du Gard above the river?",
+            "correctAnswer": "49 meters",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "The passage provides the exact height measurement of this aqueduct bridge.",
+            "evidenceQuote": "three-tiered aqueduct bridge rises 49 meters above the Gardon River",
+            "evidenceLocation": "P2 L8-9",
+            "confidence": 100,
+            "questionType": "specific_detail",
+            "alternativeAnswers": ["49 metres", "49m"]
+          },
+          {
+            "id": 20,
+            "questionText": "Who commissioned the Colosseum in 70 CE?",
+            "correctAnswer": "Emperor Vespasian",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "The passage clearly identifies Emperor Vespasian as the commissioner.",
+            "evidenceQuote": "commissioned by Emperor Vespasian in 70 CE",
+            "evidenceLocation": "P3 L3",
+            "confidence": 100,
+            "questionType": "identification",
+            "alternativeAnswers": ["Vespasian"]
+          },
+          {
+            "id": 21,
+            "questionText": "How many entrance arches did the Colosseum have?",
+            "correctAnswer": "80",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "The passage states spectators accessed seats through 80 entrance arches.",
+            "evidenceQuote": "through a system of 80 entrance arches",
+            "evidenceLocation": "P3 L5",
+            "confidence": 100,
+            "questionType": "factual",
+            "alternativeAnswers": ["eighty"]
+          },
+          {
+            "id": 22,
+            "questionText": "Who designed Trajan's Forum?",
+            "correctAnswer": "Apollodorus of Damascus",
+            "wordLimit": "NO MORE THAN THREE WORDS",
+            "justification": "The passage identifies the architect responsible for Trajan's Forum.",
+            "evidenceQuote": "completed in 112 CE by architect Apollodorus of Damascus",
+            "evidenceLocation": "P4 L3-4",
+            "confidence": 100,
+            "questionType": "identification",
+            "alternativeAnswers": ["Apollodorus"]
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "type": "sentence-completion",
+        "title": "Questions 23–27",
+        "instructions": "Complete each sentence with the correct ending, A–G, below.",
+        "questions": [
+          {
+            "id": 23,
+            "sentenceBeginning": "Roman concrete was revolutionary because it incorporated volcanic ash called…",
+            "options": {
+              "A": "pozzolana mixed with lime and aggregate",
+              "B": "limestone from nearby quarries",
+              "C": "marble dust for aesthetic purposes",
+              "D": "sand from the Mediterranean coast",
+              "E": "clay from Egyptian deposits",
+              "F": "granite chips for added strength",
+              "G": "obsidian for heat resistance"
+            },
+            "correctAnswer": "A",
+            "justification": "The passage explicitly states Roman concrete used volcanic ash called pozzolana mixed with lime and aggregate.",
+            "evidenceQuote": "volcanic ash called pozzolana mixed with lime and aggregate",
+            "evidenceLocation": "P1 L3-4",
+            "confidence": 100,
+            "questionType": "matching_sentence_endings",
+            "distractorAnalysis": {
+              "A": "Correct — exact materials mentioned in passage.",
+              "B": "Incorrect — limestone not specifically mentioned as primary ingredient.",
+              "C": "Incorrect — marble mentioned elsewhere but not for concrete.",
+              "D": "Incorrect — no mention of Mediterranean sand.",
+              "E": "Incorrect — no Egyptian materials mentioned.",
+              "F": "Incorrect — granite not mentioned in concrete composition.",
+              "G": "Incorrect — obsidian not mentioned."
+            }
+          },
+          {
+            "id": 24,
+            "sentenceBeginning": "The Pantheon's dome remained remarkable for over 1,300 years because…",
+            "options": {
+              "A": "it was the smallest dome ever built",
+              "B": "its 43.3-meter diameter was unmatched",
+              "C": "it used modern steel reinforcement",
+              "D": "it was built underground",
+              "E": "it required frequent repairs",
+              "F": "it was made entirely of marble",
+              "G": "it had multiple supporting columns"
+            },
+            "correctAnswer": "B",
+            "justification": "The passage states the Pantheon's unreinforced concrete dome spanning 43.3 meters remained a record for over 1,300 years.",
+            "evidenceQuote": "a record that remained unbroken for over 1,300 years",
+            "evidenceLocation": "P1 L5-6",
+            "confidence": 100,
+            "questionType": "matching_sentence_endings",
+            "distractorAnalysis": {
+              "A": "Incorrect — it was the largest, not smallest.",
+              "B": "Correct — specific diameter and record mentioned.",
+              "C": "Incorrect — predates modern steel reinforcement.",
+              "D": "Incorrect — the Pantheon is above ground.",
+              "E": "Incorrect — its durability is emphasized, not repairs.",
+              "F": "Incorrect — made of concrete, not entirely marble.",
+              "G": "Incorrect — the dome is unreinforced, remarkable for lack of supports."
+            }
+          },
+          {
+            "id": 25,
+            "sentenceBeginning": "Roman aqueducts demonstrated advanced engineering by…",
+            "options": {
+              "A": "using electric pumps to move water",
+              "B": "maintaining precise gradients of just 0.5 percent slope",
+              "C": "relying entirely on underground tunnels",
+              "D": "delivering water only to wealthy homes",
+              "E": "requiring daily manual operation",
+              "F": "avoiding all use of arches",
+              "G": "transporting seawater from distant oceans"
+            },
+            "correctAnswer": "B",
+            "justification": "The passage states aqueducts relied on precise gradients averaging just 0.5 percent slope to transport water.",
+            "evidenceQuote": "precise gradients, averaging just 0.5 percent slope",
+            "evidenceLocation": "P2 L4-5",
+            "confidence": 100,
+            "questionType": "matching_sentence_endings",
+            "distractorAnalysis": {
+              "A": "Incorrect — ancient aqueducts used gravity, not electric pumps.",
+              "B": "Correct — exact gradient percentage from passage.",
+              "C": "Incorrect — passage mentions arcades and valleys, not only tunnels.",
+              "D": "Incorrect — water served bathhouses, fountains, and households broadly.",
+              "E": "Incorrect — gravity-fed system didn't require daily manual operation.",
+              "F": "Incorrect — passage specifically mentions towering arcades (arches).",
+              "G": "Incorrect — fresh water, not seawater."
+            }
+          },
+          {
+            "id": 26,
+            "sentenceBeginning": "The Colosseum's underground hypogeum was used to…",
+            "options": {
+              "A": "store food for spectators",
+              "B": "house gladiators and animals before arena appearances",
+              "C": "provide seating for VIP guests",
+              "D": "collect rainwater for drinking",
+              "E": "serve as the main entrance",
+              "F": "display artwork and sculptures",
+              "G": "accommodate the emperor's palace"
+            },
+            "correctAnswer": "B",
+            "justification": "The passage describes the hypogeum as underground passages where gladiators and wild animals awaited their arena appearances.",
+            "evidenceQuote": "where gladiators and wild animals awaited their arena appearances",
+            "evidenceLocation": "P3 L7-8",
+            "confidence": 100,
+            "questionType": "matching_sentence_endings",
+            "distractorAnalysis": {
+              "A": "Incorrect — no mention of food storage.",
+              "B": "Correct — exact purpose stated in passage.",
+              "C": "Incorrect — seating was above, not underground.",
+              "D": "Incorrect — no mention of water collection.",
+              "E": "Incorrect — entrance arches were separate; hypogeum was for performers.",
+              "F": "Incorrect — functional space, not for artwork display.",
+              "G": "Incorrect — palace not mentioned as part of hypogeum."
+            }
+          },
+          {
+            "id": 27,
+            "sentenceBeginning": "Roman urban planning influenced modern cities through…",
+            "options": {
+              "A": "the use of random street layouts",
+              "B": "the castrum grid pattern with intersecting main streets",
+              "C": "the elimination of public forums",
+              "D": "the exclusive focus on military fortifications",
+              "E": "the rejection of symmetry",
+              "F": "the avoidance of central plazas",
+              "G": "the prioritization of curved roads"
+            },
+            "correctAnswer": "B",
+            "justification": "The passage describes the castrum layout with intersecting cardo and decumanus creating a grid pattern still visible in modern cities.",
+            "evidenceQuote": "a standardized approach to urban planning known as the castrum layout, characterized by intersecting main streets",
+            "evidenceLocation": "P4 L1-2",
+            "confidence": 100,
+            "questionType": "matching_sentence_endings",
+            "distractorAnalysis": {
+              "A": "Incorrect — standardized grid, not random.",
+              "B": "Correct — exact planning system described.",
+              "C": "Incorrect — forums were central features.",
+              "D": "Incorrect — urban planning broader than just military use.",
+              "E": "Incorrect — passage mentions symmetry as key principle.",
+              "F": "Incorrect — central plazas were important features.",
+              "G": "Incorrect — grid pattern implies straight streets, not curved."
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
