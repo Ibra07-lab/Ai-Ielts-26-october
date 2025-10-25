@@ -299,161 +299,201 @@
       ]
         },
         {
-          "id": 3,
-          "type": "multiple-choice",
-          "title": "Questions 11–13",
-          "instructions": "Choose the correct letter, A, B, C or D.",
-          "questions": [
-            {
-              "id": 11,
-              "questionText": "What advantage do AUVs have over ROVs?",
-              "options": [
-                "They can descend deeper",
-                "They operate without tethers",
-                "They have better cameras",
-                "They are less expensive"
-              ],
-              "correctAnswer": "They operate without tethers"
-            },
-            {
-              "id": 12,
-              "questionText": "How many new fish species were detected using eDNA in Antarctica?",
-              "options": [
-                "5",
-                "10",
-                "16",
-                "95"
-              ],
-              "correctAnswer": "16"
-            },
-            {
-              "id": 13,
-              "questionText": "What does NASA's PACE mission monitor?",
-              "options": [
-                "Underwater volcanoes",
-                "Shipwrecks",
-                "Phytoplankton blooms",
-                "Marine mammals"
-              ],
-              "correctAnswer": "Phytoplankton blooms"
-            }
+          "id": 2,
+  "type": "summary-completion",
+  "completion_type": "summary",
+  "title": "Questions 24-27",
+  "word_limit": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+  "instructions": "Complete the summary below using words from the passage.",
+  "structure": "<div class='completion-summary'><p>The beverage originated in the <strong>(10)_____</strong> around the 9th century, with cultivation migrating to Yemen by the 15th century for use in <strong>(11)_____</strong>. European adoption via trade led to coffee houses as hubs for <strong>(12)_____</strong>, exemplified by London's 1652 venue and Viennese adaptations post-1683. Colonial transplantation to areas like Java in 1699 boosted production, with Brazil dominating by <strong>(13)_____</strong>. Modern patterns feature 2.25 <strong>(14)_____</strong> cups consumed daily, alongside hybrid rituals in places like Vietnam.</p></div>",
+  "questions": [
+    {
+      "id": 24,
+      "gap_number": 24,
+      "questionText": "Gap 24",
+      "context": "originated in the (24)_____",
+      "correctAnswer": "Ethiopian highlands",
+      "evidence_quote": "Originating in the Ethiopian highlands around the 9th century",
+      "evidence_location": "P1",
+      "answer_type": "noun"
+    },
+    {
+      "id": 25,
+      "gap_number": 25,
+      "questionText": "Gap 25",
+      "context": "for use in (25)_____",
+      "correctAnswer": "nocturnal prayers",
+      "evidence_quote": "Sufi monks brewed the beverage to sustain nocturnal prayers",
+      "evidence_location": "P1",
+      "answer_type": "noun"
+    },
+    {
+      "id": 26,
+      "gap_number": 26,
+      "questionText": "Gap 26",
+      "context": "as hubs for (26)_____",
+      "correctAnswer": "intellectual discourse",
+      "evidence_quote": "fostering intellectual discourse and communal gatherings",
+      "evidence_location": "P1",
+      "answer_type": "noun"
+    },
+    {
+      "id": 27,
+      "gap_number": 27,
+      "questionText": "Gap 27",
+      "context": "Brazil dominating by (27)_____",
+      "correctAnswer": "1820",
+      "evidence_quote": "In Brazil, which by 1820 dominated world output",
+      "evidence_location": "P3",
+      "answer_type": "date"
+    }
           ]
         }
       ]
     },
     {
       "id": 3,
-      "title": "The History and Impact of Coffee Culture",
-      "level": "general",
-      "estimatedTime": 20,
-      "paragraphs": [
-        {
-          "id": "P1",
-          "text": "Coffee has evolved from an obscure Ethiopian discovery to become the world's second-most traded commodity after petroleum, with over 2.25 billion cups consumed daily worldwide. Legend attributes coffee's discovery to an Ethiopian goat herder named Kaldi around 850 CE, who noticed his goats became energized after eating berries from a particular tree. The stimulating properties of these berries, containing the alkaloid caffeine, were subsequently harnessed by Sufi monks in Yemen who brewed the roasted beans to stay alert during extended prayer sessions. By the 15th century, coffee cultivation had spread throughout the Arabian Peninsula, with the port city of Mocha becoming a major trading center. Coffee's introduction to Europe in the 17th century initially met resistance from religious authorities who deemed it the 'bitter invention of Satan,' until Pope Clement VIII allegedly tasted it and declared it too delicious to leave to infidels, thereby granting Catholic approval."
-        },
-        {
-          "id": "P2",
-          "text": "Coffeehouses emerged as vital social institutions that fundamentally shaped intellectual and commercial life in European cities. London's first coffeehouse opened in 1652, and by 1700, the city boasted over 2,000 such establishments. Unlike taverns that served alcohol, coffeehouses promoted clear-headed conversation and became known as 'penny universities' because for the price of a cup of coffee (one penny), patrons could engage in stimulating discussions and access newspapers and pamphlets. These venues facilitated exchange between merchants, artists, scientists, and philosophers, fostering innovations across multiple domains. Lloyd's of London, now a global insurance market, originated in Edward Lloyd's coffeehouse in 1686, where ship owners and merchants gathered to discuss maritime insurance. The scientific revolution also benefited from coffeehouse culture; the Royal Society, Britain's premier scientific organization, held meetings in coffeehouses where members debated natural philosophy."
-        },
-        {
-          "id": "P3",
-          "text": "Coffee's colonial history reveals the darker aspects of its global expansion, intrinsically linked to exploitation and environmental destruction. European powers established vast coffee plantations in tropical colonies using slave labor and, later, indentured workers under harsh conditions. Brazil became the world's dominant coffee producer in the 19th century through extensive plantation agriculture that decimated Atlantic rainforest ecosystems. The economic importance of coffee to colonial powers was such that the Dutch transported coffee plants from Yemen to Java in 1696, closely guarding them as valuable commercial secrets. This monopolistic control eventually broke when a French naval officer smuggled a single coffee plant to Martinique in 1720, from which most coffee plants in Latin America descended. The boom-and-bust cycles of coffee prices have caused economic instability in producer nations, with smallholder farmers bearing disproportionate risks while multinational corporations capture most profits."
-        },
-        {
-          "id": "P4",
-          "text": "Contemporary coffee culture reflects increasing consumer awareness of ethical and quality considerations. The Fair Trade movement, which began in the 1980s, aims to ensure farmers receive fair prices and work in decent conditions by establishing minimum purchase prices and prohibiting child labor. Specialty coffee, emphasizing bean origin, processing methods, and brewing techniques, has grown into a $30 billion global industry. This 'third wave' coffee movement treats coffee as an artisanal product comparable to wine, with consumers paying premium prices for single-origin beans from specific farms. Environmental sustainability has also become central to modern coffee production, as climate change threatens traditional growing regions; arabica coffee, which accounts for 60% of global production, requires specific temperature and rainfall conditions that are shifting due to global warming. Initiatives promoting shade-grown coffee, which preserves forest canopy, and organic certification reflect efforts to balance economic needs with ecological responsibility."
-        }
+  "title": "The Olympic Games: From Ancient Greece to the Modern Era",
+  "level": "academic",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "P1",
+      "text": "The Olympic Games, originating in ancient Greece as a cornerstone of religious and athletic devotion, have undergone profound transformations over millennia. Instituted in 776 BCE at Olympia, these quadrennial festivals honored Zeus through competitions that unified disparate city-states under a sacred truce. Participants, exclusively male Greek citizens, engaged in events ranging from foot races to chariot races, embodying ideals of physical excellence and moral virtue. The Games' prestige extended beyond athletics, incorporating poetic recitations and animal sacrifices, fostering a holistic celebration of Hellenic culture. Archaeological evidence from the site reveals a stadium accommodating 40,000 spectators, underscoring the event's communal magnitude. This ancient paradigm not only promoted pan-Hellenic identity but also influenced subsequent Mediterranean sporting traditions."
+    },
+    {
+      "id": "P2",
+      "text": "A pivotal case study in the ancient Olympics is the victory of Kyniska of Sparta in 396 BCE, challenging gender norms by winning the chariot race. As the first woman to triumph, her success highlighted evolving roles amid traditional exclusions, with dedications inscribed on her statue base. Over centuries, the Games endured political upheavals, yet declined under Roman rule, culminating in Emperor Theodosius I's ban in 393 CE as pagan excess. This suppression marked a hiatus of nearly 1,500 years, during which Olympic ideals persisted in folklore and Renaissance revivals. The 19th-century European Enlightenment rekindled interest, with intellectuals advocating athleticism as a counter to industrialization's sedentary ills. Such resurgence laid groundwork for the modern iteration, blending antiquity's spirit with contemporary inclusivity."
+    },
+    {
+      "id": "P3",
+      "text": "The contemporary Olympic movement crystallized in 1896 with Pierre de Coubertin's initiative, reviving the Games in Athens to promote international amity. Encompassing 14 nations and 241 athletes, the inaugural modern edition featured track events and gymnastics, echoing ancient formats while introducing novel sports. Subsequent iterations expanded scope, incorporating the Winter Games in 1924 and Paralympics in 1960, reflecting broader accessibility. A 2019 report by the Fictional International Sports Heritage Foundation notes that the 2016 Rio Olympics drew over 3 billion television viewers globally. This statistical reach illustrates the Games' evolution into a media spectacle, amplifying cultural diplomacy. Yet, challenges persist, including doping scandals and geopolitical boycotts, testing the movement's foundational ethos."
+    },
+    {
+      "id": "P4",
+      "text": "Two exemplars of modern Olympic impact are the 1936 Berlin Games, manipulated by Nazi propaganda to project Aryan supremacy. Jesse Owens' four gold medals in track events subverted this narrative, symbolizing racial equality amid international scrutiny. Conversely, the 1980 Moscow boycott by Western nations underscored Cold War tensions, reducing participation and highlighting politicization. Despite such vicissitudes, the Olympics endure as a platform for unity, with initiatives like the Refugee Olympic Team since 2016 integrating displaced athletes. Educational programs in host cities further propagate Olympic values of respect and excellence to youth populations. Thus, from Olympia's sacred groves to global arenas, the Games exemplify adaptive resilience in fostering human achievement."        }
       ],
       "questions": [
         {
-          "id": 1,
-          "type": "true-false-not-given",
-          "title": "Questions 1–6",
-          "instructions": "Do the following statements agree with the information in the passage? Write YES, NO or NOT GIVEN.",
-          "questions": [
-            { "id": 1, "questionText": "Coffee is the most traded commodity globally.", "correctAnswer": "NO" },
-            { "id": 2, "questionText": "Sufi monks used coffee to stay awake during prayers.", "correctAnswer": "YES" },
-            { "id": 3, "questionText": "Pope Clement VIII initially banned coffee consumption.", "correctAnswer": "NOT GIVEN" },
-            { "id": 4, "questionText": "London had over 2,000 coffeehouses by 1700.", "correctAnswer": "YES" },
-            { "id": 5, "questionText": "All coffee plants in Latin America descended from the Martinique plant.", "correctAnswer": "NOT GIVEN" },
-            { "id": 6, "questionText": "Arabica coffee requires specific temperature conditions.", "correctAnswer": "YES" }
-          ]
-        },
-        {
-          "id": 2,
-          "type": "multiple-choice",
-          "title": "Questions 7–11",
-          "instructions": "Choose the correct letter, A, B, C or D.",
-          "questions": [
-            {
-              "id": 7,
-              "questionText": "Why were coffeehouses called 'penny universities'?",
-              "options": [
-                "They charged students reduced prices",
-                "They offered educational lectures",
-                "They provided intellectual exchange for the price of coffee",
-                "They were owned by universities"
-              ],
-              "correctAnswer": "They provided intellectual exchange for the price of coffee"
-            },
-            {
-              "id": 8,
-              "questionText": "What originated in Edward Lloyd's coffeehouse?",
-              "options": [
-                "The Royal Society",
-                "A maritime insurance market",
-                "The first newspaper",
-                "Scientific journals"
-              ],
-              "correctAnswer": "A maritime insurance market"
-            },
-            {
-              "id": 9,
-              "questionText": "When did the Dutch transport coffee plants to Java?",
-              "options": [
-                "1652",
-                "1686",
-                "1696",
-                "1720"
-              ],
-              "correctAnswer": "1696"
-            },
-            {
-              "id": 10,
-              "questionText": "What does the Fair Trade movement prohibit?",
-              "options": [
-                "Coffee imports",
-                "Child labor",
-                "Organic farming",
-                "Premium pricing"
-              ],
-              "correctAnswer": "Child labor"
-            },
-            {
-              "id": 11,
-              "questionText": "What percentage of global coffee production is arabica?",
-              "options": [
-                "30%",
-                "40%",
-                "60%",
-                "80%"
-              ],
-              "correctAnswer": "60%"
-            }
-          ]
-        },
-        {
           "id": 3,
-          "type": "gap-fill",
-          "title": "Questions 12–14",
-          "instructions": "Complete the sentences. Choose NO MORE THAN TWO WORDS from the passage.",
-          "questions": [
-            { "id": 12, "questionText": "Coffee contains the alkaloid ___.", "correctAnswer": "caffeine" },
-            { "id": 13, "questionText": "Brazil became dominant through extensive ___ agriculture.", "correctAnswer": "plantation" },
-            { "id": 14, "questionText": "Specialty coffee has grown into a $30 billion global ___.", "correctAnswer": "industry" }
-          ]
-        }
-      ]
+  "type": "matching-sentence-endings",
+  "title": "Questions 28-30",
+  "instructions": "Complete each sentence with the correct ending, A–E.",
+  "sentence_endings": [
+    { "letter": "A", "text": "undermine the host nation's racial propaganda efforts." },
+    { "letter": "B", "text": "foster unity among diverse countries through athletic participation." },
+    { "letter": "C", "text": "a prolonged suspension lasting approximately fifteen centuries." },
+    { "letter": "D", "text": "highlight advancements in winter sports disciplines exclusively." },
+    { "letter": "E", "text": "enforce strict religious observances during athletic festivals." }
+  ],
+  "questions": [
+    { "id": 28, "questionText": "The inaugural modern Olympic event in 1896 was organized to", "correctAnswer": "B" },
+    { "id": 29, "questionText": "The decline of the ancient Games under Roman influence resulted in", "correctAnswer": "C" },
+    { "id": 30, "questionText": "Jesse Owens' accomplishments at the 1936 Berlin competition served to", "correctAnswer": "A" }          
+        ]
+        },
+        {"id": 3,
+  "type": "true-false-not-given",
+  "title": "Questions 31-36",
+  "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
+  "questions": [
+    {
+      "id": 31,
+      "questionText": "The ancient Olympic festivals were established to honor the god Zeus through athletic competitions.",
+      "correctAnswer": "TRUE"
+    },
+    {
+      "id": 32,
+      "questionText": "The modern Olympic movement was initiated by Pierre de Coubertin in Athens during 1896.",
+      "correctAnswer": "TRUE"
+    },
+    {
+      "id": 33,
+      "questionText": "The ancient Games were prohibited by Emperor Theodosius I in 394 CE.",
+      "correctAnswer": "FALSE"
+    },
+    {
+      "id": 34,
+      "questionText": "Female athletes were permitted to participate in the majority of events during the ancient Olympics.",
+      "correctAnswer": "FALSE"
+    },
+    {
+      "id": 35,
+      "questionText": "The Olympic stadium in Olympia could accommodate up to 50,000 spectators.",
+      "correctAnswer": "NOT GIVEN"
+    },
+    {
+      "id": 36,
+      "questionText": "The sacred truce of the ancient Games entirely eliminated conflicts among participating city-states.",
+      "correctAnswer": "NOT GIVEN"
+         
+    }
+            ]
+        },
+        {"id": 3,
+  "type": "multiple-choice",
+  "title": "Questions 37-40",
+  "instructions": "Choose the correct letter, A, B, C or D.",
+  "questions": [
+    {
+      "id": 37,
+      "questionText": "What was the estimated spectator capacity of the ancient Olympic stadium?",
+      "options": [
+        "A) About 40,000 people",
+        "B) Over 100,000 individuals",
+        "C) Fewer than 10,000 observers",
+        "D) Exactly 241 competitors"
+      ],
+      "correctAnswer": "A) About 40,000 people",
+      "explanation": "The passage details archaeological findings on the venue's size to emphasize its scale. This specific figure illustrates the event's communal significance in antiquity.",
+      "evidenceQuote": "a stadium accommodating 40,000 spectators, underscoring the event's communal magnitude",
+      "evidenceLocation": "P1"
+    },
+    {
+      "id": 38,
+      "questionText": "According to the text, which emperor officially ended the ancient Olympic tradition?",
+      "options": [
+        "A) Theodosius I",
+        "B) Pierre de Coubertin",
+        "C) Jesse Owens",
+        "D) Kyniska of Sparta"
+      ],
+      "correctAnswer": "A) Theodosius I",
+      "explanation": "The historical suppression is attributed to this figure as part of Roman Christianization. This detail marks the transition from pagan festivals to dormancy.",
+      "evidenceQuote": "declined under Roman rule, culminating in Emperor Theodosius I's ban",
+      "evidenceLocation": "P2"
+    },
+    {
+      "id": 39,
+      "questionText": "Based on examples from different eras in the passage, the Olympic Games have consistently functioned to",
+      "options": [
+        "A) Bridge divisions between groups through shared competition",
+        "B) Enforce strict religious doctrines on participants",
+        "C) Highlight individual national superiorities exclusively",
+        "D) Limit events to male competitors only"
+      ],
+      "correctAnswer": "A) Bridge divisions between groups through shared competition",
+      "explanation": "Synthesizing the ancient truce, modern amity goals, and inclusive teams shows a unifying role across time. This inference connects religious, political, and diplomatic threads throughout.",
+      "evidenceQuote": "unified disparate city-states under a sacred truce... promote international amity... platform for unity",
+      "evidenceLocation": "P1, P3, P4"
+    },
+    {
+      "id": 40,
+      "questionText": "What is the primary focus of the reading selection?",
+      "options": [
+        "A) The enduring evolution of a major sporting tradition amid societal changes",
+        "B) Detailed biographies of standout Olympic victors",
+        "C) Exclusively the rituals of Zeus worship in Greece",
+        "D) The financial logistics of hosting international meets"
+      ],
+      "correctAnswer": "A) The enduring evolution of a major sporting tradition amid societal changes",
+      "explanation": "The narrative spans origins, interruptions, revivals, and challenges to trace adaptive growth. This encapsulates the central historical progression without overemphasizing subsets.",
+      "evidenceQuote": "The Olympic Games... have undergone profound transformations over millennia",
+      "evidenceLocation": "P1"
     }
   ]
+}
+]
+}
+]
 }
