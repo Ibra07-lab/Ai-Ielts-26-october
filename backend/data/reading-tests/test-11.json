@@ -1,0 +1,656 @@
+{
+    "testId": 11,
+    "testName": "Test 11",
+    "passages":[
+        {
+        "id": 1,
+        "title": "Orca Societies: Matrilines, Dialects, and Cooperative Hunts",
+        "level": "academic",
+        "estimatedTime": 20,
+        "paragraphs": [
+          {
+            "id": "P1",
+            "text": "Orcas (Orcinus orca) are often portrayed as solitary apex predators, yet long-term field studies reveal a very different reality: they live in remarkably stable, socially complex family groups. Known colloquially as killer whales, orcas occur in every ocean, from the Arctic to the Antarctic, but their social behavior varies by region and prey type. Photo-identification projects begun in the late 1970s in the Northeast Pacific have tracked individuals across decades, documenting pods that persist for 40 years or more. Typical pod sizes range from 5 to 25 animals, though aggregations can number 50 or more when related groups temporarily join. Perhaps most striking is that many orca populations are matrilineal—offspring remain with their mothers for life—forming family units that cluster into larger pods and, at a higher level, into acoustic clans. These structures provide a framework for the transmission of information that includes unique vocal 'dialects' and region-specific techniques for cooperative hunting, suggesting cultural processes alongside ecological drivers. Understanding this triad—matrilines, dialects, and cooperative hunts—has reshaped scientific views of orca societies and raised new conservation questions."
+          },
+          {
+            "id": "P2",
+            "text": "The foundation of orca society is the matriline, a family unit composed of an elder female, her offspring, and her daughters' offspring. In several well-studied populations, males do not disperse at maturity but continue to travel with their mothers for life, an unusual pattern among mammals of comparable size. Data compiled by the Center for Whale Research indicate that adult females can live into their 80s, with post-reproductive life spanning 20 to 40 years—one of the few documented cases of menopause outside humans. A 2019 study in Proceedings of the Royal Society B reported that calves had a higher probability of survival during years of prey scarcity when a post-reproductive grandmother was present, especially in salmon-dependent resident orcas of the Northeast Pacific. Researchers argue that older females act as repositories of ecological knowledge, leading pod movements to historically productive foraging sites during poor conditions. Genetic and demographic analyses conducted between 1980 and 2020 in the Salish Sea show consistent philopatry (site fidelity and family cohesion), supporting the view that orca social structure is designed to sustain kin-based benefits. However, some scientists caution that prolonged dependency can magnify vulnerabilities when key prey—such as Chinook salmon—declines, because tightly bonded groups share risks as well as resources."
+          },
+          {
+            "id": "P3",
+            "text": "Vocal communication is central to maintaining these family structures: each pod uses a discrete repertoire of stereotyped calls, while clusters of related pods that share call features are termed acoustic clans. Pioneering work by Dr. John Ford in the 1980s documented that resident orca pods in British Columbia each used between 7 and 17 distinct call types, with stable structural features persisting across decades. These 'dialects' are not random; calves acquire them through social learning, producing juvenile versions before mastering adult call patterns by adolescence. Playback experiments reported in Marine Ecology Progress Series found that orcas oriented toward speakers broadcasting familiar calls significantly more often than toward unfamiliar calls, indicating discrimination at the clan and pod level. Importantly, dialects map imperfectly onto diet and range; similar call structures may occur in pods that do not forage together, suggesting cultural inheritance alongside ecological adaptation. Researchers emphasize that dialect diversity—like human accents—can accumulate when groups remain demographically cohesive over long periods. This vocal identity likely facilitates coordination during foraging and travel, reduces costly intergroup conflict, and may reinforce mate-avoidance rules that minimize inbreeding within clans."
+          },
+          {
+            "id": "P4",
+            "text": "Cooperative hunting strategies vary strikingly by region and prey, revealing a mosaic of learned behaviors transmitted within matrilines and clans. In Norwegian fjords, fish-eating orcas engage in 'carousel feeding,' corralling herring into tight bait balls using bubble streams and tail slaps before stunning them with powerful percussive strikes; groups of 5 to 12 whales often participate, with success rates reported between 60 and 80 percent in peak winter months. Along the Antarctic Peninsula, small teams repeatedly generate synchronized waves to dislodge seals from ice floes, an energetically costly tactic that requires precise timing and has been documented on video since the mid-2000s. In Patagonia, a few lineages intentionally strand themselves on beaches to seize sea lion pups, a risky strategy learned by juveniles during prolonged apprenticeships and only attempted under specific tidal and surf conditions. By contrast, mammal-eating 'transient' orcas of the Northeast Pacific rely on stealth and silent approaches, calling minimally before coordinated bursts to prevent prey from warning conspecifics. A 2021 study by researchers at the University of Exeter synthesized records from 2005–2020 and concluded that these techniques persist within family lines even when individuals disperse temporarily, a pattern consistent with cultural transmission. Notably, ecotype specialization—fish-eating residents, mammal-eating transients, and shark-feeding offshores—correlates with distinctive hunting toolkits and social rules."
+          },
+          {
+            "id": "P5",
+            "text": "The emerging consensus is that orca societies constitute a flexible framework in which ecological pressures and cultural traditions interact to sustain group success. While exact figures remain debated, long-term datasets since the 1980s show that pods with stable matrilines and reliable prey access maintain higher calf survival than those facing chronic prey shortages and vessel disturbance. Some conservation biologists argue that management should recognize culturally distinct units—defined by dialect, matriline continuity, and prey specialization—rather than lumping all orcas within a region into a single stock. Others warn that emphasizing culture without addressing habitat and prey mitigation risks romanticizing resilience while cumulative stressors exacerbate decline. A productive path may combine measures: protecting core foraging habitats identified by elder-led travel routes, limiting noise during critical feeding seasons, and coordinating fisheries with the seasonal timing of cooperative hunts. As researchers refine acoustic tracking and drone-based photogrammetry between 2015 and 2023, evidence for the durability—and fragility—of orca social worlds is likely to grow, making these whales a powerful model for the study of animal culture."
+          }
+            ],
+            "questions":[
+            {
+                "id": 1,
+                "type": "matching-headings",
+                "title": "Questions 1-5",
+                "instructions": "The reading passage has five paragraphs, A-E. Choose the correct heading for paragraphs A-E from the list of headings below. Write the correct number, i-viii, in boxes 1-5 on your answer sheet.",
+                
+                "questions": [
+                  {
+                    "id": 1,
+                    "questionText": "Paragraph A",
+                    "options": [
+                      "Matrilines and elder leadership enhance survival",
+                      "Learned vocal dialects sustain social identity",
+                      "Regional variation in cooperative hunting tactics",
+                      "Managing orcas as culturally distinct units",
+                      "Male dispersal and solitary adult behavior",
+                      "Global distribution and long-term pod stability",
+                      "Genetic differences fully explain dialect diversity",
+                      "Diet alone determines a pod's vocal structure"
+                    ],
+                    "correctAnswer": "Global distribution and long-term pod stability",
+                    "justification": "Paragraph A introduces the global distribution of orcas ('occur in every ocean, from the Arctic to the Antarctic'), the long-term stability of pods ('documenting pods that persist for 40 years or more'), and the overarching framework of matrilines, dialects, and cooperative hunts. This heading accurately captures the worldwide occurrence and enduring family groups.",
+                    "evidenceQuote": "orcas occur in every ocean, from the Arctic to the Antarctic... Photo-identification projects begun in the late 1970s in the Northeast Pacific have tracked individuals across decades, documenting pods that persist for 40 years or more"
+                  },
+                  {
+                    "id": 2,
+                    "questionText": "Paragraph B",
+                    "options": [
+                      "Matrilines and elder leadership enhance survival",
+                      "Learned vocal dialects sustain social identity",
+                      "Regional variation in cooperative hunting tactics",
+                      "Managing orcas as culturally distinct units",
+                      "Male dispersal and solitary adult behavior",
+                      "Global distribution and long-term pod stability",
+                      "Genetic differences fully explain dialect diversity",
+                      "Diet alone determines a pod's vocal structure"
+                    ],
+                    "correctAnswer": "Matrilines and elder leadership enhance survival",
+                    "justification": "Paragraph B focuses on orca society centered on matrilines where elder females, including post-reproductive grandmothers, provide knowledge that improves calf survival during prey scarcity. The paragraph links matrilineal structure to survival benefits via elder females guiding foraging and movements, aligning with the heading's focus on leadership and survival advantages.",
+                    "evidenceQuote": "calves had a higher probability of survival during years of prey scarcity when a post-reproductive grandmother was present"
+                  },
+                  {
+                    "id": 3,
+                    "questionText": "Paragraph C",
+                    "options": [
+                      "Matrilines and elder leadership enhance survival",
+                      "Learned vocal dialects sustain social identity",
+                      "Regional variation in cooperative hunting tactics",
+                      "Managing orcas as culturally distinct units",
+                      "Male dispersal and solitary adult behavior",
+                      "Global distribution and long-term pod stability",
+                      "Genetic differences fully explain dialect diversity",
+                      "Diet alone determines a pod's vocal structure"
+                    ],
+                    "correctAnswer": "Learned vocal dialects sustain social identity",
+                    "justification": "Paragraph C emphasizes that pods use distinct, socially learned vocal repertoires that reinforce identity, coordination, and mate-avoidance at pod and clan levels. The paragraph stresses social learning of calls and their role in identity and coordination, matching the heading's emphasis on dialects sustaining group identity.",
+                    "evidenceQuote": "each pod uses a discrete repertoire of stereotyped calls... calves acquire them through social learning"
+                  },
+                  {
+                    "id": 4,
+                    "questionText": "Paragraph D",
+                    "options": [
+                      "Matrilines and elder leadership enhance survival",
+                      "Learned vocal dialects sustain social identity",
+                      "Regional variation in cooperative hunting tactics",
+                      "Managing orcas as culturally distinct units",
+                      "Male dispersal and solitary adult behavior",
+                      "Global distribution and long-term pod stability",
+                      "Genetic differences fully explain dialect diversity",
+                      "Diet alone determines a pod's vocal structure"
+                    ],
+                    "correctAnswer": "Regional variation in cooperative hunting tactics",
+                    "justification": "Paragraph D discusses cooperative foraging showing strong regional differentiation, with techniques such as carousel feeding, wave-washing, and intentional stranding transmitted within family lines. The paragraph catalogs region-specific strategies and their cultural transmission, directly reflecting the heading's emphasis on regional variation in cooperative hunting.",
+                    "evidenceQuote": "Cooperative hunting strategies vary strikingly by region and prey"
+                  },
+                  {
+                    "id": 5,
+                    "questionText": "Paragraph E",
+                    "options": [
+                      "Matrilines and elder leadership enhance survival",
+                      "Learned vocal dialects sustain social identity",
+                      "Regional variation in cooperative hunting tactics",
+                      "Managing orcas as culturally distinct units",
+                      "Male dispersal and solitary adult behavior",
+                      "Global distribution and long-term pod stability",
+                      "Genetic differences fully explain dialect diversity",
+                      "Diet alone determines a pod's vocal structure"
+                    ],
+                    "correctAnswer": "Managing orcas as culturally distinct units",
+                    "justification": "Paragraph E focuses on conservation weighing cultural distinctiveness alongside ecological pressures, with debate over managing culturally defined units and combined measures to mitigate stressors. The central debate concerns management frameworks that incorporate cultural identity; the heading captures this argument and its policy implications.",
+                    "evidenceQuote": "Some conservation biologists argue that management should recognize culturally distinct units"
+                  }
+                ]
+              },
+{
+  "id": 2,
+  "type": "true-false-not-given",
+  "title": "Questions 6-9",
+  "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
+  "questions": [
+    {
+      "id": 6,
+      "questionText": "In many killer whale populations, young remain within mother-led family units for their entire lives.",
+      "correctAnswer": "TRUE",
+      "justification": "Paragraph 1 states that many populations are matrilineal and offspring remain with their mothers for life. The statement paraphrases this as lifelong residence in mother-led families.",
+      "evidenceQuote": "many orca populations are matrilineal—offspring remain with their mothers for life"
+    },
+    {
+      "id": 7,
+      "questionText": "Adult male orcas commonly leave their natal families when they reach maturity.",
+      "correctAnswer": "FALSE",
+      "justification": "Paragraph 2 says males do not disperse at maturity and continue traveling with their mothers for life. The statement asserts the opposite behavior.",
+      "evidenceQuote": "males do not disperse at maturity but continue to travel with their mothers for life"
+    },
+    {
+      "id": 8,
+      "questionText": "Genetic divergence is the principal cause of dialect differences between orca pods.",
+      "correctAnswer": "NOT GIVEN",
+      "justification": "Paragraph 3 emphasizes social learning of dialects and notes imperfect mapping to ecology, but never evaluates genetics as the main driver. Determining genetic primacy would require explicit comparative evidence not provided.",
+      "evidenceQuote": "calves acquire them through social learning... dialects map imperfectly onto diet and range"
+    },
+    {
+      "id": 9,
+      "questionText": "Since recordings began, Antarctic wave‑washing has become more frequent among orcas hunting seals on ice floes.",
+      "correctAnswer": "NOT GIVEN",
+      "justification": "Paragraph 4 notes wave‑washing has been documented on video since the mid‑2000s but provides no trend over time. Evidence of increasing frequency is absent.",
+      "evidenceQuote": "synchronized waves to dislodge seals from ice floes... documented on video since the mid‑2000s"
+    }
+  ]
+},
+{
+    "id": 3,
+    "type": "summary-completion",
+    "completion_type": "summary",
+    "title": "Questions 10-12",
+    "word_limit": "NO MORE THAN THREE WORDS",
+    "instructions": "Complete the summary below. Choose NO MORE THAN THREE WORDS from the passage for each answer.",
+    "structure": "<div class='completion-summary'><p>Across the world's oceans, orcas live in enduring family networks that combine female-led kin groups, pod-specific calls, and regionally specialized hunts. Since the late 1970s, researchers have tracked identified individuals through long-term <strong>(10)_____</strong> that revealed pods persisting for decades and typical group sizes of 5–25. Matrilines headed by elder females anchor these societies, and in lean years the presence of a <strong>(11)_____</strong> is linked to improved calf survival as older whales guide movements to productive grounds. Pod identity is maintained through distinctive call repertoires learned via <strong>(12)_____</strong>, while related pods form acoustic clans; meanwhile, cooperative tactics such as carousel feeding or wave-washing are transmitted within lineages, prompting some biologists to argue for management that reflects cultural as well as ecological differences.</p></div>",
+    "questions": [
+      {
+        "id": 10,
+        "questionText": "Gap 10",
+        "correctAnswer": "photo-identification projects",
+        "justification": "The method used for decades-long tracking is explicitly named in the passage as 'Photo-identification projects.'",
+        "evidenceQuote": "Photo-identification projects begun in the late 1970s in the Northeast Pacific have tracked individuals"
+      },
+      {
+        "id": 11,
+        "questionText": "Gap 11",
+        "correctAnswer": "post-reproductive grandmother",
+        "justification": "The passage directly connects the presence of a post-reproductive grandmother to increased calf survival during prey scarcity.",
+        "evidenceQuote": "calves had a higher probability of survival... when a post-reproductive grandmother was present"
+      },
+      {
+        "id": 12,
+        "questionText": "Gap 12",
+        "correctAnswer": "social learning",
+        "justification": "Dialect acquisition is described as occurring through 'social learning,' which underpins vocal identity and coordination.",
+        "evidenceQuote": "calves acquire them through social learning"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "type": "matching-information",
+    "title": "Questions 13-15",
+    "instructions": "Which paragraph contains the following information? Write the correct letter, A–E, in boxes 13-15 on your answer sheet.",
+    "paragraphs_list": ["A", "B", "C", "D", "E"],
+    "questions": [
+      {
+        "id": 13,
+        "questionText": "evidence that elder females enhance juvenile survival during periods of food scarcity",
+        "correctAnswer": "B",
+        "justification": "Paragraph B reports a study showing higher calf survival in lean years when a post-reproductive grandmother is present, linking elder females to improved offspring outcomes.",
+        "evidenceQuote": "calves had a higher probability of survival during years of prey scarcity when a post-reproductive grandmother was present"
+      },
+      {
+        "id": 14,
+        "questionText": "the mechanism through which young whales acquire pod-specific vocal repertoires",
+        "correctAnswer": "C",
+        "justification": "Paragraph C states that calves learn distinctive calls through social learning, explaining how dialects are transmitted within pods and clans.",
+        "evidenceQuote": "calves acquire them through social learning, producing juvenile versions before mastering adult call patterns"
+      },
+      {
+        "id": 15,
+        "questionText": "research-based indication that hunting methods persist within family lines despite temporary dispersal",
+        "correctAnswer": "D",
+        "justification": "Paragraph D cites a 2021 synthesis concluding that techniques continue within lineages even when individuals disperse, consistent with cultural transmission.",
+        "evidenceQuote": "these techniques persist within family lines even when individuals disperse temporarily, a pattern consistent with cultural transmission"
+      }
+    ]
+   }
+  ]
+},
+{
+    "id": 2,
+    "title": "Rewilding and the Return of the Wild: Keystone Species as Restoration Tools",
+    "level": "academic",
+    "estimatedTime": 20,
+    "paragraphs": [
+      {
+        "id": "P1",
+        "text": "Few conservation ideas have provoked as much debate—or delivered as dramatic images—as rewilding, the proposition that restoring missing keystone species can reboot degraded ecosystems. While exact figures remain contested, global assessments suggest that between 20 and 30 percent of terrestrial areas show signs of significant ecological degradation, with cascading consequences for biodiversity, water quality, and carbon storage. Rewilding reframes restoration as process rather than planting: by reintroducing top predators, large herbivores, and ecosystem engineers, it aims to restart trophic interactions that once sustained landscape resilience. The archetypal case, the return of wolves to Yellowstone National Park in the mid‑1990s, cemented the field's claim that species reintroductions can initiate rapid system-wide change. Yet, as rewilding moves from pilot sites to policy proposals, questions about social impacts, climate uncertainty, and long‑term monitoring have intensified."
+      },
+      {
+        "id": "P2",
+        "text": "The conceptual backbone of rewilding is the keystone species—organisms whose ecological influence disproportionately exceeds their abundance—capable of triggering trophic cascades that propagate through food webs. Following the reintroduction of 31 wolves into Yellowstone between 1995 and 1997, elk behavior and distribution shifted, reducing browsing pressure in riparian zones long suppressed by chronic herbivory. Within a decade, willow and aspen stands in some valleys increased canopy cover by between 25 and 45 percent, and beaver colonies expanded from scattered remnants to multiple active sites, building dams that slowed flows and reconnected floodplains. A 2010 synthesis by researchers from the University of Montana and partners linked these changes to higher nesting densities of riparian songbirds and cooler summer stream temperatures beneficial to trout. While subsequent studies caution that climate variability and human hunting also influenced ungulate dynamics, the Yellowstone record remains persuasive evidence that restoring an apex predator can reconfigure ecosystem structure and function."
+      },
+      {
+        "id": "P3",
+        "text": "Beyond Yellowstone, rewilding initiatives have targeted a spectrum of engineers and predators—Eurasian beaver, European bison, lynx, and white‑tailed eagle—selected for their capacity to rebuild processes rather than simply bolster species counts. In England's River Otter catchment, a government‑licensed trial (2015–2020) found that beaver dams increased late‑season baseflows by roughly 23 percent and reduced peak storm discharges, while creating wetland mosaics favored by amphibians and dragonflies. A 2021 study by researchers at the Norwegian University of Life Sciences reported that reintroduced musk ox and bison accelerate nutrient cycling and seed dispersal across tundra and meadow systems, raising plant species richness by 18–24 percent in grazed plots. Meanwhile, Iberian lynx recovery—supported by prey management, corridor restoration, and reintroduction—has more than tripled population size since the early 2000s, with territories re‑established in parts of Andalusia and Extremadura. Such outcomes reflect a core tenet of rewilding: by restoring functional guilds across landscapes, managers can amplify self‑sustaining processes and reduce the need for perpetual human inputs."
+      },
+      {
+        "id": "P4",
+        "text": "Yet rewilding's social and economic dimensions remain contentious, particularly where carnivores overlap with pastoral livelihoods and hunting traditions. Across the European Union, official depredation statistics indicate that predators account for between 0.2 and 0.6 percent of annual livestock mortality—a modest fraction at regional scales but locally devastating when concentrated in a few herds. Compensation schemes, carcass‑removal protocols, and non‑lethal deterrents (fladry, guardian dogs, range riders) can reduce losses by 30–50 percent when consistently maintained, according to a 2018 meta‑analysis from the University of Bern. Conversely, nature‑based tourism can deliver measurable benefits: an oft‑cited assessment estimated that wolf watching contributes approximately $35 million per year to the Greater Yellowstone regional economy, supporting 150–200 jobs during peak seasons. Public acceptance is sensitive to governance; a 2019 survey of 1,200 residents in two western states found 67 percent support for predator recovery when local communities had representation in rule‑making and clear incident‑response timelines."
+      },
+      {
+        "id": "P5",
+        "text": "Scaling rewilding from emblematic parks to working landscapes will require integrating ecological design with climate adaptation, connectivity, and social consent. Proposals aligned with the '30 by 30' initiative call for protecting roughly 30 percent of land and sea by 2030, but rewilding's advocates emphasize equally the importance of ecological corridors that stitch together fragmented habitats. Emerging tools—environmental DNA, low‑cost acoustic sensors, and satellite analytics—now allow managers to track recolonization, gene flow, and disturbance patterns across entire watersheds in near‑real time. A 2022 framework by the IUCN Rewilding Thematic Group recommends adaptive monitoring in 3‑ to 5‑year cycles, explicit conflict‑mitigation plans, and dynamic reference baselines to avoid nostalgia for historical states unattainable under accelerated warming. Ultimately, rewilding's promise lies not in turning back clocks, but in rebuilding the feedbacks that sustain biodiversity and human well‑being under rapidly changing conditions."
+      }
+    ],
+    "questions": [
+        {
+            "id": 5,
+            "type": "matching-headings",
+            "title": "Questions 16-20",
+            "instructions": "The reading passage has five paragraphs, A-E. Choose the correct heading for paragraphs A-E from the list of headings below. Write the correct number, i-viii, in boxes 16-20 on your answer sheet.",
+            
+            "questions": [
+              {
+                "id": 16,
+                "questionText": "Paragraph A",
+                "options": [
+                  "Yellowstone wolves and cascading ecosystem recovery",
+                  "Process‑based restoration using engineers and predators",
+                  "Livestock conflict, tourism benefits, and local consent",
+                  "Scaling rewilding with corridors and adaptive monitoring",
+                  "Rewilding's concept and global context",
+                  "Climate uncertainty undermines all rewilding outcomes",
+                  "Genetic rescue as the primary objective",
+                  "Tree‑planting as the core restoration method"
+                ],
+                "correctAnswer": "Rewilding's concept and global context",
+                "justification": "Paragraph A defines rewilding, quantifies global degradation (20–30 percent), and introduces the Yellowstone wolf case as the emblematic example, setting scope and themes for the passage.",
+                "evidenceQuote": "rewilding, the proposition that restoring missing keystone species can reboot degraded ecosystems... global assessments suggest that between 20 and 30 percent of terrestrial areas show signs of significant ecological degradation"
+              },
+              {
+                "id": 17,
+                "questionText": "Paragraph B",
+                "options": [
+                  "Yellowstone wolves and cascading ecosystem recovery",
+                  "Process‑based restoration using engineers and predators",
+                  "Livestock conflict, tourism benefits, and local consent",
+                  "Scaling rewilding with corridors and adaptive monitoring",
+                  "Rewilding's concept and global context",
+                  "Climate uncertainty undermines all rewilding outcomes",
+                  "Genetic rescue as the primary objective",
+                  "Tree‑planting as the core restoration method"
+                ],
+                "correctAnswer": "Yellowstone wolves and cascading ecosystem recovery",
+                "justification": "The paragraph centers on Yellowstone as a case of cascading recovery after wolf return, fitting a heading that foregrounds wolves and ecosystem‑wide change.",
+                "evidenceQuote": "Following the reintroduction of 31 wolves... elk behavior and distribution shifted"
+              },
+              {
+                "id": 18,
+                "questionText": "Paragraph C",
+                "options": [
+                  "Yellowstone wolves and cascading ecosystem recovery",
+                  "Process‑based restoration using engineers and predators",
+                  "Livestock conflict, tourism benefits, and local consent",
+                  "Scaling rewilding with corridors and adaptive monitoring",
+                  "Rewilding's concept and global context",
+                  "Climate uncertainty undermines all rewilding outcomes",
+                  "Genetic rescue as the primary objective",
+                  "Tree‑planting as the core restoration method"
+                ],
+                "correctAnswer": "Process‑based restoration using engineers and predators",
+                "justification": "The paragraph emphasizes selecting species for functional effects (process restoration), matching a heading that highlights process‑based design using engineers and predators.",
+                "evidenceQuote": "initiatives have targeted a spectrum of engineers and predators... selected for their capacity to rebuild processes"
+              },
+              {
+                "id": 19,
+                "questionText": "Paragraph D",
+                "options": [
+                  "Yellowstone wolves and cascading ecosystem recovery",
+                  "Process‑based restoration using engineers and predators",
+                  "Livestock conflict, tourism benefits, and local consent",
+                  "Scaling rewilding with corridors and adaptive monitoring",
+                  "Rewilding's concept and global context",
+                  "Climate uncertainty undermines all rewilding outcomes",
+                  "Genetic rescue as the primary objective",
+                  "Tree‑planting as the core restoration method"
+                ],
+                "correctAnswer": "Livestock conflict, tourism benefits, and local consent",
+                "justification": "This paragraph weighs costs and benefits and ties support to governance, aligning with a heading that synthesizes conflict, benefits, and consent.",
+                "evidenceQuote": "predators account for between 0.2 and 0.6 percent of annual livestock mortality... wolf watching contributes approximately $35 million per year"
+              },
+              {
+                "id": 20,
+                "questionText": "Paragraph E",
+                "options": [
+                  "Yellowstone wolves and cascading ecosystem recovery",
+                  "Process‑based restoration using engineers and predators",
+                  "Livestock conflict, tourism benefits, and local consent",
+                  "Scaling rewilding with corridors and adaptive monitoring",
+                  "Rewilding's concept and global context",
+                  "Climate uncertainty undermines all rewilding outcomes",
+                  "Genetic rescue as the primary objective",
+                  "Tree‑planting as the core restoration method"
+                ],
+                "correctAnswer": "Scaling rewilding with corridors and adaptive monitoring",
+                "justification": "The paragraph prescribes connectivity and adaptive monitoring as essential to scaling, directly matching the heading's twin emphases.",
+                "evidenceQuote": "Scaling rewilding... will require integrating... connectivity... Emerging tools... IUCN... recommends adaptive monitoring in 3‑ to 5‑year cycles"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "type": "multiple-choice",
+            "title": "Questions 21-24",
+            "instructions": "Choose the correct letter, A, B, C or D.",
+            "questions": [
+              {
+                "id": 21,
+                "questionText": "According to the passage, what change in late‑season baseflows followed the beaver trial in England's River Otter catchment?",
+                "options": [
+                  "They decreased by roughly 23 percent.",
+                  "They increased by between 18–24 percent.",
+                  "They remained statistically unchanged across seasons.",
+                  "They increased by roughly 23 percent."
+                ],
+                "correctAnswer": "They increased by roughly 23 percent.",
+                "justification": "Paragraph 3 states that beaver dams increased late‑season baseflows by roughly 23 percent in the River Otter catchment.",
+                "evidenceQuote": "beaver dams increased late‑season baseflows by roughly 23 percent and reduced peak storm discharges"
+              },
+              {
+                "id": 22,
+                "questionText": "What does the passage imply about the role of ecological corridors relative to the '30 by 30' protection targets?",
+                "options": [
+                  "Corridors are optional add‑ons once protection targets are already met.",
+                  "Corridors should replace protected areas in most rewilding plans.",
+                  "Corridors are emphasized as equally important complements to area‑based goals.",
+                  "Corridors are primarily intended to stimulate nature‑based tourism revenue."
+                ],
+                "correctAnswer": "Corridors are emphasized as equally important complements to area‑based goals.",
+                "justification": "Paragraph 5 contrasts '30 by 30' with an equal emphasis on ecological corridors, implying corridors are essential complements, not optional or replacements.",
+                "evidenceQuote": "Proposals aligned with the '30 by 30' initiative... but rewilding's advocates emphasize equally the importance of ecological corridors"
+              },
+              {
+                "id": 23,
+                "questionText": "Which option best captures the main focus of paragraph 4?",
+                "options": [
+                  "Demonstrating that predator losses are negligible at all spatial scales.",
+                  "Weighing conflict mitigation, tourism benefits, and governance in public acceptance.",
+                  "Documenting genetic outcomes of rewilding across multiple species.",
+                  "Arguing that predator eradication is necessary to protect rural livelihoods."
+                ],
+                "correctAnswer": "Weighing conflict mitigation, tourism benefits, and governance in public acceptance.",
+                "justification": "Paragraph 4 presents predator‑livestock conflict, mitigation effectiveness, tourism revenues, and the role of governance in support—together forming the paragraph's central theme.",
+                "evidenceQuote": "Rewilding's social and economic dimensions remain contentious... Compensation schemes... can reduce losses... wolf watching contributes approximately $35 million per year... Public acceptance is sensitive to governance"
+              },
+              {
+                "id": 24,
+                "questionText": "In paragraph 2, the word 'propagate' is closest in meaning to",
+                "options": [
+                  "accelerate",
+                  "measure",
+                  "spread",
+                  "stabilize"
+                ],
+                "correctAnswer": "spread",
+                "justification": "In the phrase 'trophic cascades that propagate through food webs,' 'propagate' means to spread or extend through a system.",
+                "evidenceQuote": "triggering trophic cascades that propagate through food webs"
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "type": "matching-features",
+            "title": "25-29",
+            "instructions": "Look at the following statements (Questions 25-29) and the list of research groups/organizations below. Match each statement with the correct research group/organization, A–G. Write the correct letter, A–G, in boxes 25-29 on your answer sheet. NB You may use any letter more than once.",
+            "features": [
+              {
+                "letter": "A",
+                "name": "University of Montana researchers"
+              },
+              {
+                "letter": "B",
+                "name": "Norwegian University of Life Sciences researchers"
+              },
+              {
+                "letter": "C",
+                "name": "University of Bern researchers"
+              },
+              {
+                "letter": "D",
+                "name": "IUCN Rewilding Thematic Group"
+              },
+              {
+                "letter": "E",
+                "name": "River Otter catchment government trial"
+              },
+              {
+                "letter": "F",
+                "name": "Western states resident survey"
+              },
+              {
+                "letter": "G",
+                "name": "Greater Yellowstone economic assessment"
+              }
+            ],
+            "questions": [
+              {
+                "id": 25,
+                "questionText": "connected beaver-facilitated vegetation recovery to increased avian breeding sites and improved fish habitat conditions",
+                "correctAnswer": "A",
+                "justification": "Passage explicitly states 'A 2010 synthesis by researchers from the University of Montana and partners linked these changes to higher nesting densities of riparian songbirds and cooler summer stream temperatures beneficial to trout.' This clearly attributes the linkage between beaver-driven changes and benefits to birds and fish to University of Montana researchers.",
+                "evidenceQuote": "A 2010 synthesis by researchers from the University of Montana and partners linked these changes to higher nesting densities of riparian songbirds and cooler summer stream temperatures beneficial to trout"
+              },
+              {
+                "id": 26,
+                "questionText": "documented that large herbivore reintroduction enhanced botanical diversity by approximately one-fifth through accelerated nutrient dynamics",
+                "correctAnswer": "B",
+                "justification": "Passage states 'A 2021 study by researchers at the Norwegian University of Life Sciences reported that reintroduced musk ox and bison accelerate nutrient cycling and seed dispersal across tundra and meadow systems, raising plant species richness by 18–24 percent in grazed plots.' The feature paraphrases 'raising plant species richness by 18-24 percent' as 'enhanced botanical diversity by approximately one-fifth' (18-24% ≈ 20%).",
+                "evidenceQuote": "A 2021 study by researchers at the Norwegian University of Life Sciences reported that reintroduced musk ox and bison accelerate nutrient cycling and seed dispersal across tundra and meadow systems, raising plant species richness by 18–24 percent"
+              },
+              {
+                "id": 27,
+                "questionText": "demonstrated that dam-building ecosystem engineers raised dry-season streamflows by nearly one-quarter",
+                "correctAnswer": "E",
+                "justification": "Passage clearly states 'In England's River Otter catchment, a government‑licensed trial (2015–2020) found that beaver dams increased late‑season baseflows by roughly 23 percent.' This finding is uniquely attributed to the River Otter trial. Feature paraphrases '23 percent' as 'nearly one-quarter.'",
+                "evidenceQuote": "In England's River Otter catchment, a government‑licensed trial (2015–2020) found that beaver dams increased late‑season baseflows by roughly 23 percent"
+              },
+              {
+                "id": 28,
+                "questionText": "proposed periodic reassessment protocols and flexible benchmarks that acknowledge climate-altered conditions",
+                "correctAnswer": "D",
+                "justification": "Passage states 'A 2022 framework by the IUCN Rewilding Thematic Group recommends adaptive monitoring in 3‑ to 5‑year cycles, explicit conflict‑mitigation plans, and dynamic reference baselines to avoid nostalgia for historical states unattainable under accelerated warming.' Feature heavily paraphrases 'adaptive monitoring in 3-5 year cycles' as 'periodic reassessment protocols' and 'dynamic reference baselines' as 'flexible benchmarks.'",
+                "evidenceQuote": "A 2022 framework by the IUCN Rewilding Thematic Group recommends adaptive monitoring in 3‑ to 5‑year cycles...and dynamic reference baselines to avoid nostalgia for historical states unattainable under accelerated warming"
+              },
+              {
+                "id": 29,
+                "questionText": "observed that aquatic rodent engineering generated habitat complexity favoring amphibian and invertebrate assemblages",
+                "correctAnswer": "E",
+                "justification": "Passage states that the River Otter trial found beaver activity created 'wetland mosaics favored by amphibians and dragonflies.' This is a second distinct finding from the same trial. Feature paraphrases 'beaver dams' as 'aquatic rodent engineering,' 'creating wetland mosaics' as 'generated habitat complexity,' and 'amphibians and dragonflies' as 'amphibian and invertebrate assemblages.'",
+                "evidenceQuote": "In England's River Otter catchment, a government‑licensed trial (2015–2020) found that beaver dams...creating wetland mosaics favored by amphibians and dragonflies"
+              }
+            ]
+          }
+        ]
+    },
+    {
+        "id": 1,
+        "title": "The Svalbard Global Seed Vault: Insurance Against Agricultural Collapse",
+        "level": "academic",
+        "estimatedTime": 20,
+        "paragraphs": [
+          {
+            "id": "P1",
+            "text": "Buried 130 meters inside a sandstone mountain on the Norwegian archipelago of Svalbard, midway between mainland Norway and the North Pole, lies what some have called humanity's most important room. The Svalbard Global Seed Vault, operational since February 2008, houses more than 1.15 million distinct seed samples representing approximately 6,000 plant species from virtually every nation on Earth. Unlike the dramatic scenarios depicted in popular science fiction—where such facilities serve post-apocalyptic survivors—this vault addresses a more immediate and prosaic threat: the accelerating erosion of agricultural biodiversity that underpins global food security. Agricultural researchers estimate that since the dawn of industrial farming in the early twentieth century, roughly 75 percent of crop genetic diversity has been lost, with seed varieties painstakingly developed over millennia disappearing at a rate that has alarmed agronomists and policymakers alike."
+          },
+          {
+            "id": "P2",
+            "text": "The vault's fundamental purpose is to function as a fail-safe backup for the world's 1,750 regional and national seed banks, which collectively preserve crop diversity but remain vulnerable to natural disasters, equipment failures, war, and chronic underfunding. History provides sobering precedents: the national seed bank in the Philippines lost 70 percent of its rice varieties during flooding in 2006, while Iraq's renowned seed collection—containing heritage wheat and barley cultivars adapted to arid conditions—was largely destroyed during conflicts in the early 2000s. More recently, Afghanistan's national seed repository suffered catastrophic losses following political upheaval in 2021. A comprehensive 2019 survey conducted by the Food and Agriculture Organization found that nearly 40 percent of national gene banks operated with inadequate climate control systems, and 28 percent lacked reliable electrical backup infrastructure. The Svalbard facility was conceived precisely to mitigate these risks, providing what crop diversity specialists term 'ultimate insurance'—a geographically remote, highly secure repository that requires no active management to maintain preservation temperatures. As Dr. Cary Fowler, who spearheaded the vault's establishment, observed in 2017, the facility represents recognition that agricultural biodiversity constitutes infrastructure as critical as any strategic petroleum reserve or financial stabilization fund."
+          },
+          {
+            "id": "P3",
+            "text": "The vault's location and engineering reflect extraordinary attention to long-term stability. Svalbard was selected after extensive geological and climatic analysis identified it as offering a uniquely favorable combination of attributes: permafrost providing natural refrigeration, sandstone geology resistant to seismic activity, elevation 130 meters above sea level ensuring protection even under extreme ice-melt scenarios, and Norwegian sovereignty guaranteeing political stability. The facility itself consists of a 125-meter entrance tunnel penetrating horizontally into the mountain, terminating in three separate vault chambers capable of housing 4.5 million seed samples—though only one chamber is currently in active use. Seeds are stored at a constant temperature of minus 18 degrees Celsius, sustained by refrigeration equipment but backed up by the surrounding permafrost, which naturally maintains temperatures of approximately minus 3 to minus 4 degrees. Each seed deposit arrives in hermetically sealed three-ply aluminum packets, which are then placed in sealed boxes on metal shelving. Crucially, depositing institutions retain complete ownership of their seeds; the Norwegian government provides the facility and infrastructure, but the Global Crop Diversity Trust and the Nordic Genetic Resource Center coordinate operations while respecting the sovereign rights of depositors. A 2020 technical assessment confirmed that even with complete mechanical refrigeration failure, the permafrost alone would keep seeds viable for extended periods—wheat and barley for up to 1,700 years, sorghum for over 20,000 years."
+          },
+          {
+            "id": "P4",
+            "text": "The vault's value transcended theoretical insurance in September 2015, when researchers from the International Center for Agricultural Research in the Dry Areas (ICARDA) made the first-ever withdrawal request. ICARDA's primary seed bank, located in Aleppo, Syria, had become inaccessible due to the ongoing civil conflict, threatening decades of research into drought-resistant wheat, barley, and chickpea varieties essential for agriculture across North Africa and West Asia. The Svalbard vault released 116,000 seed samples—roughly 15 percent of ICARDA's original deposit—enabling the organization to reconstitute its collection at replacement facilities in Lebanon and Morocco. By 2019, ICARDA had successfully regenerated these materials and returned approximately 80,000 replacement samples to Svalbard, demonstrating the system's intended cyclical function. Beyond such dramatic interventions, the vault plays a quieter but equally vital role in global agricultural resilience. Deposits have accelerated markedly since 2015, with an average of 70,000 new samples added annually—a pace reflecting both growing awareness and intensifying concerns about climate instability. Notably, the Cherokee Nation deposited sacred heirloom corn varieties in 2021, while Benin and other West African nations contributed diverse sorghum and millet accessions particularly valuable as climate change renders traditional growing zones marginal."
+          },
+          {
+            "id": "P5",
+            "text": "Yet the vault itself is not immune to the planetary changes it was designed to withstand. In May 2017, unseasonably warm temperatures and heavy rainfall caused meltwater to penetrate approximately 15 meters into the entrance tunnel—though critically, water did not reach the vault chambers themselves, and no seeds were compromised. The incident prompted immediate upgrades including enhanced drainage, waterproof walls, and removal of electrical equipment that generated excess heat. Some researchers contend that the episode, while alarming, validated core design principles: the vault's passive systems and deep placement ensured seed integrity despite surface-level infrastructure challenges. Looking ahead, funding remains a persistent concern; while construction costs of approximately nine million dollars were covered by Norway, ongoing operational expenses rely on a mix of Norwegian government support and contributions to the Global Crop Diversity Trust endowment, which remains below its $850 million target. As Dr. Marie Haga, former executive director of the Trust, emphasized in a 2022 interview, the vault represents humanity's decision to invest in resilience—a recognition that preserving the genetic raw material for future plant breeding may prove as consequential as any climate mitigation technology currently under development."
+          }
+        ],
+        "questions": [
+            {
+                "id": 8,
+                "type": "multiple-choice",
+                "title": "Questions 30-34",
+                "instructions": "Choose the correct letter, A, B, C or D.",
+                "questions": [
+                  {
+                    "id": 30,
+                    "questionText": "According to the passage, when did the Svalbard Global Seed Vault become operational?",
+                    "options": [
+                      "In February 2008",
+                      "In September 2015",
+                      "In May 2017",
+                      "In 2019"
+                    ],
+                    "correctAnswer": "In February 2008",
+                    "justification": "Paragraph 1 explicitly states 'The Svalbard Global Seed Vault, operational since February 2008.' This is a straightforward factual detail question testing the reader's ability to locate specific date information.",
+                    "evidenceQuote": "The Svalbard Global Seed Vault, operational since February 2008"
+                  },
+                  {
+                    "id": 31,
+                    "questionText": "What does the passage indicate about the selection of Svalbard as the vault location?",
+                    "options": [
+                      "It was chosen primarily for its proximity to major European agricultural institutions",
+                      "It was selected because Norway possessed the most advanced refrigeration technology",
+                      "It was chosen solely for its natural permafrost conditions",
+                      "It was selected for a combination of geological, climatic, and political factors"
+                    ],
+                    "correctAnswer": "It was selected for a combination of geological, climatic, and political factors",
+                    "justification": "Paragraph 3 clearly states 'Svalbard was selected after extensive geological and climatic analysis identified it as offering a uniquely favorable combination of attributes' and then lists multiple factors: permafrost, sandstone geology, elevation, and Norwegian sovereignty. The correct answer paraphrases 'combination of attributes' as 'combination of factors' and captures all three categories mentioned.",
+                    "evidenceQuote": "Svalbard was selected...as offering a uniquely favorable combination of attributes: permafrost providing natural refrigeration, sandstone geology resistant to seismic activity, elevation 130 meters above sea level...and Norwegian sovereignty guaranteeing political stability"
+                  },
+                  {
+                    "id": 32,
+                    "questionText": "What can be inferred about the relationship between regional seed banks and the Svalbard facility?",
+                    "options": [
+                      "Regional seed banks are gradually being closed and replaced by centralized storage in Svalbard",
+                      "Svalbard functions as a safety backup because regional facilities face numerous vulnerabilities",
+                      "Regional seed banks are now required to store all seeds exclusively at the Svalbard location",
+                      "The Svalbard facility depends on regional seed banks to maintain its collections"
+                    ],
+                    "correctAnswer": "Svalbard functions as a safety backup because regional facilities face numerous vulnerabilities",
+                    "justification": "Paragraph 2 states 'The vault's fundamental purpose is to function as a fail-safe backup for the world's 1,750 regional and national seed banks, which collectively preserve crop diversity but remain vulnerable to natural disasters, equipment failures, war, and chronic underfunding.' The passage then provides evidence of these vulnerabilities with the FAO survey data. The correct answer paraphrases 'fail-safe backup' as 'safety backup' and 'vulnerable to...disasters, failures, war, underfunding' as 'numerous vulnerabilities.'",
+                    "evidenceQuote": "The vault's fundamental purpose is to function as a fail-safe backup for the world's 1,750 regional and national seed banks, which...remain vulnerable to natural disasters, equipment failures, war, and chronic underfunding"
+                  },
+                  {
+                    "id": 33,
+                    "questionText": "What is the main idea of paragraph 5?",
+                    "options": [
+                      "The 2017 meltwater incident demonstrated fundamental flaws in the vault's design",
+                      "Climate change will inevitably destroy the vault within the next few decades",
+                      "Despite facing climate challenges and funding limitations, the vault represents a crucial long-term investment",
+                      "Norway must significantly increase its financial support for vault operations"
+                    ],
+                    "correctAnswer": "Despite facing climate challenges and funding limitations, the vault represents a crucial long-term investment",
+                    "justification": "Paragraph 5 discusses the 2017 meltwater incident, upgrades made in response, the debate about what it revealed, and persistent funding concerns, but concludes that 'the vault represents humanity's decision to invest in resilience' and may prove 'as consequential as any climate mitigation technology.' The paragraph balances acknowledgment of challenges with affirmation of the vault's importance. This answer captures this balanced main idea by recognizing both challenges and significance.",
+                    "evidenceQuote": "the vault represents humanity's decision to invest in resilience—a recognition that preserving the genetic raw material for future plant breeding may prove as consequential as any climate mitigation technology"
+                  },
+                  {
+                    "id": 34,
+                    "questionText": "The passage suggests that the 2015 ICARDA withdrawal was significant because it",
+                    "options": [
+                      "revealed unexpected security vulnerabilities in the vault's access protocols",
+                      "resulted in the permanent depletion of important Middle Eastern seed varieties",
+                      "led to immediate upgrades of the vault's mechanical refrigeration systems",
+                      "demonstrated the vault's practical value beyond theoretical contingency planning"
+                    ],
+                    "correctAnswer": "demonstrated the vault's practical value beyond theoretical contingency planning",
+                    "justification": "Paragraph 4 opens with 'The vault's value transcended theoretical insurance in September 2015' when ICARDA made its withdrawal. The word 'transcended' indicates moving beyond theory to practice. The passage describes how the withdrawal enabled ICARDA to reconstitute its collection and later return samples, 'demonstrating the system's intended cyclical function.' This answer paraphrases 'transcended theoretical insurance' as 'practical value beyond theoretical contingency planning,' capturing the passage's emphasis on the vault proving its real-world utility.",
+                    "evidenceQuote": "The vault's value transcended theoretical insurance in September 2015, when researchers from the International Center for Agricultural Research in the Dry Areas (ICARDA) made the first-ever withdrawal request"
+                  }
+                ]
+              },
+              {
+                "id": 9,
+                "type": "true-false-not-given",
+                "title": "Questions 35-38",
+                "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
+                "questions": [
+                  {
+                    "id": 35,
+                    "questionText": "Since the beginning of the twentieth century, approximately three-quarters of agricultural genetic diversity has disappeared.",
+                    "correctAnswer": "TRUE",
+                    "justification": "Paragraph 1 states that 'roughly 75 percent of crop genetic diversity has been lost' since the dawn of industrial farming in the early twentieth century. The statement accurately paraphrases '75 percent' as 'three-quarters' and 'crop genetic diversity has been lost' as 'agricultural genetic diversity has disappeared.'",
+                    "evidenceQuote": "roughly 75 percent of crop genetic diversity has been lost, with seed varieties painstakingly developed over millennia disappearing"
+                  },
+                  {
+                    "id": 36,
+                    "questionText": "The natural permafrost surrounding the vault maintains a constant temperature of minus 18 degrees Celsius without mechanical assistance.",
+                    "correctAnswer": "FALSE",
+                    "justification": "Passage states seeds are 'stored at a constant temperature of minus 18 degrees Celsius, sustained by refrigeration equipment' while 'the surrounding permafrost naturally maintains temperatures of approximately minus 3 to minus 4 degrees.' The statement incorrectly attributes the -18°C temperature to natural permafrost when that temperature actually requires mechanical refrigeration; permafrost alone maintains only -3 to -4°C.",
+                    "evidenceQuote": "stored at a constant temperature of minus 18 degrees Celsius, sustained by refrigeration equipment but backed up by the surrounding permafrost, which naturally maintains temperatures of approximately minus 3 to minus 4 degrees"
+                  },
+                  {
+                    "id": 37,
+                    "questionText": "By 2019, ICARDA had returned more than 100,000 regenerated seed samples to Svalbard following the Syrian conflict.",
+                    "correctAnswer": "FALSE",
+                    "justification": "Passage states that by 2019, 'ICARDA had successfully regenerated these materials and returned approximately 80,000 replacement samples to Svalbard.' The statement claims 'more than 100,000' samples were returned, but the actual number was approximately 80,000—significantly fewer than the 116,000 originally withdrawn.",
+                    "evidenceQuote": "By 2019, ICARDA had successfully regenerated these materials and returned approximately 80,000 replacement samples to Svalbard"
+                  },
+                  {
+                    "id": 38,
+                    "questionText": "The Svalbard facility employs more sophisticated preservation technology than any other seed storage institution worldwide.",
+                    "correctAnswer": "NOT GIVEN",
+                    "justification": "The passage describes Svalbard's preservation methods (mechanical refrigeration at -18°C backed by permafrost, hermetically sealed packets) and mentions that many other gene banks have 'inadequate climate control systems' and lack 'reliable electrical backup infrastructure.' However, it never directly compares Svalbard's technology with all other facilities or states that it is the most sophisticated globally. The passage provides information about Svalbard's features and other facilities' vulnerabilities separately but makes no definitive comparative claim about technological superiority.",
+                    "evidenceQuote": "nearly 40 percent of national gene banks operated with inadequate climate control systems, and 28 percent lacked reliable electrical backup infrastructure"
+                  }
+                ]
+              },
+              {
+                "id": 10,
+                "type": "short-answer",
+                "title": "Questions 39-40",
+                "instructions": "Answer the questions below. Choose NO MORE THAN THREE WORDS AND/OR A NUMBER from the passage for each answer.",
+                "questions": [
+                  {
+                    "id": 39,
+                    "questionText": "When did the Svalbard Global Seed Vault become operational?",
+                    "correctAnswer": "February 2008",
+                    "justification": "Paragraph 1 explicitly states 'The Svalbard Global Seed Vault, operational since February 2008.' The answer uses exact words from the passage.",
+                    "evidenceQuote": "The Svalbard Global Seed Vault, operational since February 2008"
+                  },
+                  {
+                    "id": 40,
+                    "questionText": "At what temperature are seeds stored in the vault?",
+                    "correctAnswer": "minus 18 degrees",
+                    "justification": "Paragraph 3 states 'Seeds are stored at a constant temperature of minus 18 degrees Celsius.' The answer uses exact passage words.",
+                    "evidenceQuote": "Seeds are stored at a constant temperature of minus 18 degrees Celsius"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+
+
+
+
+
+
+
+
+
+    

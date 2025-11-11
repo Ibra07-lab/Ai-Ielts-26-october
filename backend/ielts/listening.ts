@@ -106,7 +106,8 @@ export const submitListening = api<ListeningSubmission, ListeningResult>(
         score++;
         explanations[question.id] = "Correct! Well done.";
       } else {
-        explanations[question.id] = `Incorrect. The correct answer is: ${question.correctAnswer}`;
+        // Omit generic incorrect message unless provided in data
+        explanations[question.id] = "";
       }
     });
 

@@ -19,6 +19,7 @@ import { useTheme } from "../contexts/ThemeContext";
 const navigation = [
   { name: "Dashboard", href: "/", icon: Home },
   { name: "Progress", href: "/progress", icon: TrendingUp },
+  { name: "Progress Tracker", href: "/progress-tracker", icon: TrendingUp },
   { name: "AI Coach", href: "/coach", icon: MessageCircle },
   { name: "Settings", href: "/settings", icon: Settings },
 ];

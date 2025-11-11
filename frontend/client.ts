@@ -110,6 +110,8 @@ import {
     getReadingPassageById as api_ielts_reading_getReadingPassageById,
     getReadingPassages as api_ielts_reading_getReadingPassages,
     getReadingSessions as api_ielts_reading_getReadingSessions,
+    getReadingTheoryById as api_ielts_reading_getReadingTheoryById,
+    getReadingTheoryList as api_ielts_reading_getReadingTheoryList,
     getReadingTestById as api_ielts_reading_getReadingTestById,
     getReadingTests as api_ielts_reading_getReadingTests,
     submitReading as api_ielts_reading_submitReading,
@@ -162,6 +164,8 @@ export namespace ielts {
             this.getReadingPassageById = this.getReadingPassageById.bind(this)
             this.getReadingPassages = this.getReadingPassages.bind(this)
             this.getReadingSessions = this.getReadingSessions.bind(this)
+            this.getReadingTheoryById = this.getReadingTheoryById.bind(this)
+            this.getReadingTheoryList = this.getReadingTheoryList.bind(this)
             this.getReadingTestById = this.getReadingTestById.bind(this)
             this.getReadingTests = this.getReadingTests.bind(this)
             this.getSpeakingQuestion = this.getSpeakingQuestion.bind(this)
@@ -344,6 +348,24 @@ export namespace ielts {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/reading/sessions`, {method: "GET", body: undefined})
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_getReadingSessions>
+        }
+
+        /**
+         * NEW: Get list of all theory question types
+         */
+        public async getReadingTheoryList(): Promise<ResponseType<typeof api_ielts_reading_getReadingTheoryList>> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI(`/reading/theory`, {method: "GET", body: undefined})
+            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_getReadingTheoryList>
+        }
+
+        /**
+         * NEW: Get theory content for a specific question type
+         */
+        public async getReadingTheoryById(params: { questionType: string }): Promise<ResponseType<typeof api_ielts_reading_getReadingTheoryById>> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI(`/reading/theory/${encodeURIComponent(params.questionType)}`, {method: "GET", body: undefined})
+            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_getReadingTheoryById>
         }
 
         /**
@@ -1246,4 +1268,5 @@ export enum ErrCode {
     Unauthenticated = "unauthenticated",
 }
 
-export default new Client(import.meta.env.VITE_CLIENT_TARGET, { requestInit: { credentials: "include" } });
+const clientTarget: BaseURL = (import.meta as any).env?.VITE_CLIENT_TARGET || Local;
+export default new Client(clientTarget, { requestInit: { credentials: "include" } });

@@ -69,6 +69,306 @@ export interface ReadingTestResponse {
   passages: ReadingPassage[];
 }
 
+// Theory Content Interfaces
+export interface TheoryWhatIsIt {
+  description: string;
+  skillTested: string;
+}
+
+export interface TheoryExampleQuestion {
+  id: number;
+  text: string;
+  options?: string[];
+  correctAnswer: string;
+  explanation: string;
+}
+
+export interface TheoryExample {
+  passage: string | Record<string, string>;
+  headings?: string[];
+  questions: TheoryExampleQuestion[];
+}
+
+export interface TheoryMistake {
+  title: string;
+  description: string;
+  example?: any;
+  qualifyingWords?: {
+    absolute?: string[];
+    qualified?: string[];
+    caution?: string;
+  };
+  howToAvoid?: string;
+}
+
+export interface StrategyTip {
+  step: number;
+  title: string;
+  description: string;
+}
+
+export interface TimeManagement {
+  timePerQuestion: string;
+  tip: string;
+  timePerMultipleAnswer?: string;
+  totalTime?: string;
+  allocation?: {
+    reading?: string;
+    analyzing?: string;
+    deciding?: string;
+  };
+}
+
+// Quiz support embedded within theory pages
+export type TheoryQuizQuestionType =
+  | 'true-false-not-given'
+  | 'multiple-choice'
+  | 'matching-headings'
+  | 'short-answer'
+  | 'gap-fill';
+
+export interface TheoryQuizQuestion {
+  id: number;
+  type: TheoryQuizQuestionType;
+  text: string;
+  options?: string[]; // for MCQ or headings list
+  correctAnswer: string | string[]; // array supports synonyms or multiple acceptable answers
+  explanation?: string;
+}
+
+export interface TheoryQuiz {
+  passage?: string; // optional short passage dedicated to the quiz
+  questions: TheoryQuizQuestion[];
+}
+
+// Practical quiz structure for Matching Headings and similar practice blocks
+export interface PracticalQuizQuestion {
+  id: number;
+  type: 'matching-headings' | 'true-false-not-given' | 'multiple-choice' | 'short-answer' | 'gap-fill';
+  text: string;
+  options?: string[];
+  correctAnswer: string | string[];
+  explanation?: string;
+}
+
+export interface PracticalQuiz {
+  passage?: Record<string, string>;
+  headings?: string[];
+  questions: PracticalQuizQuestion[];
+  miniPractice?: {
+    paragraph: string;
+    headings: string[];
+    correctAnswer: string;
+    explanation?: string;
+  };
+}
+
+export interface TheoryScoring {
+  excellent?: { range: string; message: string };
+  good?: { range: string; message: string };
+  needsReview?: { range: string; message: string };
+  needsStudy?: { range: string; message: string };
+}
+
+// New, optional Multiple Choice extended structures
+export interface QuickStartGuide {
+  title?: string;
+  essentials?: string[];
+  commonTrap?: string;
+}
+
+export interface LearningPathPhase {
+  name?: string;
+  focus?: string[];
+  duration?: string;
+  sections?: string[];
+}
+
+export interface LearningPath {
+  phase1?: LearningPathPhase;
+  phase2?: LearningPathPhase;
+  phase3?: LearningPathPhase;
+  phase4?: LearningPathPhase;
+}
+
+export interface QuickRecognition {
+  identifiers?: string[];
+  variants?: string[];
+}
+
+export interface MCQuestionTypeEntry {
+  type: string;
+  difficulty?: string;
+  signals?: string[];
+  whatToLookFor?: string;
+  strategy?: string;
+}
+
+export interface AttitudeIndicatorEntry {
+  words?: string[];
+  example?: string;
+}
+
+export interface AttitudeIndicators {
+  positive?: AttitudeIndicatorEntry;
+  negative?: AttitudeIndicatorEntry;
+  neutral?: AttitudeIndicatorEntry;
+  cautious?: AttitudeIndicatorEntry;
+  certain?: AttitudeIndicatorEntry;
+  critical?: AttitudeIndicatorEntry;
+}
+
+export interface ParaphrasingPattern {
+  type: string;
+  passageExample?: string;
+  optionExamples?: string[];
+  tip?: string;
+}
+
+export interface ParaphrasingPatterns {
+  description?: string;
+  commonPatterns?: ParaphrasingPattern[];
+}
+
+export interface WorkedExample {
+  difficulty?: string;
+  passage?: string;
+  question?: string;
+  options?: string[];
+  correctAnswer?: string;
+  thinkingProcess?: string;
+  eliminationProcess?: Record<string, string>;
+  explanation?: string;
+  attitudeClues?: string[];
+}
+
+export interface WorkedExamples {
+  detailQuestion?: WorkedExample;
+  inferenceQuestion?: WorkedExample;
+  opinionQuestion?: WorkedExample;
+  purposeQuestion?: WorkedExample;
+}
+
+export interface MultipleAnswerExample {
+  passage?: string;
+  question?: string;
+  options?: string[];
+  correctAnswers?: string[];
+  thinkingProcess?: string;
+  eliminationProcess?: Record<string, string>;
+  explanation?: string;
+  commonMistake?: string;
+}
+
+export interface MultipleAnswerQuestions {
+  scoringRule?: string;
+  howToRecognize?: string;
+  strategy?: string[];
+  example?: MultipleAnswerExample;
+}
+
+export interface SubtleDifferenceExample {
+  passage: string;
+  question: string;
+  optionA: string;
+  optionB: string;
+  correctAnswer: string;
+  keyDifference: string;
+  explanation: string;
+}
+
+export interface SubtleDifferences {
+  description?: string;
+  example1?: SubtleDifferenceExample;
+  example2?: SubtleDifferenceExample;
+  example3?: SubtleDifferenceExample;
+}
+
+export interface DifficultyQAExample {
+  passage: string;
+  question: string;
+  options: string[];
+  correctAnswer: string;
+  whyEasy?: string;
+  whyMedium?: string;
+  whyHard?: string;
+}
+
+export interface DifficultyExamples {
+  easy?: { characteristics?: string; example?: DifficultyQAExample };
+  medium?: { characteristics?: string; example?: DifficultyQAExample };
+  hard?: { characteristics?: string; example?: DifficultyQAExample };
+}
+
+export interface TrapPattern {
+  type: string;
+  description?: string;
+  example?: string;
+  redFlag?: string;
+}
+
+export interface DosAndDonts {
+  dos?: string[];
+  donts?: string[];
+}
+
+export interface AdvancedTip {
+  title: string;
+  description: string;
+  application?: string;
+}
+
+export interface EmergencyStrategy {
+  whenRunningOutOfTime?: string[];
+  "guessing Strategy"?: string[];
+  confidenceBooster?: string;
+}
+
+export type KeyTechniques = Record<string, string>;
+
+export interface TheoryContent {
+  id: string;
+  name: string;
+  category: string;
+  whatIsIt: TheoryWhatIsIt;
+  example: TheoryExample;
+  commonMistakes: TheoryMistake[];
+  strategyTips: StrategyTip[];
+  timeManagement: TimeManagement;
+  quiz?: TheoryQuiz; // optional mini-quizlet per theory type
+  theoryQuiz?: TheoryQuiz; // explicit theory quiz block (some content uses this key)
+  practicalQuiz?: PracticalQuiz; // practical section for applied questions (e.g., Matching Headings)
+  scoring?: TheoryScoring; // optional scoring bands/messages
+  // Optional extended fields for Multiple Choice theory
+  frequency?: string;
+  quickStartGuide?: QuickStartGuide;
+  learningPath?: LearningPath;
+  quickRecognition?: QuickRecognition;
+  questionTypes?: MCQuestionTypeEntry[];
+  attitudeIndicators?: AttitudeIndicators;
+  paraphrasingPatterns?: ParaphrasingPatterns;
+  examples?: WorkedExamples;
+  multipleAnswerQuestions?: MultipleAnswerQuestions;
+  subtleDifferences?: SubtleDifferences;
+  difficultyExamples?: DifficultyExamples;
+  trapPatterns?: TrapPattern[];
+  warningSign?: string;
+  dosAndDonts?: DosAndDonts;
+  advancedTips?: AdvancedTip[];
+  emergencyStrategy?: EmergencyStrategy;
+  keyTechniques?: KeyTechniques;
+}
+
+export interface TheoryListItem {
+  id: string;
+  name: string;
+  category: string;
+}
+
+export interface TheoryData {
+  questionTypes: TheoryContent[];
+}
+
 function getReadingTestsDir(): string {
   // Resolve relative to repo root when running inside backend
   const dataDir = path.resolve(process.cwd(), "backend", "data", "reading-tests");
@@ -76,6 +376,29 @@ function getReadingTestsDir(): string {
   if (fs.existsSync(dataDir)) return dataDir;
   const alt = path.resolve(process.cwd(), "data", "reading-tests");
   return alt;
+}
+
+function getTheoryDataPath(): string {
+  // Resolve relative to repo root when running inside backend
+  const dataPath = path.resolve(process.cwd(), "backend", "data", "reading-theory.json");
+  // Fallback if process cwd is already in backend
+  if (fs.existsSync(dataPath)) return dataPath;
+  const alt = path.resolve(process.cwd(), "data", "reading-theory.json");
+  return alt;
+}
+
+function loadTheoryData(): TheoryData {
+  const filePath = getTheoryDataPath();
+  if (!fs.existsSync(filePath)) {
+    return { questionTypes: [] };
+  }
+  try {
+    const raw = fs.readFileSync(filePath, "utf8");
+    const data = JSON.parse(raw) as TheoryData;
+    return data;
+  } catch {
+    return { questionTypes: [] };
+  }
 }
 
 function loadAllTests(): Array<{ testId: number; testName: string; passages: ReadingPassage[] }> {
@@ -127,6 +450,33 @@ export const getReadingTestById = api<{ testId: number }, ReadingTestResponse>(
       // still return but do not crash; client can handle
     }
     return { testId: test.testId, testName: test.testName, passages: test.passages };
+  }
+);
+
+// NEW: Get list of all theory question types
+export const getReadingTheoryList = api<void, { theories: TheoryListItem[] }>(
+  { expose: true, method: "GET", path: "/reading/theory" },
+  async () => {
+    const theoryData = loadTheoryData();
+    const theories: TheoryListItem[] = theoryData.questionTypes.map(t => ({
+      id: t.id,
+      name: t.name,
+      category: t.category
+    }));
+    return { theories };
+  }
+);
+
+// NEW: Get theory content for a specific question type
+export const getReadingTheoryById = api<{ questionType: string }, TheoryContent>(
+  { expose: true, method: "GET", path: "/reading/theory/:questionType" },
+  async ({ questionType }) => {
+    const theoryData = loadTheoryData();
+    const theory = theoryData.questionTypes.find(t => t.id === questionType);
+    if (!theory) {
+      throw new Error("Theory content not found for this question type");
+    }
+    return theory;
   }
 );
 
@@ -604,7 +954,8 @@ export const submitReading = api<ReadingSubmission, ReadingResult>(
         score++;
         explanations[question.id] = providedExplanation || "Correct! Well done.";
       } else {
-        explanations[question.id] = providedExplanation || `Incorrect. The correct answer is: ${correct}`;
+        // Do not show a generic incorrect message; leave blank unless an explicit explanation is provided
+        explanations[question.id] = providedExplanation || "";
       }
     });
 

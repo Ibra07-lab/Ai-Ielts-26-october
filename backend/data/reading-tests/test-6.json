@@ -1,0 +1,523 @@
+{
+    "testId": 6,
+    "testName": "Test 6",
+    "passages": [
+        {
+        "id": 1,
+  "title": "Digital Disruption in Higher Education: Evaluating Online and Traditional Learning Paradigms",
+  "level": "academic",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "P1",
+      "text": "The COVID-19 pandemic accelerated a transformation in higher education that had been gradually unfolding for over two decades, forcing an unprecedented global experiment in remote learning. By 2022, approximately 73 percent of universities in developed nations offered at least some courses entirely online, compared to just 34 percent in 2015. This rapid expansion has intensified longstanding debates about the relative merits of digital and face-to-face instruction, with proponents and critics marshaling increasingly sophisticated evidence to support their positions. While enthusiasts emphasize the democratizing potential and flexibility of online platforms, skeptics point to concerns about academic rigor, student engagement, and the irreplaceable value of direct human interaction. Understanding the nuances of this comparison requires examining not merely learning outcomes but also accessibility, cost-effectiveness, and the varied contexts in which different modalities succeed or fail."
+    },
+    {
+      "id": "P2",
+      "text": "Online learning's most frequently cited advantages center on accessibility and flexibility, attributes that have demonstrably expanded educational opportunities for non-traditional student populations. Asynchronous courses—those without fixed meeting times—enable students to engage with material according to their own schedules, a particularly valuable feature for working professionals, parents, and individuals in different time zones. Research conducted by Dr. Thomas Bailey's team at Columbia University's Community College Research Center found that online course availability increased enrollment among students over age 25 by approximately 47 percent between 2016 and 2021. Geographic barriers similarly diminish in significance; prestigious institutions like MIT and Stanford have made selected course content freely available through platforms such as edX and Coursera, with MIT OpenCourseWare alone reaching over 15 million learners globally since its 2011 inception. Cost considerations also favor online delivery in many contexts. A comprehensive analysis published in the Journal of Higher Education Economics in 2022 determined that fully online degree programs cost institutions 23 to 31 percent less to deliver than equivalent on-campus offerings, with savings stemming primarily from reduced infrastructure requirements and economies of scale. These financial advantages can translate into lower tuition fees, though whether institutions actually pass savings to students remains subject to considerable debate. Moreover, students save on commuting, relocation, and campus housing expenses, which can exceed $15,000 annually at residential universities."
+    },
+    {
+      "id": "P3",
+      "text": "Despite these practical advantages, substantial evidence suggests that traditional classroom settings may offer pedagogical benefits difficult to replicate in virtual environments. The synchronous, face-to-face interaction characteristic of physical classrooms facilitates spontaneous discussion, non-verbal communication, and the kind of informal mentoring relationships that many educators consider central to deep learning. Dr. Susan Metros at the University of Southern California's Center for Educational Excellence argues that these interpersonal dimensions prove particularly crucial in disciplines requiring collaborative problem-solving or hands-on skill development. Empirical research on learning outcomes presents a complex picture. A meta-analysis examining 232 studies, published in Educational Research Review in 2020, found that students in traditional classrooms outperformed their online counterparts by modest but statistically significant margins in courses requiring high-order thinking skills, with effect sizes ranging from 0.15 to 0.28 standard deviations. However, the same analysis revealed no significant differences in courses focused primarily on information retention or procedural knowledge. Completion rates tell a similarly nuanced story. While online courses offer greater initial access, retention rates average between 40 and 60 percent—substantially lower than the 75 to 85 percent typical of traditional courses. Researchers attribute this disparity to multiple factors, including insufficient self-regulation skills among students, the absence of peer accountability, and what educational psychologist Dr. Angela Chen describes as 'structural invisibility'—the ease with which struggling students can disengage without detection in large online cohorts."
+    },
+    {
+      "id": "P4",
+      "text": "Recognition of both modalities' strengths and limitations has driven increasing interest in hybrid or 'blended' approaches that strategically combine online and in-person elements. Arizona State University's adaptive learning initiative exemplifies this trend, utilizing artificial intelligence-powered platforms to deliver personalized online instruction while reserving classroom time for collaborative activities and complex problem-solving. Preliminary assessment data from the program, which enrolled approximately 18,000 students in 2022, indicated that blended sections achieved learning outcomes comparable to traditional courses while maintaining retention rates 12 percentage points higher than fully online alternatives. Similarly, the University of Michigan's flipped classroom model—wherein students engage with lecture content online before attending sessions devoted to application and discussion—has produced encouraging results across multiple disciplines. A five-year longitudinal study tracking outcomes in introductory STEM courses found that students in flipped sections demonstrated 8 to 14 percent higher performance on standardized assessments and reported greater satisfaction with their learning experience. However, successful hybrid implementation demands significant institutional investment. Faculty require training in new pedagogical approaches and technological competencies, learning management systems need regular updating and maintenance, and course redesign involves substantial upfront time commitments. Critics like Professor David Noble have argued that the enthusiasm for technology-mediated instruction sometimes reflects administrative cost-cutting priorities rather than genuine educational innovation, raising concerns about the commercialization of higher education."
+    },
+    {
+      "id": "P5",
+      "text": "The evolving landscape of higher education suggests that the dichotomy between online and traditional learning may prove less relevant than understanding how different delivery modes serve distinct populations and educational objectives. Dr. Carol Twigg of the National Center for Academic Transformation contends that the fundamental question is not which modality is superior in the abstract but rather which approach best aligns with specific learning outcomes, student characteristics, and resource constraints. As digital natives increasingly populate university classrooms, comfort with technology may reduce some of the engagement disparities currently observed in online courses. Conversely, the pandemic's forced experiment with remote learning has highlighted the difficulty of replicating certain educational experiences virtually, potentially tempering the most optimistic predictions about wholesale digital transformation. The future will likely feature an increasingly differentiated educational ecosystem in which multiple delivery models coexist, with institutions and students selecting approaches based on pragmatic considerations of access, cost, effectiveness, and personal learning preferences. What remains essential is rigorous ongoing assessment to ensure that innovations genuinely serve educational goals rather than merely technological or economic imperatives."
+    }
+  ],
+"questions": [
+  {
+    "id": 1,
+    "type": "matching-information",
+    "title": "Questions 1–6",
+    "instructions": "Which paragraph contains the following information? Write the correct letter, A–E, in boxes 1–6 on your answer sheet.",
+    "paragraphs_list": ["A", "B", "C", "D", "E"],
+    "questions": [
+      {
+        "id": 1,
+        "questionText": "quantitative evidence regarding institutional expenditure reductions for distance education programs",
+        "correctAnswer": "B",
+        "justification": "Paragraph B provides specific statistical data on cost savings, stating 'fully online degree programs cost institutions 23 to 31 percent less to deliver than equivalent on-campus offerings.' This directly addresses institutional cost reductions for online delivery.",
+        "evidenceQuote": "fully online degree programs cost institutions 23 to 31 percent less to deliver than equivalent on-campus offerings, with savings stemming primarily from reduced infrastructure requirements"
+      },
+      {
+        "id": 2,
+        "questionText": "research demonstrating how web-based courses expanded participation among mature learners",
+        "correctAnswer": "B",
+        "justification": "Paragraph B cites Dr. Thomas Bailey's research showing 'online course availability increased enrollment among students over age 25 by approximately 47 percent between 2016 and 2021.' This specifically addresses mature student participation increases.",
+        "evidenceQuote": "Research conducted by Dr. Thomas Bailey's team at Columbia University's Community College Research Center found that online course availability increased enrollment among students over age 25"
+      },
+      {
+        "id": 3,
+        "questionText": "a contrast in student persistence levels between different instructional delivery formats",
+        "correctAnswer": "C",
+        "justification": "Paragraph C provides explicit comparison of completion rates: 'retention rates average between 40 and 60 percent—substantially lower than the 75 to 85 percent typical of traditional courses.' This directly compares persistence between modalities.",
+        "evidenceQuote": "retention rates average between 40 and 60 percent—substantially lower than the 75 to 85 percent typical of traditional courses"
+      },
+      {
+        "id": 4,
+        "questionText": "factors accounting for lower course completion in virtual learning environments",
+        "correctAnswer": "C",
+        "justification": "Paragraph C explains causes of the completion gap: 'Researchers attribute this disparity to multiple factors, including insufficient self-regulation skills among students, the absence of peer accountability, and what educational psychologist Dr. Angela Chen describes as structural invisibility.' This provides causal explanation for retention differences.",
+        "evidenceQuote": "Researchers attribute this disparity to multiple factors, including insufficient self-regulation skills among students, the absence of peer accountability, and what educational psychologist Dr. Angela Chen describes as 'structural invisibility'"
+      },
+      {
+        "id": 5,
+        "questionText": "specific institutional implementations of combined instructional approaches integrating both remote and classroom components",
+        "correctAnswer": "D",
+        "justification": "Paragraph D provides concrete examples of hybrid models: 'Arizona State University's adaptive learning initiative' and 'University of Michigan's flipped classroom model.' These are specific institutional case studies of blended approaches.",
+        "evidenceQuote": "Arizona State University's adaptive learning initiative exemplifies this trend... Similarly, the University of Michigan's flipped classroom model... has produced encouraging results"
+      },
+      {
+        "id": 6,
+        "questionText": "an expert perspective suggesting that instructional method selection should prioritize context-specific factors over abstract superiority claims",
+        "correctAnswer": "E",
+        "justification": "Paragraph E presents Dr. Carol Twigg's position: 'the fundamental question is not which modality is superior in the abstract but rather which approach best aligns with specific learning outcomes, student characteristics, and resource constraints.' This emphasizes context over absolutes.",
+        "evidenceQuote": "Dr. Carol Twigg of the National Center for Academic Transformation contends that the fundamental question is not which modality is superior in the abstract but rather which approach best aligns with specific learning outcomes"
+      }
+    ]
+  },
+  {
+    "id": 1,
+  "type": "short-answer",
+  "title": "Questions 7–10",
+  "instructions": "Answer the questions below. Choose NO MORE THAN THREE WORDS AND/OR A NUMBER from the passage for each answer.",
+  "questions": [
+    {
+      "id": 7,
+      "questionText": "What term describes courses that do not have fixed meeting times?",
+      "correctAnswer": "asynchronous courses",
+      "justification": "The passage explicitly defines 'Asynchronous courses—those without fixed meeting times' in P2. This is the exact technical term used in the passage. Both capitalized and lowercase versions are acceptable as IELTS typically accepts either.",
+      "evidenceQuote": "Asynchronous courses—those without fixed meeting times—enable students to engage with material according to their own schedules"
+    },
+    {
+      "id": 8,
+      "questionText": "By what percentage did online course availability increase enrollment among students over age 25 according to Dr. Bailey's research?",
+      "correctAnswer": "47 percent",
+      "justification": "The passage states that Dr. Thomas Bailey's research 'found that online course availability increased enrollment among students over age 25 by approximately 47 percent between 2016 and 2021.' The answer '47 percent' is the exact figure from the passage. Both 'percent' and '%' formats are acceptable.",
+      "evidenceQuote": "online course availability increased enrollment among students over age 25 by approximately 47 percent between 2016 and 2021"
+    },
+    {
+      "id": 9,
+      "questionText": "Who coined the term 'structural invisibility' to describe student disengagement in large online cohorts?",
+      "correctAnswer": "Dr. Angela Chen",
+      "justification": "The passage explicitly attributes the term 'structural invisibility' to 'educational psychologist Dr. Angela Chen.' This specific attribution makes the answer unambiguous and requires careful reading to identify the correct researcher among several mentioned in the passage.",
+      "evidenceQuote": "what educational psychologist Dr. Angela Chen describes as 'structural invisibility'—the ease with which struggling students can disengage without detection in large online cohorts"
+    },
+    {
+      "id": 10,
+      "questionText": "What teaching approach does the University of Michigan use where students engage with lectures online before attending in-person sessions?",
+      "correctAnswer": "flipped classroom model",
+      "justification": "The passage describes 'the University of Michigan's flipped classroom model—wherein students engage with lecture content online before attending sessions devoted to application and discussion.' The exact phrase 'flipped classroom model' appears in the passage. 'Flipped classroom' is also acceptable as a shortened but accurate version.",
+      "evidenceQuote": "the University of Michigan's flipped classroom model—wherein students engage with lecture content online before attending sessions devoted to application and discussion"
+    }
+  ]
+},
+{
+  "id": 1,
+  "type": "multiple-choice",
+  "title": "Questions 11–15",
+  "instructions": "Choose the correct letter, A, B, C or D.",
+  "questions": [
+    {
+      "id": 11,
+      "questionText": "According to the passage, what proportion of institutional costs can be saved by delivering fully online degree programs compared to on-campus programs?",
+      "options": [
+        "Between 15 and 20 percent",
+        "Between 23 and 31 percent",
+        "Approximately 47 percent",
+        "Over 50 percent"
+      ],
+      "correctAnswer": "Between 23 and 31 percent",
+      "justification": "Paragraph 2 explicitly states that 'fully online degree programs cost institutions 23 to 31 percent less to deliver than equivalent on-campus offerings.' The correct answer accurately captures this specific range.",
+      "evidenceQuote": "fully online degree programs cost institutions 23 to 31 percent less to deliver than equivalent on-campus offerings"
+    },
+    {
+      "id": 12,
+      "questionText": "What can be inferred about student persistence in online courses compared to traditional courses?",
+      "options": [
+        "Online courses have higher completion rates due to greater flexibility",
+        "Traditional courses maintain substantially better retention despite online courses offering wider initial access",
+        "Completion rates are essentially identical across both delivery formats",
+        "Online courses show better retention only in STEM subjects"
+      ],
+      "correctAnswer": "Traditional courses maintain substantially better retention despite online courses offering wider initial access",
+      "justification": "Paragraph 3 states 'While online courses offer greater initial access, retention rates average between 40 and 60 percent—substantially lower than the 75 to 85 percent typical of traditional courses.' This indicates traditional courses have much better completion despite online having better access.",
+      "evidenceQuote": "While online courses offer greater initial access, retention rates average between 40 and 60 percent—substantially lower than the 75 to 85 percent typical of traditional courses"
+    },
+    {
+      "id": 13,
+      "questionText": "What is the primary focus of paragraph 4?",
+      "options": [
+        "To explain why traditional classroom instruction is superior to all online methods",
+        "To describe how combined instructional approaches integrate strengths of both online and traditional formats",
+        "To criticize the commercialization of higher education through technology",
+        "To present statistical evidence that hybrid learning is universally more effective"
+      ],
+      "correctAnswer": "To describe how combined instructional approaches integrate strengths of both online and traditional formats",
+      "justification": "Paragraph 4 begins with 'Recognition of both modalities' strengths and limitations has driven increasing interest in hybrid or 'blended' approaches' and provides examples of ASU and University of Michigan's hybrid models. The main thrust is explaining how these approaches combine elements.",
+      "evidenceQuote": "Recognition of both modalities' strengths and limitations has driven increasing interest in hybrid or 'blended' approaches that strategically combine online and in-person elements"
+    },
+    {
+      "id": 14,
+      "questionText": "According to Dr. Angela Chen, what concept describes how struggling students can withdraw unnoticed in large online classes?",
+      "options": [
+        "Digital anonymity",
+        "Structural invisibility",
+        "Asynchronous disengagement",
+        "Virtual isolation"
+      ],
+      "correctAnswer": "Structural invisibility",
+      "justification": "Paragraph 3 explicitly attributes the term to Dr. Angela Chen: 'what educational psychologist Dr. Angela Chen describes as 'structural invisibility'—the ease with which struggling students can disengage without detection in large online cohorts.'",
+      "evidenceQuote": "what educational psychologist Dr. Angela Chen describes as 'structural invisibility'—the ease with which struggling students can disengage without detection in large online cohorts"
+    },
+    {
+      "id": 15,
+      "questionText": "Which of the following best characterizes Dr. Carol Twigg's perspective on comparing online and traditional learning modalities?",
+      "options": [
+        "Online learning will eventually replace traditional classrooms entirely",
+        "Traditional instruction should be preserved as the primary delivery method",
+        "The most important consideration is matching instructional approach to specific contexts and objectives",
+        "Neither modality shows meaningful advantages over the other in any context"
+      ],
+      "correctAnswer": "The most important consideration is matching instructional approach to specific contexts and objectives",
+      "justification": "Dr. Twigg's position states 'the fundamental question is not which modality is superior in the abstract but rather which approach best aligns with specific learning outcomes, student characteristics, and resource constraints.' This emphasizes context-specific selection over absolute superiority.",
+      "evidenceQuote": "Dr. Carol Twigg of the National Center for Academic Transformation contends that the fundamental question is not which modality is superior in the abstract but rather which approach best aligns with specific learning outcomes, student characteristics, and resource constraints"
+    }
+  ]
+}
+    ]
+    },
+    {
+      "id": 2,
+      "title": "Urban Transformation and the Reconfiguration of Daily Life: Behavioral Adaptations in Contemporary Cities",
+      "level": "academic",
+      "estimatedTime": 20,
+      "paragraphs": [
+        {
+          "id": "P1",
+          "text": "The accelerating pace of urbanization represents one of the most profound demographic transformations in human history, with the global urban population surpassing 4.4 billion in 2021—a figure projected to reach 6.7 billion by 2050. This unprecedented concentration of humanity within cities has catalyzed fundamental restructuring not merely of physical environments but of the temporal rhythms, social configurations, and behavioral patterns that constitute everyday existence. While early urbanization scholarship emphasized infrastructure development and economic agglomeration, contemporary research increasingly recognizes that cities function as complex adaptive systems that reshape human behavior at multiple scales, from individual time allocation to collective consumption practices. Understanding these lifestyle transformations requires examining the intricate mechanisms through which urban environments mediate between structural constraints—such as commuting distances and housing density—and individual agency in constructing meaningful daily routines. The implications extend well beyond academic interest, as these behavioral shifts have demonstrable consequences for public health, environmental sustainability, and social cohesion."
+        },
+        {
+          "id": "P2",
+          "text": "Perhaps the most immediately apparent lifestyle modification induced by urbanization involves the temporal organization of daily activities, particularly the extension and fragmentation of working hours. Research conducted by Dr. Alessandra Vitali at the University of Trento analyzing time-use data from 23 European cities found that urban residents spend, on average, 47 minutes more per day in work-related activities compared to their rural counterparts, with commuting accounting for approximately 18 minutes of this differential. However, this temporal intensification operates unevenly across socioeconomic strata. A comprehensive longitudinal study published in the Journal of Urban Economics in 2020 demonstrated that among high-income professionals in global cities like London, New York, and Tokyo, the boundaries between work and leisure have become increasingly porous, with 63 percent reporting regular work-related communications outside conventional business hours. Conversely, shift workers and those in service-sector employment experience rigid temporal constraints that often misalign with urban rhythms designed around standard office schedules, creating what temporal geographers term 'chronotopic exclusion'—systematic marginalization based on incompatible temporal patterns. This temporal restructuring manifests physically through altered meal patterns, with urban populations demonstrating substantially higher rates of eating outside the home. Data from the Global Food Consumption Survey indicates that city dwellers in middle- and high-income nations consume between 35 and 42 percent of their meals outside domestic settings, compared to just 12 percent among rural populations. Such shifts carry implications not merely for nutritional intake but for the social function of domestic spaces and familial interaction patterns."
+        },
+        {
+          "id": "P3",
+          "text": "Beyond temporal reorganization, urbanization fundamentally reconfigures social interaction patterns and the nature of community affiliation. The classical sociological proposition advanced by Georg Simmel and Louis Wirth posited that urban life engenders psychological withdrawal and social atomization—a 'blasé attitude' necessary for navigating the overwhelming sensory stimulation of dense populations. Contemporary research presents a more nuanced picture. Dr. Eric Klinenberg's extensive ethnographic research in metropolitan areas reveals that while traditional forms of community based on residential proximity have indeed weakened, urban residents construct alternative social networks organized around shared interests, professional affiliations, or lifestyle preferences rather than geographical contiguity. A 2019 study examining social networks in six major Asian cities found that urban residents maintained, on average, 17 percent fewer strong ties with neighbors compared to suburban populations but reported 31 percent more connections with individuals sharing professional or recreational interests. Technology mediates these transformed social patterns in complex ways. While digital communication platforms ostensibly facilitate connection across geographical distance, research by Professor Sherry Turkle at MIT suggests they may simultaneously diminish capacity for sustained face-to-face interaction, creating what she terms 'alone together' phenomena—physical proximity without genuine engagement. This paradox manifests particularly acutely in commercial spaces designed for sociality; urban coffee shops, for instance, increasingly function as sites of parallel solitude where individuals occupy shared physical space while remaining absorbed in individual digital worlds. Interestingly, some planners have begun designing 'third places'—spaces neither home nor workplace—specifically to counteract this trend, though evidence regarding their effectiveness remains mixed."
+        },
+        {
+          "id": "P4",
+          "text": "The lifestyle modifications induced by urbanization carry significant implications for both individual health outcomes and collective environmental impacts. From a public health perspective, urban living presents contradictory effects. On one hand, cities typically offer superior access to healthcare facilities and specialized medical services; a comprehensive analysis published in The Lancet in 2021 found that urban residents in low- and middle-income countries experience infant mortality rates approximately 24 percent lower than their rural counterparts, attributable primarily to healthcare accessibility. Conversely, urban lifestyle patterns correlate with elevated rates of non-communicable diseases. Research tracking health transitions in rapidly urbanizing regions of China and India has documented that urban populations exhibit obesity rates 1.8 to 2.3 times higher than rural areas, linked to reduced physical activity, processed food consumption, and chronic stress from environmental factors including noise pollution and air quality degradation. The environmental dimension proves equally complex. While dense urban settlement theoretically enables resource efficiency through shared infrastructure and reduced per-capita land use, actual consumption patterns often undermine these potential benefits. Data from the C40 Cities Climate Leadership Group indicates that residents of affluent global cities generate, on average, 2.6 metric tons of CO2 per capita annually through consumption-based emissions—substantially higher than the global average of 1.4 tons. This elevated environmental footprint stems largely from lifestyle factors including frequent air travel, high rates of consumer goods acquisition, and energy-intensive leisure activities. Dr. Peter Newman at Curtin University argues that genuine sustainability requires not merely technological innovation but fundamental lifestyle recalibration, questioning whether current urban consumption patterns can be maintained within planetary boundaries."
+        },
+        {
+          "id": "P5",
+          "text": "The lifestyle transformations accompanying urbanization reflect neither simple determinism nor unconstrained individual choice but emerge from complex interactions between built environments, economic structures, technological systems, and cultural norms. As urbanization continues its inexorable advance—the United Nations projects that by 2030, one in three people will reside in cities with populations exceeding 500,000—understanding these behavioral adaptations becomes increasingly urgent. Some urban scholars, including Professor Saskia Sassen, contend that contemporary cities are generating novel forms of social organization and environmental consciousness that may prove essential for addressing global challenges. Others warn that without deliberate intervention, urbanization risks exacerbating inequality, environmental degradation, and social fragmentation. What seems clear is that cities will continue to function as crucibles of lifestyle innovation, for better or worse. The critical question facing policymakers and urban planners is not whether cities will reshape how people live—this transformation is already well underway—but whether this reshaping can be guided toward outcomes that enhance human flourishing and ecological sustainability rather than merely accommodating the imperatives of capital accumulation and technological change."
+        }
+      ],
+      "questions": [
+        {
+          "id": 2,
+          "type": "matching-headings",
+          "title": "Questions 16-20",
+          "instructions": "The reading passage has five paragraphs, A-E.Choose the correct heading for paragraphs A-D from the list of headings below.Write the correct number, i-viii, in boxes 1-4 on your answer sheet.",
+          
+          "questions": [
+            {
+              "id": 16,
+              "questionText": "Paragraph A",
+              "options": [
+                "Restructuring daily schedules and domestic consumption patterns",
+                "From geographic proximity to shared-interest social networks",
+                "Commuting duration and work-life boundary dissolution",
+                "Urbanization's global magnitude and its reshaping of human behavior",
+                "The dual health benefits and environmental costs of city living",
+                "Technology's contribution to urban social isolation",
+                "Policy interventions for guiding sustainable urban development",
+                "Economic factors motivating rural-to-urban population movement"
+              ],
+              "correctAnswer": "Urbanization's global magnitude and its reshaping of human behavior",
+              "justification": "Paragraph A introduces urbanization as affecting 4.4 billion people globally, emphasizing how cities reshape 'temporal rhythms, social configurations, and behavioral patterns.' Heading iv captures this dual focus on demographic scale ('global magnitude') and lifestyle transformation ('reshaping of human behavior').",
+              "evidenceQuote": "global urban population surpassing 4.4 billion...reshape human behavior at multiple scales"
+            },
+            {
+              "id": 17,
+              "questionText": "Paragraph B",
+              "options": [
+                "Restructuring daily schedules and domestic consumption patterns",
+                "From geographic proximity to shared-interest social networks",
+                "Commuting duration and work-life boundary dissolution",
+                "Urbanization's global magnitude and its reshaping of human behavior",
+                "The dual health benefits and environmental costs of city living",
+                "Technology's contribution to urban social isolation",
+                "Policy interventions for guiding sustainable urban development",
+                "Economic factors motivating rural-to-urban population movement"
+              ],
+              "correctAnswer": "Restructuring daily schedules and domestic consumption patterns",
+              "justification": "Paragraph B's central theme is temporal reorganization of urban life, examining how urbanization extends work time (47 additional minutes), fragments work-leisure boundaries, creates chronotopic exclusion, and alters meal patterns (35-42% eating outside vs 12% rural). Heading i paraphrases 'temporal organization of daily activities' as 'restructuring daily schedules' and 'altered meal patterns' as 'domestic consumption patterns,' capturing the paragraph's dual focus on time and eating habits.",
+              "evidenceQuote": "the most immediately apparent lifestyle modification induced by urbanization involves the temporal organization of daily activities, particularly the extension and fragmentation of working hours"
+            },
+            {
+              "id": 18,
+              "questionText": "Paragraph C",
+              "options": [
+                "Restructuring daily schedules and domestic consumption patterns",
+                "From geographic proximity to shared-interest social networks",
+                "Commuting duration and work-life boundary dissolution",
+                "Urbanization's global magnitude and its reshaping of human behavior",
+                "The dual health benefits and environmental costs of city living",
+                "Technology's contribution to urban social isolation",
+                "Policy interventions for guiding sustainable urban development",
+                "Economic factors motivating rural-to-urban population movement"
+              ],
+              "correctAnswer": "From geographic proximity to shared-interest social networks",
+              "justification": "Paragraph C analyzes fundamental reconfiguration of urban social patterns. Research shows urban residents have 17% fewer neighbor ties but 31% more connections based on interests rather than location. Heading ii paraphrases 'residential proximity/geographical contiguity' as 'geographic proximity' and 'shared interests/professional affiliations' as 'shared-interest,' using prepositional structure 'from...to' to capture the transformation from one form of community to another.",
+              "evidenceQuote": "while traditional forms of community based on residential proximity have indeed weakened, urban residents construct alternative social networks organized around shared interests, professional affiliations, or lifestyle preferences rather than geographical contiguity"
+            },
+            {
+              "id": 19,
+              "questionText": "Paragraph D",
+              "options": [
+                "Restructuring daily schedules and domestic consumption patterns",
+                "From geographic proximity to shared-interest social networks",
+                "Commuting duration and work-life boundary dissolution",
+                "Urbanization's global magnitude and its reshaping of human behavior",
+                "The dual health benefits and environmental costs of city living",
+                "Technology's contribution to urban social isolation",
+                "Policy interventions for guiding sustainable urban development",
+                "Economic factors motivating rural-to-urban population movement"
+              ],
+              "correctAnswer": "The dual health benefits and environmental costs of city living",
+              "justification": "Paragraph D systematically examines paradoxes in urban outcomes across two domains. Health: cities provide better healthcare (24% lower infant mortality) yet higher disease rates (1.8-2.3x obesity). Environment: density theoretically enables efficiency yet actual consumption is elevated (2.6 vs 1.4 tons CO2). Heading v paraphrases 'contradictory effects' as 'dual...benefits and costs' and explicitly captures both health and environmental dimensions the paragraph analyzes in parallel.",
+              "evidenceQuote": "From a public health perspective, urban living presents contradictory effects...The environmental dimension proves equally complex"
+            },
+            {
+              "id": 20,
+              "questionText": "Paragraph E",
+              "options": [
+                "Restructuring daily schedules and domestic consumption patterns",
+                "From geographic proximity to shared-interest social networks",
+                "Commuting duration and work-life boundary dissolution",
+                "Urbanization's global magnitude and its reshaping of human behavior",
+                "The dual health benefits and environmental costs of city living",
+                "Technology's contribution to urban social isolation",
+                "Policy interventions for guiding sustainable urban development",
+                "Economic factors motivating rural-to-urban population movement"
+              ],
+              "correctAnswer": "Policy interventions for guiding sustainable urban development",
+              "justification": "Paragraph E shifts from analysis to implications, emphasizing need for 'deliberate intervention' by 'policymakers and urban planners' to guide transformation 'toward outcomes that enhance human flourishing and ecological sustainability rather than merely accommodating the imperatives of capital accumulation.' Heading vii paraphrases 'deliberate intervention by policymakers' as 'policy interventions,' 'guided toward' as 'guiding,' and 'ecological sustainability/human flourishing' as 'sustainable...development.'",
+              "evidenceQuote": "The critical question facing policymakers and urban planners is not whether cities will reshape how people live...but whether this reshaping can be guided toward outcomes that enhance human flourishing and ecological sustainability"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "type": "true-false-not-given",
+          "title": "Questions 21-26",
+          "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
+          "questions": [
+            {
+              "id": 21,
+              "questionText": "The worldwide urban population is anticipated to exceed six billion within the next three decades.",
+              "correctAnswer": "TRUE",
+              "justification": "P1 L1 states the global urban population was 4.4 billion in 2021 and is 'projected to reach 6.7 billion by 2050.' Since 2050 is approximately three decades from passage publication (2022), and 6.7 billion exceeds six billion, the statement is supported.",
+              "evidenceQuote": "global urban population surpassing 4.4 billion in 2021—a figure projected to reach 6.7 billion by 2050"
+            },
+            {
+              "id": 22,
+              "questionText": "City residents in affluent nations consume more than one-third of their meals in locations other than their residences.",
+              "correctAnswer": "TRUE",
+              "justification": "P2 L7 states 'city dwellers in middle- and high-income nations consume between 35 and 42 percent of their meals outside domestic settings.' One-third equals approximately 33%, and the passage indicates between 35-42%, which exceeds one-third. Statement paraphrases 'outside domestic settings' as 'locations other than residences' and 'high-income' as 'affluent.'",
+              "evidenceQuote": "city dwellers in middle- and high-income nations consume between 35 and 42 percent of their meals outside domestic settings"
+            },
+            {
+              "id": 23,
+              "questionText": "Urban residents maintain approximately 31 percent fewer connections with neighbors compared to those living in suburban areas.",
+              "correctAnswer": "FALSE",
+              "justification": "Passage states urban residents maintained '17 percent fewer strong ties with neighbors compared to suburban populations' (P3 L5), not 31 percent fewer. The statement uses the wrong percentage—31% is actually the increase in interest-based connections, not the decrease in neighbor ties. Numerical alteration distortion.",
+              "evidenceQuote": "urban residents maintained, on average, 17 percent fewer strong ties with neighbors"
+            },
+            {
+              "id": 24,
+              "questionText": "The rise in urban obesity rates has been primarily caused by increased consumption of processed foods and reduced physical exercise.",
+              "correctAnswer": "FALSE",
+              "justification": "P4 L5 states urban obesity is 'linked to reduced physical activity, processed food consumption, and chronic stress from environmental factors including noise pollution and air quality degradation.' The statement claims obesity is 'primarily caused by' food and exercise, omitting environmental stress factors. The passage presents multiple contributing factors without indicating primacy. Scope change distortion.",
+              "evidenceQuote": "urban populations exhibit obesity rates 1.8 to 2.3 times higher than rural areas, linked to reduced physical activity, processed food consumption, and chronic stress"
+            },
+            {
+              "id": 25,
+              "questionText": "Studies have shown that third places designed by urban planners successfully increase face-to-face social interaction among city residents.",
+              "correctAnswer": "NOT GIVEN",
+              "justification": "P3 L9 mentions that 'some planners have begun designing third places...specifically to counteract this trend, though evidence regarding their effectiveness remains mixed.' The passage states their effectiveness is uncertain/mixed, but provides no information about studies showing successful outcomes or quantifying increased face-to-face interaction. Would require specific research findings confirming success.",
+              "evidenceQuote": "some planners have begun designing 'third places'—spaces neither home nor workplace—specifically to counteract this trend, though evidence regarding their effectiveness remains mixed"
+            },
+            {
+              "id": 26,
+              "questionText": "Urban residents in developed countries generate lower carbon emissions per capita than those in rapidly urbanizing nations such as China and India.",
+              "correctAnswer": "NOT GIVEN",
+              "justification": "P4 L8 states 'residents of affluent global cities generate, on average, 2.6 metric tons of CO2 per capita' compared to 'global average of 1.4 tons,' and P4 L5 mentions research in China and India regarding obesity. However, passage never compares emissions between developed/affluent cities and rapidly urbanizing regions like China/India specifically. Different metrics discussed for different locations without direct comparison.",
+              "evidenceQuote": "residents of affluent global cities generate, on average, 2.6 metric tons of CO2 per capita annually...global average of 1.4 tons"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "The Architecture of Choice: Cognitive and Affective Mechanisms in Human Decision-Making",
+          "level": "academic",
+          "estimatedTime": 20,
+          "paragraphs": [
+            {
+              "id": "P1",
+              "text": "Human beings navigate an extraordinarily complex decision landscape, with contemporary adults confronting an estimated 35,000 remotely conscious choices daily—a figure that ranges from trivial selections about breakfast cereals to consequential determinations regarding career trajectories, financial investments, or medical interventions. Understanding the cognitive architecture underlying these decisions has emerged as a central preoccupation of psychological research, neuroscience, and behavioral economics over the past four decades. While classical economic models posited humans as rational actors who systematically optimize outcomes through logical deliberation, empirical research has consistently demonstrated that actual decision-making operates through fundamentally different mechanisms—ones characterized by bounded rationality, cognitive shortcuts, and significant emotional influence. This divergence between prescriptive models of how decisions should be made and descriptive accounts of how they actually unfold reveals profound insights into both human cognition and practical domains ranging from public policy design to organizational management. Elucidating these mechanisms requires examining the interplay between rapid, intuitive processing and slower, analytical reasoning, while acknowledging the pervasive role of cognitive biases and affective states in shaping judgments."
+            },
+            {
+              "id": "P2",
+              "text": "The theoretical framework that has perhaps most profoundly shaped contemporary understanding of decision processes is Daniel Kahneman and Amos Tversky's dual-process theory, which distinguishes between two fundamentally different modes of cognitive operation. System 1 thinking operates automatically and rapidly, requiring minimal cognitive effort and functioning largely outside conscious awareness. This mode enables split-second judgments essential for navigating routine situations—recognizing emotional expressions, completing familiar phrases, or assessing approximate distances. Research conducted by Dr. Ap Dijksterhuis at Radboud University demonstrated that System 1 processes can handle remarkably complex information integration; in a widely cited 2006 study, participants making intuitive decisions about multifaceted scenarios (such as selecting apartments based on twelve attributes) often outperformed those engaging in deliberate analysis, particularly when choices involved numerous variables. Conversely, System 2 encompasses effortful mental activities demanding concentration and conscious deliberation—calculating compound interest, evaluating logical syllogisms, or comparing competing policy proposals. This mode exhibits limited processing capacity and operates sequentially rather than in parallel. A comprehensive meta-analysis published in Psychological Bulletin in 2021, examining 237 studies with over 43,000 participants, found that System 2 engagement correlates with improved performance on tasks requiring systematic reasoning but consumes substantial cognitive resources, leading to performance decrements when individuals face decision fatigue. Significantly, neuroimaging research has begun localizing these systems anatomically, with System 1 associated primarily with subcortical structures and the amygdala, while System 2 recruits prefrontal cortex networks, particularly dorsolateral regions implicated in executive function."
+            },
+            {
+              "id": "P3",
+              "text": "The reliance on System 1 processing, while evolutionarily adaptive and computationally efficient, renders human judgment vulnerable to systematic biases—predictable patterns of deviation from normative standards of rationality. Heuristics, or mental shortcuts, frequently underlie these biases. The availability heuristic, for instance, leads individuals to assess event probability based on the ease with which instances come to mind rather than actual statistical frequency. Research by Professor Paul Slovic at the University of Oregon documented that Americans consistently overestimate risks from dramatic but rare causes of death (such as terrorism or shark attacks) while underestimating genuinely prevalent threats like cardiovascular disease—a distortion he attributed to vivid media coverage rendering certain dangers cognitively accessible. Similarly, anchoring effects demonstrate that initial numerical information, even when transparently arbitrary, exerts powerful influence on subsequent estimates. In seminal experiments, Tversky and Kahneman showed that participants asked whether the percentage of African nations in the United Nations exceeded a randomly generated number subsequently provided estimates systematically skewed toward that initial anchor, with median responses differing by approximately 30 percentage points depending on whether the anchor was 10 or 65. Confirmation bias represents another pervasive tendency, whereby individuals preferentially seek, interpret, and recall information congruent with pre-existing beliefs. A 2019 study tracking information gathering in political decision-making found that participants spent, on average, 67 percent of their research time examining sources aligned with their initial positions, even when explicitly instructed to consider evidence impartially. These biases prove remarkably resistant to correction; awareness of their existence provides limited protection against their influence, a phenomenon termed the 'bias blind spot.'"
+            },
+            {
+              "id": "P4",
+              "text": "While cognitive accounts dominated decision research through the 1990s, subsequent work has increasingly emphasized the integral role of emotion in choice processes, challenging the traditional dichotomy between reason and affect. Antonio Damasio's somatic marker hypothesis, developed through studying patients with ventromedial prefrontal cortex lesions, proposes that emotional signals—'somatic markers'—guide decision-making by rapidly flagging options as advantageous or deleterious based on prior experience. Patients with damage to this region, despite preserving intellectual capabilities and logical reasoning, exhibited profoundly impaired real-world decision-making, particularly in domains involving risk, social interaction, and temporal tradeoffs. In laboratory tasks such as the Iowa Gambling Task, these individuals persistently selected options yielding immediate rewards despite long-term losses, apparently unable to integrate emotional learning signals that guided neurologically intact participants toward advantageous strategies. Subsequent research has nuanced this framework, demonstrating that different emotional states produce distinct decision patterns. Anxiety and fear tend to amplify risk aversion and promote avoidance behaviors, while anger paradoxically increases risk-taking and optimistic probability assessments. Dr. Jennifer Lerner's work at Harvard University revealed that sad individuals make more impatient choices, systematically preferring smaller immediate rewards over larger delayed ones—an effect she termed 'myopic misery.' In a striking demonstration, participants induced into sadness valued hypothetical possessions approximately 33 percent lower than neutral-mood counterparts when selling but 16 percent higher when buying, suggesting emotional states fundamentally alter subjective valuations rather than merely biasing expressed preferences. These findings have prompted reconceptualization of emotion not as interfering 'noise' in rational deliberation but as providing essential information and motivational direction."
+            },
+            {
+              "id": "P5",
+              "text": "The accumulated insights from decision-making research have generated substantial practical applications, most notably in behavioral economics and 'nudge' interventions that leverage cognitive architecture to promote better choices without restricting options. Strategies such as opt-out rather than opt-in defaults for retirement savings, simplified choice architectures in healthcare decisions, and strategic framing of public health messages reflect direct applications of bias research. Programs implementing these principles have achieved impressive outcomes; for example, automatic enrollment in pension schemes increased participation rates from approximately 42 percent to 86 percent in multiple organizational contexts. However, some scholars, including Professor Gerd Gigerenzer at the Max Planck Institute, contend that characterizing heuristics primarily as sources of bias misrepresents their adaptive value, arguing that simple decision rules often outperform complex analyses in uncertain, information-poor environments—a perspective termed 'ecological rationality.' This ongoing debate reflects deeper questions about normative standards for evaluating decisions and whether observed patterns represent cognitive limitations or sophisticated adaptations to environmental structure. As research continues integrating insights from neuroscience, computational modeling, and cross-cultural psychology, understanding decision-making will likely prove essential not merely for theoretical advancement but for addressing practical challenges in an increasingly complex choice environment."
+            }
+          ],
+          "questions": [
+        {
+          "id": 3,
+          "type": "short-answer",
+          "title": "Questions 27-30",
+          "instructions": "Answer the questions below. Choose NO MORE THAN THREE WORDS AND/OR A NUMBER from the passage for each answer.",
+          "questions": [
+            {
+              "id": 27,
+              "questionText": "Who conducted research demonstrating that System 1 processes can handle complex information integration?",
+              "correctAnswer": "Dr. Ap Dijksterhuis",
+              "justification": "P2 L4 explicitly states 'Research conducted by Dr. Ap Dijksterhuis at Radboud University demonstrated that System 1 processes can handle remarkably complex information integration.' Both the full name with title and surname alone are acceptable as IELTS typically accepts either form.",
+              "evidenceQuote": "Research conducted by Dr. Ap Dijksterhuis at Radboud University demonstrated that System 1 processes can handle remarkably complex information integration"
+            },
+            {
+              "id": 28,
+              "questionText": "What term describes mental shortcuts that frequently underlie systematic biases?",
+              "correctAnswer": "heuristics",
+              "justification": "P3 L2 defines this concept explicitly: 'Heuristics, or mental shortcuts, frequently underlie these biases.' The passage provides a clear definition, making 'heuristics' the exact term being requested.",
+              "evidenceQuote": "Heuristics, or mental shortcuts, frequently underlie these biases"
+            },
+            {
+              "id": 29,
+              "questionText": "What percentage of research time did participants spend examining sources aligned with their initial positions?",
+              "correctAnswer": "67 percent",
+              "justification": "P3 L8 provides this specific statistic: 'participants spent, on average, 67 percent of their research time examining sources aligned with their initial positions.' Both 'percent' and '%' formats are acceptable as IELTS standard practice.",
+              "evidenceQuote": "participants spent, on average, 67 percent of their research time examining sources aligned with their initial positions"
+            },
+            {
+              "id": 30,
+              "questionText": "What term did Dr. Lerner use to describe the effect where sad individuals prefer immediate rewards?",
+              "correctAnswer": "myopic misery",
+              "justification": "P4 L7 attributes this specific term to Dr. Lerner: 'sad individuals make more impatient choices, systematically preferring smaller immediate rewards over larger delayed ones—an effect she termed myopic misery.' The question requires understanding the context and identifying the precise technical term used.",
+              "evidenceQuote": "sad individuals make more impatient choices, systematically preferring smaller immediate rewards over larger delayed ones—an effect she termed 'myopic misery'"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "type": "true-false-not-given",
+          "title": "Questions 31-35",
+          "instructions": "Do the following statements agree with the views of the writer in the Reading Passage? Write YES if the statement agrees with the views of the writer, NO if the statement contradicts the views of the writer, NOT GIVEN if it is impossible to say what the writer thinks about this.",
+          "questions": [
+            {
+              "id": 31,
+              "questionText": "The writer considers traditional economic models of rational decision-making to be inconsistent with empirical research findings.",
+              "correctAnswer": "YES",
+              "justification": "The writer explicitly contrasts 'classical economic models' which 'posited humans as rational actors who systematically optimize outcomes' against empirical research that 'has consistently demonstrated that actual decision-making operates through fundamentally different mechanisms' (P1 L3). This clear opposition indicates the writer endorses the view that classical models diverge from empirical reality.",
+              "evidenceQuote": "While classical economic models posited humans as rational actors...empirical research has consistently demonstrated that actual decision-making operates through fundamentally different mechanisms"
+            },
+            {
+              "id": 32,
+              "questionText": "The writer believes that emotional processes provide essential informational value in decision-making rather than merely disrupting rational thought.",
+              "correctAnswer": "YES",
+              "justification": "The writer states that research findings 'have prompted reconceptualization of emotion not as interfering noise in rational deliberation but as providing essential information and motivational direction' (P4 L9). By presenting this as a prompted reconceptualization based on compelling evidence, the writer endorses this interpretive shift in understanding emotion's role.",
+              "evidenceQuote": "These findings have prompted reconceptualization of emotion not as interfering 'noise' in rational deliberation but as providing essential information and motivational direction"
+            },
+            {
+              "id": 33,
+              "questionText": "The writer suggests that awareness of cognitive biases provides substantial protection against their influence on human judgment.",
+              "correctAnswer": "NO",
+              "justification": "The writer explicitly states that 'awareness of their existence provides limited protection against their influence' (P3 L9). The statement claims 'substantial protection' which directly contradicts the passage's assertion of only 'limited protection.' This represents a scope exaggeration distortion.",
+              "evidenceQuote": "These biases prove remarkably resistant to correction; awareness of their existence provides limited protection against their influence"
+            },
+            {
+              "id": 34,
+              "questionText": "According to Professor Gigerenzer, complex analytical approaches consistently produce better outcomes than simple heuristics in uncertain, information-scarce situations.",
+              "correctAnswer": "NO",
+              "justification": "Professor Gerd Gigerenzer is cited as contending that 'simple decision rules often outperform complex analyses in uncertain, information-poor environments' (P5 L4). The statement reverses Gigerenzer's actual position, claiming complex approaches outperform simple ones, when he argues the opposite. This is a direction reversal distortion of a cited expert's view.",
+              "evidenceQuote": "Professor Gerd Gigerenzer...contend that...simple decision rules often outperform complex analyses in uncertain, information-poor environments"
+            },
+            {
+              "id": 35,
+              "questionText": "The writer believes that System 1 processing is more valuable than System 2 processing for making important life decisions.",
+              "correctAnswer": "NOT GIVEN",
+              "justification": "While the passage extensively discusses both System 1 (rapid, intuitive) and System 2 (effortful, analytical) processing in P2, presenting each system's characteristics and contexts where each performs well, the writer never expresses a view comparing their overall value or superiority for important decisions. System 1 is noted to 'often outperform' deliberate analysis in certain contexts (P2 L4), but no general claim about which is 'more valuable' for important life decisions is made. This would require an evaluative comparison the writer has not provided.",
+              "evidenceQuote": "System 1 thinking operates automatically and rapidly...System 2 encompasses effortful mental activities demanding concentration and conscious deliberation...participants making intuitive decisions...often outperformed those engaging in deliberate analysis"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "type": "matching-information",
+          "title": "Questions 36-40",
+          "instructions": "Which paragraph contains the following information? Write the correct letter, A–E, in boxes 1–5 on your answer sheet.",
+          "paragraphs_list": ["A", "B", "C", "D", "E"],
+          "questions": [
+            {
+              "id": 36,
+              "questionText": "quantification of the volume of conscious selections confronted by typical adults daily",
+              "correctAnswer": "A",
+              "justification": "Paragraph A explicitly states that 'contemporary adults confronting an estimated 35,000 remotely conscious choices daily.' This provides the specific numerical data about daily decision frequency requested in the question.",
+              "evidenceQuote": "contemporary adults confronting an estimated 35,000 remotely conscious choices daily—a figure that ranges from trivial selections about breakfast cereals to consequential determinations"
+            },
+            {
+              "id": 37,
+              "questionText": "empirical evidence that unconscious processing can yield superior outcomes in multidimensional choice scenarios",
+              "correctAnswer": "B",
+              "justification": "Paragraph B describes Dr. Dijksterhuis's 2006 study where 'participants making intuitive decisions about multifaceted scenarios (such as selecting apartments based on twelve attributes) often outperformed those engaging in deliberate analysis.' This directly demonstrates unconscious System 1 processing outperforming conscious analysis in complex decisions.",
+              "evidenceQuote": "Research conducted by Dr. Ap Dijksterhuis...demonstrated that System 1 processes can handle remarkably complex information integration...participants making intuitive decisions about multifaceted scenarios...often outperformed those engaging in deliberate analysis"
+            },
+            {
+              "id": 38,
+              "questionText": "a description of how arbitrary initial numerical information shapes subsequent estimations",
+              "correctAnswer": "C",
+              "justification": "Paragraph C explains anchoring effects: 'initial numerical information, even when transparently arbitrary, exerts powerful influence on subsequent estimates,' then provides Tversky and Kahneman's experiment showing 30 percentage point differences based on random anchors of 10 or 65. This matches the question's focus on arbitrary numbers affecting later judgments.",
+              "evidenceQuote": "anchoring effects demonstrate that initial numerical information, even when transparently arbitrary, exerts powerful influence on subsequent estimates"
+            },
+            {
+              "id": 39,
+              "questionText": "identification of neurological damage that impairs real-world judgment despite preserved logical reasoning capacity",
+              "correctAnswer": "D",
+              "justification": "Paragraph D discusses Damasio's research on 'patients with ventromedial prefrontal cortex lesions' who, 'despite preserving intellectual capabilities and logical reasoning, exhibited profoundly impaired real-world decision-making.' This precisely describes the neurological damage causing decision impairment without affecting logical abilities.",
+              "evidenceQuote": "Patients with damage to this region, despite preserving intellectual capabilities and logical reasoning, exhibited profoundly impaired real-world decision-making"
+            },
+            {
+              "id": 40,
+              "questionText": "a scholarly viewpoint suggesting that simple decision rules may constitute adaptive responses rather than cognitive deficiencies",
+              "correctAnswer": "E",
+              "justification": "Paragraph E presents Professor Gigerenzer's perspective that 'characterizing heuristics primarily as sources of bias misrepresents their adaptive value, arguing that simple decision rules often outperform complex analyses in uncertain, information-poor environments'—termed 'ecological rationality.' The passage also asks 'whether observed patterns represent cognitive limitations or sophisticated adaptations to environmental structure,' matching the question's adaptive vs. deficiency contrast.",
+              "evidenceQuote": "Professor Gerd Gigerenzer...contend that characterizing heuristics primarily as sources of bias misrepresents their adaptive value...simple decision rules often outperform complex analyses...whether observed patterns represent cognitive limitations or sophisticated adaptations"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -102,7 +102,7 @@ class ReadingFeedbackAgent:
     def __init__(
         self,
         api_key: Optional[str] = None,
-        model_name: str = "gpt-4-turbo-preview",
+        model_name: str = "gpt-40-mini",
         temperature: float = 0.2,
         max_tokens: int = 1000
     ):

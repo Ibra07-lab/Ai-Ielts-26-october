@@ -1,0 +1,617 @@
+{
+    "testId": 8,
+    "testName": "Test 8",
+    "passages": [
+        {
+            "id": 8,
+            "title": "The Enduring Legacy: Shakespeare's Influence on Contemporary Storytelling",
+            "level": "academic",
+            "estimatedTime": 20,
+            "paragraphs": [
+              {
+                "id": "P1",
+                "text": "More than four centuries after his death, William Shakespeare remains arguably the most influential storyteller in Western culture, with his works continuing to shape modern narrative techniques, character development, and thematic exploration across multiple media. His 37 plays and 154 sonnets have been translated into every major language, and according to the British Council, approximately 75 to 80 percent of English literature courses worldwide include at least one Shakespeare text in their curriculum. Yet Shakespeare's impact extends far beyond the classroom or traditional theatre. Contemporary film, television, literature, and even video games draw extensively from Shakespearean plots, character archetypes, and dramatic structures, often without audiences recognizing the original source. Understanding this pervasive influence requires examining not only direct adaptations but also the subtle ways Shakespeare's innovations have become foundational elements of modern storytelling."
+              },
+              {
+                "id": "P2",
+                "text": "Shakespeare's most significant contribution to storytelling lies in his development of psychologically complex characters whose internal conflicts drive narrative action. Prior to Shakespeare, theatrical characters were often flat archetypes representing singular virtues or vices. Research by Professor Michael Anderson at Oxford University demonstrates that Shakespeare pioneered the portrayal of characters with contradictory motivations and evolving psychology, most notably in figures like Hamlet, whose indecision and philosophical questioning created a template for the conflicted protagonist. This innovation proved remarkably adaptable to modern media. A 2019 analysis published in the Journal of Narrative Studies found that approximately 68 percent of critically acclaimed television dramas produced between 2010 and 2018 featured protagonists exhibiting what researchers termed 'Hamlet syndrome'—moral ambiguity combined with intense self-reflection. Characters from Tony Soprano in The Sopranos to Walter White in Breaking Bad demonstrate this Shakespearean model of the flawed hero whose internal struggles generate dramatic tension. Interestingly, many screenwriters acknowledge this debt explicitly; the acclaimed series Succession has been described by its creator Jesse Armstrong as 'King Lear in a corporate setting,' transposing Shakespeare's exploration of power, family, and betrayal into contemporary business culture."
+              },
+              {
+                "id": "P3",
+                "text": "Beyond character development, Shakespeare established narrative structures and plot devices that have become fundamental to storytelling across genres. The 'star-crossed lovers' narrative from Romeo and Juliet has generated countless adaptations and variations, from West Side Story's urban gang conflict to contemporary young adult fiction. Data compiled by the Shakespeare Birthplace Trust indicates that between 1990 and 2020, filmmakers produced over 420 feature films either directly adapting Shakespeare's plays or acknowledging substantial Shakespearean influence in their plots. The revenge tragedy structure pioneered in Hamlet appears in everything from classic films like The Godfather to recent action franchises. Similarly, Shakespeare's use of mistaken identity, most famously in Twelfth Night and The Comedy of Errors, established conventions still employed in romantic comedies and farce. Dr. Sarah Chen's research team at UCLA examined 250 Hollywood romantic comedies produced since 1995 and discovered that approximately 41 percent incorporated some form of disguise or mistaken identity plot device traceable to Shakespearean comedy conventions. The playwright's mastery of interweaving multiple plot lines—a technique termed 'subplot architecture' by literary scholars—has particularly influenced long-form television narratives, where complex, interconnected character arcs develop across seasons."
+              },
+              {
+                "id": "P4",
+                "text": "The global reach of Shakespeare's influence manifests differently across cultures, with adaptations reflecting local contexts while maintaining core thematic elements. In East Asian cinema, Akira Kurosawa's films Throne of Blood (adapting Macbeth) and Ran (reimagining King Lear) demonstrated how Shakespeare's exploration of power, ambition, and family loyalty resonates across cultural boundaries. These films achieved international acclaim while transforming Shakespeare's Elizabethan England into feudal Japan, suggesting the universality of his themes. More recently, Bollywood has produced numerous Shakespeare adaptations, with Omkara (2006) transposing Othello to rural India and Haider (2014) relocating Hamlet to Kashmir during the 1990s conflict. According to film studies researcher Professor Rajesh Patel at the University of Mumbai, Indian cinema produced at least 32 acknowledged Shakespeare adaptations between 2000 and 2020, often integrating musical elements traditional to Bollywood while maintaining Shakespearean dramatic structure. However, some scholars, including Dr. Patricia Williams at Columbia University, caution against overstating Shakespeare's universality, arguing that his prominence partly reflects colonial legacy and Western cultural dominance rather than inherent superiority. Williams notes that while Shakespeare certainly demonstrated extraordinary insight into human psychology, the emphasis on his works in global education systems has been shaped by historical power dynamics as much as literary merit."
+              },
+              {
+                "id": "P5",
+                "text": "Shakespeare's influence on contemporary storytelling shows no sign of diminishing, though it continues to evolve in unexpected directions. The rise of interactive media, including video games and virtual reality experiences, has created new opportunities for Shakespearean adaptation, with developers exploring how player agency might reshape classic narratives. A 2021 survey by the International Games Developers Association found that approximately 15 percent of narrative-driven games released that year incorporated Shakespearean themes or plot elements, often in science fiction or fantasy settings far removed from the original contexts. Educational institutions are also reconsidering how Shakespeare is taught, with increasing emphasis on performance and adaptation rather than purely textual analysis. Ultimately, Shakespeare's enduring relevance lies less in the specific plots or historical settings of his works than in his profound understanding of human motivation, conflict, and transformation—elements that remain central to effective storytelling regardless of medium or cultural context. As new technologies and artistic forms emerge, writers and creators continue to discover that Shakespeare's four-hundred-year-old innovations still provide effective frameworks for exploring contemporary concerns and timeless questions about human nature."
+              }
+            ],
+            "questions": [
+                {
+                    "id": 1,
+                    "type": "matching-information",
+                    "title": "Questions 1-5",
+                    "instructions": "Which paragraph contains the following information? Write the correct letter, A–E, in boxes 1-5 on your answer sheet.",
+                    "paragraphs_list": ["A", "B", "C", "D", "E"],
+                    "questions": [
+                      {
+                        "id": 1,
+                        "questionText": "the proportion of academic literature programs globally that incorporate Shakespearean texts in their syllabi",
+                        "correctAnswer": "A",
+                        "justification": "Paragraph A provides the specific statistic that 'approximately 75 to 80 percent of English literature courses worldwide include at least one Shakespeare text in their curriculum' according to the British Council. This directly corresponds to the question about the proportion of academic literature programs including Shakespeare.",
+                        "evidenceQuote": "according to the British Council, approximately 75 to 80 percent of English literature courses worldwide include at least one Shakespeare text in their curriculum"
+                      },
+                      {
+                        "id": 2,
+                        "questionText": "specific contemporary television protagonists that exemplify character complexity derived from classical drama",
+                        "correctAnswer": "B",
+                        "justification": "Paragraph B provides concrete examples of modern TV characters—Tony Soprano and Walter White—that demonstrate 'this Shakespearean model of the flawed hero whose internal struggles generate dramatic tension.' The paragraph explicitly connects these contemporary characters to Shakespeare's innovation in creating psychologically complex protagonists.",
+                        "evidenceQuote": "Characters from Tony Soprano in The Sopranos to Walter White in Breaking Bad demonstrate this Shakespearean model of the flawed hero"
+                      },
+                      {
+                        "id": 3,
+                        "questionText": "quantitative research findings on narrative devices employed in modern comedy films",
+                        "correctAnswer": "C",
+                        "justification": "Paragraph C describes Dr. Sarah Chen's UCLA research that 'examined 250 Hollywood romantic comedies produced since 1995 and discovered that approximately 41 percent incorporated some form of disguise or mistaken identity plot device.' This provides specific quantitative data about narrative devices in comedy films.",
+                        "evidenceQuote": "Dr. Sarah Chen's research team at UCLA examined 250 Hollywood romantic comedies...discovered that approximately 41 percent incorporated some form of disguise or mistaken identity plot device"
+                      },
+                      {
+                        "id": 4,
+                        "questionText": "a critical perspective questioning assumptions about the playwright's global relevance and cultural significance",
+                        "correctAnswer": "D",
+                        "justification": "Paragraph D presents Dr. Patricia Williams's scholarly caution 'against overstating Shakespeare's universality, arguing that his prominence partly reflects colonial legacy and Western cultural dominance rather than inherent superiority.' This is a critical perspective that questions assumptions about Shakespeare's global importance, distinguishing it from the celebratory tone of other paragraphs.",
+                        "evidenceQuote": "some scholars...caution against overstating Shakespeare's universality, arguing that his prominence partly reflects colonial legacy and Western cultural dominance rather than inherent superiority"
+                      },
+                      {
+                        "id": 5,
+                        "questionText": "the percentage of interactive digital entertainment featuring classical dramatic elements in recent years",
+                        "correctAnswer": "E",
+                        "justification": "Paragraph E provides the specific statistic from a 2021 survey showing that 'approximately 15 percent of narrative-driven games released that year incorporated Shakespearean themes or plot elements.' This is the only paragraph discussing video games and interactive media, making it uniquely identifiable.",
+                        "evidenceQuote": "A 2021 survey by the International Games Developers Association found that approximately 15 percent of narrative-driven games released that year incorporated Shakespearean themes or plot elements"
+                      }
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "type": "true-false-not-given",
+                    "title": "Questions 6-9",
+                    "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
+                    "questions": [
+                      {
+                        "id": 6,
+                        "questionText": "The majority of university-level English literature programs around the world incorporate Shakespearean works into their teaching curriculum.",
+                        "correctAnswer": "TRUE",
+                        "justification": "P1 L2 states that 'approximately 75 to 80 percent of English literature courses worldwide include at least one Shakespeare text in their curriculum.' Since 75-80% represents a clear majority, the statement accurately reflects this information through paraphrasing 'English literature courses worldwide' as 'university-level English literature programs around the world' and 'include...in their curriculum' as 'incorporate...into their teaching curriculum.'",
+                        "evidenceQuote": "approximately 75 to 80 percent of English literature courses worldwide include at least one Shakespeare text in their curriculum"
+                      },
+                      {
+                        "id": 7,
+                        "questionText": "Between 1990 and 2020, filmmakers produced more than 500 feature films that either directly adapted or showed significant Shakespearean influence.",
+                        "correctAnswer": "FALSE",
+                        "justification": "Passage states 'between 1990 and 2020, filmmakers produced over 420 feature films either directly adapting Shakespeare's plays or acknowledging substantial Shakespearean influence' (P3 L3). Statement claims 'more than 500' when passage clearly states 'over 420.' Numerical alteration distortion applied—changing 420 to 500 creates a false claim.",
+                        "evidenceQuote": "between 1990 and 2020, filmmakers produced over 420 feature films"
+                      },
+                      {
+                        "id": 8,
+                        "questionText": "Akira Kurosawa's Shakespearean adaptations achieved greater commercial success in Western markets than in East Asian countries.",
+                        "correctAnswer": "NOT GIVEN",
+                        "justification": "Passage mentions that Kurosawa's films 'Throne of Blood' and 'Ran' 'achieved international acclaim' (P4 L2-3) and transformed Elizabethan settings to feudal Japan, but provides no information comparing commercial success between Western markets and East Asian countries. The passage discusses critical acclaim but not box office performance or regional market comparisons. Would require specific comparative data on commercial performance across regions.",
+                        "evidenceQuote": "Akira Kurosawa's films Throne of Blood...and Ran...achieved international acclaim while transforming Shakespeare's Elizabethan England into feudal Japan"
+                      },
+                      {
+                        "id": 9,
+                        "questionText": "Research indicates that nearly three-quarters of acclaimed television dramas from 2010 to 2018 featured protagonists with psychological characteristics similar to Hamlet.",
+                        "correctAnswer": "FALSE",
+                        "justification": "Passage states 'approximately 68 percent of critically acclaimed television dramas produced between 2010 and 2018 featured protagonists exhibiting...Hamlet syndrome' (P2 L5). Statement claims 'nearly three-quarters' (which would be approximately 75%), when passage specifies 68 percent. Quantifier change distortion—68% is closer to two-thirds than three-quarters, making this factually incorrect.",
+                        "evidenceQuote": "approximately 68 percent of critically acclaimed television dramas produced between 2010 and 2018 featured protagonists exhibiting...Hamlet syndrome"
+                      }
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "type": "matching-sentence-endings",
+                    "title": "Questions 10-12",
+                    "instructions": "Complete each sentence with the correct ending, A–E.",
+                    "sentence_endings": [
+                      {
+                        "letter": "A",
+                        "text": "successfully relocated Elizabethan narratives to feudal Japanese contexts."
+                      },
+                      {
+                        "letter": "B",
+                        "text": "produced more than 420 feature films demonstrating substantial Shakespearean influence between 1990 and 2020."
+                      },
+                      {
+                        "letter": "C",
+                        "text": "were typically flat representations of single virtues or vices."
+                      },
+                      {
+                        "letter": "D",
+                        "text": "incorporated psychological complexity and contradictory motivations in their development."
+                      },
+                      {
+                        "letter": "E",
+                        "text": "approximately 68 percent featured protagonists with moral ambiguity and self-reflection."
+                      }
+                    ],
+                    "questions": [
+                      {
+                        "id": 10,
+                        "questionText": "Prior to Shakespeare's innovations, theatrical characters",
+                        "correctAnswer": "C",
+                        "justification": "P2 L2 states 'Prior to Shakespeare, theatrical characters were often flat archetypes representing singular virtues or vices.' Ending C paraphrases 'flat archetypes' as 'flat representations' and 'singular virtues or vices' as 'single virtues or vices,' accurately capturing the pre-Shakespearean character construction.",
+                        "evidenceQuote": "Prior to Shakespeare, theatrical characters were often flat archetypes representing singular virtues or vices"
+                      },
+                      {
+                        "id": 11,
+                        "questionText": "Data from the Shakespeare Birthplace Trust indicates that filmmakers",
+                        "correctAnswer": "B",
+                        "justification": "P3 L3 states 'Data compiled by the Shakespeare Birthplace Trust indicates that between 1990 and 2020, filmmakers produced over 420 feature films either directly adapting Shakespeare's plays or acknowledging substantial Shakespearean influence.' Ending B paraphrases 'over 420' as 'more than 420' and 'acknowledging substantial Shakespearean influence' as 'demonstrating substantial Shakespearean influence.'",
+                        "evidenceQuote": "Data compiled by the Shakespeare Birthplace Trust indicates that...filmmakers produced over 420 feature films...acknowledging substantial Shakespearean influence"
+                      },
+                      {
+                        "id": 12,
+                        "questionText": "Akira Kurosawa's Shakespearean film adaptations",
+                        "correctAnswer": "A",
+                        "justification": "P4 L2-3 states that Kurosawa's films 'achieved international acclaim while transforming Shakespeare's Elizabethan England into feudal Japan.' Ending A paraphrases 'transforming Shakespeare's Elizabethan England into feudal Japan' as 'successfully relocated Elizabethan narratives to feudal Japanese contexts,' capturing both the setting transformation and successful execution.",
+                        "evidenceQuote": "achieved international acclaim while transforming Shakespeare's Elizabethan England into feudal Japan"
+                      }
+                    ]
+                  },
+                  {
+                    "id": 4,
+                    "type": "short-answer",
+                    "title": "Questions 13-15",
+                    "instructions": "Answer the questions below. Choose NO MORE THAN THREE WORDS AND/OR A NUMBER from the passage for each answer.",
+                    "questions": [
+                      {
+                        "id": 13,
+                        "questionText": "According to the passage, what percentage of Hollywood romantic comedies since 1995 used disguise or mistaken identity devices?",
+                        "correctAnswer": "41 percent",
+                        "alternativeAnswers": ["41 percent", "approximately 41 percent", "41%"],
+                        "justification": "P3 L6 explicitly states 'approximately 41 percent incorporated some form of disguise or mistaken identity plot device.' Answer uses exact percentage from passage. Both '41 percent' and '41%' are acceptable formats.",
+                        "evidenceQuote": "approximately 41 percent incorporated some form of disguise or mistaken identity plot device traceable to Shakespearean comedy conventions"
+                      },
+                      {
+                        "id": 14,
+                        "questionText": "What term do researchers use to describe moral ambiguity combined with intense self-reflection in television protagonists?",
+                        "correctAnswer": "Hamlet syndrome",
+                        "alternativeAnswers": ["Hamlet syndrome"],
+                        "justification": "P2 L5 states that researchers termed this phenomenon 'Hamlet syndrome'—defined as 'moral ambiguity combined with intense self-reflection.' This is the exact technical term used in the passage and is the only possible answer to this specific question.",
+                        "evidenceQuote": "protagonists exhibiting what researchers termed 'Hamlet syndrome'—moral ambiguity combined with intense self-reflection"
+                      },
+                      {
+                        "id": 15,
+                        "questionText": "Who conducted research at UCLA on romantic comedies produced since 1995?",
+                        "correctAnswer": "Dr. Sarah Chen",
+                        "alternativeAnswers": ["Dr. Sarah Chen", "Sarah Chen"],
+                        "justification": "P3 L6 explicitly attributes this research: 'Dr. Sarah Chen's research team at UCLA examined 250 Hollywood romantic comedies produced since 1995.' Answer uses exact name from passage. Both with and without the title 'Dr.' are acceptable.",
+                        "evidenceQuote": "Dr. Sarah Chen's research team at UCLA examined 250 Hollywood romantic comedies produced since 1995"
+                      }
+                    ]
+                  }
+                ]
+            },
+{
+  "id": 2,
+  "title": "The Camera's Eye: Photography's Revolutionary Impact on Culture and Perception",
+  "level": "academic",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "P1",
+      "text": "Few technological innovations have transformed human culture as profoundly and swiftly as photography, which emerged in the early nineteenth century to fundamentally reconceptualize how societies document reality, construct memory, and negotiate truth claims. When French inventor Nicéphore Niépce produced the first permanent photographic image in 1826 or 1827—a process requiring approximately eight hours of exposure—he inaugurated a medium that would, within decades, permeate nearly every aspect of modern life. The public announcement of practical photographic processes in 1839, with Louis Daguerre's daguerreotype and William Henry Fox Talbot's calotype competing for recognition, marked the beginning of what scholars term the 'visual revolution,' a transformation as consequential for visual culture as the printing press had been for textual dissemination. Understanding photography's impact requires examining not merely its technical evolution but also its disruption of existing representational hierarchies, its democratization of image-making, and its complex relationship with concepts of objectivity and artistic expression. What emerges is a narrative less of linear technological progress than of profound epistemological shifts in how humans perceive, record, and interpret their world."
+    },
+    {
+      "id": "P2",
+      "text": "The technical refinements that made photography practical occurred with remarkable rapidity, transforming it from laboratory curiosity to accessible medium within two decades. Daguerreotypes, while producing exquisitely detailed images on silver-plated copper, remained unique objects that could not be reproduced, limiting their utility for mass communication. Talbot's negative-positive process, by contrast, enabled multiple prints from a single exposure, establishing the reproducibility that would become photography's defining characteristic. Research by Professor David Richardson at Yale University demonstrates that by 1851, exposure times had been reduced from Niépce's original eight hours to mere minutes, and by the 1860s, to fractions of a second, fundamentally altering what photography could capture. The introduction of collodion wet plates in 1851 and subsequently gelatin dry plates in the 1870s progressively simplified photographic practice, though the process remained sufficiently complex to necessitate professional expertise until George Eastman's Kodak camera democratized amateur photography in 1888. This technical trajectory had profound implications: each innovation expanded photography's accessibility while simultaneously raising questions about the medium's relationship to artistic intentionality and mechanical reproduction. Interestingly, early photographic practitioners often came from scientific rather than artistic backgrounds, reflecting the medium's initial positioning as objective documentation rather than creative expression."
+    },
+    {
+      "id": "P3",
+      "text": "Photography's emergence precipitated what art historian Dr. Margaret Sullivan at the Courtauld Institute terms a 'crisis of representation' in painting, fundamentally challenging assumptions about visual art's purpose and value. Portrait painting, which had constituted the economic foundation of many artists' practices, experienced particularly dramatic decline. Data compiled by cultural historian Professor Jean-Paul Mercier indicates that between 1850 and 1870, professional portrait painters in major European cities decreased by approximately 42 percent, while photographic portrait studios proliferated exponentially. By 1860, London alone housed over 200 commercial photography studios, producing an estimated 3 million portrait photographs annually—a volume that would have been inconceivable through painted portraiture. This shift represented more than mere economic displacement; it fundamentally altered who could possess visual representations of themselves and their families. Whereas painted portraits remained accessible primarily to affluent classes, costing the equivalent of several months' wages for middle-class professionals, photographic portraits became affordable to much broader social strata, with some studios offering images for prices representing merely a day's labor. However, some art theorists, including the influential critic John Ruskin, argued that photography's mechanical nature disqualified it from artistic status, a debate that would persist well into the twentieth century and continues, in modified form, in contemporary discussions of digital manipulation and artificial intelligence-generated imagery."
+    },
+    {
+      "id": "P4",
+      "text": "Beyond portraiture, photography's capacity for documentary representation transformed journalism, historical consciousness, and social reform movements in ways that reshaped public discourse. The American Civil War (1861-1865) became the first major conflict extensively photographed, with practitioners like Mathew Brady and his associates producing over 7,000 images that brought battlefield realities into domestic spaces with unprecedented immediacy. A 2019 analysis published in the Journal of Visual Communication found that illustrated newspapers incorporating photographic engravings—since halftone reproduction remained unfeasible until the 1880s—experienced circulation increases of between 23 and 31 percent compared to purely text-based competitors. Photography also became instrumental in social reform, with practitioners like Jacob Riis using images of New York tenement conditions in the 1890s to galvanize public opinion and legislative action. Dr. Patricia Chen's research at Stanford University demonstrates that reform campaigns incorporating photographic evidence achieved policy outcomes at rates approximately 67 percent higher than those relying exclusively on written testimony. Yet photography's claim to objectivity proved problematic; early practitioners routinely manipulated compositions, employed staged recreations of events, and selectively framed subjects, raising questions about the medium's epistemological status that remain unresolved. Some scholars, including Professor Marcus Feldstein at Columbia University, argue that photography's perceived objectivity paradoxically enabled more effective propaganda precisely because audiences accorded photographic images unwarranted evidential authority."
+    },
+    {
+      "id": "P5",
+      "text": "Photography's cultural impact continues to evolve, particularly as digital technologies blur distinctions between photographic capture and computational construction. Contemporary societies produce an estimated 1.4 trillion photographs annually, fundamentally altering photography's scarcity economics and memorial functions. Dr. Amanda Zhao at MIT's Media Lab argues that this proliferation represents not photography's triumph but its transformation into something qualitatively different, where image ubiquity paradoxically diminishes individual photographs' evidentiary weight. The ontological questions photography initially raised—about representation's relationship to reality, mechanical reproduction's implications for artistic aura, and visual evidence's epistemological status—have intensified rather than resolved in the digital era. Ultimately, photography's historical significance lies less in any intrinsic properties of the medium than in how it catalyzed fundamental reconceptualizations of seeing, knowing, and remembering that continue to shape contemporary visual culture. As artificial intelligence increasingly generates photorealistic imagery indistinguishable from lens-based photography, the foundational assumption that photographs maintain indexical relationships to physical reality—the very premise that granted photography its revolutionary cultural authority—faces its most profound challenge since the medium's nineteenth-century inception."
+    }
+  ],
+   "questions": [
+    {
+        "id": 5,
+        "type": "matching-headings",
+        "title": "Questions 16-19",
+        "instructions": "The reading passage has five paragraphs, A-E. Choose the correct heading for paragraphs B-E from the list of headings below. Write the correct number, i-viii, in boxes 1-4 on your answer sheet.",
+        "questions": [
+          {
+            "id": 16,
+            "questionText": "Paragraph B",
+            "options": [
+              "The social democratization of portraiture through accessible imaging technology",
+              "Swift technical innovations enabling photographic accessibility and reproducibility",
+              "Documentary photography's influence on journalism and social reform movements",
+              "Photography's revolutionary transformation of cultural perception",
+              "The ongoing debate about photography's status as legitimate art",
+              "Digital era challenges to photography's claim to objective truth",
+              "Louis Daguerre's development of the daguerreotype process",
+              "The economic impact of new visual technologies on traditional industries"
+            ],
+            "correctAnswer": "Swift technical innovations enabling photographic accessibility and reproducibility",
+            "justification": "Paragraph B focuses on the timeline of technical developments from Niépce's 8-hour exposures to Eastman's Kodak camera, emphasizing how 'each innovation expanded photography's accessibility' while Talbot's process 'established the reproducibility that would become photography's defining characteristic.' The heading paraphrases 'remarkable rapidity' as 'swift,' 'technical refinements' as 'technical innovations,' and captures both key themes of accessibility and reproducibility.",
+            "evidenceQuote": "The technical refinements that made photography practical occurred with remarkable rapidity, transforming it from laboratory curiosity to accessible medium within two decades"
+          },
+          {
+            "id": 17,
+            "questionText": "Paragraph C",
+            "options": [
+              "The social democratization of portraiture through accessible imaging technology",
+              "Swift technical innovations enabling photographic accessibility and reproducibility",
+              "Documentary photography's influence on journalism and social reform movements",
+              "Photography's revolutionary transformation of cultural perception",
+              "The ongoing debate about photography's status as legitimate art",
+              "Digital era challenges to photography's claim to objective truth",
+              "Louis Daguerre's development of the daguerreotype process",
+              "The economic impact of new visual technologies on traditional industries"
+            ],
+            "correctAnswer": "The social democratization of portraiture through accessible imaging technology",
+            "justification": "Paragraph C emphasizes how photography transformed portraiture from being 'accessible primarily to affluent classes' to becoming 'affordable to much broader social strata,' fundamentally altering 'who could possess visual representations.' The heading captures this democratization theme, paraphrasing 'affordable' and 'broader social strata' as 'social democratization,' and 'photography' as 'accessible imaging technology.'",
+            "evidenceQuote": "This shift represented more than mere economic displacement; it fundamentally altered who could possess visual representations of themselves and their families"
+          },
+          {
+            "id": 18,
+            "questionText": "Paragraph D",
+            "options": [
+              "The social democratization of portraiture through accessible imaging technology",
+              "Swift technical innovations enabling photographic accessibility and reproducibility",
+              "Documentary photography's influence on journalism and social reform movements",
+              "Photography's revolutionary transformation of cultural perception",
+              "The ongoing debate about photography's status as legitimate art",
+              "Digital era challenges to photography's claim to objective truth",
+              "Louis Daguerre's development of the daguerreotype process",
+              "The economic impact of new visual technologies on traditional industries"
+            ],
+            "correctAnswer": "Documentary photography's influence on journalism and social reform movements",
+            "justification": "Paragraph D's opening sentence explicitly states photography's 'documentary representation transformed journalism...and social reform movements,' providing extensive examples of Civil War photography, illustrated newspapers, and Jacob Riis's reform work. The heading directly paraphrases this core theme, changing 'capacity for documentary representation' to 'documentary photography's influence' and 'transformed' to 'influence on.'",
+            "evidenceQuote": "photography's capacity for documentary representation transformed journalism, historical consciousness, and social reform movements in ways that reshaped public discourse"
+          },
+          {
+            "id": 19,
+            "questionText": "Paragraph E",
+            "options": [
+              "The social democratization of portraiture through accessible imaging technology",
+              "Swift technical innovations enabling photographic accessibility and reproducibility",
+              "Documentary photography's influence on journalism and social reform movements",
+              "Photography's revolutionary transformation of cultural perception",
+              "The ongoing debate about photography's status as legitimate art",
+              "Digital era challenges to photography's claim to objective truth",
+              "Louis Daguerre's development of the daguerreotype process",
+              "The economic impact of new visual technologies on traditional industries"
+            ],
+            "correctAnswer": "Digital era challenges to photography's claim to objective truth",
+            "justification": "Paragraph E discusses how 'digital technologies blur distinctions between photographic capture and computational construction' and how AI challenges 'the foundational assumption that photographs maintain indexical relationships to physical reality.' The heading paraphrases 'indexical relationships to physical reality' as 'claim to objective truth' and 'digital technologies' and 'AI' as 'digital era challenges.'",
+            "evidenceQuote": "As artificial intelligence increasingly generates photorealistic imagery indistinguishable from lens-based photography, the foundational assumption that photographs maintain indexical relationships to physical reality...faces its most profound challenge"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "type": "multiple-choice",
+        "title": "Questions 20-22",
+        "instructions": "Choose the correct letter, A, B, C or D.",
+        "questions": [
+          {
+            "id": 20,
+            "questionText": "According to the passage, what distinguished Talbot's photographic process from the daguerreotype?",
+            "options": [
+              "It required significantly shorter exposure times and was easier to use",
+              "It allowed the creation of multiple copies from a single photographic exposure",
+              "It produced images with superior detail and clarity on metal surfaces",
+              "It was the first process to be publicly announced in the nineteenth century"
+            ],
+            "correctAnswer": "It allowed the creation of multiple copies from a single photographic exposure",
+            "justification": "Paragraph 2 explicitly contrasts daguerreotypes with Talbot's process, stating that while daguerreotypes 'remained unique objects that could not be reproduced,' Talbot's 'negative-positive process, by contrast, enabled multiple prints from a single exposure, establishing the reproducibility that would become photography's defining characteristic' (P2 L2-3). Option B accurately paraphrases this key distinction.",
+            "evidenceQuote": "Talbot's negative-positive process...enabled multiple prints from a single exposure, establishing the reproducibility that would become photography's defining characteristic"
+          },
+          {
+            "id": 21,
+            "questionText": "What can be inferred from paragraph 4 about photography's relationship with objective truth?",
+            "options": [
+              "Photography was universally accepted as completely objective documentary evidence by the 1890s",
+              "Photographic manipulation techniques were developed only after the invention of digital technology",
+              "The medium's perceived objectivity could be exploited despite its susceptibility to manipulation",
+              "Photographers deliberately avoided using their work for social reform to maintain neutrality"
+            ],
+            "correctAnswer": "The medium's perceived objectivity could be exploited despite its susceptibility to manipulation",
+            "justification": "Paragraph 4 presents a paradox: while 'photography's claim to objectivity proved problematic' with practitioners routinely manipulating compositions and staging events (P4 L6), Professor Feldstein argues that 'photography's perceived objectivity paradoxically enabled more effective propaganda precisely because audiences accorded photographic images unwarranted evidential authority' (P4 L7). This indicates the perception of objectivity could be exploited even though the medium was actually manipulable—exactly what option C states.",
+            "evidenceQuote": "photography's perceived objectivity paradoxically enabled more effective propaganda precisely because audiences accorded photographic images unwarranted evidential authority"
+          },
+          {
+            "id": 22,
+            "questionText": "What is the primary focus of paragraph 3?",
+            "options": [
+              "The technical superiority of photographic portraits over painted portraits in European cities",
+              "John Ruskin's influential critical arguments against photography's artistic legitimacy",
+              "The statistical decline in professional portrait painters during the mid-nineteenth century",
+              "Photography's disruption of portrait painting and democratization of visual self-representation"
+            ],
+            "correctAnswer": "Photography's disruption of portrait painting and democratization of visual self-representation",
+            "justification": "Paragraph 3 begins by discussing photography precipitating a 'crisis of representation' in painting and portrait painting's 'dramatic decline' (P3 L1-2), provides statistical evidence of painters decreasing 42% (P3 L3), but then emphasizes this 'represented more than mere economic displacement; it fundamentally altered who could possess visual representations' (P3 L5), explaining how photographic portraits became 'affordable to much broader social strata' (P3 L6). Option D captures both dimensions—disruption of the profession AND social democratization—making it the most comprehensive main idea.",
+            "evidenceQuote": "This shift represented more than mere economic displacement; it fundamentally altered who could possess visual representations of themselves and their families"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "type": "matching-features",
+        "title": "Questions 23-25",
+        "instructions": "Look at the following statements (Questions 23-25) and the list of researchers below. Match each statement with the correct researcher, A–E. Write the correct letter, A–E, in boxes 23-25 on your answer sheet.",
+        "features": [
+          {
+            "letter": "A",
+            "name": "Professor David Richardson"
+          },
+          {
+            "letter": "B",
+            "name": "Professor Jean-Paul Mercier"
+          },
+          {
+            "letter": "C",
+            "name": "Dr. Patricia Chen"
+          },
+          {
+            "letter": "D",
+            "name": "Professor Marcus Feldstein"
+          },
+          {
+            "letter": "E",
+            "name": "Dr. Amanda Zhao"
+          }
+        ],
+        "questions": [
+          {
+            "id": 23,
+            "questionText": "documented the dramatic reduction in required exposure durations during photography's early technical evolution",
+            "correctAnswer": "A",
+            "justification": "Passage explicitly states 'Research by Professor David Richardson at Yale University demonstrates that by 1851, exposure times had been reduced from Niépce's original eight hours to mere minutes, and by the 1860s, to fractions of a second' (P2 L4). Feature paraphrases 'exposure times had been reduced' as 'dramatic reduction in required exposure durations' and 'by 1851...by the 1860s' as 'during photography's early technical evolution.'",
+            "evidenceQuote": "Research by Professor David Richardson...demonstrates that by 1851, exposure times had been reduced from Niépce's original eight hours to mere minutes, and by the 1860s, to fractions of a second"
+          },
+          {
+            "id": 24,
+            "questionText": "established that social advocacy initiatives incorporating visual evidence achieved substantially higher legislative success rates",
+            "correctAnswer": "C",
+            "justification": "Passage states 'Dr. Patricia Chen's research at Stanford University demonstrates that reform campaigns incorporating photographic evidence achieved policy outcomes at rates approximately 67 percent higher than those relying exclusively on written testimony' (P4 L5). Feature paraphrases 'reform campaigns' as 'social advocacy initiatives,' 'incorporating photographic evidence' as 'incorporating visual evidence,' and 'policy outcomes at rates approximately 67 percent higher' as 'substantially higher legislative success rates.'",
+            "evidenceQuote": "Dr. Patricia Chen's research...demonstrates that reform campaigns incorporating photographic evidence achieved policy outcomes at rates approximately 67 percent higher"
+          },
+          {
+            "id": 25,
+            "questionText": "contends that contemporary image proliferation paradoxically diminishes the evidential significance of individual photographs",
+            "correctAnswer": "E",
+            "justification": "Passage attributes this argument to Dr. Amanda Zhao: 'Dr. Amanda Zhao at MIT's Media Lab argues that this proliferation represents not photography's triumph but its transformation into something qualitatively different, where image ubiquity paradoxically diminishes individual photographs' evidentiary weight' (P5 L3). Feature paraphrases 'image ubiquity' as 'contemporary image proliferation,' 'evidentiary weight' as 'evidential significance,' and 'argues' as 'contends,' maintaining the paradox concept.",
+            "evidenceQuote": "Dr. Amanda Zhao...argues that this proliferation...where image ubiquity paradoxically diminishes individual photographs' evidentiary weight"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "type": "true-false-not-given",
+        "title": "Questions 26-28",
+        "instructions": "Do the following statements agree with the views of the writer in the Reading Passage? Write YES if the statement agrees with the views of the writer, NO if the statement contradicts the views of the writer, NOT GIVEN if it is impossible to say what the writer thinks about this.",
+        "questions": [
+          {
+            "id": 26,
+            "questionText": "The writer believes photography represents one of the most transformative cultural innovations in human history.",
+            "correctAnswer": "YES",
+            "justification": "The writer explicitly states that 'Few technological innovations have transformed human culture as profoundly and swiftly as photography' (P1 L1), directly expressing the view that photography ranks among the most significant cultural transformations. This evaluation is reinforced by comparing it to the printing press's impact on textual culture.",
+            "evidenceQuote": "Few technological innovations have transformed human culture as profoundly and swiftly as photography"
+          },
+          {
+            "id": 27,
+            "questionText": "The writer believes photography's historical importance stems primarily from its inherent technical properties rather than its cultural effects.",
+            "correctAnswer": "NO",
+            "justification": "The writer explicitly argues the opposite, stating 'Ultimately, photography's historical significance lies less in any intrinsic properties of the medium than in how it catalyzed fundamental reconceptualizations of seeing, knowing, and remembering' (P5 L5). This directly contradicts the statement's claim about technical properties being primary.",
+            "evidenceQuote": "photography's historical significance lies less in any intrinsic properties of the medium than in how it catalyzed fundamental reconceptualizations"
+          },
+          {
+            "id": 28,
+            "questionText": "The writer believes photography's democratization of image-making was ultimately beneficial for society.",
+            "correctAnswer": "NOT GIVEN",
+            "justification": "While the passage describes photography's democratization, noting that 'photographic portraits became affordable to much broader social strata' and 'fundamentally altered who could possess visual representations' (P3 L5-6), the writer never expresses an evaluative judgment about whether this democratization was beneficial or harmful to society. The description remains neutral and factual.",
+            "evidenceQuote": "This shift represented more than mere economic displacement; it fundamentally altered who could possess visual representations of themselves and their families"
+          }
+        ]
+      }
+    ]
+},
+{
+    "id": 3,
+    "title": "Cinema's Invisible Hand: How Motion Pictures Shape Collective Consciousness and Political Discourse",
+    "level": "academic",
+    "estimatedTime": 20,
+    "paragraphs": [
+      {
+        "id": "P1",
+        "text": "Since its inception in the late nineteenth century, cinema has evolved from mere entertainment into one of the most potent instruments of ideological transmission in modern society, wielding unprecedented capacity to mold collective consciousness and political sentiment. Research conducted by the Institute for Media Impact Studies indicates that the average individual in developed nations consumes approximately 127 hours of film content annually, representing exposure equivalent to nearly three full working weeks. This pervasive cultural penetration has not escaped the attention of political entities, social movements, and commercial interests, all of whom have recognized cinema's unique ability to bypass rational discourse and appeal directly to emotional and subconscious responses. Unlike traditional forms of political communication, which rely primarily on logical argumentation or statistical evidence, cinematic narratives operate through what media theorists term 'affective persuasion'—a process that embeds ideological messages within compelling storytelling frameworks. Understanding cinema's role in shaping public opinion requires examining both its technical mechanisms of influence and its historical deployment as a tool of social engineering."
+      },
+      {
+        "id": "P2",
+        "text": "The recognition of cinema's propaganda potential emerged almost simultaneously with the medium's technical maturation, as governments and political movements quickly grasped its capacity to reach mass audiences with unprecedented immediacy and emotional impact. During the 1930s and 1940s, both democratic and authoritarian regimes systematically exploited cinematic media for ideological purposes, with Nazi Germany's film industry producing over 1,350 feature films between 1933 and 1945, approximately 14 percent of which contained explicit political messaging. However, cinema's influence operates most effectively when its persuasive intent remains concealed within ostensibly neutral entertainment content. A comprehensive analysis by Professor Marcus Webb at Oxford University examined 847 Hollywood films released between 1960 and 1990, finding that 73 percent contained identifiable political or ideological themes, though fewer than 8 percent explicitly acknowledged such content. This subtlety distinguishes cinematic influence from overt propaganda; while audiences may consciously resist direct political appeals, they often absorb ideological messages embedded within narrative structures, character development, and visual symbolism. Soviet cinema provides a particularly illuminating case study, as filmmakers like Sergei Eisenstein developed sophisticated montage techniques specifically designed to generate predetermined emotional responses and political associations. These technical innovations, initially conceived for ideological purposes, subsequently permeated commercial cinema worldwide, establishing cinematic language that continues to shape contemporary film production."
+      },
+      {
+        "id": "P3",
+        "text": "The psychological mechanisms underlying cinema's persuasive power derive from what cognitive scientists describe as 'transportation theory'—the phenomenon whereby audiences become so absorbed in narrative experiences that their critical faculties diminish, rendering them more susceptible to embedded messages. Neurological studies conducted using functional magnetic resonance imaging reveal that viewers experiencing high narrative engagement exhibit reduced activity in brain regions associated with critical thinking, while simultaneously showing increased activation in areas linked to emotional processing and memory formation. Dr. Sarah Kim's research team at MIT demonstrated that subjects exposed to politically charged film sequences showed measurable shifts in policy preferences, with effects persisting for up to six weeks post-exposure. Cinema achieves this influence through multiple sensory channels operating simultaneously: visual imagery, musical scores, dialogue, and pacing work in concert to create what media psychologists term 'immersive ideological environments.' Particularly significant is cinema's capacity to normalize previously unacceptable viewpoints through gradual exposure and sympathetic character portrayal. Content analysis of American films from 1980 to 2015 reveals a progressive shift in attitudes toward violence, surveillance, and authoritarian governance, with behaviors initially presented as exceptional gradually becoming depicted as routine or necessary. This normalization process operates below conscious awareness, making it particularly resistant to rational counterargument."
+      },
+      {
+        "id": "P4",
+        "text": "Contemporary examples of cinema's impact on public opinion demonstrate both its potential for positive social change and its capacity for manipulation. The 2006 documentary 'An Inconvenient Truth' exemplifies cinema's ability to catalyze environmental awareness, with post-release surveys indicating that 66 percent of viewers reported changed attitudes toward climate change, while carbon offset purchases in screening locations increased by an average of 23 percent. Conversely, the proliferation of superhero films since 2008 has coincided with documented shifts in public attitudes toward surveillance and extrajudicial violence, with polling data showing increased acceptance of both among younger demographics. International cinema provides additional evidence of this influence: Bollywood films have been credited with promoting Hindi as a lingua franca across South Asia, while Korean cinema's global success has generated measurable increases in tourism, language learning, and cultural affinity toward South Korea in multiple nations. Perhaps most significantly, streaming platforms' algorithmic content curation has amplified cinema's opinion-shaping potential by creating personalized ideological echo chambers. Netflix's viewing data, analyzed by researchers at Carnegie Mellon University, suggests that algorithmic recommendations successfully predict and potentially reinforce users' political preferences with 84 percent accuracy. This technological evolution represents a qualitative shift from mass persuasion to individualized ideological targeting."
+      },
+      {
+        "id": "P5",
+        "text": "As cinema increasingly converges with digital media and artificial intelligence, its capacity to shape public opinion continues to evolve in ways that challenge traditional concepts of media literacy and democratic discourse. The emergence of deepfake technology and computational filmmaking raises fundamental questions about audiences' ability to distinguish authentic content from manufactured narratives, potentially undermining cinema's historical claim to documentary authority. However, some scholars argue that this technological disruption may ultimately diminish cinema's persuasive power by fostering increased skepticism toward all media content. Professor Maria Santos at the Sorbonne contends that contemporary audiences, having grown up with digital manipulation, may develop more sophisticated critical viewing skills than previous generations possessed. Nonetheless, the sheer volume of cinematic content—with global film production increasing by approximately 300 percent since 2000—ensures that cinema will remain a dominant force in shaping collective consciousness. The challenge for democratic societies lies not in censoring cinematic content but in developing educational frameworks that enhance citizens' capacity to recognize and evaluate the ideological dimensions of media consumption. Ultimately, cinema's role in shaping public opinion reflects broader tensions between artistic expression, commercial interests, and social responsibility that will likely intensify as technology continues to expand the medium's reach and sophistication."
+      }
+    ],
+    "questions": [
+        {
+            "id": 9,
+            "type": "table-completion",
+            "title": "Questions 29-33",
+            "instructions": "Complete the table below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+            "word_limit": "NO MORE THAN TWO WORDS",
+            "headers": ["Section", "Key Idea", "Answer"],
+            "rows": [
+              {
+                "cells": [
+                  { "type": "text", "content": "Historical Recognition and Development" },
+                  { "type": "text", "content": "Film narratives operate through _____ rather than logical argument" },
+                  { "type": "gap", "gapNumber": 29, "correctAnswer": "affective persuasion" }
+                ]
+              },
+              {
+                "cells": [
+                  { "type": "text", "content": "Historical Recognition and Development" },
+                  { "type": "text", "content": "Analysis of Hollywood films (1960–1990) found _____ contained political themes" },
+                  { "type": "gap", "gapNumber": 30, "correctAnswer": "73 percent" }
+                ]
+              },
+              {
+                "cells": [
+                  { "type": "text", "content": "Psychological Mechanisms" },
+                  { "type": "text", "content": "Audiences become absorbed through _____ phenomenon" },
+                  { "type": "gap", "gapNumber": 31, "correctAnswer": "transportation theory" }
+                ]
+              },
+              {
+                "cells": [
+                  { "type": "text", "content": "Psychological Mechanisms" },
+                  { "type": "text", "content": "Policy preference changes persist for up to _____" },
+                  { "type": "gap", "gapNumber": 32, "correctAnswer": "six weeks" }
+                ]
+              },
+              {
+                "cells": [
+                  { "type": "text", "content": "Contemporary Applications" },
+                  { "type": "text", "content": "Streaming platforms use _____ to create personalized content" },
+                  { "type": "gap", "gapNumber": 33, "correctAnswer": "algorithmic recommendations" }
+                ]
+              }
+            ],
+            "questions": [
+              {
+                "id": 29,
+                "gap_number": 29,
+                "correctAnswer": "affective persuasion",
+                "evidenceQuote": "\"cinematic narratives operate through what media theorists term 'affective persuasion'\"",
+                "evidenceLocation": "P1 L4",
+                "justification": "The passage explicitly states that cinematic narratives operate through 'affective persuasion' rather than logical argumentation. The question paraphrases this concept as 'film narratives' and 'logical argument,' preserving the original term."
+              },
+              {
+                "id": 30,
+                "gap_number": 30,
+                "correctAnswer": "73 percent",
+                "evidenceQuote": "\"finding that 73 percent contained identifiable political or ideological themes\"",
+                "evidenceLocation": "P2 L4",
+                "justification": "Professor Marcus Webb's study found that 73 percent of analyzed Hollywood films contained ideological themes. The paraphrased question simplifies 'identifiable political or ideological themes' to 'political themes.'"
+              },
+              {
+                "id": 31,
+                "gap_number": 31,
+                "correctAnswer": "transportation theory",
+                "evidenceQuote": "\"derive from what cognitive scientists describe as 'transportation theory'\"",
+                "evidenceLocation": "P3 L1",
+                "justification": "The term 'transportation theory' is used to describe the psychological process where audiences become absorbed in narratives, which the question summarizes as 'become absorbed through.'"
+              },
+              {
+                "id": 32,
+                "gap_number": 32,
+                "correctAnswer": "six weeks",
+                "evidenceQuote": "\"with effects persisting for up to six weeks post-exposure\"",
+                "evidenceLocation": "P3 L3",
+                "justification": "Dr. Sarah Kim’s research demonstrated that policy preference effects from film exposure lasted up to six weeks. The question restates this as 'policy preference changes persist for up to.'"
+              },
+              {
+                "id": 33,
+                "gap_number": 33,
+                "correctAnswer": "algorithmic recommendations",
+                "evidenceQuote": "\"algorithmic recommendations successfully predict and potentially reinforce users' political preferences\"",
+                "evidenceLocation": "P4 L6",
+                "justification": "The passage explains how streaming platforms use 'algorithmic recommendations' to influence viewer preferences. The question paraphrases this mechanism as 'creating personalized content.'"
+              }
+            ]
+          },
+          {
+            "id": 10,
+            "type": "matching-information",
+            "title": "Questions 34-38",
+            "instructions": "Which paragraph contains the following information? Write the correct letter, A–E, in boxes 1-5 on your answer sheet.",
+            "paragraphs_list": ["A", "B", "C", "D", "E"],
+            "questions": [
+              {
+                "id": 34,
+                "questionText": "a theoretical framework explaining how immersion in stories reduces viewers' capacity for analytical thought",
+                "correctAnswer": "C",
+                "justification": "Paragraph C explains 'transportation theory,' describing how audiences absorbed in narratives experience diminished critical faculties and increased susceptibility to embedded messages. This directly corresponds to the question's focus on reduced analytical capacity during story immersion.",
+                "evidenceQuote": "transportation theory—the phenomenon whereby audiences become so absorbed in narrative experiences that their critical faculties diminish, rendering them more susceptible to embedded messages"
+              },
+              {
+                "id": 35,
+                "questionText": "survey data showing the proportion of audience members whose environmental views were modified after watching a specific film",
+                "correctAnswer": "D",
+                "justification": "Paragraph D provides statistical evidence from 'An Inconvenient Truth,' specifically noting that 66 percent of viewers reported changed attitudes toward climate change. This is the only paragraph containing quantitative data about a film's environmental impact.",
+                "evidenceQuote": "post-release surveys indicating that 66 percent of viewers reported changed attitudes toward climate change, while carbon offset purchases in screening locations increased by an average of 23 percent"
+              },
+              {
+                "id": 36,
+                "questionText": "a director who created innovative editing approaches intended to produce particular affective reactions in audiences",
+                "correctAnswer": "B",
+                "justification": "Paragraph B discusses Sergei Eisenstein's development of sophisticated montage techniques specifically designed to generate predetermined emotional responses and political associations. This is the only paragraph mentioning a specific filmmaker and their technical innovations.",
+                "evidenceQuote": "filmmakers like Sergei Eisenstein developed sophisticated montage techniques specifically designed to generate predetermined emotional responses and political associations"
+              },
+              {
+                "id": 37,
+                "questionText": "how automated recommendation systems enhance films' persuasive capabilities through customized content delivery",
+                "correctAnswer": "D",
+                "justification": "Paragraph D explains how streaming platforms' algorithmic content curation amplifies cinema's opinion-shaping potential by creating personalized ideological echo chambers, representing a shift from mass persuasion to individualized targeting. This technological mechanism is unique to this paragraph.",
+                "evidenceQuote": "streaming platforms' algorithmic content curation has amplified cinema's opinion-shaping potential by creating personalized ideological echo chambers"
+              },
+              {
+                "id": 38,
+                "questionText": "the distinction between emotion-based cinematic influence and logic-oriented conventional political discourse",
+                "correctAnswer": "A",
+                "justification": "Paragraph A explicitly contrasts traditional political communication, which relies on logical argumentation and statistical evidence, with cinematic narratives that operate through 'affective persuasion,' bypassing rational discourse to appeal to emotions. This comparison is unique to the opening paragraph.",
+                "evidenceQuote": "Unlike traditional forms of political communication, which rely primarily on logical argumentation or statistical evidence, cinematic narratives operate through what media theorists term 'affective persuasion'"
+              }
+            ]
+          }, 
+            {
+              "id": 11,
+              "type": "short-answer",
+              "title": "Questions 39-40",
+              "instructions": "Answer the question below. Choose NO MORE THAN THREE WORDS AND/OR A NUMBER from the passage for each answer.",
+              "questions": [
+                {
+                  "id": 39,
+                  "questionText": "How many hours of film content does the average individual in developed nations consume annually?",
+                  "correctAnswer": "127 hours",
+                  "alternativeAnswers": ["127 hours", "approximately 127 hours"],
+                  "justification": "Paragraph A explicitly states the annual film consumption figure as 'approximately 127 hours'. Answer can be given with or without the qualifier 'approximately'.",
+                  "evidenceQuote": "the average individual in developed nations consumes approximately 127 hours of film content annually"
+                },
+                {
+                  "id": 40,
+                  "questionText": "What term describes the phenomenon whereby narrative absorption reduces audiences' critical faculties?",
+                  "correctAnswer": "transportation theory",
+                  "alternativeAnswers": ["transportation theory"],
+                  "justification": "Paragraph C introduces 'transportation theory' as the cognitive science term for the phenomenon where absorbed audiences experience diminished critical thinking. This is the exact terminology used in the passage.",
+                  "evidenceQuote": "what cognitive scientists describe as 'transportation theory'—the phenomenon whereby audiences become so absorbed in narrative experiences that their critical faculties diminish"
+                }
+              ]
+            }
+                ]
+            }
+          ]
+        }

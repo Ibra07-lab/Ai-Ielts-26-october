@@ -72,7 +72,8 @@
       }
     ]
   },
-  {"id": 1,
+  {
+    "id": 1,
   "type": "short-answer",
   "title": "Questions 8–13",
   "instructions": "Answer the questions below. Choose NO MORE THAN THREE WORDS AND/OR A NUMBER from the passage for each answer.",
@@ -107,9 +108,9 @@
       "questionText": "According to the passage, what is shifting toward a probabilistic framework?",
       "correctAnswer": "earthquake science"
     }
-]
-  }
-]
+  ]
+}
+  ]
 },
 {
     "id": 2,

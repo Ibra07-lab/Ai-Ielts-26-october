@@ -1,0 +1,623 @@
+{
+    "testId": 10,
+    "testName": "Test 10",
+    "passages": [
+        {
+                "id": 1,
+                "title": "The Circular Economy: Redefining Waste as a Resource",
+                "level": "academic",
+                "estimatedTime": 20,
+                "paragraphs": [
+                  {
+                    "id": "P1",
+                    "text": "For most of human industrial history, economic activity has followed a linear model: raw materials are extracted, transformed into products, used briefly, and then discarded as waste. This 'take-make-dispose' approach has generated prosperity but at considerable environmental cost, with global waste production reaching approximately 2.01 billion tonnes annually according to World Bank estimates. In response to mounting resource scarcity and environmental degradation, the circular economy has emerged as an alternative framework that seeks to eliminate waste by designing products and systems where materials circulate continuously through cycles of use and regeneration. Rather than viewing discarded items as trash, circular models recognize them as valuable resources that can be maintained, repaired, refurbished, or recycled into new products. Understanding this transition requires examining both the fundamental principles distinguishing circular from linear systems and the practical challenges businesses face when implementing circular strategies."
+                  },
+                  {
+                    "id": "P2",
+                    "text": "The linear economy's inefficiency becomes apparent when considering material flows through industrial systems. Research conducted by the Ellen MacArthur Foundation indicates that in current manufacturing processes, only 32 percent of materials used actually end up in finished products that remain in use for more than six months—the remaining 68 percent becomes waste during production or is quickly discarded. This wastefulness extends beyond manufacturing: the average European household throws away approximately 180 kilograms of food annually, representing roughly one-third of all food purchased. Circular economy principles challenge this pattern through three core strategies: maintaining products in use for longer periods through durability and repair; circulating materials at their highest value through reuse and refurbishment; and regenerating natural systems by returning biological materials safely to the environment. Dr. Walter Stahel, often credited as a pioneer of circular economy thinking, argues that extending product lifespans represents the most effective approach, as it reduces both the environmental impact of manufacturing new items and the waste generated from disposal. A 2019 study published in Resources, Conservation and Recycling found that increasing the average lifespan of household appliances by just three years could reduce carbon emissions associated with these products by approximately 23 percent across their total lifecycle. These principles require fundamental changes to how products are designed, manufactured, and sold."
+                  },
+                  {
+                    "id": "P3",
+                    "text": "Implementing circular economy models demands innovation in both product design and business strategies. Design for circularity emphasizes durability, standardization of components, and ease of disassembly, enabling products to be repaired, upgraded, or recycled effectively. The Dutch electronics company Fairphone exemplifies this approach: their smartphones feature modular construction allowing users to replace individual components like batteries, cameras, or screens without specialized tools, extending device lifespans from the typical two years to five years or more. Beyond design improvements, circular business models are restructuring relationships between manufacturers and consumers. Product-as-service arrangements, where companies retain ownership of goods and sell access rather than ownership, create incentives for durability since manufacturers bear costs of failure and benefit from longevity. The carpet manufacturer Interface, for instance, leases floor coverings to businesses rather than selling them outright, maintaining responsibility for cleaning, repairs, and eventual recycling. When carpet tiles wear out, Interface reclaims them and separates materials for manufacturing new products, achieving a material recovery rate exceeding 90 percent. Similarly, Philips Lighting has transitioned many corporate clients to 'lighting-as-a-service' contracts, where the company installs, maintains, and upgrades lighting systems while customers pay for illumination rather than equipment. These arrangements have reportedly reduced energy consumption by 35 to 50 percent compared to traditional lighting ownership models while ensuring materials remain in productive use."
+                  },
+                  {
+                    "id": "P4",
+                    "text": "Despite these promising examples, circular economy adoption faces significant obstacles, particularly regarding economic viability and scalability. Collecting, sorting, and processing used materials often costs more than extracting virgin resources, especially when commodity prices are low. The Netherlands, frequently cited as a circular economy leader, achieved a circularity rate of only 24.5 percent in 2020—meaning less than one-quarter of materials used in the Dutch economy came from recycled or reused sources. This figure had actually declined from 28.8 percent in 2010, illustrating how economic growth can outpace circular initiatives. Consumer behavior presents another barrier: studies indicate that while 65 percent of consumers express support for circular products in surveys, actual purchasing decisions remain heavily influenced by price and convenience, with repaired or refurbished goods often perceived as inferior to new items. Professor Nancy Bocken at Maastricht University notes that successful circular transitions require coordinated action across entire value chains—from raw material suppliers to retailers to waste management systems—making implementation complex and dependent on partnerships that can be difficult to establish. Regulatory frameworks in most countries remain oriented toward linear models, with recycling infrastructure underdeveloped and policies favoring virgin material extraction through subsidies and favorable tax treatment. Nevertheless, some governments have begun creating supportive conditions: France now requires manufacturers of electronic goods and certain other products to display 'repairability scores' informing consumers how easily items can be fixed, while the European Union has proposed regulations mandating minimum product lifespans and repairability standards for various categories."
+                  },
+                  {
+                    "id": "P5",
+                    "text": "The circular economy represents a fundamental reimagining of industrial systems rather than mere incremental improvement in recycling rates. Analysis by the Ellen MacArthur Foundation suggests that circular economy strategies could reduce global greenhouse gas emissions by 39 percent by 2050 while generating economic opportunities worth approximately $4.5 trillion through new business models and material savings. However, realizing this potential requires overcoming substantial inertia in manufacturing systems, consumer expectations, and regulatory environments all structured around linear assumptions. Dr. Richardson's research indicates that successful transitions will likely emerge through combinations of technological innovation, policy intervention, and gradual shifts in corporate and consumer culture rather than rapid wholesale transformation. The question is not whether circular principles offer improvements over linear systems—the environmental and resource efficiency advantages are well-established—but rather how quickly and comprehensively societies can reorganize production and consumption around these principles before planetary boundaries are exceeded."
+                  }
+            ],
+            "questions": [
+                {
+                    "id": 1,
+                    "type": "matching-headings",
+                    "title": "Questions 1-5",
+                    "instructions": "The reading passage has five paragraphs, A-E. Choose the correct heading for paragraphs A-E from the list of headings below. Write the correct number, i-viii, in boxes 37-41 on your answer sheet.",
+                    
+                    "questions": [
+                      {
+                        "id": 1,
+                        "questionText": "Paragraph A",
+                        "options": [
+                          "Design innovation and product-as-service business transformations",
+                          "Economic and regulatory barriers hindering circular adoption",
+                          "Material inefficiency in conventional systems and circular alternatives",
+                          "Contrasting traditional waste production with resource circulation models",
+                          "Transformative potential requiring systemic reorganization",
+                          "Modular smartphone design extending device operational lifespans",
+                          "Consumer demand for environmentally sustainable products",
+                          "The Netherlands' achievements in circular economy implementation"
+                        ],
+                        "correctAnswer": "Contrasting traditional waste production with resource circulation models",
+                        "justification": "Paragraph A introduces the linear 'take-make-dispose' model (2.01 billion tonnes waste annually) and contrasts it with the circular economy framework that 'seeks to eliminate waste by designing products and systems where materials circulate continuously.' This heading accurately captures the contrast between traditional linear and circular approaches.",
+                        "evidenceQuote": "This 'take-make-dispose' approach has generated prosperity but at considerable environmental cost... the circular economy has emerged as an alternative framework that seeks to eliminate waste by designing products and systems where materials circulate continuously"
+                      },
+                      {
+                        "id": 2,
+                        "questionText": "Paragraph B",
+                        "options": [
+                          "Design innovation and product-as-service business transformations",
+                          "Economic and regulatory barriers hindering circular adoption",
+                          "Material inefficiency in conventional systems and circular alternatives",
+                          "Contrasting traditional waste production with resource circulation models",
+                          "Transformative potential requiring systemic reorganization",
+                          "Modular smartphone design extending device operational lifespans",
+                          "Consumer demand for environmentally sustainable products",
+                          "The Netherlands' achievements in circular economy implementation"
+                        ],
+                        "correctAnswer": "Material inefficiency in conventional systems and circular alternatives",
+                        "justification": "Paragraph B opens by stating 'The linear economy's inefficiency becomes apparent when considering material flows,' then provides statistics showing 68% waste and 180kg annual food waste per household. It then introduces 'three core strategies' of circular economy (maintain, circulate, regenerate) as alternatives to this waste. This heading accurately captures the paragraph's dual focus on linear waste and circular solutions.",
+                        "evidenceQuote": "only 32 percent of materials used actually end up in finished products that remain in use for more than six months—the remaining 68 percent becomes waste... Circular economy principles challenge this pattern through three core strategies"
+                      },
+                      {
+                        "id": 3,
+                        "questionText": "Paragraph C",
+                        "options": [
+                          "Design innovation and product-as-service business transformations",
+                          "Economic and regulatory barriers hindering circular adoption",
+                          "Material inefficiency in conventional systems and circular alternatives",
+                          "Contrasting traditional waste production with resource circulation models",
+                          "Transformative potential requiring systemic reorganization",
+                          "Modular smartphone design extending device operational lifespans",
+                          "Consumer demand for environmentally sustainable products",
+                          "The Netherlands' achievements in circular economy implementation"
+                        ],
+                        "correctAnswer": "Design innovation and product-as-service business transformations",
+                        "justification": "Paragraph C states 'Implementing circular economy models demands innovation in both product design and business strategies.' It discusses design for circularity (durability, modularity) with Fairphone example, then shifts to 'Product-as-service arrangements' with Interface and Philips examples. This heading accurately captures the paragraph's two main themes of design and business model innovation.",
+                        "evidenceQuote": "Implementing circular economy models demands innovation in both product design and business strategies... Product-as-service arrangements...create incentives for durability"
+                      },
+                      {
+                        "id": 4,
+                        "questionText": "Paragraph D",
+                        "options": [
+                          "Design innovation and product-as-service business transformations",
+                          "Economic and regulatory barriers hindering circular adoption",
+                          "Material inefficiency in conventional systems and circular alternatives",
+                          "Contrasting traditional waste production with resource circulation models",
+                          "Transformative potential requiring systemic reorganization",
+                          "Modular smartphone design extending device operational lifespans",
+                          "Consumer demand for environmentally sustainable products",
+                          "The Netherlands' achievements in circular economy implementation"
+                        ],
+                        "correctAnswer": "Economic and regulatory barriers hindering circular adoption",
+                        "justification": "Paragraph D opens stating 'circular economy adoption faces significant obstacles, particularly regarding economic viability' and discusses costs exceeding virgin materials, Netherlands' declining circularity rates, consumer behavior gaps, and notes 'Regulatory frameworks in most countries remain oriented toward linear models.' This heading accurately captures the paragraph's focus on multiple barriers to implementation.",
+                        "evidenceQuote": "circular economy adoption faces significant obstacles, particularly regarding economic viability and scalability... Regulatory frameworks in most countries remain oriented toward linear models"
+                      },
+                      {
+                        "id": 5,
+                        "questionText": "Paragraph E",
+                        "options": [
+                          "Design innovation and product-as-service business transformations",
+                          "Economic and regulatory barriers hindering circular adoption",
+                          "Material inefficiency in conventional systems and circular alternatives",
+                          "Contrasting traditional waste production with resource circulation models",
+                          "Transformative potential requiring systemic reorganization",
+                          "Modular smartphone design extending device operational lifespans",
+                          "Consumer demand for environmentally sustainable products",
+                          "The Netherlands' achievements in circular economy implementation"
+                        ],
+                        "correctAnswer": "Transformative potential requiring systemic reorganization",
+                        "justification": "Paragraph E states 'The circular economy represents a fundamental reimagining of industrial systems' with potential for '39 percent' emissions reduction and '$4.5 trillion' economic opportunities, but emphasizes 'realizing this potential requires overcoming substantial inertia in manufacturing systems, consumer expectations, and regulatory environments.' This heading captures both the promise and prerequisites emphasized in the conclusion.",
+                        "evidenceQuote": "The circular economy represents a fundamental reimagining... could reduce global greenhouse gas emissions by 39 percent by 2050... However, realizing this potential requires overcoming substantial inertia"
+                      }
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "type": "true-false-not-given",
+                    "title": "Questions 6-10",
+                    "instructions": "Do the following statements agree with the views of the writer in the Reading Passage? Write YES if the statement agrees with the views of the writer, NO if the statement contradicts the views of the writer, NOT GIVEN if it is impossible to say what the writer thinks about this.",
+                    "questions": [
+                      {
+                        "id": 6,
+                        "questionText": "The writer believes that conventional linear production systems demonstrate considerable material wastefulness throughout manufacturing and consumption processes.",
+                        "correctAnswer": "YES",
+                        "justification": "The writer explicitly evaluates the linear economy's inefficiency in Paragraph 2, stating only 32% of materials remain in products while 68% 'becomes waste.' The characterization of households discarding 'one-third of all food purchased' further supports the view that linear systems are wasteful. This represents the writer's critical evaluation, not just neutral fact-reporting.",
+                        "evidenceQuote": "The linear economy's inefficiency becomes apparent when considering material flows... only 32 percent of materials used actually end up in finished products... the remaining 68 percent becomes waste"
+                      },
+                      {
+                        "id": 7,
+                        "questionText": "According to Dr. Walter Stahel, prolonging the operational lifespan of manufactured goods represents the most effective circular economy strategy.",
+                        "correctAnswer": "YES",
+                        "justification": "The passage directly attributes this view to Dr. Stahel in Paragraph 2, stating he 'argues that extending product lifespans represents the most effective approach.' The statement accurately paraphrases 'extending product lifespans' as 'prolonging the operational lifespan' and 'most effective approach' as 'most effective strategy,' correctly attributing this evaluative claim to Stahel rather than the writer.",
+                        "evidenceQuote": "Dr. Walter Stahel... argues that extending product lifespans represents the most effective approach, as it reduces both the environmental impact of manufacturing new items and the waste generated from disposal"
+                      },
+                      {
+                        "id": 8,
+                        "questionText": "The writer suggests that implementing circular economy principles presents relatively straightforward challenges that businesses can easily overcome.",
+                        "correctAnswer": "NO",
+                        "justification": "The writer explicitly contradicts this view in Paragraph 4, stating 'circular economy adoption faces significant obstacles, particularly regarding economic viability and scalability.' The writer emphasizes collection/processing costs exceeding virgin materials, declining circularity rates in Netherlands, consumer behavior barriers, and 'coordinated action across entire value chains' being 'complex and dependent on partnerships that can be difficult to establish.' This directly opposes the statement's claim of 'straightforward' and 'easily overcome' challenges.",
+                        "evidenceQuote": "circular economy adoption faces significant obstacles... Collecting, sorting, and processing used materials often costs more than extracting virgin resources... implementation complex and dependent on partnerships that can be difficult to establish"
+                      },
+                      {
+                        "id": 9,
+                        "questionText": "In the writer's view, incremental improvements to existing recycling programs constitute an adequate approach to achieving circular economy benefits.",
+                        "correctAnswer": "NO",
+                        "justification": "The writer explicitly contradicts this in Paragraph 5, stating 'The circular economy represents a fundamental reimagining of industrial systems rather than mere incremental improvement in recycling rates.' The writer emphasizes that realizing potential 'requires overcoming substantial inertia in manufacturing systems, consumer expectations, and regulatory environments,' indicating transformative rather than incremental change is needed. This directly opposes the statement's framing of incremental recycling improvements as adequate.",
+                        "evidenceQuote": "The circular economy represents a fundamental reimagining of industrial systems rather than mere incremental improvement in recycling rates"
+                      },
+                      {
+                        "id": 10,
+                        "questionText": "The writer believes that product repair and refurbishment strategies deliver greater environmental benefits than materials recycling approaches within circular economy frameworks.",
+                        "correctAnswer": "NOT GIVEN",
+                        "justification": "While the writer discusses circular economy's 'three core strategies: maintaining products in use for longer periods through durability and repair; circulating materials at their highest value through reuse and refurbishment; and regenerating natural systems' (Paragraph 2), no comparative evaluation of their relative environmental effectiveness is expressed. Dr. Stahel's view about extending lifespans being 'most effective' refers to lifespan extension generally, not specifically repair vs. recycling. The writer presents these as complementary components of circularity without ranking their environmental merits.",
+                        "evidenceQuote": "three core strategies: maintaining products in use for longer periods through durability and repair; circulating materials at their highest value through reuse and refurbishment; and regenerating natural systems"
+                      }
+                    ]
+                  },
+                  {
+                  "id": 3,
+                  "type": "sentence-completion",
+                  "title": "Questions 11-15",
+                  "word_limit": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+                  "instructions": "Complete the sentences below. Choose NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.",
+                  "questions": [
+                    {
+                      "id": 11,
+                      "questionText": "Global waste generation reaches approximately _____ annually.",
+                      "correctAnswer": "2.01 billion tonnes",
+                      "alternativeAnswers": ["2.01 billion tonnes", "2.01 billion"],
+                      "evidenceQuote": "global waste production reaching approximately 2.01 billion tonnes annually according to World Bank estimates"
+                    },
+                    {
+                      "id": 12,
+                      "questionText": "According to _____, prolonging product lifespans is the most effective approach.",
+                      "correctAnswer": "Dr. Stahel",
+                      "alternativeAnswers": ["Dr. Stahel", "Walter Stahel", "Dr. Walter Stahel"],
+                      "evidenceQuote": "Dr. Walter Stahel ... argues that extending product lifespans represents the most effective approach"
+                    },
+                    {
+                      "id": 13,
+                      "questionText": "Interface and Philips use _____ arrangements where companies retain ownership.",
+                      "correctAnswer": "product-as-service",
+                      "alternativeAnswers": ["product-as-service"],
+                      "evidenceQuote": "Product-as-service arrangements, where companies retain ownership of goods and sell access rather than ownership"
+                    },
+                    {
+                      "id": 14,
+                      "questionText": "The primary obstacle relates to _____ and scalability issues.",
+                      "correctAnswer": "economic viability",
+                      "alternativeAnswers": ["economic viability"],
+                      "evidenceQuote": "obstacles, particularly regarding economic viability and scalability"
+                    },
+                    {
+                      "id": 15,
+                      "questionText": "Circular strategies could generate opportunities worth approximately _____ through new business models.",
+                      "correctAnswer": "$4.5 trillion",
+                      "alternativeAnswers": ["$4.5 trillion", "4.5 trillion"],
+                      "evidenceQuote": "opportunities worth approximately $4.5 trillion"
+                    }
+                  ]
+                }
+                ]
+            },
+            {
+                "id": 2,
+                "title": "The Montessori Method: A Century of Alternative Education",
+                "level": "academic",
+                "estimatedTime": 20,
+                "paragraphs": [
+                  {
+                    "id": "P1",
+                    "text": "When Italian physician Maria Montessori opened her first Casa dei Bambini (Children's House) in a Roman tenement district in 1907, she initiated an educational revolution that would eventually influence pedagogical practices worldwide. What began as an experimental program for disadvantaged children has evolved into a comprehensive educational philosophy embraced by approximately 20,000 schools across more than 110 countries. The Montessori method's core premise—that children possess an innate drive toward self-directed learning when provided with appropriately structured environments—challenged prevailing assumptions about childhood education that emphasized rote memorization and teacher-centered instruction. While Montessori education has attracted both passionate advocates and vocal critics over its century-long history, its fundamental principles continue to shape contemporary debates about optimal learning conditions, the role of play in cognitive development, and the balance between structure and freedom in educational settings. Understanding the method's enduring appeal requires examining both its philosophical foundations and the empirical evidence regarding its educational outcomes."
+                  },
+                  {
+                    "id": "P2",
+                    "text": "Montessori pedagogy rests on several interconnected principles that distinguish it from conventional educational approaches. Central to the method is the concept of the 'prepared environment'—carefully designed spaces equipped with specialized materials that enable children to explore concepts independently at their own pace. Rather than organizing students by chronological age into single-year cohorts, Montessori classrooms typically group children in three-year spans (such as ages 3-6, 6-9, or 9-12), allowing younger students to learn from older peers while older children reinforce knowledge through teaching. The educator's role shifts from primary knowledge transmitter to observant facilitator, a function Montessori termed the 'directress,' guiding rather than directing student activity. Dr. Angeline Lillard's research at the University of Virginia has documented that this approach cultivates what psychologists call 'executive function'—the cognitive processes governing self-regulation, planning, and sustained attention. Her 2006 study comparing Montessori and conventional school students found that Montessori-educated children demonstrated statistically significant advantages in social skills and executive function by age five. Perhaps most distinctively, Montessori environments eliminate traditional grade-based assessments and competitive rankings, instead employing individualized observation and portfolio documentation to track developmental progression. This emphasis on intrinsic motivation rather than external rewards reflects Montessori's belief that authentic learning emerges from curiosity and personal interest rather than from fear of failure or desire for recognition."
+                  },
+                  {
+                    "id": "P3",
+                    "text": "The concrete manifestation of Montessori philosophy appears in the distinctive didactic materials that populate these learning environments. These carefully sequenced apparatus—ranging from the iconic 'pink tower' (ten progressively sized pink cubes) to the 'movable alphabet' for early literacy—embody what Montessori called 'materialized abstractions,' allowing children to manipulate physical objects representing mathematical, linguistic, or scientific concepts. Each material incorporates a 'control of error,' a self-correcting feature enabling children to recognize mistakes independently without teacher intervention. For instance, the cylindrical blocks fit into corresponding holes only when correctly matched by dimension, providing immediate tactile feedback. Research conducted by Professor Jeffrey Shankland at Northwestern University examined neurological responses to Montessori materials using functional MRI technology, revealing that hands-on manipulation of these concrete materials activated brain regions associated with both sensory processing and abstract reasoning simultaneously. This finding supports Montessori's century-old assertion that sensorial experience forms the foundation for conceptual understanding. The materials also facilitate what contemporary educators term 'differentiated instruction'—the same apparatus can challenge children at varying developmental stages, with a three-year-old using the pink tower to explore size relationships while a five-year-old employs it for mathematical calculations involving cubic volume. Interestingly, many Montessori materials have remained essentially unchanged since their early twentieth-century design, though some contemporary schools have introduced digital adaptations that Montessori purists regard as antithetical to the method's emphasis on tangible, multi-sensory engagement."
+                  },
+                  {
+                    "id": "P4",
+                    "text": "Empirical investigations into Montessori education's efficacy have yielded mixed but generally positive findings, though methodological challenges complicate definitive conclusions. A comprehensive meta-analysis published in 2017 in the Review of Educational Research synthesized results from 32 studies comparing Montessori and conventional education outcomes. The analysis indicated that Montessori students demonstrated modest but consistent advantages in academic achievement, particularly in mathematics and literacy, with effect sizes averaging 0.17 standard deviations—statistically significant though not dramatic. More pronounced differences emerged in non-academic domains: Montessori-educated children scored notably higher on measures of social development, creativity, and sense of academic competence. However, researchers acknowledge that selection bias potentially inflates these advantages, as families choosing Montessori schools often differ systematically from the general population in socioeconomic status and educational values. Dr. Kevin Rathunde's longitudinal study tracking students from ages 11-14 found that Montessori middle school students reported higher levels of intrinsic motivation and 'flow' states—psychological absorption in challenging activities—compared to traditional school peers, though standardized test score differences diminished during adolescence. Critics of Montessori education argue that its deemphasized direct instruction may disadvantage students from less educationally supportive home environments, while the method's effectiveness appears contingent on faithful implementation of its principles—a factor that varies considerably among schools claiming Montessori affiliation, as the term 'Montessori' remains legally unprotected and subject to inconsistent application. Some research suggests that hybrid approaches incorporating Montessori principles alongside more structured curriculum guidance may optimize outcomes for diverse student populations."
+                  },
+                  {
+                    "id": "P5",
+                    "text": "More than a century after its inception, the Montessori method's influence extends well beyond schools explicitly bearing its name, having shaped mainstream educational practices in ways often unacknowledged. Concepts now commonplace in early childhood education—learning centers, manipulative materials, mixed-age classrooms, and child-sized furniture—originated in or were popularized by Montessori pedagogy. Contemporary educational movements emphasizing student agency, personalized learning pathways, and competency-based rather than time-based progression echo Montessori principles, even when practitioners remain unaware of this historical lineage. Professor Jacqueline Cossentino at the University of Maryland argues that Montessori's most significant contribution lies not in specific techniques but in fundamentally reconceptualizing childhood as a period of intense intellectual construction rather than passive reception. Yet challenges persist: scaling Montessori approaches to public education systems constrained by standardized testing requirements and limited resources for specialized materials remains difficult, while the method's individualized nature complicates outcome measurement using conventional educational metrics. As educational systems worldwide grapple with preparing students for rapidly changing economic and technological landscapes, Montessori's emphasis on cultivating intrinsic motivation, adaptability, and self-directed learning may prove increasingly relevant—or alternatively, its century-old framework may require substantial adaptation to address contemporary educational imperatives."
+                  }
+                ],
+                "questions": [
+                    {
+                        "id": 4,
+                        "type": "true-false-not-given",
+                        "title": "Questions 16-20",
+                        "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
+                        "questions": [
+                          {
+                            "id": 16,
+                            "questionText": "Montessori educational settings organize students into multi-year age groupings spanning three years rather than separating them by single-year chronological age cohorts.",
+                            "correctAnswer": "TRUE",
+                            "justification": "Paragraph 2 states 'Montessori classrooms typically group children in three-year spans (such as ages 3-6, 6-9, or 9-12)' in contrast to conventional 'single-year cohorts.' The statement accurately paraphrases 'classrooms' as 'educational settings,' 'group children' as 'organize students,' and 'three-year spans' as 'multi-year age groupings spanning three years.'",
+                            "evidenceQuote": "Montessori classrooms typically group children in three-year spans (such as ages 3-6, 6-9, or 9-12)"
+                          },
+                          {
+                            "id": 17,
+                            "questionText": "Research conducted at the University of Virginia demonstrated that Montessori-educated children exhibited superior social capabilities and self-regulatory skills by age five.",
+                            "correctAnswer": "TRUE",
+                            "justification": "Paragraph 2 explicitly states 'Her 2006 study comparing Montessori and conventional school students found that Montessori-educated children demonstrated statistically significant advantages in social skills and executive function by age five.' The statement paraphrases 'social skills' as 'social capabilities' and 'executive function' (which governs self-regulation per Paragraph 2) as 'self-regulatory skills,' while 'exhibited superior' paraphrases 'demonstrated advantages.'",
+                            "evidenceQuote": "Montessori-educated children demonstrated statistically significant advantages in social skills and executive function by age five"
+                          },
+                          {
+                            "id": 18,
+                            "questionText": "The Montessori educational approach is currently implemented in fewer than one hundred countries worldwide.",
+                            "correctAnswer": "FALSE",
+                            "justification": "Paragraph 1 states the method has been 'embraced by approximately 20,000 schools across more than 110 countries.' The statement claims 'fewer than one hundred countries' when the passage explicitly states 'more than 110 countries.' The actual figure (110+) contradicts the statement's claim of fewer than 100.",
+                            "evidenceQuote": "approximately 20,000 schools across more than 110 countries"
+                          },
+                          {
+                            "id": 19,
+                            "questionText": "A comprehensive meta-analysis published in 2017 indicated that Montessori students demonstrated academic achievement advantages exceeding half a standard deviation compared to conventional students.",
+                            "correctAnswer": "FALSE",
+                            "justification": "Paragraph 4 states the 2017 meta-analysis found 'effect sizes averaging 0.17 standard deviations' for academic achievement. The statement claims advantages 'exceeding half a standard deviation' (0.5), which is approximately three times larger than the actual figure of 0.17. The passage explicitly characterizes these as 'modest but consistent advantages,' contradicting the statement's implication of substantially larger effects.",
+                            "evidenceQuote": "effect sizes averaging 0.17 standard deviations—statistically significant though not dramatic"
+                          },
+                          {
+                            "id": 20,
+                            "questionText": "Research evidence indicates that Montessori education produces stronger developmental benefits for early childhood students (ages 3-6) than for adolescents.",
+                            "correctAnswer": "NOT GIVEN",
+                            "justification": "While the passage mentions research findings for different age groups—Lillard's study showing advantages 'by age five' (Paragraph 2) and Rathunde's study of ages 11-14 showing higher intrinsic motivation though 'standardized test score differences diminished during adolescence' (Paragraph 4)—no direct comparison is made evaluating which age group experiences stronger overall benefits. This would require explicit comparative analysis across age ranges that the passage does not provide.",
+                            "evidenceQuote": "Montessori-educated children demonstrated...advantages...by age five...Montessori middle school students reported higher levels of intrinsic motivation...though standardized test score differences diminished during adolescence"
+                          }
+                        ]
+                      },
+                      {
+                        "id": 5,
+                        "type": "matching-sentence-endings",
+                        "title": "Questions 21-25",
+                        "instructions": "Complete each sentence with the correct ending, A–H.",
+                        "sentence_endings": [
+                          {
+                            "letter": "A",
+                            "text": "exhibited superior performance in social competencies and self-regulatory abilities by age five."
+                          },
+                          {
+                            "letter": "B",
+                            "text": "organizing students into single-year age cohorts for optimal peer interaction."
+                          },
+                          {
+                            "letter": "C",
+                            "text": "allow children to identify errors autonomously without requiring educator guidance."
+                          },
+                          {
+                            "letter": "D",
+                            "text": "have remained completely unchanged since their original early twentieth-century design."
+                          },
+                          {
+                            "letter": "E",
+                            "text": "analyzed findings from 32 comparative studies of Montessori and traditional educational approaches."
+                          },
+                          {
+                            "letter": "F",
+                            "text": "was established in a Roman tenement district in 1907."
+                          },
+                          {
+                            "letter": "G",
+                            "text": "involved reframing childhood as a phase of active cognitive development rather than passive learning."
+                          },
+                          {
+                            "letter": "H",
+                            "text": "that standardized testing produces more reliable measures of student progress."
+                          }
+                        ],
+                        "questions": [
+                          {
+                            "id": 21,
+                            "questionText": "Maria Montessori's first educational facility for children",
+                            "correctAnswer": "F",
+                            "justification": "Paragraph 1 explicitly states 'Maria Montessori opened her first Casa dei Bambini (Children's House) in a Roman tenement district in 1907.' Ending F paraphrases this, using 'was established' for 'opened' and 'facility' for 'Casa dei Bambini,' accurately capturing the location and date.",
+                            "evidenceQuote": "Maria Montessori opened her first Casa dei Bambini (Children's House) in a Roman tenement district in 1907"
+                          },
+                          {
+                            "id": 22,
+                            "questionText": "The self-correcting features built into Montessori didactic materials",
+                            "correctAnswer": "C",
+                            "justification": "Paragraph 3 states 'Each material incorporates a 'control of error,' a self-correcting feature enabling children to recognize mistakes independently without teacher intervention.' Ending C paraphrases this purpose, using 'allow' for 'enabling' and 'identify errors autonomously' for 'recognize mistakes independently.'",
+                            "evidenceQuote": "a self-correcting feature enabling children to recognize mistakes independently without teacher intervention"
+                          },
+                          {
+                            "id": 23,
+                            "questionText": "Dr. Angeline Lillard's research comparing educational approaches demonstrated that Montessori students",
+                            "correctAnswer": "A",
+                            "justification": "Paragraph 2 reports 'Her 2006 study comparing Montessori and conventional school students found that Montessori-educated children demonstrated statistically significant advantages in social skills and executive function by age five.' Ending A paraphrases this, using 'exhibited superior performance' for 'demonstrated advantages' and 'self-regulatory abilities' for 'executive function.'",
+                            "evidenceQuote": "Montessori-educated children demonstrated statistically significant advantages in social skills and executive function by age five"
+                          },
+                          {
+                            "id": 24,
+                            "questionText": "The comprehensive 2017 meta-analysis of Montessori education effectiveness",
+                            "correctAnswer": "E",
+                            "justification": "Paragraph 4 states 'A comprehensive meta-analysis published in 2017 in the Review of Educational Research synthesized results from 32 studies comparing Montessori and conventional education outcomes.' Ending E accurately paraphrases this, using 'analyzed findings' for 'synthesized results' and 'comparative studies' for 'studies comparing.'",
+                            "evidenceQuote": "A comprehensive meta-analysis published in 2017...synthesized results from 32 studies comparing Montessori and conventional education"
+                          },
+                          {
+                            "id": 25,
+                            "questionText": "Professor Cossentino argues that Montessori's primary legacy",
+                            "correctAnswer": "G",
+                            "justification": "Paragraph 5 states 'Professor Jacqueline Cossentino...argues that Montessori's most significant contribution lies...in fundamentally reconceptualizing childhood as a period of intense intellectual construction rather than passive reception.' Ending G paraphrases this complex idea, using 'involved reframing' for 'reconceptualizing' and 'active cognitive development' for 'intense intellectual construction.'",
+                            "evidenceQuote": "Montessori's most significant contribution lies...in fundamentally reconceptualizing childhood as a period of intense intellectual construction rather than passive reception"
+                          }
+                        ]
+                      },
+{
+  "id": 6,
+  "type": "short-answer",
+  "title": "Questions 26-28",
+  "instructions": "Answer the questions below. Choose NO MORE THAN THREE WORDS AND/OR A NUMBER from the passage for each answer.",
+  "questions": [
+    {
+      "id": 26,
+      "questionText": "In what year did Maria Montessori open her first Casa dei Bambini?",
+      "correctAnswer": "1907",
+      "alternativeAnswers": ["1907"],
+      "justification": "Paragraph 1 explicitly states 'Maria Montessori opened her first Casa dei Bambini (Children's House) in a Roman tenement district in 1907.' The year 1907 is the exact answer from the passage.",
+      "evidenceQuote": "Maria Montessori opened her first Casa dei Bambini (Children's House) in a Roman tenement district in 1907"
+    },
+    {
+      "id": 27,
+      "questionText": "What term did Montessori use to describe the educator's role in her educational method?",
+      "correctAnswer": "directress",
+      "alternativeAnswers": ["directress", "the directress"],
+      "justification": "Paragraph 2 states 'The educator's role shifts from primary knowledge transmitter to observant facilitator, a function Montessori termed the 'directress.'' The question paraphrases this description, and 'directress' is the exact term from the passage. Both with and without article are acceptable.",
+      "evidenceQuote": "a function Montessori termed the 'directress,' guiding rather than directing student activity"
+    },
+    {
+      "id": 28,
+      "questionText": "How many comparative studies were analyzed in the 2017 meta-analysis of Montessori education?",
+      "correctAnswer": "32",
+      "alternativeAnswers": ["32", "32 studies"],
+      "justification": "Paragraph 4 states 'A comprehensive meta-analysis published in 2017 in the Review of Educational Research synthesized results from 32 studies comparing Montessori and conventional education outcomes.' Answer uses exact number from passage; '32 studies' also acceptable.",
+      "evidenceQuote": "synthesized results from 32 studies comparing Montessori and conventional education outcomes"
+    }
+  ]
+}
+                ]
+              },
+              {
+                "id": 3,
+                "title": "Neuromarketing: The Science of Consumer Choice",
+                "level": "academic",
+                "estimatedTime": 20,
+                "paragraphs": [
+                  {
+                    "id": "P1",
+                    "text": "Traditional market research has long relied on consumer self-reporting—surveys, focus groups, and interviews that assume people can accurately articulate their purchasing motivations. Yet mounting evidence suggests that consumers themselves often cannot explain why they prefer one product over another, as approximately 95 percent of purchasing decisions occur in the subconscious mind, beyond conscious introspection. Neuromarketing, which applies neuroscience methodologies to decode consumer behavior, has emerged as a controversial yet increasingly influential discipline that promises to reveal these hidden drivers of choice. By employing technologies such as functional magnetic resonance imaging (fMRI) and electroencephalography (EEG) to observe brain activity during exposure to marketing stimuli, researchers can identify neural responses that correlate with preference, emotional engagement, and purchase intent. Understanding neuromarketing's capabilities and limitations requires examining both the technological mechanisms underlying these insights and the ethical debates surrounding their commercial application."
+                  },
+                  {
+                    "id": "P2",
+                    "text": "Functional magnetic resonance imaging represents neuromarketing's most sophisticated but also most resource-intensive investigative tool, measuring blood oxygenation changes that indicate neural activity in specific brain regions. When participants view advertisements or product packaging while inside an fMRI scanner, researchers can observe activation patterns in areas associated with reward anticipation (ventral striatum), emotional processing (amygdala), and memory formation (hippocampus). Dr. Brian Knutson's pioneering research at Stanford University demonstrated that nucleus accumbens activation—a brain region linked to anticipated pleasure—predicted actual product purchases with 67 percent accuracy, substantially exceeding the 52 percent accuracy achieved through conventional self-reported preference surveys. This predictive advantage has attracted corporate interest: a 2019 study published in the Journal of Marketing Research found that brands incorporating fMRI-derived insights into campaign development experienced average sales increases of 18 percent compared to control campaigns using traditional research methodologies. However, fMRI's practical applications remain constrained by significant limitations: scanning sessions cost between $500 and $1,200 per hour, require participants to remain motionless inside confined scanner environments, and measure brain activity with temporal resolution of only 2-3 seconds, too slow to capture rapid attentional shifts crucial for advertisement effectiveness. These constraints have prevented fMRI from scaling beyond high-value marketing decisions—typically limited to major brand repositioning, product launches exceeding $10 million in budget, or Super Bowl advertising campaigns where individual commercials cost upward of $7 million for thirty seconds of airtime. Consequently, most routine neuromarketing applications employ more accessible technologies despite their reduced neurological precision."
+                  },
+                  {
+                    "id": "P3",
+                    "text": "Electroencephalography has become neuromarketing's workhorse methodology, offering portability, real-time measurement, and costs approximately one-tenth those of fMRI while sacrificing spatial resolution for temporal precision. EEG devices—ranging from clinical 128-electrode systems to commercial 14-electrode headsets marketed to research firms—detect electrical activity across the scalp, measuring neural oscillations associated with attention, emotional valence, and cognitive workload. Particular interest has focused on 'approach-withdrawal' asymmetries in frontal brain regions: relatively greater left-frontal activation correlates with positive emotional responses and approach motivation, while right-frontal dominance indicates withdrawal or aversion. Professor Ale Smidts at Rotterdam School of Management demonstrated this principle's commercial value when his team used EEG to evaluate television commercials for a major beverage company. Advertisements eliciting sustained left-frontal asymmetry generated brand preference increases of 23 percent in subsequent taste tests despite participants being unable to consciously recall what they found appealing about the commercials. The methodology's millisecond-level temporal resolution proves particularly valuable for optimizing dynamic stimuli: researchers can identify precisely which moments in a 30-second advertisement trigger attention lapses, emotional peaks, or memory encoding—insights impossible to obtain through post-exposure interviews where memories have already been consolidated and rationalized. Nielsen Consumer Neuroscience, established in 2011, now operates facilities across fifteen countries offering standardized EEG-based advertising pretesting, claiming that campaigns optimized using their protocols achieve 10-15 percent higher purchase intent scores compared to conventionally tested alternatives. However, EEG's popularity has also generated concerns about methodological rigor, as consumer-grade devices lack the signal quality of research-grade equipment, and interpretation of EEG data requires sophisticated signal processing that some commercial vendors may oversimplify."
+                  },
+                  {
+                    "id": "P4",
+                    "text": "Real-world applications demonstrate both neuromarketing's commercial potential and its capacity to generate public unease about manipulation. When Frito-Lay employed neuromarketing research in 2008 to redesign packaging for its healthier snack line, neuroimaging revealed that matte bags with pictures of ingredients activated brain regions associated with health consciousness more effectively than shiny bags with product photos. The subsequent packaging redesign, informed by these neural insights, contributed to a 12 percent sales increase in the reformulated product line. More controversially, a leaked 2016 report suggested that political campaigns had begun utilizing neuroscience consultancies to optimize campaign advertisements, though the extent of such applications remains largely undisclosed due to proprietary concerns. These developments have intensified ethical scrutiny. Critics argue that neuromarketing threatens consumer autonomy by identifying and exploiting subconscious vulnerabilities that individuals cannot consciously defend against. Professor Joseph Turow at the University of Pennsylvania contends that unlike traditional marketing, which consumers recognize and can rationally evaluate, neuromarketing-optimized stimuli may bypass critical faculties entirely, raising questions about informed consent and cognitive liberty. Industry advocates counter that neuromarketing merely improves efficiency of persuasion already omnipresent in commercial environments, and that neurological insights help create genuinely appealing products rather than compelling purchases of inferior goods. Several European nations, including France, have implemented restrictions: French law prohibits using brain imaging for non-medical purposes without explicit consent, effectively banning covert neuromarketing research, though enforcement mechanisms remain underdeveloped and companies can easily conduct studies in less regulated jurisdictions."
+                  },
+                  {
+                    "id": "P5",
+                    "text": "As neuroimaging technologies continue advancing while simultaneously becoming more affordable and accessible, neuromarketing's influence on commercial decision-making appears likely to expand regardless of ethical concerns. Emerging technologies including functional near-infrared spectroscopy (fNIRS) and eye-tracking integrated with pupillometry promise brain-based consumer insights at price points enabling routine application even for modest marketing budgets. Dr. Uma Karmarkar at Harvard Business School projects that within a decade, real-time neural feedback during online shopping could enable 'adaptive' marketing that adjusts product presentations dynamically based on individual users' moment-to-moment brain states, though such applications remain speculative. The trajectory of neuromarketing ultimately depends less on technological capabilities than on evolving regulatory frameworks and public attitudes toward neuroscience-informed persuasion. Whether societies embrace these tools as benign efficiency improvements or restrict them as threats to consumer autonomy will determine whether neuromarketing represents merely an incremental enhancement of existing marketing practices or a qualitative shift in the relationship between commercial interests and human decision-making. What remains evident is that the traditional assumption underlying market research—that consumers can reliably report their preferences—has been fundamentally challenged, forcing reconsideration of how commercial societies should balance business interests against emerging understandings of human cognitive architecture."
+                  }
+                ],
+                "questions": [
+                  {
+                    "id": 7,
+                    "type": "matching-headings",
+                    "title": "Questions 29-33",
+                    "instructions": "The reading passage has five paragraphs, A-E. Choose the correct heading for paragraphs A-E from the list of headings below. Write the correct number, i-vii, in boxes 29-33 on your answer sheet.",
+                    
+                    "questions": [
+                      {
+                        "id": 29,
+                        "questionText": "Paragraph A",
+                        "options": [
+                          "Portable methodology enabling routine commercial neuromarketing applications",
+                          "The superior prediction accuracy of neuroimaging compared to surveys",
+                          "Real-world applications raising ethical questions about consumer manipulation",
+                          "Advanced neuroimaging technology constrained by cost and practical limitations",
+                          "Subconscious decision-making and the emergence of brain-based consumer research",
+                          "Future developments dependent on regulatory frameworks rather than technological advances",
+                          "The neuroscience of advertising and product design",
+                          "Nielsen Consumer Neuroscience's expansion across fifteen countries"
+                        ],
+                        "correctAnswer": "Subconscious decision-making and the emergence of brain-based consumer research",
+                        "justification": "Paragraph A introduces the limitations of traditional market research (which 'assume people can accurately articulate their purchasing motivations') and contrasts this with the finding that '95 percent of purchasing decisions occur in the subconscious mind.' It then introduces neuromarketing as the solution, which 'applies neuroscience methodologies to decode consumer behavior' using fMRI and EEG. This heading accurately captures both themes: the subconscious nature of decisions and the emergence of neuroscience-based approaches.",
+                        "evidenceQuote": "approximately 95 percent of purchasing decisions occur in the subconscious mind, beyond conscious introspection. Neuromarketing, which applies neuroscience methodologies to decode consumer behavior, has emerged as a controversial yet increasingly influential discipline"
+                      },
+                      {
+                        "id": 30,
+                        "questionText": "Paragraph B",
+                        "options": [
+                          "Portable methodology enabling routine commercial neuromarketing applications",
+                          "The superior prediction accuracy of neuroimaging compared to surveys",
+                          "Real-world applications raising ethical questions about consumer manipulation",
+                          "Advanced neuroimaging technology constrained by cost and practical limitations",
+                          "Subconscious decision-making and the emergence of brain-based consumer research",
+                          "Future developments dependent on regulatory frameworks rather than technological advances",
+                          "The neuroscience of advertising and product design",
+                          "Nielsen Consumer Neuroscience's expansion across fifteen countries"
+                        ],
+                        "correctAnswer": "Advanced neuroimaging technology constrained by cost and practical limitations",
+                        "justification": "Paragraph B opens by describing fMRI as 'neuromarketing's most sophisticated but also most resource-intensive investigative tool' and then extensively details its limitations: costs of '$500 to $1,200 per hour,' slow 'temporal resolution of only 2-3 seconds,' and practical constraints restricting use to 'high-value marketing decisions.' The paragraph concludes that these limitations have 'prevented fMRI from scaling' and forced 'most routine neuromarketing applications' to use other technologies. This heading accurately captures the paragraph's dual emphasis on sophistication and constraints.",
+                        "evidenceQuote": "fMRI's practical applications remain constrained by significant limitations: scanning sessions cost between $500 and $1,200 per hour...These constraints have prevented fMRI from scaling beyond high-value marketing decisions"
+                      },
+                      {
+                        "id": 31,
+                        "questionText": "Paragraph C",
+                        "options": [
+                          "Portable methodology enabling routine commercial neuromarketing applications",
+                          "The superior prediction accuracy of neuroimaging compared to surveys",
+                          "Real-world applications raising ethical questions about consumer manipulation",
+                          "Advanced neuroimaging technology constrained by cost and practical limitations",
+                          "Subconscious decision-making and the emergence of brain-based consumer research",
+                          "Future developments dependent on regulatory frameworks rather than technological advances",
+                          "The neuroscience of advertising and product design",
+                          "Nielsen Consumer Neuroscience's expansion across fifteen countries"
+                        ],
+                        "correctAnswer": "Portable methodology enabling routine commercial neuromarketing applications",
+                        "justification": "Paragraph C explicitly states EEG 'has become neuromarketing's workhorse methodology' due to 'portability, real-time measurement, and costs approximately one-tenth those of fMRI.' The paragraph emphasizes EEG's practical advantages for widespread use: Nielsen operates 'facilities across fifteen countries offering standardized EEG-based advertising pretesting,' and the methodology is used for routine applications. This heading accurately captures the paragraph's focus on practical accessibility.",
+                        "evidenceQuote": "Electroencephalography has become neuromarketing's workhorse methodology, offering portability, real-time measurement, and costs approximately one-tenth those of fMRI"
+                      },
+                      {
+                        "id": 32,
+                        "questionText": "Paragraph D",
+                        "options": [
+                          "Portable methodology enabling routine commercial neuromarketing applications",
+                          "The superior prediction accuracy of neuroimaging compared to surveys",
+                          "Real-world applications raising ethical questions about consumer manipulation",
+                          "Advanced neuroimaging technology constrained by cost and practical limitations",
+                          "Subconscious decision-making and the emergence of brain-based consumer research",
+                          "Future developments dependent on regulatory frameworks rather than technological advances",
+                          "The neuroscience of advertising and product design",
+                          "Nielsen Consumer Neuroscience's expansion across fifteen countries"
+                        ],
+                        "correctAnswer": "Real-world applications raising ethical questions about consumer manipulation",
+                        "justification": "Paragraph D opens stating 'Real-world applications demonstrate both neuromarketing's commercial potential and its capacity to generate public unease about manipulation,' then provides Frito-Lay (12% sales increase) and political campaign examples before pivoting to 'These developments have intensified ethical scrutiny.' The paragraph extensively discusses critics arguing neuromarketing 'threatens consumer autonomy by identifying and exploiting subconscious vulnerabilities' and regulatory responses like French restrictions. This heading captures both key themes.",
+                        "evidenceQuote": "Real-world applications demonstrate both neuromarketing's commercial potential and its capacity to generate public unease about manipulation...Critics argue that neuromarketing threatens consumer autonomy"
+                      },
+                      {
+                        "id": 33,
+                        "questionText": "Paragraph E",
+                        "options": [
+                          "Portable methodology enabling routine commercial neuromarketing applications",
+                          "The superior prediction accuracy of neuroimaging compared to surveys",
+                          "Real-world applications raising ethical questions about consumer manipulation",
+                          "Advanced neuroimaging technology constrained by cost and practical limitations",
+                          "Subconscious decision-making and the emergence of brain-based consumer research",
+                          "Future developments dependent on regulatory frameworks rather than technological advances",
+                          "The neuroscience of advertising and product design",
+                          "Nielsen Consumer Neuroscience's expansion across fifteen countries"
+                        ],
+                        "correctAnswer": "Future developments dependent on regulatory frameworks rather than technological advances",
+                        "justification": "Paragraph E explicitly states 'The trajectory of neuromarketing ultimately depends less on technological capabilities than on evolving regulatory frameworks and public attitudes toward neuroscience-informed persuasion.' While the paragraph mentions emerging technologies (fNIRS, adaptive marketing), it emphasizes these are becoming available but that 'Whether societies embrace these tools...or restrict them...will determine whether neuromarketing represents...incremental enhancement...or qualitative shift.' This heading captures the central argument.",
+                        "evidenceQuote": "The trajectory of neuromarketing ultimately depends less on technological capabilities than on evolving regulatory frameworks and public attitudes toward neuroscience-informed persuasion"
+                      }
+                    ]
+                  },
+                  {
+                    "id": 8,
+                    "type": "multiple-choice",
+                    "title": "Questions 34-37",
+                    "instructions": "Choose the correct letter, A, B, C or D.",
+                    "questions": [
+                      {
+                        "id": 34,
+                        "questionText": "According to paragraph 2, what is the primary constraint that limits fMRI's widespread application in routine marketing research?",
+                        "options": [
+                          "The inability to measure brain activity in multiple regions simultaneously",
+                          "High operational costs and impractical scanning environment requirements",
+                          "Inadequate prediction accuracy compared to traditional survey methodologies",
+                          "Insufficient spatial resolution for identifying specific neural activation patterns"
+                        ],
+                        "correctAnswer": "High operational costs and impractical scanning environment requirements",
+                        "justification": "Paragraph 2 explicitly states that fMRI's 'practical applications remain constrained by significant limitations: scanning sessions cost between $500 and $1,200 per hour, require participants to remain motionless inside confined scanner environments.' These constraints 'have prevented fMRI from scaling beyond high-value marketing decisions.' The correct answer paraphrases 'cost' and 'confined scanner environments' as 'high operational costs and impractical scanning environment requirements.'",
+                        "evidenceQuote": "scanning sessions cost between $500 and $1,200 per hour, require participants to remain motionless inside confined scanner environments...These constraints have prevented fMRI from scaling beyond high-value marketing decisions"
+                      },
+                      {
+                        "id": 35,
+                        "questionText": "What can be inferred about EEG technology's commercial adoption in neuromarketing based on information in paragraph 3?",
+                        "options": [
+                          "Its superior spatial resolution makes it more scientifically rigorous than fMRI for consumer research",
+                          "Its accessibility and cost-effectiveness have enabled widespread implementation across the industry",
+                          "Its effectiveness has been limited primarily to beverage industry applications",
+                          "Its commercial popularity has resulted in universal methodological standardization"
+                        ],
+                        "correctAnswer": "Its accessibility and cost-effectiveness have enabled widespread implementation across the industry",
+                        "justification": "Paragraph 3 describes EEG as 'neuromarketing's workhorse methodology' due to 'portability, real-time measurement, and costs approximately one-tenth those of fMRI,' and notes that Nielsen operates 'facilities across fifteen countries offering standardized EEG-based advertising pretesting.' These details support the inference that accessibility (portability) and cost-effectiveness (one-tenth fMRI costs) have enabled widespread adoption. The answer synthesizes information from multiple sentences.",
+                        "evidenceQuote": "Electroencephalography has become neuromarketing's workhorse methodology, offering portability, real-time measurement, and costs approximately one-tenth those of fMRI...Nielsen Consumer Neuroscience...operates facilities across fifteen countries"
+                      },
+                      {
+                        "id": 36,
+                        "questionText": "What is the primary focus of paragraph 4?",
+                        "options": [
+                          "Demonstrating the commercial profitability of neuromarketing through corporate case studies",
+                          "Explaining the technical methodologies used in product packaging research",
+                          "Presenting real-world implementations alongside growing ethical concerns about manipulation",
+                          "Arguing that neuromarketing regulations should be strengthened in all jurisdictions"
+                        ],
+                        "correctAnswer": "Presenting real-world implementations alongside growing ethical concerns about manipulation",
+                        "justification": "Paragraph 4 opens stating 'Real-world applications demonstrate both neuromarketing's commercial potential and its capacity to generate public unease about manipulation,' then provides Frito-Lay and political campaign examples before pivoting to 'These developments have intensified ethical scrutiny.' The paragraph balances discussion of applications (Frito-Lay's 12% sales increase) with ethical concerns (critics arguing it 'threatens consumer autonomy,' French restrictions). This answer accurately captures this dual theme.",
+                        "evidenceQuote": "Real-world applications demonstrate both neuromarketing's commercial potential and its capacity to generate public unease about manipulation...These developments have intensified ethical scrutiny"
+                      },
+                      {
+                        "id": 37,
+                        "questionText": "According to paragraph 5, which factor will most critically determine neuromarketing's future development?",
+                        "options": [
+                          "Continued technological innovations reducing brain imaging costs and improving accuracy",
+                          "The development of real-time adaptive marketing systems using neural feedback",
+                          "Societal decisions regarding regulatory frameworks and acceptable commercial persuasion boundaries",
+                          "Widespread adoption of functional near-infrared spectroscopy in consumer research"
+                        ],
+                        "correctAnswer": "Societal decisions regarding regulatory frameworks and acceptable commercial persuasion boundaries",
+                        "justification": "Paragraph 5 explicitly states 'The trajectory of neuromarketing ultimately depends less on technological capabilities than on evolving regulatory frameworks and public attitudes toward neuroscience-informed persuasion.' The paragraph emphasizes that 'Whether societies embrace these tools...or restrict them...will determine whether neuromarketing represents...incremental enhancement...or qualitative shift.' This clearly identifies regulatory/societal factors as more critical than technology.",
+                        "evidenceQuote": "The trajectory of neuromarketing ultimately depends less on technological capabilities than on evolving regulatory frameworks and public attitudes...Whether societies embrace these tools...or restrict them...will determine"
+                      }
+                    ]
+                  },
+                  {
+  "id": 9,
+  "type": "sentence-completion",
+  "title": "Questions 38-40",
+  "word_limit": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+  "instructions": "Complete the sentence below. Choose NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer.",
+  "questions": [
+    {
+      "id": 38,
+      "gap_number": 38,
+      "questionText": "Around _____ of purchase decisions occur below awareness",
+      "correctAnswer": "95 percent",
+      "alternativeAnswers": ["95%"],
+      "evidenceQuote": "approximately 95 percent of purchasing decisions occur in the subconscious mind",
+      "answer_type": "percentage",
+      "justification": "P1 states that approximately 95 percent of purchasing decisions occur in the subconscious mind. The summary paraphrases 'in the subconscious mind' as 'below awareness' and 'purchasing decisions' as 'purchase decisions,' but answer '95 percent' is exact words from passage. '95%' is acceptable alternative format."
+    },
+    {
+      "id": 39,
+      "gap_number": 39,
+      "questionText": "Activation in the _____ predicted purchases at above-survey accuracy",
+      "correctAnswer": "nucleus accumbens",
+      "alternativeAnswers": [],
+      "evidenceQuote": "nucleus accumbens activation—a brain region linked to anticipated pleasure—predicted actual product purchases",
+      "answer_type": "name",
+      "justification": "P2 attributes predictive purchase power to 'nucleus accumbens activation.' The summary paraphrases 'actual product purchases' as 'purchases' and adds context about 'above-survey accuracy,' but answer 'nucleus accumbens' is exact from passage."
+    },
+    {
+      "id": 40,
+      "gap_number": 40,
+      "questionText": "French law requires _____ for non-medical brain imaging use",
+      "correctAnswer": "explicit consent",
+      "alternativeAnswers": [],
+      "evidenceQuote": "French law prohibits using brain imaging for non-medical purposes without explicit consent",
+      "answer_type": "noun_phrase",
+      "justification": "P4 specifies that French law prohibits using brain imaging for non-medical purposes without explicit consent. Summary paraphrases 'prohibits...without' as 'requires' and 'for non-medical purposes' as 'for non-medical brain imaging use,' but answer 'explicit consent' is exact from passage."
+    }
+  ]
+}
+            ]
+            }
+            ]
+        }
+            

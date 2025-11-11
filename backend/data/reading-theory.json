@@ -1,0 +1,1377 @@
+{
+  "questionTypes": [
+    {
+      "id": "true-false-not-given",
+      "name": "True/False/Not Given",
+      "category": "factual-information",
+      "whatIsIt": {
+        "description": "These questions test your ability to identify specific information and determine whether statements are supported, contradicted, or not mentioned in the passage.",
+        "skillTested": "Distinguishing between stated, contradicted, and missing information."
+      },
+      "recognition": {
+        "howToIdentify": [
+          "Instructions contain 'TRUE/FALSE/NOT GIVEN' or 'YES/NO/NOT GIVEN'",
+          "Questions are factual statements about the passage",
+          "Usually 4–6 statements per set",
+          "Appears in nearly every IELTS Reading test"
+        ]
+      },
+      "example": {
+        "passage": "The honey bee population has declined by 30% over the past decade due to pesticide use and habitat loss. Scientists at Cambridge University have been studying this phenomenon since 2018. While some farmers have switched to organic methods, the majority still rely heavily on chemical pesticides. Research suggests that urban beekeeping programs could help stabilize bee populations in cities.",
+        "questions": [
+          {
+            "id": 1,
+            "text": "Honey bee numbers have fallen by 30% in the last ten years.",
+            "correctAnswer": "TRUE",
+            "explanation": "The passage directly states 'declined by 30% over the past decade.'"
+          },
+          {
+            "id": 2,
+            "text": "Cambridge University research began before 2018.",
+            "correctAnswer": "FALSE",
+            "explanation": "The text says 'since 2018,' meaning the research started in 2018, not before."
+          },
+          {
+            "id": 3,
+            "text": "Most farmers now use organic farming methods.",
+            "correctAnswer": "FALSE",
+            "explanation": "The passage states 'the majority still rely heavily on chemical pesticides,' contradicting the statement."
+          }
+        ]
+      },
+      "strategyTips": [
+        {
+          "step": 1,
+          "title": "Read the statements first",
+          "description": "Understand what you need to confirm or deny before reading the passage."
+        },
+        {
+          "step": 2,
+          "title": "Underline key words",
+          "description": "Focus on names, dates, numbers, and absolute terms (e.g., always, never, all)."
+        },
+        {
+          "step": 3,
+          "title": "Scan for paraphrases",
+          "description": "Look for similar meanings, not exact words."
+        },
+        {
+          "step": 4,
+          "title": "Check for contradiction",
+          "description": "If the text says the opposite, it’s FALSE."
+        },
+        {
+          "step": 5,
+          "title": "Identify missing info",
+          "description": "If the passage doesn’t mention it at all, choose NOT GIVEN."
+        }
+      ],
+      "commonMistakes": [
+        {
+          "title": "Confusing FALSE with NOT GIVEN",
+          "description": "Partial or missing information means NOT GIVEN, not FALSE."
+        },
+        {
+          "title": "Using logic or outside knowledge",
+          "description": "Only rely on what’s explicitly in the passage."
+        },
+        {
+          "title": "Ignoring qualifying words",
+          "description": "Words like 'most,' 'some,' or 'all' can completely change the meaning."
+        },
+        {
+          "title": "Expecting exact matches",
+          "description": "IELTS uses paraphrases; the wording will differ from the passage."
+        }
+      ],
+      "trapPatterns": {
+        "description": "Watch for misleading statements and distractors.",
+        "examples": [
+          "Statements that are true in real life but not mentioned in the passage",
+          "Numbers or facts that are almost—but not exactly—the same",
+          "Information appearing in a different context"
+        ],
+        "warningSigns": "Absolute terms like 'always,' 'never,' or 'all' often indicate FALSE answers."
+      },
+      "advancedTips": {
+        "difficultyPatterns": [
+          "Earlier questions usually follow passage order; later ones may not",
+          "If you find info for one statement, nearby questions might be related"
+        ],
+        "confidenceBooster": "Information for TRUE and FALSE answers will always be clearly stated or clearly contradicted."
+      },
+      "timeManagement": {
+        "timePerQuestion": "60–90 seconds",
+        "tip": "If you can’t find the answer in 30 seconds, move on and mark 'NOT GIVEN' — it’s statistically the most common answer."
+      },
+      
+
+    "quiz": {
+    "passage": "Online learning has transformed education dramatically over the past five years. A 2023 study by the Education Research Institute found that 78% of university students now take at least one online course during their degree. The flexibility of online learning appeals particularly to working adults, who represent 45% of all online learners. However, critics argue that online education lacks the social interaction necessary for developing communication skills. Professor Sarah Chen from Melbourne University believes that blended learning - combining online and face-to-face instruction - offers the best solution. She conducted research with 200 students in 2022 and found that those in blended programs showed 25% better engagement scores compared to purely online courses. Despite these benefits, technical difficulties remain a significant challenge, with 30% of students reporting connectivity issues during live sessions.",
+    "questions": [
+      {
+        "id": 1,
+        "type": "multiple-choice",
+        "text": "What is the main difference between FALSE and NOT GIVEN answers?",
+        "options": [
+          "FALSE means the information is wrong; NOT GIVEN means you disagree with it",
+          "FALSE means the passage contradicts the statement; NOT GIVEN means no relevant information is provided",
+          "FALSE means the information is incomplete; NOT GIVEN means it's too difficult to understand",
+          "There is no difference - they mean the same thing"
+        ],
+        "correctAnswer": "FALSE means the passage contradicts the statement; NOT GIVEN means no relevant information is provided",
+        "explanation": "FALSE means the passage directly contradicts the statement, while NOT GIVEN means no relevant information exists in the passage."
+      },
+      {
+        "id": 2,
+        "type": "multiple-choice",
+        "text": "When looking for answers in the passage, you should:",
+        "options": [
+          "Search for the exact same words as in the question",
+          "Look for synonyms and paraphrased information",
+          "Use your general knowledge if you can't find the information",
+          "Always read the entire passage first"
+        ],
+        "correctAnswer": "Look for synonyms and paraphrased information",
+        "explanation": "IELTS tests your ability to identify paraphrased information, not exact word matching."
+      },
+      {
+        "id": 3,
+        "type": "multiple-choice",
+        "text": "If a statement says 'All teenagers use social media' but the passage says 'Most teenagers use social media,' the answer is:",
+        "options": [
+          "TRUE - because most means almost all",
+          "FALSE - because 'all' and 'most' have different meanings",
+          "NOT GIVEN - because the exact percentage isn't provided",
+          "TRUE - because it's generally correct information"
+        ],
+        "correctAnswer": "FALSE - because 'all' and 'most' have different meanings",
+        "explanation": "Qualifying words like 'all' vs 'most' change the meaning completely, making the statement false."
+      },
+      {
+        "id": 4,
+        "type": "multiple-choice",
+        "text": "Which time management strategy is recommended for T/F/NG questions?",
+        "options": [
+          "Spend 3-5 minutes per question to be thorough",
+          "Read the entire passage before looking at any questions",
+          "Spend 60-90 seconds per question",
+          "Answer all TRUE answers first, then FALSE, then NOT GIVEN"
+        ],
+        "correctAnswer": "Spend 60-90 seconds per question",
+        "explanation": "Efficient time management allows 60-90 seconds per T/F/NG question."
+      },
+      { 
+        "id": 5, 
+        "type": "true-false-not-given", 
+        "text": "More than three-quarters of university students take online courses.", 
+        "correctAnswer": "TRUE", 
+        "explanation": "The passage states 78% of university students take online courses, which is more than three-quarters (75%)." 
+      },
+      { 
+        "id": 6, 
+        "type": "true-false-not-given", 
+        "text": "Working adults make up nearly half of all online learners.", 
+        "correctAnswer": "TRUE", 
+        "explanation": "The passage states working adults represent 45% of all online learners, which is nearly half." 
+      },
+      { 
+        "id": 7, 
+        "type": "true-false-not-given", 
+        "text": "Online education is inferior to traditional classroom learning.", 
+        "correctAnswer": "NOT GIVEN", 
+        "explanation": "Critics argue about social interaction issues, but the passage doesn't state that online education is inferior overall." 
+      },
+      { 
+        "id": 8, 
+        "type": "true-false-not-given", 
+        "text": "Professor Chen's research was conducted at Melbourne University.", 
+        "correctAnswer": "NOT GIVEN", 
+        "explanation": "We know Professor Chen is from Melbourne University, but the passage doesn't specify where her research was conducted." 
+      },
+      { 
+        "id": 9, 
+        "type": "true-false-not-given", 
+        "text": "Blended learning students had 25% higher grades than online-only students.", 
+        "correctAnswer": "FALSE", 
+        "explanation": "The research found 25% better engagement scores, not higher grades." 
+      },
+      { 
+        "id": 10, 
+        "type": "true-false-not-given", 
+        "text": "One-third of students experience technical problems during online classes.", 
+        "correctAnswer": "FALSE", 
+        "explanation": "30% of students report connectivity issues, which is less than one-third (33.3%)." 
+    }
+  ]
+      },
+      "quickReferenceCard": {
+        "do": [
+          "Read the statement carefully before searching the text",
+          "Look for synonyms and paraphrases",
+          "Pay attention to qualifying words",
+          "Accept partial matches for TRUE answers"
+        ],
+        "dont": [
+          "Use your own knowledge",
+          "Assume logical connections",
+          "Spend more than 2 minutes on one question",
+          "Choose FALSE just because you can’t find the words"
+        ]
+      }
+    },
+    {
+      "id": "matching-headings",
+      "name": "Matching Headings",
+      "category": "main-ideas",
+      "frequency": "High - appears in approximately 60-70% of IELTS Reading tests",
+      
+      "quickRecognition": {
+        "identifiers": [
+          "A list of headings (usually labeled i, ii, iii, iv, etc.)",
+          "Instructions say 'Choose the correct heading for each paragraph/section'",
+          "More headings than paragraphs (distractors included)"
+        ]
+      },
+      
+      "whatIsIt": {
+        "description": "These questions test your ability to identify the main idea or theme of a paragraph. You must match each paragraph with the most suitable heading from a list of options. There are always extra headings to distract you.",
+        "skillTested": "Your ability to identify main ideas and distinguish them from supporting details",
+        "howItWorks": "You match headings to paragraphs based on the main idea, not specific details.",
+        "scoringImpact": "Typically 5-8 questions per set, worth 1 point each. This question type often appears with longer passages."
+      },
+      
+      "example": {
+        "passage": {
+          "paragraphA": "The ancient city of Petra in Jordan attracts over one million visitors annually, making it the country's most popular tourist destination. The influx of tourists has brought significant economic benefits to the region, creating jobs in hospitality, transportation, and guiding services. Local businesses have flourished, with restaurants, hotels, and souvenir shops experiencing steady growth over the past decade.",
+          
+          "paragraphB": "However, the environmental cost of mass tourism has become increasingly apparent. The constant foot traffic has led to erosion of the ancient stone structures, while littering and inadequate waste management systems have polluted the surrounding desert landscape. Archaeologists warn that without immediate intervention, some of the site's most fragile monuments may suffer irreversible damage within the next 20 years."
+        },
+        
+        "headings": [
+          "i. Economic advantages of tourism",
+          "ii. Environmental damage caused by visitors",
+          "iii. The history of Petra's discovery",
+          "iv. Threats to archaeological preservation",
+          "v. Government investment in infrastructure"
+        ],
+        
+        "questions": [
+          {
+            "id": 1,
+            "text": "Paragraph A",
+            "correctAnswer": "i",
+            "thinkingProcess": "Focus is on economic benefits - jobs, business growth, money. Main idea = economic advantages.",
+            "explanation": "The entire paragraph discusses economic benefits (jobs, business growth)"
+          },
+          {
+            "id": 2,
+            "text": "Paragraph B",
+            "correctAnswer": "iv",
+            "thinkingProcess": "Focus is on environmental problems AND warnings about damage to monuments. Which heading is more complete? Heading ii mentions environmental damage, but heading iv captures the archaeological concern. The paragraph emphasizes archaeological threats more than general environmental issues.",
+            "explanation": "While environmental damage is mentioned, the main idea centers on threats to the archaeological site and potential irreversible damage"
+          }
+        ]
+      },
+      
+      "commonMistakes": [
+        {
+          "title": "Matching based on a single word",
+          "description": "Students pick a heading because one word appears in both the heading and paragraph, but the heading must match the MAIN idea, not just a detail or keyword."
+        },
+        {
+          "title": "Choosing a heading that describes only one sentence",
+          "description": "A heading must represent the entire paragraph's main idea, not just one sentence or example within it."
+        },
+        {
+          "title": "Confusing main ideas with supporting examples",
+          "description": "Supporting details and examples are used to illustrate the main idea - they are not the main idea themselves."
+        },
+        {
+          "title": "Not reading the whole paragraph",
+          "description": "The main idea might not be in the first sentence alone. You must read the entire paragraph to understand its overall purpose."
+        },
+        {
+          "title": "Falling for distractor headings",
+          "description": "Headings that use words from the paragraph but misrepresent the main idea, or overly specific headings that match one detail but not the overall point."
+        }
+      ],
+      
+      "trapPatterns": [
+        {
+          "type": "Word repetition trap",
+          "description": "Headings that use words from the paragraph but misrepresent the main idea"
+        },
+        {
+          "type": "Over-specific headings",
+          "description": "Headings that match one detail but not the overall point"
+        },
+        {
+          "type": "Similar headings",
+          "description": "Two or more headings with subtle but important differences - testing your precision"
+        }
+      ],
+      
+      "warningSign": "If you match a heading too quickly based on one word, STOP and reread the entire paragraph",
+      
+      "strategyTips": [
+        {
+          "step": 1,
+          "title": "Read all headings first",
+          "description": "Familiarize yourself with all the options before reading paragraphs to understand what you're looking for"
+        },
+        {
+          "step": 2,
+          "title": "Read the first and last sentences of each paragraph",
+          "description": "These often contain the main idea or topic sentence"
+        },
+        {
+          "step": 3,
+          "title": "Identify the main idea",
+          "description": "Ask yourself: What is this paragraph MAINLY about? Ignore minor details and examples"
+        },
+        {
+          "step": 4,
+          "title": "Look for repeated themes",
+          "description": "Concepts or ideas that appear throughout the paragraph usually indicate the main theme"
+        },
+        {
+          "step": 5,
+          "title": "Match and eliminate",
+          "description": "Cross out headings as you use them. This helps you focus on remaining options"
+        },
+        {
+          "step": 6,
+          "title": "Match concepts, not keywords",
+          "description": "The heading will paraphrase the main idea using different words - don't expect exact word matches"
+        }
+      ],
+      
+      "keyTechniques": {
+        "topicSentence": "Focus on the topic sentence (usually first or second sentence) which introduces the main idea",
+        "repeatedConcepts": "Look for themes or concepts that are repeated throughout the paragraph",
+        "elimination": "Eliminate headings as you use them to avoid confusion",
+        "avoidKeywords": "Don't match based on keywords alone - match concepts and main ideas"
+      },
+      
+      "timeManagement": {
+        "timePerQuestion": "2-3 minutes per paragraph",
+        "totalTime": "10-15 minutes total for a full set",
+        "tip": "This question type takes longer than others. Budget your time accordingly and don't rush."
+      },
+      
+      "dosAndDonts": {
+        "dos": [
+          "Read the entire paragraph before choosing",
+          "Focus on the main idea, not supporting details",
+          "Cross out headings you've already used",
+          "Check if the first and last sentences support your choice",
+          "Read all heading options before making decisions"
+        ],
+        "donts": [
+          "Match based on word repetition alone",
+          "Rush - this question type requires careful thinking",
+          "Choose a heading that only matches part of the paragraph",
+          "Forget that there are extra, unused headings",
+          "Use a heading more than once"
+        ]
+      },
+      
+      "advancedTips": [
+        {
+          "title": "Difficulty variations",
+          "description": "Early paragraphs (A, B, C) often have clearer main ideas; later ones may be more subtle"
+        },
+        {
+          "title": "Check for example answers",
+          "description": "Always check if an example passage is given with a heading already matched - this helps you understand the level of generality required"
+        },
+        {
+          "title": "Similar headings strategy",
+          "description": "If two headings seem similar, carefully note their differences - they're testing your precision in understanding nuances"
+        },
+        {
+          "title": "Start with the easiest",
+          "description": "One heading is usually very obvious - start with the easiest paragraph to build momentum and eliminate options"
+        }
+      ],
+      
+      "emergencyStrategy": {
+        "whenRunningOutOfTime": "Read only the first two and last sentences of remaining paragraphs, then make your best guess",
+        "confidenceBooster": "One heading is usually very obvious - start with the easiest paragraph to build momentum"
+      },
+      
+      "masteryCheck": {
+        "theoryQuiz": [
+          {
+            "id": 1,
+            "question": "Should you match headings based on keywords appearing in both the heading and paragraph?",
+            "correctAnswer": "No, you should match based on the main idea, not keywords",
+            "explanation": "Keyword matching is a common trap. You must identify main ideas, which are often paraphrased."
+          },
+          {
+            "id": 2,
+            "question": "What part of the paragraph usually contains the main idea?",
+            "correctAnswer": "Usually in the topic sentence (first or second sentence) and supported by the conclusion",
+            "explanation": "The topic sentence typically introduces the main idea, while the rest provides supporting details."
+          },
+          {
+            "id": 3,
+            "question": "Why are there more headings than paragraphs?",
+            "correctAnswer": "To include distractors that test your precision",
+            "explanation": "Extra headings serve as distractors to test whether you can accurately identify main ideas versus related but incorrect options."
+          },
+          {
+            "id": 4,
+            "question": "How can you tell the difference between a main idea and a supporting detail?",
+            "correctAnswer": "The main idea is what the entire paragraph is about; supporting details are examples or evidence that illustrate it",
+            "explanation": "Supporting details explain, prove, or illustrate the main idea but are not the central point themselves."
+          }
+        ],
+        
+        "miniPractice": {
+          "passage": "While renewable energy technologies have become more affordable in recent years, the initial investment remains prohibitively expensive for many developing nations. Solar panels and wind turbines require substantial upfront capital that these countries often lack. International funding programs have been established to address this gap, but bureaucratic hurdles and strict eligibility requirements mean many nations cannot access these resources.",
+          
+          "headings": [
+            "i. The falling cost of renewable technology",
+            "ii. Financial barriers preventing renewable energy adoption",
+            "iii. How developing nations produce energy"
+          ],
+          
+          "correctAnswer": "ii",
+          "explanation": "Although the paragraph mentions falling costs, the MAIN idea is about financial barriers that prevent adoption, not the cost reduction itself. The entire paragraph focuses on why developing nations cannot afford or access renewable energy."
+        },
+        
+        "selfAssessment": [
+          "I can distinguish between main ideas and supporting details",
+          "I read the entire paragraph before matching a heading",
+          "I don't rely on keyword matching alone",
+          "I can eliminate distractors confidently",
+          "I can explain why wrong headings don't fit"
+        ],
+        
+        "readyWhen": "You score 100% on the understanding quiz and can explain why wrong headings don't fit"
+      },
+    "theoryQuiz": {
+      "title": "Matching Headings - Theory Understanding",
+      "questions": [
+        {
+          "id": 1,
+          "type": "multiple-choice",
+          "text": "Should you match headings based on keywords appearing in both the heading and paragraph?",
+          "options": [
+            "Yes, keyword matching is the fastest and most accurate method",
+            "No, you should match based on the main idea, not keywords",
+            "Yes, but only if the keyword appears more than twice",
+            "No, you should only use the first sentence"
+          ],
+          "correctAnswer": "b",
+          "explanation": "Keyword matching is a common trap. IELTS tests your ability to identify main ideas, which are often paraphrased rather than using exact words."
+        },
+        {
+          "id": 2,
+          "type": "multiple-choice",
+          "text": "What part of the paragraph usually contains the main idea?",
+          "options": [
+            "Only in the middle sentences",
+            "Always in the last sentence",
+            "Usually in the topic sentence (first or second sentence) and supported by the conclusion",
+            "Evenly distributed throughout"
+          ],
+          "correctAnswer": "c",
+          "explanation": "The topic sentence typically introduces the main idea, while the rest of the paragraph provides supporting details."
+        },
+        {
+          "id": 3,
+          "type": "multiple-choice",
+          "text": "Why are there more headings than paragraphs in this question type?",
+          "options": [
+            "To give you more options in case you're unsure",
+            "It's a mistake in the test design",
+            "To include distractors that test your precision",
+            "So you can choose your favorite heading style"
+          ],
+          "correctAnswer": "c",
+          "explanation": "Extra headings serve as distractors to test whether you can accurately identify main ideas versus related but incorrect options."
+        },
+        {
+          "id": 4,
+          "type": "multiple-choice",
+          "text": "How much time should you allocate per paragraph for matching headings?",
+          "options": [
+            "30 seconds - work quickly",
+            "5 minutes - be very thorough",
+            "2-3 minutes per paragraph",
+            "It doesn't matter, just finish all questions"
+          ],
+          "correctAnswer": "c",
+          "explanation": "Matching headings requires careful thought; 2-3 minutes per paragraph allows proper analysis without rushing."
+        }
+      ]
+    },
+    "practicalQuiz": {
+      "passage": {
+        "paragraphA": "The introduction of artificial intelligence in healthcare has revolutionized diagnostic accuracy. Machine learning algorithms can now analyze medical images with precision that rivals or exceeds human radiologists. A 2023 study showed that AI systems correctly identified lung cancer in CT scans 94% of the time, compared to 88% for human doctors. This technology has proven particularly valuable in regions with limited access to specialist physicians.",
+        "paragraphB": "Despite these technological advances, many patients express discomfort with AI-driven diagnoses. Surveys indicate that 65% of patients prefer human doctors to make final medical decisions, even when AI provides supporting analysis. Trust issues stem from concerns about algorithmic bias, lack of transparency in how AI reaches conclusions, and fears about data privacy. Healthcare providers report that patient anxiety often increases when they learn AI was involved in their diagnosis.",
+        "paragraphC": "The economic implications of AI in healthcare extend beyond diagnostic improvements. Hospitals implementing AI systems report initial costs averaging $2.5 million, including software, training, and infrastructure upgrades. However, long-term savings emerge through reduced diagnostic errors, shorter hospital stays, and more efficient resource allocation. Some healthcare economists project that widespread AI adoption could reduce overall healthcare costs by 15-20% within a decade.",
+        "paragraphD": "Medical schools worldwide are now integrating AI training into their curricula. Future doctors must learn not only traditional diagnostic skills but also how to interpret AI-generated insights and communicate them effectively to patients. The University of Toronto recently launched a mandatory course on AI literacy for all first-year medical students. Educators emphasize that AI should augment, not replace, human clinical judgment."
+      },
+      "headings": [
+        "i. Superior diagnostic performance of AI systems",
+        "ii. Patient resistance to automated medical decisions",
+        "iii. The cost-benefit analysis of healthcare AI",
+        "iv. Training the next generation of AI-literate physicians",
+        "v. Government regulation of medical technology",
+        "vi. The history of AI development",
+        "vii. AI's role in surgical procedures",
+        "viii. Financial investment and long-term savings in AI healthcare"
+      ],
+      "questions": [
+        { "id": 5, "type": "matching-headings", "text": "Paragraph A", "correctAnswer": "i", "explanation": "The paragraph's main focus is on how AI has improved diagnostic accuracy, with specific statistics showing AI outperforming human doctors." },
+        { "id": 6, "type": "matching-headings", "text": "Paragraph B", "correctAnswer": "ii", "explanation": "The main idea centers on patient discomfort and preference for human doctors over AI, despite technological capabilities." },
+        { "id": 7, "type": "matching-headings", "text": "Paragraph C", "correctAnswer": "viii", "explanation": "While heading iii is tempting, heading viii is more precise as the paragraph specifically discusses initial investment costs and long-term financial savings." },
+        { "id": 8, "type": "matching-headings", "text": "Paragraph D", "correctAnswer": "iv", "explanation": "The paragraph discusses how medical schools are preparing future doctors to work with AI technology." }
+      ],
+      "miniPractice": {
+        "paragraph": "While renewable energy technologies have become more affordable in recent years, the initial investment remains prohibitively expensive for many developing nations. Solar panels and wind turbines require substantial upfront capital that these countries often lack. International funding programs have been established to address this gap, but bureaucratic hurdles and strict eligibility requirements mean many nations cannot access these resources.",
+        "headings": [
+          "i. The falling cost of renewable technology",
+          "ii. Financial barriers preventing renewable energy adoption",
+          "iii. How developing nations produce energy"
+        ],
+        "correctAnswer": "ii",
+        "explanation": "Although the paragraph mentions falling costs, the main idea is about financial barriers that prevent adoption, not the cost reduction itself."
+      }
+    },
+    "scoring": {
+      "excellent": { "range": "7-8", "message": "Excellent! You understand the main idea concept" },
+      "good": { "range": "5-6", "message": "Good progress, review questions where you confused details with main ideas" },
+      "needsReview": { "range": "3-4", "message": "Review the theory section focusing on main idea vs. supporting details" },
+      "needsStudy": { "range": "0-2", "message": "Study the theory section again and practice identifying topic sentences" }
+    }
+    },
+    {
+      "id": "multiple-choice",
+      "name": "Multiple Choice",
+      "category": "various-skills",
+      "frequency": "High - appears in almost every IELTS Reading test",
+      "quickStartGuide": {
+        "title": "5 Essential Rules - Master These First",
+        "essentials": [
+          "Read the question BEFORE looking at the options",
+          "Eliminate obviously wrong answers first (process of elimination)",
+          "Don't choose based on word matching - look for paraphrases",
+          "Find specific evidence in the passage to support your choice",
+          "Beware of 'true but irrelevant' options - they must ANSWER the question"
+        ],
+        "commonTrap": "The most common mistake: choosing an answer just because it uses the same words as the passage, even though it doesn't answer the question or has a different meaning."
+      },
+      "learningPath": {
+        "phase1": {
+          "name": "Understanding Basics",
+          "focus": ["What is multiple choice", "Question types", "Recognition"],
+          "duration": "15 minutes",
+          "sections": ["quickRecognition", "whatIsIt", "questionTypes"]
+        },
+        "phase2": {
+          "name": "Learning Traps & Patterns",
+          "focus": ["Common mistakes", "Distractor patterns", "Paraphrasing"],
+          "duration": "20 minutes",
+          "sections": ["commonMistakes", "trapPatterns", "paraphrasingPatterns"]
+        },
+        "phase3": {
+          "name": "Strategy & Examples",
+          "focus": ["Step-by-step approach", "Worked examples", "Different question types"],
+          "duration": "30 minutes",
+          "sections": ["strategyTips", "examples", "difficultyExamples"]
+        },
+        "phase4": {
+          "name": "Mastery & Practice",
+          "focus": ["Theory quiz", "Mini practice", "Self-assessment"],
+          "duration": "20 minutes",
+          "sections": ["masteryCheck"]
+        }
+      },
+      "quickRecognition": {
+        "identifiers": [
+          "Question followed by 3-4 options (A, B, C, D)",
+          "Instructions say 'Choose the correct letter' or 'Choose TWO/THREE letters'",
+          "Can ask about main ideas, details, writer's opinion, or purpose"
+        ],
+        "variants": [
+          "Single answer questions (choose ONE letter) - most common",
+          "Multiple answer questions (choose TWO or THREE letters) - harder, all-or-nothing scoring"
+        ]
+      },
+      "whatIsIt": {
+        "description": "Multiple choice questions test various reading skills by asking you to select the correct answer from 3-4 options. Questions can focus on specific details, main ideas, writer's purpose, attitude, or implied meaning.",
+        "skillTested": "Your ability to understand specific details, main ideas, writer's purpose, attitude, or opinion",
+        "howItWorks": "You read a question and choose the correct answer from 3-4 options. Some questions require selecting multiple answers (e.g., 'Choose TWO letters').",
+        "scoringImpact": "Typically 3-7 questions per passage, worth 1 point each. CRITICAL: For 'choose TWO/THREE' questions, you must get ALL answers correct to earn the point - no partial credit."
+      },
+      "example": {
+        "passage": "Research shows that regular exercise improves not only physical health but also mental well-being. Studies indicate that just 30 minutes of moderate activity daily can reduce anxiety and depression symptoms by up to 40%. However, many people struggle to maintain consistent exercise routines due to time constraints and lack of motivation.",
+        "questions": [
+          {
+            "id": 1,
+            "text": "According to the passage, what is the main benefit of exercise?",
+            "options": [
+              "A. It only improves physical health",
+              "B. It improves both physical and mental health",
+              "C. It requires expensive equipment",
+              "D. It takes several hours per day"
+            ],
+            "correctAnswer": "B",
+            "explanation": "The passage states exercise improves \"not only physical health but also mental well-being\""
+          }
+        ]
+      },
+      "questionTypes": [
+        {
+          "type": "Detail/Fact Questions",
+          "difficulty": "Easy to Medium",
+          "signals": [
+            "According to the passage...",
+            "The passage states that...",
+            "What/When/Where/Who/How many..."
+          ],
+          "whatToLookFor": "Specific facts, dates, names, numbers clearly stated in the text",
+          "strategy": "Scan for keywords, find the exact location, read carefully for paraphrases"
+        },
+        {
+          "type": "Main Idea Questions",
+          "difficulty": "Medium",
+          "signals": [
+            "What is the main purpose...",
+            "The passage is mainly about...",
+            "The primary focus of the paragraph is..."
+          ],
+          "whatToLookFor": "Overall theme or central point of the passage or paragraph",
+          "strategy": "Read topic sentences and conclusions, ignore specific details"
+        },
+        {
+          "type": "Inference Questions",
+          "difficulty": "Medium to Hard",
+          "signals": [
+            "The writer suggests that...",
+            "It can be inferred that...",
+            "The passage implies...",
+            "What does the author mean by..."
+          ],
+          "whatToLookFor": "Meaning that is suggested but not directly stated - read between the lines",
+          "strategy": "Look for clues in context, tone, and logical connections"
+        },
+        {
+          "type": "Opinion/Attitude Questions",
+          "difficulty": "Medium to Hard",
+          "signals": [
+            "The author's attitude is...",
+            "The writer's tone can be described as...",
+            "The author believes that..."
+          ],
+          "whatToLookFor": "Language that shows the writer's viewpoint, feelings, or judgment",
+          "strategy": "Identify attitude indicators - adjectives, adverbs, and evaluative language"
+        },
+        {
+          "type": "Purpose Questions",
+          "difficulty": "Medium",
+          "signals": [
+            "Why does the writer mention...",
+            "The purpose of paragraph X is...",
+            "The writer includes this example to..."
+          ],
+          "whatToLookFor": "Why the writer included certain information or examples - function rather than content",
+          "strategy": "Think about how the information connects to the main argument"
+        },
+        {
+          "type": "Vocabulary in Context",
+          "difficulty": "Medium",
+          "signals": [
+            "What does the word '...' mean in line X?",
+            "The phrase '...' refers to..."
+          ],
+          "whatToLookFor": "Meaning of a word or phrase based on how it's used in the passage",
+          "strategy": "Read the sentence before and after, try substituting each option"
+        }
+      ],
+      "attitudeIndicators": {
+        "positive": {
+          "words": ["fortunately", "beneficial", "impressive", "successfully", "remarkable", "innovative", "promising"],
+          "example": "The results were remarkably positive"
+        },
+        "negative": {
+          "words": ["unfortunately", "problematic", "concerning", "failed", "alarming", "disappointing", "inadequate"],
+          "example": "The policy has proven problematic"
+        },
+        "neutral": {
+          "words": ["however", "in contrast", "on the other hand", "whereas", "alternatively"],
+          "example": "However, other researchers disagree"
+        },
+        "cautious": {
+          "words": ["may", "might", "could", "possibly", "potentially", "appears to", "seems to"],
+          "example": "This may lead to improvements"
+        },
+        "certain": {
+          "words": ["will", "must", "certainly", "definitely", "undoubtedly", "clearly", "obviously"],
+          "example": "This will certainly cause problems"
+        },
+        "critical": {
+          "words": ["merely", "only", "simply", "fails to", "overlooks", "ignores"],
+          "example": "The study merely examines surface issues"
+        }
+      },
+      "paraphrasingPatterns": {
+        "description": "IELTS always paraphrases information. The correct answer rarely uses the exact same words as the passage.",
+        "commonPatterns": [
+          {
+            "type": "Synonym Replacement",
+            "passageExample": "reduce carbon emissions",
+            "optionExamples": ["decrease pollution", "lower greenhouse gases", "cut CO2 output"],
+            "tip": "Learn common synonym pairs"
+          },
+          {
+            "type": "Active to Passive Voice",
+            "passageExample": "Scientists discovered a new species",
+            "optionExamples": ["A new species was discovered", "The discovery of a new species occurred"],
+            "tip": "Same meaning, different structure"
+          },
+          {
+            "type": "Noun to Verb (and vice versa)",
+            "passageExample": "showed improvement in test scores",
+            "optionExamples": ["test scores improved", "there was an improvement"],
+            "tip": "Watch for word form changes"
+          },
+          {
+            "type": "Number/Percentage Paraphrasing",
+            "passageExample": "25% of students",
+            "optionExamples": ["a quarter of students", "one in four students"],
+            "tip": "Know fraction equivalents"
+          },
+          {
+            "type": "Negative to Positive (and vice versa)",
+            "passageExample": "not uncommon",
+            "optionExamples": ["fairly common", "happens frequently"],
+            "tip": "Double negatives = positive"
+          },
+          {
+            "type": "Cause-Effect Rephrasing",
+            "passageExample": "Due to budget cuts, the program was cancelled",
+            "optionExamples": ["Budget cuts led to program cancellation", "The program ended because of funding issues"],
+            "tip": "Same relationship, different words"
+          }
+        ]
+      },
+      "examples": {
+        "detailQuestion": {
+          "difficulty": "Easy",
+          "passage": "The sharing economy has fundamentally altered consumer behavior in urban centers. Apps like Uber and Airbnb have made it possible to access services without ownership, appealing particularly to younger generations who value experiences over possessions.",
+          "question": "What is the main advantage of the sharing economy mentioned in the passage?",
+            "options": [
+            "A. It provides stable employment",
+            "B. It allows access to services without ownership",
+            "C. It increases worker benefits",
+            "D. It reduces company profits"
+            ],
+            "correctAnswer": "B",
+          "thinkingProcess": "This is a DETAIL question ('What is mentioned'). Scan for keywords: 'advantage' or 'benefit'. The passage says apps 'made it possible to access services without ownership' - this directly matches option B.",
+          "eliminationProcess": {
+            "A": "WRONG - Nothing about employment is mentioned as an advantage",
+            "B": "CORRECT - Directly stated: 'access services without ownership'",
+            "C": "WRONG - Worker benefits are not mentioned",
+            "D": "WRONG - Company profits are not discussed"
+          },
+          "explanation": "The passage explicitly states the sharing economy makes it 'possible to access services without ownership' - this is a paraphrase match with option B."
+        },
+        "inferenceQuestion": {
+          "difficulty": "Hard",
+          "passage": "Critics argue that online education lacks the social interaction necessary for developing communication skills. Professor Sarah Chen believes that blended learning - combining online and face-to-face instruction - offers the best solution. She conducted research with 200 students in 2022 and found that those in blended programs showed 25% better engagement scores compared to purely online courses.",
+          "question": "What can be inferred about Professor Chen's view on purely online courses?",
+          "options": [
+            "A. They are completely ineffective for learning",
+            "B. They have some limitations compared to blended learning",
+            "C. They should be banned from universities",
+            "D. They are more expensive than traditional courses"
+          ],
+          "correctAnswer": "B",
+          "thinkingProcess": "This is an INFERENCE question ('can be inferred'). Professor Chen's research showed blended learning had better results than purely online. This suggests online-only has weaknesses, but she doesn't say it's completely bad.",
+          "eliminationProcess": {
+            "A": "WRONG - Too extreme. She doesn't say purely online is 'completely ineffective', just that blended is better",
+            "B": "CORRECT - She shows blended is better (25% higher engagement), implying online-only has limitations",
+            "C": "WRONG - Extreme and not suggested anywhere",
+            "D": "WRONG - Cost is never mentioned"
+          },
+          "explanation": "Since her research shows blended learning performs better, we can infer she believes purely online has limitations. Option B is carefully worded to match this inference without being too extreme."
+        },
+        "opinionQuestion": {
+          "difficulty": "Medium-Hard",
+          "passage": "The proposal to build a new highway through the forest has sparked considerable debate. Environmentalists have raised alarming concerns about habitat destruction and increased carbon emissions. While the government claims economic benefits will outweigh environmental costs, this argument fails to consider the long-term ecological damage that could prove irreversible.",
+          "question": "What is the writer's attitude toward the highway proposal?",
+          "options": [
+            "A. Strongly supportive",
+            "B. Completely neutral",
+            "C. Somewhat skeptical",
+            "D. Mildly optimistic"
+          ],
+          "correctAnswer": "C",
+          "thinkingProcess": "This is an OPINION/ATTITUDE question. Look for evaluative language. The writer uses 'alarming concerns', says the government's argument 'fails to consider', and mentions 'irreversible' damage. This shows skepticism/doubt.",
+          "eliminationProcess": {
+            "A": "WRONG - The writer criticizes the proposal, not supports it",
+            "B": "WRONG - The language is clearly not neutral ('alarming', 'fails to consider')",
+            "C": "CORRECT - Words like 'fails to consider' and 'irreversible' show doubt/skepticism",
+            "D": "WRONG - Nothing suggests optimism; the tone is critical"
+          },
+          "attitudeClues": [
+            "'alarming concerns' = negative language",
+            "'fails to consider' = criticism",
+            "'irreversible damage' = serious warning"
+          ],
+          "explanation": "The writer's use of critical language ('fails to consider', 'alarming', 'irreversible') indicates skepticism about the proposal."
+        },
+        "purposeQuestion": {
+          "difficulty": "Medium",
+          "passage": "Renewable energy costs have dropped dramatically. Solar panel prices, for instance, have fallen by 90% since 2010. This price revolution has made clean energy accessible to millions of households worldwide who previously could not afford it.",
+          "question": "Why does the writer mention solar panel prices?",
+          "options": [
+            "A. To criticize the solar industry",
+            "B. To provide an example of falling renewable energy costs",
+            "C. To argue that solar is better than wind power",
+            "D. To explain how solar panels work"
+          ],
+          "correctAnswer": "B",
+          "thinkingProcess": "This is a PURPOSE question ('Why does the writer mention...'). The first sentence says renewable energy costs dropped. Then 'for instance' introduces solar panels as a specific EXAMPLE of this general point.",
+          "eliminationProcess": {
+            "A": "WRONG - The tone is positive, not critical",
+            "B": "CORRECT - 'For instance' signals that solar panels are an example of the previous statement about falling costs",
+            "C": "WRONG - Wind power is not mentioned or compared",
+            "D": "WRONG - How they work is not explained"
+          },
+          "explanation": "The phrase 'for instance' clearly signals that solar panels are being used as a specific example to illustrate the general statement about falling renewable energy costs."
+        }
+      },
+      "multipleAnswerQuestions": {
+        "scoringRule": "❗ CRITICAL: Must get ALL answers correct for 1 point - no partial credit. If you choose 2 out of 3 correctly, you get 0 points.",
+        "howToRecognize": "Instructions say 'Choose TWO letters' or 'Choose THREE letters'",
+        "strategy": [
+          "Read the question carefully - it may ask for things, reasons, features, etc.",
+          "Eliminate impossible answers first",
+          "Look for options that are BOTH/ALL clearly and explicitly supported in the passage",
+          "Don't choose options that contradict each other",
+          "Check that the passage supports ALL your choices, not just one",
+          "Be conservative - only choose if you're certain"
+        ],
+        "example": {
+          "passage": "Remote work has increased productivity for many employees, particularly those with long commutes. However, managers report difficulty in monitoring performance and maintaining team cohesion. Employee surveys show mixed feelings: while 78% appreciate flexibility, 45% report feeling isolated. Some companies have adopted hybrid models, requiring employees to attend the office 2-3 days per week to balance these concerns.",
+          "question": "Which TWO problems with remote work are mentioned?",
+          "options": [
+            "A. Decreased productivity",
+            "B. Difficulty supervising employees",
+            "C. Increased operational costs",
+            "D. Challenges maintaining team unity",
+            "E. Employee dissatisfaction with flexibility"
+          ],
+          "correctAnswers": ["B", "D"],
+          "thinkingProcess": "Need to find TWO problems clearly stated. Look for negative aspects or challenges mentioned.",
+          "eliminationProcess": {
+            "A": "WRONG - Passage says productivity INCREASED, not decreased",
+            "B": "CORRECT - 'managers report difficulty in monitoring performance' = supervision problems",
+            "C": "WRONG - Operational costs are never mentioned",
+            "D": "CORRECT - 'maintaining team cohesion' is explicitly mentioned as a difficulty",
+            "E": "WRONG - 78% appreciate flexibility, so most are satisfied with it"
+          },
+          "explanation": "Both B and D are explicitly stated as problems. B is paraphrased from 'difficulty in monitoring performance' and D from 'maintaining team cohesion'.",
+          "commonMistake": "Students might choose A because it seems logical, but the passage actually says the OPPOSITE - productivity increased. Always base answers on what's stated, not logic."
+        }
+      },
+      "subtleDifferences": {
+        "description": "Often two options will seem very similar. You must identify the subtle but important difference.",
+        "example1": {
+          "passage": "Most scientists agree that climate change is accelerating, though a small minority remain skeptical.",
+          "question": "What does the passage say about scientific opinion on climate change?",
+          "optionA": "All scientists believe climate change is speeding up",
+          "optionB": "The majority of scientists think climate change is accelerating",
+          "correctAnswer": "B",
+          "keyDifference": "'Most' vs 'All' - this is a qualifying word trap",
+          "explanation": "Option A says 'all' but the passage says 'most' - these mean different things. Option B correctly paraphrases 'most' as 'majority' and 'accelerating' as 'speeding up'. Always check qualifying words carefully."
+        },
+        "example2": {
+          "passage": "The study suggests that regular exercise may reduce the risk of heart disease.",
+          "question": "According to the passage, what is the relationship between exercise and heart disease?",
+          "optionA": "Exercise prevents heart disease",
+          "optionB": "Exercise might lower heart disease risk",
+          "correctAnswer": "B",
+          "keyDifference": "'Prevents' (certain) vs 'might lower' (possible) - certainty level",
+          "explanation": "Option A is too strong. The passage uses 'may reduce', which means possibility, not certainty. 'Prevents' implies it definitely stops it, but 'might lower risk' correctly captures the cautious tone."
+        },
+        "example3": {
+          "passage": "Urban gardens provide fresh produce and strengthen community bonds.",
+          "question": "What benefit of urban gardens is mentioned?",
+          "optionA": "They improve neighborhood relationships",
+          "optionB": "They increase property values",
+          "correctAnswer": "A",
+          "keyDifference": "Both seem like benefits, but only A is actually stated",
+          "explanation": "'Strengthen community bonds' is paraphrased as 'improve neighborhood relationships' in option A. Option B might be true in reality, but it's not mentioned in the passage - don't use general knowledge."
+        }
+      },
+      "difficultyExamples": {
+        "easy": {
+          "characteristics": "Direct fact stated clearly, minimal paraphrasing",
+          "example": {
+            "passage": "The research was conducted in 2022 with 500 participants.",
+            "question": "How many people participated in the research?",
+            "options": ["A. 200", "B. 500", "C. 2022", "D. Not stated"],
+            "correctAnswer": "B",
+            "whyEasy": "Number is explicitly stated with no paraphrasing"
+          }
+        },
+        "medium": {
+          "characteristics": "Fact is stated but paraphrased in options, requires careful reading",
+          "example": {
+            "passage": "The program has led to a 30% reduction in waste.",
+            "question": "What impact has the program had?",
+            "options": [
+              "A. Waste increased by 30%",
+              "B. Waste was eliminated completely",
+              "C. Waste decreased by nearly one-third",
+              "D. Waste stayed the same"
+            ],
+            "correctAnswer": "C",
+            "whyMedium": "Requires recognizing that 30% = 'nearly one-third' and 'reduction' = 'decreased'"
+          }
+        },
+        "hard": {
+          "characteristics": "Requires inference, understanding tone/purpose, or comparing subtle options",
+          "example": {
+            "passage": "While the technology shows promise, researchers caution that significant obstacles remain before commercial viability can be achieved.",
+            "question": "What is the researchers' view of the technology?",
+            "options": [
+              "A. It is ready for commercial use",
+              "B. It has potential but faces challenges",
+              "C. It should be abandoned",
+              "D. It is completely impractical"
+            ],
+            "correctAnswer": "B",
+            "whyHard": "Requires understanding the contrast between 'shows promise' (positive) and 'obstacles remain' (negative), then finding the balanced option that captures both aspects"
+          }
+        }
+      },
+      "commonMistakes": [
+        {
+          "title": "Word Matching Trap",
+          "description": "Choosing an option just because it contains the same words as the passage, even though the meaning is different or it doesn't answer the question",
+          "example": {
+            "passage": "The decline in bee populations is not caused by mobile phone radiation.",
+            "wrongChoice": "Option: Mobile phone radiation affects bee populations",
+            "whyWrong": "The passage mentions mobile phones, but says they do NOT cause the problem. Students see matching words and choose it."
+          },
+          "howToAvoid": "Read the complete sentence in the passage AND the complete option. Check if the meaning actually matches."
+        },
+        {
+          "title": "True But Irrelevant",
+          "description": "Selecting an answer that is stated in the passage but doesn't actually answer the specific question being asked",
+          "example": {
+            "passage": "Solar panels have become cheaper. However, installation costs remain high.",
+            "question": "What problem is mentioned?",
+            "wrongChoice": "Option: Solar panel prices have decreased",
+            "whyWrong": "This is TRUE and stated in the passage, but the question asks for a PROBLEM. The problem is installation costs, not the price decrease."
+          },
+          "howToAvoid": "Always check: does this option answer what the question is specifically asking?"
+        },
+        {
+          "title": "Using General Knowledge",
+          "description": "Choosing an answer that is true in general or from your knowledge, but is not stated or supported in the passage",
+          "example": {
+            "passage": "Electric cars produce zero emissions while driving.",
+            "question": "What advantage is mentioned?",
+            "wrongChoice": "Option: Electric cars are better for the environment overall",
+            "whyWrong": "While this might be true, the passage only mentions zero emissions while driving, not overall environmental impact. Battery production etc. are not discussed."
+          },
+          "howToAvoid": "Only choose answers that can be directly supported by the passage text. Ignore what you know from outside."
+        },
+        {
+          "title": "Ignoring Qualifying Words",
+          "description": "Missing important words like 'some,' 'most,' 'usually' vs. 'always,' 'never,' 'all' that completely change the meaning",
+          "example": {
+            "passage": "Most experts recommend daily exercise.",
+            "wrongChoice": "Option: All experts recommend daily exercise",
+            "whyWrong": "'Most' and 'all' mean different things. Most = majority, All = 100%"
+          },
+          "qualifyingWords": {
+            "absolute": ["all", "every", "always", "never", "none", "only"],
+            "qualified": ["most", "many", "some", "often", "usually", "rarely", "few"],
+            "caution": "Options with absolute words are often wrong unless the passage also uses absolute language"
+          },
+          "howToAvoid": "Circle qualifying words in both the question and options. Make sure they match."
+        },
+        {
+          "title": "Not Reading All Options",
+          "description": "Selecting the first option that seems reasonable without comparing it to all other choices",
+          "example": {
+            "scenario": "Option B seems good, so student picks it without reading C and D. But option D is actually more accurate.",
+            "whyWrong": "There might be a BETTER option that more precisely matches the passage"
+          },
+          "howToAvoid": "Read ALL options before choosing. Often option D is the most accurate."
+        },
+        {
+          "title": "Choosing Partial Answers",
+          "description": "Selecting an option that is partially correct but includes one wrong detail",
+          "example": {
+            "passage": "The study examined 200 adults over 6 months.",
+            "wrongChoice": "Option: The study examined 200 children over 6 months",
+            "whyWrong": "Number and duration are correct, but 'children' should be 'adults' - one wrong word makes the whole answer wrong"
+          },
+          "howToAvoid": "Check that EVERY part of the option is supported by the passage. One wrong detail = wrong answer."
+        }
+      ],
+      "trapPatterns": [
+        {
+          "type": "True But Irrelevant",
+          "description": "Statement is in the passage but doesn't answer the question",
+          "example": "Question asks about advantages, but option mentions a disadvantage that is stated in the text",
+          "redFlag": "The option seems familiar from the passage but doesn't match what the question is asking"
+        },
+        {
+          "type": "Partially Correct",
+          "description": "Contains some correct information but includes a wrong detail",
+          "example": "Option says 'all workers' when passage says 'most workers'",
+          "redFlag": "Most of the option matches but one word seems different - check carefully"
+        },
+        {
+          "type": "Opposite Meaning",
+          "description": "Uses similar words but reverses the meaning",
+          "example": "Passage: 'rarely effective' → Option: 'highly effective'",
+          "redFlag": "The words look familiar but the meaning feels backwards"
+        },
+        {
+          "type": "Too Extreme",
+          "description": "Uses absolute language when passage uses qualified language",
+          "example": "Passage: 'often helps' → Option: 'always helps'",
+          "redFlag": "Option uses words like 'always', 'never', 'all', 'none' when passage says 'often', 'sometimes', 'many', 'few'"
+        },
+        {
+          "type": "Close Synonym Trap",
+          "description": "Uses a word that seems similar but has a different meaning",
+          "example": "Passage: 'reduce' → Option: 'eliminate'",
+          "redFlag": "Similar words with different strengths - 'reduce' means lower, 'eliminate' means remove completely"
+        },
+        {
+          "type": "Context Change",
+          "description": "Uses information from the passage but in a different context",
+          "example": "Passage mentions cost in paragraph 1 about cars, option mentions cost but about housing",
+          "redFlag": "The information exists but is about something else"
+        }
+      ],
+      "warningSign": "⚠️ If an answer seems too obvious or uses exact words from the passage, STOP and double-check it - it might be a word-matching trap. The correct answer usually paraphrases.",
+      "strategyTips": [
+        {
+          "step": 1,
+          "title": "Read the question carefully FIRST",
+          "description": "Identify what type of question it is (detail, main idea, inference, opinion, purpose) BEFORE looking at options",
+          "why": "This focuses your reading and prevents option bias"
+        },
+        {
+          "step": 2,
+          "title": "Identify and underline keywords",
+          "description": "Underline key words in the question - names, dates, specific terms, question focus",
+          "why": "Helps you scan the passage efficiently"
+        },
+        {
+          "step": 3,
+          "title": "Scan for the relevant section",
+          "description": "Questions usually follow passage order. Use keywords to locate where the answer will be",
+          "why": "Saves time - you don't need to reread the entire passage"
+        },
+        {
+          "step": 4,
+          "title": "Read that section thoroughly",
+          "description": "Don't just skim - read the relevant 2-3 sentences carefully, understanding the complete meaning",
+          "why": "Skimming causes you to miss important details or misunderstand"
+        },
+        {
+          "step": 5,
+          "title": "Read ALL options before choosing",
+          "description": "Even if option A seems good, read B, C, and D. One of them might be more precise",
+          "why": "The best answer might come later in the list"
+        },
+        {
+          "step": 6,
+          "title": "Eliminate obviously wrong answers",
+          "description": "Cross out options that are clearly incorrect, opposite, or not mentioned",
+          "why": "Narrows down your choices and increases accuracy"
+        },
+        {
+          "step": 7,
+          "title": "Compare remaining options carefully",
+          "description": "If stuck between two options, find the specific difference and check which the passage supports",
+          "why": "Often the difference is one word - 'most' vs 'all', 'may' vs 'will'"
+        },
+        {
+          "step": 8,
+          "title": "Find specific evidence",
+          "description": "Identify the exact sentence(s) in the passage that support your choice",
+          "why": "Evidence-based selection is more reliable than 'gut feeling'"
+        },
+        {
+          "step": 9,
+          "title": "Check your answer matches the question",
+          "description": "Reread the question and verify your answer actually answers what's being asked",
+          "why": "Prevents 'true but irrelevant' errors"
+        }
+      ],
+      "keyTechniques": {
+        "underlining": "Underline key words in questions and options to stay focused on what matters",
+        "qualifyingWords": "Pay special attention to qualifying words: some/all, often/always, may/will, usually/never, most/every",
+        "questionOrder": "Questions usually follow passage order - use this to locate information quickly",
+        "evidenceBased": "Always find specific evidence in the passage to support your answer - don't rely on memory or feelings",
+        "elimination": "When stuck, eliminate what's definitely wrong rather than trying to find what's definitely right",
+        "paraphraseRecognition": "Train yourself to recognize synonyms and paraphrases - the correct answer rarely uses exact words"
+      },
+      "timeManagement": {
+        "timePerQuestion": "1-1.5 minutes per single-answer question",
+        "timePerMultipleAnswer": "2-2.5 minutes per choose TWO/THREE question",
+        "totalTime": "5-10 minutes for a set of 5-7 questions",
+        "tip": "Don't spend more than 2 minutes on any single question. If stuck, eliminate what you can, make your best guess, and move on. You can return if time permits.",
+        "allocation": {
+          "reading": "30-40 seconds - locate and read relevant section",
+          "analyzing": "30-40 seconds - read and compare all options",
+          "deciding": "20-30 seconds - eliminate and choose"
+        }
+      },
+      "dosAndDonts": {
+        "dos": [
+          "✅ Read the question BEFORE looking at options",
+          "✅ Identify the question type (detail, inference, opinion, etc.)",
+          "✅ Read ALL options before choosing",
+          "✅ Eliminate obviously wrong answers first",
+          "✅ Find specific evidence in the passage for your answer",
+          "✅ Pay attention to qualifying words (some, often, may, usually)",
+          "✅ Look for paraphrases, not exact word matches",
+          "✅ Check your answer actually answers the specific question",
+          "✅ Circle or underline key words to stay focused",
+          "✅ Use process of elimination when unsure"
+        ],
+        "donts": [
+          "❌ Don't choose based on word matching alone",
+          "❌ Don't use your general knowledge instead of passage information",
+          "❌ Don't select the first option that seems reasonable without reading others",
+          "❌ Don't ignore words like 'usually,' 'often,' 'some,' 'many'",
+          "❌ Don't spend more than 2 minutes on one question",
+          "❌ Don't assume an answer is correct just because it's true",
+          "❌ Don't choose options with extreme words unless passage is also extreme",
+          "❌ Don't rely on memory - always check the passage",
+          "❌ Don't leave answers blank - always guess if running out of time",
+          "❌ Don't choose an option just because it sounds academic or complex"
+        ]
+      },
+      "advancedTips": [
+        {
+          "title": "Difficulty Progression",
+          "description": "Easy questions ask about clearly stated facts. Hard questions ask about implied meaning, purpose, or tone. Recognize which type you're facing.",
+          "application": "If a question seems hard, it's likely testing inference or attitude - look for clues beyond literal statements"
+        },
+        {
+          "title": "Question Order Pattern",
+          "description": "Questions typically follow the order of information in the passage - use this to navigate efficiently",
+          "application": "If Q1 answer is in paragraph 1 and Q3 is in paragraph 3, Q2 answer is probably in paragraph 2"
+        },
+        {
+          "title": "Cross-Question Intelligence",
+          "description": "Information you find for one question may help eliminate options in another question",
+          "application": "If Q1 establishes that costs increased, any option in Q2 saying costs decreased must be wrong"
+        },
+        {
+          "title": "Extreme Language Red Flag",
+          "description": "Options with extreme words (always, never, all, none, only, every) are usually wrong unless the passage uses equally extreme language",
+          "application": "If passage says 'most scientists', option saying 'all scientists' is probably wrong"
+        },
+        {
+          "title": "Process Over Product",
+          "description": "Sometimes it's easier to eliminate three wrong answers than to identify one correct answer directly",
+          "application": "Use systematic elimination: cross out impossible → cross out extreme → cross out irrelevant → choose from remaining"
+        },
+        {
+          "title": "First vs Last Strategy",
+          "description": "Some students prefer answering easiest questions first to build confidence and save time",
+          "application": "Quickly scan all questions, answer obvious ones first, then tackle harder ones with remaining time"
+        },
+        {
+          "title": "Tone Words Matter",
+          "description": "For opinion/attitude questions, one adjective can change everything",
+          "application": "Distinguish between 'concerned' (worried), 'critical' (disapproving), 'cautious' (careful), and 'skeptical' (doubtful)"
+        },
+        {
+          "title": "Example/Detail vs Main Point",
+          "description": "Don't confuse examples or supporting details with the main point being made",
+          "application": "If passage gives 3 examples of renewable energy, don't choose an option that only mentions solar panels (one example)"
+        }
+      ],
+      "emergencyStrategy": {
+        "whenRunningOutOfTime": [
+          "Quickly scan for keywords from the question in the passage",
+          "Read only that sentence and the one before/after it",
+          "Eliminate any obviously wrong options",
+          "Make your best guess from remaining options",
+          "NEVER leave blank - no penalty for wrong answers"
+        ],
+        "guessing Strategy": [
+          "If totally stuck, eliminate options with:",
+          "- Extreme language (always, never, all, none)",
+          "- Information not mentioned in passage",
+          "- Opposite meaning to passage tone",
+          "Choose from remaining moderate options"
+        ],
+        "confidenceBooster": "Wrong answers usually have clear, identifiable reasons why they're wrong. Trust your elimination process - if you can eliminate 2-3 options, your guess has a good chance."
+      }
+    },
+    {
+      "id": "gap-fill",
+      "name": "Gap Fill / Sentence Completion",
+      "category": "detail-recognition",
+      "whatIsIt": {
+        "description": "These questions test your ability to find specific information and complete sentences with words from the passage. You must follow word limits (e.g., NO MORE THAN TWO WORDS).",
+        "skillTested": "Scanning for specific information and understanding context."
+      },
+      "example": {
+        "passage": "The Amazon rainforest produces approximately 20% of the world's oxygen and is home to over 390 billion individual trees. Scientists estimate that one in ten known species in the world lives in the Amazon ecosystem.",
+        "questions": [
+          {
+            "id": 1,
+            "text": "The Amazon rainforest generates about _____ of the planet's oxygen.",
+            "correctAnswer": "20%",
+            "explanation": "The passage states \"approximately 20% of the world's oxygen\""
+          },
+          {
+            "id": 2,
+            "text": "There are more than _____ trees in the Amazon.",
+            "correctAnswer": "390 billion",
+            "explanation": "The passage mentions \"over 390 billion individual trees\""
+          }
+        ]
+      },
+      "commonMistakes": [
+        {
+          "title": "Exceeding the word limit",
+          "description": "If it says NO MORE THAN TWO WORDS, you cannot write three words. You'll get zero marks even if the meaning is correct."
+        },
+        {
+          "title": "Changing the form of words",
+          "description": "Use the EXACT words from the passage. Don't change singular to plural or verb tenses."
+        },
+        {
+          "title": "Including unnecessary articles",
+          "description": "Don't write \"the 390 billion\" if the limit is two words. Write \"390 billion\" only."
+        },
+        {
+          "title": "Poor spelling",
+          "description": "Copy the spelling exactly from the passage. Misspelled answers receive no marks."
+        }
+      ],
+      "strategyTips": [
+        {
+          "step": 1,
+          "title": "Read the instruction carefully",
+          "description": "Note the word limit (e.g., ONE WORD, TWO WORDS, THREE WORDS)"
+        },
+        {
+          "step": 2,
+          "title": "Identify keywords in the sentence",
+          "description": "Find words that will help you locate the answer in the passage"
+        },
+        {
+          "step": 3,
+          "title": "Scan for the relevant section",
+          "description": "Questions usually follow the order of the passage"
+        },
+        {
+          "step": 4,
+          "title": "Check grammar fits",
+          "description": "Your answer must make the sentence grammatically correct"
+        },
+        {
+          "step": 5,
+          "title": "Copy exactly and count words",
+          "description": "Use exact spelling and punctuation, verify word count"
+        }
+      ],
+      "timeManagement": {
+        "timePerQuestion": "~45 seconds to 1 minute per gap",
+        "tip": "These are usually quicker than other question types if you scan efficiently."
+      }
+    },
+    {
+      "id": "short-answer",
+      "name": "Short Answer Questions",
+      "category": "detail-recognition",
+      "whatIsIt": {
+        "description": "These questions require you to answer with specific information from the passage, following strict word limits. Answers are usually factual details like names, dates, or numbers.",
+        "skillTested": "Precise scanning and extracting factual information."
+      },
+      "example": {
+        "passage": "Marie Curie won the Nobel Prize in Physics in 1903 and the Nobel Prize in Chemistry in 1911, making her the first person to win Nobel Prizes in two different sciences. She conducted her groundbreaking research on radioactivity in Paris.",
+        "questions": [
+          {
+            "id": 1,
+            "text": "In which city did Marie Curie conduct her research? (NO MORE THAN ONE WORD)",
+            "correctAnswer": "Paris",
+            "explanation": "The passage states she conducted research \"in Paris\""
+          },
+          {
+            "id": 2,
+            "text": "When did Curie win her first Nobel Prize? (NO MORE THAN ONE WORD)",
+            "correctAnswer": "1903",
+            "explanation": "The passage mentions \"Nobel Prize in Physics in 1903\""
+          }
+        ]
+      },
+      "commonMistakes": [
+        {
+          "title": "Writing complete sentences",
+          "description": "Short answers don't need full sentences. Just write the specific word(s) requested."
+        },
+        {
+          "title": "Ignoring word limits",
+          "description": "Stick to the word limit exactly. \"NO MORE THAN TWO WORDS\" means 1 or 2 words only."
+        },
+        {
+          "title": "Not using words from the passage",
+          "description": "Your answer must come directly from the passage, not your own knowledge."
+        },
+        {
+          "title": "Including extra information",
+          "description": "Only answer what is asked. Don't add extra details."
+        }
+      ],
+      "strategyTips": [
+        {
+          "step": 1,
+          "title": "Identify the question word",
+          "description": "What, where, when, who, how many - tells you what type of answer to find"
+        },
+        {
+          "step": 2,
+          "title": "Note the word limit",
+          "description": "Check if it's one word, two words, or three words maximum"
+        },
+        {
+          "step": 3,
+          "title": "Scan for keywords",
+          "description": "Find the relevant section quickly using key terms from the question"
+        },
+        {
+          "step": 4,
+          "title": "Extract the precise answer",
+          "description": "Copy the answer exactly as it appears, don't paraphrase"
+        },
+        {
+          "step": 5,
+          "title": "Verify grammar and spelling",
+          "description": "Make sure your answer is grammatically correct and spelled correctly"
+        }
+      ],
+      "timeManagement": {
+        "timePerQuestion": "~45 seconds per question",
+        "tip": "Short answer questions should be quick. They test scanning ability, not reading comprehension."
+      }
+    }
+  ]
+}
+

@@ -1,26 +1,63 @@
-import { useQuery } from "@tanstack/react-query";
-import { Calendar, Target, Clock, TrendingUp, BookOpen, Mic, PenTool, Headphones, Star, Award, CheckCircle } from "lucide-react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { Calendar, Target, Clock, TrendingUp, BookOpen, Mic, PenTool, Headphones, Star, Award, CheckCircle, Plus, Wand2 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useUser } from "../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import backend from "~backend/client";
+import * as progressApi from "@/api/progress";
+import AddTaskModal from "@/components/progress/AddTaskModal";
+import AISuggestDrawer from "@/components/progress/AISuggestDrawer";
+import TaskCard from "@/components/progress/TaskCard";
+import GlowingProgressCard from "@/components/progress/GlowingProgressCard";
 
 export default function Dashboard() {
   const { user } = useUser();
   const navigate = useNavigate();
+  const qc = useQueryClient();
+  const [addOpen, setAddOpen] = useState(false);
+  const [aiOpen, setAiOpen] = useState(false);
+  const [range] = useState<"daily">("daily");
+  const dueISO = new Date().toISOString().slice(0, 16);
 
   const { data: progress } = useQuery({
     queryKey: ["progress", user?.id],
-    queryFn: () => user ? backend.ielts.getProgress(user.id) : null,
+    queryFn: () => user ? backend.ielts.getProgress({ userId: user.id }) : null,
     enabled: !!user,
   });
 
   const { data: dailyGoal } = useQuery({
     queryKey: ["dailyGoal", user?.id],
-    queryFn: () => user ? backend.ielts.getDailyGoal(user.id) : null,
+    queryFn: () => user ? backend.ielts.getDailyGoal({ userId: user.id }) : null,
     enabled: !!user,
+  });
+
+  // Dashboard tasks (compact list)
+  const { data: dashTasks } = useQuery({
+    queryKey: ["dashboard-tasks", user?.id, range],
+    queryFn: () => user ? progressApi.listTasks(user.id, "daily", "all") : Promise.resolve({ tasks: [] }),
+    enabled: !!user,
+  });
+
+  const createTask = useMutation({
+    mutationFn: progressApi.createTask,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["dashboard-tasks"] });
+    },
+  });
+  const updateTask = useMutation({
+    mutationFn: ({ id, updates }: { id: string; updates: Parameters<typeof progressApi.updateTask>[1] }) => progressApi.updateTask(id, updates),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["dashboard-tasks"] });
+    },
+  });
+  const acceptPlan = useMutation({
+    mutationFn: progressApi.acceptSuggestions,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["dashboard-tasks"] });
+    },
   });
 
   if (!user) {
@@ -74,9 +111,7 @@ export default function Dashboard() {
     },
   ];
 
-  const progressPercentage = dailyGoal 
-    ? Math.round((dailyGoal.completedMinutes / dailyGoal.targetMinutes) * 100)
-    : 0;
+  const progressPercentage = 100;
 
   const currentHour = new Date().getHours();
   const timeOfDay = currentHour < 12 ? 'morning' : currentHour < 18 ? 'afternoon' : 'evening';
@@ -118,52 +153,14 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Daily Goal Card */}
-        <Card className="border-2 border-green-100 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-xl">
-              🎯 <span className="font-bold">Today's Study Goal</span>
-              {progressPercentage >= 100 && <CheckCircle className="h-6 w-6 text-green-600" />}
-            </CardTitle>
-            <CardDescription className="text-base">
-              Target: Band {user.targetBand}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-5">
-              <div>
-                <div className="flex justify-between text-lg font-semibold mb-3">
-                  <span>Study Progress</span>
-                  <span className="text-green-600">{dailyGoal?.completedMinutes || 0} / {dailyGoal?.targetMinutes || 30} minutes</span>
-                </div>
-                <Progress 
-                  value={progressPercentage} 
-                  className="h-4 bg-gray-200 dark:bg-gray-700" 
-                  aria-label={`Daily study progress: ${dailyGoal?.completedMinutes || 0} out of ${dailyGoal?.targetMinutes || 30} minutes completed (${Math.round(progressPercentage)}%)`}
-                />
-                <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                  {progressPercentage}% complete {progressPercentage >= 100 ? "🎉" : ""}
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex items-center gap-2 p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg">
-                  <Clock className="h-5 w-5 text-blue-600" />
-                  <div>
-                    <div className="font-semibold">{dailyGoal?.completedMinutes || 0} min</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300">completed</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 p-3 bg-orange-50 dark:bg-orange-950/20 rounded-lg">
-                  <div className="text-xl">🔥</div>
-                  <div>
-                    <div className="font-semibold">{progress?.studyStreak || 0} days</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300">streak</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        {/* New: Glowing Progress Tracker */}
+        <GlowingProgressCard
+          title="Project Progress"
+          percent={progressPercentage}
+          onAiSuggest={() => setAiOpen(true)}
+        />
+
+        {/* Removed Study Tasks block as per new design */}
 
         {/* Practice Areas */}
         <div>
@@ -179,9 +176,11 @@ export default function Dashboard() {
                 "bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20",
                 "bg-gradient-to-br from-purple-50 to-violet-50 dark:from-purple-950/20 dark:to-violet-950/20"
               ];
+              const isReadingPractice = area.title === "Reading Practice";
+              
               return (
-                <Card key={area.title} className={`hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-gray-200 ${bgGradients[index]}`}>
-                  <CardContent className="p-6" onClick={() => navigate(area.href)}>
+                <Card key={area.title} className={`hover:shadow-lg hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-gray-200 ${bgGradients[index]}`}>
+                  <CardContent className="p-6">
                     <div className="flex items-center gap-3 mb-4">
                       <div className={`p-3 rounded-xl ${area.color} shadow-lg`}>
                         <Icon className="h-6 w-6 text-white" />
@@ -193,15 +192,76 @@ export default function Dashboard() {
                     <p className="text-gray-600 dark:text-gray-300 mb-5 leading-relaxed">
                       {area.description}
                     </p>
-                    <Button className={`w-full font-semibold py-2 px-4 ${area.color} hover:opacity-90 transition-opacity`} size="default">
-                      Start Practice →
-                    </Button>
+                    
+                    {/* Special handling for Reading Practice - two buttons */}
+                    {isReadingPractice ? (
+                      <div className="flex gap-2">
+                        <Button 
+                          onClick={() => navigate(area.href)}
+                          className={`flex-1 font-semibold py-2 px-3 text-sm ${area.color} hover:opacity-90 transition-opacity`} 
+                          size="default"
+                        >
+                          Start Practice →
+                        </Button>
+                        <Button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate('/reading/theory');
+                          }}
+                          variant="outline"
+                          className="flex-1 font-semibold py-2 px-3 text-sm border-2 border-green-500 text-green-700 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-950/30"
+                          size="default"
+                        >
+                          Learn Basics →
+                        </Button>
+                      </div>
+                    ) : (
+                      <Button 
+                        onClick={() => navigate(area.href)}
+                        className={`w-full font-semibold py-2 px-4 ${area.color} hover:opacity-90 transition-opacity`} 
+                        size="default"
+                      >
+                        Start Practice →
+                      </Button>
+                    )}
                   </CardContent>
                 </Card>
               );
             })}
           </div>
         </div>
+
+        {/* Inline modals for dashboard */}
+        <AddTaskModal
+          open={addOpen}
+          onClose={() => setAddOpen(false)}
+          onSubmit={(d) => {
+            if (!user) return;
+            createTask.mutate({
+              userId: user.id,
+              name: d.name,
+              category: d.category,
+              difficulty: d.difficulty,
+              estimatedMinutes: d.estimatedMinutes,
+              dueAt: d.dueAt ?? dueISO,
+            });
+          }}
+          defaultDueISO={dueISO}
+        />
+        <AISuggestDrawer
+          open={aiOpen}
+          onClose={() => setAiOpen(false)}
+          initialRange="daily"
+          onGenerate={async ({ range, timeAvailableMinutes }) => {
+            if (!user) return [];
+            const res = await progressApi.generateSuggestions({ userId: user.id, range, timeAvailableMinutes });
+            return res.suggestions;
+          }}
+          onAccept={async (suggestions) => {
+            if (!user) return;
+            await acceptPlan.mutateAsync({ userId: user.id, suggestions });
+          }}
+        />
 
         {/* Vocabulary Builder */}
         <div>
@@ -233,6 +293,8 @@ export default function Dashboard() {
             </CardContent>
           </Card>
         </div>
+
+        
 
         {/* Quick Stats */}
         <div>
