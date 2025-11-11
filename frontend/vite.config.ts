@@ -22,6 +22,17 @@ export default defineConfig(({ command }) => {
       hmr: {
         overlay: false,
       },
+      proxy: {
+        '/progress': {
+          target: 'http://localhost:4000',
+          changeOrigin: true,
+        },
+        // Optional: also proxy user progress/daily-goal if needed from same-origin
+        '/users': {
+          target: 'http://localhost:4000',
+          changeOrigin: true,
+        },
+      },
     },
     build: {
       minify: false,

@@ -1,0 +1,695 @@
+{
+    "testId": 9,
+    "testName": "Test 9",
+    "passages": [
+      {
+        "id": 1,
+        "title": "Biomimicry: Nature's Influence on Modern Engineering",
+        "level": "academic",
+        "estimatedTime": 20,
+        "paragraphs": [
+          {
+            "id": "P1",
+            "text": "For centuries, engineers have grappled with design challenges that nature solved millions of years ago through evolutionary processes. Biomimicry—the practice of emulating biological strategies to solve human engineering problems—has emerged as one of the most promising approaches to sustainable innovation in the twenty-first century. Research conducted by the Biomimicry Institute suggests that nature-inspired designs now account for approximately 12 percent of all engineering patents filed globally, a figure that has tripled since 2005. From self-cleaning surfaces modeled on lotus leaves to adhesives inspired by gecko feet, these innovations demonstrate how biological systems offer solutions that are often more efficient, sustainable, and elegant than conventional engineering approaches. The financial implications are substantial: a 2020 analysis by McKinsey & Company estimated that biomimetic technologies could generate up to $425 billion in annual value across multiple sectors by 2030. Understanding how engineers translate natural phenomena into practical applications requires examining both successful case studies and the systematic methodologies that enable this translation."
+          },
+          {
+            "id": "P2",
+            "text": "The formalization of biomimicry as an engineering discipline began in earnest during the 1950s, though humans have unconsciously mimicked nature for far longer. Early aviation pioneers, for instance, studied bird wing structures, while the invention of Velcro in 1941 directly resulted from Swiss engineer George de Mestral's observation of burrs clinging to his dog's fur. However, modern biomimicry employs far more sophisticated analysis than simple visual imitation. Dr. Julian Vincent's research team at the University of Bath developed what they term 'biological transforms'—systematic methods for identifying functional parallels between biological systems and engineering challenges. This approach involves analyzing biological mechanisms at multiple scales, from molecular structures to ecosystem-level interactions, then abstracting the underlying principles for technological application. A study published in the Journal of Mechanical Design in 2019 examined 340 biomimetic innovations and found that successful applications typically focus on replicating functional principles rather than exact structural copies. This distinction is crucial: engineers don't simply copy nature's forms but rather understand the physical and chemical principles that make biological solutions effective. The process often requires collaboration between biologists, materials scientists, and engineers, each contributing specialized knowledge to translate natural phenomena into manufacturable designs."
+          },
+          {
+            "id": "P3",
+            "text": "Perhaps the most celebrated example of biomimicry in transportation engineering is Japan's Shinkansen bullet train, redesigned in the 1990s after engineers encountered a persistent problem with sonic booms. When the original 500-series trains exited tunnels at speeds exceeding 270 kilometers per hour, they generated disruptive pressure waves that violated noise pollution regulations. Eiji Nakatsu, the train's chief engineer and an avid birdwatcher, found inspiration in the kingfisher—a bird that dives from air into water with minimal splash due to its streamlined beak structure. By reshaping the train's nose to mimic the kingfisher's beak geometry, Nakatsu's team reduced tunnel boom intensity by 30 percent while simultaneously improving energy efficiency. The redesigned train consumed 15 percent less electricity and traveled 10 percent faster than its predecessor, demonstrating how a single biomimetic modification could yield multiple performance benefits. This success prompted widespread interest in applying biological models to various engineering domains. Architects have developed building ventilation systems based on termite mound structures, which maintain stable internal temperatures despite extreme external variations in African climates. The Eastgate Centre in Harare, Zimbabwe, completed in 1996, uses no conventional air conditioning yet maintains comfortable temperatures, reducing energy costs by approximately 90 percent compared to similar-sized buildings. Meanwhile, researchers at MIT have created water collection systems inspired by the Namibian fog-basking beetle, which harvests moisture from desert air using specialized wing surface textures."
+          },
+          {
+            "id": "P4",
+            "text": "More recent biomimetic innovations have focused on materials science, where nature's manufacturing processes offer alternatives to energy-intensive industrial methods. Spider silk, for example, possesses tensile strength comparable to steel despite being produced at ambient temperature using only protein and water, whereas steel production requires temperatures exceeding 1,500 degrees Celsius. Professor Anna Rising at the Karolinska Institute has spent over a decade attempting to replicate spider silk production artificially, achieving fibers that retain approximately 70 percent of natural silk's strength—a significant achievement that could revolutionize textile manufacturing. Similarly, researchers at the University of California, Berkeley, have developed synthetic adhesives modeled on gecko toe pads, which utilize millions of microscopic hair-like structures called setae to create van der Waals forces. These adhesives can support substantial weight, remain effective after thousands of attachment cycles, and leave no residue—properties that have attracted interest from industries ranging from medical devices to robotics. However, translating biological solutions to industrial scale presents substantial challenges. Natural systems often rely on complex hierarchical structures or self-assembly processes that are difficult to replicate using conventional manufacturing techniques. Additionally, biological materials frequently incorporate multiple functions—a bird's feather provides insulation, waterproofing, and aerodynamic performance simultaneously—while engineered materials traditionally optimize for single characteristics. Dr. Marc Weissburg at Georgia Tech argues that successful biomimicry requires accepting that human implementations may diverge significantly from biological models while still embodying core functional principles."
+          },
+          {
+            "id": "P5",
+            "text": "As global pressures mount to develop technologies that minimize environmental impact while maintaining economic viability, biomimicry offers a framework for innovation that inherently aligns with sustainability principles. Biological systems have evolved under constraints of energy efficiency and material economy for billions of years, making them exemplars of resource optimization. A 2021 report from the Ellen MacArthur Foundation suggested that widespread adoption of biomimetic design principles could reduce industrial carbon emissions by up to 38 percent by 2050, though such projections depend heavily on scaling challenges being overcome. Educational institutions are responding to this potential: universities worldwide now offer specialized programs in biomimetic engineering, and the field has developed its own conferences, journals, and professional organizations. Yet some researchers caution against viewing biomimicry as a universal solution. Professor Jeannette Yen at Georgia Institute of Technology notes that billions of years of evolution have also produced countless biological 'dead ends,' and that determining which natural systems offer transferable insights requires sophisticated analytical frameworks. Nevertheless, as computational tools for analyzing biological systems grow more powerful and our understanding of natural mechanisms deepens, the boundary between biology and engineering continues to blur, suggesting that nature's influence on technology will only intensify in coming decades."
+          }
+            ],
+            "questions": [
+{
+  "id": 1,
+  "type": "multiple-choice",
+  "title": "Questions 1-4",
+  "instructions": "Choose the correct letter, A, B, C or D.",
+  "questions": [
+    {
+      "id": 1,
+      "questionText": "According to the passage, what proportion of global engineering patents currently utilize nature-inspired designs?",
+      "options": [
+        "Approximately 5 percent of all patents filed worldwide",
+        "Roughly 12 percent of patents submitted globally",
+        "About one quarter of engineering innovations",
+        "Nearly half of all technological developments"
+      ],
+      "correctAnswer": "Roughly 12 percent of patents submitted globally",
+      "justification": "Paragraph 1 explicitly states that 'nature-inspired designs now account for approximately 12 percent of all engineering patents filed globally.' Option B accurately paraphrases this using 'roughly' for 'approximately' and 'submitted' for 'filed.'",
+      "evidenceQuote": "nature-inspired designs now account for approximately 12 percent of all engineering patents filed globally"
+    },
+    {
+      "id": 2,
+      "questionText": "What can be inferred about the redesign of Japan's Shinkansen bullet train?",
+      "options": [
+        "It was motivated primarily by economic concerns about fuel costs",
+        "It required collaboration between ornithologists and mechanical engineers",
+        "It achieved multiple performance improvements through a single biomimetic modification",
+        "It was the first successful application of biomimicry in transportation engineering"
+      ],
+      "correctAnswer": "It achieved multiple performance improvements through a single biomimetic modification",
+      "justification": "Paragraph 3 states the kingfisher-inspired nose redesign 'reduced tunnel boom intensity by 30 percent while simultaneously improving energy efficiency' and resulted in 15% less electricity consumption and 10% faster speed. The phrase 'demonstrating how a single biomimetic modification could yield multiple performance benefits' directly supports this answer. This requires synthesizing information from multiple sentences.",
+      "evidenceQuote": "By reshaping the train's nose to mimic the kingfisher's beak geometry... reduced tunnel boom intensity by 30 percent while simultaneously improving energy efficiency... consumed 15 percent less electricity and traveled 10 percent faster"
+    },
+    {
+      "id": 3,
+      "questionText": "What is the main point made in paragraph 2?",
+      "options": [
+        "Effective biomimicry replicates functional principles rather than merely copying natural forms",
+        "George de Mestral invented Velcro by observing burrs on his dog's fur",
+        "The University of Bath has developed the most advanced biomimetic research methods",
+        "Modern biomimicry began in the 1950s with formalization as an engineering discipline"
+      ],
+      "correctAnswer": "Effective biomimicry replicates functional principles rather than merely copying natural forms",
+      "justification": "Paragraph 2's central argument is that successful biomimicry 'focus on replicating functional principles rather than exact structural copies' and that 'engineers don't simply copy nature's forms but rather understand the physical and chemical principles.' This main idea is developed through examples (Velcro, biological transforms) and the 2019 study. The other options are supporting details rather than the paragraph's main point.",
+      "evidenceQuote": "successful applications typically focus on replicating functional principles rather than exact structural copies... engineers don't simply copy nature's forms but rather understand the physical and chemical principles"
+    },
+    {
+      "id": 4,
+      "questionText": "Based on information in the passage, which statement best characterizes the author's perspective on the future viability of biomimetic engineering?",
+      "options": [
+        "Biomimicry will inevitably replace conventional engineering approaches within the next decade",
+        "The field faces insurmountable obstacles that will prevent widespread industrial adoption",
+        "Natural systems offer valuable design principles, but biological dead ends require careful analytical frameworks",
+        "Biomimetic technologies will achieve the projected $425 billion value only if educational programs expand significantly"
+      ],
+      "correctAnswer": "Biomimetic technologies will achieve the projected $425 billion value only if educational programs expand significantly",
+      "justification": "The passage presents a balanced, nuanced view. Paragraph 5 mentions both substantial potential (38% emissions reduction possible by 2050, growing educational programs) and important cautions (Prof. Yen's warning about biological 'dead ends' requiring 'sophisticated analytical frameworks'). This answer captures the measured optimism with awareness of challenges, paraphrasing the need to 'determine which natural systems offer transferable insights' through proper frameworks.",
+      "evidenceQuote": "Professor Jeannette Yen notes that billions of years of evolution have also produced countless biological 'dead ends,' and that determining which natural systems offer transferable insights requires sophisticated analytical frameworks"
+    }
+  ]
+},
+{
+  "id": 2,
+  "type": "matching-information",
+  "title": "Questions 5-9",
+  "instructions": "Which paragraph contains the following information? Write the correct letter, A–E, in boxes 1-5 on your answer sheet.",
+  "paragraphs_list": ["A", "B", "C", "D", "E"],
+  "questions": [
+    {
+      "id": 5,
+      "questionText": "projected annual economic value of nature-inspired technologies within the current decade",
+      "correctAnswer": "A",
+      "justification": "Paragraph A provides specific financial projections, stating that a McKinsey analysis estimated biomimetic technologies could generate up to $425 billion in annual value by 2030. This is the only paragraph containing quantitative economic forecasts.",
+      "evidenceQuote": "a 2020 analysis by McKinsey & Company estimated that biomimetic technologies could generate up to $425 billion in annual value across multiple sectors by 2030"
+    },
+    {
+      "id": 6,
+      "questionText": "the distinction between copying natural forms and understanding the functional mechanisms behind biological solutions",
+      "correctAnswer": "B",
+      "justification": "Paragraph B emphasizes that effective biomimicry involves 'replicating functional principles rather than exact structural copies' and that engineers 'don't simply copy nature's forms but rather understand the physical and chemical principles.' This conceptual distinction is unique to this paragraph.",
+      "evidenceQuote": "successful applications typically focus on replicating functional principles rather than exact structural copies... engineers don't simply copy nature's forms but rather understand the physical and chemical principles"
+    },
+    {
+      "id": 7,
+      "questionText": "a high-speed rail system redesigned using aerodynamic features observed in diving waterbirds",
+      "correctAnswer": "C",
+      "justification": "Paragraph C describes how Japan's Shinkansen bullet train was redesigned based on the kingfisher's beak geometry to solve sonic boom problems. This is the only detailed transportation engineering example using avian biomimicry.",
+      "evidenceQuote": "Eiji Nakatsu... found inspiration in the kingfisher—a bird that dives from air into water with minimal splash... By reshaping the train's nose to mimic the kingfisher's beak geometry"
+    },
+    {
+      "id": 8,
+      "questionText": "academic investigation into replicating protein-based fibers produced by arachnids at ambient temperatures",
+      "correctAnswer": "D",
+      "justification": "Paragraph D specifically discusses Professor Anna Rising's research at Karolinska Institute attempting to replicate spider silk production, noting it's produced at ambient temperature using only protein and water. This is the only paragraph with detailed reference to this specific research.",
+      "evidenceQuote": "Spider silk... produced at ambient temperature using only protein and water... Professor Anna Rising at the Karolinska Institute has spent over a decade attempting to replicate spider silk production"
+    },
+    {
+      "id": 9,
+      "questionText": "potential reduction in industrial greenhouse gas output through widespread implementation of biology-inspired engineering principles",
+      "correctAnswer": "E",
+      "justification": "Paragraph E discusses future environmental implications, specifically citing a 2021 Ellen MacArthur Foundation report suggesting biomimetic design could reduce industrial carbon emissions by up to 38 percent by 2050. This environmental impact projection is unique to the conclusion.",
+      "evidenceQuote": "A 2021 report from the Ellen MacArthur Foundation suggested that widespread adoption of biomimetic design principles could reduce industrial carbon emissions by up to 38 percent by 2050"
+    }
+  ]
+},
+{
+  "id": 3,
+  "type": "table-completion",
+  "title": "Questions 10-14",
+  "instructions": "Complete the table below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+  "word_limit": "NO MORE THAN TWO WORDS",
+  "headers": ["Section", "Key Idea", "Answer"],
+  "rows": [
+    {
+      "cells": [
+        { "type": "text", "content": "Current Status and Potential" },
+        { "type": "text", "content": "Nature-inspired designs comprise approximately _____ of global engineering patents" },
+        { "type": "gap", "gapNumber": 10, "correctAnswer": "12 percent" }
+      ]
+    },
+    {
+      "cells": [
+        { "type": "text", "content": "Design Methodology" },
+        { "type": "text", "content": "Successful biomimicry focuses on replicating _____ rather than exact structures" },
+        { "type": "gap", "gapNumber": 11, "correctAnswer": "functional principles" }
+      ]
+    },
+    {
+      "cells": [
+        { "type": "text", "content": "Transportation Engineering" },
+        { "type": "text", "content": "Japanese bullet train nose redesigned based on _____ diving characteristics" },
+        { "type": "gap", "gapNumber": 12, "correctAnswer": "kingfisher" }
+      ]
+    },
+    {
+      "cells": [
+        { "type": "text", "content": "Transportation Engineering" },
+        { "type": "text", "content": "Redesign achieved _____ reduction in sonic boom intensity" },
+        { "type": "gap", "gapNumber": 13, "correctAnswer": "30 percent" }
+      ]
+    },
+    {
+      "cells": [
+        { "type": "text", "content": "Materials Science Innovations" },
+        { "type": "text", "content": "Researchers attempting to synthetically manufacture _____ at ambient temperatures" },
+        { "type": "gap", "gapNumber": 14, "correctAnswer": "spider silk" }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": 10,
+      "gap_number": 10,
+      "correctAnswer": "12 percent",
+      "alternativeAnswers": ["12%", "approximately 12 percent"],
+      "evidenceQuote": "nature-inspired designs now account for approximately 12 percent of all engineering patents filed globally",
+      "evidenceLocation": "P1",
+      "justification": "Paragraph 1 explicitly states that nature-inspired designs account for 'approximately 12 percent' of global patents. The question paraphrases 'account for' as 'comprise' but the answer '12 percent' uses exact words from the passage."
+    },
+    {
+      "id": 11,
+      "gap_number": 11,
+      "correctAnswer": "functional principles",
+      "alternativeAnswers": ["functional principles"],
+      "evidenceQuote": "successful applications typically focus on replicating functional principles rather than exact structural copies",
+      "evidenceLocation": "P2",
+      "justification": "The passage states that successful biomimetic applications 'focus on replicating functional principles rather than exact structural copies.' The question paraphrases 'exact structural copies' as 'exact structures' while preserving the key term 'functional principles.'"
+    },
+    {
+      "id": 12,
+      "gap_number": 12,
+      "correctAnswer": "kingfisher",
+      "alternativeAnswers": ["the kingfisher"],
+      "evidenceQuote": "Eiji Nakatsu... found inspiration in the kingfisher—a bird that dives from air into water with minimal splash",
+      "evidenceLocation": "P3",
+      "justification": "Paragraph 3 describes how the train was inspired by 'the kingfisher—a bird that dives from air into water.' The question paraphrases the diving behavior as 'diving characteristics' while the answer 'kingfisher' is taken directly from the passage."
+    },
+    {
+      "id": 13,
+      "gap_number": 13,
+      "correctAnswer": "30 percent",
+      "alternativeAnswers": ["30%"],
+      "evidenceQuote": "Nakatsu's team reduced tunnel boom intensity by 30 percent",
+      "evidenceLocation": "P3",
+      "justification": "The passage states the redesign 'reduced tunnel boom intensity by 30 percent.' The question uses 'sonic boom' to paraphrase 'tunnel boom' and restructures the information, but the answer '30 percent' is exact words from the passage."
+    },
+    {
+      "id": 14,
+      "gap_number": 14,
+      "correctAnswer": "spider silk",
+      "alternativeAnswers": ["spider silk"],
+      "evidenceQuote": "Spider silk... produced at ambient temperature... Professor Anna Rising... has spent over a decade attempting to replicate spider silk production artificially",
+      "evidenceLocation": "P4",
+      "justification": "Paragraph 4 discusses spider silk being 'produced at ambient temperature' and Professor Rising 'attempting to replicate spider silk production artificially.' The question paraphrases 'replicate... production artificially' as 'synthetically manufacture,' but 'spider silk' is taken directly from the passage."
+    }
+  ]
+}
+]
+},
+    {
+      "id": 2,
+      "title": "The Science of Geothermal Energy: Harnessing Earth's Internal Heat",
+      "level": "academic",
+      "estimatedTime": 20,
+      "paragraphs": [
+        {
+          "id": "P1",
+          "text": "Beneath Earth's surface lies an immense reservoir of thermal energy, generated primarily by the radioactive decay of isotopes within the planet's mantle and core—a resource that has remained largely underexploited despite its considerable potential for sustainable electricity generation and direct heating applications. Geothermal energy, derived from the Greek words for 'earth' and 'heat,' currently contributes a modest 0.3 percent to global electricity production, yet installed capacity has expanded by approximately 52 percent over the past two decades. This thermal resource exists across diverse geological contexts, from high-temperature volcanic systems capable of generating hundreds of megawatts to low-temperature aquifers suitable for district heating schemes. Research conducted by the International Energy Agency suggests that geothermal installations could theoretically supply between 8 and 15 percent of worldwide electricity demand by 2050, provided that significant technological and economic barriers can be overcome. Understanding geothermal energy's viability as a cornerstone of future energy systems requires examining both the physical principles governing heat extraction and the multifaceted challenges that have constrained its widespread adoption. The technology's relationship with subsurface geology, its operational characteristics, and its environmental footprint distinguish it fundamentally from other renewable sources like solar and wind."
+        },
+        {
+          "id": "P2",
+          "text": "Geothermal power generation exploits naturally occurring temperature differentials between Earth's interior and its surface, with the geothermal gradient—the rate at which temperature increases with depth—averaging approximately 25 to 30 degrees Celsius per kilometer in continental crust. Commercial geothermal plants typically access reservoirs at depths ranging from 1,500 to 3,000 meters, where temperatures exceed 150 degrees Celsius, though enhanced geothermal systems (EGS) under development aim to extract heat from impermeable rock formations at depths approaching 5,000 meters. Three principal technologies dominate current electricity generation: dry steam plants, which utilize vapor extracted directly from underground reservoirs; flash steam systems, which exploit pressure reduction to convert hot water into steam; and binary cycle facilities, which employ a secondary working fluid with a lower boiling point than water. The latter configuration, developed extensively since the 1980s, enables exploitation of moderate-temperature resources between 100 and 150 degrees Celsius that were previously considered uneconomical. Dr. Stefan Markovic's team at the University of Iceland demonstrated in 2019 that supercritical geothermal resources—fluids at temperatures exceeding 374 degrees Celsius and pressures above 22 megapascals—could potentially deliver five to ten times the power output of conventional wells, though drilling at these extreme conditions presents formidable engineering challenges. The efficiency of geothermal conversion remains constrained by thermodynamic limitations, with typical power plants achieving thermal efficiencies between 10 and 17 percent, considerably lower than fossil fuel installations but offset by the continuous availability of the thermal resource. Crucially, reservoir permeability and porosity determine the economic viability of geothermal projects, as these properties govern the rate at which heated fluids can be extracted and the volume of accessible thermal energy."
+        },
+        {
+          "id": "P3",
+          "text": "The strategic advantages of geothermal energy stem principally from its capacity for baseload power generation—unlike solar and wind systems, geothermal plants operate continuously with capacity factors typically exceeding 90 percent, making them invaluable for grid stability. Iceland provides perhaps the most compelling case study, deriving approximately 66 percent of its primary energy from geothermal sources, with nearly all space heating in the capital region supplied by low-temperature geothermal water distributed through extensive district heating networks. The economic landscape has evolved considerably: while installation costs remain substantial, ranging from $2,500 to $5,000 per installed kilowatt depending on resource characteristics, levelized costs of electricity from mature geothermal fields have declined to between $0.05 and $0.10 per kilowatt-hour, competitive with conventional generation in favorable geological settings. A 2021 analysis published in Energy Policy examined 347 geothermal installations across 24 countries, finding that plants located in high-enthalpy volcanic environments achieved payback periods averaging 7.3 years, substantially shorter than the 15 to 20 years typical for developments exploiting sedimentary basin resources. Beyond electricity generation, direct-use applications have proliferated, with geothermal heat supporting industrial processes, agricultural greenhouses, aquaculture operations, and even snow melting systems for roads and pavements. The Philippines and Kenya have emerged as leaders in geothermal deployment despite relatively modest economic development, with geothermal contributing 14 percent and 47 percent respectively to their national electricity grids—demonstrating that geological endowment, rather than technological sophistication alone, often determines adoption rates. Geothermal's minimal land footprint, estimated at 404 square meters per gigawatt-hour annually, compares favorably with solar (3,237 square meters) and wind (1,335 square meters), an increasingly significant consideration in densely populated regions."
+        },
+        {
+          "id": "P4",
+          "text": "Despite these advantages, geothermal development confronts substantial technical, economic, and environmental constraints that have impeded expansion beyond geologically favorable regions. The most significant barrier remains resource uncertainty: exploration drilling represents 30 to 50 percent of total project costs, yet approximately one in four exploratory wells fails to encounter commercially viable temperatures or flow rates, creating financial risks that deter investment. Enhanced geothermal systems, which involve hydraulic fracturing of hot impermeable rock to create artificial reservoirs, have provoked concerns about induced seismicity. Projects in Basel, Switzerland (2006) and Pohang, South Korea (2017) were suspended following earthquakes of magnitude 3.4 and 5.5 respectively, attributed to fluid injection operations. While most induced seismic events associated with geothermal operations measure below magnitude 2.0 and cause no structural damage, Professor Regina Haenel at ETH Zurich argues that inadequate seismic monitoring and public communication protocols have undermined social license for EGS development in populated areas. Environmental impacts, though considerably lower than fossil fuel alternatives, are not negligible: geothermal fluids frequently contain dissolved gases including carbon dioxide, hydrogen sulfide, and methane, with total lifecycle emissions ranging from 10 to 120 grams of CO2 equivalent per kilowatt-hour—substantially less than natural gas (450 grams) but variable depending on reservoir chemistry. Water consumption presents an additional concern, particularly in binary cycle plants utilizing evaporative cooling, which may require 7 to 13 liters per kilowatt-hour in arid regions where geothermal resources often coincide with water scarcity. Furthermore, thermal depletion of reservoirs can occur if extraction exceeds natural recharge rates, necessitating careful reservoir management and, in some cases, reinjection of spent fluids to maintain pressure and extend operational lifetimes."
+        },
+        {
+          "id": "P5",
+          "text": "As global energy systems undergo decarbonization, geothermal energy's role remains contested among energy planners and policymakers. Optimists point to emerging technologies—including advanced drilling techniques adapted from oil and gas industries, closed-loop systems that eliminate fracturing requirements, and machine learning algorithms for reservoir optimization—as pathways to unlocking vast unconventional resources beneath most continental regions. A 2020 assessment by researchers at MIT estimated that accessible EGS resources in the United States alone could provide more than 100 gigawatts of baseload capacity, equivalent to the output of approximately one hundred large nuclear reactors. Conversely, skeptics contend that geothermal's geological constraints, coupled with the maturation of battery storage technologies that increasingly enable intermittent renewables to provide firm capacity, may relegate geothermal to niche applications in volcanically active regions. Dr. Yuki Tanaka at Kyoto University suggests that hybrid systems integrating geothermal baseload with variable renewables may represent the optimal configuration, though economic optimization of such arrangements depends heavily on local resource availability and electricity market structures. What remains indisputable is that geothermal represents a proven, scalable technology whose fuller exploitation could contribute meaningfully to climate mitigation objectives, provided that innovation in drilling efficiency, seismic risk management, and financial de-risking mechanisms can overcome current limitations. The trajectory of geothermal deployment over the coming decades will likely depend less on technological possibility than on policy frameworks, carbon pricing mechanisms, and society's willingness to accept the localized risks inherent in tapping Earth's subterranean heat."
+        }
+      ],
+      "questions": [
+        {
+          "id": 4,
+          "type": "true-false-not-given",
+          "title": "Questions 15-18",
+          "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
+          "questions": [
+            {
+              "id": 15,
+              "questionText": "Iceland obtains the majority of its primary energy requirements from geothermal resources.",
+              "correctAnswer": "TRUE",
+              "justification": "Paragraph 3 states that Iceland derives 'approximately 66 percent of its primary energy from geothermal sources.' Since 66 percent constitutes a majority (more than half), the statement accurately paraphrases this information using 'obtains' for 'deriving,' 'majority' for '66 percent,' and 'requirements' for contextual addition.",
+              "evidenceQuote": "Iceland...deriving approximately 66 percent of its primary energy from geothermal sources"
+            },
+            {
+              "id": 16,
+              "questionText": "Geothermal power plants produce higher lifecycle carbon emissions per kilowatt-hour than natural gas facilities.",
+              "correctAnswer": "FALSE",
+              "justification": "Paragraph 4 states that geothermal lifecycle emissions range from '10 to 120 grams of CO2 equivalent per kilowatt-hour—substantially less than natural gas (450 grams).' The statement reverses this relationship by claiming geothermal produces 'higher' emissions than natural gas, making it false.",
+              "evidenceQuote": "lifecycle emissions ranging from 10 to 120 grams of CO2 equivalent per kilowatt-hour—substantially less than natural gas (450 grams)"
+            },
+            {
+              "id": 17,
+              "questionText": "Geothermal energy contributes approximately 47 percent to the Philippines' national electricity grid.",
+              "correctAnswer": "FALSE",
+              "justification": "Paragraph 3 states that 'the Philippines and Kenya' have geothermal contributing '14 percent and 47 percent respectively to their national electricity grids.' The Philippines receives 14 percent, while Kenya receives 47 percent. The statement incorrectly attributes Kenya's 47 percent figure to the Philippines.",
+              "evidenceQuote": "the Philippines and Kenya...geothermal contributing 14 percent and 47 percent respectively to their national electricity grids"
+            },
+            {
+              "id": 18,
+              "questionText": "Binary cycle geothermal plants have lower installation costs per kilowatt than dry steam facilities.",
+              "correctAnswer": "NOT GIVEN",
+              "justification": "The passage mentions three plant types (dry steam, flash steam, binary cycle) in Paragraph 2 and discusses general installation costs ($2,500 to $5,000 per installed kilowatt) in Paragraph 3, but provides no information comparing installation costs between different plant types. This would require specific cost data for each technology type, which is not provided.",
+              "evidenceQuote": "Three principal technologies dominate current electricity generation: dry steam plants...flash steam systems...and binary cycle facilities... installation costs remain substantial, ranging from $2,500 to $5,000 per installed kilowatt"
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "type": "short-answer",
+          "title": "Questions 19-20",
+          "instructions": "Answer the questions below. Choose NO MORE THAN THREE WORDS AND/OR A NUMBER from the passage for each answer.",
+          "questions": [
+            {
+              "id": 19,
+              "questionText": "What percentage of global electricity production currently comes from geothermal energy?",
+              "correctAnswer": "0.3 percent",
+              "alternativeAnswers": ["0.3 percent", "0.3%"],
+              "justification": "Paragraph 1 explicitly states that geothermal energy 'currently contributes a modest 0.3 percent to global electricity production.' Answer uses exact words from passage. Both '0.3 percent' and '0.3%' formats are acceptable.",
+              "evidenceQuote": "currently contributes a modest 0.3 percent to global electricity production"
+            },
+            {
+              "id": 20,
+              "questionText": "What type of geothermal systems involve hydraulic fracturing of hot rock to create artificial reservoirs?",
+              "correctAnswer": "enhanced geothermal systems",
+              "alternativeAnswers": ["enhanced geothermal systems", "EGS"],
+              "justification": "Paragraph 4 describes how 'Enhanced geothermal systems...involve hydraulic fracturing of hot impermeable rock to create artificial reservoirs.' The question paraphrases this description, and the answer 'enhanced geothermal systems' or its abbreviation 'EGS' (both from passage) are acceptable.",
+              "evidenceQuote": "Enhanced geothermal systems, which involve hydraulic fracturing of hot impermeable rock to create artificial reservoirs"
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "type": "flow-chart-completion",
+          "title": "Questions 21-24",
+          "instructions": "Complete the flow chart below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+          "word_limit": "NO MORE THAN TWO WORDS",
+          "flow_chart": {
+            "title": "The Process of Geothermal Electricity Generation",
+            "orientation": "vertical",
+            "nodes": [
+              {
+                "id": "node1",
+                "type": "stage",
+                "content": "Thermal energy originates within Earth's mantle and core",
+                "position": 1
+              },
+              {
+                "id": "gap21",
+                "type": "gap",
+                "content": "Source of internal heat is __________",
+                "gapNumber": 21,
+                "correctAnswer": "radioactive decay",
+                "position": 2
+              },
+              {
+                "id": "node2",
+                "type": "stage",
+                "content": "Temperature increases with depth below Earth's surface",
+                "position": 3
+              },
+              {
+                "id": "gap22",
+                "type": "gap",
+                "content": "This temperature increase is called the __________",
+                "gapNumber": 22,
+                "correctAnswer": "geothermal gradient",
+                "position": 4
+              },
+              {
+                "id": "node3",
+                "type": "stage",
+                "content": "Commercial plants drill wells to access high-temperature underground reservoirs",
+                "position": 5
+              },
+              {
+                "id": "gap23",
+                "type": "gap",
+                "content": "One extraction technology uses __________ systems to convert hot water",
+                "gapNumber": 23,
+                "correctAnswer": "flash steam",
+                "position": 6
+              },
+              {
+                "id": "gap24",
+                "type": "gap",
+                "content": "Alternative __________ facilities employ secondary fluid with lower boiling point",
+                "gapNumber": 24,
+                "correctAnswer": "binary cycle",
+                "position": 7
+              },
+              {
+                "id": "node4",
+                "type": "stage",
+                "content": "Thermal energy converted to electricity with efficiency between 10 and 17 percent",
+                "position": 8
+              }
+            ],
+            "connections": [
+              { "from": "node1", "to": "gap21", "style": "solid" },
+              { "from": "gap21", "to": "node2", "style": "solid" },
+              { "from": "node2", "to": "gap22", "style": "solid" },
+              { "from": "gap22", "to": "node3", "style": "solid" },
+              { "from": "node3", "to": "gap23", "style": "solid" },
+              { "from": "gap23", "to": "gap24", "style": "solid" },
+              { "from": "gap24", "to": "node4", "style": "solid" }
+            ]
+          },
+          "questions": [
+            {
+              "id": 21,
+              "gap_number": 21,
+              "correctAnswer": "radioactive decay",
+              "alternativeAnswers": ["radioactive decay"],
+              "justification": "Paragraph 1 explicitly states that thermal energy beneath Earth's surface is 'generated primarily by the radioactive decay of isotopes within the planet's mantle and core.' The answer uses exact words from the passage.",
+              "evidenceQuote": "generated primarily by the radioactive decay of isotopes within the planet's mantle and core"
+            },
+            {
+              "id": 22,
+              "gap_number": 22,
+              "correctAnswer": "geothermal gradient",
+              "alternativeAnswers": ["geothermal gradient"],
+              "justification": "Paragraph 2 defines 'the geothermal gradient' as 'the rate at which temperature increases with depth.' This is the precise technical term for the temperature increase phenomenon described in the flow chart.",
+              "evidenceQuote": "with the geothermal gradient—the rate at which temperature increases with depth—averaging approximately 25 to 30 degrees Celsius per kilometer"
+            },
+            {
+              "id": 23,
+              "gap_number": 23,
+              "correctAnswer": "flash steam",
+              "alternativeAnswers": ["flash steam"],
+              "justification": "Paragraph 2 describes three principal technologies for electricity generation, including 'flash steam systems' which use pressure reduction to convert hot water into steam. The answer is taken directly from the passage.",
+              "evidenceQuote": "flash steam systems, which exploit pressure reduction to convert hot water into steam"
+            },
+            {
+              "id": 24,
+              "gap_number": 24,
+              "correctAnswer": "binary cycle",
+              "alternativeAnswers": ["binary cycle"],
+              "justification": "Paragraph 2 describes 'binary cycle facilities' as the technology that employs 'a secondary working fluid with a lower boiling point than water.' The answer uses exact words from the passage.",
+              "evidenceQuote": "binary cycle facilities, which employ a secondary working fluid with a lower boiling point than water"
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "type": "matching-sentence-endings",
+          "title": "Questions 25-29",
+          "instructions": "Complete each sentence with the correct ending, A–H.",
+          "sentence_endings": [
+            {
+              "letter": "A",
+              "text": "is termed the geothermal gradient, averaging 25 to 30 degrees Celsius per kilometer."
+            },
+            {
+              "letter": "B",
+              "text": "has expanded by approximately 52 percent over the past two decades."
+            },
+            {
+              "letter": "C",
+              "text": "range from 10 to 120 grams of CO2 equivalent per kilowatt-hour, considerably lower than fossil fuel alternatives."
+            },
+            {
+              "letter": "D",
+              "text": "that closed-loop systems will eliminate all environmental impacts within the next decade."
+            },
+            {
+              "letter": "E",
+              "text": "enable the economic utilization of moderate-temperature resources between 100 and 150 degrees Celsius."
+            },
+            {
+              "letter": "F",
+              "text": "remains resource uncertainty, as approximately one in four exploratory wells fails to find commercially viable conditions."
+            },
+            {
+              "letter": "G",
+              "text": "function continuously with capacity factors typically exceeding 90 percent, ensuring grid stability."
+            },
+            {
+              "letter": "H",
+              "text": "exceed those of conventional fossil fuel installations in most operational contexts."
+            }
+          ],
+          "questions": [
+            {
+              "id": 25,
+              "questionText": "The rate at which temperature increases with depth beneath Earth's surface",
+              "correctAnswer": "A",
+              "justification": "Paragraph 2 explicitly defines the geothermal gradient as 'the rate at which temperature increases with depth—averaging approximately 25 to 30 degrees Celsius per kilometer.' Ending A accurately paraphrases this definition and includes the specific measurement.",
+              "evidenceQuote": "the geothermal gradient—the rate at which temperature increases with depth—averaging approximately 25 to 30 degrees Celsius per kilometer"
+            },
+            {
+              "id": 26,
+              "questionText": "Binary cycle facilities, developed extensively since the 1980s,",
+              "correctAnswer": "E",
+              "justification": "Paragraph 2 states that binary cycle configuration 'developed extensively since the 1980s, enables exploitation of moderate-temperature resources between 100 and 150 degrees Celsius that were previously considered uneconomical.' Ending E paraphrases this as 'economic utilization' and includes the specific temperature range.",
+              "evidenceQuote": "developed extensively since the 1980s, enables exploitation of moderate-temperature resources between 100 and 150 degrees Celsius that were previously considered uneconomical"
+            },
+            {
+              "id": 27,
+              "questionText": "Unlike intermittent renewable sources such as solar and wind, geothermal plants",
+              "correctAnswer": "G",
+              "justification": "Paragraph 3 contrasts geothermal with solar and wind: 'unlike solar and wind systems, geothermal plants operate continuously with capacity factors typically exceeding 90 percent, making them invaluable for grid stability.' Ending G paraphrases this comparison using 'function' for 'operate' and includes the grid stability benefit.",
+              "evidenceQuote": "unlike solar and wind systems, geothermal plants operate continuously with capacity factors typically exceeding 90 percent, making them invaluable for grid stability"
+            },
+            {
+              "id": 28,
+              "questionText": "The most significant barrier to geothermal development",
+              "correctAnswer": "F",
+              "justification": "Paragraph 4 explicitly states 'The most significant barrier remains resource uncertainty: exploration drilling represents 30 to 50 percent of total project costs, yet approximately one in four exploratory wells fails to encounter commercially viable temperatures or flow rates.' Ending F paraphrases this, focusing on the well failure aspect.",
+              "evidenceQuote": "The most significant barrier remains resource uncertainty... approximately one in four exploratory wells fails to encounter commercially viable temperatures or flow rates"
+            },
+            {
+              "id": 29,
+              "questionText": "Environmental analysis reveals that geothermal lifecycle emissions",
+              "correctAnswer": "C",
+              "justification": "Paragraph 4 provides emission data: 'total lifecycle emissions ranging from 10 to 120 grams of CO2 equivalent per kilowatt-hour—substantially less than natural gas (450 grams).' Ending C accurately paraphrases this range and comparison, using 'considerably lower than fossil fuel alternatives' for the comparison.",
+              "evidenceQuote": "total lifecycle emissions ranging from 10 to 120 grams of CO2 equivalent per kilowatt-hour—substantially less than natural gas (450 grams)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+          "id": 3,
+          "title": "Vertical Farming: Reassessing the Promise of Controlled Environment Agriculture",
+          "level": "academic",
+          "estimatedTime": 20,
+          "paragraphs": [
+            {
+              "id": "P1",
+              "text": "As urban populations swell—with projections suggesting that 68 percent of humanity will reside in cities by 2050—the spatial and logistical challenges of feeding concentrated populations have intensified interest in vertical farming, a production method that cultivates crops in stacked layers within controlled indoor environments. Proponents characterize this approach as a transformative solution to food security, citing advantages including year-round production, minimal water consumption, and elimination of pesticide dependence. Global investment in vertical farming enterprises surged from approximately $400 million in 2017 to nearly $2.3 billion by 2021, reflecting substantial confidence in the technology's commercial viability. Yet beneath the optimistic projections and sleek marketing imagery lies a more nuanced reality, one in which economic sustainability, energy intensity, and scalability constraints challenge vertical farming's capacity to meaningfully address global food system vulnerabilities. Evaluating vertical farming's actual—rather than theoretical—contribution to urban food security requires scrutinizing both its technical capabilities and the structural economic factors that determine whether these systems can transition from niche operations to significant components of food infrastructure."
+            },
+            {
+              "id": "P2",
+              "text": "Vertical farming systems employ sophisticated environmental controls to optimize plant growth independently of external climatic conditions, utilizing hydroponic, aeroponic, or aquaponic cultivation methods rather than conventional soil-based agriculture. LED arrays provide photosynthetically active radiation calibrated to specific wavelengths that maximize chlorophyll absorption, while computerized systems regulate temperature, humidity, carbon dioxide concentration, and nutrient delivery with precision unattainable in traditional greenhouses. This technological orchestration enables production densities dramatically exceeding conventional farming: a 2020 study conducted by researchers at Wageningen University demonstrated that vertical systems could yield between 80 and 600 times more lettuce per square meter annually than field cultivation, depending on the number of growing tiers and operational intensity. Dr. Paul Gauthier's team at McGill University has shown that photoperiod manipulation—strategic alteration of light-dark cycles—can accelerate growth rates for certain leafy greens by up to 23 percent compared to natural day-length patterns. Moreover, closed-loop water recycling systems reduce consumption by approximately 95 percent relative to soil-based production, as water transpired by plants is captured, condensed, and recirculated rather than lost to soil absorption or atmospheric evaporation. These technical capabilities have proven particularly effective for high-value crops with short growth cycles, such as lettuce, herbs, microgreens, and certain varieties of strawberries. However, the agronomic advantages concentrate heavily in this narrow crop spectrum, as energy requirements for lighting make cultivation of staple grains or calorie-dense vegetables economically prohibitive under current technological constraints."
+            },
+            {
+              "id": "P3",
+              "text": "The economic equation governing vertical farming remains considerably less favorable than enthusiasts often acknowledge, with capital expenditure and operational costs constraining profitability despite yield advantages. Construction costs for commercial-scale facilities range from $1,800 to $3,500 per square meter of growing space, substantially higher than conventional greenhouses ($250-400 per square meter) or field preparation costs. Electricity consumption represents between 25 and 40 percent of total operational expenditure in most vertical farms, as LED lighting, climate control, and water circulation systems demand continuous power inputs. A 2022 analysis published in Agricultural Systems examined 47 operational vertical farms across North America and Europe, finding that only 38 percent achieved profitability within their first five years of operation, with mean break-even periods extending to 7.8 years. AeroFarms, a prominent New Jersey-based vertical farming company, reported production costs of approximately $4.20 per kilogram for mixed salad greens in 2021—competitive with premium organic produce but substantially exceeding conventional lettuce prices of $1.50-2.00 per kilogram at wholesale. Geographic location significantly influences economic viability: vertical farms proximate to affluent urban markets with high real estate values and expensive conventionally grown produce demonstrate stronger financial performance than those in regions with abundant agricultural land and lower food prices. Japan and Singapore have emerged as particularly hospitable environments for vertical farming, combining dense urban populations, limited arable land, dependence on food imports, and affluent consumers willing to pay premiums for locally grown produce. Conversely, ventures in North American and European markets have encountered substantial difficulties achieving sustainable profitability, with several high-profile companies, including Bowery Farming and Infarm, implementing significant workforce reductions in 2022-2023 amid mounting financial pressures."
+            },
+            {
+              "id": "P4",
+              "text": "Environmental assessments of vertical farming reveal a paradoxical relationship between resource efficiency and sustainability outcomes, largely mediated by energy source composition. While water consumption and land use metrics favor vertical systems overwhelmingly, comprehensive life cycle analyses demonstrate that carbon footprints depend critically on electrical grid characteristics. Research conducted by Professor Viktoriya Stechenko at the University of Copenhagen calculated that vertical farms powered by coal-dominant electricity grids (such as those in Poland or India) generate between 2.1 and 3.7 kilograms of CO2 equivalent per kilogram of lettuce produced, compared to 0.3-0.8 kilograms for conventional field production in temperate climates. Conversely, facilities operating in regions with renewable-heavy grids—such as Iceland's geothermal and hydroelectric system or Norway's predominantly hydropower infrastructure—achieve carbon intensities as low as 0.2 kilograms per kilogram of produce, substantially better than conventional agriculture when transportation emissions are incorporated. The elimination of 'food miles' constitutes a genuine environmental advantage in contexts where produce is otherwise transported long distances, though this benefit diminishes in regions with proximate conventional agricultural production. Pesticide elimination represents an unambiguous environmental gain, as controlled environments physically exclude most pest organisms, though some vertical farms have reported challenges with fungal pathogens in high-humidity growing environments. Nutrient runoff—a major environmental concern in conventional agriculture—is essentially eliminated in properly managed vertical systems, as hydroponic solutions are contained and recycled rather than discharged into watersheds. Nevertheless, Dr. Michael Hamm at Michigan State University argues that focusing environmental analysis narrowly on per-unit resource consumption obscures systemic questions about whether energy-intensive food production represents optimal utilization of renewable electricity that might alternatively displace fossil fuel consumption in other sectors."
+            },
+            {
+              "id": "P5",
+              "text": "Vertical farming's trajectory over the coming decade will likely reflect ongoing tension between technological optimism and economic realism, with the sector's evolution depending heavily on advances in LED efficiency, renewable energy costs, and automation technologies. Current evidence suggests vertical farming will occupy a valuable but fundamentally limited niche within food systems rather than revolutionizing agricultural production broadly. Professor Laura Vearrier at Cornell University contends that vertical farming's most defensible applications involve high-value specialty crops in geographically constrained markets—urban centers in water-scarce regions, isolated communities with minimal agricultural infrastructure, or locations with extreme climates precluding conventional production. The technology may prove particularly valuable for pharmaceutical plant production, rare herbs, and other ultra-high-value applications where premium pricing can absorb energy costs. However, aspirations of addressing global food security or substantially reducing agriculture's environmental footprint appear considerably premature absent breakthroughs reducing energy consumption by an order of magnitude. As renewable energy becomes cheaper and LED technology continues improving—with efficacy gains of approximately 3-5 percent annually—the economic calculus will gradually shift, potentially expanding vertical farming's viable crop range. What remains clear is that vertical farming represents not a replacement for conventional agriculture but rather a complementary technology whose appropriate deployment requires careful consideration of local energy systems, market conditions, and realistic assessment of both capabilities and constraints."
+            }
+          ],
+          "questions": [
+            {
+              "id": 7,
+              "type": "matching-headings",
+              "title": "Questions 30-34",
+              "instructions": "The reading passage has five paragraphs, A-E. Choose the correct heading for paragraphs A-E from the list of headings below. Write the correct number, i-viii, in boxes 26-30 on your answer sheet.",
+              
+              "questions": [
+                {
+                  "id": 30,
+                  "questionText": "Paragraph A",
+                  "options": [
+                    "How electricity grid composition determines environmental credentials",
+                    "Sophisticated control systems delivering results for limited crop varieties",
+                    "Achieving significant water conservation through recycling technologies",
+                    "The gap between promotional narratives and economic realities",
+                    "Financial obstacles and geographic variations in commercial viability",
+                    "Asian markets demonstrating successful vertical farming operations",
+                    "A supplementary technology with constrained practical applications",
+                    "The advantages of pesticide-free production in urban environments"
+                  ],
+                  "correctAnswer": "The gap between promotional narratives and economic realities",
+                  "justification": "Paragraph A contrasts surging investment ($400 million to $2.3 billion) and 'optimistic projections' with 'a more nuanced reality' involving 'economic sustainability, energy intensity, and scalability constraints.' This heading captures the disparity between enthusiasm ('promotional narratives') and actual challenges ('economic realities').",
+                  "evidenceQuote": "beneath the optimistic projections and sleek marketing imagery lies a more nuanced reality, one in which economic sustainability, energy intensity, and scalability constraints challenge vertical farming's capacity"
+                },
+                {
+                  "id": 31,
+                  "questionText": "Paragraph B",
+                  "options": [
+                    "How electricity grid composition determines environmental credentials",
+                    "Sophisticated control systems delivering results for limited crop varieties",
+                    "Achieving significant water conservation through recycling technologies",
+                    "The gap between promotional narratives and economic realities",
+                    "Financial obstacles and geographic variations in commercial viability",
+                    "Asian markets demonstrating successful vertical farming operations",
+                    "A supplementary technology with constrained practical applications",
+                    "The advantages of pesticide-free production in urban environments"
+                  ],
+                  "correctAnswer": "Sophisticated control systems delivering results for limited crop varieties",
+                  "justification": "Paragraph B describes vertical farming's 'sophisticated environmental controls' (LED arrays, computerized systems) that enable dramatic yield increases ('80-600 times more lettuce'). However, it concludes that 'agronomic advantages concentrate heavily in this narrow crop spectrum' of high-value crops, while 'energy requirements make cultivation of staple grains economically prohibitive.' This heading accurately captures both technical capability and limitation.",
+                  "evidenceQuote": "technical capabilities have proven particularly effective for high-value crops with short growth cycles... However, the agronomic advantages concentrate heavily in this narrow crop spectrum"
+                },
+                {
+                  "id": 32,
+                  "questionText": "Paragraph C",
+                  "options": [
+                    "How electricity grid composition determines environmental credentials",
+                    "Sophisticated control systems delivering results for limited crop varieties",
+                    "Achieving significant water conservation through recycling technologies",
+                    "The gap between promotional narratives and economic realities",
+                    "Financial obstacles and geographic variations in commercial viability",
+                    "Asian markets demonstrating successful vertical farming operations",
+                    "A supplementary technology with constrained practical applications",
+                    "The advantages of pesticide-free production in urban environments"
+                  ],
+                  "correctAnswer": "Financial obstacles and geographic variations in commercial viability",
+                  "justification": "Paragraph C states 'The economic equation governing vertical farming remains considerably less favorable' and details multiple financial challenges: high construction costs, electricity representing 25-40% of operational costs, only 38% achieving profitability within 5 years. It emphasizes that 'Geographic location significantly influences economic viability,' contrasting successful Japan/Singapore operations with struggling North American/European ventures.",
+                  "evidenceQuote": "The economic equation governing vertical farming remains considerably less favorable than enthusiasts often acknowledge... Geographic location significantly influences economic viability"
+                },
+                {
+                  "id": 33,
+                  "questionText": "Paragraph D",
+                  "options": [
+                    "How electricity grid composition determines environmental credentials",
+                    "Sophisticated control systems delivering results for limited crop varieties",
+                    "Achieving significant water conservation through recycling technologies",
+                    "The gap between promotional narratives and economic realities",
+                    "Financial obstacles and geographic variations in commercial viability",
+                    "Asian markets demonstrating successful vertical farming operations",
+                    "A supplementary technology with constrained practical applications",
+                    "The advantages of pesticide-free production in urban environments"
+                  ],
+                  "correctAnswer": "How electricity grid composition determines environmental credentials",
+                  "justification": "Paragraph D's opening states environmental outcomes are 'largely mediated by energy source composition,' then provides detailed analysis showing carbon footprints 'depend critically on electrical grid characteristics': coal-dominant grids produce 2.1-3.7 kg CO2/kg lettuce (worse than conventional), while renewable-heavy grids achieve 0.2 kg (better than conventional). This heading accurately captures the paragraph's central argument about energy dependency.",
+                  "evidenceQuote": "Environmental assessments of vertical farming reveal a paradoxical relationship between resource efficiency and sustainability outcomes, largely mediated by energy source composition"
+                },
+                {
+                  "id": 34,
+                  "questionText": "Paragraph E",
+                  "options": [
+                    "How electricity grid composition determines environmental credentials",
+                    "Sophisticated control systems delivering results for limited crop varieties",
+                    "Achieving significant water conservation through recycling technologies",
+                    "The gap between promotional narratives and economic realities",
+                    "Financial obstacles and geographic variations in commercial viability",
+                    "Asian markets demonstrating successful vertical farming operations",
+                    "A supplementary technology with constrained practical applications",
+                    "The advantages of pesticide-free production in urban environments"
+                  ],
+                  "correctAnswer": "A supplementary technology with constrained practical applications",
+                  "justification": "Paragraph E concludes that 'vertical farming will occupy a valuable but fundamentally limited niche rather than revolutionizing agricultural production,' with Professor Vearrier identifying 'most defensible applications' as 'high-value specialty crops in geographically constrained markets.' The paragraph emphasizes vertical farming is 'not a replacement for conventional agriculture but rather a complementary technology.' This heading captures the conclusion that the role will be limited rather than transformative.",
+                  "evidenceQuote": "vertical farming will occupy a valuable but fundamentally limited niche within food systems rather than revolutionizing agricultural production broadly... not a replacement for conventional agriculture but rather a complementary technology"
+                }
+              ]
+            },
+            {
+              "id": 8,
+              "type": "true-false-not-given",
+              "title": "Questions 35-38",
+              "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
+              "questions": [
+                {
+                  "id": 35,
+                  "questionText": "Closed-loop recycling technologies in vertical farming systems reduce water usage by approximately 95 percent compared to traditional soil-based agriculture.",
+                  "correctAnswer": "TRUE",
+                  "justification": "Paragraph 2 states that 'closed-loop water recycling systems reduce consumption by approximately 95 percent relative to soil-based production.' The statement paraphrases 'consumption' as 'usage,' 'relative to' as 'compared to,' and 'soil-based production' as 'traditional soil-based agriculture,' accurately preserving the 95% reduction figure.",
+                  "evidenceQuote": "closed-loop water recycling systems reduce consumption by approximately 95 percent relative to soil-based production"
+                },
+                {
+                  "id": 36,
+                  "questionText": "Vertical farming facilities powered by coal-dominant electricity grids produce lower carbon emissions per kilogram of produce than conventional field cultivation.",
+                  "correctAnswer": "FALSE",
+                  "justification": "Paragraph 4 states that vertical farms with coal-dominant grids 'generate between 2.1 and 3.7 kilograms of CO2 equivalent per kilogram of lettuce produced, compared to 0.3-0.8 kilograms for conventional field production.' The statement reverses this relationship by claiming vertical farms produce 'lower' emissions when they actually produce substantially higher emissions (2.1-3.7 vs 0.3-0.8).",
+                  "evidenceQuote": "vertical farms powered by coal-dominant electricity grids...generate between 2.1 and 3.7 kilograms of CO2 equivalent per kilogram...compared to 0.3-0.8 kilograms for conventional field production"
+                },
+                {
+                  "id": 37,
+                  "questionText": "The majority of commercial-scale vertical farming operations achieved profitability within their first five years of operation.",
+                  "correctAnswer": "FALSE",
+                  "justification": "Paragraph 3 states that 'only 38 percent achieved profitability within their first five years of operation,' which means 38% achieved profitability—a minority, not a majority. The statement changes 'only 38 percent' (minority) to 'majority' (over 50%), making it false.",
+                  "evidenceQuote": "only 38 percent achieved profitability within their first five years of operation"
+                },
+                {
+                  "id": 38,
+                  "questionText": "Vertical farming systems utilizing aeroponic methods achieve higher yields per square meter than those using hydroponic cultivation.",
+                  "correctAnswer": "NOT GIVEN",
+                  "justification": "Paragraph 2 mentions that vertical farming employs 'hydroponic, aeroponic, or aquaponic cultivation methods' and provides yield data (80-600 times more lettuce per square meter), but never compares yields between these different cultivation methods. This would require specific comparative data on hydroponics versus aeroponics versus aquaponics performance, which is not provided in the passage.",
+                  "evidenceQuote": "vertical farming systems employ...hydroponic, aeroponic, or aquaponic cultivation methods...could yield between 80 and 600 times more lettuce per square meter"
+                }
+              ]
+            },
+            {
+              "id": 9,
+              "type": "short-answer",
+              "title": "Questions 39-40",
+              "instructions": "Answer the questions below. Choose NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer.",
+              "questions": [
+                {
+                  "id": 39,
+                  "questionText": "What percentage of humanity is projected to reside in cities by 2050?",
+                  "correctAnswer": "68 percent",
+                  "alternativeAnswers": ["68 percent", "68%"],
+                  "justification": "Paragraph 1 explicitly states 'projections suggesting that 68 percent of humanity will reside in cities by 2050.' Answer uses exact words from passage. Both '68 percent' and '68%' formats are acceptable.",
+                  "evidenceQuote": "projections suggesting that 68 percent of humanity will reside in cities by 2050"
+                },
+                {
+                  "id": 40,
+                  "questionText": "What percentage of commercial vertical farms achieved profitability within their first five years of operation?",
+                  "correctAnswer": "38 percent",
+                  "alternativeAnswers": ["38 percent", "38%"],
+                  "justification": "Paragraph 3 states that a 2022 analysis 'finding that only 38 percent achieved profitability within their first five years of operation.' The question paraphrases 'examined 47 operational vertical farms' as 'commercial vertical farms' and answer '38 percent' is exact words from passage.",
+                  "evidenceQuote": "only 38 percent achieved profitability within their first five years of operation"
+                }
+              ]
+            }
+            ]
+            }
+            ]
+        }

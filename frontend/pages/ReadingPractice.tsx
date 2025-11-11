@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { BookOpen, Clock, Send, RotateCcw, Highlighter } from "lucide-react";
+import { BookOpen, Clock, Send, RotateCcw, Highlighter, CheckCircle, XCircle, Lightbulb, AlertCircle, Sparkles, GraduationCap } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -11,9 +11,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 import TextHighlighter from "../components/TextHighlighter";
-import backend from "~backend/client";
+import ReadingTheoryQuiz from "@/components/ReadingTheoryQuiz";
+import backend, { Local } from "~backend/client";
 import { getAIFeedback } from '../services/aiFeedback';
+import NoteCompletion from "@/components/questions/NoteCompletion";
 
 interface Highlight {
   id: number;
@@ -50,7 +53,7 @@ interface TableCompletionQuestion {
   }>;
 }
 
-// Collapsible question result component
+// Collapsible question result component - Eye-comfortable design
 function QuestionResult({ 
   question, 
   answer, 
@@ -73,100 +76,227 @@ function QuestionResult({
 
   return (
     <div 
-      className={`p-3 rounded-lg border-l-4 cursor-pointer transition-colors ${
+      className={`p-5 rounded-md border-l-2 cursor-pointer transition-colors ${
         isCorrect 
-          ? 'bg-green-50 dark:bg-green-900/20 border-green-500 hover:bg-green-100 dark:hover:bg-green-900/30' 
-          : 'bg-red-50 dark:bg-red-900/20 border-red-500 hover:bg-red-100 dark:hover:bg-red-900/30'
+          ? 'bg-slate-50 dark:bg-slate-800/30 border-emerald-600/80 hover:bg-slate-100 dark:hover:bg-slate-800/50' 
+          : 'bg-slate-50 dark:bg-slate-800/30 border-rose-700/80 hover:bg-slate-100 dark:hover:bg-slate-800/50'
       }`}
       onClick={() => setExpanded(!expanded)}
     >
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className={`w-6 h-6 rounded-full flex items-center justify-center text-white font-bold text-sm ${
-            isCorrect ? 'bg-green-500' : 'bg-red-500'
-          }`}>
-            {isCorrect ? '✓' : '✗'}
-          </div>
-          <span className="font-medium">
+      {/* Sticky Header */}
+      <div className={`flex items-center justify-between ${expanded ? 'sticky top-0 z-10 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 pb-3 mb-6 -mx-5 px-5' : ''}`}>
+        <div className="flex items-center gap-3">
+          {isCorrect ? (
+            <CheckCircle className="w-5 h-5 text-emerald-600/80 dark:text-emerald-500/80" />
+          ) : (
+            <XCircle className="w-5 h-5 text-rose-700/80 dark:text-rose-600/80" />
+          )}
+          <span className="font-medium text-slate-700 dark:text-slate-300">
             Q{question.id}
           </span>
         </div>
-        <span className="text-sm text-gray-500">
-          {expanded ? '▼' : '▶'}
+        <span className="text-sm text-slate-500 dark:text-slate-400">
+          {expanded ? '▼' : '▶'} Click for details
         </span>
       </div>
       
       {expanded && (
-        <div className="mt-3 pl-8 text-sm space-y-2 border-t pt-3">
-          <p><strong>Question:</strong> {question.questionText || question.sentenceBeginning}</p>
-          <p><strong>Your answer:</strong> <span className="font-semibold">{answer || "Not answered"}</span></p>
-          <p><strong>Correct answer:</strong> <span className="font-semibold text-green-700 dark:text-green-400">{correctAnswer}</span></p>
-          <p className={isCorrect ? "text-green-700 dark:text-green-400" : "text-red-700 dark:text-red-400"}>
-            {explanation}
-          </p>
+        <div className="space-y-6 text-base leading-relaxed">
+          {/* Question Text */}
+          <div>
+            <p className="text-lg font-medium text-slate-700 dark:text-slate-300 leading-relaxed">
+              {question.questionText || question.sentenceBeginning}
+            </p>
+          </div>
           
-          {/* NEW: AI Feedback Section */}
-          {!isCorrect && onGetAIFeedback && (
-            <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-              {!aiFeedback && !isLoadingFeedback && (
-                <Button 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onGetAIFeedback();
-                  }}
-                  size="sm"
-                  variant="outline"
-                  className="w-full bg-white hover:bg-blue-50"
-                >
-                  🤖 Get AI Tutor Feedback
-                </Button>
+          {/* Answer Comparison - Simplified */}
+          <div className="space-y-4">
+            <div className="flex items-start gap-3 p-4 border-l-2 border-slate-300 dark:border-slate-600 bg-transparent">
+              {isCorrect ? (
+                <CheckCircle className="w-4 h-4 text-emerald-600/80 dark:text-emerald-500/80 mt-0.5 flex-shrink-0" />
+              ) : (
+                <XCircle className="w-4 h-4 text-rose-700/80 dark:text-rose-600/80 mt-0.5 flex-shrink-0" />
               )}
+              <div>
+                <p className="text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
+                  Your Answer
+                </p>
+                <p className="text-slate-700 dark:text-slate-300">
+                  {answer || "Not answered"}
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex items-start gap-3 p-4 border-l-2 border-emerald-600/80 bg-transparent">
+              <CheckCircle className="w-4 h-4 text-emerald-600/80 dark:text-emerald-500/80 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
+                  Correct Answer
+                </p>
+                <p className="text-slate-700 dark:text-slate-300 font-medium">
+                  {correctAnswer}
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          {/* For CORRECT answers */}
+          {isCorrect && (
+            <div className="space-y-6 divide-y divide-slate-200 dark:divide-slate-700">
+              <div className="pt-6 first:pt-0">
+                <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                  {explanation}
+                </p>
+              </div>
               
-              {isLoadingFeedback && (
-                <div className="text-center py-2">
-                  <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-                  <p className="text-sm text-blue-700 dark:text-blue-300 mt-2">AI is analyzing...</p>
+              {/* Show evidence quote if available */}
+              {question.evidenceQuote && (
+                <div className="pt-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <BookOpen className="w-5 h-5 text-amber-600 dark:text-amber-500" />
+                    <h4 className="font-medium text-slate-700 dark:text-slate-300">Evidence from Passage</h4>
+                  </div>
+                  <div className="pl-7 border-l-2 border-amber-600/50 dark:border-amber-500/50">
+                    <p className="text-slate-700 dark:text-slate-300 leading-loose italic">
+                      "{question.evidenceQuote}"
+                    </p>
+                  </div>
                 </div>
               )}
               
-              {aiFeedback && (
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-lg">🤖</span>
-                    <h4 className="font-semibold text-blue-700 dark:text-blue-300">AI Tutor Feedback</h4>
+              {/* Show justification if available */}
+              {question.justification && (
+                <div className="pt-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Lightbulb className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                    <h4 className="font-medium text-slate-700 dark:text-slate-300">Why This is Correct</h4>
                   </div>
-                  
-                  <div className="bg-white dark:bg-gray-800 p-3 rounded border">
-                    <p className="text-sm">{aiFeedback.feedback}</p>
+                  <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                    {question.justification}
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+          
+          {/* For INCORRECT answers */}
+          {!isCorrect && (
+            <div className="space-y-6 divide-y divide-slate-200 dark:divide-slate-700">
+              {/* Basic explanation */}
+              <div className="pt-6 first:pt-0">
+                <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                  {explanation}
+                </p>
+              </div>
+              
+              {/* Show evidence quote if available in test data */}
+              {question.evidenceQuote && (
+                <div className="pt-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <BookOpen className="w-5 h-5 text-amber-600 dark:text-amber-500" />
+                    <h4 className="font-medium text-slate-700 dark:text-slate-300">Evidence from Passage</h4>
                   </div>
+                  <div className="pl-7 border-l-2 border-amber-600/50 dark:border-amber-500/50">
+                    <p className="text-slate-700 dark:text-slate-300 leading-loose italic">
+                      "{question.evidenceQuote}"
+                    </p>
+                  </div>
+                </div>
+              )}
+              
+              {/* Show justification if available in test data */}
+              {question.justification && (
+                <div className="pt-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Lightbulb className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                    <h4 className="font-medium text-slate-700 dark:text-slate-300">Why the Correct Answer is Right</h4>
+                  </div>
+                  <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                    {question.justification}
+                  </p>
+                </div>
+              )}
+              
+              {/* AI Feedback Section - Deeper Analysis */}
+              {onGetAIFeedback && (
+                <div className="pt-6">
+                  {!aiFeedback && !isLoadingFeedback && (
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onGetAIFeedback();
+                      }}
+                      className="w-full px-6 py-3 bg-slate-700 hover:bg-slate-600 dark:bg-slate-600 dark:hover:bg-slate-500 text-white rounded-md transition-colors font-medium text-base flex items-center justify-center gap-2"
+                    >
+                      <Sparkles className="w-5 h-5" />
+                      Get Deeper AI Analysis
+                    </button>
+                  )}
                   
-                  <details className="cursor-pointer">
-                    <summary className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline">
-                      📖 View Detailed Analysis
-                    </summary>
-                    <div className="mt-3 space-y-3 pl-4">
-                      <div>
-                        <strong className="text-xs uppercase text-gray-500">Reasoning:</strong>
-                        <p className="text-sm text-gray-700 dark:text-gray-300 mt-1 whitespace-pre-line">
+                  {isLoadingFeedback && (
+                    <div className="text-center py-4">
+                      <div className="inline-block animate-spin rounded-full h-10 w-10 border-b-2 border-slate-600"></div>
+                      <p className="text-base text-slate-600 dark:text-slate-400 mt-3">AI is analyzing your answer...</p>
+                    </div>
+                  )}
+                  
+                  {aiFeedback && (
+                    <div className="space-y-6 divide-y divide-slate-200 dark:divide-slate-700">
+                      {/* AI Reasoning - Additional analysis */}
+                      <div className="pt-6 first:pt-0">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Sparkles className="w-5 h-5 text-violet-600 dark:text-violet-500" />
+                          <h4 className="font-medium text-slate-700 dark:text-slate-300">AI Tutor's Detailed Analysis</h4>
+                        </div>
+                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line">
                           {aiFeedback.reasoning}
                         </p>
                       </div>
                       
-                      <div>
-                        <strong className="text-xs uppercase text-gray-500">Strategy Tip:</strong>
-                        <p className="text-sm text-blue-700 dark:text-blue-300 mt-1">
-                          💡 {aiFeedback.strategy_tip}
+                      {/* Additional Evidence Quote from AI */}
+                      <div className="pt-6">
+                        <div className="flex items-center gap-2 mb-3">
+                          <BookOpen className="w-5 h-5 text-amber-600 dark:text-amber-500" />
+                          <h4 className="font-medium text-slate-700 dark:text-slate-300">Additional Evidence (AI-Found)</h4>
+                        </div>
+                        <div className="pl-7 border-l-2 border-amber-600/50 dark:border-amber-500/50 mb-3">
+                          <p className="text-slate-700 dark:text-slate-300 leading-loose italic">
+                            "{aiFeedback.passage_reference}"
+                          </p>
+                        </div>
+                        <p className="text-sm text-emerald-600 dark:text-emerald-500 flex items-center gap-1.5">
+                          <CheckCircle className="w-3.5 h-3.5" />
+                          This quote supports the correct answer
                         </p>
                       </div>
                       
-                      <div>
-                        <strong className="text-xs uppercase text-gray-500">Passage Reference:</strong>
-                        <p className="text-sm italic text-gray-600 dark:text-gray-400 mt-1 border-l-2 border-gray-300 pl-3">
-                          "{aiFeedback.passage_reference}"
+                      {/* AI Recommendations */}
+                      <div className="pt-6">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Lightbulb className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                          <h4 className="font-medium text-slate-700 dark:text-slate-300">AI Tutor's Recommendations</h4>
+                        </div>
+                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                          {aiFeedback.feedback}
                         </p>
                       </div>
+                      
+                      {/* Strategy Tip (collapsible) */}
+                      <div className="pt-6">
+                        <details className="cursor-pointer group">
+                          <summary className="text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 flex items-center gap-2">
+                            <Sparkles className="w-4 h-4" />
+                            View Strategy Tips for This Question Type
+                          </summary>
+                          <div className="mt-4 pl-6 border-l-2 border-slate-200 dark:border-slate-700">
+                            <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                              {aiFeedback.strategy_tip}
+                            </p>
+                          </div>
+                        </details>
+                      </div>
                     </div>
-                  </details>
+                  )}
                 </div>
               )}
             </div>
@@ -207,6 +337,54 @@ function SummaryCompletion({
   handleAnswerChange: (qid: number, value: string) => void;
   summaryInputRefs: React.MutableRefObject<Record<number, HTMLInputElement | null>>;
 }) {
+  // Parse IELTS-style word limit rules
+  const parseWordLimit = (ruleText: string | undefined) => {
+    const text = (ruleText || "").toUpperCase();
+    let maxWords = 2;
+    if (text.includes("ONE WORD")) maxWords = 1;
+    else if (text.includes("TWO WORD")) maxWords = 2;
+    else if (text.includes("THREE WORD")) maxWords = 3;
+    else {
+      // Fallback: try to read a number if present
+      const n = parseInt((text.match(/\d+/)?.[0] as string) || "", 10);
+      if (!isNaN(n)) maxWords = n;
+    }
+    const allowNumber = text.includes("NUMBER");
+    return { maxWords, allowNumber };
+  };
+
+  const { maxWords, allowNumber } = parseWordLimit(group?.word_limit);
+
+  // Count words with IELTS rules: hyphenated counts as one; numbers count as one if allowed
+  const countTokens = (value: string) => {
+    const trimmed = value.trim();
+    if (!trimmed) return { words: 0, hasInvalidNumber: false };
+    const tokens = trimmed.split(/\s+/);
+    let words = 0;
+    let hasInvalidNumber = false;
+    for (const token of tokens) {
+      const isNumber = /^\d+([.,]\d+)?$/.test(token);
+      if (isNumber) {
+        if (allowNumber) {
+          words += 1;
+        } else {
+          // Still count it but flag invalid so the UI can warn
+          words += 1;
+          hasInvalidNumber = true;
+        }
+        continue;
+      }
+      // Treat hyphenated compound as one word
+      const isWord = /^[A-Za-z]+(?:-[A-Za-z]+)*$/.test(token);
+      if (isWord) {
+        words += 1;
+        continue;
+      }
+      // Any other token (symbols etc.) does not increase count
+    }
+    return { words, hasInvalidNumber };
+  };
+  
   const raw: string = group?.structure || "";
   const normalized = raw.replace(/<strong>\((\d+)\)_____<\/strong>/g, "($1)_____");
   const stripped = normalized
@@ -228,6 +406,9 @@ function SummaryCompletion({
               const labelNum = match[1];
               const q = Array.isArray(group?.questions) ? group.questions[gapIndex++] : null;
               const qid = q?.id as number | undefined;
+              const value = (qid ? (answers[qid] || "") : "") as string;
+              const { words, hasInvalidNumber } = countTokens(value);
+              const exceeded = words > maxWords;
               return (
                 <span 
                   key={`gap-${idx}`} 
@@ -240,8 +421,10 @@ function SummaryCompletion({
                     type="text"
                     tabIndex={0}
                     disabled={!!result}
-                    className="px-2 py-1 border rounded text-xs w-28 bg-white dark:bg-gray-900 relative z-20 pointer-events-auto focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value={(qid ? (answers[qid] || "") : "") as string}
+                    className={`px-2 py-1 border rounded text-xs w-28 bg-white dark:bg-gray-900 relative z-20 pointer-events-auto focus:outline-none focus:ring-2 ${
+                      exceeded || hasInvalidNumber ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'
+                    }`}
+                    value={value}
                     ref={(el) => {
                       if (qid != null) summaryInputRefs.current[qid] = el;
                     }}
@@ -267,6 +450,20 @@ function SummaryCompletion({
                     onKeyDown={(e) => e.stopPropagation()}
                     onKeyUp={(e) => e.stopPropagation()}
                   />
+                  {!result && (
+                    <span
+                      className={`text-[10px] ${
+                        exceeded || hasInvalidNumber ? 'text-red-600' : 'text-gray-500'
+                      }`}
+                      title={
+                        hasInvalidNumber && !allowNumber
+                          ? 'Numbers are not allowed for this question'
+                          : ''
+                      }
+                    >
+                      {words}/{maxWords}
+                    </span>
+                  )}
                 </span>
               );
             }
@@ -680,6 +877,7 @@ export default function ReadingPractice() {
   const [startTime, setStartTime] = useState<number | null>(null);
   const [result, setResult] = useState<any>(null);
   const [highlights, setHighlights] = useState<Highlight[]>([]);
+  const [questionHighlights, setQuestionHighlights] = useState<Record<number, Highlight[]>>({});
   const [activeTab, setActiveTab] = useState("passage");
   const [viewMode, setViewMode] = useState<"tabs" | "split">("tabs");
   const [selectedTestIndex, setSelectedTestIndex] = useState<number | null>(null);
@@ -692,6 +890,11 @@ export default function ReadingPractice() {
   const queryClient = useQueryClient();
 
   const summaryInputRefs = useRef<Record<number, HTMLInputElement | null>>({});
+
+  // Per-question highlights helpers (keep question highlights isolated by id)
+  const getQHighlights = (qid: number) => questionHighlights[qid] || [];
+  const setQHighlightsFor = (qid: number) => (hs: Highlight[]) =>
+    setQuestionHighlights(prev => ({ ...prev, [qid]: hs }));
 
   const formatTime = (secs: number) => {
     const m = Math.floor(secs / 60);
@@ -714,6 +917,42 @@ export default function ReadingPractice() {
       }
     }
     return result;
+  };
+
+  // Helpers for sentence-completion word limits (IELTS rules)
+  const parseSentenceWordLimit = (ruleText?: string) => {
+    const text = (ruleText || "").toUpperCase();
+    let maxWords = 2;
+    if (text.includes("ONE WORD")) maxWords = 1;
+    else if (text.includes("TWO WORD")) maxWords = 2;
+    else if (text.includes("THREE WORD")) maxWords = 3;
+    else {
+      const n = parseInt((text.match(/\d+/)?.[0] as string) || "", 10);
+      if (!isNaN(n)) maxWords = n;
+    }
+    const allowNumber = text.includes("NUMBER");
+    return { maxWords, allowNumber };
+  };
+
+  const countAnswerTokens = (value: string, allowNumber: boolean) => {
+    const trimmed = (value || "").trim();
+    if (!trimmed) return { words: 0, hasInvalidNumber: false };
+    const tokens = trimmed.split(/\s+/);
+    let words = 0;
+    let hasInvalidNumber = false;
+    for (const token of tokens) {
+      const isNumber = /^\d+([.,]\d+)?$/.test(token);
+      if (isNumber) {
+        if (!allowNumber) hasInvalidNumber = true;
+        words += 1;
+        continue;
+      }
+      const isWord = /^[A-Za-z]+(?:-[A-Za-z]+)*$/.test(token);
+      if (isWord) {
+        words += 1;
+      }
+    }
+    return { words, hasInvalidNumber };
   };
 
   // Fetch available tests
@@ -937,6 +1176,26 @@ export default function ReadingPractice() {
       }
     }
 
+    // Validate sentence-completion word limits
+    const allSentenceGroups = tests.flatMap((passage) => 
+      passage?.questions?.filter((g: any) => g.type === 'sentence-completion') || []
+    );
+    for (const group of allSentenceGroups) {
+      const { maxWords, allowNumber } = parseSentenceWordLimit((group as any).word_limit);
+      for (const q of (group as any).questions || []) {
+        const answer = (answers[q.id] || "").trim();
+        const { words, hasInvalidNumber } = countAnswerTokens(answer, allowNumber);
+        if (words > maxWords || hasInvalidNumber) {
+          toast({
+            title: "Word Limit Error",
+            description: `Sentence ${q.id} violates the rule (${words}/${maxWords}${hasInvalidNumber ? ', number not allowed' : ''})`,
+            variant: "destructive"
+          });
+          return;
+        }
+      }
+    }
+
     // Combine all passages content
     const allPassagesContent = tests.map(p => p.paragraphs?.map((par: any) => par.text).join("\n\n")).join("\n\n---\n\n");
 
@@ -976,19 +1235,29 @@ export default function ReadingPractice() {
       case "matching-headings":
         return (
           <div key={question.id} className="space-y-3">
-            <h4 className="font-medium">{question.questionText}</h4>
+            <TextHighlighter
+              content={String(question.questionText || "")}
+              passageTitle={`${passage?.title || "Reading"} - Question`}
+              highlights={getQHighlights(question.id)}
+              onHighlightsChange={setQHighlightsFor(question.id)}
+              showLabels={false}
+            />
             <RadioGroup
               value={answers[question.id] || ""}
               onValueChange={(value) => handleAnswerChange(question.id, value)}
             >
-              {question.options?.map((option: string, index: number) => (
-                <div key={index} className="flex items-center space-x-2">
-                  <RadioGroupItem value={option} id={`q${question.id}-${index}`} />
-                  <Label htmlFor={`q${question.id}-${index}`} className="text-sm">
-                    {String.fromCharCode(105 + index)}. {option}
-                  </Label>
-                </div>
-              ))}
+              {question.options?.map((option: any, index: number) => {
+                const optionValue = typeof option === 'object' ? option.letter : option;
+                const optionText = typeof option === 'object' ? option.text : option;
+                return (
+                  <div key={index} className="flex items-center space-x-2">
+                    <RadioGroupItem value={optionValue} id={`q${question.id}-${index}`} />
+                    <Label htmlFor={`q${question.id}-${index}`} className="text-sm">
+                      {String.fromCharCode(105 + index)}. {optionText}
+                    </Label>
+                  </div>
+                );
+              })}
             </RadioGroup>
           </div>
         );
@@ -996,27 +1265,37 @@ export default function ReadingPractice() {
       case "multiple-choice":
         return (
           <div key={question.id} className="space-y-3">
-            <h4 className="font-medium">{question.id}. {question.questionText}</h4>
+            <TextHighlighter
+              content={`${question.id}. ${String(question.questionText || "")}`}
+              passageTitle={`${passage?.title || "Reading"} - Question`}
+              highlights={getQHighlights(question.id)}
+              onHighlightsChange={setQHighlightsFor(question.id)}
+              showLabels={false}
+            />
             <RadioGroup
               value={answers[question.id] || ""}
               onValueChange={(value) => handleAnswerChange(question.id, value)}
             >
-              {question.options?.map((option: string, index: number) => (
-                <div 
-                  key={index} 
-                  className="flex items-center space-x-2 cursor-pointer"
-                  onClick={() => {
-                    if (answers[question.id] === option) {
-                      handleAnswerChange(question.id, "");
-                    }
-                  }}
-                >
-                  <RadioGroupItem value={option} id={`q${question.id}-${index}`} />
-                  <Label htmlFor={`q${question.id}-${index}`} className="text-sm">
-                    {option}
-                  </Label>
-                </div>
-              ))}
+              {question.options?.map((option: any, index: number) => {
+                const optionValue = typeof option === 'object' ? option.letter : option;
+                const optionText = typeof option === 'object' ? `${option.letter}. ${option.text}` : option;
+                return (
+                  <div 
+                    key={index} 
+                    className="flex items-center space-x-2 cursor-pointer"
+                    onClick={() => {
+                      if (answers[question.id] === optionValue) {
+                        handleAnswerChange(question.id, "");
+                      }
+                    }}
+                  >
+                    <RadioGroupItem value={optionValue} id={`q${question.id}-${index}`} />
+                    <Label htmlFor={`q${question.id}-${index}`} className="text-sm">
+                      {optionText}
+                    </Label>
+                  </div>
+                );
+              })}
             </RadioGroup>
           </div>
         );
@@ -1024,10 +1303,17 @@ export default function ReadingPractice() {
       case "true-false-not-given":
         return (
           <div key={question.id} className="space-y-3">
-            <h4 className="font-medium">{question.id}. {question.questionText}</h4>
+            <TextHighlighter
+              content={`${question.id}. ${String(question.questionText || "")}`}
+              passageTitle={`${passage?.title || "Reading"} - Question`}
+              highlights={getQHighlights(question.id)}
+              onHighlightsChange={setQHighlightsFor(question.id)}
+              showLabels={false}
+            />
             <RadioGroup
               value={answers[question.id] || ""}
               onValueChange={(value) => handleAnswerChange(question.id, value)}
+              className="inline-flex flex-wrap items-center gap-2"
             >
               {question.options?.map((option: string) => (
                 <div 
@@ -1051,22 +1337,64 @@ export default function ReadingPractice() {
 
       case "gap-fill":
       case "fill-in-blank":
-        return (
-          <div key={question.id} className="space-y-3">
-            <h4 className="font-medium">{question.id}. {question.questionText}</h4>
-            <Input
-              placeholder="Type your answer..."
-              value={answers[question.id] || ""}
-              onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-              className="max-w-md"
-            />
-          </div>
-        );
+        {
+          const text: string = question.questionText || "";
+          const match = text.match(/_{3,}/);
+          if (match) {
+            const idx = match.index ?? -1;
+            const before = text.slice(0, idx);
+            const after = text.slice(idx + match[0].length);
+            return (
+              <div key={question.id} className="space-y-3">
+                <TextHighlighter
+                  content={`${question.id}. ${before}_____${after}`}
+                  passageTitle={`${passage?.title || "Reading"} - Question`}
+                  highlights={getQHighlights(question.id)}
+                  onHighlightsChange={setQHighlightsFor(question.id)}
+                  showLabels={false}
+                />
+                <p className="text-sm">
+                  {before}
+                  <Input
+                    placeholder={`Gap ${question.id}`}
+                    value={answers[question.id] || ""}
+                    onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                    className="inline-block w-40 h-8 align-baseline mx-1"
+                  />
+                  {after}
+                </p>
+              </div>
+            );
+          }
+          return (
+            <div key={question.id} className="space-y-3">
+              <TextHighlighter
+                content={`${question.id}. ${String(question.questionText || "")}`}
+                passageTitle={`${passage?.title || "Reading"} - Question`}
+                highlights={getQHighlights(question.id)}
+                onHighlightsChange={setQHighlightsFor(question.id)}
+                showLabels={false}
+              />
+              <Input
+                placeholder="Type your answer..."
+                value={answers[question.id] || ""}
+                onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                className="max-w-md"
+              />
+            </div>
+          );
+        }
 
       case "short-answer":
         return (
           <div key={question.id} className="space-y-3">
-            <h4 className="font-medium">{question.id}. {question.questionText}</h4>
+            <TextHighlighter
+              content={`${question.id}. ${String(question.questionText || "")}`}
+              passageTitle={`${passage?.title || "Reading"} - Question`}
+              highlights={getQHighlights(question.id)}
+              onHighlightsChange={setQHighlightsFor(question.id)}
+              showLabels={false}
+            />
             <Input
               placeholder="Type your answer..."
               value={answers[question.id] || ""}
@@ -1079,14 +1407,55 @@ export default function ReadingPractice() {
       case "sentence-completion":
         return (
           <div key={question.id} className="space-y-3">
-            <h4 className="font-medium">
-              {question.id}. {question.questionText || question.sentenceBeginning || question.incompleteSentence}
-            </h4>
+            {/* Inline sentence with embedded gap input */}
+            {(() => {
+              const full = `${question.id}. ${String(question.questionText || question.sentenceBeginning || question.incompleteSentence || "")}`;
+              const match = full.match(/_{3,}/);
+              const hasGap = !!match;
+              const before = hasGap ? full.slice(0, match!.index as number) : full;
+              const after = hasGap ? full.slice((match!.index as number) + (match![0]?.length || 0)) : "";
+              const ruleText = (question as any).groupWordLimit || (question as any).wordLimit;
+              const { maxWords, allowNumber } = parseSentenceWordLimit(ruleText);
+              const value = answers[question.id] || "";
+              const { words, hasInvalidNumber } = countAnswerTokens(value, allowNumber);
+              const exceeded = words > maxWords;
+              return (
+                <div className="text-sm leading-6">
+                  <span>{before}</span>
+                  {hasGap ? (
+                    <span className="inline-flex items-center gap-1 align-baseline">
+                      <input
+                        aria-label={`Gap ${question.id}`}
+                        type="text"
+                        disabled={!!result}
+                        className={`px-1 border-b bg-transparent w-40 focus:outline-none ${
+                          exceeded || hasInvalidNumber ? 'border-red-500' : 'border-gray-400 focus:border-gray-700'
+                        }`}
+                        value={value}
+                        onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                      />
+                      <span className={`text-[10px] ${exceeded || hasInvalidNumber ? 'text-red-600' : 'text-gray-500'}`}>
+                        {words}/{maxWords}{hasInvalidNumber ? ' • Number not allowed' : ''}
+                      </span>
+                    </span>
+                  ) : (
+                    <Input
+                      placeholder="Type your answer..."
+                      value={value}
+                      onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                      className={`${(exceeded || hasInvalidNumber) ? 'border-red-500' : ''} max-w-md inline-block ml-2`}
+                    />
+                  )}
+                  <span>{after}</span>
+                </div>
+              );
+            })()}
             {question.options ? (
               // Multiple-choice style sentence completion (matching sentence endings)
               <RadioGroup
                 value={answers[question.id] || ""}
                 onValueChange={(value) => handleAnswerChange(question.id, value)}
+                className="inline-flex flex-wrap items-center gap-2"
               >
                 {Object.entries(question.options).map(([key, value]: [string, any]) => (
                   <div 
@@ -1105,20 +1474,7 @@ export default function ReadingPractice() {
                   </div>
                 ))}
               </RadioGroup>
-            ) : (
-              // Fill-in-the-blank style sentence completion
-              <>
-                {question.wordLimit && (
-                  <p className="text-xs text-gray-500 italic">{question.wordLimit}</p>
-                )}
-                <Input
-                  placeholder="Type your answer..."
-                  value={answers[question.id] || ""}
-                  onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                  className="max-w-md"
-                />
-              </>
-            )}
+            ) : null}
           </div>
         );
 
@@ -1152,6 +1508,29 @@ export default function ReadingPractice() {
   );
   const answeredQuestionsAllSlides = Object.keys(answers).length;
 
+  const navigate = useNavigate();
+  const [showBasics, setShowBasics] = useState(false);
+  const [selectedTheory, setSelectedTheory] = useState<string | null>(null);
+
+  // Learn Basics (Theory) data sourced from backend -> backend/data/reading-theory.json
+  const { data: theoriesData, isLoading: loadingTheoryList } = useQuery({
+    queryKey: ['reading-theories'],
+    queryFn: async () => {
+      const resp = await fetch(`${Local}/reading/theory`, { method: 'GET', cache: 'no-store' });
+      return resp.json();
+    },
+    enabled: showBasics,
+  });
+
+  const { data: theoryContent, isLoading: loadingTheoryContent } = useQuery({
+    queryKey: ['reading-theory', selectedTheory],
+    queryFn: async () => {
+      const resp = await fetch(`${Local}/reading/theory/${encodeURIComponent(selectedTheory!)}`, { method: 'GET', cache: 'no-store' });
+      return resp.json();
+    },
+    enabled: showBasics && !!selectedTheory,
+  });
+
   // Loading / Error states to prevent blank screens
   if (isLoading) {
     return (
@@ -1179,7 +1558,275 @@ export default function ReadingPractice() {
           </p>
         </div>
 
-        {selectedTestIndex === null && (
+        {showBasics && (
+          <div className="space-y-6 mt-2">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">📚 Reading Basics</h2>
+                <p className="text-slate-600 dark:text-slate-400">Learn about IELTS Reading question types before you practice</p>
+              </div>
+              <Button
+                variant="ghost"
+                onClick={() => { setShowBasics(false); setSelectedTheory(null); }}
+              >
+                Close
+              </Button>
+            </div>
+
+            {!selectedTheory && (
+              <div>
+                {loadingTheoryList ? (
+                  <div className="text-center py-8 text-slate-600">Loading theory list...</div>
+                ) : (
+                  <div className="grid md:grid-cols-2 gap-4">
+                    {theoriesData?.theories.map((theory: any) => (
+                      <Card
+                        key={theory.id}
+                        className="cursor-pointer hover:shadow-lg transition-shadow border-2 hover:border-blue-400"
+                        onClick={() => setSelectedTheory(theory.id)}
+                      >
+                        <CardHeader>
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <CardTitle className="text-xl mb-2">{theory.name}</CardTitle>
+                              <Badge variant="secondary" className="text-xs">
+                                {theory.category.replace('-', ' ')}
+                              </Badge>
+                            </div>
+                            <BookOpen className="w-6 h-6 text-blue-600" />
+                          </div>
+                        </CardHeader>
+                        <CardContent>
+                          <Button variant="ghost" className="w-full text-blue-600 hover:text-blue-700">
+                            Learn More →
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {selectedTheory && (
+              <div className="space-y-12">
+                <button
+                  onClick={() => setSelectedTheory(null)}
+                  className="text-sm text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors"
+                >
+                  ← Back to Theory List
+                </button>
+
+                {loadingTheoryContent ? (
+                  <div className="text-center py-12 text-slate-600 dark:text-slate-400">Loading content...</div>
+                ) : theoryContent ? (
+                  <div className="space-y-12">
+                    {/* Header */}
+                    <div className="space-y-3">
+                      <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+                        {theoryContent.name}
+                      </h1>
+                      <div>
+                        <span className="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300">
+                          {theoryContent.category.replace('-', ' ')}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="h-px bg-slate-200/70 dark:bg-slate-700/50" />
+
+                    {/* 1. What is it? */}
+                    <section className="space-y-4">
+                      <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                        <Lightbulb className="w-5 h-5 text-slate-500 dark:text-slate-400" />
+                        What is it?
+                      </h2>
+                      <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                        {theoryContent.whatIsIt.description}
+                      </p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">
+                        <span className="font-medium">Skill tested:</span> {theoryContent.whatIsIt.skillTested}
+                      </p>
+                    </section>
+
+                    {/* Divider */}
+                    <div className="h-px bg-slate-200/70 dark:bg-slate-700/50" />
+
+                    {/* 2. Example */}
+                    <section className="space-y-6">
+                      <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                        <BookOpen className="w-5 h-5 text-slate-500 dark:text-slate-400" />
+                        Example
+                      </h2>
+                      {typeof theoryContent.example.passage === 'string' ? (
+                        <blockquote className="text-slate-700 dark:text-slate-300 italic leading-relaxed">
+                          "{theoryContent.example.passage}"
+                        </blockquote>
+                      ) : theoryContent.example.passage && typeof theoryContent.example.passage === 'object' ? (
+                        <div className="space-y-3">
+                          {Object.entries(theoryContent.example.passage as Record<string, string>)
+                            .sort(([a], [b]) => a.localeCompare(b))
+                            .map(([paraKey, paraText]) => (
+                              <div key={paraKey} className="space-y-1">
+                                <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                                  {paraKey.replace(/^paragraph/i, 'Paragraph ')}
+                                </h4>
+                                <p className="text-slate-700 dark:text-slate-300 leading-relaxed">{paraText}</p>
+                              </div>
+                            ))}
+                        </div>
+                      ) : null}
+
+                      {theoryContent.example.headings && (
+                        <div className="space-y-2">
+                          <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Headings</h3>
+                          <ul className="space-y-1">
+                            {theoryContent.example.headings.map((heading: string, idx: number) => (
+                              <li key={idx} className="text-slate-700 dark:text-slate-300 pl-4">{heading}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {!theoryContent?.quiz && (
+                        <div className="space-y-3">
+                          <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Questions</h3>
+                          {theoryContent.example.questions.map((q: any) => (
+                            <div key={q.id} className="space-y-1">
+                              <p className="text-slate-700 dark:text-slate-300">
+                                {q.id}. {q.text}
+                              </p>
+                              {q.options && (
+                                <ul className="ml-4 list-disc space-y-1 text-slate-600 dark:text-slate-400">
+                                  {q.options.map((opt: string, idx: number) => (
+                                    <li key={idx}>{opt}</li>
+                                  ))}
+                                </ul>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {!theoryContent?.quiz && (
+                        <div className="space-y-3">
+                          <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Answers</h3>
+                          <ul className="space-y-2">
+                            {theoryContent.example.questions.map((q: any) => (
+                              <li key={q.id} className="flex gap-3 text-slate-700 dark:text-slate-300">
+                                <CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mt-0.5" />
+                                <div>
+                                  <p className="font-medium">{q.id}. {q.correctAnswer}</p>
+                                  {q.explanation && (
+                                    <p className="text-sm text-slate-600 dark:text-slate-400">{q.explanation}</p>
+                                  )}
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </section>
+
+                    {/* Divider */}
+                    {(theoryContent.commonMistakes?.length ?? 0) > 0 && (
+                      <div className="h-px bg-slate-200/70 dark:bg-slate-700/50" />
+                    )}
+
+                    {/* 3. Common Mistakes */}
+                    {(theoryContent.commonMistakes?.length ?? 0) > 0 && (
+                      <section className="space-y-4">
+                        <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                          <XCircle className="w-5 h-5 text-slate-500 dark:text-slate-400" />
+                          Common Mistakes
+                        </h2>
+                        <ul className="space-y-3">
+                          {theoryContent.commonMistakes.map((mistake: any, idx: number) => (
+                            <li key={idx} className="space-y-1">
+                              <p className="font-medium text-slate-900 dark:text-slate-100">{mistake.title}</p>
+                              <p className="text-slate-700 dark:text-slate-300">{mistake.description}</p>
+                            </li>
+                          ))}
+                        </ul>
+                      </section>
+                    )}
+
+                    {/* Divider */}
+                    {(theoryContent.strategyTips?.length ?? 0) > 0 && (
+                      <div className="h-px bg-slate-200/70 dark:bg-slate-700/50" />
+                    )}
+
+                    {/* 4. Strategy & Tips */}
+                    {(theoryContent.strategyTips?.length ?? 0) > 0 && (
+                      <section className="space-y-4">
+                        <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Strategy & Tips</h2>
+                        <ol className="space-y-3">
+                          {theoryContent.strategyTips.map((tip: any) => (
+                            <li key={tip.step} className="space-y-1">
+                              <p className="font-medium text-slate-900 dark:text-slate-100">
+                                {tip.step}. {tip.title}
+                              </p>
+                              <p className="text-slate-700 dark:text-slate-300">{tip.description}</p>
+                            </li>
+                          ))}
+                        </ol>
+                      </section>
+                    )}
+
+                    {/* Divider */}
+                    {theoryContent.timeManagement && (
+                      <div className="h-px bg-slate-200/70 dark:bg-slate-700/50" />
+                    )}
+
+                    {/* 5. Time Management */}
+                    {theoryContent.timeManagement && (
+                      <section className="space-y-2">
+                        <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Time Management</h2>
+                        <p className="text-slate-700 dark:text-slate-300">
+                          ⏱️ Spend {theoryContent.timeManagement.timePerQuestion}
+                        </p>
+                        <p className="text-slate-700 dark:text-slate-300">{theoryContent.timeManagement.tip}</p>
+                      </section>
+                    )}
+
+                    {/* 6. Quick Quiz */}
+                    {(() => {
+                      const intro = ((theoryContent as any)?.Quiz?.questions ?? (theoryContent as any)?.introQuiz?.questions ?? []) as any[];
+                      const normalizeMCQ = (q: any) => {
+                        if (
+                          q?.type === 'multiple-choice' &&
+                          Array.isArray(q.options) &&
+                          typeof q.correctAnswer === 'string' &&
+                          /^[a-d]$/i.test(q.correctAnswer)
+                        ) {
+                          const idx = q.correctAnswer.toLowerCase().charCodeAt(0) - 97;
+                          const correct = q.options[idx] ?? q.correctAnswer;
+                          return { ...q, correctAnswer: correct };
+                        }
+                        return q;
+                      };
+                      const introFixed = intro.map(normalizeMCQ);
+                      const main = (theoryContent?.quiz?.questions ?? []) as any[];
+                      const merged = { passage: theoryContent?.quiz?.passage, questions: [...introFixed, ...main] };
+                      return merged.questions.length > 0 ? (
+                        <>
+                          <div className="h-px bg-slate-200/70 dark:bg-slate-700/50" />
+                          <section className="space-y-4">
+                            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Quick Quiz</h2>
+                            <ReadingTheoryQuiz quiz={merged} />
+                          </section>
+                        </>
+                      ) : null;
+                    })()}
+                  </div>
+                ) : null}
+              </div>
+            )}
+          </div>
+        )}
+
+        {!showBasics && selectedTestIndex === null && (
           <div className="space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {testsData?.tests?.map((test: any) => (
@@ -1393,25 +2040,33 @@ export default function ReadingPractice() {
                                     
                                     return (
                                       <div key={question.id} className="space-y-2">
-                                        <h4 className="font-medium">{question.questionText}</h4>
+                                        <TextHighlighter
+                                          content={String(question.questionText || "")}
+                                          passageTitle={`${passage?.title || "Reading"} - Question`}
+                                          highlights={getQHighlights(question.id)}
+                                          onHighlightsChange={setQHighlightsFor(question.id)}
+                                          showLabels={false}
+                                        />
                                         <RadioGroup
                                           value={selectedAnswer}
                                           onValueChange={(value) => handleAnswerChange(question.id, value)}
                                         >
-                                          {question.options?.map((option: string, index: number) => {
-                                            const isUsedElsewhere = usedOptions.includes(option);
+                                          {question.options?.map((option: any, index: number) => {
+                                            const optionValue = typeof option === 'object' ? option.letter : option;
+                                            const optionText = typeof option === 'object' ? option.text : option;
+                                            const isUsedElsewhere = usedOptions.includes(optionValue);
                                             return (
                                               <div 
                                                 key={index} 
                                                 className="flex items-center space-x-2 cursor-pointer"
                                                 onClick={() => {
-                                                  if (selectedAnswer === option) {
+                                                  if (selectedAnswer === optionValue) {
                                                     handleAnswerChange(question.id, "");
                                                   }
                                                 }}
                                               >
                                                 <RadioGroupItem 
-                                                  value={option} 
+                                                  value={optionValue} 
                                                   id={`q${question.id}-${index}`}
                                                   disabled={isUsedElsewhere}
                                                 />
@@ -1419,7 +2074,7 @@ export default function ReadingPractice() {
                                                   htmlFor={`q${question.id}-${index}`} 
                                                   className={`text-sm ${isUsedElsewhere ? 'text-red-500 line-through opacity-50' : ''}`}
                                                 >
-                                                  {toRomanNumeral(index + 1)}. {option}
+                                                  {toRomanNumeral(index + 1)}. {optionText}
                                                 </Label>
                                               </div>
                                             );
@@ -1448,7 +2103,13 @@ export default function ReadingPractice() {
                                 <div className="space-y-4">
                                   {questionGroup.questions?.map((question: any) => (
                                     <div key={question.id} className="space-y-2">
-                                      <h4 className="font-medium">{question.id}. {question.questionText}</h4>
+                                      <TextHighlighter
+                                        content={`${question.id}. ${String(question.questionText || "")}`}
+                                        passageTitle={`${passage?.title || "Reading"} - Question`}
+                                        highlights={getQHighlights(question.id)}
+                                        onHighlightsChange={setQHighlightsFor(question.id)}
+                                        showLabels={false}
+                                      />
                                       <Input
                                         placeholder="Enter letter (A, B, C, D)..."
                                         value={answers[question.id] || ""}
@@ -1479,10 +2140,17 @@ export default function ReadingPractice() {
                                 <div className="space-y-4">
                                   {questionGroup.questions?.map((question: any) => (
                                     <div key={question.id} className="space-y-2">
-                                      <h4 className="font-medium">{question.id}. {question.questionText}</h4>
+                                      <TextHighlighter
+                                        content={`${question.id}. ${String(question.questionText || "")}`}
+                                        passageTitle={`${passage?.title || "Reading"} - Question`}
+                                        highlights={getQHighlights(question.id)}
+                                        onHighlightsChange={setQHighlightsFor(question.id)}
+                                        showLabels={false}
+                                      />
                                       <RadioGroup
                                         value={answers[question.id] || ""}
                                         onValueChange={(value) => handleAnswerChange(question.id, value)}
+                                        className="inline-flex flex-wrap items-center gap-2"
                                       >
                                         {questionGroup.sentence_endings?.map((ending: any) => (
                                           <div 
@@ -1505,13 +2173,28 @@ export default function ReadingPractice() {
                                   ))}
                                 </div>
                               </div>
-                            ) : questionGroup.type === "summary-completion" ? (
-                              <SummaryCompletion 
-                                group={questionGroup} 
+                            ) : (questionGroup.type === "sentence-completion" && (questionGroup as any).structure) ? (
+                              <SummaryCompletion
+                                group={questionGroup}
                                 answers={answers}
                                 result={result}
                                 handleAnswerChange={handleAnswerChange}
                                 summaryInputRefs={summaryInputRefs}
+                              />
+                            ) : questionGroup.type === "summary-completion" ? (
+                              <SummaryCompletion
+                                group={questionGroup}
+                                answers={answers}
+                                result={result}
+                                handleAnswerChange={handleAnswerChange}
+                                summaryInputRefs={summaryInputRefs}
+                              />
+                            ) : questionGroup.type === "note-completion" ? (
+                              <NoteCompletion
+                                group={questionGroup}
+                                answers={answers}
+                                result={result}
+                                onAnswerChange={handleAnswerChange}
                               />
                             ) : questionGroup.type === "table-completion" ? (
                               <TableCompletion
@@ -1551,7 +2234,15 @@ export default function ReadingPractice() {
                                   {questionGroup.questions?.map((q: any) => (
                                     <div key={q.id} className="matching-info-question-item flex items-start gap-3 p-3 border-l-4 border-gray-300">
                                       <span className="font-medium min-w-[40px]">{q.id}.</span>
-                                      <p className="flex-1 text-sm">{q.questionText}</p>
+                                      <div className="flex-1 text-sm">
+                                        <TextHighlighter
+                                          content={String(q.questionText || "")}
+                                          passageTitle={`${passage?.title || "Reading"} - Q${q.id}`}
+                                          highlights={getQHighlights(q.id)}
+                                          onHighlightsChange={setQHighlightsFor(q.id)}
+                                          showLabels={false}
+                                        />
+                                      </div>
                                       <select
                                         value={answers[q.id] || ""}
                                         onChange={(e) => handleAnswerChange(q.id, e.target.value)}
@@ -1574,6 +2265,7 @@ export default function ReadingPractice() {
                                 renderQuestion({
                                   ...question,
                                   type: questionGroup.type,
+                                  groupWordLimit: questionGroup.word_limit,
                                   options:
                                     questionGroup.type === 'true-false-not-given'
                                       ? (() => {
@@ -1695,26 +2387,34 @@ export default function ReadingPractice() {
                                       
                                       return (
                                         <div key={question.id} className="space-y-1.5">
-                                          <h4 className="font-medium text-xs">{question.questionText}</h4>
+                                          <TextHighlighter
+                                            content={String(question.questionText || "")}
+                                            passageTitle={`${passage?.title || "Reading"} - Q${question.id}`}
+                                            highlights={getQHighlights(question.id)}
+                                            onHighlightsChange={setQHighlightsFor(question.id)}
+                                            showLabels={false}
+                                          />
                                           <RadioGroup
                                             value={selectedAnswer}
                                             onValueChange={(value) => handleAnswerChange(question.id, value)}
                                             className="space-y-1"
                                           >
-                                            {question.options?.map((option: string, index: number) => {
-                                              const isUsedElsewhere = usedOptions.includes(option);
+                                            {question.options?.map((option: any, index: number) => {
+                                              const optionValue = typeof option === 'object' ? option.letter : option;
+                                              const optionText = typeof option === 'object' ? option.text : option;
+                                              const isUsedElsewhere = usedOptions.includes(optionValue);
                                               return (
                                                 <div 
                                                   key={index} 
                                                   className="flex items-center space-x-2 cursor-pointer"
                                                   onClick={() => {
-                                                    if (selectedAnswer === option) {
+                                                    if (selectedAnswer === optionValue) {
                                                       handleAnswerChange(question.id, "");
                                                     }
                                                   }}
                                                 >
                                                   <RadioGroupItem 
-                                                    value={option} 
+                                                    value={optionValue} 
                                                     id={`split-q${question.id}-${index}`}
                                                     className="h-3 w-3"
                                                     disabled={isUsedElsewhere}
@@ -1723,7 +2423,7 @@ export default function ReadingPractice() {
                                                     htmlFor={`split-q${question.id}-${index}`} 
                                                     className={`text-xs leading-tight ${isUsedElsewhere ? 'text-red-500 line-through opacity-50' : ''}`}
                                                   >
-                                                    {toRomanNumeral(index + 1)}. {option}
+                                                    {toRomanNumeral(index + 1)}. {optionText}
                                                   </Label>
                                                 </div>
                                               );
@@ -1749,7 +2449,13 @@ export default function ReadingPractice() {
                                   <div className="space-y-3">
                                     {questionGroup.questions?.map((question: any) => (
                                       <div key={question.id} className="space-y-1.5">
-                                        <h4 className="font-medium text-xs">{question.id}. {question.questionText}</h4>
+                                        <TextHighlighter
+                                          content={`${question.id}. ${String(question.questionText || "")}`}
+                                          passageTitle={`${passage?.title || "Reading"} - Q${question.id}`}
+                                          highlights={getQHighlights(question.id)}
+                                          onHighlightsChange={setQHighlightsFor(question.id)}
+                                          showLabels={false}
+                                        />
                                         <Input
                                           placeholder="Enter letter..."
                                           value={answers[question.id] || ""}
@@ -1777,11 +2483,17 @@ export default function ReadingPractice() {
                                   <div className="space-y-3">
                                     {questionGroup.questions?.map((question: any) => (
                                       <div key={question.id} className="space-y-1.5">
-                                        <h4 className="font-medium text-xs">{question.id}. {question.questionText}</h4>
+                                        <TextHighlighter
+                                          content={`${question.id}. ${String(question.questionText || "")}`}
+                                          passageTitle={`${passage?.title || "Reading"} - Q${question.id}`}
+                                          highlights={getQHighlights(question.id)}
+                                          onHighlightsChange={setQHighlightsFor(question.id)}
+                                          showLabels={false}
+                                        />
                                         <RadioGroup
                                           value={answers[question.id] || ""}
                                           onValueChange={(value) => handleAnswerChange(question.id, value)}
-                                          className="space-y-1"
+                                          className="inline-flex flex-wrap items-center gap-2"
                                         >
                                           {questionGroup.sentence_endings?.map((ending: any) => (
                                             <div 
@@ -1804,13 +2516,28 @@ export default function ReadingPractice() {
                                     ))}
                                   </div>
                                 </div>
-                              ) : questionGroup.type === "summary-completion" ? (
-                                <SummaryCompletion 
-                                  group={questionGroup} 
+                              ) : (questionGroup.type === "sentence-completion" && (questionGroup as any).structure) ? (
+                                <SummaryCompletion
+                                  group={questionGroup}
                                   answers={answers}
                                   result={result}
                                   handleAnswerChange={handleAnswerChange}
                                   summaryInputRefs={summaryInputRefs}
+                                />
+                              ) : questionGroup.type === "summary-completion" ? (
+                                <SummaryCompletion
+                                  group={questionGroup}
+                                  answers={answers}
+                                  result={result}
+                                  handleAnswerChange={handleAnswerChange}
+                                  summaryInputRefs={summaryInputRefs}
+                                />
+                              ) : questionGroup.type === "note-completion" ? (
+                                <NoteCompletion
+                                  group={questionGroup}
+                                  answers={answers}
+                                  result={result}
+                                  onAnswerChange={handleAnswerChange}
                                 />
                               ) : questionGroup.type === "table-completion" ? (
                                 <TableCompletion
@@ -1850,7 +2577,15 @@ export default function ReadingPractice() {
                                     {questionGroup.questions?.map((q: any) => (
                                       <div key={q.id} className="flex items-start gap-2 p-2 border-l-2 border-gray-300">
                                         <span className="font-medium text-xs min-w-[20px]">{q.id}.</span>
-                                        <p className="flex-1 text-xs">{q.questionText}</p>
+                                        <div className="flex-1 text-xs">
+                                          <TextHighlighter
+                                            content={String(q.questionText || "")}
+                                            passageTitle={`${passage?.title || "Reading"} - Q${q.id}`}
+                                            highlights={getQHighlights(q.id)}
+                                            onHighlightsChange={setQHighlightsFor(q.id)}
+                                            showLabels={false}
+                                          />
+                                        </div>
                                         <select
                                           value={answers[q.id] || ""}
                                           onChange={(e) => handleAnswerChange(q.id, e.target.value)}
@@ -1917,7 +2652,13 @@ export default function ReadingPractice() {
                                     case "matching-headings":
                                       return (
                                         <div key={question.id} className="space-y-2">
-                                          <h4 className="font-medium text-xs">{question.questionText}</h4>
+                                          <TextHighlighter
+                                            content={String(question.questionText || "")}
+                                            passageTitle={`${passage?.title || "Reading"} - Q${question.id}`}
+                                            highlights={getQHighlights(question.id)}
+                                            onHighlightsChange={setQHighlightsFor(question.id)}
+                                            showLabels={false}
+                                          />
                                           <RadioGroup
                                             value={answers[question.id] || ""}
                                             onValueChange={(value) => handleAnswerChange(question.id, value)}
@@ -1946,7 +2687,13 @@ export default function ReadingPractice() {
                                     case "multiple-choice":
                                       return (
                                         <div key={question.id} className="space-y-2">
-                                          <h4 className="font-medium text-xs">{question.id}. {question.questionText}</h4>
+                                          <TextHighlighter
+                                            content={`${question.id}. ${String(question.questionText || "")}`}
+                                            passageTitle={`${passage?.title || "Reading"} - Q${question.id}`}
+                                            highlights={getQHighlights(question.id)}
+                                            onHighlightsChange={setQHighlightsFor(question.id)}
+                                            showLabels={false}
+                                          />
                                           <RadioGroup
                                             value={answers[question.id] || ""}
                                             onValueChange={(value) => handleAnswerChange(question.id, value)}
@@ -1975,11 +2722,17 @@ export default function ReadingPractice() {
                                     case "true-false-not-given":
                                       return (
                                         <div key={question.id} className="space-y-2">
-                                          <h4 className="font-medium text-xs">{question.id}. {question.questionText}</h4>
+                                          <TextHighlighter
+                                            content={`${question.id}. ${String(question.questionText || "")}`}
+                                            passageTitle={`${passage?.title || "Reading"} - Q${question.id}`}
+                                            highlights={getQHighlights(question.id)}
+                                            onHighlightsChange={setQHighlightsFor(question.id)}
+                                            showLabels={false}
+                                          />
                                           <RadioGroup
                                             value={answers[question.id] || ""}
                                             onValueChange={(value) => handleAnswerChange(question.id, value)}
-                                            className="flex gap-3"
+                                            className="inline-flex flex-wrap items-center gap-2"
                                           >
                                             {questionOptions?.map((option: string) => (
                                               <div 
@@ -2003,10 +2756,63 @@ export default function ReadingPractice() {
 
                                     case "gap-fill":
                                     case "fill-in-blank":
+                                      {
+                                        const text: string = question.questionText || "";
+                                        const match = text.match(/_{3,}/);
+                                        if (match) {
+                                          const idx = match.index ?? -1;
+                                          const before = text.slice(0, idx);
+                                          const after = text.slice(idx + match[0].length);
+                                          return (
+                                            <div key={question.id} className="space-y-1.5">
+                                              <TextHighlighter
+                                                content={`${question.id}. ${before}_____${after}`}
+                                                passageTitle={`${passage?.title || "Reading"} - Q${question.id}`}
+                                                highlights={getQHighlights(question.id)}
+                                                onHighlightsChange={setQHighlightsFor(question.id)}
+                                                showLabels={false}
+                                              />
+                                              <p className="text-xs">
+                                                {before}
+                                                <Input
+                                                  placeholder={`Gap ${question.id}`}
+                                                  value={answers[question.id] || ""}
+                                                  onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                                                  className="inline-block h-7 w-28 align-baseline mx-1 text-xs"
+                                                />
+                                                {after}
+                                              </p>
+                                            </div>
+                                          );
+                                        }
+                                        return (
+                                          <div key={question.id} className="space-y-1.5">
+                                            <TextHighlighter
+                                              content={`${question.id}. ${String(question.questionText || "")}`}
+                                              passageTitle={`${passage?.title || "Reading"} - Q${question.id}`}
+                                              highlights={getQHighlights(question.id)}
+                                              onHighlightsChange={setQHighlightsFor(question.id)}
+                                              showLabels={false}
+                                            />
+                                            <Input
+                                              placeholder="Type your answer..."
+                                              value={answers[question.id] || ""}
+                                              onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                                              className="h-8 text-sm"
+                                            />
+                                          </div>
+                                        );
+                                      }
                                     case "short-answer":
                                       return (
                                         <div key={question.id} className="space-y-1.5">
-                                          <h4 className="font-medium text-xs">{question.id}. {question.questionText}</h4>
+                                          <TextHighlighter
+                                            content={`${question.id}. ${String(question.questionText || "")}`}
+                                            passageTitle={`${passage?.title || "Reading"} - Q${question.id}`}
+                                            highlights={getQHighlights(question.id)}
+                                            onHighlightsChange={setQHighlightsFor(question.id)}
+                                            showLabels={false}
+                                          />
                                           <Input
                                             placeholder="Type your answer..."
                                             value={answers[question.id] || ""}
@@ -2019,14 +2825,53 @@ export default function ReadingPractice() {
                                     case "sentence-completion":
                                       return (
                                         <div key={question.id} className="space-y-1.5">
-                                          <h4 className="font-medium text-xs">
-                                            {question.id}. {question.questionText || question.sentenceBeginning || question.incompleteSentence}
-                                          </h4>
+                                          {(() => {
+                                            const full = `${question.id}. ${String(question.questionText || question.sentenceBeginning || question.incompleteSentence || "")}`;
+                                            const match = full.match(/_{3,}/);
+                                            const hasGap = !!match;
+                                            const before = hasGap ? full.slice(0, match!.index as number) : full;
+                                            const after = hasGap ? full.slice((match!.index as number) + (match![0]?.length || 0)) : "";
+                                            const ruleText = questionGroup.word_limit || (question as any).wordLimit;
+                                            const { maxWords, allowNumber } = parseSentenceWordLimit(ruleText);
+                                            const value = answers[question.id] || "";
+                                            const { words, hasInvalidNumber } = countAnswerTokens(value, allowNumber);
+                                            const exceeded = words > maxWords;
+                                            return (
+                                              <div className="text-xs leading-6">
+                                                <span>{before}</span>
+                                                {hasGap ? (
+                                                  <span className="inline-flex items-center gap-1 align-baseline">
+                                                    <input
+                                                      aria-label={`Gap ${question.id}`}
+                                                      type="text"
+                                                      disabled={!!result}
+                                                      className={`px-1 border-b bg-transparent w-36 focus:outline-none ${
+                                                        exceeded || hasInvalidNumber ? 'border-red-500' : 'border-gray-400 focus:border-gray-700'
+                                                      }`}
+                                                      value={value}
+                                                      onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                                                    />
+                                                    <span className={`text-[10px] ${exceeded || hasInvalidNumber ? 'text-red-600' : 'text-gray-500'}`}>
+                                                      {words}/{maxWords}{hasInvalidNumber ? ' • Number not allowed' : ''}
+                                                    </span>
+                                                  </span>
+                                                ) : (
+                                                  <Input
+                                                    placeholder="Type your answer..."
+                                                    value={value}
+                                                    onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                                                    className={`h-8 text-sm inline-block ml-2 ${exceeded || hasInvalidNumber ? 'border-red-500' : ''}`}
+                                                  />
+                                                )}
+                                                <span>{after}</span>
+                                              </div>
+                                            );
+                                          })()}
                                           {question.options ? (
                                             <RadioGroup
                                               value={answers[question.id] || ""}
                                               onValueChange={(value) => handleAnswerChange(question.id, value)}
-                                              className="space-y-1"
+                                              className="inline-flex flex-wrap items-center gap-2"
                                             >
                                               {Object.entries(question.options).map(([key, value]: [string, any]) => (
                                                 <div 
@@ -2046,17 +2891,28 @@ export default function ReadingPractice() {
                                               ))}
                                             </RadioGroup>
                                           ) : (
-                                            <>
-                                              {question.wordLimit && (
-                                                <p className="text-xs text-gray-500 italic">{question.wordLimit}</p>
-                                              )}
-                                              <Input
-                                                placeholder="Type your answer..."
-                                                value={answers[question.id] || ""}
-                                                onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                                                className="h-8 text-sm"
-                                              />
-                                            </>
+                                            (() => {
+                                              const { maxWords, allowNumber } = parseSentenceWordLimit(questionGroup.word_limit);
+                                              const value = answers[question.id] || "";
+                                              const { words, hasInvalidNumber } = countAnswerTokens(value, allowNumber);
+                                              const exceeded = words > maxWords;
+                                              return (
+                                                <div className="space-y-1">
+                                                  {questionGroup.word_limit && (
+                                                    <p className="text-xs text-gray-500 italic">{questionGroup.word_limit}</p>
+                                                  )}
+                                                  <Input
+                                                    placeholder="Type your answer..."
+                                                    value={value}
+                                                    onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                                                    className={`h-8 text-sm ${exceeded || hasInvalidNumber ? 'border-red-500' : ''}`}
+                                                  />
+                                                  <p className={`text-[10px] ${exceeded || hasInvalidNumber ? 'text-red-600' : 'text-gray-500'}`}>
+                                                    {words}/{maxWords} {hasInvalidNumber && ' • Number not allowed'}
+                                                  </p>
+                                                </div>
+                                              );
+                                            })()
                                           )}
                                         </div>
                                       );

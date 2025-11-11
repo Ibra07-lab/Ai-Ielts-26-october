@@ -1,0 +1,621 @@
+{
+    "testId": 7,
+    "testName": "Test 7",
+    "passages": [
+        {
+            "id": 1,
+            "title": "Networks of Exchange: The Evolution and Impact of Historical Trade Routes",
+            "level": "academic",
+            "estimatedTime": 20,
+            "paragraphs": [
+              {
+                "id": "P1",
+                "text": "Long before the advent of modern globalization, intricate networks of trade routes connected distant civilizations, facilitating not merely the exchange of goods but the transmission of ideas, technologies, and cultural practices that would fundamentally reshape human societies. These ancient pathways, spanning continents and oceans, handled an estimated 15 to 20 percent of the world's economic activity by the 15th century, a proportion that rivals contemporary international trade as a share of global GDP. The development of these routes, from the famed Silk Road traversing Central Asia to the maritime passages linking Europe with the Indies, represents one of history's most consequential economic and cultural phenomena. Understanding their evolution requires examining not only the geographical and technological factors that enabled long-distance commerce but also the political structures, cultural intermediaries, and environmental conditions that sustained these networks across centuries. The legacy of these historical trade routes continues to influence modern economic geography, urban development patterns, and cultural identities in ways both obvious and subtle."
+              },
+              {
+                "id": "P2",
+                "text": "The overland routes connecting East and West, collectively termed the Silk Road despite encompassing multiple distinct pathways, emerged gradually between the 2nd century BCE and 1st century CE as Han Dynasty China extended its influence westward and Roman expansion reached eastward. Research by Dr. Valerie Hansen at Yale University has demonstrated that these routes functioned less as continuous highways than as relay systems, with goods typically changing hands multiple times across intermediate trading cities rather than traveling directly from origin to final destination. Major nodes such as Samarkand, Bukhara, and Kashgar developed as cosmopolitan commercial hubs where Persian, Chinese, Indian, and later Arab merchants congregated. Archaeological evidence from sites along the Taklamakan Desert indicates that by the 7th century CE, approximately 67 percent of luxury goods reaching Mediterranean markets had transited through Central Asian intermediaries, with silk, spices, precious stones, and religious texts comprising the primary commodities. However, the volume of trade fluctuated considerably based on political stability; the fragmentation of the Mongol Empire in the 14th century, for instance, disrupted established security arrangements that had facilitated commerce, contributing to a decline in overland trade that some historians estimate at 40 to 50 percent over a fifty-year period. Interestingly, disease also traveled these routes—the Black Death's spread to Europe in 1347 followed merchant pathways from Central Asia, demonstrating the networks' capacity to transmit not only beneficial exchanges but also devastating pandemics. The environmental sustainability of these routes depended critically on access to water and fodder for pack animals, with caravanserais (roadside inns) typically spaced at intervals of 25 to 35 kilometers, representing a day's travel for laden camels."
+              },
+              {
+                "id": "P3",
+                "text": "While overland routes dominated Eurasian commerce for centuries, maritime trade networks developed in parallel, ultimately surpassing land-based exchange in both volume and economic significance. The Indian Ocean trade system, active since at least 800 BCE, connected East African, Arabian, Indian, and Southeast Asian ports through seasonal monsoon winds that enabled predictable sailing schedules. A comprehensive analysis by historians at the University of Oxford examining port records and shipwreck inventories concluded that by 1000 CE, maritime routes handled approximately three times the cargo volume of overland passages, with bulk goods such as grain, timber, and ceramics supplementing the luxury items that characterized land trade. The dhow, a traditional sailing vessel optimized for monsoon navigation, could carry roughly 200 to 300 tons of cargo—equivalent to the load of several hundred camels—while requiring a crew of only 15 to 30 sailors. European maritime expansion from the 15th century fundamentally transformed these networks. Portuguese circumnavigation of Africa in 1498, establishing direct sea routes to India, effectively bypassed traditional intermediaries and shifted trade's geographic center. Professor Janet Abu-Lughod's influential research at The New School demonstrated that this shift represented less a European 'discovery' than a forcible integration into existing Asian maritime systems that had operated profitably for millennia. The establishment of the Manila Galleon trade in 1565, connecting Asian markets with Spanish America across the Pacific, created the first truly global exchange network, with silver from Potosí mines flowing to China in exchange for silk, porcelain, and spices. Records indicate that between 1565 and 1815, approximately 450 million pesos in silver traveled from the Americas to Asia via this route, fundamentally altering global monetary systems and contributing to inflation in both Spain and China."
+              },
+              {
+                "id": "P4",
+                "text": "The cultural and technological impacts of these trade networks extended far beyond simple commodity exchange, facilitating what historians term 'diffusion of innovations' across vast distances. Paper-making technology, originating in China in the 2nd century CE, reached the Islamic world by 751 CE following the Battle of Talas, where captured Chinese artisans revealed production techniques to Abbasid forces. From there, the technology spread to Europe by the 12th century, fundamentally transforming knowledge transmission and eventually enabling the printing revolution. Similarly, agricultural products reshaped distant societies: the introduction of New World crops such as maize, potatoes, and chili peppers to Afro-Eurasia via post-1492 trade routes increased agricultural productivity in some regions by an estimated 25 to 30 percent, contributing to population growth and urbanization. Numerical systems provide another striking example—the positional decimal system, developed in India, reached Europe via Arab merchants and scholars, with Fibonacci's 1202 Liber Abaci introducing these 'Arabic numerals' to European commerce. However, some scholars, including Professor Patrick Manning at the University of Pittsburgh, caution against overstating trade routes' democratizing effects, arguing that the benefits of exchange accrued disproportionately to merchant elites and imperial powers while subjugated populations often bore the costs of resource extraction and labor exploitation. The slave trade, which intensified along both Atlantic and Indian Ocean routes from the 16th century onward, represents the darkest aspect of these commercial networks, with an estimated 12 to 15 million Africans forcibly transported across the Atlantic alone between 1525 and 1866. This demographic catastrophe fundamentally altered African, American, and European societies in ways that continue to shape contemporary inequalities."
+              },
+              {
+                "id": "P5",
+                "text": "The historical evolution of global trade routes offers crucial insights into contemporary discussions about globalization, economic integration, and cultural exchange. Modern infrastructure projects such as China's Belt and Road Initiative explicitly invoke historical Silk Road precedents, though whether these contemporary networks will generate comparable cultural exchange or merely facilitate resource extraction remains debated among scholars. Dr. Peter Frankopan at Oxford University argues that understanding historical trade patterns remains essential for grasping current geopolitical dynamics, as many contemporary conflicts and alliances reflect competition for control over strategic chokepoints and transit routes established centuries ago. The Mediterranean, Persian Gulf, and Malacca Strait retain their historical significance as critical passages, with approximately 60 percent of global maritime trade still transiting these historically important waterways. As digital technologies create new forms of exchange and connection, the fundamental dynamics of trade—the interplay between distance costs, political stability, and technological capability—continue to shape human societies much as they did in the era of camel caravans and monsoon winds. The question facing contemporary policymakers is not whether trade networks will continue to evolve but whether their benefits can be distributed more equitably than historical precedents suggest."
+              }
+            ],
+            "questions": [
+                {
+                "id": 1,
+                "type": "true-false-not-given",
+                "title": "Questions 1–6",
+                "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
+                "questions": [
+                  {
+                    "id": 1,
+                    "questionText": "By the beginning of the second millennium CE, sea-based trade networks transported triple the quantity of goods compared to land-based routes.",
+                    "correctAnswer": "TRUE",
+                    "justification": "P3 L3 states that by 1000 CE (beginning of second millennium), maritime routes handled approximately three times the cargo volume of overland passages. Statement paraphrases this using 'sea-based trade networks' for maritime routes, 'transported triple' for handled three times, and 'land-based routes' for overland passages.",
+                    "evidenceQuote": "by 1000 CE, maritime routes handled approximately three times the cargo volume of overland passages"
+                  },
+                  {
+                    "id": 2,
+                    "questionText": "The Silk Road operated primarily as a relay network where merchandise was transferred among multiple merchants at intermediary centers rather than traveling uninterrupted from source to destination.",
+                    "correctAnswer": "TRUE",
+                    "justification": "P2 L2 explicitly states these routes functioned less as continuous highways than as relay systems, with goods changing hands multiple times across intermediate trading cities rather than traveling directly from origin to final destination. Statement paraphrases this core concept using synonyms and restructured phrasing.",
+                    "evidenceQuote": "functioned less as continuous highways than as relay systems, with goods typically changing hands multiple times across intermediate trading cities"
+                  },
+                  {
+                    "id": 3,
+                    "questionText": "Archaeological findings indicate that by the 7th century CE, approximately three-quarters of luxury products arriving in Mediterranean markets passed through Central Asian middlemen.",
+                    "correctAnswer": "FALSE",
+                    "justification": "Passage states approximately 67 percent of luxury goods transited through Central Asian intermediaries, not three-quarters (75 percent). Quantifier change: 67% distorted to 75%, an 8 percentage point difference that makes the statement false.",
+                    "evidenceQuote": "approximately 67 percent of luxury goods reaching Mediterranean markets had transited through Central Asian intermediaries"
+                  },
+                  {
+                    "id": 4,
+                    "questionText": "Traditional dhow vessels typically required a crew of 30 to 45 sailors to operate effectively.",
+                    "correctAnswer": "FALSE",
+                    "justification": "Passage explicitly states dhows required a crew of only 15 to 30 sailors, not 30 to 45. Numerical alteration: the range has been shifted upward by 15 sailors at both bounds, creating a clear contradiction.",
+                    "evidenceQuote": "requiring a crew of only 15 to 30 sailors"
+                  },
+                  {
+                    "id": 5,
+                    "questionText": "The operation of caravanserais along the Silk Road generated substantial profits for their owners.",
+                    "correctAnswer": "NOT GIVEN",
+                    "justification": "Passage mentions caravanserais as roadside inns spaced at 25-35 kilometer intervals for practical purposes (day's travel for camels), but provides no information about their profitability, revenue, or financial benefits to owners. Would require economic data not present in the text.",
+                    "evidenceQuote": "caravanserais (roadside inns) typically spaced at intervals of 25 to 35 kilometers, representing a day's travel for laden camels"
+                  },
+                  {
+                    "id": 6,
+                    "questionText": "Trade in silk generated higher profit margins for merchants than trade in spices during the peak period of the overland routes.",
+                    "correctAnswer": "NOT GIVEN",
+                    "justification": "Passage mentions both silk and spices as primary commodities comprising luxury goods along the Silk Road, but never compares their relative profitability or profit margins. Different metrics are provided (volume percentages, cargo types) but not comparative financial returns for different goods.",
+                    "evidenceQuote": "silk, spices, precious stones, and religious texts comprising the primary commodities"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "type": "matching-sentence-endings",
+                "title": "Questions 7-11",
+                "instructions": "Complete each sentence with the correct ending, A–H.",
+                "sentence_endings": [
+                  { "letter": "A", "text": "operated primarily through relay networks with goods exchanging ownership multiple times across intermediate trading hubs." },
+                  { "letter": "B", "text": "led to a substantial reduction in commercial activity along overland passages over subsequent decades." },
+                  { "letter": "C", "text": "could carry loads equivalent to hundreds of camels while employing crews of fewer than thirty individuals." },
+                  { "letter": "D", "text": "reached Islamic territories by the 8th century following military conflict and subsequently spread to Europe." },
+                  { "letter": "E", "text": "continue to accommodate approximately three-fifths of worldwide ocean shipping traffic." },
+                  { "letter": "F", "text": "that technological innovations traveled exclusively along maritime routes rather than overland pathways." },
+                  { "letter": "G", "text": "experienced unprecedented expansion due to improved security measures implemented by regional authorities." },
+                  { "letter": "H", "text": "when Portuguese navigators established direct maritime connections to Indian markets." }
+                ],
+                "questions": [
+                  {
+                    "id": 7,
+                    "questionText": "Research conducted at Yale University demonstrated that Silk Road commerce",
+                    "correctAnswer": "A",
+                    "justification": "P2 L2 explains Hansen's research showed these routes functioned as relay systems with goods changing hands multiple times across intermediate cities, not as continuous highways. Ending A paraphrases this finding accurately.",
+                    "evidenceQuote": "these routes functioned less as continuous highways than as relay systems, with goods typically changing hands multiple times across intermediate trading cities"
+                  },
+                  {
+                    "id": 8,
+                    "questionText": "The fragmentation of the Mongol Empire in the 14th century",
+                    "correctAnswer": "B",
+                    "justification": "P2 L5 states that Mongol Empire fragmentation disrupted security arrangements facilitating commerce, contributing to an estimated 40-50% decline in overland trade over fifty years. Ending B paraphrases this as 'substantial reduction' over 'subsequent decades'.",
+                    "evidenceQuote": "disrupted established security arrangements that had facilitated commerce, contributing to a decline in overland trade that some historians estimate at 40 to 50 percent over a fifty-year period"
+                  },
+                  {
+                    "id": 9,
+                    "questionText": "Unlike overland caravans that required numerous pack animals, maritime dhow vessels",
+                    "correctAnswer": "C",
+                    "justification": "P3 L4 explains dhows could carry 200-300 tons (equivalent to several hundred camels' load) while requiring only 15-30 sailors. Ending C paraphrases this comparison using 'loads equivalent to hundreds of camels' and 'crews of fewer than thirty individuals'.",
+                    "evidenceQuote": "could carry roughly 200 to 300 tons of cargo—equivalent to the load of several hundred camels—while requiring a crew of only 15 to 30 sailors"
+                  },
+                  {
+                    "id": 10,
+                    "questionText": "Paper-making technology originating in China",
+                    "correctAnswer": "D",
+                    "justification": "P4 L2-3 traces paper-making from China (2nd century CE) to the Islamic world by 751 CE following the Battle of Talas, then to Europe by 12th century. Ending D paraphrases '751 CE' as '8th century', 'Battle of Talas' as 'military conflict', and captures the subsequent European spread.",
+                    "evidenceQuote": "reached the Islamic world by 751 CE following the Battle of Talas... From there, the technology spread to Europe by the 12th century"
+                  },
+                  {
+                    "id": 11,
+                    "questionText": "Strategic waterways such as the Mediterranean, Persian Gulf, and Malacca Strait",
+                    "correctAnswer": "E",
+                    "justification": "P5 L4 states approximately 60% of global maritime trade still transits these historically important waterways. Ending E paraphrases this as 'three-fifths' (60% = 3/5) of 'worldwide ocean shipping traffic', using 'continue to accommodate' for 'still transiting'.",
+                    "evidenceQuote": "approximately 60 percent of global maritime trade still transiting these historically important waterways"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "type": "matching-information",
+                "title": "Questions 12-15",
+                "instructions": "Which paragraph contains the following information? Write the correct letter, A–E, in boxes 12-15 on your answer sheet.",
+                "paragraphs_list": ["A", "B", "C", "D", "E"],
+                "questions": [
+                  {
+                    "id": 12,
+                    "questionText": "quantitative data on the proportion of worldwide commerce managed by pre-modern exchange networks",
+                    "correctAnswer": "A",
+                    "justification": "Paragraph A provides the specific statistic that ancient trade routes handled 15 to 20 percent of global economic activity by the 15th century. This is the only paragraph quantifying historical trade's share of world commerce.",
+                    "evidenceQuote": "These ancient pathways, spanning continents and oceans, handled an estimated 15 to 20 percent of the world's economic activity by the 15th century"
+                  },
+                  {
+                    "id": 13,
+                    "questionText": "an instance of pathogen transmission along commercial networks reaching Europe in the mid-fourteenth century",
+                    "correctAnswer": "B",
+                    "justification": "Paragraph B specifically discusses how disease traveled trade routes, mentioning the Black Death's spread to Europe in 1347 following merchant pathways from Central Asia. This is the only example of disease transmission via trade routes.",
+                    "evidenceQuote": "disease also traveled these routes—the Black Death's spread to Europe in 1347 followed merchant pathways from Central Asia"
+                  },
+                  {
+                    "id": 14,
+                    "questionText": "comparative data on the transportation capacity of sea-based versus land-based commercial pathways",
+                    "correctAnswer": "C",
+                    "justification": "Paragraph C provides specific comparative analysis showing maritime routes handled approximately three times the cargo volume of overland passages by 1000 CE. This is the only paragraph directly comparing cargo capacity between maritime and land routes.",
+                    "evidenceQuote": "by 1000 CE, maritime routes handled approximately three times the cargo volume of overland passages"
+                  },
+                  {
+                    "id": 15,
+                    "questionText": "specific examples of agricultural commodities from the Americas that enhanced food production in other continents",
+                    "correctAnswer": "D",
+                    "justification": "Paragraph D discusses the introduction of New World crops (maize, potatoes, chili peppers) to Afro-Eurasia via post-1492 trade routes, noting they increased agricultural productivity by 25-30 percent. This is the only paragraph providing examples of American agricultural products improving productivity elsewhere.",
+                    "evidenceQuote": "the introduction of New World crops such as maize, potatoes, and chili peppers to Afro-Eurasia via post-1492 trade routes increased agricultural productivity"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Digital Disruption: How E-commerce is Reshaping the Retail Landscape",
+            "level": "academic",
+            "estimatedTime": 20,
+            "paragraphs": [
+              {
+                "id": "P1",
+                "text": "The retail sector has undergone more profound transformation in the past two decades than in the entire previous century, driven primarily by the exponential growth of electronic commerce. Global e-commerce sales, which represented merely 5 percent of total retail transactions in 2005, had surged to approximately 19 percent by 2021, with projections suggesting this figure could reach 24 to 27 percent by 2025. This shift extends far beyond simple channel substitution—the replacement of physical stores with online platforms—instead representing a fundamental reconceptualization of how consumers discover, evaluate, and acquire goods and services. Understanding the trajectory of retail's evolution requires examining not only technological infrastructure and consumer behavior patterns but also the strategic responses of traditional retailers, the regulatory frameworks governing digital marketplaces, and the broader socioeconomic implications of this transformation. What emerges is a complex picture of disruption and adaptation, with significant consequences for employment, urban development, and commercial property markets worldwide."
+              },
+              {
+                "id": "P2",
+                "text": "The rise of sophisticated e-commerce platforms has fundamentally altered consumer expectations regarding convenience, selection, and personalization. Research conducted by Professor Michael Zhang at Stanford University between 2018 and 2020 demonstrated that online retail environments could offer product selections 40 to 60 times larger than comparable physical stores, while advanced algorithms enabled recommendation systems that increased purchase conversion rates by an average of 23 percent. Amazon, the dominant force in Western e-commerce, exemplifies this model: the company's fulfillment network enables same-day or next-day delivery to approximately 72 percent of the U.S. population, effectively eliminating the traditional advantage of immediate gratification that physical stores once held. In China, platforms such as Alibaba and JD.com have evolved even further, integrating social media, live-streaming commerce, and sophisticated logistics networks that can deliver purchases within hours in major urban centers. A 2021 analysis published in the International Journal of Retail Studies found that Chinese consumers now complete approximately 52 percent of retail purchases through mobile devices, compared to 35 percent in the United States and 28 percent in Europe. This mobile-first approach has particularly resonated with younger demographics; consumers aged 18 to 34 conduct roughly three-quarters of their non-grocery shopping online, according to data from the Global Consumer Research Consortium. Interestingly, the pandemic period of 2020-2021 accelerated adoption rates across all age groups, with even consumers over 65 increasing their online purchasing by an estimated 40 to 45 percent."
+              },
+              {
+                "id": "P3",
+                "text": "The expansion of e-commerce has exerted considerable pressure on traditional brick-and-mortar retail, though the narrative of wholesale displacement oversimplifies a more nuanced reality. In the United States, physical retail space per capita declined from a peak of 23.5 square feet in 2016 to approximately 21.2 square feet by 2022, with department stores and mid-tier shopping centers experiencing the most dramatic contractions. Professor Elena Rodriguez at MIT's Retail Innovation Lab notes that while approximately 12,000 retail locations closed across North America in 2020 alone, many retailers have strategically reconceived physical spaces as 'experience centers' or fulfillment nodes rather than purely transactional venues. The concept of 'showrooming'—where customers examine products in stores before purchasing online—initially alarmed traditional retailers, but has subsequently been countered by 'webrooming,' wherein consumers research online but complete purchases in physical locations to avoid shipping costs or delays. Data from the National Retail Federation indicates that roughly 65 percent of consumers now engage in some form of cross-channel behavior, consulting multiple touchpoints before finalizing purchases. Luxury retail has proven particularly resistant to complete digitization; high-value items such as jewelry, designer fashion, and premium electronics still see 60 to 70 percent of sales occurring in physical environments where personal service and tactile evaluation remain valued. However, even luxury brands have recognized the necessity of digital presence, with companies like Burberry and Gucci investing heavily in augmented reality applications and virtual showrooms that bridge physical and digital experiences."
+              },
+              {
+                "id": "P4",
+                "text": "The most successful retail organizations have embraced omnichannel strategies that seamlessly integrate online and offline operations rather than treating them as competing channels. Target, a major U.S. retailer, exemplifies this approach: the company invested $4 billion between 2017 and 2020 in supply chain infrastructure that enables services like 'order online, pick up in store' and 'same-day delivery from local stores.' These initiatives proved remarkably effective; by 2021, approximately 95 percent of Target's sales involved digital interaction at some stage, whether for product research, purchase, or fulfillment, yet roughly 75 percent still included an in-store component. Similarly, Walmart's acquisition of e-commerce platforms and development of sophisticated inventory systems allowed the company to leverage its vast network of physical locations—over 4,700 stores in the United States—as fulfillment centers positioned within ten miles of 90 percent of the American population. Research by Dr. James Patterson at the University of Toronto suggests that retailers with established physical presence actually hold significant advantages in the omnichannel era, as their existing infrastructure can reduce last-mile delivery costs by 15 to 25 percent compared to purely digital competitors. Nevertheless, some analysts, including Professor Sarah Lin at INSEAD, caution that maintaining dual-channel operations creates complexity and requires substantial technological investment that smaller retailers often cannot sustain. The result has been increasing market concentration, with the top ten retailers capturing an estimated 58 percent of total e-commerce revenue in 2021, up from 44 percent in 2015."
+              },
+              {
+                "id": "P5",
+                "text": "The future retail landscape will likely feature continued evolution rather than the complete extinction of physical commerce that some early predictions suggested. Dr. Antonio Ferrara at Oxford University's Said Business School argues that successful retailers will be those that view physical and digital not as separate channels but as complementary elements of integrated customer experiences. Emerging technologies such as artificial intelligence, virtual reality, and advanced robotics promise to further blur these boundaries, enabling innovations like automated micro-fulfillment centers and virtual try-on capabilities that combine digital convenience with physical certainty. The implications extend beyond retail strategy to encompass workforce transformation, as an estimated 2 to 3 million traditional retail positions in developed economies have been displaced since 2015, though many have been partially offset by growth in logistics and technology roles. Urban planners and commercial property developers face the challenge of repurposing retail space in an era where consumer behavior continues to evolve rapidly. Ultimately, the question confronting the retail sector is not whether to embrace digital transformation but how to execute it in ways that preserve employment, serve diverse consumer preferences, and maintain the social functions that physical retail spaces have traditionally provided in communities."
+              }
+            ],
+            "questions": [
+                {
+                    "id": 4,
+                    "type": "matching-headings",
+                    "title": "Questions 16-20",
+                    "instructions": "The reading passage has 5 paragraphs, A-E. Choose the correct heading for each paragraph from the list of headings below. Write the correct number, i-viii, in boxes 16-20.",
+                    "questions": [
+                      {
+                        "id": 16,
+                        "questionText": "Paragraph A",
+                        "options": [
+                          "Technological innovations reshaping consumer shopping patterns",
+                          "Strategic adaptation of traditional retail to online competition",
+                          "The dominance of mobile commerce in Asian markets",
+                          "The unprecedented scale of retail sector transformation",
+                          "Integrating physical and digital retail channels",
+                          "Luxury retail's continued reliance on physical stores",
+                          "Societal implications beyond commercial strategy",
+                          "The inevitable decline of brick-and-mortar retail"
+                        ],
+                        "correctAnswer": "The unprecedented scale of retail sector transformation",
+                        "justification": "Paragraph A establishes that retail has undergone 'more profound transformation in the past two decades than in the entire previous century,' with e-commerce growing from 5% (2005) to 19% (2021) of total retail. The heading 'unprecedented scale of transformation' paraphrases this magnitude of change, capturing the paragraph's emphasis on the extent and speed of disruption.",
+                        "evidenceQuote": "The retail sector has undergone more profound transformation in the past two decades than in the entire previous century"
+                      },
+                      {
+                        "id": 17,
+                        "questionText": "Paragraph B",
+                        "options": [
+                          "Technological innovations reshaping consumer shopping patterns",
+                          "Strategic adaptation of traditional retail to online competition",
+                          "The dominance of mobile commerce in Asian markets",
+                          "The unprecedented scale of retail sector transformation",
+                          "Integrating physical and digital retail channels",
+                          "Luxury retail's continued reliance on physical stores",
+                          "Societal implications beyond commercial strategy",
+                          "The inevitable decline of brick-and-mortar retail"
+                        ],
+                        "correctAnswer": "Technological innovations reshaping consumer shopping patterns",
+                        "justification": "Paragraph B focuses on how sophisticated e-commerce platforms' technological features (advanced algorithms, recommendation systems, logistics networks, mobile integration) have fundamentally altered consumer expectations and behaviors. The heading paraphrases 'sophisticated e-commerce platforms' as 'technological innovations' and 'altered consumer expectations' as 'reshaping consumer shopping patterns,' accurately capturing the paragraph's central theme of technology-driven behavioral change.",
+                        "evidenceQuote": "The rise of sophisticated e-commerce platforms has fundamentally altered consumer expectations regarding convenience, selection, and personalization."
+                      },
+                      {
+                        "id": 18,
+                        "questionText": "Paragraph C",
+                        "options": [
+                          "Technological innovations reshaping consumer shopping patterns",
+                          "Strategic adaptation of traditional retail to online competition",
+                          "The dominance of mobile commerce in Asian markets",
+                          "The unprecedented scale of retail sector transformation",
+                          "Integrating physical and digital retail channels",
+                          "Luxury retail's continued reliance on physical stores",
+                          "Societal implications beyond commercial strategy",
+                          "The inevitable decline of brick-and-mortar retail"
+                        ],
+                        "correctAnswer": "Strategic adaptation of traditional retail to online competition",
+                        "justification": "Paragraph C emphasizes that physical retail's response to e-commerce has been strategic adaptation rather than wholesale displacement. The opening states the 'narrative of wholesale displacement oversimplifies a more nuanced reality,' then details how retailers have reconceived spaces, cross-channel behaviors emerged, and luxury retail adapted. The heading paraphrases 'retailers have strategically reconceived' as 'strategic adaptation,' capturing the paragraph's focus on survival through evolution.",
+                        "evidenceQuote": "many retailers have strategically reconceived physical spaces as 'experience centers' or fulfillment nodes rather than purely transactional venues"
+                      },
+                      {
+                        "id": 19,
+                        "questionText": "Paragraph D",
+                        "options": [
+                          "Technological innovations reshaping consumer shopping patterns",
+                          "Strategic adaptation of traditional retail to online competition",
+                          "The dominance of mobile commerce in Asian markets",
+                          "The unprecedented scale of retail sector transformation",
+                          "Integrating physical and digital retail channels",
+                          "Luxury retail's continued reliance on physical stores",
+                          "Societal implications beyond commercial strategy",
+                          "The inevitable decline of brick-and-mortar retail"
+                        ],
+                        "correctAnswer": "Integrating physical and digital retail channels",
+                        "justification": "Paragraph D's topic sentence explicitly states successful retailers 'embrace omnichannel strategies that seamlessly integrate online and offline operations.' The entire paragraph then illustrates this integration through Target and Walmart case studies, showing how physical-digital integration works. The heading paraphrases 'integrate online and offline operations' as 'integrating physical and digital retail channels,' capturing the paragraph's focus on synthesis rather than competition between channels.",
+                        "evidenceQuote": "The most successful retail organizations have embraced omnichannel strategies that seamlessly integrate online and offline operations rather than treating them as competing channels."
+                      },
+                      {
+                        "id": 20,
+                        "questionText": "Paragraph E",
+                        "options": [
+                          "Technological innovations reshaping consumer shopping patterns",
+                          "Strategic adaptation of traditional retail to online competition",
+                          "The dominance of mobile commerce in Asian markets",
+                          "The unprecedented scale of retail sector transformation",
+                          "Integrating physical and digital retail channels",
+                          "Luxury retail's continued reliance on physical stores",
+                          "Societal implications beyond commercial strategy",
+                          "The inevitable decline of brick-and-mortar retail"
+                        ],
+                        "correctAnswer": "Societal implications beyond commercial strategy",
+                        "justification": "Paragraph E moves beyond retail business operations to discuss broader consequences: workforce displacement (2-3 million jobs), urban planning challenges, and the need to preserve social functions that physical retail provides. The passage explicitly states implications 'extend beyond retail strategy' to encompass workforce and urban development. The heading paraphrases this exact concept—'implications beyond retail strategy' becomes 'implications beyond commercial strategy,' with 'societal' capturing the workforce/urban/social dimensions discussed.",
+                        "evidenceQuote": "The implications extend beyond retail strategy to encompass workforce transformation...urban planners and commercial property developers face the challenge of repurposing retail space"
+                      }
+                    ]
+                  },
+                  {
+                    "id": 5,
+                    "type": "matching-features",
+                    "title": "Questions 21-25",
+                    "instructions": "Look at the following statements (Questions 21-25) and the list of retailers/platforms below. Match each statement with the correct retailer/platform, A–G. Write the correct letter, A–G, in boxes 21-25 on your answer sheet.",
+                    "features": [
+                      {
+                        "letter": "A",
+                        "name": "Amazon"
+                      },
+                      {
+                        "letter": "B",
+                        "name": "Alibaba and JD.com"
+                      },
+                      {
+                        "letter": "C",
+                        "name": "Target"
+                      },
+                      {
+                        "letter": "D",
+                        "name": "Walmart"
+                      },
+                      {
+                        "letter": "E",
+                        "name": "Burberry and Gucci"
+                      },
+                      {
+                        "letter": "F",
+                        "name": "Department stores"
+                      },
+                      {
+                        "letter": "G",
+                        "name": "National Retail Federation"
+                      }
+                    ],
+                    "questions": [
+                      {
+                        "id": 21,
+                        "questionText": "operates an extensive physical network positioning stores within close proximity to nine-tenths of the population",
+                        "correctAnswer": "D",
+                        "justification": "Passage states 'Walmart's...vast network of physical locations—over 4,700 stores in the United States—as fulfillment centers positioned within ten miles of 90 percent of the American population' (P4 L4). Feature paraphrases 'vast network' as 'extensive physical network,' 'positioned within ten miles of 90 percent' as 'within close proximity to nine-tenths,' maintaining the distinctive characteristic of Walmart's geographic coverage.",
+                        "evidenceQuote": "Walmart's...vast network of physical locations—over 4,700 stores in the United States—as fulfillment centers positioned within ten miles of 90 percent of the American population"
+                      },
+                      {
+                        "id": 22,
+                        "questionText": "enables rapid shipping to approximately three-quarters of consumers in one major national market",
+                        "correctAnswer": "A",
+                        "justification": "Passage explicitly states 'Amazon...the company's fulfillment network enables same-day or next-day delivery to approximately 72 percent of the U.S. population' (P2 L3). Feature paraphrases 'same-day or next-day delivery' as 'rapid shipping,' '72 percent' as 'three-quarters,' and 'U.S. population' as 'consumers in one major national market,' accurately identifying Amazon's delivery coverage capability.",
+                        "evidenceQuote": "Amazon...the company's fulfillment network enables same-day or next-day delivery to approximately 72 percent of the U.S. population"
+                      },
+                      {
+                        "id": 23,
+                        "questionText": "allocated several billion dollars toward supply chain systems facilitating combined digital and physical service offerings",
+                        "correctAnswer": "C",
+                        "justification": "Passage states 'Target...invested $4 billion between 2017 and 2020 in supply chain infrastructure that enables services like order online, pick up in store and same-day delivery from local stores' (P4 L2). Feature paraphrases '$4 billion' as 'several billion dollars,' 'invested...in supply chain infrastructure' as 'allocated...toward supply chain systems,' and the dual-channel services as 'combined digital and physical service offerings.'",
+                        "evidenceQuote": "Target...invested $4 billion between 2017 and 2020 in supply chain infrastructure that enables services like 'order online, pick up in store'"
+                      },
+                      {
+                        "id": 24,
+                        "questionText": "incorporates social networking and broadcast commerce with logistics capabilities enabling delivery within hours",
+                        "correctAnswer": "B",
+                        "justification": "Passage describes how 'platforms such as Alibaba and JD.com have evolved even further, integrating social media, live-streaming commerce, and sophisticated logistics networks that can deliver purchases within hours in major urban centers' (P2 L4). Feature paraphrases 'integrating social media' as 'incorporates social networking,' 'live-streaming commerce' as 'broadcast commerce,' maintaining the distinctive multi-channel integration characteristic of Chinese platforms.",
+                        "evidenceQuote": "Alibaba and JD.com...integrating social media, live-streaming commerce, and sophisticated logistics networks that can deliver purchases within hours"
+                      },
+                      {
+                        "id": 25,
+                        "questionText": "achieved customer engagement patterns where nearly all transactions involve online interaction while maintaining substantial in-person participation",
+                        "correctAnswer": "C",
+                        "justification": "Passage states about Target: 'by 2021, approximately 95 percent of Target's sales involved digital interaction at some stage, whether for product research, purchase, or fulfillment, yet roughly 75 percent still included an in-store component' (P4 L3). Feature paraphrases '95 percent...involved digital interaction' as 'nearly all transactions involve online interaction' and '75 percent still included an in-store component' as 'maintaining substantial in-person participation,' capturing Target's distinctive omnichannel achievement.",
+                        "evidenceQuote": "approximately 95 percent of Target's sales involved digital interaction at some stage...yet roughly 75 percent still included an in-store component"
+                      }
+                    ]
+                  },
+                  {
+                    "id": 6,
+                    "type": "summary-completion",
+                    "completion_type": "summary",
+                    "title": "Questions 26-30",
+                    "word_limit": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+                    "instructions": "Complete the notes below. Choose NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer. Write your answers in boxes 26-30 on your answer sheet.",
+                    "structure": "<div class='completion-notes'><h4>E-commerce Expansion</h4><p>• In 2005, online sales accounted for only <strong>(1)_____</strong> of retail transactions<br>• By 2021, this figure had risen to approximately 19 percent<br>• Advanced recommendation systems increased purchase conversion rates by <strong>(2)_____</strong></p><h4>Consumer Behavior Changes</h4><p>• Behavior where consumers research digitally but purchase in physical stores is termed <strong>(3)_____</strong><br>• Approximately 65% of shoppers now consult multiple touchpoints before buying</p><h4>Strategic Responses</h4></div>",
+                    "questions": [
+                      {
+                        "id": 26,
+                        "gap_number": 26,
+                        "questionText": "Gap 26",
+                        "context": "In 2005, online sales accounted for only (26)_____ of retail transactions",
+                        "correctAnswer": "5 percent",
+                        "justification": "Passage states e-commerce 'represented merely 5 percent of total retail transactions in 2005' (P1 L2). Notes paraphrase 'represented merely' as 'accounted for only,' but answer '5 percent' is exact words from passage.",
+                        "evidenceQuote": "Global e-commerce sales, which represented merely 5 percent of total retail transactions in 2005",
+                        "evidence_location": "P1",
+                        "answer_type": "number"
+                      },
+                      {
+                        "id": 27,
+                        "gap_number": 27,
+                        "questionText": "Gap 27",
+                        "context": "Advanced recommendation systems increased purchase conversion rates by (2)_____",
+                        "correctAnswer": "23 percent",
+                        "justification": "Passage states 'recommendation systems that increased purchase conversion rates by an average of 23 percent' (P2 L2). Notes simplify 'by an average of' to 'by,' but answer '23 percent' is exact words.",
+                        "evidenceQuote": "advanced algorithms enabled recommendation systems that increased purchase conversion rates by an average of 23 percent",
+                        "evidence_location": "P2",
+                        "answer_type": "number"
+                      },
+                      {
+                        "id": 28,
+                        "gap_number": 28,
+                        "questionText": "Gap 28",
+                        "context": "Behavior where consumers research digitally but purchase in physical stores is termed (28)_____",
+                        "correctAnswer": "webrooming",
+                        "justification": "Passage defines 'webrooming' as the practice 'wherein consumers research online but complete purchases in physical locations' (P3 L4). Notes paraphrase 'research online' as 'research digitally' and 'complete purchases in physical locations' as 'purchase in physical stores,' but answer 'webrooming' is exact term from passage.",
+                        "evidenceQuote": "webrooming, wherein consumers research online but complete purchases in physical locations",
+                        "evidence_location": "P3",
+                        "answer_type": "noun_phrase"
+                      }
+                    ]
+                  }
+                ]
+            },
+            {
+                     "id": 3,
+                    "title": "From Ledgers to Algorithms: The Institutional Evolution of Modern Banking",
+                "level": "academic",
+                "estimatedTime": 20,
+                "paragraphs": [
+                  {
+                    "id": "P1",
+                    "text": "The contemporary banking system represents the culmination of centuries of institutional innovation, transforming from rudimentary deposit-taking operations into complex financial intermediaries that channel approximately $140 trillion in assets globally. This evolution has occurred not through linear progression but through punctuated equilibria—periods of relative stability interrupted by technological and regulatory disruptions that fundamentally reconceptualize banking's role in economic systems. The transition from medieval merchant banking to algorithmic trading platforms reflects profound shifts in trust mechanisms, risk assessment methodologies, and the very conceptualization of money itself. Understanding this trajectory requires examining not merely the technological infrastructure enabling modern finance but also the regulatory frameworks, societal norms, and economic theories that have shaped banking's function in capital allocation and economic development. What emerges is a narrative less of inevitable progress than of contested adaptations to changing political economies, wherein banking institutions have alternately driven and resisted transformation."
+                  },
+                  {
+                    "id": "P2",
+                    "text": "The formalization of banking emerged gradually from informal money-changing and deposit-taking practices documented in ancient Mesopotamia and classical Athens, yet the critical institutional innovations occurred during the Italian Renaissance. Florentine and Venetian merchant houses developed double-entry bookkeeping between 1340 and 1450, enabling systematic tracking of complex financial obligations across geographically dispersed operations. Research by Professor Janet Wilson at Cambridge University demonstrates that these accounting innovations facilitated the emergence of bills of exchange, negotiable instruments that by 1550 constituted approximately 60 percent of long-distance commercial transactions in European markets. The subsequent development of fractional reserve banking—wherein institutions lend multiples of their actual deposits—represented perhaps the most consequential transformation, effectively allowing banks to create money through credit extension. The Bank of Amsterdam, established in 1609, pioneered this model on an institutional scale, maintaining reserve ratios of approximately 50 percent while facilitating trade throughout the Dutch Golden Age. By the 18th century, the proliferation of joint-stock banks and the emergence of central banking institutions, exemplified by the Bank of England's evolution from its 1694 founding onward, had established the fundamental architecture recognizable in modern financial systems. Interestingly, many core banking practices—deposit insurance concepts, clearinghouse mechanisms, lender-of-last-resort functions—emerged not from theoretical design but from pragmatic responses to recurring financial panics."
+                  },
+                  {
+                    "id": "P3",
+                    "text": "The late 20th century witnessed a technological revolution that fundamentally reconceptualized banking operations and competitive dynamics. The introduction of automated teller machines in the 1960s and the subsequent digitization of payment systems initiated what economists term 'disintermediation'—the reduction of traditional banking's role as intermediary between savers and borrowers. A comprehensive analysis published in the International Journal of Banking Studies in 2021 found that between 1995 and 2020, the proportion of retail banking transactions conducted through physical branches declined from 87 percent to merely 23 percent in developed economies, with mobile and internet platforms absorbing the differential. Algorithmic trading and high-frequency transactions, negligible before 1990, now account for an estimated 70 to 75 percent of equity trading volume in major financial markets. Simultaneously, the rise of financial technology companies has challenged traditional banking monopolies on payment processing and credit provision. Peer-to-peer lending platforms originated approximately $300 billion in loans globally between 2015 and 2022, effectively bypassing conventional intermediation and its associated costs. Professor David Chen at MIT's Digital Economy Initiative argues that these developments represent not merely technological upgrades but fundamental restructuring of trust architectures, replacing institutional guarantees with algorithmic verification and distributed ledger technologies. This shift has particular implications for developing economies, where mobile banking adoption rates exceed 65 percent in regions like Sub-Saharan Africa, enabling financial inclusion for populations previously excluded from formal banking systems."
+                  },
+                  {
+                    "id": "P4",
+                    "text": "Banking's evolution has occurred within increasingly sophisticated regulatory frameworks designed to mitigate systemic risks and address information asymmetries inherent in financial intermediation. The Basel Accords, initiated in 1988 and subsequently revised through Basel III protocols implemented from 2013 onward, established international capital adequacy standards requiring banks to maintain core equity ratios of at least 4.5 percent of risk-weighted assets, with additional buffers for systemically important institutions. These regulations emerged from costly lessons; the 2008 global financial crisis alone resulted in estimated economic losses exceeding $10 trillion globally and precipitated the most comprehensive regulatory reforms since the Great Depression. However, some economists, including Professor Sarah Lin at the Financial Stability Institute, caution that regulatory responses often lag behind financial innovation, creating arbitrage opportunities wherein activities migrate to less-regulated shadow banking sectors. Data from the Financial Stability Board indicates that shadow banking assets—including money market funds, hedge funds, and non-bank lenders—reached approximately 50 percent of traditional banking system assets by 2020, up from 28 percent in 2002. The tension between fostering innovation and ensuring stability remains central to contemporary banking policy debates, particularly regarding cryptocurrency integration and the prospective issuance of central bank digital currencies. Research conducted by Dr. Elena Martinez at the Bank for International Settlements between 2019 and 2022 suggests that regulatory fragmentation across jurisdictions may undermine the effectiveness of capital requirements, as financial institutions optimize their geographic footprints to minimize compliance costs."
+                  },
+                  {
+                    "id": "P5",
+                    "text": "The future banking landscape will likely feature continued fragmentation between traditional institutions and decentralized finance systems, rather than wholesale replacement of established models. Dr. Antonio Ferrara at Oxford's Said Business School argues that successful banks will be those integrating technological capabilities while leveraging regulatory legitimacy and consumer trust that purely algorithmic systems cannot easily replicate. The emergence of central bank digital currencies—with pilot programs active in 18 countries as of 2023, including China, Sweden, and the Bahamas—promises to fundamentally alter monetary policy transmission mechanisms and payment system architectures. Yet significant questions remain regarding privacy implications, the potential for financial surveillance, and the consequences for commercial banking if central banks establish direct relationships with retail customers. Ultimately, the question confronting policymakers and institutions is not whether banking will continue evolving but whether regulatory frameworks can adapt sufficiently rapidly to preserve financial stability while enabling innovation that serves broader economic development and financial inclusion objectives. As historical precedent suggests, the institutions that successfully navigate these transitions will be those that recognize banking's essential function—not the provision of specific products but the management of trust and risk in facilitating economic exchange."
+                  }
+                ],
+              "questions": [
+                {
+                  "id": 7,
+                  "type": "multiple-choice",
+                  "title": "Questions 29-32",
+                  "instructions": "Choose the correct letter, A, B, C or D. Write the correct letter in boxes 1-4 on your answer sheet.",
+                  "questions": [
+                      {
+                        "id": 29,
+                        "questionText": "According to the passage, what was the most significant consequence of fractional reserve banking?",
+                        "options": [
+                          "A) It enabled systematic tracking of financial obligations across multiple locations",
+                          "B) It established international capital adequacy standards for financial institutions",
+                          "C) It maintained reserve ratios of approximately 50 percent during the Dutch Golden Age",
+                          "D) It allowed financial institutions to generate money through the extension of credit"
+                        ],
+                        "correctAnswer": "D) It allowed financial institutions to generate money through the extension of credit",
+                        "justification": "Paragraph 2 explicitly states that fractional reserve banking 'represented perhaps the most consequential transformation, effectively allowing banks to create money through credit extension' (P2 L4). Option D paraphrases 'allowing banks to create money' as 'allowed financial institutions to generate money' and 'credit extension' as 'extension of credit,' accurately capturing the passage's emphasis on this being the primary significance.",
+                        "evidenceQuote": "fractional reserve banking...represented perhaps the most consequential transformation, effectively allowing banks to create money through credit extension"
+                      },
+                      {
+                        "id": 30,
+                        "questionText": "What can be inferred from Professor Chen's argument about technological developments in banking?",
+                        "options": [
+                          "A) Digital innovations represent minor improvements to existing banking infrastructure",
+                          "B) Algorithmic systems have completely eliminated the need for institutional oversight",
+                          "C) Contemporary changes involve fundamental shifts in how trust is established and validated",
+                          "D) Technological upgrades have restored traditional banking's intermediary role in finance"
+                        ],
+                        "correctAnswer": "C) Contemporary changes involve fundamental shifts in how trust is established and validated",
+                        "justification": "Professor Chen argues that developments 'represent not merely technological upgrades but fundamental restructuring of trust architectures, replacing institutional guarantees with algorithmic verification and distributed ledger technologies' (P3 L7). This indicates a profound change in trust mechanisms, not superficial improvements. Option C paraphrases 'fundamental restructuring of trust architectures' as 'fundamental shifts in how trust is established and validated.'",
+                        "evidenceQuote": "Professor David Chen...argues that these developments represent not merely technological upgrades but fundamental restructuring of trust architectures, replacing institutional guarantees with algorithmic verification"
+                      },
+                      {
+                        "id": 31,
+                        "questionText": "What is the primary focus of paragraph 4?",
+                        "options": [
+                          "A) Explaining the specific capital requirements established by Basel III protocols",
+                          "B) Examining the regulatory frameworks governing banking and their inherent challenges",
+                          "C) Describing the economic losses resulting from the 2008 global financial crisis",
+                          "D) Advocating for the elimination of shadow banking sectors through stricter oversight"
+                        ],
+                        "correctAnswer": "B) Examining the regulatory frameworks governing banking and their inherent challenges",
+                        "justification": "Paragraph 4 opens by establishing that 'banking's evolution has occurred within increasingly sophisticated regulatory frameworks' (P4 L1), then discusses Basel Accords, the 2008 crisis's regulatory impact, concerns about regulatory lag, shadow banking growth, and regulatory fragmentation. The overarching theme is regulatory frameworks and their challenges (lag, arbitrage, fragmentation), not any single detail. Option B captures this comprehensive focus.",
+                        "evidenceQuote": "Banking's evolution has occurred within increasingly sophisticated regulatory frameworks designed to mitigate systemic risks...However, some economists...caution that regulatory responses often lag behind financial innovation"
+                      },
+                      {
+                        "id": 32,
+                        "questionText": "According to the passage, what proportion of retail banking transactions in developed economies were conducted through physical branches by 2020?",
+                        "options": [
+                          "A) Approximately 23 percent",
+                          "B) Approximately 50 percent",
+                          "C) Approximately 65 percent",
+                          "D) Approximately 87 percent"
+                        ],
+                        "correctAnswer": "A) Approximately 23 percent",
+                        "justification": "Paragraph 3 states that 'between 1995 and 2020, the proportion of retail banking transactions conducted through physical branches declined from 87 percent to merely 23 percent in developed economies' (P3 L3). The question asks specifically about 2020, making 23 percent the correct answer.",
+                        "evidenceQuote": "the proportion of retail banking transactions conducted through physical branches declined from 87 percent to merely 23 percent in developed economies"
+                      }
+                    ]
+                  },
+                  {
+                    "id": 8,
+                    "type": "matching-sentence-endings",
+                    "title": "Questions 33-37",
+                    "instructions": "Complete each sentence with the correct ending, A–H.",
+                    "sentence_endings": [
+                      { "letter": "A", "text": "represented roughly three-fifths of long-distance commercial activity in European markets." },
+                      { "letter": "B", "text": "combine digital innovation with established regulatory credibility and client confidence." },
+                      { "letter": "C", "text": "frequently fail to maintain pace with innovations in the financial sector." },
+                      { "letter": "D", "text": "enabled financial institutions to generate currency through the provision of credit." },
+                      { "letter": "E", "text": "emerged primarily from theoretical economic models rather than practical responses to crises." },
+                      { "letter": "F", "text": "fell from approximately 87 percent to just 23 percent in developed economies." },
+                      { "letter": "G", "text": "that have increasingly migrated toward less-regulated shadow banking sectors." },
+                      { "letter": "H", "text": "now constitute the majority of global financial transactions by volume and value." }
+                    ],
+                    "questions": [
+                      {
+                        "id": 33,
+                        "questionText": "The introduction of fractional reserve banking",
+                        "correctAnswer": "D",
+                        "justification": "P2 L4 states fractional reserve banking 'represented perhaps the most consequential transformation, effectively allowing banks to create money through credit extension.' Ending D paraphrases 'allowing banks to create money' as 'enabled financial institutions to generate currency' and 'credit extension' as 'loan provision,' capturing this fundamental capability.",
+                        "evidenceQuote": "fractional reserve banking...effectively allowing banks to create money through credit extension",
+                        "evidence_location": "P2"
+                      },
+                      {
+                        "id": 34,
+                        "questionText": "By the mid-sixteenth century, negotiable instruments known as bills of exchange",
+                        "correctAnswer": "A",
+                        "justification": "P2 L3 states 'bills of exchange, negotiable instruments that by 1550 constituted approximately 60 percent of long-distance commercial transactions in European markets.' Ending A paraphrases '60 percent' as 'roughly three-fifths' and maintains the context of European commercial activity.",
+                        "evidenceQuote": "bills of exchange, negotiable instruments that by 1550 constituted approximately 60 percent of long-distance commercial transactions in European markets",
+                        "evidence_location": "P2"
+                      },
+                      {
+                        "id": 35,
+                        "questionText": "Between 1995 and 2020, the proportion of retail banking transactions conducted through physical branches",
+                        "correctAnswer": "F",
+                        "justification": "P3 L3 explicitly states 'the proportion of retail banking transactions conducted through physical branches declined from 87 percent to merely 23 percent in developed economies.' Ending F paraphrases 'declined from...to merely' as 'fell from...to just,' maintaining exact percentages with slight vocabulary change.",
+                        "evidenceQuote": "the proportion of retail banking transactions conducted through physical branches declined from 87 percent to merely 23 percent in developed economies",
+                        "evidence_location": "P3"
+                      },
+                      {
+                        "id": 36,
+                        "questionText": "Professor Sarah Lin cautions that oversight mechanisms",
+                        "correctAnswer": "C",
+                        "justification": "P4 L4 states 'Professor Sarah Lin...caution that regulatory responses often lag behind financial innovation.' Ending C paraphrases 'regulatory responses' as 'oversight mechanisms,' 'often lag behind' as 'frequently fail to maintain pace with,' and 'financial innovation' as 'innovations in the financial sector.'",
+                        "evidenceQuote": "Professor Sarah Lin...caution that regulatory responses often lag behind financial innovation",
+                        "evidence_location": "P4"
+                      },
+                      {
+                        "id": 37,
+                        "questionText": "According to Dr. Ferrara, institutions achieving long-term viability will be those that",
+                        "correctAnswer": "B",
+                        "justification": "P5 L2 states 'Dr. Antonio Ferrara...argues that successful banks will be those integrating technological capabilities while leveraging regulatory legitimacy and consumer trust.' Ending B paraphrases this as 'combine digital innovation with established regulatory credibility and client confidence,' using 'combine' for 'integrating...while leveraging' and synonyms throughout.",
+                        "evidenceQuote": "Dr. Antonio Ferrara...argues that successful banks will be those integrating technological capabilities while leveraging regulatory legitimacy and consumer trust",
+                        "evidence_location": "P5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": 9,
+                    "type": "table-completion",
+                    "title": "Questions 38-40",
+                    "instructions": "Complete the table below. Choose NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer.",
+                    "word_limit": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+                    "headers": ["Historical Period", "Key Innovation/Development", "Statistical Achievement", "Impact/Context"],
+                    "rows": [
+                      {
+                        "cells": [
+                          { "type": "text", "content": "Renaissance Period (1340-1450)" },
+                          { "type": "gap", "gapNumber": 38, "correctAnswer": "double-entry bookkeeping"},
+                          { "type": "text", "content": "60 percent" },
+                          { "type": "text", "content": "bills of exchange in European markets by 1550" }
+                        ]
+                      },
+                      {
+                        "cells": [
+                          { "type": "text", "content": "Late 20th Century (1995-2020)" },
+                          { "type": "text", "content": "Digital transformation" },
+                          { "type": "gap", "gapNumber": 39, "correctAnswer": "23 percent"},
+                          { "type": "text", "content": "branch transactions by 2020" }
+                        ]
+                      },
+                      {
+                        "cells": [
+                          { "type": "text", "content": "Contemporary Period (by 2020)" },
+                          { "type": "text", "content": "Shadow banking growth" },
+                          { "type": "gap", "gapNumber": 40, "correctAnswer": "50 percent" },
+                          { "type": "text", "content": "of traditional banking assets" }
+                        ]
+                      }
+                    ],
+                    "questions": [
+                      { 
+                        "id": 38, 
+                        "gap_number": 38, 
+                        "correctAnswer": "double-entry bookkeeping",
+                        "justification": "Passage states 'Florentine and Venetian merchant houses developed double-entry bookkeeping...enabling systematic tracking of complex financial obligations' (P2 L2). Answer is exact phrase from passage.",
+                        "evidenceQuote": "Florentine and Venetian merchant houses developed double-entry bookkeeping between 1340 and 1450, enabling systematic tracking of complex financial obligations"
+                      },
+                      { 
+                        "id": 39, 
+                        "gap_number": 39, 
+                        "correctAnswer": "23 percent",
+                        "justification": "Passage states 'the proportion of retail banking transactions conducted through physical branches declined from 87 percent to merely 23 percent' between 1995-2020 (P3 L3). Answer is exact percentage from passage.",
+                        "evidenceQuote": "between 1995 and 2020, the proportion of retail banking transactions conducted through physical branches declined from 87 percent to merely 23 percent in developed economies"
+                      },
+                      { 
+                        "id": 40, 
+                        "gap_number": 40, 
+                        "correctAnswer": "50 percent",
+                        "justification": "Passage states 'shadow banking assets...reached approximately 50 percent of traditional banking system assets by 2020' (P4 L5). Answer is exact percentage from passage.",
+                        "evidenceQuote": "shadow banking assets...reached approximately 50 percent of traditional banking system assets by 2020"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }

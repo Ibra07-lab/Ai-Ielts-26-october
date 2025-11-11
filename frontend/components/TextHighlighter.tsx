@@ -21,6 +21,7 @@ interface TextHighlighterProps {
   passageTitle: string;
   highlights?: Highlight[];
   onHighlightsChange?: (highlights: Highlight[]) => void;
+  showLabels?: boolean;
 }
 
 interface PopupMenu {
@@ -45,7 +46,8 @@ export default function TextHighlighter({
   content, 
   passageTitle, 
   highlights = [], 
-  onHighlightsChange 
+  onHighlightsChange,
+  showLabels = true,
 }: TextHighlighterProps) {
   const [popupMenu, setPopupMenu] = useState<PopupMenu | null>(null);
   const [deletePopup, setDeletePopup] = useState<{ x: number; y: number; highlightId: number } | null>(null);
@@ -313,7 +315,7 @@ export default function TextHighlighter({
 
           return (
             <p key={index} className="mb-4 text-gray-700 dark:text-gray-300">
-              <span className="mr-2 font-semibold">{label}</span>
+              {showLabels && <span className="mr-2 font-semibold">{label}</span>}
               <span data-segment-start={paraStart}>{body}</span>
             </p>
           );
