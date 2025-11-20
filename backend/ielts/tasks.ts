@@ -131,21 +131,32 @@ export const getProgressSummary = api(
 export const listTasks = api(
 	{ expose: true, method: "GET", path: "/progress/tasks" },
 	async (params: { userId: number; range?: "daily" | "weekly"; status?: "all" | "planned" | "in-progress" | "completed" }): Promise<{ tasks: Task[] }> => {
-		const { userId, range = "weekly", status = "all" } = params;
-		const { from, to } = getRangeBounds(range);
-		const statusFilter = mapStatusFilter(status);
-
-		const rows = await ieltsDB.queryAll<any>`
-			SELECT *
-			FROM tasks
-			WHERE user_id = ${userId}
-			  AND (due_at IS NULL OR (due_at >= ${from} AND due_at <= ${to}))
-			  ${statusFilter ? ieltsDB.sql`AND status = ${statusFilter[0]}` : ieltsDB.sql``}
-			ORDER BY COALESCE(due_at, created_at) ASC, created_at DESC
+	  const { userId, range = "weekly", status = "all" } = params;
+	  const { from, to } = getRangeBounds(range);
+	  const statusFilter = mapStatusFilter(status);
+  
+	  let rows: any[];
+	  if (statusFilter) {
+		rows = await ieltsDB.queryAll<any>`
+		  SELECT *
+		  FROM tasks
+		  WHERE user_id = ${userId}
+			AND (due_at IS NULL OR (due_at >= ${from} AND due_at <= ${to}))
+			AND status = ${statusFilter[0]}
+		  ORDER BY COALESCE(due_at, created_at) ASC, created_at DESC
 		`;
-		return { tasks: rows.map(mapRowToTask) };
+	  } else {
+		rows = await ieltsDB.queryAll<any>`
+		  SELECT *
+		  FROM tasks
+		  WHERE user_id = ${userId}
+			AND (due_at IS NULL OR (due_at >= ${from} AND due_at <= ${to}))
+		  ORDER BY COALESCE(due_at, created_at) ASC, created_at DESC
+		`;
+	  }
+	  return { tasks: rows.map(mapRowToTask) };
 	}
-);
+  );
 
 // POST /progress/tasks
 export const createTask = api(

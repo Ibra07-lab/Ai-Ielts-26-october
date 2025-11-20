@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Sparkles, Wand2, CheckCircle, Circle, CircleDot } from "lucide-react";
+import { Sparkles, Wand2, CheckCircle, Circle, CircleDot, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
@@ -58,6 +58,45 @@ function toDateTimeLocal(iso?: string) {
   const hh = pad(d.getHours());
   const mm = pad(d.getMinutes());
   return `${yyyy}-${MM}-${dd}T${hh}:${mm}`;
+}
+
+const CATEGORY_COLORS: Record<string, string> = {
+  reading: "bg-green-500 neon-fill--reading",
+  speaking: "bg-red-500 neon-fill--speaking",
+  writing: "bg-blue-500 neon-fill--writing",
+  listening: "bg-purple-500 neon-fill--listening",
+  vocabulary: "bg-amber-500 neon-fill--amber",
+  grammar: "bg-slate-500 neon-fill--slate",
+};
+
+function computeCategorySegments(
+  tasks: Array<{ category?: string; status?: string }>,
+  totalFillPercent: number
+) {
+  const done = tasks.filter((t) => t.status === "completed");
+  const totalDone = done.length;
+  if (!totalDone || totalFillPercent <= 0) return [];
+
+  const byCat: Record<string, number> = {};
+  for (const t of done) {
+    const key = t.category ?? "other";
+    byCat[key] = (byCat[key] || 0) + 1;
+  }
+
+  return Object.entries(byCat).map(([category, count]) => ({
+    category,
+    width: Math.max(0, Math.min(100, Math.round((count / totalDone) * totalFillPercent))),
+  }));
+}
+
+async function toggleTaskStatus(
+  t: { id: string; status: string },
+  updateFn: (id: string, updates: { progress?: number; status?: "planned" | "in-progress" | "completed"; completedAt?: string }) => Promise<any>,
+  invalidate: () => Promise<void>
+) {
+  const next: "planned" | "in-progress" | "completed" = t.status === "completed" ? "planned" : "completed";
+  await updateFn(t.id, { status: next });
+  await invalidate();
 }
 
 export default function GlowingProgressCard({
@@ -142,6 +181,7 @@ export default function GlowingProgressCard({
   const tasks = tasksRes?.tasks ?? [];
   const totalTasks = tasks.length;
   const doneTasks = tasks.filter((t) => t.status === "completed").length;
+  const derivedPercent = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : clamped;
 
   return (
     <div
@@ -180,24 +220,31 @@ export default function GlowingProgressCard({
           </div>
         </div>
 
-        {/* AI Suggest */}
-        <Button
-          size="sm"
-          onClick={(e) => {
-            e.stopPropagation();
-            onAiSuggest?.();
-          }}
-          className="bg-white/10 hover:bg-white/15 text-white border-0 backdrop-blur-sm"
-        >
-          <Wand2 className="h-4 w-4 mr-2" />
-          AI Suggest
-        </Button>
+        {/* Actions: Add Task + AI Suggest */}
+        <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+          <Button
+            size="sm"
+            onClick={() => setAddOpen(true)}
+            className="bg-white/10 hover:bg-white/15 text-white border-0 backdrop-blur-sm"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Add Task
+          </Button>
+          <Button
+            size="sm"
+            onClick={() => onAiSuggest?.()}
+            className="bg-white/10 hover:bg-white/15 text-white border-0 backdrop-blur-sm"
+          >
+            <Wand2 className="h-4 w-4 mr-2" />
+            AI Suggest
+          </Button>
+        </div>
       </div>
 
       {/* Massive percentage */}
       <div className="mt-5 md:mt-6">
         <div className="text-[44px] md:text-[64px] leading-none font-extrabold text-white/90 tracking-tight">
-          {clamped}
+          {derivedPercent}
           <span className="text-white/70">%</span>
         </div>
       </div>
@@ -206,9 +253,21 @@ export default function GlowingProgressCard({
       <div className="mt-6 md:mt-7">
         <div className="relative h-5 md:h-6 w-full rounded-full neon-track overflow-visible">
           <div
-            className="h-full rounded-full neon-fill bg-gradient-to-r from-lime-400 to-cyan-400 transition-all duration-500"
-            style={{ width: `${clamped}%` }}
-          />
+            className="h-full rounded-full overflow-hidden transition-all duration-500"
+            style={{ width: `${derivedPercent}%` }}
+          >
+            {computeCategorySegments(tasks, derivedPercent).map((seg, i) => {
+              const colorClass = CATEGORY_COLORS[seg.category] || "bg-gray-400 neon-fill";
+              return (
+                <div
+                  key={`${seg.category}-${i}`}
+                  className={`h-full inline-block ${colorClass}`}
+                  style={{ width: `${seg.width}%` }}
+                  title={`${seg.category} • ${seg.width}% of fill`}
+                />
+              );
+            })}
+          </div>
           {/* Due chip on right end of the bar */}
           <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-0">
             {!editingDue ? (
@@ -250,23 +309,7 @@ export default function GlowingProgressCard({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="rounded-xl bg-white text-gray-900 dark:bg-neutral-900 dark:text-white border border-gray-100 dark:border-white/10 p-4 md:p-5 shadow-sm">
-          {/* Minimalist bar + counts */}
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex-1 flex items-center gap-3">
-              <div className="w-full h-2 rounded-full bg-gray-200 dark:bg-neutral-800 overflow-hidden">
-                <div
-                  className="h-full bg-green-500 transition-all duration-500"
-                  style={{ width: `${clamped}%` }}
-                />
-              </div>
-              <span className="text-xs font-semibold text-gray-700 dark:text-gray-300 whitespace-nowrap">
-                {clamped}%
-              </span>
-            </div>
-            <div className="ml-3 text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
-              {doneTasks} of {totalTasks}
-            </div>
-          </div>
+          
 
           {/* Checklist */}
           {totalTasks === 0 ? (
@@ -287,7 +330,28 @@ export default function GlowingProgressCard({
                     className="relative pl-4 border-l border-gray-200/70 dark:border-white/10"
                   >
                     <div className="flex items-start gap-3">
-                      <div className="mt-0.5">
+                      <button
+                        type="button"
+                        className="mt-0.5"
+                        onClick={async (e) => {
+                          e.stopPropagation();
+                          try {
+                            await toggleTaskStatus(
+                              t,
+                              progressApi.updateTask,
+                              async () => {
+                                await queryClient.invalidateQueries({ predicate: (q) => Array.isArray(q.queryKey) && q.queryKey[0] === "glow-tasks" });
+                                await queryClient.refetchQueries({ predicate: (q) => Array.isArray(q.queryKey) && q.queryKey[0] === "glow-tasks" });
+                              }
+                            );
+                          } catch (err) {
+                            // eslint-disable-next-line no-console
+                            console.error("Failed to toggle task", err);
+                          }
+                        }}
+                        aria-label={isDone ? "Mark as planned" : "Mark as completed"}
+                        title={isDone ? "Mark as planned" : "Mark as completed"}
+                      >
                         {isDone ? (
                           <CheckCircle className="h-4 w-4 text-green-600" />
                         ) : isInProgress ? (
@@ -295,7 +359,7 @@ export default function GlowingProgressCard({
                         ) : (
                           <Circle className="h-4 w-4 text-gray-400 dark:text-gray-500" />
                         )}
-                      </div>
+                      </button>
                       <div className="flex-1 min-w-0">
                         <div className="text-sm font-medium text-gray-900 dark:text-white leading-tight">
                           {t.name}
@@ -327,11 +391,15 @@ export default function GlowingProgressCard({
               category: data.category,
               difficulty: data.difficulty,
               estimatedMinutes: data.estimatedMinutes,
-              dueAt: data.dueAt,
+              dueAt: data.dueAt ? new Date(data.dueAt).toISOString() : undefined,
             });
             setAddOpen(false);
-            await queryClient.invalidateQueries({ predicate: (q) => Array.isArray(q.queryKey) && q.queryKey[0] === "glow-tasks" });
-            await queryClient.refetchQueries({ predicate: (q) => Array.isArray(q.queryKey) && q.queryKey[0] === "glow-tasks" });
+            await queryClient.invalidateQueries({
+              predicate: (q) => Array.isArray(q.queryKey) && q.queryKey[0] === "glow-tasks"
+            });
+            await queryClient.refetchQueries({
+              predicate: (q) => Array.isArray(q.queryKey) && q.queryKey[0] === "glow-tasks"
+            });
           } catch (e) {
             // eslint-disable-next-line no-console
             console.error("Failed to create task", e);

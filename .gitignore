@@ -11,3 +11,7 @@ node_modules
 .env.*.local
 backend/.env
 frontend/.env
+# GitHub push protection: exclude secret files
+**/.pip
+app/.pip
+backend/.pip
