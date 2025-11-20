@@ -8,6 +8,8 @@ on IELTS Reading answers using LangChain and OpenAI GPT-4 Turbo.
 # Load environment variables FIRST, before any other imports
 from dotenv import load_dotenv
 load_dotenv()
+from pathlib import Path
+load_dotenv(dotenv_path=Path(__file__).resolve().parent / ".pip")
 
 import os
 import logging
@@ -50,14 +52,15 @@ async def lifespan(app: FastAPI):
         logger.info("Initializing Reading Feedback Agent...")
         agent = create_reading_feedback_agent(
             api_key=os.getenv("OPENAI_API_KEY"),
-            model_name=os.getenv("OPENAI_MODEL", "gpt-4-turbo-preview"),
+            model_name=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
             temperature=float(os.getenv("TEMPERATURE", "0.2")),
             max_tokens=int(os.getenv("MAX_TOKENS", "1000"))
         )
         logger.info("Agent initialized successfully")
     except Exception as e:
         logger.error(f"Failed to initialize agent: {str(e)}")
-        raise
+        # Do not crash the app; allow non-AI endpoints to work
+        agent = None
     
     yield
     
@@ -100,7 +103,7 @@ class ErrorResponse(BaseModel):
 
 # API Endpoints
 
-@app.get("/", response_model=Dict[str, str])
+@app.get("/", response_model=Dict[str, Any])
 async def root():
     """Root endpoint with API information."""
     return {
@@ -125,7 +128,7 @@ async def health_check():
     return HealthResponse(
         status="healthy",
         version="1.0.0",
-        model=os.getenv("OPENAI_MODEL", "gpt-4-turbo-preview")
+        model=os.getenv("OPENAI_MODEL", "gpt-4o-mini")
     )
 
 

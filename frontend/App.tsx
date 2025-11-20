@@ -19,6 +19,7 @@ import Subscription from "./pages/Subscription";
 import Register from "./pages/Register";
 import ReadingTFNGQuiz from "./pages/ReadingTFNGQuiz";
 import MatchingHeadingsQuiz from "./pages/MatchingHeadingsQuiz";
+import ReadingTutor from "./pages/ReadingTutor";
 import ErrorBoundary from "./components/ErrorBoundary";
 
 const queryClient = new QueryClient({
@@ -42,6 +43,8 @@ function AppInner() {
           <Route path="/reading/quiz-tfng" element={<ReadingTFNGQuiz />} />
           <Route path="/reading/quiz-matching-headings" element={<MatchingHeadingsQuiz />} />
           <Route path="/reading/theory" element={<ReadingTheory />} />
+          <Route path="/reading/tutor-chat" element={<ReadingTutor />} />
+					<Route path="/tutor" element={<ReadingTutor />} />
           <Route path="/listening" element={<ListeningPractice />} />
           <Route path="/vocabulary" element={<VocabularyBuilder />} />
           <Route path="/progress" element={<Progress />} />

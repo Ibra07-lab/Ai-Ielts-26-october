@@ -111,7 +111,7 @@ export default function Dashboard() {
     },
   ];
 
-  const progressPercentage = 100;
+  const progressPercentage = 0;
 
   const currentHour = new Date().getHours();
   const timeOfDay = currentHour < 12 ? 'morning' : currentHour < 18 ? 'afternoon' : 'evening';
@@ -193,27 +193,40 @@ export default function Dashboard() {
                       {area.description}
                     </p>
                     
-                    {/* Special handling for Reading Practice - two buttons */}
+                    {/* Special handling for Reading Practice - three buttons */}
                     {isReadingPractice ? (
-                      <div className="flex gap-2">
+                      <div className="flex flex-col gap-2">
                         <Button 
                           onClick={() => navigate(area.href)}
-                          className={`flex-1 font-semibold py-2 px-3 text-sm ${area.color} hover:opacity-90 transition-opacity`} 
+                          className={`w-full font-semibold py-2 px-3 text-sm ${area.color} hover:opacity-90 transition-opacity`} 
                           size="default"
                         >
                           Start Practice →
                         </Button>
-                        <Button 
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            navigate('/reading/theory');
-                          }}
-                          variant="outline"
-                          className="flex-1 font-semibold py-2 px-3 text-sm border-2 border-green-500 text-green-700 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-950/30"
-                          size="default"
-                        >
-                          Learn Basics →
-                        </Button>
+                        <div className="flex gap-2">
+                          <Button 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate('/reading/theory');
+                            }}
+                            variant="outline"
+                            className="flex-1 font-semibold py-2 px-3 text-sm border-2 border-green-500 text-green-700 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-950/30"
+                            size="default"
+                          >
+                            Learn Basics →
+                          </Button>
+                          <Button 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate('/reading/tutor-chat');
+                            }}
+                            variant="outline"
+                            className="flex-1 font-semibold py-2 px-3 text-sm border-2 border-blue-500 text-blue-700 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30"
+                            size="default"
+                          >
+                            🤖 AI Tutor →
+                          </Button>
+                        </div>
                       </div>
                     ) : (
                       <Button 

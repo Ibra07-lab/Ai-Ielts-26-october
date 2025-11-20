@@ -166,8 +166,245 @@
                         "evidenceQuote": "Some researchers argue that education in 'persuasion literacy'—teaching people to recognize influence tactics—should become a standard part of school curricula"
                       }
                     ]
+                  },
+                  {
+                    "id": 3,
+                    "type": "sentence-completion",
+                    "title": "Questions 11-15",
+  "word_limit": "NO MORE THAN TWO WORDS",
+  "instructions": "Complete the sentences below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+  "questions": [
+    {
+      "id": 11,
+      "questionText": "Aristotle identified three fundamental modes of influence in his work written around _____.",
+      "correctAnswer": "350 BCE",
+      "alternativeAnswers": ["350 BCE", "350 BC"],
+      "justification": "Passage states Aristotle 'identified three core modes of influence in his work 'Rhetoric' around 350 BCE.' The sentence paraphrases 'core modes' as 'fundamental modes' and 'in his work' as 'in his work written,' maintaining the factual content while restructuring the statement.",
+      "evidenceQuote": "ancient Greek philosopher Aristotle, who identified three core modes of influence in his work 'Rhetoric' around 350 BCE"
+    },
+    {
+      "id": 12,
+      "questionText": "According to neurological research, emotional responses occur before _____.",
+      "correctAnswer": "rational thought",
+      "alternativeAnswers": ["rational thought"],
+      "justification": "Passage states 'neurological studies show emotional responses precede rational thought by approximately 200 to 300 milliseconds.' Sentence paraphrases 'neurological studies show' as 'According to neurological research' and 'precede' as 'occur before,' testing whether students can identify the timing relationship described.",
+      "evidenceQuote": "neurological studies show emotional responses precede rational thought by approximately 200 to 300 milliseconds"
+    },
+    {
+      "id": 13,
+      "questionText": "In 1984, psychologist Robert Cialdini outlined _____ key principles of influence in his groundbreaking publication.",
+      "correctAnswer": "six",
+      "alternativeAnswers": ["six"],
+      "justification": "Passage states 'Robert Cialdini identified six key principles of influence in his landmark 1984 book.' Sentence paraphrases 'identified' as 'outlined' and restructures to place the gap in middle position, testing the specific number of principles.",
+      "evidenceQuote": "contemporary psychologist Robert Cialdini identified six key principles of influence in his landmark 1984 book"
+    },
+    {
+      "id": 14,
+      "questionText": "Scarcity tactics such as limited-time offers trigger a psychological phenomenon called _____.",
+      "correctAnswer": "loss aversion",
+      "alternativeAnswers": ["loss aversion"],
+      "justification": "Passage states 'limited-time offers and low-stock warnings trigger what psychologists call 'loss aversion.'' Sentence paraphrases 'low-stock warnings' as 'scarcity tactics' and 'what psychologists call' as 'a psychological phenomenon called,' testing knowledge of the technical term.",
+      "evidenceQuote": "limited-time offers and low-stock warnings trigger what psychologists call 'loss aversion,' the tendency to avoid losses"
+    },
+    {
+      "id": 15,
+      "questionText": "The European Union's GDPR regulation, enacted in 2018, aims to safeguard consumers from excessively _____.",
+      "correctAnswer": "manipulative practices",
+      "alternativeAnswers": ["manipulative practices"],
+      "justification": "Passage states GDPR 'represents one regulatory attempt to protect consumers from overly manipulative practices.' Sentence heavily paraphrases 'implemented' as 'enacted,' 'represents one regulatory attempt to protect' as 'aims to safeguard,' and 'overly' as 'excessively,' testing deeper comprehension of the regulation's purpose.",
+      "evidenceQuote": "The European Union's General Data Protection Regulation (GDPR), implemented in 2018, represents one regulatory attempt to protect consumers from overly manipulative practices"
+    }
+   ]
+  }
+ ]
+},
+              {
+                "id": 2,
+                "title": "The Phenomenon of False Memories: When the Mind Constructs What Never Was",
+                "level": "academic",
+                "estimatedTime": 20,
+                "paragraphs": [
+                  {
+                    "id": "P1",
+                    "text": "In 1992, Beth Rutherford sought therapy for eating disorders and depression, during which she recovered detailed 'memories' of her father repeatedly abusing her and forcing her to undergo two abortions. These memories felt entirely real to her, vivid and emotionally charged. Yet medical examinations revealed she had never been pregnant, and extensive investigation found no evidence the events had occurred. Rutherford's case exemplifies a phenomenon that has fascinated and troubled psychologists for decades: false memories—vivid, detailed recollections of events that never happened. Research suggests that between 20 and 40 percent of people can be induced to develop false memories under certain experimental conditions, revealing fundamental insights about how human memory operates not as a video recorder but as a reconstructive process."
+                  },
+                  {
+                    "id": "P2",
+                    "text": "The scientific investigation of false memories gained momentum in the 1970s through the work of psychologist Elizabeth Loftus at the University of Washington. In a landmark 1974 experiment, Loftus and Palmer showed participants film clips of automobile accidents, then asked them to estimate vehicle speeds. The critical manipulation involved changing a single word in the question: participants asked how fast cars were going when they 'smashed' into each other reported speeds averaging 41 miles per hour, compared to just 34 miles per hour when the verb 'hit' was used instead. One week later, those exposed to the word 'smashed' were more than twice as likely to falsely remember seeing broken glass at the accident scene, despite none being present in the footage. This misinformation effect—the distortion of memory through exposure to misleading post-event information—has since been replicated in hundreds of studies across diverse contexts. Another influential paradigm, developed by Roediger and McDermott in 1995, demonstrated that people could be led to 'remember' words they had never actually encountered. Participants studied lists of related words (bed, rest, awake, tired) but not a central theme word (sleep); remarkably, approximately 65 percent later claimed with confidence to remember seeing the non-presented word, often reporting it more confidently than words actually on the list."
+                  },
+                  {
+                    "id": "P3",
+                    "text": "Several interconnected factors contribute to the formation of false memories. First, memory is fundamentally reconstructive rather than reproductive—each time we recall an event, we essentially rebuild it from fragmentary stored information, a process vulnerable to distortion. Research by neuroscientist Daniel Schacter at Harvard University has shown that the same brain regions, particularly the hippocampus and prefrontal cortex, activate during both true and false memory retrieval, making them subjectively indistinguishable. Second, imagination and perception share overlapping neural pathways; a 2018 study using functional MRI scanning found that vividly imagining an event can create memory traces nearly identical to those formed by actual experience. Social influences also play a crucial role. When authority figures or family members describe events with conviction, individuals often unconsciously incorporate these narratives into their own autobiographical memory. A study conducted at the University of California, Irvine, between 2013 and 2015 demonstrated that roughly 30 percent of participants developed false memories of committing crimes in adolescence after just three interview sessions using suggestive techniques. Importantly, memory confidence bears little relationship to accuracy—people often feel most certain about memories that are entirely fabricated."
+                  },
+                  {
+                    "id": "P4",
+                    "text": "The phenomenon of false memories carries profound implications for the legal system, particularly regarding eyewitness testimony. The Innocence Project, which uses DNA evidence to exonerate wrongly convicted individuals, reports that mistaken eyewitness identification contributed to approximately 69 percent of the more than 375 wrongful convictions overturned through DNA testing as of 2022. In many cases, witnesses provided detailed, confident testimony about events that forensic evidence later proved they could not have witnessed. The therapeutic context presents additional concerns. During the 1980s and early 1990s, thousands of adults in therapy 'recovered' memories of childhood abuse, leading to criminal prosecutions and family ruptures. While genuine recovered memories can occur, research by memory scientists demonstrated that certain therapeutic techniques—including hypnosis, guided imagery, and repeated suggestion—could inadvertently implant false memories of traumatic events that never occurred. This sparked intense debate, with some clinicians arguing that dismissing recovered memories re-victimizes abuse survivors, while researchers emphasized that the inability to distinguish true from false memories makes relying solely on recovered recollections scientifically and ethically problematic. Courts in several jurisdictions have since imposed stricter standards for admitting such testimony."
+                  },
+                  {
+                    "id": "P5",
+                    "text": "Understanding false memory formation has practical applications beyond the courtroom and clinic. Educational psychologists are developing evidence-based interview protocols for children, who are particularly susceptible to suggestion, while police departments increasingly adopt cognitive interview techniques designed to minimize contamination of witness recollections. Emerging research using advanced neuroimaging suggests potential markers that might eventually help distinguish true from false memories, though this remains controversial and far from courtroom application. Dr. Kimberly Wade of the University of Warwick, writing in a 2021 review, cautions that public awareness of memory fallibility remains limited despite decades of research, with many people still viewing memory as akin to photographic reproduction. As techniques for manipulating memory become more sophisticated—including recent experiments using virtual reality to implant false autobiographical memories—the need for broader education about memory's reconstructive nature becomes increasingly urgent. Memory, it seems, is less a faithful record of the past than an imperfect, creative reconstruction shaped by our present beliefs, emotions, and social context."
                   }
-
+                ],
+                "questions": [
+                    {
+                        "id": 4,
+                        "type": "matching-information",
+                        "title": "Questions 16-19",
+                        "instructions": "Which paragraph contains the following information? Write the correct letter, A–E, in boxes 16-19 on your answer sheet.",
+                        "paragraphs_list": ["A", "B", "C", "D", "E"],
+                        "questions": [
+                          {
+                            "id": 16,
+                            "questionText": "an experiment demonstrating how a single word alteration influenced participants' recollections of vehicle collision speeds",
+                            "correctAnswer": "B",
+                            "justification": "Paragraph B describes Loftus and Palmer's 1974 landmark experiment where changing 'smashed' to 'hit' in questions resulted in different speed estimates (41 mph vs 34 mph) and affected subsequent memory of broken glass. This uniquely matches the question's focus on word manipulation affecting accident recall.",
+                            "evidenceQuote": "participants asked how fast cars were going when they 'smashed' into each other reported speeds averaging 41 miles per hour, compared to just 34 miles per hour when the verb 'hit' was used instead"
+                          },
+                          {
+                            "id": 17,
+                            "questionText": "neurological evidence explaining why fabricated recollections feel subjectively identical to authentic ones",
+                            "correctAnswer": "C",
+                            "justification": "Paragraph C specifically discusses Daniel Schacter's Harvard research showing that the same brain regions (hippocampus and prefrontal cortex) activate during both true and false memory retrieval, making them subjectively indistinguishable. No other paragraph addresses the neural basis for why false memories feel real.",
+                            "evidenceQuote": "Research by neuroscientist Daniel Schacter at Harvard University has shown that the same brain regions, particularly the hippocampus and prefrontal cortex, activate during both true and false memory retrieval, making them subjectively indistinguishable"
+                          },
+                          {
+                            "id": 18,
+                            "questionText": "quantitative data on the proportion of wrongful criminal convictions attributed to inaccurate witness recognition",
+                            "correctAnswer": "D",
+                            "justification": "Paragraph D uniquely provides the Innocence Project statistic that approximately 69 percent of the more than 375 wrongful convictions overturned through DNA testing involved mistaken eyewitness identification. This specific quantitative legal data appears only in this paragraph.",
+                            "evidenceQuote": "The Innocence Project...reports that mistaken eyewitness identification contributed to approximately 69 percent of the more than 375 wrongful convictions overturned through DNA testing as of 2022"
+                          },
+                          {
+                            "id": 19,
+                            "questionText": "a controversy regarding clinical methods that may unintentionally create recollections of traumatic events that did not occur",
+                            "correctAnswer": "D",
+                            "justification": "Paragraph D discusses the intense debate sparked by 1980s-1990s recovered memory cases, specifically addressing how certain therapeutic techniques (hypnosis, guided imagery, repeated suggestion) could inadvertently implant false memories of traumatic events. The controversy between clinicians and researchers about recovered memories is unique to this paragraph.",
+                            "evidenceQuote": "research by memory scientists demonstrated that certain therapeutic techniques—including hypnosis, guided imagery, and repeated suggestion—could inadvertently implant false memories of traumatic events that never occurred. This sparked intense debate"
+                          }
+                        ]
+                      },
+                      {
+                        "id": 5,
+                        "type": "true-false-not-given",
+                        "title": "Questions 20-22",
+                        "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
+                        "questions": [
+                          {
+                            "id": 20,
+                            "questionText": "A substantial majority of research participants falsely recalled encountering words that had not actually appeared on study lists in the Roediger and McDermott experiment.",
+                            "correctAnswer": "TRUE",
+                            "justification": "Paragraph 2 states that 'approximately 65 percent later claimed with confidence to remember seeing the non-presented word.' The statement accurately paraphrases '65 percent' as 'substantial majority,' 'claimed...to remember seeing' as 'falsely recalled encountering,' and 'non-presented word' as 'words that had not actually appeared on study lists.'",
+                            "evidenceQuote": "approximately 65 percent later claimed with confidence to remember seeing the non-presented word, often reporting it more confidently than words actually on the list"
+                          },
+                          {
+                            "id": 21,
+                            "questionText": "University of California research conducted between 2013 and 2015 found that approximately half of participants formed false memories of committing crimes during their teenage years.",
+                            "correctAnswer": "FALSE",
+                            "justification": "Passage states that 'roughly 30 percent of participants developed false memories of committing crimes in adolescence' in the UC Irvine study. The statement incorrectly claims 'approximately half' (which would be around 50 percent) when the actual figure was 30 percent.",
+                            "evidenceQuote": "A study conducted at the University of California, Irvine, between 2013 and 2015 demonstrated that roughly 30 percent of participants developed false memories of committing crimes"
+                          },
+                          {
+                            "id": 22,
+                            "questionText": "Cognitive interview protocols designed for law enforcement have demonstrated higher accuracy rates than traditional police questioning methods when collecting witness testimony.",
+                            "correctAnswer": "NOT GIVEN",
+                            "justification": "Paragraph 5 mentions that 'police departments increasingly adopt cognitive interview techniques designed to minimize contamination of witness recollections,' but the passage provides no comparative data on accuracy rates between cognitive interview protocols and traditional methods. The statement requires specific effectiveness comparison data that is not provided in the passage.",
+                            "evidenceQuote": "police departments increasingly adopt cognitive interview techniques designed to minimize contamination of witness recollections"
+                          }
+                        ]
+                      },
+                      {
+                        "id": 6,
+                        "type": "multiple-choice",
+                        "title": "Questions 23-26",
+                        "instructions": "Choose the correct letter, A, B, C or D.",
+                        "questions": [
+                          {
+                            "id": 23,
+                            "questionText": "In the 1974 Loftus and Palmer automobile accident study, what effect did altering a single verb in questions have on participants?",
+                            "options": [
+                              "It had no measurable impact on either speed estimates or subsequent memories",
+                              "It influenced both speed judgments and later false recollections of details not in the original footage",
+                              "It only affected the confidence levels of participants but not their actual memory content",
+                              "It reduced memory accuracy by approximately 65 percent across all test conditions"
+                            ],
+                            "correctAnswer": "It influenced both speed judgments and later false recollections of details not in the original footage",
+                            "justification": "Paragraph 2 describes how changing 'smashed' to 'hit' resulted in different speed estimates (41 mph vs. 34 mph) and later states 'those exposed to the word smashed were more than twice as likely to falsely remember seeing broken glass.' The correct answer paraphrases 'reported speeds averaging' as 'influenced speed judgments' and 'falsely remember seeing broken glass' as 'false recollections of details not in the original footage.'",
+                            "evidenceQuote": "participants asked how fast cars were going when they 'smashed' into each other reported speeds averaging 41 miles per hour, compared to just 34 miles per hour when the verb 'hit' was used\" and \"those exposed to the word 'smashed' were more than twice as likely to falsely remember seeing broken glass"
+                          },
+                          {
+                            "id": 24,
+                            "questionText": "What can be inferred about eyewitness testimony based on information provided in the passage?",
+                            "options": [
+                              "It has played a significant role in a large percentage of incorrect criminal convictions",
+                              "It has become more reliable since the introduction of cognitive interview techniques",
+                              "It is only problematic when witnesses have been exposed to leading questions",
+                              "It is generally more accurate than forensic DNA analysis in identifying perpetrators"
+                            ],
+                            "correctAnswer": "It has played a significant role in a large percentage of incorrect criminal convictions",
+                            "justification": "Paragraph 4 states that 'mistaken eyewitness identification contributed to approximately 69 percent of the more than 375 wrongful convictions overturned through DNA testing as of 2022.' This clearly supports the inference that eyewitness testimony has been a major factor in wrongful convictions. The answer paraphrases '69 percent of...375 wrongful convictions' as 'significant role in a large percentage of incorrect criminal convictions.'",
+                            "evidenceQuote": "The Innocence Project...reports that mistaken eyewitness identification contributed to approximately 69 percent of the more than 375 wrongful convictions overturned through DNA testing as of 2022"
+                          },
+                          {
+                            "id": 25,
+                            "questionText": "What is the primary focus of paragraph 3?",
+                            "options": [
+                              "Demonstrating that social pressure is the most important cause of memory distortion",
+                              "Outlining multiple psychological and neurological factors that contribute to false memory creation",
+                              "Proving that all human memories are fundamentally unreliable and should be disregarded",
+                              "Comparing the effectiveness of different therapeutic approaches to recovering memories"
+                            ],
+                            "correctAnswer": "Outlining multiple psychological and neurological factors that contribute to false memory creation",
+                            "justification": "Paragraph 3 opens with 'Several interconnected factors contribute to the formation of false memories' and then systematically discusses reconstructive memory, overlapping brain regions for true and false memories, imagination-perception pathways, and social influences. The correct answer captures this comprehensive overview by paraphrasing 'several interconnected factors contribute' as 'multiple psychological and neurological factors that contribute.'",
+                            "evidenceQuote": "Several interconnected factors contribute to the formation of false memories\" followed by discussion of reconstructive memory, brain regions, imagination overlap, and social influences"
+                          },
+                          {
+                            "id": 26,
+                            "questionText": "What does the passage indicate about the relationship between how certain someone feels about a memory and whether that memory is accurate?",
+                            "options": [
+                              "Strong confidence in a memory is a reliable indicator that the memory is factually correct",
+                              "There is minimal connection between certainty levels and the actual accuracy of recollections",
+                              "People tend to express the highest confidence only in memories verified by physical evidence",
+                              "Confidence increases proportionally with the amount of time elapsed since the original event"
+                            ],
+                            "correctAnswer": "There is minimal connection between certainty levels and the actual accuracy of recollections",
+                            "justification": "Paragraph 3 explicitly states 'Importantly, memory confidence bears little relationship to accuracy—people often feel most certain about memories that are entirely fabricated.' The correct answer paraphrases 'bears little relationship' as 'minimal connection' and 'memory confidence' and 'accuracy' as 'certainty levels' and 'actual accuracy of recollections.'",
+                            "evidenceQuote": "Importantly, memory confidence bears little relationship to accuracy—people often feel most certain about memories that are entirely fabricated"
+                          }
+                        ]
+                      },
+                      {
+                        "id": 7,
+                        "type": "summary-completion",
+                        "completion_type": "summary",
+                        "title": "Questions 27-29",
+                        "word_limit": "NO MORE THAN TWO WORDS",
+                        "instructions": "Complete the summary below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+                        "structure": "<div class='completion-summary'><p>False memories—vivid recollections of events that never actually occurred—represent a significant psychological phenomenon. Pioneering research by Elizabeth Loftus in the 1970s demonstrated the misinformation effect, showing how exposure to misleading information distorts subsequent recall. In her landmark 1974 automobile accident study, changing a single verb in post-event questions caused participants to incorrectly remember seeing <strong>(27)_____</strong> that had not been present in the original footage. Later research revealed that the same brain regions, particularly the hippocampus and <strong>(28)_____</strong>, activate during both accurate and fabricated memory retrieval, making them subjectively indistinguishable. This phenomenon carries profound legal implications, with mistaken eyewitness identification contributing to approximately <strong>(29)_____</strong> of wrongful convictions later overturned through DNA evidence.</p></div>",
+                        "questions": [
+                          {
+                            "id": 27,
+                            "questionText": "Gap 27",
+                            "correctAnswer": "broken glass",
+                            "justification": "Paragraph 2 describes how participants in Loftus's experiment 'were more than twice as likely to falsely remember seeing broken glass at the accident scene, despite none being present in the footage.' The summary paraphrases 'falsely remember' as 'incorrectly remember' and 'in the footage' as 'in the original footage.'",
+                            "evidenceQuote": "One week later, those exposed to the word 'smashed' were more than twice as likely to falsely remember seeing broken glass at the accident scene, despite none being present in the footage"
+                          },
+                          {
+                            "id": 28,
+                            "questionText": "Gap 28",
+                            "correctAnswer": "prefrontal cortex",
+                            "justification": "Paragraph 3 explains that 'the same brain regions, particularly the hippocampus and prefrontal cortex, activate during both true and false memory retrieval, making them subjectively indistinguishable.' The summary paraphrases 'true and false memory' as 'accurate and fabricated memory' and maintains the reference to both brain regions.",
+                            "evidenceQuote": "Research by neuroscientist Daniel Schacter at Harvard University has shown that the same brain regions, particularly the hippocampus and prefrontal cortex, activate during both true and false memory retrieval"
+                          },
+                          {
+                            "id": 29,
+                            "questionText": "Gap 29",
+                            "correctAnswer": "69 percent",
+                            "justification": "Paragraph 4 states that 'mistaken eyewitness identification contributed to approximately 69 percent of the more than 375 wrongful convictions overturned through DNA testing as of 2022.' The summary paraphrases 'overturned through DNA testing' as 'later overturned through DNA evidence' and maintains the percentage figure as a gap.",
+                            "evidenceQuote": "The Innocence Project...reports that mistaken eyewitness identification contributed to approximately 69 percent of the more than 375 wrongful convictions overturned through DNA testing as of 2022"
+                          }
+                        ]
+                      }
+                    
 
 
 
