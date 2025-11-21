@@ -54,18 +54,18 @@ interface TableCompletionQuestion {
 }
 
 // Collapsible question result component - Eye-comfortable design
-function QuestionResult({ 
-  question, 
-  answer, 
-  correctAnswer, 
+function QuestionResult({
+  question,
+  answer,
+  correctAnswer,
   explanation,
   aiFeedback,
   onGetAIFeedback,
   isLoadingFeedback
-}: { 
-  question: any; 
-  answer: string; 
-  correctAnswer: string; 
+}: {
+  question: any;
+  answer: string;
+  correctAnswer: string;
   explanation: string;
   aiFeedback?: any;
   onGetAIFeedback?: () => void;
@@ -75,12 +75,11 @@ function QuestionResult({
   const isCorrect = answer === correctAnswer;
 
   return (
-    <div 
-      className={`p-5 rounded-md border-l-2 cursor-pointer transition-colors ${
-        isCorrect 
-          ? 'bg-slate-50 dark:bg-slate-800/30 border-emerald-600/80 hover:bg-slate-100 dark:hover:bg-slate-800/50' 
+    <div
+      className={`p-5 rounded-md border-l-2 cursor-pointer transition-colors ${isCorrect
+          ? 'bg-slate-50 dark:bg-slate-800/30 border-emerald-600/80 hover:bg-slate-100 dark:hover:bg-slate-800/50'
           : 'bg-slate-50 dark:bg-slate-800/30 border-rose-700/80 hover:bg-slate-100 dark:hover:bg-slate-800/50'
-      }`}
+        }`}
       onClick={() => setExpanded(!expanded)}
     >
       {/* Sticky Header */}
@@ -99,7 +98,7 @@ function QuestionResult({
           {expanded ? '▼' : '▶'} Click for details
         </span>
       </div>
-      
+
       {expanded && (
         <div className="space-y-6 text-base leading-relaxed">
           {/* Question Text */}
@@ -108,7 +107,7 @@ function QuestionResult({
               {question.questionText || question.sentenceBeginning}
             </p>
           </div>
-          
+
           {/* Answer Comparison - Simplified */}
           <div className="space-y-4">
             <div className="flex items-start gap-3 p-4 border-l-2 border-slate-300 dark:border-slate-600 bg-transparent">
@@ -126,7 +125,7 @@ function QuestionResult({
                 </p>
               </div>
             </div>
-            
+
             <div className="flex items-start gap-3 p-4 border-l-2 border-emerald-600/80 bg-transparent">
               <CheckCircle className="w-4 h-4 text-emerald-600/80 dark:text-emerald-500/80 mt-0.5 flex-shrink-0" />
               <div>
@@ -139,7 +138,7 @@ function QuestionResult({
               </div>
             </div>
           </div>
-          
+
           {/* For CORRECT answers */}
           {isCorrect && (
             <div className="space-y-6 divide-y divide-slate-200 dark:divide-slate-700">
@@ -148,7 +147,7 @@ function QuestionResult({
                   {explanation}
                 </p>
               </div>
-              
+
               {/* Show evidence quote if available */}
               {question.evidenceQuote && (
                 <div className="pt-6">
@@ -163,7 +162,7 @@ function QuestionResult({
                   </div>
                 </div>
               )}
-              
+
               {/* Show justification if available */}
               {question.justification && (
                 <div className="pt-6">
@@ -178,7 +177,7 @@ function QuestionResult({
               )}
             </div>
           )}
-          
+
           {/* For INCORRECT answers */}
           {!isCorrect && (
             <div className="space-y-6 divide-y divide-slate-200 dark:divide-slate-700">
@@ -188,7 +187,7 @@ function QuestionResult({
                   {explanation}
                 </p>
               </div>
-              
+
               {/* Show evidence quote if available in test data */}
               {question.evidenceQuote && (
                 <div className="pt-6">
@@ -203,7 +202,7 @@ function QuestionResult({
                   </div>
                 </div>
               )}
-              
+
               {/* Show justification if available in test data */}
               {question.justification && (
                 <div className="pt-6">
@@ -216,12 +215,12 @@ function QuestionResult({
                   </p>
                 </div>
               )}
-              
+
               {/* AI Feedback Section - Deeper Analysis */}
               {onGetAIFeedback && (
                 <div className="pt-6">
                   {!aiFeedback && !isLoadingFeedback && (
-                    <button 
+                    <button
                       onClick={(e) => {
                         e.stopPropagation();
                         onGetAIFeedback();
@@ -232,14 +231,14 @@ function QuestionResult({
                       Get Deeper AI Analysis
                     </button>
                   )}
-                  
+
                   {isLoadingFeedback && (
                     <div className="text-center py-4">
                       <div className="inline-block animate-spin rounded-full h-10 w-10 border-b-2 border-slate-600"></div>
                       <p className="text-base text-slate-600 dark:text-slate-400 mt-3">AI is analyzing your answer...</p>
                     </div>
                   )}
-                  
+
                   {aiFeedback && (
                     <div className="space-y-6 divide-y divide-slate-200 dark:divide-slate-700">
                       {/* AI Reasoning - Additional analysis */}
@@ -252,7 +251,7 @@ function QuestionResult({
                           {aiFeedback.reasoning}
                         </p>
                       </div>
-                      
+
                       {/* Additional Evidence Quote from AI */}
                       <div className="pt-6">
                         <div className="flex items-center gap-2 mb-3">
@@ -269,7 +268,7 @@ function QuestionResult({
                           This quote supports the correct answer
                         </p>
                       </div>
-                      
+
                       {/* AI Recommendations */}
                       <div className="pt-6">
                         <div className="flex items-center gap-2 mb-3">
@@ -280,7 +279,7 @@ function QuestionResult({
                           {aiFeedback.feedback}
                         </p>
                       </div>
-                      
+
                       {/* Strategy Tip (collapsible) */}
                       <div className="pt-6">
                         <details className="cursor-pointer group">
@@ -324,16 +323,16 @@ function TrueFalseExplanation({ format }: { format: 'TRUE/FALSE' | 'YES/NO' }) {
 }
 
 // Summary Completion component (moved outside to prevent recreation on re-render)
-function SummaryCompletion({ 
-  group, 
-  answers, 
-  result, 
-  handleAnswerChange, 
-  summaryInputRefs 
-}: { 
-  group: any; 
-  answers: Record<number, string>; 
-  result: any; 
+function SummaryCompletion({
+  group,
+  answers,
+  result,
+  handleAnswerChange,
+  summaryInputRefs
+}: {
+  group: any;
+  answers: Record<number, string>;
+  result: any;
   handleAnswerChange: (qid: number, value: string) => void;
   summaryInputRefs: React.MutableRefObject<Record<number, HTMLInputElement | null>>;
 }) {
@@ -384,7 +383,7 @@ function SummaryCompletion({
     }
     return { words, hasInvalidNumber };
   };
-  
+
   const raw: string = group?.structure || "";
   const normalized = raw.replace(/<strong>\((\d+)\)_____<\/strong>/g, "($1)_____");
   const stripped = normalized
@@ -410,8 +409,8 @@ function SummaryCompletion({
               const { words, hasInvalidNumber } = countTokens(value);
               const exceeded = words > maxWords;
               return (
-                <span 
-                  key={`gap-${idx}`} 
+                <span
+                  key={`gap-${idx}`}
                   className="inline-flex items-center gap-1 mx-1 align-baseline relative z-10 pointer-events-auto"
                   onMouseDown={(e) => e.stopPropagation()}
                   onClick={(e) => e.stopPropagation()}
@@ -421,9 +420,8 @@ function SummaryCompletion({
                     type="text"
                     tabIndex={0}
                     disabled={!!result}
-                    className={`px-2 py-1 border rounded text-xs w-28 bg-white dark:bg-gray-900 relative z-20 pointer-events-auto focus:outline-none focus:ring-2 ${
-                      exceeded || hasInvalidNumber ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'
-                    }`}
+                    className={`px-2 py-1 border rounded text-xs w-28 bg-white dark:bg-gray-900 relative z-20 pointer-events-auto focus:outline-none focus:ring-2 ${exceeded || hasInvalidNumber ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'
+                      }`}
                     value={value}
                     ref={(el) => {
                       if (qid != null) summaryInputRefs.current[qid] = el;
@@ -452,9 +450,8 @@ function SummaryCompletion({
                   />
                   {!result && (
                     <span
-                      className={`text-[10px] ${
-                        exceeded || hasInvalidNumber ? 'text-red-600' : 'text-gray-500'
-                      }`}
+                      className={`text-[10px] ${exceeded || hasInvalidNumber ? 'text-red-600' : 'text-gray-500'
+                        }`}
                       title={
                         hasInvalidNumber && !allowNumber
                           ? 'Numbers are not allowed for this question'
@@ -488,20 +485,20 @@ function TableCompletion({
   setAnswers: (setter: (prev: Record<number, string>) => Record<number, string>) => void;
 }) {
   const wordLimit = parseInt(group.word_limit.match(/\d+/)?.[0] || "2");
-  
+
   const countWords = (text: string) => {
     return text.trim().split(/\s+/).filter(word => word.length > 0).length;
   };
-  
+
   const getCellState = (gapNumber: number) => {
     const answer = answers[gapNumber] || "";
     const wordCount = countWords(answer);
-    
+
     if (result) {
       const correctAnswer = group.questions.find(q => q.gap_number === gapNumber)?.correctAnswer || "";
       return answer.trim().toLowerCase() === correctAnswer.toLowerCase() ? 'correct' : 'incorrect';
     }
-    
+
     if (!answer) return 'empty';
     if (wordCount > wordLimit) return 'exceeded';
     return 'filled';
@@ -532,7 +529,7 @@ function TableCompletion({
               ))}
             </tr>
           </thead>
-          
+
           {/* Body */}
           <tbody>
             {group.rows.map((row, rowIdx) => (
@@ -564,11 +561,10 @@ function TableCompletion({
                         />
                         {/* Word count indicator */}
                         {answers[cell.gapNumber!] && (
-                          <p className={`text-xs ${
-                            countWords(answers[cell.gapNumber!]) > wordLimit 
-                              ? 'text-red-600 dark:text-red-400 font-semibold' 
+                          <p className={`text-xs ${countWords(answers[cell.gapNumber!]) > wordLimit
+                              ? 'text-red-600 dark:text-red-400 font-semibold'
                               : 'text-gray-500'
-                          }`}>
+                            }`}>
                             {countWords(answers[cell.gapNumber!])} / {wordLimit} words
                           </p>
                         )}
@@ -642,20 +638,20 @@ function FlowChartCompletion({
   setAnswers: (setter: (prev: Record<number, string>) => Record<number, string>) => void;
 }) {
   const wordLimit = parseInt(group.word_limit.match(/\d+/)?.[0] || "2");
-  
+
   const countWords = (text: string) => {
     return text.trim().split(/\s+/).filter(word => word.length > 0).length;
   };
-  
+
   const getNodeState = (gapNumber: number) => {
     const answer = answers[gapNumber] || "";
     const wordCount = countWords(answer);
-    
+
     if (result) {
       const correctAnswer = group.questions.find(q => q.gap_number === gapNumber)?.correctAnswer || "";
       return answer.trim().toLowerCase() === correctAnswer.toLowerCase() ? 'correct' : 'incorrect';
     }
-    
+
     if (!answer) return 'empty';
     if (wordCount > wordLimit) return 'exceeded';
     return 'filled';
@@ -689,14 +685,14 @@ function FlowChartCompletion({
       )}
 
       {/* Flow Chart Container */}
-      <div 
+      <div
         className={`flex ${group.flow_chart.orientation === 'horizontal' ? 'flex-row overflow-x-auto' : 'flex-col'} items-center gap-3 p-4`}
         role="figure"
         aria-label={`Flow chart: ${group.flow_chart.title}`}
       >
         {sortedNodes.map((node, index) => {
           const connection = getConnection(node.id);
-          
+
           return (
             <div key={node.id} className="flex flex-col items-center w-full max-w-md">
               {/* Node Box */}
@@ -715,7 +711,7 @@ function FlowChartCompletion({
                     <div className="absolute -top-2 -left-2 bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold shadow-md z-10">
                       {node.gapNumber}
                     </div>
-                    
+
                     {node.content ? (
                       // If content exists, display it with inline gap
                       <div className="border border-gray-300 dark:border-gray-600 rounded-lg p-4 bg-gray-50 dark:bg-gray-800">
@@ -777,21 +773,20 @@ function FlowChartCompletion({
                       />
                     )}
                   </div>
-                  
+
                   {/* Word Count Indicator */}
                   {answers[node.gapNumber!] && !result && (
                     <div className="flex justify-center">
-                      <p className={`text-xs font-medium ${
-                        countWords(answers[node.gapNumber!]) > wordLimit 
-                          ? 'text-red-600 dark:text-red-400' 
+                      <p className={`text-xs font-medium ${countWords(answers[node.gapNumber!]) > wordLimit
+                          ? 'text-red-600 dark:text-red-400'
                           : 'text-green-600 dark:text-green-400'
-                      }`}>
+                        }`}>
                         {countWords(answers[node.gapNumber!])} / {wordLimit} words
                         {countWords(answers[node.gapNumber!]) > wordLimit && ' - Exceeds limit!'}
                       </p>
                     </div>
                   )}
-                  
+
                   {/* Review Mode - Show Correct Answer */}
                   {result && getNodeState(node.gapNumber!) === 'incorrect' && (
                     <div className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg p-3 shadow-sm">
@@ -807,7 +802,7 @@ function FlowChartCompletion({
                       </div>
                     </div>
                   )}
-                  
+
                   {result && getNodeState(node.gapNumber!) === 'correct' && (
                     <div className="flex justify-center">
                       <p className="text-xs text-green-600 dark:text-green-400 font-medium flex items-center gap-1">
@@ -824,7 +819,7 @@ function FlowChartCompletion({
                   </p>
                 </div>
               )}
-              
+
               {/* Connection Arrow (if not last node) */}
               {connection && (
                 <div className="flex flex-col items-center my-2">
@@ -992,7 +987,7 @@ export default function ReadingPractice() {
     setActiveSlideIndex(0);
     setAnswers({});
     setResult(null);
-    setHighlights([]);    
+    setHighlights([]);
     setActiveTab("passage");
   };
 
@@ -1008,7 +1003,7 @@ export default function ReadingPractice() {
 
   const handleGetAIFeedback = async (questionId: number, question: any, studentAnswer: string, correctAnswer: string) => {
     setLoadingFeedback(prev => new Set(prev).add(questionId));
-    
+
     try {
       const feedback = await getAIFeedback({
         passage: passage?.paragraphs?.map(p => p.text).join('\n\n') || '',
@@ -1017,12 +1012,12 @@ export default function ReadingPractice() {
         correct_answer: correctAnswer,
         student_answer: studentAnswer
       });
-      
+
       setAIFeedback(prev => ({
         ...prev,
         [questionId]: feedback
       }));
-      
+
       toast({
         title: "AI Feedback Ready",
         description: "Scroll down to see detailed feedback",
@@ -1046,8 +1041,8 @@ export default function ReadingPractice() {
   // Build a flat list of questions for rendering and results
   const flatPassageQuestions = Array.isArray(passage?.questions)
     ? passage!.questions.flatMap((group: any) =>
-        Array.isArray(group?.questions) ? group.questions : []
-      )
+      Array.isArray(group?.questions) ? group.questions : []
+    )
     : [];
 
   // Load highlights for the current passage
@@ -1116,28 +1111,28 @@ export default function ReadingPractice() {
     const timeTaken = Math.floor((Date.now() - startTime) / 1000);
 
     // Collect all questions from all 3 slides
-    const allQuestions = tests.flatMap((passage) => 
+    const allQuestions = tests.flatMap((passage) =>
       Array.isArray(passage?.questions)
         ? passage.questions.flatMap((group: any) =>
           Array.isArray(group?.questions)
             ? group.questions.map((q: any) => ({
-                id: q.id,
-                type: group.type,
-                  questionText: q.questionText || q.sentenceBeginning || q.incompleteSentence || "",
-                  options: q.options 
-                    ? (typeof q.options === 'object' && !Array.isArray(q.options)
-                        ? Object.entries(q.options).map(([key, value]) => `${key}) ${value}`)
-                        : q.options)
-                    : undefined,
-                correctAnswer: Array.isArray(q.correctAnswer) ? q.correctAnswer[0] : q.correctAnswer,
-              }))
+              id: q.id,
+              type: group.type,
+              questionText: q.questionText || q.sentenceBeginning || q.incompleteSentence || "",
+              options: q.options
+                ? (typeof q.options === 'object' && !Array.isArray(q.options)
+                  ? Object.entries(q.options).map(([key, value]) => `${key}) ${value}`)
+                  : q.options)
+                : undefined,
+              correctAnswer: Array.isArray(q.correctAnswer) ? q.correctAnswer[0] : q.correctAnswer,
+            }))
             : []
         )
         : []
     );
 
     // Validate table-completion word limits
-    const allTableGroups = tests.flatMap((passage) => 
+    const allTableGroups = tests.flatMap((passage) =>
       passage?.questions?.filter((g: any) => g.type === 'table-completion') || []
     );
     for (const group of allTableGroups) {
@@ -1157,7 +1152,7 @@ export default function ReadingPractice() {
     }
 
     // Validate flow-chart-completion word limits
-    const allFlowChartGroups = tests.flatMap((passage) => 
+    const allFlowChartGroups = tests.flatMap((passage) =>
       passage?.questions?.filter((g: any) => g.type === 'flow-chart-completion') || []
     );
     for (const group of allFlowChartGroups) {
@@ -1177,7 +1172,7 @@ export default function ReadingPractice() {
     }
 
     // Validate sentence-completion word limits
-    const allSentenceGroups = tests.flatMap((passage) => 
+    const allSentenceGroups = tests.flatMap((passage) =>
       passage?.questions?.filter((g: any) => g.type === 'sentence-completion') || []
     );
     for (const group of allSentenceGroups) {
@@ -1280,8 +1275,8 @@ export default function ReadingPractice() {
                 const optionValue = typeof option === 'object' ? option.letter : option;
                 const optionText = typeof option === 'object' ? `${option.letter}. ${option.text}` : option;
                 return (
-                  <div 
-                    key={index} 
+                  <div
+                    key={index}
                     className="flex items-center space-x-2 cursor-pointer"
                     onClick={() => {
                       if (answers[question.id] === optionValue) {
@@ -1316,8 +1311,8 @@ export default function ReadingPractice() {
               className="inline-flex flex-wrap items-center gap-2"
             >
               {question.options?.map((option: string) => (
-                <div 
-                  key={option} 
+                <div
+                  key={option}
                   className="flex items-center space-x-2 cursor-pointer"
                   onClick={() => {
                     if (answers[question.id] === option) {
@@ -1428,9 +1423,8 @@ export default function ReadingPractice() {
                         aria-label={`Gap ${question.id}`}
                         type="text"
                         disabled={!!result}
-                        className={`px-1 border-b bg-transparent w-40 focus:outline-none ${
-                          exceeded || hasInvalidNumber ? 'border-red-500' : 'border-gray-400 focus:border-gray-700'
-                        }`}
+                        className={`px-1 border-b bg-transparent w-40 focus:outline-none ${exceeded || hasInvalidNumber ? 'border-red-500' : 'border-gray-400 focus:border-gray-700'
+                          }`}
                         value={value}
                         onChange={(e) => handleAnswerChange(question.id, e.target.value)}
                       />
@@ -1458,8 +1452,8 @@ export default function ReadingPractice() {
                 className="inline-flex flex-wrap items-center gap-2"
               >
                 {Object.entries(question.options).map(([key, value]: [string, any]) => (
-                  <div 
-                    key={key} 
+                  <div
+                    key={key}
                     className="flex items-center space-x-2 cursor-pointer"
                     onClick={() => {
                       if (answers[question.id] === key) {
@@ -1486,24 +1480,24 @@ export default function ReadingPractice() {
   // Current slide questions count
   const totalQuestions = Array.isArray(passage?.questions)
     ? passage!.questions.reduce((total: number, group: any) => {
-        const count = Array.isArray(group?.questions) ? group.questions.length : 0;
-        return total + count;
-      }, 0)
+      const count = Array.isArray(group?.questions) ? group.questions.length : 0;
+      return total + count;
+    }, 0)
     : 0;
 
   // Get question IDs for current slide
   const currentSlideQuestionIds = Array.isArray(passage?.questions)
     ? passage!.questions.flatMap((group: any) =>
-        Array.isArray(group?.questions) ? group.questions.map((q: any) => q.id) : []
-      )
+      Array.isArray(group?.questions) ? group.questions.map((q: any) => q.id) : []
+    )
     : [];
 
   // Count answered questions on current slide only
   const answeredQuestionsCurrentSlide = currentSlideQuestionIds.filter(id => answers[id]).length;
 
   // Calculate total questions across all slides for submission validation
-  const totalQuestionsAllSlides = tests.reduce((sum, passage) => 
-    sum + (passage?.questions?.reduce((count: number, group: any) => 
+  const totalQuestionsAllSlides = tests.reduce((sum, passage) =>
+    sum + (passage?.questions?.reduce((count: number, group: any) =>
       count + (group?.questions?.length || 0), 0) || 0), 0
   );
   const answeredQuestionsAllSlides = Object.keys(answers).length;
@@ -1548,15 +1542,50 @@ export default function ReadingPractice() {
 
   return (
     <>
-      <div className="max-w-7xl mx-auto space-y-6 pb-32">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Reading Practice
-          </h1>
-          <p className="text-gray-600 dark:text-gray-300">
-            Practice IELTS reading comprehension with authentic passages and questions. Highlight text to add to vocabulary or get translations.
-          </p>
-        </div>
+      <div className="max-w-7xl mx-auto space-y-8 pb-32">
+        {/* Hero Section */}
+        {!showBasics && selectedTestIndex === null && (
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 to-indigo-700 dark:from-blue-900 dark:to-indigo-900 text-white shadow-xl">
+            <div className="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 -mb-10 -ml-10 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl"></div>
+
+            <div className="relative z-10 p-8 md:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              <div className="space-y-4 max-w-2xl">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/30 border border-blue-400/30 text-blue-100 text-sm font-medium backdrop-blur-sm">
+                  <Sparkles className="w-4 h-4 text-yellow-300" />
+                  <span>New AI-Powered Feedback Available</span>
+                </div>
+                <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white">
+                  Master IELTS Reading
+                </h1>
+                <p className="text-lg text-blue-100 leading-relaxed">
+                  Practice with authentic passages, get instant AI analysis, and track your improvements.
+                  Highlight text to build your vocabulary as you read.
+                </p>
+                <div className="flex flex-wrap gap-4 pt-2">
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/10">
+                    <BookOpen className="w-5 h-5 text-blue-200" />
+                    <span className="font-medium">{testsData?.tests?.length || 0} Practice Tests</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/10">
+                    <Clock className="w-5 h-5 text-blue-200" />
+                    <span className="font-medium">60 Min / Test</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/10">
+                    <GraduationCap className="w-5 h-5 text-blue-200" />
+                    <span className="font-medium">Academic & General</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="hidden md:block">
+                <div className="w-32 h-32 bg-white/10 rounded-2xl rotate-12 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-2xl">
+                  <BookOpen className="w-16 h-16 text-white/90" />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {showBasics && (
           <div className="space-y-6 mt-2">
@@ -1826,47 +1855,93 @@ export default function ReadingPractice() {
           </div>
         )}
 
+        {/* Test Selection Grid */}
         {!showBasics && selectedTestIndex === null && (
           <div className="space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {testsData?.tests?.map((test: any) => (
-                <div
-                  key={test.testId}
-                  onClick={() => {
-                    setSelectedTestId(test.testId);
-                    setSelectedTestIndex(null);
-                    setActiveSlideIndex(0);
-                    setAnswers({});
-                    setResult(null);
-                    setHighlights([]);
-                  }}
-                  className={`cursor-pointer p-6 rounded-2xl text-center shadow-md transition-all 
-                  ${
-                    selectedTestId === test.testId
-                      ? "bg-blue-600 dark:bg-blue-600 scale-105 text-white"
-                      : "bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700"
-                  }`}
-                >
-                  <h2 className="text-xl font-semibold">{test.testName}</h2>
-                  <p className={`text-sm mt-2 ${selectedTestId === test.testId ? "text-blue-100" : "text-gray-500 dark:text-gray-400"}`}>
-                    {test.totalQuestions} questions
-                  </p>
-                </div>
-              ))}
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+                <BookOpen className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                Available Tests
+              </h2>
+              <div className="flex gap-2">
+                <Badge variant="outline" className="px-3 py-1">All Levels</Badge>
+                <Badge variant="outline" className="px-3 py-1">Academic</Badge>
+              </div>
             </div>
 
-            {selectedTestId && (
-              <div className="flex justify-center">
-                <Button 
-                  onClick={() => enterTest(0)} 
-                  size="lg"
-                  className="px-8 py-6 text-lg"
-                  disabled={!tests || tests.length === 0}
-                >
-                  Start Test {selectedTestId}
-                </Button>
-              </div>
-            )}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {testsData?.tests?.map((test: any, index: number) => {
+                const isSelected = selectedTestId === test.testId;
+                // Mock difficulty for visual variety
+                const difficulty = index % 3 === 0 ? "Hard" : index % 2 === 0 ? "Medium" : "Easy";
+                const difficultyColor = difficulty === "Hard" ? "text-rose-600 bg-rose-50 border-rose-200" : difficulty === "Medium" ? "text-amber-600 bg-amber-50 border-amber-200" : "text-emerald-600 bg-emerald-50 border-emerald-200";
+
+                return (
+                  <Card
+                    key={test.testId}
+                    onClick={() => {
+                      setSelectedTestId(test.testId);
+                      setSelectedTestIndex(null);
+                      setActiveSlideIndex(0);
+                      setAnswers({});
+                      setResult(null);
+                      setHighlights([]);
+                    }}
+                    className={`cursor-pointer group relative overflow-hidden transition-all duration-300 border-2
+                    ${isSelected
+                        ? "border-blue-500 shadow-lg ring-2 ring-blue-200 dark:ring-blue-900"
+                        : "border-transparent hover:border-blue-200 hover:shadow-md dark:bg-slate-800 dark:hover:border-slate-600"
+                      }`}
+                  >
+                    <CardHeader className="pb-3">
+                      <div className="flex justify-between items-start mb-2">
+                        <div className={`p-2 rounded-lg ${isSelected ? 'bg-blue-100 text-blue-600' : 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300'}`}>
+                          <BookOpen className="w-6 h-6" />
+                        </div>
+                        <span className={`text-xs font-bold px-2 py-1 rounded-full border ${difficultyColor} dark:bg-opacity-10`}>
+                          {difficulty}
+                        </span>
+                      </div>
+                      <CardTitle className="text-lg font-bold text-slate-800 dark:text-slate-100 group-hover:text-blue-600 transition-colors">
+                        {test.testName}
+                      </CardTitle>
+                      <CardDescription className="flex items-center gap-2 mt-1">
+                        <Clock className="w-3.5 h-3.5" />
+                        60 mins
+                        <span>•</span>
+                        {test.totalQuestions} Questions
+                      </CardDescription>
+                    </CardHeader>
+
+                    <CardContent>
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between text-sm text-slate-600 dark:text-slate-400">
+                          <span>Completion Rate</span>
+                          <span className="font-medium">0%</span>
+                        </div>
+                        <div className="h-2 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+                          <div className="h-full bg-blue-500 w-0 rounded-full"></div>
+                        </div>
+
+                        {isSelected && (
+                          <div className="pt-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                            <Button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                enterTest(0);
+                              }}
+                              className="w-full bg-blue-600 hover:bg-blue-700 text-white shadow-md group-hover:shadow-lg transition-all"
+                            >
+                              Start Test Now
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
           </div>
         )}
 
@@ -1875,15 +1950,15 @@ export default function ReadingPractice() {
             <div className="flex items-center justify-between">
               {viewMode === "tabs" ? (
                 <Tabs value={activeTab} onValueChange={setActiveTab}>
-              <TabsList>
-                <TabsTrigger value="passage">
-                  <BookOpen className="h-4 w-4 mr-2" />
-                  Reading Passage
-                </TabsTrigger>
-                <TabsTrigger value="questions">
+                  <TabsList>
+                    <TabsTrigger value="passage">
+                      <BookOpen className="h-4 w-4 mr-2" />
+                      Reading Passage
+                    </TabsTrigger>
+                    <TabsTrigger value="questions">
                       Questions ({answeredQuestionsCurrentSlide}/{totalQuestions})
-                </TabsTrigger>
-              </TabsList>
+                    </TabsTrigger>
+                  </TabsList>
                 </Tabs>
               ) : (
                 <div className="flex items-center gap-2">
@@ -1894,7 +1969,7 @@ export default function ReadingPractice() {
                   </Badge>
                 </div>
               )}
-              
+
               <div className="flex items-center gap-2">
                 <Button
                   variant={viewMode === "tabs" ? "outline" : "default"}
@@ -1906,26 +1981,26 @@ export default function ReadingPractice() {
                 </Button>
                 {tests && tests.length > 1 && (
                   <>
-                  <div className="flex gap-1 mr-2" role="tablist" aria-label="Reading slides">
-                    {tests.map((_: any, idx: number) => (
-                      <Button
-                        key={idx}
-                        variant={activeSlideIndex === idx ? "default" : "outline"}
-                        size="sm"
-                        onClick={() => {
-                          setActiveSlideIndex(idx);
+                    <div className="flex gap-1 mr-2" role="tablist" aria-label="Reading slides">
+                      {tests.map((_: any, idx: number) => (
+                        <Button
+                          key={idx}
+                          variant={activeSlideIndex === idx ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => {
+                            setActiveSlideIndex(idx);
                             // Keep answers when switching slides
-                          setResult(null);
-                          setHighlights([]);
-                          setActiveTab("passage");
-                        }}
-                        aria-pressed={activeSlideIndex === idx}
-                        aria-label={`Show Slide ${idx + 1}`}
-                      >
-                        Slide {idx + 1}
-                      </Button>
-                    ))}
-                  </div>
+                            setResult(null);
+                            setHighlights([]);
+                            setActiveTab("passage");
+                          }}
+                          aria-pressed={activeSlideIndex === idx}
+                          aria-label={`Show Slide ${idx + 1}`}
+                        >
+                          Slide {idx + 1}
+                        </Button>
+                      ))}
+                    </div>
                     <Badge variant="outline" className="text-xs">
                       Overall: {answeredQuestionsAllSlides}/{totalQuestionsAllSlides}
                     </Badge>
@@ -1951,361 +2026,361 @@ export default function ReadingPractice() {
             {/* Tab View Mode */}
             {viewMode === "tabs" && (
               <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsContent value="passage">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <BookOpen className="h-5 w-5" />
-                    {passage.title}
-                  </CardTitle>
-                  <CardDescription>
-                    <div className="flex items-center justify-between">
-                      <span>Select text to highlight, translate, or add to vocabulary.</span>
-                      <div className="flex items-center gap-2">
-                        <Clock className="h-4 w-4" />
-                        <span className="text-sm">Recommended: {passage.estimatedTime || 20} minutes</span>
-                      </div>
-                    </div>
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg">
-                    <TextHighlighter
-                      content={passage.paragraphs?.map((p: { text: string }) => p.text).join('\n\n') || ''}
-                      passageTitle={passage.title}
-                      highlights={highlights}
-                      onHighlightsChange={handleHighlightsChange}
-                    />
-                  </div>
-                  
-                  {highlights.length > 0 && (
-                    <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                      <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">
-                        💡 Tip: Your highlights are saved automatically
-                      </h4>
-                      <p className="text-sm text-blue-800 dark:text-blue-200">
-                        You have {highlights.length} highlighted {highlights.length === 1 ? 'item' : 'items'} in this passage. 
-                        They will be available when you return to this passage.
-                      </p>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="questions">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Questions</CardTitle>
-                  <CardDescription>
-                    Answer all questions based on the passage you just read.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="flex justify-between items-center">
-                    <Badge variant={answeredQuestionsCurrentSlide === totalQuestions ? "default" : "secondary"}>
-                      {answeredQuestionsCurrentSlide}/{totalQuestions} answered on this slide
-                    </Badge>
-                  </div>
-
-                  <div className="space-y-8">
-                    {Array.isArray(passage?.questions) ? (
-                      passage!.questions.map((questionGroup: any) => (
-                        <div key={questionGroup.id} className="space-y-4">
-                          <div className="border-b pb-2">
-                            <h3 className="text-lg font-semibold">{questionGroup.title}</h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-300">{questionGroup.instructions}</p>
-                            
-                            {/* Add explanation for TRUE/FALSE/NOT GIVEN question types */}
-                            {questionGroup.type === 'true-false-not-given' && (
-                              <TrueFalseExplanation 
-                                format={
-                                  questionGroup.questions?.[0]?.correctAnswer === 'TRUE' || 
-                                  questionGroup.questions?.[0]?.correctAnswer === 'FALSE'
-                                    ? 'TRUE/FALSE'
-                                    : 'YES/NO'
-                                } 
-                              />
-                            )}
+                <TabsContent value="passage">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <BookOpen className="h-5 w-5" />
+                        {passage.title}
+                      </CardTitle>
+                      <CardDescription>
+                        <div className="flex items-center justify-between">
+                          <span>Select text to highlight, translate, or add to vocabulary.</span>
+                          <div className="flex items-center gap-2">
+                            <Clock className="h-4 w-4" />
+                            <span className="text-sm">Recommended: {passage.estimatedTime || 20} minutes</span>
                           </div>
-                          <div className="space-y-6">
-                            {questionGroup.type === "matching-headings" ? (
-                              // Render matching-headings at GROUP level
-                              <div className="space-y-4">
-                                  {questionGroup.questions?.map((question: any) => {
-                                    const selectedAnswer = answers[question.id] || "";
-                                    const usedOptions = Object.entries(answers)
-                                      .filter(([qId, _]) => Number(qId) !== question.id)
-                                      .map(([_, ans]) => ans);
-                                    
-                                    return (
-                                      <div key={question.id} className="space-y-2">
-                                        <TextHighlighter
-                                          content={String(question.questionText || "")}
-                                          passageTitle={`${passage?.title || "Reading"} - Question`}
-                                          highlights={getQHighlights(question.id)}
-                                          onHighlightsChange={setQHighlightsFor(question.id)}
-                                          showLabels={false}
-                                        />
-                                        <RadioGroup
-                                          value={selectedAnswer}
-                                          onValueChange={(value) => handleAnswerChange(question.id, value)}
-                                        >
-                                          {question.options?.map((option: any, index: number) => {
-                                            const optionValue = typeof option === 'object' ? option.letter : option;
-                                            const optionText = typeof option === 'object' ? option.text : option;
-                                            const isUsedElsewhere = usedOptions.includes(optionValue);
-                                            return (
-                                              <div 
-                                                key={index} 
+                        </div>
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg">
+                        <TextHighlighter
+                          content={passage.paragraphs?.map((p: { text: string }) => p.text).join('\n\n') || ''}
+                          passageTitle={passage.title}
+                          highlights={highlights}
+                          onHighlightsChange={handleHighlightsChange}
+                        />
+                      </div>
+
+                      {highlights.length > 0 && (
+                        <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                          <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">
+                            💡 Tip: Your highlights are saved automatically
+                          </h4>
+                          <p className="text-sm text-blue-800 dark:text-blue-200">
+                            You have {highlights.length} highlighted {highlights.length === 1 ? 'item' : 'items'} in this passage.
+                            They will be available when you return to this passage.
+                          </p>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+
+                <TabsContent value="questions">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Questions</CardTitle>
+                      <CardDescription>
+                        Answer all questions based on the passage you just read.
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                      <div className="flex justify-between items-center">
+                        <Badge variant={answeredQuestionsCurrentSlide === totalQuestions ? "default" : "secondary"}>
+                          {answeredQuestionsCurrentSlide}/{totalQuestions} answered on this slide
+                        </Badge>
+                      </div>
+
+                      <div className="space-y-8">
+                        {Array.isArray(passage?.questions) ? (
+                          passage!.questions.map((questionGroup: any) => (
+                            <div key={questionGroup.id} className="space-y-4">
+                              <div className="border-b pb-2">
+                                <h3 className="text-lg font-semibold">{questionGroup.title}</h3>
+                                <p className="text-sm text-gray-600 dark:text-gray-300">{questionGroup.instructions}</p>
+
+                                {/* Add explanation for TRUE/FALSE/NOT GIVEN question types */}
+                                {questionGroup.type === 'true-false-not-given' && (
+                                  <TrueFalseExplanation
+                                    format={
+                                      questionGroup.questions?.[0]?.correctAnswer === 'TRUE' ||
+                                        questionGroup.questions?.[0]?.correctAnswer === 'FALSE'
+                                        ? 'TRUE/FALSE'
+                                        : 'YES/NO'
+                                    }
+                                  />
+                                )}
+                              </div>
+                              <div className="space-y-6">
+                                {questionGroup.type === "matching-headings" ? (
+                                  // Render matching-headings at GROUP level
+                                  <div className="space-y-4">
+                                    {questionGroup.questions?.map((question: any) => {
+                                      const selectedAnswer = answers[question.id] || "";
+                                      const usedOptions = Object.entries(answers)
+                                        .filter(([qId, _]) => Number(qId) !== question.id)
+                                        .map(([_, ans]) => ans);
+
+                                      return (
+                                        <div key={question.id} className="space-y-2">
+                                          <TextHighlighter
+                                            content={String(question.questionText || "")}
+                                            passageTitle={`${passage?.title || "Reading"} - Question`}
+                                            highlights={getQHighlights(question.id)}
+                                            onHighlightsChange={setQHighlightsFor(question.id)}
+                                            showLabels={false}
+                                          />
+                                          <RadioGroup
+                                            value={selectedAnswer}
+                                            onValueChange={(value) => handleAnswerChange(question.id, value)}
+                                          >
+                                            {question.options?.map((option: any, index: number) => {
+                                              const optionValue = typeof option === 'object' ? option.letter : option;
+                                              const optionText = typeof option === 'object' ? option.text : option;
+                                              const isUsedElsewhere = usedOptions.includes(optionValue);
+                                              return (
+                                                <div
+                                                  key={index}
+                                                  className="flex items-center space-x-2 cursor-pointer"
+                                                  onClick={() => {
+                                                    if (selectedAnswer === optionValue) {
+                                                      handleAnswerChange(question.id, "");
+                                                    }
+                                                  }}
+                                                >
+                                                  <RadioGroupItem
+                                                    value={optionValue}
+                                                    id={`q${question.id}-${index}`}
+                                                    disabled={isUsedElsewhere}
+                                                  />
+                                                  <Label
+                                                    htmlFor={`q${question.id}-${index}`}
+                                                    className={`text-sm ${isUsedElsewhere ? 'text-red-500 line-through opacity-50' : ''}`}
+                                                  >
+                                                    {toRomanNumeral(index + 1)}. {optionText}
+                                                  </Label>
+                                                </div>
+                                              );
+                                            })}
+                                          </RadioGroup>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                ) : questionGroup.type === "matching-features" ? (
+                                  // Render matching-features questions
+                                  <div className="space-y-6">
+                                    {/* Display available features (people/institutions) */}
+                                    <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                                      <h4 className="font-medium mb-3">List of People/Institutions:</h4>
+                                      <div className="space-y-2">
+                                        {questionGroup.features?.map((feature: any, idx: number) => (
+                                          <div key={idx} className="text-sm">
+                                            <strong>{feature.letter}.</strong> {feature.name}
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </div>
+
+                                    {/* Statements to match */}
+                                    <div className="space-y-4">
+                                      {questionGroup.questions?.map((question: any) => (
+                                        <div key={question.id} className="space-y-2">
+                                          <TextHighlighter
+                                            content={`${question.id}. ${String(question.questionText || "")}`}
+                                            passageTitle={`${passage?.title || "Reading"} - Question`}
+                                            highlights={getQHighlights(question.id)}
+                                            onHighlightsChange={setQHighlightsFor(question.id)}
+                                            showLabels={false}
+                                          />
+                                          <Input
+                                            placeholder="Enter letter (A, B, C, D)..."
+                                            value={answers[question.id] || ""}
+                                            onChange={(e) => handleAnswerChange(question.id, e.target.value.toUpperCase())}
+                                            className="max-w-md"
+                                            maxLength={1}
+                                          />
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                ) : questionGroup.type === "matching-sentence-endings" ? (
+                                  // Render matching-sentence-endings questions
+                                  <div className="space-y-6">
+                                    {/* Display available endings (A-E) */}
+                                    <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                                      <h4 className="font-medium mb-3">Possible Endings:</h4>
+                                      <div className="space-y-2">
+                                        {questionGroup.sentence_endings?.map((ending: any, idx: number) => (
+                                          <div key={idx} className="text-sm">
+                                            <strong>{ending.letter}.</strong> {ending.text}
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </div>
+
+                                    {/* Sentence beginnings to match */}
+                                    <div className="space-y-4">
+                                      {questionGroup.questions?.map((question: any) => (
+                                        <div key={question.id} className="space-y-2">
+                                          <TextHighlighter
+                                            content={`${question.id}. ${String(question.questionText || "")}`}
+                                            passageTitle={`${passage?.title || "Reading"} - Question`}
+                                            highlights={getQHighlights(question.id)}
+                                            onHighlightsChange={setQHighlightsFor(question.id)}
+                                            showLabels={false}
+                                          />
+                                          <RadioGroup
+                                            value={answers[question.id] || ""}
+                                            onValueChange={(value) => handleAnswerChange(question.id, value)}
+                                            className="inline-flex flex-wrap items-center gap-2"
+                                          >
+                                            {questionGroup.sentence_endings?.map((ending: any) => (
+                                              <div
+                                                key={ending.letter}
                                                 className="flex items-center space-x-2 cursor-pointer"
                                                 onClick={() => {
-                                                  if (selectedAnswer === optionValue) {
+                                                  if (answers[question.id] === ending.letter) {
                                                     handleAnswerChange(question.id, "");
                                                   }
                                                 }}
                                               >
-                                                <RadioGroupItem 
-                                                  value={optionValue} 
-                                                  id={`q${question.id}-${index}`}
-                                                  disabled={isUsedElsewhere}
-                                                />
-                                                <Label 
-                                                  htmlFor={`q${question.id}-${index}`} 
-                                                  className={`text-sm ${isUsedElsewhere ? 'text-red-500 line-through opacity-50' : ''}`}
-                                                >
-                                                  {toRomanNumeral(index + 1)}. {optionText}
+                                                <RadioGroupItem value={ending.letter} id={`q${question.id}-${ending.letter}`} />
+                                                <Label htmlFor={`q${question.id}-${ending.letter}`} className="text-sm">
+                                                  {ending.letter}
                                                 </Label>
                                               </div>
-                                            );
-                                          })}
-                                        </RadioGroup>
-                                      </div>
-                                    );
-                                  })}
-                                </div>
-                            ) : questionGroup.type === "matching-features" ? (
-                              // Render matching-features questions
-                              <div className="space-y-6">
-                                {/* Display available features (people/institutions) */}
-                                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
-                                  <h4 className="font-medium mb-3">List of People/Institutions:</h4>
-                                  <div className="space-y-2">
-                                    {questionGroup.features?.map((feature: any, idx: number) => (
-                                      <div key={idx} className="text-sm">
-                                        <strong>{feature.letter}.</strong> {feature.name}
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                                
-                                {/* Statements to match */}
-                                <div className="space-y-4">
-                                  {questionGroup.questions?.map((question: any) => (
-                                    <div key={question.id} className="space-y-2">
-                                      <TextHighlighter
-                                        content={`${question.id}. ${String(question.questionText || "")}`}
-                                        passageTitle={`${passage?.title || "Reading"} - Question`}
-                                        highlights={getQHighlights(question.id)}
-                                        onHighlightsChange={setQHighlightsFor(question.id)}
-                                        showLabels={false}
-                                      />
-                                      <Input
-                                        placeholder="Enter letter (A, B, C, D)..."
-                                        value={answers[question.id] || ""}
-                                        onChange={(e) => handleAnswerChange(question.id, e.target.value.toUpperCase())}
-                                        className="max-w-md"
-                                        maxLength={1}
-                                      />
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            ) : questionGroup.type === "matching-sentence-endings" ? (
-                              // Render matching-sentence-endings questions
-                              <div className="space-y-6">
-                                {/* Display available endings (A-E) */}
-                                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
-                                  <h4 className="font-medium mb-3">Possible Endings:</h4>
-                                  <div className="space-y-2">
-                                    {questionGroup.sentence_endings?.map((ending: any, idx: number) => (
-                                      <div key={idx} className="text-sm">
-                                        <strong>{ending.letter}.</strong> {ending.text}
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                                
-                                {/* Sentence beginnings to match */}
-                                <div className="space-y-4">
-                                  {questionGroup.questions?.map((question: any) => (
-                                    <div key={question.id} className="space-y-2">
-                                      <TextHighlighter
-                                        content={`${question.id}. ${String(question.questionText || "")}`}
-                                        passageTitle={`${passage?.title || "Reading"} - Question`}
-                                        highlights={getQHighlights(question.id)}
-                                        onHighlightsChange={setQHighlightsFor(question.id)}
-                                        showLabels={false}
-                                      />
-                                      <RadioGroup
-                                        value={answers[question.id] || ""}
-                                        onValueChange={(value) => handleAnswerChange(question.id, value)}
-                                        className="inline-flex flex-wrap items-center gap-2"
-                                      >
-                                        {questionGroup.sentence_endings?.map((ending: any) => (
-                                          <div 
-                                            key={ending.letter} 
-                                            className="flex items-center space-x-2 cursor-pointer"
-                                            onClick={() => {
-                                              if (answers[question.id] === ending.letter) {
-                                                handleAnswerChange(question.id, "");
-                                              }
-                                            }}
-                                          >
-                                            <RadioGroupItem value={ending.letter} id={`q${question.id}-${ending.letter}`} />
-                                            <Label htmlFor={`q${question.id}-${ending.letter}`} className="text-sm">
-                                              {ending.letter}
-                                            </Label>
-                                          </div>
-                                        ))}
-                                      </RadioGroup>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            ) : (questionGroup.type === "sentence-completion" && (questionGroup as any).structure) ? (
-                              <SummaryCompletion
-                                group={questionGroup}
-                                answers={answers}
-                                result={result}
-                                handleAnswerChange={handleAnswerChange}
-                                summaryInputRefs={summaryInputRefs}
-                              />
-                            ) : questionGroup.type === "summary-completion" ? (
-                              <SummaryCompletion
-                                group={questionGroup}
-                                answers={answers}
-                                result={result}
-                                handleAnswerChange={handleAnswerChange}
-                                summaryInputRefs={summaryInputRefs}
-                              />
-                            ) : questionGroup.type === "note-completion" ? (
-                              <NoteCompletion
-                                group={questionGroup}
-                                answers={answers}
-                                result={result}
-                                onAnswerChange={handleAnswerChange}
-                              />
-                            ) : questionGroup.type === "table-completion" ? (
-                              <TableCompletion
-                                group={questionGroup as any}
-                                answers={answers}
-                                result={result}
-                                setAnswers={setAnswers}
-                              />
-                            ) : questionGroup.type === "flow-chart-completion" ? (
-                              <FlowChartCompletion
-                                group={questionGroup as any}
-                                answers={answers}
-                                result={result}
-                                setAnswers={setAnswers}
-                              />
-                            ) : questionGroup.type === "matching-information" ? (
-                              // Render matching-information questions
-                              <div className="space-y-4">
-                                {/* Paragraph Reference Box */}
-                                {questionGroup.paragraphs_list && (
-                                  <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200">
-                                    <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">
-                                      Paragraphs:
-                                    </h4>
-                                    <div className="flex gap-2 flex-wrap">
-                                      {questionGroup.paragraphs_list.map((para: string) => (
-                                        <span key={para} className="text-xs text-blue-800 dark:text-blue-200">
-                                          {para}
-                                        </span>
+                                            ))}
+                                          </RadioGroup>
+                                        </div>
                                       ))}
                                     </div>
                                   </div>
-                                )}
-                                
-                                {/* Questions */}
-                                <div className="space-y-3">
-                                  {questionGroup.questions?.map((q: any) => (
-                                    <div key={q.id} className="matching-info-question-item flex items-start gap-3 p-3 border-l-4 border-gray-300">
-                                      <span className="font-medium min-w-[40px]">{q.id}.</span>
-                                      <div className="flex-1 text-sm">
-                                        <TextHighlighter
-                                          content={String(q.questionText || "")}
-                                          passageTitle={`${passage?.title || "Reading"} - Q${q.id}`}
-                                          highlights={getQHighlights(q.id)}
-                                          onHighlightsChange={setQHighlightsFor(q.id)}
-                                          showLabels={false}
-                                        />
+                                ) : (questionGroup.type === "sentence-completion" && (questionGroup as any).structure) ? (
+                                  <SummaryCompletion
+                                    group={questionGroup}
+                                    answers={answers}
+                                    result={result}
+                                    handleAnswerChange={handleAnswerChange}
+                                    summaryInputRefs={summaryInputRefs}
+                                  />
+                                ) : questionGroup.type === "summary-completion" ? (
+                                  <SummaryCompletion
+                                    group={questionGroup}
+                                    answers={answers}
+                                    result={result}
+                                    handleAnswerChange={handleAnswerChange}
+                                    summaryInputRefs={summaryInputRefs}
+                                  />
+                                ) : questionGroup.type === "note-completion" ? (
+                                  <NoteCompletion
+                                    group={questionGroup}
+                                    answers={answers}
+                                    result={result}
+                                    onAnswerChange={handleAnswerChange}
+                                  />
+                                ) : questionGroup.type === "table-completion" ? (
+                                  <TableCompletion
+                                    group={questionGroup as any}
+                                    answers={answers}
+                                    result={result}
+                                    setAnswers={setAnswers}
+                                  />
+                                ) : questionGroup.type === "flow-chart-completion" ? (
+                                  <FlowChartCompletion
+                                    group={questionGroup as any}
+                                    answers={answers}
+                                    result={result}
+                                    setAnswers={setAnswers}
+                                  />
+                                ) : questionGroup.type === "matching-information" ? (
+                                  // Render matching-information questions
+                                  <div className="space-y-4">
+                                    {/* Paragraph Reference Box */}
+                                    {questionGroup.paragraphs_list && (
+                                      <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200">
+                                        <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">
+                                          Paragraphs:
+                                        </h4>
+                                        <div className="flex gap-2 flex-wrap">
+                                          {questionGroup.paragraphs_list.map((para: string) => (
+                                            <span key={para} className="text-xs text-blue-800 dark:text-blue-200">
+                                              {para}
+                                            </span>
+                                          ))}
+                                        </div>
                                       </div>
-                                      <select
-                                        value={answers[q.id] || ""}
-                                        onChange={(e) => handleAnswerChange(q.id, e.target.value)}
-                                        disabled={!!result}
-                                        className="matching-info-select px-3 py-2 border rounded-md min-w-[120px]"
-                                      >
-                                        <option value="">Select...</option>
-                                        {questionGroup.paragraphs_list?.map((para: string) => (
-                                          <option key={para} value={para}>
-                                            Paragraph {para}
-                                          </option>
-                                        ))}
-                                      </select>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            ) : Array.isArray(questionGroup.questions) ? (
-                              questionGroup.questions.map((question: any) =>
-                                renderQuestion({
-                                  ...question,
-                                  type: questionGroup.type,
-                                  groupWordLimit: questionGroup.word_limit,
-                                  options:
-                                    questionGroup.type === 'true-false-not-given'
-                                      ? (() => {
-                                          // Auto-detect format based on first question's correct answer
-                                          const firstCorrectAnswer = questionGroup.questions?.[0]?.correctAnswer;
-                                          if (firstCorrectAnswer === 'TRUE' || firstCorrectAnswer === 'FALSE') {
-                                            return ["TRUE", "FALSE", "NOT GIVEN"];
-                                          } else {
-                                            return ["YES", "NO", "NOT GIVEN"];
-                                          }
-                                        })()
-                                      : question.options,
-                                })
-                              )
-                            ) : (
-                              <p className="text-sm text-red-600">Invalid question group data.</p>
-                            )}
-                          </div>
-                        </div>
-                      ))
-                    ) : (
-                      <p className="text-sm text-red-600">Questions are not available.</p>
-                    )}
-                  </div>
+                                    )}
 
-                  {activeSlideIndex === tests.length - 1 && (
-                  <Button
-                    onClick={handleSubmit}
-                      disabled={answeredQuestionsAllSlides === 0 || submitReadingMutation.isPending}
-                    className="w-full"
-                  >
-                    <Send className="h-4 w-4 mr-2" />
-                      {submitReadingMutation.isPending ? "Submitting..." : "Submit All Answers"}
-                  </Button>
-                  )}
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-        )}
+                                    {/* Questions */}
+                                    <div className="space-y-3">
+                                      {questionGroup.questions?.map((q: any) => (
+                                        <div key={q.id} className="matching-info-question-item flex items-start gap-3 p-3 border-l-4 border-gray-300">
+                                          <span className="font-medium min-w-[40px]">{q.id}.</span>
+                                          <div className="flex-1 text-sm">
+                                            <TextHighlighter
+                                              content={String(q.questionText || "")}
+                                              passageTitle={`${passage?.title || "Reading"} - Q${q.id}`}
+                                              highlights={getQHighlights(q.id)}
+                                              onHighlightsChange={setQHighlightsFor(q.id)}
+                                              showLabels={false}
+                                            />
+                                          </div>
+                                          <select
+                                            value={answers[q.id] || ""}
+                                            onChange={(e) => handleAnswerChange(q.id, e.target.value)}
+                                            disabled={!!result}
+                                            className="matching-info-select px-3 py-2 border rounded-md min-w-[120px]"
+                                          >
+                                            <option value="">Select...</option>
+                                            {questionGroup.paragraphs_list?.map((para: string) => (
+                                              <option key={para} value={para}>
+                                                Paragraph {para}
+                                              </option>
+                                            ))}
+                                          </select>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                ) : Array.isArray(questionGroup.questions) ? (
+                                  questionGroup.questions.map((question: any) =>
+                                    renderQuestion({
+                                      ...question,
+                                      type: questionGroup.type,
+                                      groupWordLimit: questionGroup.word_limit,
+                                      options:
+                                        questionGroup.type === 'true-false-not-given'
+                                          ? (() => {
+                                            // Auto-detect format based on first question's correct answer
+                                            const firstCorrectAnswer = questionGroup.questions?.[0]?.correctAnswer;
+                                            if (firstCorrectAnswer === 'TRUE' || firstCorrectAnswer === 'FALSE') {
+                                              return ["TRUE", "FALSE", "NOT GIVEN"];
+                                            } else {
+                                              return ["YES", "NO", "NOT GIVEN"];
+                                            }
+                                          })()
+                                          : question.options,
+                                    })
+                                  )
+                                ) : (
+                                  <p className="text-sm text-red-600">Invalid question group data.</p>
+                                )}
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <p className="text-sm text-red-600">Questions are not available.</p>
+                        )}
+                      </div>
+
+                      {activeSlideIndex === tests.length - 1 && (
+                        <Button
+                          onClick={handleSubmit}
+                          disabled={answeredQuestionsAllSlides === 0 || submitReadingMutation.isPending}
+                          className="w-full"
+                        >
+                          <Send className="h-4 w-4 mr-2" />
+                          {submitReadingMutation.isPending ? "Submitting..." : "Submit All Answers"}
+                        </Button>
+                      )}
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+              </Tabs>
+            )}
 
             {/* Split View Mode */}
             {viewMode === "split" && (
@@ -2317,11 +2392,11 @@ export default function ReadingPractice() {
                       <CardTitle className="flex items-center gap-2 text-base">
                         <BookOpen className="h-4 w-4" />
                         {passage.title}
-              </CardTitle>
+                      </CardTitle>
                       <CardDescription className="text-xs">
                         Select text to highlight, translate, or add to vocabulary.
                       </CardDescription>
-            </CardHeader>
+                    </CardHeader>
                     <CardContent className="p-4">
                       <div className="p-4 rounded-lg text-sm leading-relaxed">
                         <TextHighlighter
@@ -2351,7 +2426,7 @@ export default function ReadingPractice() {
                             <div className="pb-2">
                               <h3 className="text-sm font-semibold">{questionGroup.title}</h3>
                               <p className="text-xs text-gray-600 dark:text-gray-300">{questionGroup.instructions}</p>
-                              
+
                               {/* Add explanation for TRUE/FALSE/NOT GIVEN question types */}
                               {questionGroup.type === 'true-false-not-given' && (
                                 <div className="mt-2 p-2 border-l-4 border-blue-500 rounded">
@@ -2379,59 +2454,59 @@ export default function ReadingPractice() {
                               {questionGroup.type === "matching-headings" ? (
                                 // Render matching-headings at GROUP level (split view)
                                 <div className="space-y-3">
-                                    {questionGroup.questions?.map((question: any) => {
-                                      const selectedAnswer = answers[question.id] || "";
-                                      const usedOptions = Object.entries(answers)
-                                        .filter(([qId, _]) => Number(qId) !== question.id)
-                                        .map(([_, ans]) => ans);
-                                      
-                                      return (
-                                        <div key={question.id} className="space-y-1.5">
-                                          <TextHighlighter
-                                            content={String(question.questionText || "")}
-                                            passageTitle={`${passage?.title || "Reading"} - Q${question.id}`}
-                                            highlights={getQHighlights(question.id)}
-                                            onHighlightsChange={setQHighlightsFor(question.id)}
-                                            showLabels={false}
-                                          />
-                                          <RadioGroup
-                                            value={selectedAnswer}
-                                            onValueChange={(value) => handleAnswerChange(question.id, value)}
-                                            className="space-y-1"
-                                          >
-                                            {question.options?.map((option: any, index: number) => {
-                                              const optionValue = typeof option === 'object' ? option.letter : option;
-                                              const optionText = typeof option === 'object' ? option.text : option;
-                                              const isUsedElsewhere = usedOptions.includes(optionValue);
-                                              return (
-                                                <div 
-                                                  key={index} 
-                                                  className="flex items-center space-x-2 cursor-pointer"
-                                                  onClick={() => {
-                                                    if (selectedAnswer === optionValue) {
-                                                      handleAnswerChange(question.id, "");
-                                                    }
-                                                  }}
+                                  {questionGroup.questions?.map((question: any) => {
+                                    const selectedAnswer = answers[question.id] || "";
+                                    const usedOptions = Object.entries(answers)
+                                      .filter(([qId, _]) => Number(qId) !== question.id)
+                                      .map(([_, ans]) => ans);
+
+                                    return (
+                                      <div key={question.id} className="space-y-1.5">
+                                        <TextHighlighter
+                                          content={String(question.questionText || "")}
+                                          passageTitle={`${passage?.title || "Reading"} - Q${question.id}`}
+                                          highlights={getQHighlights(question.id)}
+                                          onHighlightsChange={setQHighlightsFor(question.id)}
+                                          showLabels={false}
+                                        />
+                                        <RadioGroup
+                                          value={selectedAnswer}
+                                          onValueChange={(value) => handleAnswerChange(question.id, value)}
+                                          className="space-y-1"
+                                        >
+                                          {question.options?.map((option: any, index: number) => {
+                                            const optionValue = typeof option === 'object' ? option.letter : option;
+                                            const optionText = typeof option === 'object' ? option.text : option;
+                                            const isUsedElsewhere = usedOptions.includes(optionValue);
+                                            return (
+                                              <div
+                                                key={index}
+                                                className="flex items-center space-x-2 cursor-pointer"
+                                                onClick={() => {
+                                                  if (selectedAnswer === optionValue) {
+                                                    handleAnswerChange(question.id, "");
+                                                  }
+                                                }}
+                                              >
+                                                <RadioGroupItem
+                                                  value={optionValue}
+                                                  id={`split-q${question.id}-${index}`}
+                                                  className="h-3 w-3"
+                                                  disabled={isUsedElsewhere}
+                                                />
+                                                <Label
+                                                  htmlFor={`split-q${question.id}-${index}`}
+                                                  className={`text-xs leading-tight ${isUsedElsewhere ? 'text-red-500 line-through opacity-50' : ''}`}
                                                 >
-                                                  <RadioGroupItem 
-                                                    value={optionValue} 
-                                                    id={`split-q${question.id}-${index}`}
-                                                    className="h-3 w-3"
-                                                    disabled={isUsedElsewhere}
-                                                  />
-                                                  <Label 
-                                                    htmlFor={`split-q${question.id}-${index}`} 
-                                                    className={`text-xs leading-tight ${isUsedElsewhere ? 'text-red-500 line-through opacity-50' : ''}`}
-                                                  >
-                                                    {toRomanNumeral(index + 1)}. {optionText}
-                                                  </Label>
-                                                </div>
-                                              );
-                                            })}
-                                          </RadioGroup>
-                                        </div>
-                                      );
-                                    })}
+                                                  {toRomanNumeral(index + 1)}. {optionText}
+                                                </Label>
+                                              </div>
+                                            );
+                                          })}
+                                        </RadioGroup>
+                                      </div>
+                                    );
+                                  })}
                                 </div>
                               ) : questionGroup.type === "matching-features" ? (
                                 <div className="space-y-4">
@@ -2445,7 +2520,7 @@ export default function ReadingPractice() {
                                       ))}
                                     </div>
                                   </div>
-                                  
+
                                   <div className="space-y-3">
                                     {questionGroup.questions?.map((question: any) => (
                                       <div key={question.id} className="space-y-1.5">
@@ -2479,7 +2554,7 @@ export default function ReadingPractice() {
                                       ))}
                                     </div>
                                   </div>
-                                  
+
                                   <div className="space-y-3">
                                     {questionGroup.questions?.map((question: any) => (
                                       <div key={question.id} className="space-y-1.5">
@@ -2496,8 +2571,8 @@ export default function ReadingPractice() {
                                           className="inline-flex flex-wrap items-center gap-2"
                                         >
                                           {questionGroup.sentence_endings?.map((ending: any) => (
-                                            <div 
-                                              key={ending.letter} 
+                                            <div
+                                              key={ending.letter}
                                               className="flex items-center space-x-2 cursor-pointer"
                                               onClick={() => {
                                                 if (answers[question.id] === ending.letter) {
@@ -2571,7 +2646,7 @@ export default function ReadingPractice() {
                                       </div>
                                     </div>
                                   )}
-                                  
+
                                   {/* Questions */}
                                   <div className="space-y-2">
                                     {questionGroup.questions?.map((q: any) => (
@@ -2616,7 +2691,7 @@ export default function ReadingPractice() {
                                       ))}
                                     </div>
                                   </div>
-                                  
+
                                   {/* Statements to match */}
                                   <div className="space-y-3">
                                     {questionGroup.questions?.map((question: any) => (
@@ -2638,13 +2713,13 @@ export default function ReadingPractice() {
                                   const questionType = questionGroup.type;
                                   const questionOptions = questionType === 'true-false-not-given'
                                     ? (() => {
-                                        const firstCorrectAnswer = questionGroup.questions?.[0]?.correctAnswer;
-                                        if (firstCorrectAnswer === 'TRUE' || firstCorrectAnswer === 'FALSE') {
-                                          return ["TRUE", "FALSE", "NOT GIVEN"];
-                                        } else {
-                                          return ["YES", "NO", "NOT GIVEN"];
-                                        }
-                                      })()
+                                      const firstCorrectAnswer = questionGroup.questions?.[0]?.correctAnswer;
+                                      if (firstCorrectAnswer === 'TRUE' || firstCorrectAnswer === 'FALSE') {
+                                        return ["TRUE", "FALSE", "NOT GIVEN"];
+                                      } else {
+                                        return ["YES", "NO", "NOT GIVEN"];
+                                      }
+                                    })()
                                     : question.options;
 
                                   // Render compact question based on type
@@ -2665,8 +2740,8 @@ export default function ReadingPractice() {
                                             className="space-y-1"
                                           >
                                             {questionOptions?.map((option: string, index: number) => (
-                                              <div 
-                                                key={index} 
+                                              <div
+                                                key={index}
                                                 className="flex items-center space-x-2 cursor-pointer"
                                                 onClick={() => {
                                                   if (answers[question.id] === option) {
@@ -2700,8 +2775,8 @@ export default function ReadingPractice() {
                                             className="space-y-1"
                                           >
                                             {questionOptions?.map((option: string, index: number) => (
-                                              <div 
-                                                key={index} 
+                                              <div
+                                                key={index}
                                                 className="flex items-center space-x-2 cursor-pointer"
                                                 onClick={() => {
                                                   if (answers[question.id] === option) {
@@ -2735,8 +2810,8 @@ export default function ReadingPractice() {
                                             className="inline-flex flex-wrap items-center gap-2"
                                           >
                                             {questionOptions?.map((option: string) => (
-                                              <div 
-                                                key={option} 
+                                              <div
+                                                key={option}
                                                 className="flex items-center space-x-1.5 cursor-pointer"
                                                 onClick={() => {
                                                   if (answers[question.id] === option) {
@@ -2845,9 +2920,8 @@ export default function ReadingPractice() {
                                                       aria-label={`Gap ${question.id}`}
                                                       type="text"
                                                       disabled={!!result}
-                                                      className={`px-1 border-b bg-transparent w-36 focus:outline-none ${
-                                                        exceeded || hasInvalidNumber ? 'border-red-500' : 'border-gray-400 focus:border-gray-700'
-                                                      }`}
+                                                      className={`px-1 border-b bg-transparent w-36 focus:outline-none ${exceeded || hasInvalidNumber ? 'border-red-500' : 'border-gray-400 focus:border-gray-700'
+                                                        }`}
                                                       value={value}
                                                       onChange={(e) => handleAnswerChange(question.id, e.target.value)}
                                                     />
@@ -2874,8 +2948,8 @@ export default function ReadingPractice() {
                                               className="inline-flex flex-wrap items-center gap-2"
                                             >
                                               {Object.entries(question.options).map(([key, value]: [string, any]) => (
-                                                <div 
-                                                  key={key} 
+                                                <div
+                                                  key={key}
                                                   className="flex items-center space-x-2 cursor-pointer"
                                                   onClick={() => {
                                                     if (answers[question.id] === key) {
@@ -2970,32 +3044,32 @@ export default function ReadingPractice() {
                 </h4>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
                   Green = Correct ✓ | Red = Incorrect ✗
-                    </p>
-                  </div>
+                </p>
+              </div>
               <div className="space-y-2 max-h-[600px] overflow-y-auto pr-2">
-                {tests.flatMap((passage) => 
+                {tests.flatMap((passage) =>
                   Array.isArray(passage?.questions)
                     ? passage.questions.flatMap((group: any) =>
-                        Array.isArray(group?.questions)
-                          ? group.questions.map((q: any) => (
-                              <QuestionResult
-                                key={q.id}
-                                question={q}
-                                answer={answers[q.id]}
-                                correctAnswer={result.correctAnswers[q.id]}
-                                explanation={result.explanations[q.id]}
-                                aiFeedback={aiFeedback[q.id]}
-                                onGetAIFeedback={() => handleGetAIFeedback(
-                                  q.id,
-                                  q,
-                                  answers[q.id],
-                                  result.correctAnswers[q.id]
-                                )}
-                                isLoadingFeedback={loadingFeedback.has(q.id)}
-                              />
-                            ))
-                          : []
-                      )
+                      Array.isArray(group?.questions)
+                        ? group.questions.map((q: any) => (
+                          <QuestionResult
+                            key={q.id}
+                            question={q}
+                            answer={answers[q.id]}
+                            correctAnswer={result.correctAnswers[q.id]}
+                            explanation={result.explanations[q.id]}
+                            aiFeedback={aiFeedback[q.id]}
+                            onGetAIFeedback={() => handleGetAIFeedback(
+                              q.id,
+                              q,
+                              answers[q.id],
+                              result.correctAnswers[q.id]
+                            )}
+                            isLoadingFeedback={loadingFeedback.has(q.id)}
+                          />
+                        ))
+                        : []
+                    )
                     : []
                 )}
               </div>
