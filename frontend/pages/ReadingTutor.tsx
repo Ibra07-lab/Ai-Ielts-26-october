@@ -273,172 +273,192 @@ export default function ReadingTutor() {
 	] as const;
 
 	return (
-		<div className="min-h-[calc(100vh-96px)] bg-[radial-gradient(ellipse_at_top,rgba(240,245,255,0.7),transparent_60%)]">
-			<div className="mx-auto max-w-5xl px-4 pt-6 pb-0">
-				{/* Main column */}
-				<div className="relative">
-					<ScrollArea
-						ref={listRef as any}
-						className="rounded-xl border bg-white/70 dark:bg-gray-900/40 dark:border-gray-800 backdrop-blur p-4 pb-28 h-[calc(100vh-160px)] reading-scroll"
-					>
-						<div className="space-y-1">
-							{messages.map((m) => (
-								<div
-									key={m.id}
-									className={cn("flex", m.role === "user" ? "justify-end" : "justify-start")}
-								>
-									<div
-										className={cn(
-											"flex items-start gap-1 max-w-[80%]",
-											m.role === "user" ? "flex-row-reverse" : "flex-row"
-										)}
-									>
-										<div
-											className={cn(
-												"h-7 w-7 mt-1 rounded-full flex items-center justify-center text-white",
-												m.role === "user"
-													? "bg-gradient-to-br from-blue-500 to-blue-600"
-													: "bg-gradient-to-br from-purple-400 to-purple-500"
-											)}
-										>
-											{m.role === "user" ? (
-												<UserIcon className="h-4 w-4" />
-											) : (
-												<Bot className="h-4 w-4" />
-											)}
-										</div>
-										<div
-											className={cn(
-												"rounded-lg px-3 py-2 text-sm leading-4",
-												m.role === "user"
-													? "bg-blue-600 text-white"
-													: "bg-muted/50 dark:bg-gray-800/70 border dark:border-gray-700 text-foreground"
-											)}
-										>
-											{(() => {
-												if (m.role === "assistant") {
-													const parsed = parseStructuredMatchingHeadings(m.content);
-													if (parsed) {
-														return <StructuredAiMessage data={parsed} />;
-													}
-												}
-												return (
-													<div className="chat-content whitespace-pre-wrap break-words">
-														<ReactMarkdown
-															components={{
-																p: ({ children }) => <p className="my-1">{children}</p>,
-																strong: ({ children }) => (
-																	<strong className="text-amber-600 dark:text-amber-300 font-semibold">
-																		{children}
-																	</strong>
-																),
-																ol: ({ children }) => {
-																	const renderListAsCards = false;
-																	return renderListAsCards ? (
-																		<ol className="list-cards">{children}</ol>
-																	) : (
-																		<ol>{children}</ol>
-																	);
-																},
-															}}
-														>
-															{m.role === "assistant"
-																? formatAssistantContent(m.content)
-																: m.content}
-														</ReactMarkdown>
-													</div>
-												);
-											})()}
-										</div>
-									</div>
-								</div>
-							))}
-							{isLoading && (
-								<div className="flex gap-1 items-start">
-									<div className="h-7 w-7 mt-1 rounded-full flex items-center justify-center text-white bg-gradient-to-br from-purple-400 to-purple-500">
-										<Bot className="h-4 w-4" />
-									</div>
-									<div
-										className={cn(
-											"max-w-[80%] text-sm leading-4",
-											"bg-muted/50 dark:bg-gray-800/70 border rounded-lg px-3 py-2 dark:border-gray-700"
-										)}
-									>
-										<div className="flex items-center gap-1" aria-live="polite">
-											<span className="sr-only">Thinking…</span>
-											<div className="w-2 h-2 rounded-full bg-primary/70 animate-bounce" />
-											<div className="w-2 h-2 rounded-full bg-primary/70 animate-bounce [animation-delay:150ms]" />
-											<div className="w-2 h-2 rounded-full bg-primary/70 animate-bounce [animation-delay:300ms]" />
-										</div>
-									</div>
-								</div>
-							)}
-							{messages.length === 0 && (
-								<div className="py-4">
-									<p className="text-sm text-muted-foreground text-center">
-										Ask anything about IELTS Reading strategies, question types, or paste a paragraph to analyze.
-									</p>
-									<div className="mt-4 grid gap-3 sm:grid-cols-3">
-										{quickStarts.map(({ label, text, Icon }) => (
-											<Button
-												key={label}
-												variant="outline"
-												className="justify-start h-auto py-3 px-3 text-left"
-												onClick={() => {
-													setInput(text);
-													setTimeout(() => inputRef.current?.focus(), 0);
-												}}
-											>
-												<Icon className="h-4 w-4 mr-2 text-primary" />
-												<div>
-													<div className="text-sm font-medium">{label}</div>
-													<div className="text-xs text-muted-foreground">{text}</div>
-												</div>
-											</Button>
-										))}
-									</div>
-								</div>
-							)}
-						</div>
-					</ScrollArea>
-
-					{/* Fixed Composer */}
-					<div className="fixed inset-x-0 bottom-0 z-20 bg-white/90 dark:bg-gray-900/80 border-t">
-						<div className="mx-auto max-w-5xl px-4 py-3 relative">
-							<div className="relative">
-								<Textarea
-									ref={inputRef}
-									value={input}
-									onChange={(e) => setInput(e.target.value)}
-									placeholder="Ask me anything..."
-									className="pr-14 min-h-14 max-h-40 resize-none border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/60 focus-visible:ring-1 focus-visible:ring-blue-600"
-									onKeyDown={(e) => {
-										if (e.key === "Enter" && !e.shiftKey) {
-											e.preventDefault();
-											send();
-										}
-									}}
-								/>
-								<Button
-									onClick={send}
-									disabled={!input.trim()}
-									size="sm"
-									aria-label="Send message"
-									className={cn(
-										"absolute right-2 bottom-2 h-9 w-9 rounded-full p-0 transition-colors",
-										hasText
-											? "bg-blue-600 hover:bg-blue-700 text-white"
-											: "bg-gray-200 dark:bg-gray-700 text-gray-500"
-									)}
-								>
-									<Send className="h-4 w-4" />
-								</Button>
-							</div>
-							<div className="mt-2 text-[11px] text-muted-foreground">
-								This tutor may be inaccurate. Please verify important information.
-							</div>
+		<div className="h-full flex flex-col bg-slate-50 dark:bg-slate-950 relative overflow-hidden">
+			{/* Header */}
+			<div className="flex-shrink-0 px-6 py-4 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-b border-slate-100 dark:border-slate-800 flex items-center justify-between z-20">
+				<div className="flex items-center gap-3.5">
+					<div className="relative">
+						<div className="absolute inset-0 bg-blue-500 blur-lg opacity-20 rounded-full"></div>
+						<div className="relative p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl shadow-lg shadow-blue-500/25 ring-1 ring-white/20">
+							<Sparkles className="h-4 w-4 text-white" />
 						</div>
 					</div>
+					<div>
+						<h3 className="font-bold text-slate-900 dark:text-slate-100 tracking-tight text-base">Reading Mentor</h3>
+						<div className="flex items-center gap-1.5">
+							<span className="relative flex h-2 w-2">
+								<span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+								<span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+							</span>
+							<p className="text-xs font-medium text-slate-500 dark:text-slate-400">Online & Ready</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{/* Chat Area */}
+			<div className="flex-1 overflow-hidden relative">
+				<ScrollArea
+					ref={listRef as any}
+					className="h-full p-4 sm:p-6"
+				>
+					<div className="space-y-6 pb-4">
+						{messages.map((m) => (
+							<div
+								key={m.id}
+								className={cn(
+									"flex gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500",
+									m.role === "user" ? "justify-end" : "justify-start"
+								)}
+							>
+								{/* Avatar for Assistant */}
+								{m.role === "assistant" && (
+									<div className="w-9 h-9 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
+										<div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full p-1.5">
+											<Bot className="h-4 w-4 text-white" />
+										</div>
+									</div>
+								)}
+
+								<div
+									className={cn(
+										"flex flex-col max-w-[85%] sm:max-w-[75%]",
+										m.role === "user" ? "items-end" : "items-start"
+									)}
+								>
+									<div
+										className={cn(
+											"px-5 py-4 rounded-2xl shadow-sm text-[15px] leading-relaxed",
+											m.role === "user"
+												? "bg-blue-600 text-white rounded-tr-sm shadow-blue-500/10"
+												: "bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-slate-800 dark:text-slate-200 rounded-tl-sm shadow-sm"
+										)}
+									>
+										{(() => {
+											if (m.role === "assistant") {
+												const parsed = parseStructuredMatchingHeadings(m.content);
+												if (parsed) {
+													return <StructuredAiMessage data={parsed} />;
+												}
+											}
+											return (
+												<div className="chat-content whitespace-pre-wrap break-words">
+													<ReactMarkdown
+														components={{
+															p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+															strong: ({ children }) => (
+																<strong className={cn("font-semibold", m.role === "user" ? "text-white" : "text-indigo-600 dark:text-indigo-400")}>
+																	{children}
+																</strong>
+															),
+															ul: ({ children }) => <ul className="list-disc pl-4 mb-3 space-y-1.5">{children}</ul>,
+															ol: ({ children }) => <ol className="list-decimal pl-4 mb-3 space-y-1.5">{children}</ol>,
+															li: ({ children }) => <li className="pl-1">{children}</li>,
+														}}
+													>
+														{m.role === "assistant"
+															? formatAssistantContent(m.content)
+															: m.content}
+													</ReactMarkdown>
+												</div>
+											);
+										})()}
+									</div>
+								</div>
+
+								{/* Avatar for User */}
+								{m.role === "user" && (
+									<div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0 shadow-md shadow-blue-500/20 mt-1 ring-2 ring-white dark:ring-slate-900">
+										<UserIcon className="h-4 w-4 text-white" />
+									</div>
+								)}
+							</div>
+						))}
+
+						{isLoading && (
+							<div className="flex gap-4 justify-start animate-in fade-in duration-300">
+								<div className="w-9 h-9 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center flex-shrink-0 shadow-sm">
+									<div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full p-1.5">
+										<Bot className="h-4 w-4 text-white" />
+									</div>
+								</div>
+								<div className="bg-white dark:bg-slate-900 px-5 py-4 rounded-2xl rounded-tl-sm shadow-sm border border-slate-100 dark:border-slate-800">
+									<div className="flex space-x-1.5 items-center h-full">
+										<div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce"></div>
+										<div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce delay-75"></div>
+										<div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce delay-150"></div>
+									</div>
+								</div>
+							</div>
+						)}
+
+						{messages.length === 0 && (
+							<div className="py-8 px-4">
+								<div className="text-center mb-8">
+									<h2 className="text-xl font-semibold text-slate-800 dark:text-slate-200 mb-2">Welcome to IELTS Reading Mentor</h2>
+									<p className="text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+										Ask anything about IELTS Reading strategies, question types, or paste a paragraph to analyze.
+									</p>
+								</div>
+								<div className="grid gap-3 sm:grid-cols-3 max-w-3xl mx-auto">
+									{quickStarts.map(({ label, text, Icon }) => (
+										<Button
+											key={label}
+											variant="outline"
+											className="justify-start h-auto py-4 px-4 text-left bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-blue-500 dark:hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 group"
+											onClick={() => {
+												setInput(text);
+												setTimeout(() => inputRef.current?.focus(), 0);
+											}}
+										>
+											<div className="bg-blue-100 dark:bg-blue-900/50 p-2 rounded-lg mr-3 group-hover:bg-blue-200 dark:group-hover:bg-blue-800 transition-colors">
+												<Icon className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+											</div>
+											<div>
+												<div className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-0.5">{label}</div>
+												<div className="text-xs text-slate-500 dark:text-slate-400 line-clamp-1">{text}</div>
+											</div>
+										</Button>
+									))}
+								</div>
+							</div>
+						)}
+					</div>
+				</ScrollArea>
+			</div>
+
+			{/* Input Area */}
+			<div className="p-4 sm:p-5 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
+				<div className="relative flex items-end gap-2 bg-slate-50 dark:bg-slate-950 p-2 rounded-[24px] border border-slate-200 dark:border-slate-800 focus-within:ring-2 focus-within:ring-blue-500/10 focus-within:border-blue-500/50 transition-all duration-300 shadow-sm">
+					<Textarea
+						ref={inputRef}
+						value={input}
+						onChange={(e) => setInput(e.target.value)}
+						placeholder="Ask me anything..."
+						className="min-h-[48px] max-h-[150px] border-none bg-transparent resize-none focus-visible:ring-0 p-3.5 text-[15px] shadow-none placeholder:text-slate-400"
+						onKeyDown={(e) => {
+							if (e.key === "Enter" && !e.shiftKey) {
+								e.preventDefault();
+								send();
+							}
+						}}
+					/>
+					<Button
+						onClick={send}
+						disabled={!input.trim()}
+						size="icon"
+						className={cn(
+							"mb-1 mr-1 h-10 w-10 rounded-full transition-all duration-300",
+							hasText
+								? "bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/25 transform hover:scale-105 active:scale-95"
+								: "bg-slate-200 text-slate-400 dark:bg-slate-800 dark:text-slate-600"
+						)}
+					>
+						<Send className="h-4 w-4 ml-0.5" />
+					</Button>
+				</div>
+				<div className="mt-3 text-[10px] text-center text-slate-400 font-medium opacity-60">
+					This tutor may be inaccurate. Please verify important information.
 				</div>
 			</div>
 		</div>

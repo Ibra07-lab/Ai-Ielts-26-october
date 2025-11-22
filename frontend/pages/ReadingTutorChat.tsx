@@ -6,33 +6,50 @@ export default function ReadingTutorChatPage() {
   const [droppedQuestionId, setDroppedQuestionId] = useState<string | null>(null);
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6 pb-8">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-          <MessageSquare className="h-8 w-8 text-blue-600" />
-          AI Reading Tutor
-        </h1>
-        <p className="text-gray-600 dark:text-gray-300">
-          Get personalized help with IELTS Reading questions and strategies
-        </p>
-      </div>
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 relative overflow-hidden">
+      {/* Background Gradients */}
+      <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-blue-50 to-transparent dark:from-blue-950/20 dark:to-transparent pointer-events-none" />
+      <div className="absolute -top-20 -right-20 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-40 -left-20 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Chat Interface */}
-      <div className="h-[calc(100vh-220px)] min-h-[700px]">
-        <ReadingTutorChat droppedQuestionId={droppedQuestionId} />
-      </div>
+      <div className="max-w-6xl mx-auto px-4 py-8 relative z-10 h-[calc(100vh-4rem)] flex flex-col gap-6">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold text-slate-900 dark:text-white flex items-center gap-3 tracking-tight">
+              <div className="p-2 bg-blue-600 rounded-xl shadow-lg shadow-blue-600/20">
+                <MessageSquare className="h-6 w-6 text-white" />
+              </div>
+              AI Reading Mentor
+            </h1>
+            <p className="text-slate-500 dark:text-slate-400 mt-2 text-lg">
+              Your personal guide to mastering IELTS Reading
+            </p>
+          </div>
 
-      {/* Instructions */}
-      <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
-        <h3 className="font-semibold mb-2 text-gray-900 dark:text-white">How to use the tutor:</h3>
-        <ul className="space-y-1 text-sm text-gray-600 dark:text-gray-300">
-          <li>• Ask questions about IELTS Reading strategies and techniques</li>
-          <li>• Request explanations for why certain answers are correct or incorrect</li>
-          <li>• Ask for hints if you're stuck on a question</li>
-          <li>• Discuss time management and question-type specific approaches</li>
-          <li>• Get motivational support and study tips</li>
-        </ul>
+          {/* Quick Stats or Status could go here */}
+        </div>
+
+        {/* Main Chat Interface */}
+        <div className="flex-1 min-h-0">
+          <ReadingTutorChat droppedQuestionId={droppedQuestionId} />
+        </div>
+
+        {/* Footer / Tips */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-slate-500 dark:text-slate-400">
+          <div className="flex items-center gap-2 px-4 py-2 bg-white/50 dark:bg-slate-900/50 rounded-lg backdrop-blur-sm border border-slate-200/50 dark:border-slate-800/50">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+            Instant feedback on answers
+          </div>
+          <div className="flex items-center gap-2 px-4 py-2 bg-white/50 dark:bg-slate-900/50 rounded-lg backdrop-blur-sm border border-slate-200/50 dark:border-slate-800/50">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+            Strategy explanations
+          </div>
+          <div className="flex items-center gap-2 px-4 py-2 bg-white/50 dark:bg-slate-900/50 rounded-lg backdrop-blur-sm border border-slate-200/50 dark:border-slate-800/50">
+            <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+            24/7 Practice partner
+          </div>
+        </div>
       </div>
     </div>
   );

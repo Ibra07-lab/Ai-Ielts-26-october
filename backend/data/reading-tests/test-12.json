@@ -402,8 +402,39 @@
                             "justification": "Paragraph 4 states that 'mistaken eyewitness identification contributed to approximately 69 percent of the more than 375 wrongful convictions overturned through DNA testing as of 2022.' The summary paraphrases 'overturned through DNA testing' as 'later overturned through DNA evidence' and maintains the percentage figure as a gap.",
                             "evidenceQuote": "The Innocence Project...reports that mistaken eyewitness identification contributed to approximately 69 percent of the more than 375 wrongful convictions overturned through DNA testing as of 2022"
                           }
-                        ]
-                      }
+   ]
+  }
+ ]
+},
+{
+  "id": 3,
+  "title": "The Evolution of Documentary Filmmaking: From Objectivity to Advocacy",
+  "level": "academic",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "P1",
+      "text": "When John Grierson coined the term 'documentary' in 1926, he envisioned films that could capture reality with minimal artistic intervention. For several decades following this period, documentary filmmakers pursued an ideal of objectivity, attempting to record events without influencing them. This approach, often described as 'fly-on-the-wall' filmmaking, dominated the genre from the 1960s through the early 1980s. However, the landscape of documentary filmmaking has undergone a dramatic transformation over the past four decades. Today, approximately 68 percent of documentary filmmakers describe their work as having an explicit advocacy purpose, according to a 2021 survey conducted by the International Documentary Association. This shift from detached observation to engaged storytelling represents one of the most significant evolutions in the medium's history."
+    },
+    {
+      "id": "P2",
+      "text": "The direct cinema movement, which emerged in North America during the early 1960s, epitomized the objective approach to documentary filmmaking. Filmmakers like Frederick Wiseman and the Maysles brothers developed techniques that minimized their presence during filming, using lightweight cameras and avoiding interviews or narration. The goal was to observe events as they unfolded naturally, without directorial interference. This methodology was mirrored in France by the cinéma vérité movement, though French filmmakers were somewhat more willing to acknowledge the camera's influence on subjects. Research by Professor David Hutchings at Northwestern University found that between 1962 and 1979, roughly 73 percent of documentaries shown at major film festivals employed these observational techniques. The approach rested on the philosophical assumption that truth could be captured through patient, unobtrusive observation. Films like 'Primary' (1960), which followed John F. Kennedy and Hubert Humphrey during the Wisconsin presidential primary, demonstrated the power of this approach. Audiences responded enthusiastically to the sense of authenticity and unmediated access these films provided."
+    },
+    {
+      "id": "P3",
+      "text": "The 1980s and 1990s witnessed a fundamental shift as filmmakers increasingly embraced advocacy as a legitimate documentary purpose. Rather than simply observing social problems, directors began creating films explicitly designed to promote change. Environmental documentaries pioneered this transformation, with films like 'The Thin Blue Line' (1988) not only exploring issues but actively arguing for specific conclusions—in this case, the innocence of a man on death row. By the early 2000s, this advocacy approach had become mainstream. Michael Moore's 'Bowling for Columbine' (2002) and 'Fahrenheit 9/11' (2004) achieved unprecedented commercial success, with the latter earning over $220 million worldwide. Al Gore's 'An Inconvenient Truth' (2006) demonstrated that advocacy documentaries could influence public policy; studies showed that viewers were 17 percent more likely to take personal action on climate change after watching the film. According to Dr. Jennifer Walsh's 2019 analysis published in Documentary Studies Review, approximately 61 percent of documentaries produced between 2005 and 2015 contained explicit advocacy elements, compared to just 23 percent in the previous decade. This represented a fundamental reconceptualization of the documentary's social role."
+    },
+    {
+      "id": "P4",
+      "text": "Alongside advocacy, documentary filmmaking has increasingly embraced subjective, personal narratives in which the filmmaker becomes a central character. This confessional approach, which emerged prominently in the late 1990s, challenges traditional notions of journalistic distance. Films like 'Tarnation' (2003) and 'Stories We Tell' (2012) blur the boundaries between documentary and autobiography, with directors investigating their own family histories and personal experiences. Morgan Spurlock's 'Super Size Me' (2004) exemplified this trend by making the filmmaker's body the experimental subject. Research conducted between 2016 and 2020 by the Documentary Media Centre in Australia revealed that first-person documentaries generated 34 percent higher audience engagement scores than traditional observational films, particularly among viewers aged 18 to 35. Critics argue that this subjective turn undermines documentary's truth-telling function, while supporters contend that acknowledging the filmmaker's perspective actually increases honesty. As Professor Michael Chen notes in his 2018 book 'Documentary Voices,' personal storytelling can create emotional connections that make complex issues more accessible, though it requires viewers to critically assess the director's potential biases."
+    },
+    {
+      "id": "P5",
+      "text": "The contemporary documentary landscape reflects this evolution, with streaming platforms like Netflix and Amazon Prime investing heavily in advocacy and personal documentaries. Data from 2022 indicates that documentary viewership on streaming services increased by 47 percent compared to 2017, with socially conscious content performing particularly well. This commercial success has validated the shift away from pure objectivity, though debates continue about documentary ethics. Some film schools now teach that the objective ideal was always illusory—that editorial choices about framing, editing, and subject selection inevitably reflect perspective. Looking forward, emerging technologies like virtual reality may create new forms of documentary immersion. What remains constant is the documentary's fundamental purpose: to illuminate aspects of reality, whether through detached observation or passionate advocacy, that deserve public attention and understanding."
+    }
+  ],
+"questions": [
+                    
                     
 
 
@@ -425,4 +456,5 @@
       ]
      }
     ]
-   }
+  }
+  
