@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { 
-  Home, 
-  TrendingUp, 
-  Settings, 
+import {
+  Home,
+  TrendingUp,
+  Settings,
   MessageCircle,
   Menu,
   X,
@@ -64,11 +64,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   key={item.name}
                   to={item.href}
                   onClick={() => setSidebarOpen(false)}
-                  className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors ${
-                    isActive
+                  className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors ${isActive
                       ? "bg-sky-100 text-sky-900 dark:bg-sky-900 dark:text-sky-100"
                       : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-                  }`}
+                    }`}
                 >
                   <Icon className="mr-3 h-5 w-5 flex-shrink-0" />
                   {item.name}
@@ -100,11 +99,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors ${
-                    isActive
+                  className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors ${isActive
                       ? "bg-sky-100 text-sky-900 dark:bg-sky-900 dark:text-sky-100"
                       : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-                  }`}
+                    }`}
                 >
                   <Icon className="mr-3 h-5 w-5 flex-shrink-0" />
                   {item.name}
@@ -139,7 +137,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               >
                 IELTS AI
               </Button>
-              
+
               <Button
                 variant="outline"
                 size="sm"
@@ -150,7 +148,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <GraduationCap className="h-4 w-4 mr-2" />
                 AI Teacher
               </Button>
-              
+
               <Button
                 variant="outline"
                 size="sm"
@@ -161,7 +159,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <TrendingUp className="h-4 w-4 mr-2" />
                 Progress
               </Button>
-              
+
               <Button
                 variant="outline"
                 size="sm"
@@ -175,7 +173,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   <Sun className="h-4 w-4" />
                 )}
               </Button>
-              
+
               {user && (
                 <div className="text-sm text-gray-600 dark:text-gray-300 ml-auto">
                   Welcome back, <span className="font-medium">{user.name}</span>
@@ -186,8 +184,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
 
         {/* Page content */}
-        <main className="py-6">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <main className={location.pathname === '/tutor' || location.pathname === '/reading/tutor-chat' ? "h-[calc(100vh-4rem)]" : "py-6"}>
+          <div className={location.pathname === '/tutor' || location.pathname === '/reading/tutor-chat' ? "h-full" : "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"}>
             {children}
           </div>
         </main>

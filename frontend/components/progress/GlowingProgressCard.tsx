@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Sparkles, Wand2, CheckCircle, Circle, CircleDot, Plus } from "lucide-react";
+import { Sparkles, Wand2, CheckCircle, Circle, CircleDot, Plus, Calendar, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
@@ -42,7 +42,7 @@ function formatDueShort(iso?: string) {
   if (!iso) return "Set due date";
   try {
     const d = new Date(iso);
-    return d.toLocaleDateString(undefined, { month: "long", day: "numeric" });
+    return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
   } catch {
     return "Set due date";
   }
@@ -61,12 +61,12 @@ function toDateTimeLocal(iso?: string) {
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-  reading: "bg-green-500 neon-fill--reading",
-  speaking: "bg-red-500 neon-fill--speaking",
-  writing: "bg-blue-500 neon-fill--writing",
-  listening: "bg-purple-500 neon-fill--listening",
-  vocabulary: "bg-amber-500 neon-fill--amber",
-  grammar: "bg-slate-500 neon-fill--slate",
+  reading: "bg-gradient-to-r from-emerald-400 to-cyan-500 shadow-[0_0_15px_rgba(52,211,153,0.6)]",
+  speaking: "bg-gradient-to-r from-rose-400 to-orange-500 shadow-[0_0_15px_rgba(251,113,133,0.6)]",
+  writing: "bg-gradient-to-r from-blue-400 to-indigo-500 shadow-[0_0_15px_rgba(96,165,250,0.6)]",
+  listening: "bg-gradient-to-r from-violet-400 to-fuchsia-500 shadow-[0_0_15px_rgba(167,139,250,0.6)]",
+  vocabulary: "bg-gradient-to-r from-amber-400 to-orange-500 shadow-[0_0_15px_rgba(251,191,36,0.6)]",
+  grammar: "bg-gradient-to-r from-slate-400 to-gray-500 shadow-[0_0_15px_rgba(148,163,184,0.6)]",
 };
 
 function computeCategorySegments(
@@ -140,7 +140,7 @@ export default function GlowingProgressCard({
     if (!planTypeProp) {
       try {
         localStorage.setItem(PLAN_LS_KEY, planType);
-      } catch {}
+      } catch { }
     }
   }, [planType, planTypeProp]);
   useEffect(() => {
@@ -148,7 +148,7 @@ export default function GlowingProgressCard({
       try {
         if (dueISO) localStorage.setItem(DUE_LS_KEY, dueISO);
         else localStorage.removeItem(DUE_LS_KEY);
-      } catch {}
+      } catch { }
     }
   }, [dueISO, dueProp]);
 
@@ -186,153 +186,173 @@ export default function GlowingProgressCard({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-xl p-6 md:p-7 frosted-card radial-tl",
-        "text-white",
+        "relative overflow-hidden rounded-3xl p-6 md:p-8 transition-all duration-300 group",
+        "bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950",
+        "border border-white/10 shadow-2xl shadow-indigo-500/10",
         className
       )}
       aria-expanded={isOpen}
       onClick={() => setIsOpen((v) => !v)}
     >
+      {/* Background Effects */}
+      <div className="absolute top-0 right-0 -mt-20 -mr-20 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl opacity-50 pointer-events-none group-hover:opacity-70 transition-opacity duration-500"></div>
+      <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl opacity-30 pointer-events-none"></div>
+
       {/* Header */}
-      <div className="flex items-start justify-between gap-4">
+      <div className="relative flex items-center justify-between gap-4 z-10">
         <div className="flex items-center gap-3">
-          <div className="h-5 w-5 text-white/80">
-            <Sparkles className="h-5 w-5" />
+          <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-blue-600 shadow-lg shadow-indigo-500/25 ring-1 ring-white/20">
+            <Target className="h-5 w-5 text-white" />
           </div>
-          <div className="flex items-center gap-3">
-            <h3 className="text-lg md:text-xl font-medium text-white/90 tracking-tight">
+          <div>
+            <h3 className="text-lg font-semibold text-white tracking-tight leading-none">
               {title}
             </h3>
+            <p className="text-xs text-slate-400 font-medium mt-1">Track your goals</p>
+          </div>
+        </div>
 
-            {/* Plan Type pill with Select */}
-            <div onClick={(e) => e.stopPropagation()}>
-              <Select value={planType} onValueChange={(v) => handlePlanType(v as PlanType)}>
-                <SelectTrigger className="h-7 rounded-full bg-white/10 border-white/10 text-white/90 px-3 py-1 text-xs font-medium backdrop-blur-sm hover:bg-white/15">
-                <SelectValue placeholder="Plan type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="daily">Daily plan</SelectItem>
-                <SelectItem value="weekly">Weekly plan</SelectItem>
-                <SelectItem value="custom">Custom</SelectItem>
-              </SelectContent>
-              </Select>
+        {/* Plan Type Selector */}
+        <div onClick={(e) => e.stopPropagation()}>
+          <Select value={planType} onValueChange={(v) => handlePlanType(v as PlanType)}>
+            <SelectTrigger className="h-8 rounded-full bg-white/5 border-white/10 text-slate-200 px-3 text-xs font-medium hover:bg-white/10 hover:text-white transition-colors focus:ring-0 focus:ring-offset-0 w-[110px]">
+              <SelectValue placeholder="Plan type" />
+            </SelectTrigger>
+            <SelectContent className="bg-slate-900 border-slate-800 text-slate-200">
+              <SelectItem value="daily">Daily plan</SelectItem>
+              <SelectItem value="weekly">Weekly plan</SelectItem>
+              <SelectItem value="custom">Custom</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      {/* Main Progress Area */}
+      <div className="relative mt-8 z-10">
+        <div className="flex items-end justify-between mb-4">
+          <div className="flex items-baseline gap-1">
+            <span className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-indigo-200 tracking-tighter">
+              {derivedPercent}
+            </span>
+            <span className="text-2xl font-medium text-indigo-200/60 mb-1">%</span>
+          </div>
+          <div className="text-right mb-2">
+            <div className="text-sm font-medium text-slate-300">
+              <span className="text-white font-bold">{doneTasks}</span>
+              <span className="text-slate-500 mx-1">/</span>
+              <span className="text-slate-400">{totalTasks} tasks</span>
             </div>
           </div>
         </div>
 
-        {/* Actions: Add Task + AI Suggest */}
+        {/* Progress Bar */}
+        <div className="relative h-4 w-full rounded-full bg-slate-950/50 ring-1 ring-white/5 overflow-hidden">
+          <div
+            className="absolute inset-0 rounded-full transition-all duration-700 ease-out"
+            style={{ width: `${derivedPercent}%` }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-blue-500 opacity-20 blur-sm"></div>
+          </div>
+
+          <div className="relative h-full w-full flex rounded-full overflow-hidden">
+            {computeCategorySegments(tasks, derivedPercent).map((seg, i) => {
+              const colorClass = CATEGORY_COLORS[seg.category] || "bg-slate-500";
+              return (
+                <div
+                  key={`${seg.category}-${i}`}
+                  className={`h-full ${colorClass} transition-all duration-500 hover:brightness-110`}
+                  style={{ width: `${seg.width}%` }}
+                  title={`${seg.category} • ${seg.width}%`}
+                />
+              );
+            })}
+            {/* Fallback fill if no categories but percent > 0 */}
+            {derivedPercent > 0 && tasks.filter(t => t.status === 'completed').length === 0 && (
+              <div className="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-full" style={{ width: `${derivedPercent}%` }} />
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Action Footer */}
+      <div className="relative mt-8 flex items-center justify-between z-10">
         <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
           <Button
             size="sm"
             onClick={() => setAddOpen(true)}
-            className="bg-white/10 hover:bg-white/15 text-white border-0 backdrop-blur-sm"
+            className="h-9 rounded-full bg-white text-slate-900 hover:bg-indigo-50 border-0 font-medium px-4 shadow-lg shadow-white/5 transition-all hover:scale-105 active:scale-95"
           >
-            <Plus className="h-4 w-4 mr-2" />
+            <Plus className="h-3.5 w-3.5 mr-1.5" />
             Add Task
           </Button>
           <Button
             size="sm"
             onClick={() => onAiSuggest?.()}
-            className="bg-white/10 hover:bg-white/15 text-white border-0 backdrop-blur-sm"
+            className="h-9 rounded-full bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 border border-indigo-500/20 font-medium px-4 transition-all hover:text-indigo-200"
           >
-            <Wand2 className="h-4 w-4 mr-2" />
+            <Wand2 className="h-3.5 w-3.5 mr-1.5" />
             AI Suggest
           </Button>
         </div>
-      </div>
 
-      {/* Massive percentage */}
-      <div className="mt-5 md:mt-6">
-        <div className="text-[44px] md:text-[64px] leading-none font-extrabold text-white/90 tracking-tight">
-          {derivedPercent}
-          <span className="text-white/70">%</span>
-        </div>
-      </div>
-
-      {/* Glowing progress bar with due chip */}
-      <div className="mt-6 md:mt-7">
-        <div className="relative h-5 md:h-6 w-full rounded-full neon-track overflow-visible">
-          <div
-            className="h-full rounded-full overflow-hidden transition-all duration-500"
-            style={{ width: `${derivedPercent}%` }}
-          >
-            {computeCategorySegments(tasks, derivedPercent).map((seg, i) => {
-              const colorClass = CATEGORY_COLORS[seg.category] || "bg-gray-400 neon-fill";
-              return (
-                <div
-                  key={`${seg.category}-${i}`}
-                  className={`h-full inline-block ${colorClass}`}
-                  style={{ width: `${seg.width}%` }}
-                  title={`${seg.category} • ${seg.width}% of fill`}
-                />
-              );
-            })}
-          </div>
-          {/* Due chip on right end of the bar */}
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-0">
-            {!editingDue ? (
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setEditingDue(true);
-                }}
-                className="whitespace-nowrap select-none px-3 py-1 rounded-full text-xs md:text-sm bg-white/20 text-white/80 backdrop-blur-sm border border-white/25"
-              >
-                {dueISO ? `Due ${dueDisplay}` : "Set due date"}
-              </button>
-            ) : (
-              <input
-                autoFocus
-                type="date"
-                className="px-3 py-1 rounded-full text-xs md:text-sm bg-white/90 text-gray-900 border border-white/50 outline-none"
-                value={toInputDate(dueISO)}
-                onChange={handleDueInput}
-                onBlur={() => setEditingDue(false)}
-                onClick={(e) => e.stopPropagation()}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === "Escape") setEditingDue(false);
-                }}
-              />
-            )}
-          </div>
+        {/* Due Date */}
+        <div className="relative" onClick={(e) => e.stopPropagation()}>
+          {!editingDue ? (
+            <button
+              type="button"
+              onClick={() => setEditingDue(true)}
+              className="flex items-center gap-2 text-xs font-medium text-slate-400 hover:text-white transition-colors px-3 py-1.5 rounded-full hover:bg-white/5"
+            >
+              <Calendar className="h-3.5 w-3.5" />
+              {dueISO ? dueDisplay : "Set due date"}
+            </button>
+          ) : (
+            <input
+              autoFocus
+              type="date"
+              className="px-3 py-1.5 rounded-lg text-xs bg-slate-800 text-white border border-slate-700 outline-none focus:border-indigo-500 transition-colors"
+              value={toInputDate(dueISO)}
+              onChange={handleDueInput}
+              onBlur={() => setEditingDue(false)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === "Escape") setEditingDue(false);
+              }}
+            />
+          )}
         </div>
       </div>
 
       {/* Expanded Task List Area */}
       <div
         className={cn(
-          "transition-[max-height,opacity,margin] duration-500 ease-out overflow-hidden",
-          isOpen ? "opacity-100 mt-6 md:mt-7" : "opacity-0 mt-0"
+          "transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] overflow-hidden",
+          isOpen ? "max-h-[800px] opacity-100 mt-6" : "max-h-0 opacity-0 mt-0"
         )}
-        style={{ maxHeight: isOpen ? 800 : 0 }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="rounded-xl bg-white text-gray-900 dark:bg-neutral-900 dark:text-white border border-gray-100 dark:border-white/10 p-4 md:p-5 shadow-sm">
-          
-
-          {/* Checklist */}
+        <div className="rounded-2xl bg-slate-950/50 border border-white/5 p-1 backdrop-blur-md">
           {totalTasks === 0 ? (
-            <div className="text-sm text-gray-600 dark:text-gray-300 py-4">
-              <div>No tasks yet. Add some to track progress.</div>
-              <Button className="mt-3" size="sm" onClick={() => setAddOpen(true)}>
-                Add Task
-              </Button>
+            <div className="flex flex-col items-center justify-center py-8 text-center">
+              <div className="w-12 h-12 rounded-full bg-slate-900 flex items-center justify-center mb-3 border border-slate-800">
+                <Sparkles className="h-5 w-5 text-slate-500" />
+              </div>
+              <p className="text-sm text-slate-400 font-medium">No tasks yet</p>
+              <p className="text-xs text-slate-500 mt-1">Add tasks to start tracking progress</p>
             </div>
           ) : (
-            <ul className="mt-2 space-y-2">
+            <ul className="space-y-1">
               {tasks.map((t) => {
                 const isDone = t.status === "completed";
                 const isInProgress = t.status === "in_progress";
                 return (
                   <li
                     key={t.id}
-                    className="relative pl-4 border-l border-gray-200/70 dark:border-white/10"
+                    className="group relative overflow-hidden rounded-xl transition-all duration-200 hover:bg-white/5"
                   >
-                    <div className="flex items-start gap-3">
+                    <div className="flex items-center gap-3 p-3">
                       <button
                         type="button"
-                        className="mt-0.5"
+                        className="flex-shrink-0 transition-transform active:scale-90"
                         onClick={async (e) => {
                           e.stopPropagation();
                           try {
@@ -345,27 +365,40 @@ export default function GlowingProgressCard({
                               }
                             );
                           } catch (err) {
-                            // eslint-disable-next-line no-console
                             console.error("Failed to toggle task", err);
                           }
                         }}
-                        aria-label={isDone ? "Mark as planned" : "Mark as completed"}
-                        title={isDone ? "Mark as planned" : "Mark as completed"}
                       >
                         {isDone ? (
-                          <CheckCircle className="h-4 w-4 text-green-600" />
+                          <CheckCircle className="h-5 w-5 text-emerald-500 fill-emerald-500/20" />
                         ) : isInProgress ? (
-                          <CircleDot className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                          <CircleDot className="h-5 w-5 text-indigo-400" />
                         ) : (
-                          <Circle className="h-4 w-4 text-gray-400 dark:text-gray-500" />
+                          <Circle className="h-5 w-5 text-slate-600 group-hover:text-slate-400 transition-colors" />
                         )}
                       </button>
+
                       <div className="flex-1 min-w-0">
-                        <div className="text-sm font-medium text-gray-900 dark:text-white leading-tight">
+                        <div className={cn(
+                          "text-sm font-medium transition-colors",
+                          isDone ? "text-slate-500 line-through decoration-slate-600" : "text-slate-200 group-hover:text-white"
+                        )}>
                           {t.name}
                         </div>
-                        <div className="text-xs text-gray-500 dark:text-gray-400">
-                          {t.category} · {t.estimatedMinutes ?? 0}m
+                        <div className="flex items-center gap-2 mt-0.5">
+                          <span className={cn(
+                            "text-[10px] px-1.5 py-0.5 rounded font-medium border",
+                            isDone
+                              ? "bg-slate-900/50 border-slate-800 text-slate-600"
+                              : "bg-indigo-500/10 border-indigo-500/20 text-indigo-300"
+                          )}>
+                            {t.category}
+                          </span>
+                          {t.estimatedMinutes && (
+                            <span className="text-[10px] text-slate-500">
+                              {t.estimatedMinutes}m
+                            </span>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -401,7 +434,6 @@ export default function GlowingProgressCard({
               predicate: (q) => Array.isArray(q.queryKey) && q.queryKey[0] === "glow-tasks"
             });
           } catch (e) {
-            // eslint-disable-next-line no-console
             console.error("Failed to create task", e);
           }
         }}
@@ -409,5 +441,3 @@ export default function GlowingProgressCard({
     </div>
   );
 }
-
-
