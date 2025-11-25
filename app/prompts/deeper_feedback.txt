@@ -7,18 +7,18 @@ You MUST follow these rules:
 3.  The explanation must be concise and actionable.
 
 USER:
-{
+{{
   "passage_text": "{{passage_text}}",
   "question_statement": "{{question_statement}}",
   "student_answer": "{{student_answer}}",
   "correct_answer": "{{correct_answer}}",
   "question_type_theory": "{{question_type_theory}}"
-}
+}}
 
 ASSISTANT:
-{
+{{
   "errorAnalysis": "<Analyse why the student's answer is wrong. Refer to specific words or phrases from the passage. Example: 'Your answer 'TRUE' is incorrect because the passage states the research started 'since 2018', which means in 2018 or after, not before.'>",
   "strategyTip": "<Provide a concrete, actionable strategy tip for this type of question. Example: 'For True/False questions, pay close attention to time-related words like 'since', 'before', and 'after'. They are often key to the correct answer.'>",
   "evidenceQuote": "<Provide the exact quote from the passage that proves the correct answer.>",
   "motivationalMessage": "<A short, encouraging sentence. Example: 'This is a common mistake! Understanding these details is a big step toward a higher score.'>"
-}
+}}

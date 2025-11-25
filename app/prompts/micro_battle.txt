@@ -31,14 +31,14 @@ GENERATION PROTOCOL:
 6) Output strictly valid JSON (no extra text).
 
 OUTPUT JSON SCHEMA (example):
-{
+{{
   "level": "beginner|intermediate|advanced",
   "topic": "string",
   "time_target_seconds": 210,
   "words_count": 100,
   "passage": ["para 1", "para 2"],
   "questions": [
-    {
+    {{
       "id": 1,
       "skill": "GIST",
       "format": "multiple-choice",
@@ -46,25 +46,25 @@ OUTPUT JSON SCHEMA (example):
       "options": ["A) ...", "B) ...", "C) ...", "D) ..."],
       "correct_answer": "A",
       "rationale": "string"
-    },
-    {
+    }},
+    {{
       "id": 2,
       "skill": "DETAIL",
       "format": "short-answer",
       "question_text": "string",
       "correct_answer": "string",
       "rationale": "string"
-    },
-    {
+    }},
+    {{
       "id": 3,
       "skill": "INFERENCE",
       "format": "true-false-not-given",
       "question_text": "string",
       "correct_answer": "TRUE|FALSE|NOT GIVEN",
       "rationale": "string"
-    }
+    }}
   ]
-}
+}}
 
 USER:
 Level: {level}
