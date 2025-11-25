@@ -41,4 +41,4 @@ Chat history: {chat_history}
 User message: {user_message}
 
 Output example format:
-{"action":"GENERATE_HINT","parameters":{"hint_level":"low","question_id":42},"confidence":0.87,"reason":"User requested a small clue about Q42."}
+{{"action":"GENERATE_HINT","parameters":{{"hint_level":"low","question_id":42}},"confidence":0.87,"reason":"User requested a small clue about Q42."}}

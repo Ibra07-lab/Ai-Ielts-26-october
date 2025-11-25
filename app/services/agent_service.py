@@ -12,6 +12,10 @@ from pydantic import BaseModel, Field
 from app.core.config import settings 
 from app.models.chat_models import ChatMessage
 from typing import Optional, List
+from app.models.tutor_persona import alex
+from app.services.emotion_detector import emotion_detector, emotional_response_generator, UserEmotion
+from app.services.profile_service import profile_service
+from app.models.student_profile import ConversationMemory
 
 class MicroBattleQuestion(BaseModel):
     id: int
@@ -144,6 +148,17 @@ class AgentService:
             api_key=settings.OPENAI_API_KEY
         )
         
+        # Initialize Alex's persona
+        self.persona = alex
+        
+        # Initialize emotion detection
+        self.emotion_detector = emotion_detector
+        self.emotional_response = emotional_response_generator
+        
+        # Initialize profile service
+        self.profile_service = profile_service
+        self.active_sessions: Dict[str, ConversationMemory] = {}
+        
         # Get the absolute path to the prompts directory
         current_file = Path(__file__).resolve()
         prompts_dir = current_file.parent.parent / "prompts"
@@ -153,62 +168,64 @@ class AgentService:
         self.micro_battle_prompt_template = (prompts_dir / "micro_battle.txt").read_text()
 
         self.general_chat_prompt_template = ChatPromptTemplate.from_messages([
-            ("system", """System: You are an expert IELTS Reading tutor named Alex — a supportive, encouraging AI tutor specialized in the IELTS Academic Reading module. Your mission: help students improve reading skills (timing, accuracy, vocabulary, inference) using scaffolded teaching, short practice tasks, and clear feedback. Always be student-centered, motivational, and concise.
+            ("system", """System: You are Alex, an expert IELTS Reading tutor with a warm, encouraging personality. You're a former IELTS examiner with 8 years of teaching experience, specialized in the IELTS Academic Reading module.
+
+Your personality:
+- Encouraging but honest, using humour to lighten stress
+- Occasionally uses coffee metaphors to explain concepts
+- Celebrates small wins enthusiastically
+- Uses British spellings (colour, favourite, analyse)
+- References common student mistakes warmly, without judgment
+- Shows empathy when students are frustrated, confused, anxious, or tired
+
+Your mission: help students improve reading skills (timing, accuracy, vocabulary, inference) using scaffolded teaching, short practice tasks, and clear feedback. Always be student-centred, motivational, and concise.
+
+CRITICAL PRACTICE FLOW:
+When a student mentions a problem or wants to practice:
+1. ACKNOWLEDGE the issue briefly (1-2 sentences)
+2. Explain the concept/strategy concisely (2-3 sentences max)
+3. ASK: "Would you like to try a practice passage right now?" or "Fancy a quick practice drill?"
+4. WAIT for their response
+5. If they say YES, encourage them to say "micro battle" to get an actual passage with questions
+6. If they say NO, offer alternative help (explanations, tips, etc.)
+
+AFTER they complete practice:
+- Give feedback on their answers
+- ASK: "Want to try something more challenging?" or "Ready for a harder passage?"
+- If YES: suggest they request a micro battle at the next difficulty level
+- Track difficulty progression in your responses
+
+NEVER:
+- Don't offer "micro-practice" without actually providing a passage
+- Don't give vague practice suggestions like "try skimming any text you have"
+- Don't promise practice and then not deliver it
 
 Behavior rules:
-- Start responses with brief empathy/encouragement (e.g., “Nice work — let’s tackle this.”).
-- Ask one clarifying question only if user intent is unclear (goal: timing, accuracy, vocabulary, or general practice).
-- Structure each reply: 1) acknowledgement, 2) concept (short), 3) step-by-step strategy or drill, 4) one short example or micro-practice, 5) suggested next action and a closing question.
-- Use clear, conversational English. Avoid unexplained jargon; use simple analogies.
-- When user provides a passage or questions: first ask their target (speed/score/skill), then offer a micro-assessment (1–3 questions), show one modeled solution with thought process, then provide 2 practice items or a timed drill.
-- Do not provide or invent actual exam content or answers to real copyrighted test forms. Use user-provided text only when they paste it.
-- Avoid absolute score guarantees or numeric promises. Encourage measurement: “let’s track time and accuracy over 3 attempts.”
-- Keep most replies under 500 words and focused. For multi-step lesson plans, label sections and give an estimated time per activity.
-- End every turn positively (e.g., “Great effort — ready for a 5-min drill?”).
+- Start responses with brief empathy/encouragement
+- Ask clarifying questions only when needed
+- Keep replies under 400 words and focused
+- End every turn with a clear next step or question
 
-Defaults & tools:
-- Default drill length: 10 minutes. Default hint policy: max 3 hints per practice item.
-- If user asks for resources, recommend reputable sources generically (e.g., Cambridge practice books, AWL apps) without linking to copyrighted exam items.
+Example flow:
+User: "I have problem with timing"
+You: "Nice work identifying that! ⏰ Timing is crucial for IELTS Reading.
 
-Example starter prompt for students:
-User: “I struggle with matching headings and run out of time.”
-Agent should respond: Acknowledge → Ask whether priority is timing or accuracy → Give 3 quick strategies for headings → Model one example in 60–90 seconds → Offer a 5-min timed drill and ask to start.
+Quick strategy: Spend 2-3 minutes skimming the passage first, then allocate about 20 minutes per passage including questions. Practice with a timer to build speed.
 
-End.
-"""),
+Would you like to try a timed practice passage right now? I can generate one for you!"
+
+If user says "yes":
+You: "Brilliant! Say 'micro battle' and I'll generate a practice passage with questions. You'll get instant feedback when you submit your answers!"
+
+If user completes practice:
+You: "[Feedback on answers]
+
+Great effort! Want to try a more challenging passage? Say 'micro battle advanced' for a harder one!"
+
+End."""),
             MessagesPlaceholder(variable_name="chat_history"),
             ("user", "{user_message}")
         ])
-
-    async def generate_deeper_feedback(self, context: dict) -> DeeperFeedbackResponse:
-        """Генерирует глубокий анализ и возвращает Pydantic модель."""
-        parser = JsonOutputParser(pydantic_object=DeeperFeedbackResponse)
-        prompt = ChatPromptTemplate.from_messages([
-            ("system", self.deeper_feedback_prompt_template),
-            ("system", "Output format instructions: {format_instructions}"),
-            ("user", "Here is the data: {passage_text}, {question_statement}, {student_answer}, {correct_answer}, {question_type_theory}")
-        ]).partial(format_instructions=parser.get_format_instructions())
-        
-        chain = prompt | self.quality_llm | parser
-        result = await chain.ainvoke(context)
-        return result
-
-    async def generate_micro_battle(self, level: str | None, topic: str | None, chat_history: str) -> 'MicroBattle':
-        """Генерирует Micro‑Passage Battle согласно спецификации и возвращает Pydantic модель."""
-        parser = JsonOutputParser(pydantic_object=MicroBattle)
-        prompt = ChatPromptTemplate.from_messages([
-            ("system", self.micro_battle_prompt_template),
-            ("user", "Level: {level}\nTopic: {topic}\nChat context: {chat_history}")
-        ])
-        chain = prompt | self.quality_llm | parser
-        normalized_level = (level or "auto").strip().lower()
-        normalized_topic = (topic or "").strip()
-        result = await chain.ainvoke({
-            "level": normalized_level,
-            "topic": normalized_topic,
-            "chat_history": chat_history[:2000],
-        })
-        return result
 
     async def handle_chat_message(self, session_id: str, messages: list[ChatMessage], dropped_question_id: str | None) -> ChatMessage:
         """Главный обработчик сообщений чата."""
@@ -302,10 +319,9 @@ End.
 
         elif router_decision.action == "REQUEST_PRACTICE":
             response_content = (
-                "Would you like a quick practice session?\n"
-                "- Option A: 5-minute timed drill focusing on timing\n"
-                "- Option B: Two practice items focusing on accuracy\n\n"
-                "Reply with 'timed_drill' or 'practice_items' to begin."
+                "That sounds like a great plan. Would you like to try a **Micro Battle** practice passage right now? "
+                "It's a quick, focused drill with instant feedback. ⚔️\n\n"
+                "Just say **'Yes'** or **'Micro Battle'** to start!"
             )
 
         elif router_decision.action == "PROVIDE_FEEDBACK":
