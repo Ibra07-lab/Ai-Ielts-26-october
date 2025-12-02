@@ -289,6 +289,201 @@
   }
   .neon-fill--reading { box-shadow: 0 0 30px rgba(34,197,94,.75), 0 0 60px rgba(21,128,61,.55); }
   .neon-fill--speaking { box-shadow: 0 0 30px rgba(239,68,68,.75), 0 0 60px rgba(185,28,28,.55); }
+  --sidebar-ring: oklch(0.439 0 0);
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  
+  html,
+  :host {
+    /* Fix CSS compatibility warning - add standard property alongside webkit */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* CSS Compatibility Fixes */
+@layer utilities {
+  /* Fix mask-repeat compatibility for Edge 79+ */
+  .mask-repeat {
+    -webkit-mask-repeat: repeat;
+    mask-repeat: repeat;
+  }
+  
+  /* Fix field-sizing compatibility for Firefox and Safari */
+  .field-sizing-content {
+    field-sizing: content;
+  }
+  
+  /* Fallback for browsers that don't support field-sizing */
+  @supports not (field-sizing: content) {
+    .field-sizing-content {
+      /* Use intrinsic sizing as fallback */
+      width: max-content;
+      min-width: auto;
+    }
+  }
+  
+  /* Fix text-wrap compatibility for Safari < 17.4 */
+  .text-wrap {
+    /* Fallback for older Safari versions */
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    /* Modern text-wrap property */
+    text-wrap: wrap;
+  }
+  
+  /* Additional mask utilities with cross-browser support */
+  .mask-no-repeat {
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+  
+  .mask-repeat-x {
+    -webkit-mask-repeat: repeat-x;
+    mask-repeat: repeat-x;
+  }
+  
+  .mask-repeat-y {
+    -webkit-mask-repeat: repeat-y;
+    mask-repeat: repeat-y;
+  }
+  
+  .mask-space {
+    -webkit-mask-repeat: space;
+    mask-repeat: space;
+  }
+  
+  .mask-round {
+    -webkit-mask-repeat: round;
+    mask-repeat: round;
+  }
+}
+
+/* Completion question structure styling */
+@layer components {
+  .completion-structure {
+    line-height: 1.8;
+  }
+  
+  .completion-structure strong {
+    font-weight: 600;
+    color: #2563eb;
+  }
+  
+  .dark .completion-structure strong {
+    color: #60a5fa;
+  }
+  
+  .completion-structure p {
+    margin-bottom: 0.75rem;
+  }
+  
+  .completion-structure p:last-child {
+    margin-bottom: 0;
+
+    .matching-info-paragraph-box {
+      background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+      border: 2px solid #3b82f6;
+      border-radius: 0.75rem;
+      padding: 1rem;
+    }
+    
+    .dark .matching-info-paragraph-box {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+      border-color: #60a5fa;
+    }
+    
+    .matching-info-question-item {
+      transition: all 0.2s ease;
+    }
+    
+    .matching-info-question-item:hover {
+      background-color: #f0f9ff;
+      border-left-color: #3b82f6 !important;
+      transform: translateX(4px);
+    }
+    
+    .dark .matching-info-question-item:hover {
+      background-color: #1e293b;
+    }
+    
+    .matching-info-select {
+      transition: all 0.2s ease;
+    }
+    
+    .matching-info-select:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    .matching-info-select:hover:not(:disabled) {
+      border-color: #60a5fa;
+      background-color: #f0f9ff;
+    }
+    
+    .dark .matching-info-select:hover:not(:disabled) {
+      background-color: #1e293b;
+    }
+  }
+}
+
+/* Glowing Progress Card helpers */
+@layer utilities {
+  .neon-track {
+    @apply bg-white/10 border border-white/10;
+  }
+  .neon-fill {
+    box-shadow: 0 0 30px rgba(177, 15, 15, 0.75), 0 0 60px rgba(29, 7, 100, 0.55);
+  }
+  .neon-fill--reading { box-shadow: 0 0 30px rgba(34,197,94,.75), 0 0 60px rgba(21,128,61,.55); }
+  .neon-fill--speaking { box-shadow: 0 0 30px rgba(239,68,68,.75), 0 0 60px rgba(185,28,28,.55); }
   .neon-fill--writing { box-shadow: 0 0 30px rgba(59,130,246,.75), 0 0 60px rgba(29,78,216,.55); }
   .neon-fill--listening { box-shadow: 0 0 30px rgba(168,85,247,.75), 0 0 60px rgba(126,34,206,.55); }
   .frosted-card {
@@ -306,5 +501,32 @@
     background: radial-gradient(240px circle at 20% 0%, rgba(255,255,255,.08), transparent 60%);
     filter: blur(2px);
     pointer-events: none;
+  }
+
+  /* 3D Flip Card Utilities */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+  
+  /* Scroll Masking */
+  .mask-fade-right {
+    mask-image: linear-gradient(to right, black 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }

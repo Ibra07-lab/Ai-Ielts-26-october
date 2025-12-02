@@ -56,7 +56,7 @@ export default function Settings() {
 
   const updateUserMutation = useMutation({
     mutationFn: ({ id, ...params }: { id: number } & Omit<UpdateUserRequest, "id">) =>
-      backend.ielts.updateUser(id, params),
+      backend.ielts.updateUser({ id, ...params }),
     onSuccess: (data) => {
       setUser(data);
       queryClient.invalidateQueries({ queryKey: ["progress"] });
@@ -105,9 +105,9 @@ export default function Settings() {
   };
 
   const handleInputChange = (field: string, value: string | number) => {
-    setFormData(prev => ({ 
-      ...prev, 
-      [field]: field === 'targetBand' ? Number(value) : value 
+    setFormData(prev => ({
+      ...prev,
+      [field]: field === 'targetBand' ? Number(value) : value
     }));
   };
 
@@ -232,8 +232,8 @@ export default function Settings() {
                 {createUserMutation.isPending || updateUserMutation.isPending
                   ? "Saving..."
                   : user
-                  ? "Update Profile"
-                  : "Create Profile"
+                    ? "Update Profile"
+                    : "Create Profile"
                 }
               </Button>
             </form>
@@ -292,21 +292,19 @@ export default function Settings() {
               <h4 className="font-medium mb-2">Preview</h4>
               <p className="text-sm">
                 This is a sample text with a{" "}
-                <span className={`px-1 rounded ${
-                  highlightSettings.wordColor === 'yellow' ? 'bg-yellow-200 dark:bg-yellow-800' :
-                  highlightSettings.wordColor === 'green' ? 'bg-green-200 dark:bg-green-800' :
-                  highlightSettings.wordColor === 'pink' ? 'bg-pink-200 dark:bg-pink-800' :
-                  'bg-orange-200 dark:bg-orange-800'
-                }`}>
+                <span className={`px-1 rounded ${highlightSettings.wordColor === 'yellow' ? 'bg-yellow-200 dark:bg-yellow-800' :
+                    highlightSettings.wordColor === 'green' ? 'bg-green-200 dark:bg-green-800' :
+                      highlightSettings.wordColor === 'pink' ? 'bg-pink-200 dark:bg-pink-800' :
+                        'bg-orange-200 dark:bg-orange-800'
+                  }`}>
                   highlighted word
                 </span>{" "}
                 and{" "}
-                <span className={`px-1 rounded ${
-                  highlightSettings.sentenceColor === 'lightblue' ? 'bg-blue-200 dark:bg-blue-800' :
-                  highlightSettings.sentenceColor === 'lightgreen' ? 'bg-green-200 dark:bg-green-800' :
-                  highlightSettings.sentenceColor === 'lightpurple' ? 'bg-purple-200 dark:bg-purple-800' :
-                  'bg-gray-200 dark:bg-gray-800'
-                }`}>
+                <span className={`px-1 rounded ${highlightSettings.sentenceColor === 'lightblue' ? 'bg-blue-200 dark:bg-blue-800' :
+                    highlightSettings.sentenceColor === 'lightgreen' ? 'bg-green-200 dark:bg-green-800' :
+                      highlightSettings.sentenceColor === 'lightpurple' ? 'bg-purple-200 dark:bg-purple-800' :
+                        'bg-gray-200 dark:bg-gray-800'
+                  }`}>
                   this is a highlighted sentence
                 </span>.
               </p>
@@ -362,7 +360,7 @@ export default function Settings() {
                     <p className="text-2xl font-bold text-sky-600">{user.targetBand}</p>
                   </div>
                 </div>
-                
+
                 {user.examDate && (
                   <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
                     <Calendar className="h-8 w-8 text-green-600" />
@@ -402,7 +400,7 @@ export default function Settings() {
           </CardContent>
         </Card>
       </div>
-      
+
     </>
   );
 }

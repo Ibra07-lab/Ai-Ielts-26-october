@@ -209,6 +209,9 @@ class ConversationMemory(BaseModel):
     # Callbacks for later
     follow_up_items: List[Dict[str, Any]] = Field(default_factory=list)
     
+    # Student's submitted answers {question_id: answer}
+    student_answers: Dict[int, str] = Field(default_factory=dict)
+    
     def add_follow_up(self, item: str, trigger_after: int = 3) -> None:
         """Add something to follow up on after n exchanges."""
         self.follow_up_items.append({

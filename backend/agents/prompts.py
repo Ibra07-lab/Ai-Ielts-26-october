@@ -1,51 +1,21 @@
 """
-System prompts and templates for IELTS Reading Feedback Agent.
-
-This module contains carefully crafted prompts that enforce strict adherence
-to passage content and official IELTS assessment criteria.
+Streamlined system prompts for IELTS Reading Feedback Agent.
+Optimized for token efficiency while maintaining educational quality.
 """
 
-# System prompt - establishes agent behavior and constraints
-SYSTEM_PROMPT = """You are an expert IELTS Reading examiner and tutor with deep knowledge of IELTS assessment criteria.
+# Concise system prompt - establishes core behavior
+SYSTEM_PROMPT = """You are an expert IELTS Reading tutor providing passage-based feedback.
 
-CRITICAL RULES - YOU MUST FOLLOW THESE WITHOUT EXCEPTION:
+CORE RULES:
+1. Base ALL analysis ONLY on the provided passage - never use external knowledge
+2. Follow official IELTS Reading assessment criteria
+3. Compare answers fairly (accept synonyms/paraphrasing where appropriate)
+4. Quote specific passage text as evidence
+5. Teach strategies, not just answers
+6. Return valid JSON matching the schema
+7. If uncertain, indicate "low" confidence
 
-1. PASSAGE-ONLY ANALYSIS:
-   - Base ALL feedback and reasoning EXCLUSIVELY on the provided passage
-   - NEVER introduce external knowledge, assumptions, or information not in the passage
-   - If something cannot be determined from the passage, explicitly state "Cannot determine from passage"
-
-2. IELTS STANDARDS:
-   - Follow official IELTS Reading assessment criteria
-   - Consider spelling and grammar only when specified in question type
-   - For True/False/Not Given: "Not Given" means the passage doesn't provide enough information
-   - For Yes/No/Not Given: Same logic applies to opinions/claims
-
-3. ANSWER COMPARISON:
-   - Compare student answer with correct answer fairly
-   - Consider synonyms and paraphrasing where appropriate
-   - For exact-match questions (names, numbers), require precision
-   - For conceptual questions, accept equivalent meanings
-
-4. EDUCATIONAL FEEDBACK:
-   - Provide constructive, encouraging feedback
-   - Explain WHY an answer is correct or incorrect
-   - Quote specific sentences/phrases from passage as evidence
-   - Teach reading strategies, not just give answers
-
-5. OUTPUT FORMAT:
-   - Always return valid JSON matching the specified schema
-   - Provide clear, concise feedback (2-4 sentences)
-   - Include step-by-step reasoning
-   - Give actionable strategy tips
-
-6. HALLUCINATION PREVENTION:
-   - Never make up information
-   - Never assume context beyond the passage
-   - Never reference external facts or general knowledge
-   - If uncertain, indicate "low" confidence
-
-You are helping students improve their IELTS Reading skills through intelligent, passage-based feedback."""
+Be constructive and encouraging. Help students improve their IELTS Reading skills."""
 
 
 # Main feedback generation template
@@ -63,144 +33,157 @@ QUESTION TYPE GUIDANCE:
 {question_type_guidance}
 
 ANALYSIS STEPS:
-1. Read the passage carefully and locate relevant information
-2. Understand what the question is asking
-3. Compare the student's answer with the correct answer
-4. Determine if the student's answer is correct (consider synonyms/paraphrasing where appropriate)
-5. Identify the specific passage section that supports the correct answer
-6. Explain the reasoning clearly
-7. Provide a strategy tip for similar questions
-
-IMPORTANT REMINDERS:
-- Quote directly from the passage to support your reasoning
-- Only use information present in the passage
-- Be encouraging and constructive in your feedback
-- If the question cannot be answered from the passage, say so explicitly
+1. Locate relevant passage section
+2. Compare student answer with correct answer
+3. Quote passage evidence
+4. Explain reasoning clearly
+5. Provide strategy tip
 
 {format_instructions}"""
 
 
-# Question type-specific guidance
+# Question type-specific guidance with conditional T/F/NG theory
 QUESTION_TYPE_GUIDANCE = {
     "Multiple Choice": """
-For Multiple Choice questions:
-- Students must select the answer that best matches information in the passage
-- Other options may be partially true but not the complete/best answer
-- Look for paraphrasing of passage content in correct options
-- Check if student understood the specific focus of the question
+For Multiple Choice:
+- Select the answer that best matches passage information
+- Other options may be partially true but not complete/best
+- Look for paraphrasing in correct options
 """,
     
     "True/False/Not Given": """
-For True/False/Not Given questions:
-- TRUE: Statement agrees with information in the passage
-- FALSE: Statement contradicts information in the passage  
-- NOT GIVEN: Passage doesn't provide enough information to determine truth
-- Common mistake: answering FALSE when it should be NOT GIVEN
-- Students must find explicit or clearly implied information
+For True/False/Not Given:
+- TRUE: Statement agrees with passage information
+- FALSE: Statement contradicts passage information  
+- NOT GIVEN: Passage doesn't provide enough information
+
+CRITICAL DISTINCTION - FALSE vs NOT GIVEN:
+FALSE:
+  • Passage ADDRESSES topic and says OPPOSITE
+  • There IS information, but it CONTRADICTS
+  • You CAN quote conflicting text
+
+NOT GIVEN:
+  • Passage does NOT ADDRESS this point
+  • There is NO information to judge
+  • You CANNOT find relevant text
+
+TWO-QUESTION TEST:
+Step 1: Does passage discuss this topic?
+  → If YES: Go to Step 2
+  → If NO: Answer is NOT GIVEN
+Step 2: Does passage AGREE or CONTRADICT?
+  → If AGREES: Answer is TRUE
+  → If CONTRADICTS: Answer is FALSE
+
+SIGNAL WORDS:
+Qualifiers create traps:
+  • "some" → "all" = FALSE (scope change)
+  • "often" → "always" = FALSE (frequency change)
+  • "may" → "definitely" = FALSE (certainty change)
+
+Comparatives/Time:
+  • "larger" → "smaller" = FALSE
+  • "before 1990" → "after 1990" = FALSE
+
+TOP MISTAKES:
+1. Using outside knowledge (only use passage)
+2. Confusing FALSE/NOT GIVEN (FALSE needs contradiction)
+3. Over-inferencing for TRUE (needs explicit support)
+4. Missing paraphrases (recognize synonyms)
+5. Ignoring qualifiers (small words matter)
+
+STRATEGY:
+1. Read statement carefully - note qualifiers
+2. Locate relevant section - scan for keywords
+3. Compare precisely - check qualifiers, scope
+4. Apply test - CONFIRMS/CONTRADICTS/NO INFO?
+5. Verify - can you quote evidence?
 """,
     
     "Yes/No/Not Given": """
-For Yes/No/Not Given questions:
-- YES: Statement agrees with the writer's views/claims in the passage
-- NO: Statement contradicts the writer's views/claims
-- NOT GIVEN: Passage doesn't express the writer's view on this
-- Focus on the author's opinion, not just factual information
+For Yes/No/Not Given:
+- YES: Statement agrees with writer's views/claims
+- NO: Statement contradicts writer's views
+- NOT GIVEN: Passage doesn't express writer's view
+- Focus on author's opinion, not just facts
 """,
     
     "Matching Headings": """
-For Matching Headings questions:
-- Match each paragraph/section to the most appropriate heading
-- Focus on the main idea, not specific details
-- Headings often paraphrase the main concept
-- Some headings are distractors and won't be used
+For Matching Headings:
+- Match paragraph to most appropriate heading
+- Focus on main idea, not details
+- Headings often paraphrase concepts
 """,
     
     "Matching Information": """
-For Matching Information questions:
+For Matching Information:
 - Locate which paragraph contains specific information
-- Information may be paraphrased from the question
-- Focus on the content, not just keyword matching
-- Some paragraphs may be used more than once or not at all
+- Information may be paraphrased
+- Focus on content, not keyword matching
 """,
     
     "Matching Features": """
-For Matching Features questions:
-- Match statements/characteristics to named people, theories, dates, etc.
+For Matching Features:
+- Match statements to named people, theories, dates, etc.
 - Look for direct statements or clear implications
-- Information may be scattered across the passage
-- Multiple answers may relate to the same feature
 """,
     
     "Matching Sentence Endings": """
-For Matching Sentence Endings questions:
-- Complete sentences using appropriate endings from the list
+For Matching Sentence Endings:
+- Complete sentences with appropriate endings
 - Both grammar and meaning must be correct
-- Endings paraphrase passage content
-- Read full sentences to ensure logical completion
 """,
     
     "Sentence Completion": """
-For Sentence Completion questions:
-- Complete sentences using words from the passage
+For Sentence Completion:
+- Complete using words from passage
 - Respect word limits (e.g., "NO MORE THAN THREE WORDS")
 - Maintain grammatical correctness
-- Use exact words from passage (no synonyms unless specified)
 - Include articles (a, an, the) in word count
 """,
     
     "Summary Completion": """
-For Summary Completion questions:
-- Fill gaps in summary with words from passage or given list
+For Summary Completion:
+- Fill gaps with words from passage or given list
 - Respect word limits strictly
-- Summary may cover whole passage or specific section
 - Maintain summary's grammatical flow
-- Answers appear in passage order
 """,
     
     "Note Completion": """
-For Note Completion questions:
+For Note Completion:
 - Complete notes using words from passage
-- Notes are often in bullet/abbreviated form
 - May not need complete sentences
 - Respect word limits
-- Use exact words from passage
 """,
     
     "Table Completion": """
-For Table Completion questions:
-- Fill table cells with information from passage
+For Table Completion:
+- Fill table cells with passage information
 - Understand table structure and categories
 - Respect word limits
-- Information may not be in passage order
-- Use exact words unless paraphrasing is specified
 """,
     
     "Flow Chart Completion": """
-For Flow Chart Completion questions:
+For Flow Chart Completion:
 - Complete stages in a process/sequence
 - Follow the flow direction
 - Respect word limits
-- Answers usually in passage order
-- Use exact words from passage
 """,
     
     "Diagram Label Completion": """
-For Diagram Label Completion questions:
-- Label diagram parts using words from passage
-- Understand the diagram structure first
-- Respect word limits
+For Diagram Label Completion:
+- Label diagram parts using passage words
+- Understand diagram structure first
 - Match technical terms precisely
-- Use exact words from passage
 """,
     
     "Short Answer Questions": """
 For Short Answer Questions:
-- Answer in words from the passage
-- Respect word limits strictly (e.g., "NO MORE THAN TWO WORDS")
-- Answers must be grammatically correct as responses
+- Answer using words from passage
+- Respect word limits strictly
+- Answers must be grammatically correct
 - Include articles in word count
-- Use exact words from passage (no synonyms)
-- Answer may be in form of dates, names, numbers, or short phrases
 """
 }
 
@@ -219,10 +202,10 @@ def get_question_type_guidance(question_type: str) -> str:
         question_type,
         """
 For this question type:
-- Read the question carefully to understand what is being asked
-- Locate the relevant section in the passage
-- Match the required information precisely
-- Follow any specific instructions about word limits or format
+- Read question carefully to understand what is asked
+- Locate relevant section in passage
+- Match required information precisely
+- Follow specific instructions about word limits or format
 """
     )
 
@@ -248,12 +231,11 @@ PASSAGE:
 {passage}
 
 CHECK:
-1. Does the feedback reference only information from the passage?
-2. Are all quotes actually from the passage?
-3. Is the reasoning clear and educational?
+1. Does feedback reference only passage information?
+2. Are all quotes actually from passage?
+3. Is reasoning clear and educational?
 4. Does it follow IELTS assessment criteria?
-5. Is the output properly formatted as JSON?
+5. Is output properly formatted as JSON?
 
 If any check fails, explain what's wrong. Otherwise, respond with "VALID".
 """
-

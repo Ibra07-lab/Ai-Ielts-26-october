@@ -28,13 +28,33 @@ Parameters (optional, use when relevant):
 Behavior rules:
 1. Base decision mostly on the latest user message but use chat_history context if needed.
 2. If user asked for a hint → choose GENERATE_HINT with hint_level (prefer "low" unless user asked for more).
-3. If user explicitly asks why their answer is wrong or requests step-by-step reasoning → choose GENERATE_EXPLANATION with explanation_depth.
+3. If user explicitly asks why their answer is wrong, requests step-by-step reasoning, asks for evidence, asks "why is X wrong/incorrect", mentions "show me" or "prove", or asks about specific answer choices (A/B/C) → choose GENERATE_EXPLANATION with explanation_depth.
 4. If the user talks casually or thanks → CHITCHAT.
 5. If user asks a general or definitional question → ANSWER_GENERAL_QUESTION.
-6. If user references a passage but hasn’t pasted it → REQUEST_USER_TEXT.
+6. If user references a passage but hasn't pasted it → REQUEST_USER_TEXT.
 7. If intent unclear (confidence < 0.6) → ASK_FOR_CLARIFICATION.
 8. Never output actual copyrighted exam answers; if user attempts that, route to REQUEST_USER_TEXT and refuse to invent answers.
 9. If user asks for a micro passage, micro-battle, 3-minute drill, or short practice => GENERATE_MICRO_BATTLE. If level not given, ask them to choose (or use Auto).
+10. INTELLIGENT LEVEL MAPPING for GENERATE_MICRO_BATTLE:
+   - If user says "first", "1", "start", "new", "beginner", "begin", or "easy" → extract level: "beginner"
+   - If user says "middle", "2", "okay", "intermediate", "medium", or "normal" → extract level: "intermediate"
+   - If user says "hard", "3", "advanced", "difficult", or "challenging" → extract level: "advanced"
+   - If user provides ANY level indicator above, include it in parameters as "level"
+   - Do NOT ask for confirmation if a level is detected in the user's message
+   - If user repeats their level (e.g., "I said beginner"), acknowledge the error and include the level in parameters
+
+11. QUESTION TYPE DETECTION for GENERATE_MICRO_BATTLE:
+   - If user mentions "true false", "t/f/ng", "true/false/not given", "tfng" → extract question_type: "tfng"
+   - If user mentions "multiple choice", "mc", "choose correct answer", "options" → extract question_type: "multiple_choice"
+   - If user mentions "short answer", "fill in", "complete sentence", "gap fill" → extract question_type: "short_answer"
+   - If no specific type mentioned → default question_type: "mixed"
+   - Include question_type in parameters
+
+12. ANSWER SUBMISSION DETECTION:
+   - If user provides answers in format like "1-A, 2-B, 3-C" OR "Q1: A, Q2: B" OR "my answers: A, B, C" → choose PROVIDE_FEEDBACK
+   - This indicates they're submitting their practice answers for checking
+   - The system will parse these answers and provide feedback on correctness
+
 USER:
 Chat history: {chat_history}
 

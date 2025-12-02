@@ -1,0 +1,89 @@
+============================================================
+CRITICAL DISTINCTION: FALSE vs NOT GIVEN
+============================================================
+
+FALSE:
+  • The passage ADDRESSES the topic and says the OPPOSITE
+  • There IS information, but it CONTRADICTS
+  • You CAN quote conflicting text
+
+NOT GIVEN:
+
+TWO-QUESTION TEST:
+Step 1: Does the passage discuss this topic/make a related claim?
+  → If YES: Go to Question 2
+  → If NO: Answer is NOT GIVEN
+Step 2: Does the passage AGREE or CONTRADICT?
+  → If AGREES: Answer is TRUE
+  → If CONTRADICTS: Answer is FALSE
+
+============================================================
+CRITICAL SIGNAL WORDS
+============================================================
+
+Qualifiers (Often Create FALSE Traps):
+  • "some students" → "all students" = FALSE - Scope changed
+  • "often occurs" → "always occurs" = FALSE - Frequency changed
+  • "may cause" → "definitely causes" = FALSE - Certainty changed
+  • "one of the reasons" → "the main reason" = FALSE/NOT GIVEN - Importance changed
+  • "rarely happens" → "never happens" = FALSE - Absolute vs qualified
+
+Comparatives & Superlatives:
+  • "larger than X" → "smaller than X" = FALSE
+  • "the largest" → "one of the largest" = Could be TRUE
+  • "more popular" → "most popular" = NOT GIVEN unless confirmed
+
+Time & Sequence Words:
+  • "before 1990" → "after 1990" = FALSE
+  • "since 2010" → "prior to 2010" = FALSE
+  • "X then Y" → "Y then X" = FALSE - Order matters
+
+============================================================
+TOP 5 COMMON MISTAKES
+============================================================
+
+1. Using Outside Knowledge
+   Trap: You know something is true in real life, so you mark it TRUE.
+   Rule: Only use information IN the passage. Your knowledge is irrelevant.
+   ❌ Wrong: I know CO2 is a greenhouse gas, so TRUE.
+   ✓ Correct: The passage doesn't mention CO2 at all → NOT GIVEN
+
+2. Confusing FALSE and NOT GIVEN
+   Trap: The statement seems wrong, so you choose FALSE—but the passage never discusses it.
+   Rule: FALSE needs a contradiction. No information = NOT GIVEN.
+   ❌ Wrong: 50 participants sounds expensive, but the passage doesn't say it was expensive, so FALSE.
+   ✓ Correct: Cost is never mentioned → NOT GIVEN
+
+3. Over-Inferencing for TRUE
+   Trap: You make a logical assumption and treat it as confirmed.
+   Rule: TRUE requires explicit support, not logical assumptions.
+   ❌ Wrong: Why would they expand if not for profit? TRUE.
+   ✓ Correct: Profitability expectations are never stated → NOT GIVEN
+
+4. Missing Paraphrases
+   Trap: You don't recognize that the passage says the same thing differently.
+   Rule: Learn to recognize synonyms and paraphrases.
+   ❌ Wrong: I can't find the words 'inhabitants' or 'fell' → NOT GIVEN.
+   ✓ Correct: 'population' = 'number of inhabitants'; 'declined rapidly' = 'fell quickly' → TRUE
+
+5. Ignoring Qualifiers
+   Trap: You miss small words that change meaning significantly.
+
+============================================================
+5-STEP STRATEGY
+============================================================
+
+Step 1: Read the Statement Carefully
+  Identify the KEY CLAIM being made. Note specific details: names, numbers, dates, qualifiers. Underline critical words.
+
+Step 2: Locate the Relevant Section
+  Statements usually follow passage order. Scan for keywords or synonyms. Find the 1-3 sentences that discuss this topic.
+
+Step 3: Compare Precisely
+  Read the relevant passage section carefully. Compare each element against the passage. Pay attention to qualifiers, scope, degree, and time references.
+
+Step 4: Apply the Three-Way Test
+  Can I find text that CONFIRMS this? → TRUE | Can I find text that CONTRADICTS this? → FALSE | Can I find NO relevant information? → NOT GIVEN
+
+Step 5: Verify Your Answer
+  For TRUE: Can I quote supporting evidence? For FALSE: Can I quote contradicting evidence? For NOT GIVEN: Am I certain this isn't addressed anywhere?

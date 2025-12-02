@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { TrendingUp, Target, Calendar, Clock, Award, BookOpen, Mic, PenTool, Headphones } from "lucide-react";
+import { BookOpen, Mic, PenTool, Headphones, Info } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress as ProgressBar } from "@/components/ui/progress";
@@ -7,44 +7,45 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useUser } from "../contexts/UserContext";
 import backend from "~backend/client";
 import DailyProgressChart from "../components/progress/DailyProgressChart";
-import DailyGoalCard from "../components/progress/DailyGoalCard";
+import SkillRadar from "../components/progress/SkillRadar";
+
 
 export default function Progress() {
   const { user } = useUser();
 
   const { data: progress } = useQuery({
     queryKey: ["progress", user?.id],
-    queryFn: () => user ? backend.ielts.getProgress(user.id) : null,
+    queryFn: () => user ? backend.ielts.getProgress({ userId: user.id }) : null,
     enabled: !!user,
   });
 
   const { data: speakingSessions } = useQuery({
     queryKey: ["speakingSessions", user?.id],
-    queryFn: () => user ? backend.ielts.getSpeakingSessions(user.id) : null,
+    queryFn: () => user ? backend.ielts.getSpeakingSessions({ userId: user.id }) : null,
     enabled: !!user,
   });
 
   const { data: writingSessions } = useQuery({
     queryKey: ["writingSessions", user?.id],
-    queryFn: () => user ? backend.ielts.getWritingSessions(user.id) : null,
+    queryFn: () => user ? backend.ielts.getWritingSessions({ userId: user.id }) : null,
     enabled: !!user,
   });
 
   const { data: readingSessions } = useQuery({
     queryKey: ["readingSessions", user?.id],
-    queryFn: () => user ? backend.ielts.getReadingSessions(user.id) : null,
+    queryFn: () => user ? backend.ielts.getReadingSessions({ userId: user.id }) : null,
     enabled: !!user,
   });
 
   const { data: listeningSessions } = useQuery({
     queryKey: ["listeningSessions", user?.id],
-    queryFn: () => user ? backend.ielts.getListeningSessions(user.id) : null,
+    queryFn: () => user ? backend.ielts.getListeningSessions({ userId: user.id }) : null,
     enabled: !!user,
   });
 
   const { data: vocabularyProgress } = useQuery({
     queryKey: ["vocabularyProgress", user?.id],
-    queryFn: () => user ? backend.ielts.getVocabularyProgress(user.id) : null,
+    queryFn: () => user ? backend.ielts.getVocabularyProgress({ userId: user.id }) : null,
     enabled: !!user,
   });
 
@@ -69,21 +70,7 @@ export default function Progress() {
     return progress?.overall.find(p => p.skill === skill);
   };
 
-  const calculateOverallBand = () => {
-    if (!progress?.overall.length) return 0;
 
-    const validBands = progress.overall
-      .filter(p => p.estimatedBand)
-      .map(p => p.estimatedBand!);
-
-    if (validBands.length === 0) return 0;
-
-    return Math.round((validBands.reduce((sum, band) => sum + band, 0) / validBands.length) * 10) / 10;
-  };
-
-  const overallBand = calculateOverallBand();
-  const targetBand = user.targetBand;
-  const progressToTarget = targetBand > 0 ? Math.min((overallBand / targetBand) * 100, 100) : 0;
 
   // Aggregate daily progress data
   const getDailyProgress = () => {
@@ -143,94 +130,37 @@ export default function Progress() {
           </p>
         </div>
 
-        {/* Overall Progress Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                    Current Band
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {overallBand || "N/A"}
-                  </p>
-                </div>
-                <Target className="h-8 w-8 text-sky-600" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                    Target Band
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {targetBand}
-                  </p>
-                </div>
-                <Award className="h-8 w-8 text-yellow-600" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                    Study Streak
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {progress?.studyStreak || 0} days
-                  </p>
-                </div>
-                <Calendar className="h-8 w-8 text-green-600" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                    Practice Time
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {progress?.totalPracticeTime || 0}m
-                  </p>
-                </div>
-                <Clock className="h-8 w-8 text-purple-600" />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
         {/* Daily Activity Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Daily Goal Card */}
-          <div className="lg:col-span-1">
-            <DailyGoalCard
-              tasks={{
-                listening: todayData.listening,
-                reading: todayData.reading,
-                writing: todayData.writing,
-                speaking: todayData.speaking,
-                vocabulary: todayData.vocabulary
-              }}
-              dailyGoal={5}
-            />
-          </div>
-
-          {/* Daily Progress Chart */}
-          <div className="lg:col-span-2">
-            <DailyProgressChart data={dailyData} />
-          </div>
+        <div className="w-full">
+          <DailyProgressChart data={dailyData} />
         </div>
+
+        {/* Skill Radar Chart */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Skill Balance & Goals</CardTitle>
+            <CardDescription>
+              Visualizing your current performance against your target band of {user.targetBand}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <SkillRadar
+              data={[
+                { subject: 'Speaking', A: getSkillProgress('speaking')?.estimatedBand || 0, B: user.targetBand || 7.0, fullMark: 9 },
+                { subject: 'Writing', A: getSkillProgress('writing')?.estimatedBand || 0, B: user.targetBand || 7.0, fullMark: 9 },
+                { subject: 'Reading', A: getSkillProgress('reading')?.estimatedBand || 0, B: user.targetBand || 7.0, fullMark: 9 },
+                { subject: 'Listening', A: getSkillProgress('listening')?.estimatedBand || 0, B: user.targetBand || 7.0, fullMark: 9 },
+              ]}
+            />
+            <div className="mt-6 bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg flex gap-3 items-start">
+              <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
+              <div className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                <p><strong>Note:</strong> If the chart is empty, ensure you have practice data for the skills.</p>
+                <p>If the "Target" line is missing, check if your profile has a target band set (default is usually 7.0).</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Skills Breakdown */}
         <Card>
