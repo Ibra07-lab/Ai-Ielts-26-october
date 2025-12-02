@@ -65,9 +65,13 @@ export default function ReadingTutorChat({ droppedQuestionId }: ReadingTutorChat
   // Format assistant messages: collapse excessive blank lines and auto-number "Statements:" blocks
   const formatAssistantContent = (raw: string): string => {
     // Collapse 3+ blank lines to just 2
-    const collapsed = raw.replace(/\n{3,}/g, '\n\n');
+    let processed = raw.replace(/\n{3,}/g, '\n\n');
+
+    // Fix loose lists: "1. \n Text" -> "1. Text"
+    processed = processed.replace(/^(\d+\.|[-*])\s+\n\s*/gm, '$1 ');
+
     // Auto-number lines directly after a "Statements:" header until a blank line
-    return collapsed.replace(/(Statements?:\s*\n)([\s\S]+)/i, (_, header: string, rest: string) => {
+    return processed.replace(/(Statements?:\s*\n)([\s\S]+)/i, (_, header: string, rest: string) => {
       const lines = rest.split('\n');
       let end = lines.findIndex(l => !l.trim());
       if (end === -1) end = lines.length;
@@ -223,19 +227,19 @@ export default function ReadingTutorChat({ droppedQuestionId }: ReadingTutorChat
                 <div className="chat-content text-left">
                   <ReactMarkdown
                     components={{
-                      p: ({ children }) => <p className="mb-0.5 last:mb-0">{children}</p>,
+                      p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
                       strong: ({ children }) => (
                         <strong className={`font-semibold ${message.role === 'user' ? 'text-white' : 'text-indigo-600 dark:text-indigo-400'}`}>
                           {children}
                         </strong>
                       ),
-                      ul: ({ children }) => <ul className="my-0.5 pl-4 list-disc">{children}</ul>,
-                      ol: ({ children }) => <ol className="my-0.5 pl-4 list-decimal">{children}</ol>,
-                      li: ({ children }) => <li><div className="block w-full">{children}</div></li>,
+                      ul: ({ children }) => <ul className="my-2 pl-4 list-disc space-y-1">{children}</ul>,
+                      ol: ({ children }) => <ol className="my-2 pl-4 list-decimal space-y-1">{children}</ol>,
+                      li: ({ children }) => <li className="pl-1">{children}</li>,
                       code: ({ children }) => (
-                        <code className={`px-1.5 py-0.5 rounded text-xs font-mono font-medium ${message.role === 'user'
+                        <code className={`px-1.5 py-0.5 rounded text-[14px] font-semibold ${message.role === 'user'
                           ? 'bg-white/20 text-white'
-                          : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700'
+                          : 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-100 dark:border-emerald-800'
                           }`}>
                           {children}
                         </code>

@@ -5,8 +5,8 @@
       "name": "True/False/Not Given",
       "category": "factual-information",
       "whatIsIt": {
-        "description": "These questions test your ability to identify specific information and determine whether statements are supported, contradicted, or not mentioned in the passage.",
-        "skillTested": "Distinguishing between stated, contradicted, and missing information."
+        "description": "True/False/Not Given (T/F/NG) is one of the most common and challenging question types in the IELTS Academic and General Training Reading tests. You are given a series of statements and must decide whether each one agrees with, contradicts, or is not mentioned in the passage.",
+        "skillTested": "Distinguishing between stated, contradicted, and missing information with precision."
       },
       "recognition": {
         "howToIdentify": [
@@ -36,52 +36,58 @@
             "text": "Most farmers now use organic farming methods.",
             "correctAnswer": "FALSE",
             "explanation": "The passage states 'the majority still rely heavily on chemical pesticides,' contradicting the statement."
+          },
+          {
+            "id": 4,
+            "text": "Urban beekeeping can completely solve the bee population crisis.",
+            "correctAnswer": "NOT GIVEN",
+            "explanation": "The passage says it 'could help stabilize' but doesn't claim it will completely solve the crisis."
           }
         ]
       },
       "strategyTips": [
         {
           "step": 1,
-          "title": "Read the statements first",
-          "description": "Understand what you need to confirm or deny before reading the passage."
+          "title": "Read the Statement Carefully",
+          "description": "Identify the KEY CLAIM being made. Note specific details: names, numbers, dates, qualifiers. Underline critical words."
         },
         {
           "step": 2,
-          "title": "Underline key words",
-          "description": "Focus on names, dates, numbers, and absolute terms (e.g., always, never, all)."
+          "title": "Locate the Relevant Section",
+          "description": "Statements usually follow passage order. Scan for keywords or synonyms. Find the 1-3 sentences that discuss this topic."
         },
         {
           "step": 3,
-          "title": "Scan for paraphrases",
-          "description": "Look for similar meanings, not exact words."
+          "title": "Compare Precisely",
+          "description": "Read the relevant passage section carefully. Compare each element against the passage. Pay attention to qualifiers, scope, degree, and time references."
         },
         {
           "step": 4,
-          "title": "Check for contradiction",
-          "description": "If the text says the opposite, it’s FALSE."
+          "title": "Apply the Three-Way Test",
+          "description": "Can I find text that CONFIRMS this? → TRUE | Can I find text that CONTRADICTS this? → FALSE | Can I find NO relevant information? → NOT GIVEN"
         },
         {
           "step": 5,
-          "title": "Identify missing info",
-          "description": "If the passage doesn’t mention it at all, choose NOT GIVEN."
+          "title": "Verify Your Answer",
+          "description": "For TRUE: Can I quote supporting evidence? For FALSE: Can I quote contradicting evidence? For NOT GIVEN: Am I certain this isn't addressed anywhere?"
         }
       ],
       "commonMistakes": [
         {
           "title": "Confusing FALSE with NOT GIVEN",
-          "description": "Partial or missing information means NOT GIVEN, not FALSE."
+          "description": "FALSE means the passage contradicts the statement. NOT GIVEN means no relevant information exists. Partial or missing information means NOT GIVEN, not FALSE."
         },
         {
           "title": "Using logic or outside knowledge",
-          "description": "Only rely on what’s explicitly in the passage."
+          "description": "Only rely on what's explicitly in the passage. Don't use common sense, assumptions, or what you think should be true."
         },
         {
           "title": "Ignoring qualifying words",
-          "description": "Words like 'most,' 'some,' or 'all' can completely change the meaning."
+          "description": "Words like 'most,' 'some,' 'all,' 'often,' 'always' can completely change the meaning. 'Most students' is NOT the same as 'all students.'"
         },
         {
           "title": "Expecting exact matches",
-          "description": "IELTS uses paraphrases; the wording will differ from the passage."
+          "description": "IELTS uses paraphrases; the wording will differ from the passage. Look for meaning, not word-for-word matches."
         }
       ],
       "trapPatterns": {
@@ -89,121 +95,120 @@
         "examples": [
           "Statements that are true in real life but not mentioned in the passage",
           "Numbers or facts that are almost—but not exactly—the same",
-          "Information appearing in a different context"
+          "Information appearing in a different context",
+          "Extreme language (always, never, all) when passage uses qualified language"
         ],
-        "warningSigns": "Absolute terms like 'always,' 'never,' or 'all' often indicate FALSE answers."
+        "warningSigns": "Absolute terms like 'always,' 'never,' or 'all' often indicate FALSE answers when the passage uses more nuanced language."
       },
       "advancedTips": {
         "difficultyPatterns": [
           "Earlier questions usually follow passage order; later ones may not",
           "If you find info for one statement, nearby questions might be related"
         ],
-        "confidenceBooster": "Information for TRUE and FALSE answers will always be clearly stated or clearly contradicted."
+        "confidenceBooster": "Information for TRUE and FALSE answers will always be clearly stated or clearly contradicted. If you're unsure, it's likely NOT GIVEN."
       },
       "timeManagement": {
         "timePerQuestion": "60–90 seconds",
-        "tip": "If you can’t find the answer in 30 seconds, move on and mark 'NOT GIVEN' — it’s statistically the most common answer."
+        "tip": "If you're stuck on one question for more than 90 seconds, make your best guess, mark it for review, and move on. NOT GIVEN is statistically common."
       },
-      
-
-    "quiz": {
-    "passage": "Online learning has transformed education dramatically over the past five years. A 2023 study by the Education Research Institute found that 78% of university students now take at least one online course during their degree. The flexibility of online learning appeals particularly to working adults, who represent 45% of all online learners. However, critics argue that online education lacks the social interaction necessary for developing communication skills. Professor Sarah Chen from Melbourne University believes that blended learning - combining online and face-to-face instruction - offers the best solution. She conducted research with 200 students in 2022 and found that those in blended programs showed 25% better engagement scores compared to purely online courses. Despite these benefits, technical difficulties remain a significant challenge, with 30% of students reporting connectivity issues during live sessions.",
-    "questions": [
-      {
-        "id": 1,
-        "type": "multiple-choice",
-        "text": "What is the main difference between FALSE and NOT GIVEN answers?",
-        "options": [
-          "FALSE means the information is wrong; NOT GIVEN means you disagree with it",
-          "FALSE means the passage contradicts the statement; NOT GIVEN means no relevant information is provided",
-          "FALSE means the information is incomplete; NOT GIVEN means it's too difficult to understand",
-          "There is no difference - they mean the same thing"
-        ],
-        "correctAnswer": "FALSE means the passage contradicts the statement; NOT GIVEN means no relevant information is provided",
-        "explanation": "FALSE means the passage directly contradicts the statement, while NOT GIVEN means no relevant information exists in the passage."
-      },
-      {
-        "id": 2,
-        "type": "multiple-choice",
-        "text": "When looking for answers in the passage, you should:",
-        "options": [
-          "Search for the exact same words as in the question",
-          "Look for synonyms and paraphrased information",
-          "Use your general knowledge if you can't find the information",
-          "Always read the entire passage first"
-        ],
-        "correctAnswer": "Look for synonyms and paraphrased information",
-        "explanation": "IELTS tests your ability to identify paraphrased information, not exact word matching."
-      },
-      {
-        "id": 3,
-        "type": "multiple-choice",
-        "text": "If a statement says 'All teenagers use social media' but the passage says 'Most teenagers use social media,' the answer is:",
-        "options": [
-          "TRUE - because most means almost all",
-          "FALSE - because 'all' and 'most' have different meanings",
-          "NOT GIVEN - because the exact percentage isn't provided",
-          "TRUE - because it's generally correct information"
-        ],
-        "correctAnswer": "FALSE - because 'all' and 'most' have different meanings",
-        "explanation": "Qualifying words like 'all' vs 'most' change the meaning completely, making the statement false."
-      },
-      {
-        "id": 4,
-        "type": "multiple-choice",
-        "text": "Which time management strategy is recommended for T/F/NG questions?",
-        "options": [
-          "Spend 3-5 minutes per question to be thorough",
-          "Read the entire passage before looking at any questions",
-          "Spend 60-90 seconds per question",
-          "Answer all TRUE answers first, then FALSE, then NOT GIVEN"
-        ],
-        "correctAnswer": "Spend 60-90 seconds per question",
-        "explanation": "Efficient time management allows 60-90 seconds per T/F/NG question."
-      },
-      { 
-        "id": 5, 
-        "type": "true-false-not-given", 
-        "text": "More than three-quarters of university students take online courses.", 
-        "correctAnswer": "TRUE", 
-        "explanation": "The passage states 78% of university students take online courses, which is more than three-quarters (75%)." 
-      },
-      { 
-        "id": 6, 
-        "type": "true-false-not-given", 
-        "text": "Working adults make up nearly half of all online learners.", 
-        "correctAnswer": "TRUE", 
-        "explanation": "The passage states working adults represent 45% of all online learners, which is nearly half." 
-      },
-      { 
-        "id": 7, 
-        "type": "true-false-not-given", 
-        "text": "Online education is inferior to traditional classroom learning.", 
-        "correctAnswer": "NOT GIVEN", 
-        "explanation": "Critics argue about social interaction issues, but the passage doesn't state that online education is inferior overall." 
-      },
-      { 
-        "id": 8, 
-        "type": "true-false-not-given", 
-        "text": "Professor Chen's research was conducted at Melbourne University.", 
-        "correctAnswer": "NOT GIVEN", 
-        "explanation": "We know Professor Chen is from Melbourne University, but the passage doesn't specify where her research was conducted." 
-      },
-      { 
-        "id": 9, 
-        "type": "true-false-not-given", 
-        "text": "Blended learning students had 25% higher grades than online-only students.", 
-        "correctAnswer": "FALSE", 
-        "explanation": "The research found 25% better engagement scores, not higher grades." 
-      },
-      { 
-        "id": 10, 
-        "type": "true-false-not-given", 
-        "text": "One-third of students experience technical problems during online classes.", 
-        "correctAnswer": "FALSE", 
-        "explanation": "30% of students report connectivity issues, which is less than one-third (33.3%)." 
-    }
-  ]
+      "quiz": {
+        "passage": "Online learning has transformed education dramatically over the past five years. A 2023 study by the Education Research Institute found that 78% of university students now take at least one online course during their degree. The flexibility of online learning appeals particularly to working adults, who represent 45% of all online learners. However, critics argue that online education lacks the social interaction necessary for developing communication skills. Professor Sarah Chen from Melbourne University believes that blended learning - combining online and face-to-face instruction - offers the best solution. She conducted research with 200 students in 2022 and found that those in blended programs showed 25% better engagement scores compared to purely online courses. Despite these benefits, technical difficulties remain a significant challenge, with 30% of students reporting connectivity issues during live sessions.",
+        "questions": [
+          {
+            "id": 1,
+            "type": "multiple-choice",
+            "text": "What is the main difference between FALSE and NOT GIVEN answers?",
+            "options": [
+              "FALSE means the information is wrong; NOT GIVEN means you disagree with it",
+              "FALSE means the passage contradicts the statement; NOT GIVEN means no relevant information is provided",
+              "FALSE means the information is incomplete; NOT GIVEN means it's too difficult to understand",
+              "There is no difference - they mean the same thing"
+            ],
+            "correctAnswer": "FALSE means the passage contradicts the statement; NOT GIVEN means no relevant information is provided",
+            "explanation": "FALSE means the passage directly contradicts the statement, while NOT GIVEN means no relevant information exists in the passage."
+          },
+          {
+            "id": 2,
+            "type": "multiple-choice",
+            "text": "When looking for answers in the passage, you should:",
+            "options": [
+              "Search for the exact same words as in the question",
+              "Look for synonyms and paraphrased information",
+              "Use your general knowledge if you can't find the information",
+              "Always read the entire passage first"
+            ],
+            "correctAnswer": "Look for synonyms and paraphrased information",
+            "explanation": "IELTS tests your ability to identify paraphrased information, not exact word matching."
+          },
+          {
+            "id": 3,
+            "type": "multiple-choice",
+            "text": "If a statement says 'All teenagers use social media' but the passage says 'Most teenagers use social media,' the answer is:",
+            "options": [
+              "TRUE - because most means almost all",
+              "FALSE - because 'all' and 'most' have different meanings",
+              "NOT GIVEN - because the exact percentage isn't provided",
+              "TRUE - because it's generally correct information"
+            ],
+            "correctAnswer": "FALSE - because 'all' and 'most' have different meanings",
+            "explanation": "Qualifying words like 'all' vs 'most' change the meaning completely, making the statement false."
+          },
+          {
+            "id": 4,
+            "type": "multiple-choice",
+            "text": "Which time management strategy is recommended for T/F/NG questions?",
+            "options": [
+              "Spend 3-5 minutes per question to be thorough",
+              "Read the entire passage before looking at any questions",
+              "Spend 60-90 seconds per question",
+              "Answer all TRUE answers first, then FALSE, then NOT GIVEN"
+            ],
+            "correctAnswer": "Spend 60-90 seconds per question",
+            "explanation": "Efficient time management allows 60-90 seconds per T/F/NG question."
+          },
+          {
+            "id": 5,
+            "type": "true-false-not-given",
+            "text": "More than three-quarters of university students take online courses.",
+            "correctAnswer": "TRUE",
+            "explanation": "The passage states 78% of university students take online courses, which is more than three-quarters (75%)."
+          },
+          {
+            "id": 6,
+            "type": "true-false-not-given",
+            "text": "Working adults make up nearly half of all online learners.",
+            "correctAnswer": "TRUE",
+            "explanation": "The passage states working adults represent 45% of all online learners, which is nearly half."
+          },
+          {
+            "id": 7,
+            "type": "true-false-not-given",
+            "text": "Online education is inferior to traditional classroom learning.",
+            "correctAnswer": "NOT GIVEN",
+            "explanation": "Critics argue about social interaction issues, but the passage doesn't state that online education is inferior overall."
+          },
+          {
+            "id": 8,
+            "type": "true-false-not-given",
+            "text": "Professor Chen's research was conducted at Melbourne University.",
+            "correctAnswer": "NOT GIVEN",
+            "explanation": "We know Professor Chen is from Melbourne University, but the passage doesn't specify where her research was conducted."
+          },
+          {
+            "id": 9,
+            "type": "true-false-not-given",
+            "text": "Blended learning students had 25% higher grades than online-only students.",
+            "correctAnswer": "FALSE",
+            "explanation": "The research found 25% better engagement scores, not higher grades."
+          },
+          {
+            "id": 10,
+            "type": "true-false-not-given",
+            "text": "One-third of students experience technical problems during online classes.",
+            "correctAnswer": "FALSE",
+            "explanation": "30% of students report connectivity issues, which is less than one-third (33.3%)."
+          }
+        ]
       },
       "quickReferenceCard": {
         "do": [
@@ -218,6 +223,616 @@
           "Spend more than 2 minutes on one question",
           "Choose FALSE just because you can’t find the words"
         ]
+      },
+      "detailedTheory": {
+        "sections": [
+          {
+            "id": "section-1",
+            "title": "SECTION 1: WHAT IS TRUE/FALSE/NOT GIVEN?",
+            "subsections": [
+              {
+                "id": "overview",
+                "title": "1.1 Overview",
+                "content": "True/False/Not Given (T/F/NG) is one of the most common and challenging question types in the IELTS Academic and General Training Reading tests. You are given a series of statements and must decide whether each one agrees with, contradicts, or is not mentioned in the passage.",
+                "answerMeanings": [
+                  {
+                    "answer": "TRUE",
+                    "meaning": "The statement agrees with the information in the passage"
+                  },
+                  {
+                    "answer": "FALSE",
+                    "meaning": "The statement contradicts the information in the passage"
+                  },
+                  {
+                    "answer": "NOT GIVEN",
+                    "meaning": "There is no information about this in the passage"
+                  }
+                ],
+                "importantNote": {
+                  "title": "Important Note",
+                  "description": "In some IELTS tests, you'll see 'Yes/No/Not Given' instead. The difference:",
+                  "comparison": [
+                    {
+                      "type": "True/False/Not Given",
+                      "tests": "Factual information"
+                    },
+                    {
+                      "type": "Yes/No/Not Given",
+                      "tests": "Writer's opinions, claims, or views"
+                    }
+                  ],
+                  "note": "The strategy for both is essentially the same."
+                }
+              },
+              {
+                "id": "skills-tested",
+                "title": "1.2 What This Question Type Tests",
+                "description": "T/F/NG questions assess several critical reading skills:",
+                "skills": [
+                  {
+                    "skill": "Detailed comprehension",
+                    "meaning": "Understanding specific information, not just general ideas"
+                  },
+                  {
+                    "skill": "Paraphrase recognition",
+                    "meaning": "Recognizing when the same meaning is expressed differently"
+                  },
+                  {
+                    "skill": "Distinguishing explicit vs. implicit",
+                    "meaning": "Knowing what the text actually says vs. what you assume"
+                  },
+                  {
+                    "skill": "Precision reading",
+                    "meaning": "Paying attention to qualifiers, negatives, and scope"
+                  },
+                  {
+                    "skill": "Information verification",
+                    "meaning": "Matching claims against textual evidence"
+                  }
+                ],
+                "keyInsight": "This question type does NOT test your opinion or general knowledge. It ONLY tests whether information appears in the passage and whether the statement matches it."
+              }
+            ]
+          },
+          {
+            "id": "section-2",
+            "title": "SECTION 2: UNDERSTANDING THE THREE ANSWERS",
+            "subsections": [
+              {
+                "id": "true-answer",
+                "title": "2.1 TRUE — The Statement Agrees",
+                "description": "The answer is TRUE when:",
+                "criteria": [
+                  "The passage explicitly states the same information (possibly using different words)",
+                  "The statement is a valid paraphrase of passage content",
+                  "You can point to specific text that confirms the statement"
+                ],
+                "example": {
+                  "passage": "The research team discovered that dolphins can recognize themselves in mirrors, a capability previously thought to exist only in great apes and humans.",
+                  "statement": "Before this research, scientists believed only great apes and humans could identify their own reflection.",
+                  "answer": "TRUE",
+                  "explanation": "The statement paraphrases 'capability previously thought to exist only in great apes and humans.' The meaning is identical."
+                }
+              },
+              {
+                "id": "false-answer",
+                "title": "2.2 FALSE — The Statement Contradicts",
+                "description": "The answer is FALSE when:",
+                "criteria": [
+                  "The passage states the OPPOSITE of what the statement claims",
+                  "There is a direct, demonstrable contradiction",
+                  "You can quote text that conflicts with the statement"
+                ],
+                "criticalPoint": "FALSE requires contradiction, not just absence. The passage must say something incompatible with the statement.",
+                "example": {
+                  "passage": "The survey revealed that 68% of respondents preferred working from home at least three days per week.",
+                  "statement": "The majority of people surveyed wanted to work in the office most of the week.",
+                  "answer": "FALSE",
+                  "explanation": "68% preferred working from home at least three days directly contradicts 'wanted to work in the office most of the week.' These cannot both be true."
+                }
+              },
+              {
+                "id": "not-given-answer",
+                "title": "2.3 NOT GIVEN — No Information",
+                "description": "The answer is NOT GIVEN when:",
+                "criteria": [
+                  "The passage does not mention this specific information at all",
+                  "The topic might be related, but the specific claim is never addressed",
+                  "You cannot find evidence to confirm OR deny the statement"
+                ],
+                "criticalPoint": "NOT GIVEN means absence of information. You cannot infer, assume, or use logic to determine the answer—the passage simply doesn't discuss it.",
+                "example": {
+                  "passage": "The research team discovered that dolphins can recognize themselves in mirrors. The study was conducted at a marine facility in California over a period of two years.",
+                  "statement": "The research was funded by the US government.",
+                  "answer": "NOT GIVEN",
+                  "explanation": "The passage mentions where and how long the study took place, but says nothing about funding. We cannot assume anything about funding sources."
+                }
+              }
+            ]
+          },
+          {
+            "id": "section-3",
+            "title": "SECTION 3: THE KEY DISTINCTION — FALSE vs. NOT GIVEN",
+            "intro": "This is where most students lose marks. Understanding this distinction is crucial.",
+            "subsections": [
+              {
+                "id": "core-difference",
+                "title": "3.1 The Core Difference",
+                "comparison": {
+                  "FALSE": [
+                    "The passage ADDRESSES the topic and says the OPPOSITE",
+                    "There IS information, but it CONTRADICTS",
+                    "You CAN quote conflicting text"
+                  ],
+                  "NOT GIVEN": [
+                    "The passage does NOT ADDRESS this specific point",
+                    "There is NO information to judge",
+                    "You CANNOT find relevant text"
+                  ]
+                }
+              },
+              {
+                "id": "two-question-test",
+                "title": "3.2 The Two-Question Test",
+                "description": "Ask yourself these two questions in order:",
+                "flowchart": [
+                  {
+                    "step": 1,
+                    "question": "Does the passage discuss this topic/make a related claim?",
+                    "ifYes": "Go to Question 2",
+                    "ifNo": "Answer is NOT GIVEN"
+                  },
+                  {
+                    "step": 2,
+                    "question": "Does the passage AGREE or CONTRADICT?",
+                    "ifAgrees": "Answer is TRUE",
+                    "ifContradicts": "Answer is FALSE"
+                  }
+                ]
+              },
+              {
+                "id": "comparison-examples",
+                "title": "3.3 Comparison Examples",
+                "passage": "The company was founded in Manchester in 1987 by two university graduates.",
+                "examples": [
+                  {
+                    "statement": "The company started in Manchester.",
+                    "answer": "TRUE",
+                    "reasoning": "Directly confirmed ('founded in Manchester')"
+                  },
+                  {
+                    "statement": "The company was established in London.",
+                    "answer": "FALSE",
+                    "reasoning": "Contradicted (Manchester, not London)"
+                  },
+                  {
+                    "statement": "The company was founded in 1985.",
+                    "answer": "FALSE",
+                    "reasoning": "Contradicted (1987, not 1985)"
+                  },
+                  {
+                    "statement": "The founders met at university.",
+                    "answer": "NOT GIVEN",
+                    "reasoning": "They were 'university graduates' but passage doesn't say they met there"
+                  },
+                  {
+                    "statement": "The company initially struggled financially.",
+                    "answer": "NOT GIVEN",
+                    "reasoning": "No information about early financial situation"
+                  },
+                  {
+                    "statement": "The company was founded by three people.",
+                    "answer": "FALSE",
+                    "reasoning": "Contradicted ('two' not 'three')"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-4",
+            "title": "SECTION 4: STRATEGY & TECHNIQUE",
+            "subsections": [
+              {
+                "id": "step-by-step",
+                "title": "4.1 Step-by-Step Approach",
+                "steps": [
+                  {
+                    "step": 1,
+                    "title": "Read the Statement Carefully",
+                    "actions": [
+                      "Identify the KEY CLAIM being made",
+                      "Note specific details: names, numbers, dates, qualifiers",
+                      "Underline critical words"
+                    ]
+                  },
+                  {
+                    "step": 2,
+                    "title": "Locate the Relevant Section",
+                    "actions": [
+                      "Statements usually follow passage order (Q1 → early paragraphs, Q5 → later paragraphs)",
+                      "Scan for keywords or synonyms from the statement",
+                      "Find the 1-3 sentences that discuss this topic"
+                    ]
+                  },
+                  {
+                    "step": 3,
+                    "title": "Compare Precisely",
+                    "actions": [
+                      "Read the relevant passage section carefully",
+                      "Compare each element of the statement against the passage",
+                      "Pay attention to: qualifiers, scope, degree, time references"
+                    ]
+                  },
+                  {
+                    "step": 4,
+                    "title": "Apply the Three-Way Test",
+                    "tests": [
+                      "Can I find text that CONFIRMS this? → TRUE",
+                      "Can I find text that CONTRADICTS this? → FALSE",
+                      "Can I find NO relevant information? → NOT GIVEN"
+                    ]
+                  },
+                  {
+                    "step": 5,
+                    "title": "Verify Your Answer",
+                    "checks": [
+                      "For TRUE: Can I quote supporting evidence?",
+                      "For FALSE: Can I quote contradicting evidence?",
+                      "For NOT GIVEN: Am I certain this isn't addressed anywhere?"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "time-management",
+                "title": "4.2 Time Management",
+                "guidelines": {
+                  "5 questions": "7-9 minutes",
+                  "6-7 questions": "9-12 minutes",
+                  "perQuestion": "60-90 seconds average"
+                },
+                "tip": "If you're stuck on one question for more than 90 seconds, make your best guess, mark it for review, and move on."
+              },
+              {
+                "id": "signal-words",
+                "title": "4.3 Signal Words to Watch",
+                "categories": [
+                  {
+                    "category": "Qualifiers (Often Create FALSE Traps)",
+                    "examples": [
+                      {
+                        "passageSays": "some students",
+                        "questionClaims": "all students",
+                        "answer": "FALSE"
+                      },
+                      {
+                        "passageSays": "often occurs",
+                        "questionClaims": "always occurs",
+                        "answer": "FALSE"
+                      },
+                      {
+                        "passageSays": "may cause",
+                        "questionClaims": "definitely causes",
+                        "answer": "FALSE"
+                      },
+                      {
+                        "passageSays": "one of the reasons",
+                        "questionClaims": "the main reason",
+                        "answer": "FALSE/NOT GIVEN"
+                      },
+                      {
+                        "passageSays": "rarely happens",
+                        "questionClaims": "never happens",
+                        "answer": "FALSE"
+                      }
+                    ]
+                  },
+                  {
+                    "category": "Comparatives & Superlatives",
+                    "examples": [
+                      {
+                        "passageSays": "larger than X",
+                        "questionClaims": "smaller than X",
+                        "answer": "FALSE"
+                      },
+                      {
+                        "passageSays": "the largest",
+                        "questionClaims": "one of the largest",
+                        "answer": "Could be TRUE (largest is also 'one of')"
+                      },
+                      {
+                        "passageSays": "more popular",
+                        "questionClaims": "most popular",
+                        "answer": "NOT GIVEN (unless confirmed)"
+                      }
+                    ]
+                  },
+                  {
+                    "category": "Time & Sequence Words",
+                    "examples": [
+                      {
+                        "passageSays": "before 1990",
+                        "questionClaims": "after 1990",
+                        "answer": "FALSE"
+                      },
+                      {
+                        "passageSays": "since 2010",
+                        "questionClaims": "prior to 2010",
+                        "answer": "FALSE"
+                      },
+                      {
+                        "passageSays": "X then Y",
+                        "questionClaims": "Y then X",
+                        "answer": "FALSE"
+                      },
+                      {
+                        "passageSays": "during the study",
+                        "questionClaims": "after the study",
+                        "answer": "FALSE/NOT GIVEN"
+                      }
+                    ]
+                  },
+                  {
+                    "category": "Negatives & Double Negatives",
+                    "examples": [
+                      {
+                        "passageSays": "not uncommon",
+                        "questionClaims": "common",
+                        "answer": "TRUE (double negative = positive)"
+                      },
+                      {
+                        "passageSays": "rarely fails",
+                        "questionClaims": "usually succeeds",
+                        "answer": "TRUE (same meaning)"
+                      },
+                      {
+                        "passageSays": "cannot be ignored",
+                        "questionClaims": "is important",
+                        "answer": "TRUE"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "signalWords": {
+        "description": "Critical words that can change the answer completely",
+        "qualifiers": {
+          "title": "Qualifiers (Often Create FALSE Traps)",
+          "examples": [
+            {
+              "passage": "some students",
+              "question": "all students",
+              "result": "FALSE - Scope changed"
+            },
+            {
+              "passage": "often occurs",
+              "question": "always occurs",
+              "result": "FALSE - Frequency changed"
+            },
+            {
+              "passage": "may cause",
+              "question": "definitely causes",
+              "result": "FALSE - Certainty changed"
+            },
+            {
+              "passage": "one of the reasons",
+              "question": "the main reason",
+              "result": "FALSE/NOT GIVEN - Importance changed"
+            },
+            {
+              "passage": "rarely happens",
+              "question": "never happens",
+              "result": "FALSE - Absolute vs qualified"
+            }
+          ]
+        },
+        "comparatives": {
+          "title": "Comparatives & Superlatives",
+          "examples": [
+            {
+              "passage": "larger than X",
+              "question": "smaller than X",
+              "result": "FALSE"
+            },
+            {
+              "passage": "the largest",
+              "question": "one of the largest",
+              "result": "Could be TRUE"
+            },
+            {
+              "passage": "more popular",
+              "question": "most popular",
+              "result": "NOT GIVEN unless confirmed"
+            }
+          ]
+        },
+        "timeSequence": {
+          "title": "Time & Sequence Words",
+          "examples": [
+            {
+              "passage": "before 1990",
+              "question": "after 1990",
+              "result": "FALSE"
+            },
+            {
+              "passage": "since 2010",
+              "question": "prior to 2010",
+              "result": "FALSE"
+            },
+            {
+              "passage": "X then Y",
+              "question": "Y then X",
+              "result": "FALSE - Order matters"
+            }
+          ]
+        }
+      },
+      "commonPitfalls": {
+        "title": "Common Mistakes & Pitfalls",
+        "description": "The 10 Most Common Errors Students Make",
+        "mistakes": [
+          {
+            "id": 1,
+            "title": "Using Outside Knowledge",
+            "trap": "You know something is true in real life, so you mark it TRUE.",
+            "example": {
+              "passage": "Passage discusses climate change but doesn't mention CO2.",
+              "statement": "Carbon dioxide is a greenhouse gas.",
+              "wrongThinking": "I know CO2 is a greenhouse gas, so TRUE.",
+              "correctThinking": "The passage doesn't mention CO2 at all → NOT GIVEN"
+            },
+            "rule": "Only use information IN the passage. Your knowledge is irrelevant."
+          },
+          {
+            "id": 2,
+            "title": "Confusing FALSE and NOT GIVEN",
+            "trap": "The statement seems wrong, so you choose FALSE—but the passage never discusses it.",
+            "example": {
+              "passage": "The experiment used 50 participants over three months.",
+              "statement": "The experiment was expensive to conduct.",
+              "wrongThinking": "50 participants sounds expensive, but the passage doesn't say it was expensive, so FALSE.",
+              "correctThinking": "Cost is never mentioned → NOT GIVEN"
+            },
+            "rule": "FALSE needs a contradiction. No information = NOT GIVEN."
+          },
+          {
+            "id": 3,
+            "title": "Over-Inferencing for TRUE",
+            "trap": "You make a logical assumption and treat it as confirmed.",
+            "example": {
+              "passage": "The CEO announced the company would expand into Asian markets.",
+              "statement": "The company expects expansion to be profitable.",
+              "wrongThinking": "Why would they expand if not for profit? TRUE.",
+              "correctThinking": "Profitability expectations are never stated → NOT GIVEN"
+            },
+            "rule": "TRUE requires explicit support, not logical assumptions."
+          },
+          {
+            "id": 4,
+            "title": "Missing Paraphrases",
+            "trap": "You don't recognize that the passage says the same thing differently.",
+            "example": {
+              "passage": "The population declined rapidly.",
+              "statement": "The number of inhabitants fell quickly.",
+              "wrongThinking": "I can't find the words 'inhabitants' or 'fell' → NOT GIVEN.",
+              "correctThinking": "'population' = 'number of inhabitants'; 'declined rapidly' = 'fell quickly' → TRUE"
+            },
+            "rule": "Learn to recognize synonyms and paraphrases."
+          },
+          {
+            "id": 5,
+            "title": "Ignoring Qualifiers",
+            "trap": "You miss small words that change meaning significantly.",
+            "commonQualifierTraps": [
+              {
+                "passage": "Some experts believe...",
+                "statement": "Experts believe...",
+                "answer": "NOT GIVEN",
+                "missedWord": "'Some' vs. general"
+              },
+              {
+                "passage": "This may lead to...",
+                "statement": "This leads to...",
+                "answer": "FALSE",
+                "missedWord": "'may' = possibility"
+              },
+              {
+                "passage": "One of the causes...",
+                "statement": "The cause...",
+                "answer": "FALSE",
+                "missedWord": "'One of' vs. 'The'"
+              },
+              {
+                "passage": "...was rarely seen",
+                "statement": "...was never seen",
+                "answer": "FALSE",
+                "missedWord": "'rarely' vs. 'never'"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "title": "Reversing Comparisons",
+            "trap": "You confuse which item is greater/lesser/earlier/later.",
+            "example": {
+              "passage": "Method A was more effective than Method B.",
+              "statement": "Method B produced better results than Method A.",
+              "wrongThinking": "It's comparing the two methods, so TRUE.",
+              "correctThinking": "The passage says A > B, but statement says B > A → FALSE"
+            }
+          },
+          {
+            "id": 7,
+            "title": "Scope Errors",
+            "trap": "The statement makes a broader or narrower claim than the passage.",
+            "example": {
+              "passage": "The study found that children who read daily performed better in school.",
+              "statement": "Reading daily improves academic performance for all age groups.",
+              "wrongThinking": "Reading helps performance, TRUE.",
+              "correctThinking": "Passage is about children only; statement claims ALL age groups → NOT GIVEN"
+            }
+          },
+          {
+            "id": 8,
+            "title": "Partial Matches",
+            "trap": "Part of the statement is true, but another part is false or unconfirmed.",
+            "example": {
+              "passage": "Dr. Smith, a biologist from Oxford, published the findings in 2020.",
+              "statement": "Dr. Smith, a chemist from Oxford, published the findings in 2020.",
+              "analysis": [
+                "✓ From Oxford — TRUE",
+                "✓ Published in 2020 — TRUE",
+                "✗ Chemist — FALSE (passage says 'biologist')"
+              ],
+              "answer": "FALSE",
+              "reasoning": "One contradiction makes the whole statement false"
+            },
+            "rule": "Every part of the statement must be verified. One wrong element = FALSE."
+          },
+          {
+            "id": 9,
+            "title": "Misreading Negatives",
+            "trap": "Double negatives or negative constructions confuse you.",
+            "examples": [
+              {
+                "passageSays": "It is not impossible",
+                "means": "It IS possible",
+                "statement": "It is possible",
+                "answer": "TRUE"
+              },
+              {
+                "passageSays": "Few would disagree",
+                "means": "Most agree",
+                "statement": "Most people agree",
+                "answer": "TRUE"
+              },
+              {
+                "passageSays": "He was not unaware",
+                "means": "He WAS aware",
+                "statement": "He knew about it",
+                "answer": "TRUE"
+              },
+              {
+                "passageSays": "Not all students passed",
+                "means": "Some failed",
+                "statement": "Some students failed",
+                "answer": "TRUE"
+              }
+            ]
+          },
+          {
+            "id": 10,
+            "title": "Position Assumption",
+            "trap": "You assume statements at the end of the question set relate to the end of the passage.",
+            "reality": "While questions generally follow passage order, this isn't guaranteed. Always verify the location.",
+            "strategy": "Use keywords to locate the relevant section, don't rely on position alone."
+          }
+        ]
       }
     },
     {
@@ -225,7 +840,6 @@
       "name": "Matching Headings",
       "category": "main-ideas",
       "frequency": "High - appears in approximately 60-70% of IELTS Reading tests",
-      
       "quickRecognition": {
         "identifiers": [
           "A list of headings (usually labeled i, ii, iii, iv, etc.)",
@@ -233,21 +847,17 @@
           "More headings than paragraphs (distractors included)"
         ]
       },
-      
       "whatIsIt": {
         "description": "These questions test your ability to identify the main idea or theme of a paragraph. You must match each paragraph with the most suitable heading from a list of options. There are always extra headings to distract you.",
         "skillTested": "Your ability to identify main ideas and distinguish them from supporting details",
         "howItWorks": "You match headings to paragraphs based on the main idea, not specific details.",
         "scoringImpact": "Typically 5-8 questions per set, worth 1 point each. This question type often appears with longer passages."
       },
-      
       "example": {
         "passage": {
           "paragraphA": "The ancient city of Petra in Jordan attracts over one million visitors annually, making it the country's most popular tourist destination. The influx of tourists has brought significant economic benefits to the region, creating jobs in hospitality, transportation, and guiding services. Local businesses have flourished, with restaurants, hotels, and souvenir shops experiencing steady growth over the past decade.",
-          
           "paragraphB": "However, the environmental cost of mass tourism has become increasingly apparent. The constant foot traffic has led to erosion of the ancient stone structures, while littering and inadequate waste management systems have polluted the surrounding desert landscape. Archaeologists warn that without immediate intervention, some of the site's most fragile monuments may suffer irreversible damage within the next 20 years."
         },
-        
         "headings": [
           "i. Economic advantages of tourism",
           "ii. Environmental damage caused by visitors",
@@ -255,7 +865,6 @@
           "iv. Threats to archaeological preservation",
           "v. Government investment in infrastructure"
         ],
-        
         "questions": [
           {
             "id": 1,
@@ -273,7 +882,6 @@
           }
         ]
       },
-      
       "commonMistakes": [
         {
           "title": "Matching based on a single word",
@@ -296,7 +904,6 @@
           "description": "Headings that use words from the paragraph but misrepresent the main idea, or overly specific headings that match one detail but not the overall point."
         }
       ],
-      
       "trapPatterns": [
         {
           "type": "Word repetition trap",
@@ -311,9 +918,7 @@
           "description": "Two or more headings with subtle but important differences - testing your precision"
         }
       ],
-      
       "warningSign": "If you match a heading too quickly based on one word, STOP and reread the entire paragraph",
-      
       "strategyTips": [
         {
           "step": 1,
@@ -346,20 +951,17 @@
           "description": "The heading will paraphrase the main idea using different words - don't expect exact word matches"
         }
       ],
-      
       "keyTechniques": {
         "topicSentence": "Focus on the topic sentence (usually first or second sentence) which introduces the main idea",
         "repeatedConcepts": "Look for themes or concepts that are repeated throughout the paragraph",
         "elimination": "Eliminate headings as you use them to avoid confusion",
         "avoidKeywords": "Don't match based on keywords alone - match concepts and main ideas"
       },
-      
       "timeManagement": {
         "timePerQuestion": "2-3 minutes per paragraph",
         "totalTime": "10-15 minutes total for a full set",
         "tip": "This question type takes longer than others. Budget your time accordingly and don't rush."
       },
-      
       "dosAndDonts": {
         "dos": [
           "Read the entire paragraph before choosing",
@@ -376,7 +978,6 @@
           "Use a heading more than once"
         ]
       },
-      
       "advancedTips": [
         {
           "title": "Difficulty variations",
@@ -395,12 +996,10 @@
           "description": "One heading is usually very obvious - start with the easiest paragraph to build momentum and eliminate options"
         }
       ],
-      
       "emergencyStrategy": {
         "whenRunningOutOfTime": "Read only the first two and last sentences of remaining paragraphs, then make your best guess",
         "confidenceBooster": "One heading is usually very obvious - start with the easiest paragraph to build momentum"
       },
-      
       "masteryCheck": {
         "theoryQuiz": [
           {
@@ -428,20 +1027,16 @@
             "explanation": "Supporting details explain, prove, or illustrate the main idea but are not the central point themselves."
           }
         ],
-        
         "miniPractice": {
           "passage": "While renewable energy technologies have become more affordable in recent years, the initial investment remains prohibitively expensive for many developing nations. Solar panels and wind turbines require substantial upfront capital that these countries often lack. International funding programs have been established to address this gap, but bureaucratic hurdles and strict eligibility requirements mean many nations cannot access these resources.",
-          
           "headings": [
             "i. The falling cost of renewable technology",
             "ii. Financial barriers preventing renewable energy adoption",
             "iii. How developing nations produce energy"
           ],
-          
           "correctAnswer": "ii",
           "explanation": "Although the paragraph mentions falling costs, the MAIN idea is about financial barriers that prevent adoption, not the cost reduction itself. The entire paragraph focuses on why developing nations cannot afford or access renewable energy."
         },
-        
         "selfAssessment": [
           "I can distinguish between main ideas and supporting details",
           "I read the entire paragraph before matching a heading",
@@ -449,106 +1044,141 @@
           "I can eliminate distractors confidently",
           "I can explain why wrong headings don't fit"
         ],
-        
         "readyWhen": "You score 100% on the understanding quiz and can explain why wrong headings don't fit"
       },
-    "theoryQuiz": {
-      "title": "Matching Headings - Theory Understanding",
-      "questions": [
-        {
-          "id": 1,
-          "type": "multiple-choice",
-          "text": "Should you match headings based on keywords appearing in both the heading and paragraph?",
-          "options": [
-            "Yes, keyword matching is the fastest and most accurate method",
-            "No, you should match based on the main idea, not keywords",
-            "Yes, but only if the keyword appears more than twice",
-            "No, you should only use the first sentence"
-          ],
-          "correctAnswer": "b",
-          "explanation": "Keyword matching is a common trap. IELTS tests your ability to identify main ideas, which are often paraphrased rather than using exact words."
-        },
-        {
-          "id": 2,
-          "type": "multiple-choice",
-          "text": "What part of the paragraph usually contains the main idea?",
-          "options": [
-            "Only in the middle sentences",
-            "Always in the last sentence",
-            "Usually in the topic sentence (first or second sentence) and supported by the conclusion",
-            "Evenly distributed throughout"
-          ],
-          "correctAnswer": "c",
-          "explanation": "The topic sentence typically introduces the main idea, while the rest of the paragraph provides supporting details."
-        },
-        {
-          "id": 3,
-          "type": "multiple-choice",
-          "text": "Why are there more headings than paragraphs in this question type?",
-          "options": [
-            "To give you more options in case you're unsure",
-            "It's a mistake in the test design",
-            "To include distractors that test your precision",
-            "So you can choose your favorite heading style"
-          ],
-          "correctAnswer": "c",
-          "explanation": "Extra headings serve as distractors to test whether you can accurately identify main ideas versus related but incorrect options."
-        },
-        {
-          "id": 4,
-          "type": "multiple-choice",
-          "text": "How much time should you allocate per paragraph for matching headings?",
-          "options": [
-            "30 seconds - work quickly",
-            "5 minutes - be very thorough",
-            "2-3 minutes per paragraph",
-            "It doesn't matter, just finish all questions"
-          ],
-          "correctAnswer": "c",
-          "explanation": "Matching headings requires careful thought; 2-3 minutes per paragraph allows proper analysis without rushing."
-        }
-      ]
-    },
-    "practicalQuiz": {
-      "passage": {
-        "paragraphA": "The introduction of artificial intelligence in healthcare has revolutionized diagnostic accuracy. Machine learning algorithms can now analyze medical images with precision that rivals or exceeds human radiologists. A 2023 study showed that AI systems correctly identified lung cancer in CT scans 94% of the time, compared to 88% for human doctors. This technology has proven particularly valuable in regions with limited access to specialist physicians.",
-        "paragraphB": "Despite these technological advances, many patients express discomfort with AI-driven diagnoses. Surveys indicate that 65% of patients prefer human doctors to make final medical decisions, even when AI provides supporting analysis. Trust issues stem from concerns about algorithmic bias, lack of transparency in how AI reaches conclusions, and fears about data privacy. Healthcare providers report that patient anxiety often increases when they learn AI was involved in their diagnosis.",
-        "paragraphC": "The economic implications of AI in healthcare extend beyond diagnostic improvements. Hospitals implementing AI systems report initial costs averaging $2.5 million, including software, training, and infrastructure upgrades. However, long-term savings emerge through reduced diagnostic errors, shorter hospital stays, and more efficient resource allocation. Some healthcare economists project that widespread AI adoption could reduce overall healthcare costs by 15-20% within a decade.",
-        "paragraphD": "Medical schools worldwide are now integrating AI training into their curricula. Future doctors must learn not only traditional diagnostic skills but also how to interpret AI-generated insights and communicate them effectively to patients. The University of Toronto recently launched a mandatory course on AI literacy for all first-year medical students. Educators emphasize that AI should augment, not replace, human clinical judgment."
+      "theoryQuiz": {
+        "title": "Matching Headings - Theory Understanding",
+        "questions": [
+          {
+            "id": 1,
+            "type": "multiple-choice",
+            "text": "Should you match headings based on keywords appearing in both the heading and paragraph?",
+            "options": [
+              "Yes, keyword matching is the fastest and most accurate method",
+              "No, you should match based on the main idea, not keywords",
+              "Yes, but only if the keyword appears more than twice",
+              "No, you should only use the first sentence"
+            ],
+            "correctAnswer": "b",
+            "explanation": "Keyword matching is a common trap. IELTS tests your ability to identify main ideas, which are often paraphrased rather than using exact words."
+          },
+          {
+            "id": 2,
+            "type": "multiple-choice",
+            "text": "What part of the paragraph usually contains the main idea?",
+            "options": [
+              "Only in the middle sentences",
+              "Always in the last sentence",
+              "Usually in the topic sentence (first or second sentence) and supported by the conclusion",
+              "Evenly distributed throughout"
+            ],
+            "correctAnswer": "c",
+            "explanation": "The topic sentence typically introduces the main idea, while the rest of the paragraph provides supporting details."
+          },
+          {
+            "id": 3,
+            "type": "multiple-choice",
+            "text": "Why are there more headings than paragraphs in this question type?",
+            "options": [
+              "To give you more options in case you're unsure",
+              "It's a mistake in the test design",
+              "To include distractors that test your precision",
+              "So you can choose your favorite heading style"
+            ],
+            "correctAnswer": "c",
+            "explanation": "Extra headings serve as distractors to test whether you can accurately identify main ideas versus related but incorrect options."
+          },
+          {
+            "id": 4,
+            "type": "multiple-choice",
+            "text": "How much time should you allocate per paragraph for matching headings?",
+            "options": [
+              "30 seconds - work quickly",
+              "5 minutes - be very thorough",
+              "2-3 minutes per paragraph",
+              "It doesn't matter, just finish all questions"
+            ],
+            "correctAnswer": "c",
+            "explanation": "Matching headings requires careful thought; 2-3 minutes per paragraph allows proper analysis without rushing."
+          }
+        ]
       },
-      "headings": [
-        "i. Superior diagnostic performance of AI systems",
-        "ii. Patient resistance to automated medical decisions",
-        "iii. The cost-benefit analysis of healthcare AI",
-        "iv. Training the next generation of AI-literate physicians",
-        "v. Government regulation of medical technology",
-        "vi. The history of AI development",
-        "vii. AI's role in surgical procedures",
-        "viii. Financial investment and long-term savings in AI healthcare"
-      ],
-      "questions": [
-        { "id": 5, "type": "matching-headings", "text": "Paragraph A", "correctAnswer": "i", "explanation": "The paragraph's main focus is on how AI has improved diagnostic accuracy, with specific statistics showing AI outperforming human doctors." },
-        { "id": 6, "type": "matching-headings", "text": "Paragraph B", "correctAnswer": "ii", "explanation": "The main idea centers on patient discomfort and preference for human doctors over AI, despite technological capabilities." },
-        { "id": 7, "type": "matching-headings", "text": "Paragraph C", "correctAnswer": "viii", "explanation": "While heading iii is tempting, heading viii is more precise as the paragraph specifically discusses initial investment costs and long-term financial savings." },
-        { "id": 8, "type": "matching-headings", "text": "Paragraph D", "correctAnswer": "iv", "explanation": "The paragraph discusses how medical schools are preparing future doctors to work with AI technology." }
-      ],
-      "miniPractice": {
-        "paragraph": "While renewable energy technologies have become more affordable in recent years, the initial investment remains prohibitively expensive for many developing nations. Solar panels and wind turbines require substantial upfront capital that these countries often lack. International funding programs have been established to address this gap, but bureaucratic hurdles and strict eligibility requirements mean many nations cannot access these resources.",
+      "practicalQuiz": {
+        "passage": {
+          "paragraphA": "The introduction of artificial intelligence in healthcare has revolutionized diagnostic accuracy. Machine learning algorithms can now analyze medical images with precision that rivals or exceeds human radiologists. A 2023 study showed that AI systems correctly identified lung cancer in CT scans 94% of the time, compared to 88% for human doctors. This technology has proven particularly valuable in regions with limited access to specialist physicians.",
+          "paragraphB": "Despite these technological advances, many patients express discomfort with AI-driven diagnoses. Surveys indicate that 65% of patients prefer human doctors to make final medical decisions, even when AI provides supporting analysis. Trust issues stem from concerns about algorithmic bias, lack of transparency in how AI reaches conclusions, and fears about data privacy. Healthcare providers report that patient anxiety often increases when they learn AI was involved in their diagnosis.",
+          "paragraphC": "The economic implications of AI in healthcare extend beyond diagnostic improvements. Hospitals implementing AI systems report initial costs averaging $2.5 million, including software, training, and infrastructure upgrades. However, long-term savings emerge through reduced diagnostic errors, shorter hospital stays, and more efficient resource allocation. Some healthcare economists project that widespread AI adoption could reduce overall healthcare costs by 15-20% within a decade.",
+          "paragraphD": "Medical schools worldwide are now integrating AI training into their curricula. Future doctors must learn not only traditional diagnostic skills but also how to interpret AI-generated insights and communicate them effectively to patients. The University of Toronto recently launched a mandatory course on AI literacy for all first-year medical students. Educators emphasize that AI should augment, not replace, human clinical judgment."
+        },
         "headings": [
-          "i. The falling cost of renewable technology",
-          "ii. Financial barriers preventing renewable energy adoption",
-          "iii. How developing nations produce energy"
+          "i. Superior diagnostic performance of AI systems",
+          "ii. Patient resistance to automated medical decisions",
+          "iii. The cost-benefit analysis of healthcare AI",
+          "iv. Training the next generation of AI-literate physicians",
+          "v. Government regulation of medical technology",
+          "vi. The history of AI development",
+          "vii. AI's role in surgical procedures",
+          "viii. Financial investment and long-term savings in AI healthcare"
         ],
-        "correctAnswer": "ii",
-        "explanation": "Although the paragraph mentions falling costs, the main idea is about financial barriers that prevent adoption, not the cost reduction itself."
+        "questions": [
+          {
+            "id": 5,
+            "type": "matching-headings",
+            "text": "Paragraph A",
+            "correctAnswer": "i",
+            "explanation": "The paragraph's main focus is on how AI has improved diagnostic accuracy, with specific statistics showing AI outperforming human doctors."
+          },
+          {
+            "id": 6,
+            "type": "matching-headings",
+            "text": "Paragraph B",
+            "correctAnswer": "ii",
+            "explanation": "The main idea centers on patient discomfort and preference for human doctors over AI, despite technological capabilities."
+          },
+          {
+            "id": 7,
+            "type": "matching-headings",
+            "text": "Paragraph C",
+            "correctAnswer": "viii",
+            "explanation": "While heading iii is tempting, heading viii is more precise as the paragraph specifically discusses initial investment costs and long-term financial savings."
+          },
+          {
+            "id": 8,
+            "type": "matching-headings",
+            "text": "Paragraph D",
+            "correctAnswer": "iv",
+            "explanation": "The paragraph discusses how medical schools are preparing future doctors to work with AI technology."
+          }
+        ],
+        "miniPractice": {
+          "paragraph": "While renewable energy technologies have become more affordable in recent years, the initial investment remains prohibitively expensive for many developing nations. Solar panels and wind turbines require substantial upfront capital that these countries often lack. International funding programs have been established to address this gap, but bureaucratic hurdles and strict eligibility requirements mean many nations cannot access these resources.",
+          "headings": [
+            "i. The falling cost of renewable technology",
+            "ii. Financial barriers preventing renewable energy adoption",
+            "iii. How developing nations produce energy"
+          ],
+          "correctAnswer": "ii",
+          "explanation": "Although the paragraph mentions falling costs, the main idea is about financial barriers that prevent adoption, not the cost reduction itself."
+        }
+      },
+      "scoring": {
+        "excellent": {
+          "range": "7-8",
+          "message": "Excellent! You understand the main idea concept"
+        },
+        "good": {
+          "range": "5-6",
+          "message": "Good progress, review questions where you confused details with main ideas"
+        },
+        "needsReview": {
+          "range": "3-4",
+          "message": "Review the theory section focusing on main idea vs. supporting details"
+        },
+        "needsStudy": {
+          "range": "0-2",
+          "message": "Study the theory section again and practice identifying topic sentences"
+        }
       }
-    },
-    "scoring": {
-      "excellent": { "range": "7-8", "message": "Excellent! You understand the main idea concept" },
-      "good": { "range": "5-6", "message": "Good progress, review questions where you confused details with main ideas" },
-      "needsReview": { "range": "3-4", "message": "Review the theory section focusing on main idea vs. supporting details" },
-      "needsStudy": { "range": "0-2", "message": "Study the theory section again and practice identifying topic sentences" }
-    }
     },
     {
       "id": "multiple-choice",
@@ -569,27 +1199,57 @@
       "learningPath": {
         "phase1": {
           "name": "Understanding Basics",
-          "focus": ["What is multiple choice", "Question types", "Recognition"],
+          "focus": [
+            "What is multiple choice",
+            "Question types",
+            "Recognition"
+          ],
           "duration": "15 minutes",
-          "sections": ["quickRecognition", "whatIsIt", "questionTypes"]
+          "sections": [
+            "quickRecognition",
+            "whatIsIt",
+            "questionTypes"
+          ]
         },
         "phase2": {
           "name": "Learning Traps & Patterns",
-          "focus": ["Common mistakes", "Distractor patterns", "Paraphrasing"],
+          "focus": [
+            "Common mistakes",
+            "Distractor patterns",
+            "Paraphrasing"
+          ],
           "duration": "20 minutes",
-          "sections": ["commonMistakes", "trapPatterns", "paraphrasingPatterns"]
+          "sections": [
+            "commonMistakes",
+            "trapPatterns",
+            "paraphrasingPatterns"
+          ]
         },
         "phase3": {
           "name": "Strategy & Examples",
-          "focus": ["Step-by-step approach", "Worked examples", "Different question types"],
+          "focus": [
+            "Step-by-step approach",
+            "Worked examples",
+            "Different question types"
+          ],
           "duration": "30 minutes",
-          "sections": ["strategyTips", "examples", "difficultyExamples"]
+          "sections": [
+            "strategyTips",
+            "examples",
+            "difficultyExamples"
+          ]
         },
         "phase4": {
           "name": "Mastery & Practice",
-          "focus": ["Theory quiz", "Mini practice", "Self-assessment"],
+          "focus": [
+            "Theory quiz",
+            "Mini practice",
+            "Self-assessment"
+          ],
           "duration": "20 minutes",
-          "sections": ["masteryCheck"]
+          "sections": [
+            "masteryCheck"
+          ]
         }
       },
       "quickRecognition": {
@@ -696,27 +1356,72 @@
       ],
       "attitudeIndicators": {
         "positive": {
-          "words": ["fortunately", "beneficial", "impressive", "successfully", "remarkable", "innovative", "promising"],
+          "words": [
+            "fortunately",
+            "beneficial",
+            "impressive",
+            "successfully",
+            "remarkable",
+            "innovative",
+            "promising"
+          ],
           "example": "The results were remarkably positive"
         },
         "negative": {
-          "words": ["unfortunately", "problematic", "concerning", "failed", "alarming", "disappointing", "inadequate"],
+          "words": [
+            "unfortunately",
+            "problematic",
+            "concerning",
+            "failed",
+            "alarming",
+            "disappointing",
+            "inadequate"
+          ],
           "example": "The policy has proven problematic"
         },
         "neutral": {
-          "words": ["however", "in contrast", "on the other hand", "whereas", "alternatively"],
+          "words": [
+            "however",
+            "in contrast",
+            "on the other hand",
+            "whereas",
+            "alternatively"
+          ],
           "example": "However, other researchers disagree"
         },
         "cautious": {
-          "words": ["may", "might", "could", "possibly", "potentially", "appears to", "seems to"],
+          "words": [
+            "may",
+            "might",
+            "could",
+            "possibly",
+            "potentially",
+            "appears to",
+            "seems to"
+          ],
           "example": "This may lead to improvements"
         },
         "certain": {
-          "words": ["will", "must", "certainly", "definitely", "undoubtedly", "clearly", "obviously"],
+          "words": [
+            "will",
+            "must",
+            "certainly",
+            "definitely",
+            "undoubtedly",
+            "clearly",
+            "obviously"
+          ],
           "example": "This will certainly cause problems"
         },
         "critical": {
-          "words": ["merely", "only", "simply", "fails to", "overlooks", "ignores"],
+          "words": [
+            "merely",
+            "only",
+            "simply",
+            "fails to",
+            "overlooks",
+            "ignores"
+          ],
           "example": "The study merely examines surface issues"
         }
       },
@@ -726,37 +1431,56 @@
           {
             "type": "Synonym Replacement",
             "passageExample": "reduce carbon emissions",
-            "optionExamples": ["decrease pollution", "lower greenhouse gases", "cut CO2 output"],
+            "optionExamples": [
+              "decrease pollution",
+              "lower greenhouse gases",
+              "cut CO2 output"
+            ],
             "tip": "Learn common synonym pairs"
           },
           {
             "type": "Active to Passive Voice",
             "passageExample": "Scientists discovered a new species",
-            "optionExamples": ["A new species was discovered", "The discovery of a new species occurred"],
+            "optionExamples": [
+              "A new species was discovered",
+              "The discovery of a new species occurred"
+            ],
             "tip": "Same meaning, different structure"
           },
           {
             "type": "Noun to Verb (and vice versa)",
             "passageExample": "showed improvement in test scores",
-            "optionExamples": ["test scores improved", "there was an improvement"],
+            "optionExamples": [
+              "test scores improved",
+              "there was an improvement"
+            ],
             "tip": "Watch for word form changes"
           },
           {
             "type": "Number/Percentage Paraphrasing",
             "passageExample": "25% of students",
-            "optionExamples": ["a quarter of students", "one in four students"],
+            "optionExamples": [
+              "a quarter of students",
+              "one in four students"
+            ],
             "tip": "Know fraction equivalents"
           },
           {
             "type": "Negative to Positive (and vice versa)",
             "passageExample": "not uncommon",
-            "optionExamples": ["fairly common", "happens frequently"],
+            "optionExamples": [
+              "fairly common",
+              "happens frequently"
+            ],
             "tip": "Double negatives = positive"
           },
           {
             "type": "Cause-Effect Rephrasing",
             "passageExample": "Due to budget cuts, the program was cancelled",
-            "optionExamples": ["Budget cuts led to program cancellation", "The program ended because of funding issues"],
+            "optionExamples": [
+              "Budget cuts led to program cancellation",
+              "The program ended because of funding issues"
+            ],
             "tip": "Same relationship, different words"
           }
         ]
@@ -766,13 +1490,13 @@
           "difficulty": "Easy",
           "passage": "The sharing economy has fundamentally altered consumer behavior in urban centers. Apps like Uber and Airbnb have made it possible to access services without ownership, appealing particularly to younger generations who value experiences over possessions.",
           "question": "What is the main advantage of the sharing economy mentioned in the passage?",
-            "options": [
+          "options": [
             "A. It provides stable employment",
             "B. It allows access to services without ownership",
             "C. It increases worker benefits",
             "D. It reduces company profits"
-            ],
-            "correctAnswer": "B",
+          ],
+          "correctAnswer": "B",
           "thinkingProcess": "This is a DETAIL question ('What is mentioned'). Scan for keywords: 'advantage' or 'benefit'. The passage says apps 'made it possible to access services without ownership' - this directly matches option B.",
           "eliminationProcess": {
             "A": "WRONG - Nothing about employment is mentioned as an advantage",
@@ -869,7 +1593,10 @@
             "D. Challenges maintaining team unity",
             "E. Employee dissatisfaction with flexibility"
           ],
-          "correctAnswers": ["B", "D"],
+          "correctAnswers": [
+            "B",
+            "D"
+          ],
           "thinkingProcess": "Need to find TWO problems clearly stated. Look for negative aspects or challenges mentioned.",
           "eliminationProcess": {
             "A": "WRONG - Passage says productivity INCREASED, not decreased",
@@ -918,7 +1645,12 @@
           "example": {
             "passage": "The research was conducted in 2022 with 500 participants.",
             "question": "How many people participated in the research?",
-            "options": ["A. 200", "B. 500", "C. 2022", "D. Not stated"],
+            "options": [
+              "A. 200",
+              "B. 500",
+              "C. 2022",
+              "D. Not stated"
+            ],
             "correctAnswer": "B",
             "whyEasy": "Number is explicitly stated with no paraphrasing"
           }
@@ -996,8 +1728,23 @@
             "whyWrong": "'Most' and 'all' mean different things. Most = majority, All = 100%"
           },
           "qualifyingWords": {
-            "absolute": ["all", "every", "always", "never", "none", "only"],
-            "qualified": ["most", "many", "some", "often", "usually", "rarely", "few"],
+            "absolute": [
+              "all",
+              "every",
+              "always",
+              "never",
+              "none",
+              "only"
+            ],
+            "qualified": [
+              "most",
+              "many",
+              "some",
+              "often",
+              "usually",
+              "rarely",
+              "few"
+            ],
             "caution": "Options with absolute words are often wrong unless the passage also uses absolute language"
           },
           "howToAvoid": "Circle qualifying words in both the question and options. Make sure they match."
@@ -1374,4 +2121,3 @@
     }
   ]
 }
-

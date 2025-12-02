@@ -1,0 +1,377 @@
+{
+    "id": "tfng-detailed-theory",
+    "title": "IELTS Reading: True/False/Not Given - Complete Theory & Strategy Guide",
+    "sections": [
+        {
+            "id": "section-1",
+            "title": "SECTION 1: WHAT IS TRUE/FALSE/NOT GIVEN?",
+            "subsections": [
+                {
+                    "id": "overview",
+                    "title": "1.1 Overview",
+                    "content": "True/False/Not Given (T/F/NG) is one of the most common and challenging question types in the IELTS Academic and General Training Reading tests. You are given a series of statements and must decide whether each one agrees with, contradicts, or is not mentioned in the passage.",
+                    "answerMeanings": [
+                        {
+                            "answer": "TRUE",
+                            "meaning": "The statement agrees with the information in the passage"
+                        },
+                        {
+                            "answer": "FALSE",
+                            "meaning": "The statement contradicts the information in the passage"
+                        },
+                        {
+                            "answer": "NOT GIVEN",
+                            "meaning": "There is no information about this in the passage"
+                        }
+                    ],
+                    "importantNote": {
+                        "title": "Important Note",
+                        "description": "In some IELTS tests, you'll see 'Yes/No/Not Given' instead. The difference:",
+                        "comparison": [
+                            {
+                                "type": "True/False/Not Given",
+                                "tests": "Factual information"
+                            },
+                            {
+                                "type": "Yes/No/Not Given",
+                                "tests": "Writer's opinions, claims, or views"
+                            }
+                        ],
+                        "note": "The strategy for both is essentially the same."
+                    }
+                },
+                {
+                    "id": "skills-tested",
+                    "title": "1.2 What This Question Type Tests",
+                    "description": "T/F/NG questions assess several critical reading skills:",
+                    "skills": [
+                        {
+                            "skill": "Detailed comprehension",
+                            "meaning": "Understanding specific information, not just general ideas"
+                        },
+                        {
+                            "skill": "Paraphrase recognition",
+                            "meaning": "Recognizing when the same meaning is expressed differently"
+                        },
+                        {
+                            "skill": "Distinguishing explicit vs. implicit",
+                            "meaning": "Knowing what the text actually says vs. what you assume"
+                        },
+                        {
+                            "skill": "Precision reading",
+                            "meaning": "Paying attention to qualifiers, negatives, and scope"
+                        },
+                        {
+                            "skill": "Information verification",
+                            "meaning": "Matching claims against textual evidence"
+                        }
+                    ],
+                    "keyInsight": "This question type does NOT test your opinion or general knowledge. It ONLY tests whether information appears in the passage and whether the statement matches it."
+                }
+            ]
+        },
+        {
+            "id": "section-2",
+            "title": "SECTION 2: UNDERSTANDING THE THREE ANSWERS",
+            "subsections": [
+                {
+                    "id": "true-answer",
+                    "title": "2.1 TRUE — The Statement Agrees",
+                    "description": "The answer is TRUE when:",
+                    "criteria": [
+                        "The passage explicitly states the same information (possibly using different words)",
+                        "The statement is a valid paraphrase of passage content",
+                        "You can point to specific text that confirms the statement"
+                    ],
+                    "example": {
+                        "passage": "The research team discovered that dolphins can recognize themselves in mirrors, a capability previously thought to exist only in great apes and humans.",
+                        "statement": "Before this research, scientists believed only great apes and humans could identify their own reflection.",
+                        "answer": "TRUE",
+                        "explanation": "The statement paraphrases 'capability previously thought to exist only in great apes and humans.' The meaning is identical."
+                    }
+                },
+                {
+                    "id": "false-answer",
+                    "title": "2.2 FALSE — The Statement Contradicts",
+                    "description": "The answer is FALSE when:",
+                    "criteria": [
+                        "The passage states the OPPOSITE of what the statement claims",
+                        "There is a direct, demonstrable contradiction",
+                        "You can quote text that conflicts with the statement"
+                    ],
+                    "criticalPoint": "FALSE requires contradiction, not just absence. The passage must say something incompatible with the statement.",
+                    "example": {
+                        "passage": "The survey revealed that 68% of respondents preferred working from home at least three days per week.",
+                        "statement": "The majority of people surveyed wanted to work in the office most of the week.",
+                        "answer": "FALSE",
+                        "explanation": "68% preferred working from home at least three days directly contradicts 'wanted to work in the office most of the week.' These cannot both be true."
+                    }
+                },
+                {
+                    "id": "not-given-answer",
+                    "title": "2.3 NOT GIVEN — No Information",
+                    "description": "The answer is NOT GIVEN when:",
+                    "criteria": [
+                        "The passage does not mention this specific information at all",
+                        "The topic might be related, but the specific claim is never addressed",
+                        "You cannot find evidence to confirm OR deny the statement"
+                    ],
+                    "criticalPoint": "NOT GIVEN means absence of information. You cannot infer, assume, or use logic to determine the answer—the passage simply doesn't discuss it.",
+                    "example": {
+                        "passage": "The research team discovered that dolphins can recognize themselves in mirrors. The study was conducted at a marine facility in California over a period of two years.",
+                        "statement": "The research was funded by the US government.",
+                        "answer": "NOT GIVEN",
+                        "explanation": "The passage mentions where and how long the study took place, but says nothing about funding. We cannot assume anything about funding sources."
+                    }
+                }
+            ]
+        },
+        {
+            "id": "section-3",
+            "title": "SECTION 3: THE KEY DISTINCTION — FALSE vs. NOT GIVEN",
+            "intro": "This is where most students lose marks. Understanding this distinction is crucial.",
+            "subsections": [
+                {
+                    "id": "core-difference",
+                    "title": "3.1 The Core Difference",
+                    "comparison": {
+                        "FALSE": [
+                            "The passage ADDRESSES the topic and says the OPPOSITE",
+                            "There IS information, but it CONTRADICTS",
+                            "You CAN quote conflicting text"
+                        ],
+                        "NOT GIVEN": [
+                            "The passage does NOT ADDRESS this specific point",
+                            "There is NO information to judge",
+                            "You CANNOT find relevant text"
+                        ]
+                    }
+                },
+                {
+                    "id": "two-question-test",
+                    "title": "3.2 The Two-Question Test",
+                    "description": "Ask yourself these two questions in order:",
+                    "flowchart": [
+                        {
+                            "step": 1,
+                            "question": "Does the passage discuss this topic/make a related claim?",
+                            "ifYes": "Go to Question 2",
+                            "ifNo": "Answer is NOT GIVEN"
+                        },
+                        {
+                            "step": 2,
+                            "question": "Does the passage AGREE or CONTRADICT?",
+                            "ifAgrees": "Answer is TRUE",
+                            "ifContradicts": "Answer is FALSE"
+                        }
+                    ]
+                },
+                {
+                    "id": "comparison-examples",
+                    "title": "3.3 Comparison Examples",
+                    "passage": "The company was founded in Manchester in 1987 by two university graduates.",
+                    "examples": [
+                        {
+                            "statement": "The company started in Manchester.",
+                            "answer": "TRUE",
+                            "reasoning": "Directly confirmed ('founded in Manchester')"
+                        },
+                        {
+                            "statement": "The company was established in London.",
+                            "answer": "FALSE",
+                            "reasoning": "Contradicted (Manchester, not London)"
+                        },
+                        {
+                            "statement": "The company was founded in 1985.",
+                            "answer": "FALSE",
+                            "reasoning": "Contradicted (1987, not 1985)"
+                        },
+                        {
+                            "statement": "The founders met at university.",
+                            "answer": "NOT GIVEN",
+                            "reasoning": "They were 'university graduates' but passage doesn't say they met there"
+                        },
+                        {
+                            "statement": "The company initially struggled financially.",
+                            "answer": "NOT GIVEN",
+                            "reasoning": "No information about early financial situation"
+                        },
+                        {
+                            "statement": "The company was founded by three people.",
+                            "answer": "FALSE",
+                            "reasoning": "Contradicted ('two' not 'three')"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "section-4",
+            "title": "SECTION 4: STRATEGY & TECHNIQUE",
+            "subsections": [
+                {
+                    "id": "step-by-step",
+                    "title": "4.1 Step-by-Step Approach",
+                    "steps": [
+                        {
+                            "step": 1,
+                            "title": "Read the Statement Carefully",
+                            "actions": [
+                                "Identify the KEY CLAIM being made",
+                                "Note specific details: names, numbers, dates, qualifiers",
+                                "Underline critical words"
+                            ]
+                        },
+                        {
+                            "step": 2,
+                            "title": "Locate the Relevant Section",
+                            "actions": [
+                                "Statements usually follow passage order (Q1 → early paragraphs, Q5 → later paragraphs)",
+                                "Scan for keywords or synonyms from the statement",
+                                "Find the 1-3 sentences that discuss this topic"
+                            ]
+                        },
+                        {
+                            "step": 3,
+                            "title": "Compare Precisely",
+                            "actions": [
+                                "Read the relevant passage section carefully",
+                                "Compare each element of the statement against the passage",
+                                "Pay attention to: qualifiers, scope, degree, time references"
+                            ]
+                        },
+                        {
+                            "step": 4,
+                            "title": "Apply the Three-Way Test",
+                            "tests": [
+                                "Can I find text that CONFIRMS this? → TRUE",
+                                "Can I find text that CONTRADICTS this? → FALSE",
+                                "Can I find NO relevant information? → NOT GIVEN"
+                            ]
+                        },
+                        {
+                            "step": 5,
+                            "title": "Verify Your Answer",
+                            "checks": [
+                                "For TRUE: Can I quote supporting evidence?",
+                                "For FALSE: Can I quote contradicting evidence?",
+                                "For NOT GIVEN: Am I certain this isn't addressed anywhere?"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "time-management",
+                    "title": "4.2 Time Management",
+                    "guidelines": {
+                        "5 questions": "7-9 minutes",
+                        "6-7 questions": "9-12 minutes",
+                        "perQuestion": "60-90 seconds average"
+                    },
+                    "tip": "If you're stuck on one question for more than 90 seconds, make your best guess, mark it for review, and move on."
+                },
+                {
+                    "id": "signal-words",
+                    "title": "4.3 Signal Words to Watch",
+                    "categories": [
+                        {
+                            "category": "Qualifiers (Often Create FALSE Traps)",
+                            "examples": [
+                                {
+                                    "passageSays": "some students",
+                                    "questionClaims": "all students",
+                                    "answer": "FALSE"
+                                },
+                                {
+                                    "passageSays": "often occurs",
+                                    "questionClaims": "always occurs",
+                                    "answer": "FALSE"
+                                },
+                                {
+                                    "passageSays": "may cause",
+                                    "questionClaims": "definitely causes",
+                                    "answer": "FALSE"
+                                },
+                                {
+                                    "passageSays": "one of the reasons",
+                                    "questionClaims": "the main reason",
+                                    "answer": "FALSE/NOT GIVEN"
+                                },
+                                {
+                                    "passageSays": "rarely happens",
+                                    "questionClaims": "never happens",
+                                    "answer": "FALSE"
+                                }
+                            ]
+                        },
+                        {
+                            "category": "Comparatives & Superlatives",
+                            "examples": [
+                                {
+                                    "passageSays": "larger than X",
+                                    "questionClaims": "smaller than X",
+                                    "answer": "FALSE"
+                                },
+                                {
+                                    "passageSays": "the largest",
+                                    "questionClaims": "one of the largest",
+                                    "answer": "Could be TRUE (largest is also 'one of')"
+                                },
+                                {
+                                    "passageSays": "more popular",
+                                    "questionClaims": "most popular",
+                                    "answer": "NOT GIVEN (unless confirmed)"
+                                }
+                            ]
+                        },
+                        {
+                            "category": "Time & Sequence Words",
+                            "examples": [
+                                {
+                                    "passageSays": "before 1990",
+                                    "questionClaims": "after 1990",
+                                    "answer": "FALSE"
+                                },
+                                {
+                                    "passageSays": "since 2010",
+                                    "questionClaims": "prior to 2010",
+                                    "answer": "FALSE"
+                                },
+                                {
+                                    "passageSays": "X then Y",
+                                    "questionClaims": "Y then X",
+                                    "answer": "FALSE"
+                                },
+                                {
+                                    "passageSays": "during the study",
+                                    "questionClaims": "after the study",
+                                    "answer": "FALSE/NOT GIVEN"
+                                }
+                            ]
+                        },
+                        {
+                            "category": "Negatives & Double Negatives",
+                            "examples": [
+                                {
+                                    "passageSays": "not uncommon",
+                                    "questionClaims": "common",
+                                    "answer": "TRUE (double negative = positive)"
+                                },
+                                {
+                                    "passageSays": "rarely fails",
+                                    "questionClaims": "usually succeeds",
+                                    "answer": "TRUE (same meaning)"
+                                },
+                                {
+                                    "passageSays": "cannot be ignored",
+                                    "questionClaims": "is important",
+                                    "answer": "TRUE"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

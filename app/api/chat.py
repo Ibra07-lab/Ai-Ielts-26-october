@@ -8,9 +8,15 @@ from app.models.chat_models import DeeperFeedbackRequest, ChatRequest, ChatMessa
 router = APIRouter()
 
 
+# Singleton instance to persist sessions across requests
+_agent_service_instance = None
+
 # Dependency function
 def get_agent_service():
-    return AgentService()
+    global _agent_service_instance
+    if _agent_service_instance is None:
+        _agent_service_instance = AgentService()
+    return _agent_service_instance
 
 
 # POST endpoint for deeper feedback

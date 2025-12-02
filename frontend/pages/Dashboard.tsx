@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { Calendar, Target, Clock, TrendingUp, BookOpen, Mic, PenTool, Headphones, Star, Award, CheckCircle, Plus, Wand2 } from "lucide-react";
+import { Calendar, Target, Clock, TrendingUp, BookOpen, Mic, PenTool, Headphones, Star, Award, CheckCircle, Plus, Wand2, ArrowRight } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -309,30 +309,82 @@ export default function Dashboard() {
           <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white flex items-center gap-2">
             📖 <span>Vocabulary Builder</span>
           </h2>
-          <Card className="hover:shadow-lg hover:scale-102 transition-all duration-300 cursor-pointer bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 border-2 border-orange-100">
-            <CardContent className="p-8" onClick={() => navigate("/vocabulary")}>
-              <div className="flex items-center gap-4 mb-5">
-                <div className="p-4 rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 shadow-lg">
-                  <BookOpen className="h-8 w-8 text-white" />
+          <div className="relative group overflow-hidden rounded-3xl bg-gradient-to-br from-orange-500 via-amber-500 to-yellow-500 p-1">
+            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
+            <div className="relative h-full bg-white dark:bg-neutral-900/90 rounded-[22px] overflow-hidden backdrop-blur-xl transition-all duration-500 group-hover:bg-white/90 dark:group-hover:bg-neutral-900/80">
+              {/* Decorative Blobs */}
+              <div className="absolute -top-24 -right-24 w-64 h-64 bg-orange-400/20 rounded-full blur-3xl group-hover:bg-orange-400/30 transition-all duration-500"></div>
+              <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-yellow-400/20 rounded-full blur-3xl group-hover:bg-yellow-400/30 transition-all duration-500"></div>
+
+              <div className="relative p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div className="flex-1 space-y-6 text-center md:text-left">
+                  <div className="space-y-2">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 text-xs font-bold uppercase tracking-wider">
+                      <Star className="h-3 w-3 fill-current" />
+                      Premium Feature
+                    </div>
+                    <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+                      Vocabulary <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500">Builder</span>
+                    </h2>
+                    <p className="text-lg text-gray-600 dark:text-gray-300 max-w-xl leading-relaxed">
+                      Master high-frequency IELTS words with our scientifically proven spaced repetition system.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap justify-center md:justify-start gap-4">
+                    <div className="flex items-center gap-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+                      <div className="p-1.5 rounded-full bg-orange-100 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400">
+                        <Target className="h-4 w-4" />
+                      </div>
+                      Context Learning
+                    </div>
+                    <div className="flex items-center gap-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+                      <div className="p-1.5 rounded-full bg-amber-100 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                        <Clock className="h-4 w-4" />
+                      </div>
+                      Spaced Repetition
+                    </div>
+                    <div className="flex items-center gap-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+                      <div className="p-1.5 rounded-full bg-yellow-100 dark:bg-yellow-500/10 text-yellow-600 dark:text-yellow-400">
+                        <Award className="h-4 w-4" />
+                      </div>
+                      Smart Tracking
+                    </div>
+                  </div>
+
+                  <Button
+                    onClick={() => navigate("/vocabulary")}
+                    size="lg"
+                    className="h-14 px-8 text-lg font-bold rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-105 transition-all duration-300"
+                  >
+                    Start Learning Now <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
                 </div>
-                <div>
-                  <h3 className="font-bold text-xl text-gray-900 dark:text-white mb-1">
-                    Vocabulary Builder
-                  </h3>
-                  <div className="flex items-center gap-2">
-                    <Star className="h-4 w-4 text-yellow-500" />
-                    <span className="text-sm text-gray-600 dark:text-gray-300">Boost your word power</span>
+
+                {/* Visual Element */}
+                <div className="relative w-full md:w-auto flex justify-center">
+                  <div className="relative w-64 h-64">
+                    <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-full opacity-20 animate-pulse blur-2xl"></div>
+                    <div className="relative z-10 w-full h-full bg-gradient-to-br from-white to-orange-50 dark:from-neutral-800 dark:to-neutral-900 rounded-3xl border border-white/20 shadow-2xl flex items-center justify-center transform rotate-6 hover:rotate-0 transition-all duration-500">
+                      <div className="text-center space-y-2">
+                        <div className="text-6xl">📚</div>
+                        <div className="font-bold text-gray-900 dark:text-white">Word of the Day</div>
+                        <div className="text-sm text-orange-500 font-medium">Click to reveal</div>
+                      </div>
+
+                      {/* Floating badges */}
+                      <div className="absolute -top-4 -right-4 px-3 py-1 bg-white dark:bg-neutral-800 rounded-full shadow-lg border border-gray-100 dark:border-white/10 text-xs font-bold text-green-500 flex items-center gap-1 animate-bounce">
+                        <CheckCircle className="h-3 w-3" /> Learned
+                      </div>
+                      <div className="absolute -bottom-4 -left-4 px-3 py-1 bg-white dark:bg-neutral-800 rounded-full shadow-lg border border-gray-100 dark:border-white/10 text-xs font-bold text-blue-500 flex items-center gap-1 animate-bounce delay-700">
+                        <TrendingUp className="h-3 w-3" /> +15 XP
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <p className="text-gray-600 dark:text-gray-300 mb-6 text-lg leading-relaxed">
-                Expand your IELTS vocabulary with spaced repetition learning and smart review system
-              </p>
-              <Button className="w-full font-semibold py-3 px-6 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white transition-all duration-300" size="lg">
-                Start Learning →
-              </Button>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
 
         {/* Quick Stats */}
