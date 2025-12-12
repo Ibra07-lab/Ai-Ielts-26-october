@@ -54,6 +54,9 @@ export default function ReadingTheory() {
     ? theoryData.questionTypes.find((t: any) => t.id === selectedTheory)
     : null;
 
+  // Handle different JSON structures for different question types
+  // Some types have detailedTheory.sections, others have sections directly
+  const sections = theoryContent?.detailedTheory?.sections || theoryContent?.sections;
   const mc = theoryContent as any;
 
   // Show theory list
@@ -151,9 +154,9 @@ export default function ReadingTheory() {
 
 
       {/* Detailed Theory Sections */}
-      {mc?.detailedTheory?.sections && (
+      {sections && sections.length > 0 && (
         <div className="space-y-8">
-          {mc.detailedTheory.sections.map((section: any) => (
+          {sections.map((section: any) => (
             <Card key={section.id} className="border-l-4 border-l-emerald-500 shadow-md">
               <CardHeader>
                 <CardTitle className="text-xl text-emerald-900 dark:text-emerald-100">
@@ -845,18 +848,22 @@ export default function ReadingTheory() {
               <div className="p-3 bg-white/10 rounded-full">
                 <Clock className="w-6 h-6 text-blue-400" />
               </div>
-              <div>
-                <h3 className="font-bold text-lg">Time Management</h3>
-                <p className="text-slate-300">
-                  {theoryContent.timeManagement.timePerQuestion} per question
+              {theoryContent.timeManagement && (
+                <div>
+                  <h3 className="font-bold text-lg">Time Management</h3>
+                  <p className="text-slate-300">
+                    {theoryContent.timeManagement.timePerQuestion} per question
+                  </p>
+                </div>
+              )}
+            </div>
+            {theoryContent.timeManagement?.tip && (
+              <div className="text-right max-w-xs hidden md:block">
+                <p className="text-sm text-slate-400 italic">
+                  "{theoryContent.timeManagement.tip}"
                 </p>
               </div>
-            </div>
-            <div className="text-right max-w-xs hidden md:block">
-              <p className="text-sm text-slate-400 italic">
-                "{theoryContent.timeManagement.tip}"
-              </p>
-            </div>
+            )}
           </CardContent>
         </Card>
       )}
