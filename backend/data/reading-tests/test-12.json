@@ -434,7 +434,160 @@
                         "text": "The contemporary documentary landscape reflects this evolution, with streaming platforms like Netflix and Amazon Prime investing heavily in advocacy and personal documentaries. Data from 2022 indicates that documentary viewership on streaming services increased by 47 percent compared to 2017, with socially conscious content performing particularly well. This commercial success has validated the shift away from pure objectivity, though debates continue about documentary ethics. Some film schools now teach that the objective ideal was always illusory—that editorial choices about framing, editing, and subject selection inevitably reflect perspective. Looking forward, emerging technologies like virtual reality may create new forms of documentary immersion. What remains constant is the documentary's fundamental purpose: to illuminate aspects of reality, whether through detached observation or passionate advocacy, that deserve public attention and understanding."
                       }
                     ],
-                    "questions": []
+                    "questions": [
+                      {
+                        "id": 8,
+                        "type": "multiple-choice",
+                        "title": "Questions 30-34",
+                        "instructions": "Choose the correct letter, A, B, C or D.",
+                        "questions": [
+                          {
+                            "id": 30,
+                            "questionText": "According to the passage, what percentage of contemporary documentary filmmakers describe their work as having an advocacy purpose?",
+                            "options": [
+                              "Approximately 47 percent",
+                              "Approximately 68 percent",
+                              "Approximately 73 percent",
+                              "Approximately 61 percent"
+                            ],
+                            "correctAnswer": "Approximately 68 percent",
+                            "justification": "Paragraph A explicitly states that a 2021 survey found 68 percent of documentary filmmakers describe their work as having an explicit advocacy purpose. This is a straightforward detail question requiring scanning for a specific statistic.",
+                            "evidenceQuote": "approximately 68 percent of documentary filmmakers describe their work as having an explicit advocacy purpose, according to a 2021 survey conducted by the International Documentary Association"
+                          },
+                          {
+                            "id": 31,
+                            "questionText": "What approach did direct cinema filmmakers adopt to minimize their influence on filmed events?",
+                            "options": [
+                              "They used portable cameras and eliminated interviews and narration",
+                              "They made themselves central characters to acknowledge their presence",
+                              "They conducted extensive interviews while avoiding voice-over commentary",
+                              "They focused primarily on filming environmental and social problems"
+                            ],
+                            "correctAnswer": "They used portable cameras and eliminated interviews and narration",
+                            "justification": "Paragraph B describes direct cinema filmmakers as 'using lightweight cameras and avoiding interviews or narration' to minimize their presence. The correct answer paraphrases 'lightweight cameras' as 'portable cameras' and 'avoiding' as 'eliminated,' maintaining the core meaning of their objective methodology.",
+                            "evidenceQuote": "Filmmakers like Frederick Wiseman and the Maysles brothers developed techniques that minimized their presence during filming, using lightweight cameras and avoiding interviews or narration"
+                          },
+                          {
+                            "id": 32,
+                            "questionText": "What can be inferred about the impact of 'An Inconvenient Truth' on viewers?",
+                            "options": [
+                              "It was less effective at influencing behavior than observational documentaries",
+                              "It primarily influenced government policymakers rather than general audiences",
+                              "It motivated a measurable portion of viewers to modify their personal habits",
+                              "It convinced the majority of viewers to take action on climate change"
+                            ],
+                            "correctAnswer": "It motivated a measurable portion of viewers to modify their personal habits",
+                            "justification": "Paragraph C states that studies showed viewers were '17 percent more likely to take personal action on climate change after watching the film.' This evidence supports the inference that a measurable portion (17% more) were motivated to change personal habits. The correct answer paraphrases 'take personal action' as 'modify their personal habits' and '17 percent more likely' as 'measurable portion.'",
+                            "evidenceQuote": "studies showed that viewers were 17 percent more likely to take personal action on climate change after watching the film"
+                          },
+                          {
+                            "id": 33,
+                            "questionText": "Based on the passage, what does the shift from observational to first-person documentaries suggest about contemporary audience preferences?",
+                            "options": [
+                              "Viewers now prioritize factual objectivity over emotional connection",
+                              "Traditional observational documentaries have become commercially obsolete",
+                              "Audiences across all age groups equally prefer subjective narratives",
+                              "Younger viewers particularly value personal engagement in documentary storytelling"
+                            ],
+                            "correctAnswer": "Younger viewers particularly value personal engagement in documentary storytelling",
+                            "justification": "Paragraph D states that 'first-person documentaries generated 34 percent higher audience engagement scores than traditional observational films, particularly among viewers aged 18 to 35.' This evidence supports inferring that younger audiences especially value personal connection. The answer synthesizes information about engagement scores and age demographics to draw a logical conclusion about preferences.",
+                            "evidenceQuote": "first-person documentaries generated 34 percent higher audience engagement scores than traditional observational films, particularly among viewers aged 18 to 35"
+                          },
+                          {
+                            "id": 34,
+                            "questionText": "What is the primary purpose of paragraph C?",
+                            "options": [
+                              "To demonstrate that Michael Moore revolutionized documentary filmmaking through unprecedented commercial success",
+                              "To describe how documentary filmmakers progressively embraced advocacy as a central purpose",
+                              "To argue that advocacy documentaries are more effective than observational films at achieving social change",
+                              "To analyze the financial performance of environmental documentaries compared to other genres"
+                            ],
+                            "correctAnswer": "To describe how documentary filmmakers progressively embraced advocacy as a central purpose",
+                            "justification": "Paragraph C opens with 'The 1980s and 1990s witnessed a fundamental shift as filmmakers increasingly embraced advocacy as a legitimate documentary purpose' and traces this evolution through specific examples and statistical evidence (61% advocacy content 2005-2015 vs. 23% previously). Option B correctly captures this progression toward advocacy as the paragraph's central theme.",
+                            "evidenceQuote": "The 1980s and 1990s witnessed a fundamental shift as filmmakers increasingly embraced advocacy as a legitimate documentary purpose"
+                          }
+                        ]
+                      },
+                      {
+                        "id": 9,
+                        "type": "summary-completion",
+                        "completion_type": "notes",
+                        "title": "Questions 35-38",
+                        "word_limit": "NO MORE THAN TWO WORDS",
+                        "instructions": "Complete the notes below. Choose NO MORE THAN TWO WORDS from the passage for each answer. Write your answers in boxes 33-36 on your answer sheet.",
+                        "structure": "<div class='completion-notes'><h4>Early Objective Period</h4><p>• John Grierson introduced the term in <strong>(33)_____</strong><br>• Objective style known as <strong>(34)_____</strong> filmmaking dominated 1960s-1980s</p><h4>Direct Cinema Movement (1960s-1970s)</h4><p>• Filmmakers used <strong>(35)_____</strong> to minimize their presence during filming<br>• Avoided interviews and narration to observe events naturally<br>• Majority of festival documentaries employed these observational techniques</p><h4>Shift to Advocacy (1980s onwards)</h4><p>• Directors created films explicitly designed to promote social change<br>• 'Fahrenheit 9/11' generated over <strong>(36)_____</strong> in worldwide revenue<br>• Advocacy approach became mainstream by early 2000s</p><h4>Personal Documentary Approach (Late 1990s-Present)</h4><p>• Filmmakers place themselves as central characters<br>• First-person documentaries achieve higher audience engagement<br>• Particularly popular among younger viewers<br>• Critics debate whether this undermines documentary's truth-telling function</p></div>",
+                        "questions": [
+                          {
+                            "id": 35,
+                            "gap_number": 35,
+                            "questionText": "Gap 35",
+                            "context": "John Grierson introduced the term in (35)_____",
+                            "correctAnswer": "1926",
+                            "justification": "Paragraph A explicitly states that Grierson 'coined the term documentary in 1926.' The note context paraphrases 'coined' as 'introduced' but the answer '1926' is the exact year from the passage.",
+                            "evidenceQuote": "coined the term 'documentary' in 1926",
+                            "evidence_location": "P1",
+                            "answer_type": "date"
+                          },
+                          {
+                            "id": 36,
+                            "gap_number": 36,
+                            "questionText": "Gap 36",
+                            "context": "Objective style known as (36)_____ filmmaking dominated 1960s-1980s",
+                            "correctAnswer": "fly-on-the-wall",
+                            "justification": "The passage describes the objective approach as 'fly-on-the-wall' filmmaking. The note context paraphrases 'This approach, often described as' to 'Objective style known as' and 'dominated the genre from the 1960s through the early 1980s' to 'dominated 1960s-1980s.'",
+                            "evidenceQuote": "This approach, often described as 'fly-on-the-wall' filmmaking, dominated the genre from the 1960s through the early 1980s",
+                            "evidence_location": "P1",
+                            "answer_type": "noun_phrase"
+                          },
+                          {
+                            "id": 37,
+                            "gap_number": 37,
+                            "questionText": "Gap 35",
+                            "context": "Filmmakers used (37)_____ to minimize their presence during filming",
+                            "correctAnswer": "lightweight cameras",
+                            "justification": "Paragraph B states that direct cinema filmmakers 'minimized their presence during filming, using lightweight cameras.' The note context paraphrases 'developed techniques that minimized' as 'used...to minimize' while maintaining the exact phrase 'lightweight cameras' from the passage.",
+                            "evidenceQuote": "developed techniques that minimized their presence during filming, using lightweight cameras",
+                            "evidence_location": "P2",
+                            "answer_type": "noun_phrase"
+                          },
+                          {
+                            "id": 38,
+                            "gap_number": 38,
+                            "questionText": "Gap 38",
+                            "context": "'Fahrenheit 9/11' generated over (38)_____ in worldwide revenue",
+                            "correctAnswer": "$220 million",
+                            "justification": "The passage states that 'Fahrenheit 9/11' earned 'over $220 million worldwide.' The note paraphrases 'earning' as 'generated' and 'worldwide' as 'in worldwide revenue,' but the answer '$220 million' must be exact.",
+                            "evidenceQuote": "'Fahrenheit 9/11' (2004) achieved unprecedented commercial success, with the latter earning over $220 million worldwide",
+                            "evidence_location": "P3",
+                            "answer_type": "number"
+                          }
+                        ]
+                      },
+                      {
+                        "id": 10,
+                        "type": "short-answer",
+                        "title": "Questions 39-40",
+                        "instructions": "Answer the questions below. Choose NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer.",
+                        "questions": [
+                          {
+                            "id": 39,
+                            "questionText": "Who coined the term 'documentary' in 1926?",
+                            "correctAnswer": "John Grierson",
+                            "alternativeAnswers": ["John Grierson"],
+                            "justification": "P A L1 explicitly states that John Grierson coined the term 'documentary' in 1926, making this a straightforward factual identification.",
+                            "evidenceQuote": "When John Grierson coined the term 'documentary' in 1926, he envisioned films that could capture reality"
+                          },
+                          {
+                            "id": 40,
+                            "questionText": "According to the Documentary Media Centre in Australia, how much higher were audience engagement scores for first-person documentaries compared to traditional observational films?",
+                            "correctAnswer": "34 percent",
+                            "alternativeAnswers": ["34 percent", "34%"],
+                            "justification": "P D L5-6 directly states the research finding that first-person documentaries generated '34 percent higher audience engagement scores' than traditional observational films.",
+                            "evidenceQuote": "first-person documentaries generated 34 percent higher audience engagement scores than traditional observational films"
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }

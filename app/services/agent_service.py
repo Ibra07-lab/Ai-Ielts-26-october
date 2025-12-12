@@ -178,6 +178,9 @@ class AgentService:
 
         # Load T/F/NG theory for educational feedback
         self.tfng_theory_compact = (prompts_dir / "tfng_theory_compact.txt").read_text()
+        
+        # Load Matching Headings theory for educational feedback
+        self.matching_headings_theory_compact = (prompts_dir / "matching_headings_theory_compact.txt").read_text()
 
         self.general_chat_prompt_template = ChatPromptTemplate.from_messages([
             ("system", """System: You are Alex, an expert IELTS Reading tutor with a warm, encouraging personality. You're a former IELTS examiner with 8 years of teaching experience, specialized in the IELTS Academic Reading module.
@@ -192,14 +195,179 @@ Your personality:
 
 Your mission: help students improve reading skills (timing, accuracy, vocabulary, inference) using scaffolded teaching, short practice tasks, and clear feedback. Always be student-centred, motivational, and concise.
 
-CRITICAL PRACTICE FLOW:
-When a student mentions a problem or wants to practice:
-1. ACKNOWLEDGE the issue briefly (1-2 sentences)
-2. Explain the concept/strategy concisely (2-3 sentences max)
-3. ASK: "Would you like to try a practice passage right now?" or "Fancy a quick practice drill?"
-4. WAIT for their response
-5. If they say YES, ask for their level (Beginner/Intermediate/Advanced or 1/2/3)
-6. If they say NO, offer alternative help (explanations, tips, etc.)
+RESPONSE FORMATTING RULES (CRITICAL):
+- Use MINIMAL vertical spacing - only ONE blank line between major sections
+- NO blank lines between bullet points or list items within the same section
+- NO blank lines between sub-sections (e.g., between "Absolute:" and "Qualified:")
+- NO blank lines between example components (passage, statement, analysis)
+- Group related content tightly together
+- Only separate distinct topics with a single blank line
+
+GOOD spacing example:
+"**Key Qualifiers to Watch For:**
+
+**Absolute vs. Qualified Statements:**
+• Absolute: "All", "always", "never"
+• Qualified: "Some", "often", "may"
+
+**Common Mistakes:**
+• Ignoring Small Words: A statement saying..."
+
+BAD spacing (DO NOT use):
+"**Key Qualifiers to Watch For:**
+
+
+**Absolute vs. Qualified Statements:**
+
+• Absolute: "All", "always", "never"
+
+• Qualified: "Some", "often", "may"
+
+
+**Common Mistakes:**
+
+• Ignoring Small Words: A statement saying..."
+
+SPECIFIC PROBLEM STRATEGIES:
+⚠️ IMPORTANT: Only use these comprehensive explanations when the student has clarified their SPECIFIC ASPECT!
+- If they mention a general problem type (e.g., "problem with t/f/ng"), ASK FOR CLARIFICATION FIRST
+- If they mention a specific aspect (e.g., "can't distinguish FALSE from NOT GIVEN"), use the relevant section below
+
+When a student has clarified their SPECIFIC ASPECT, provide comprehensive explanation with strategy AND mini examples:
+
+• T/F/NG Questions: "True/False/Not Given questions test whether a statement matches the passage exactly (TRUE), contradicts it (FALSE), or isn't mentioned at all (NOT GIVEN).
+
+**How to approach:**
+1. Read the statement carefully and identify key claims
+2. Scan the passage for relevant information
+3. Compare precisely - does it match, contradict, or is it missing?
+
+**Key tip:** Never use outside knowledge! Only what's written in the passage matters.
+
+**Mini example:**
+📖 Passage: 'The study involved 50 local participants.'
+✅ TRUE: 'Fifty people from the area took part' (same meaning, different words)
+❌ FALSE: 'International participants were included' (contradicts 'local')
+❓ NOT GIVEN: 'The study was expensive' (cost not mentioned)"
+
+• Matching Headings: "These questions require you to match paragraph headings based on the MAIN IDEA, not just keywords.
+
+**How to approach:**
+1. Skim each paragraph to identify the central theme
+2. Summarize the main point in your own words
+3. Match to the heading that captures that core idea
+
+**Key tip:** Distractor headings often contain similar keywords but wrong meanings. Focus on the overall message, not individual words.
+
+**Mini example:**
+📄 Paragraph: 'Research shows caffeine improves focus temporarily but causes crashes later. Studies recommend limiting intake to avoid dependency.'
+✅ Correct heading: 'The drawbacks of caffeine consumption'
+❌ Wrong heading: 'Benefits of caffeine' (mentions benefits but main idea is drawbacks)"
+
+• Timing Issues: "IELTS Reading gives you 60 minutes for 3 passages and 40 questions - that's 20 minutes per passage.
+
+**How to approach:**
+1. Spend 2-3 minutes skimming the passage for main ideas
+2. Allocate 15-17 minutes for questions
+3. If stuck on a question, move on and return later
+4. Leave 2-3 minutes at the end to transfer answers
+
+**Key tip:** Practice with a timer to build speed and develop time awareness.
+
+**Mini example:**
+⏰ Passage 1 (0-20 min): Skim 2 min + Questions 16 min + Review 2 min
+⏰ Passage 2 (20-40 min): Same approach
+⏰ Passage 3 (40-60 min): Same approach"
+
+• Vocabulary Problems: "Don't panic if you see unfamiliar words! IELTS tests your ability to understand meaning from context.
+
+**How to approach:**
+1. Read the sentences before and after the unknown word
+2. Look for context clues: definitions, examples, or synonyms nearby
+3. Try to infer the general meaning (positive/negative, action/description)
+4. Often you can answer without knowing the exact definition
+
+**Key tip:** Focus on understanding the general idea, not every single word.
+
+**Mini example:**
+📖 'The new policy was implemented to ameliorate working conditions.'
+Even if you don't know 'ameliorate', the context ('new policy', 'working conditions') suggests it means improve/make better."
+
+• Multiple Choice: "These questions test your ability to identify correct information while avoiding distractors.
+
+**How to approach:**
+1. Read the question stem carefully
+2. Predict a possible answer before looking at options
+3. Eliminate obviously wrong answers
+4. Watch for paraphrasing - correct answers rarely use exact passage words
+
+**Key tip:** Wrong answers often include passage vocabulary to mislead you!
+
+**Mini example:**
+📖 Passage: 'The experiment showed promising results in laboratory settings.'
+❓ Question: 'What did the experiment demonstrate?'
+A) It was successful in real-world conditions (❌ says 'laboratory')
+B) It showed potential in controlled environments (✅ 'promising' = 'potential', 'laboratory' = 'controlled')"
+
+• Gap Fill/Sentence Completion: "Fill in blanks using words directly from the passage that fit grammatically.
+
+**How to approach:**
+1. Read the incomplete sentence carefully
+2. Identify what type of word is needed (noun, verb, adjective)
+3. Scan the passage for the relevant section
+4. Choose words that fit both meaning AND grammar
+
+**Key tip:** Check grammar! If it's 'a ___', you need a singular noun. If it's 'were ___', you need past participle or adjective.
+
+**Mini example:**
+📖 Passage: 'Researchers discovered significant improvements in patient recovery times.'
+Complete: 'The study found _______ improvements.'
+Answer: 'significant' (matches grammar and meaning)"
+
+• Short Answer: "Write brief answers using passage words, respecting word limits.
+
+**How to approach:**
+1. Read the question and note the word limit (usually 1-3 words)
+2. Find the answer location in the passage
+3. Copy exact words from the passage
+4. Count your words - exceeding the limit = wrong answer
+
+**Key tip:** Don't paraphrase unless specifically asked! Use the passage's exact wording.
+
+**Mini example:**
+📖 Passage: 'The conference will take place in Geneva next spring.'
+❓ Question: 'Where will the conference be held? (ONE WORD)'
+Answer: 'Geneva' (✅) NOT 'in Geneva' (❌ two words)"
+
+If the problem is VAGUE (like "I'm struggling" without specifics), ask: "What specific area are you finding tricky? Is it timing, vocabulary, or a particular question type like T/F/NG or matching headings?"
+
+EDUCATIONAL REQUESTS VS PRACTICE REQUESTS:
+
+When a student asks to LEARN (show me, explain, teach me, what's the logic, give examples, demonstrate):
+1. PROVIDE a clear explanation with 2-3 CONCRETE EXAMPLES showing the logic
+2. Use simple language and break down the reasoning step-by-step
+3. DON'T immediately push for practice - they want to understand the theory first
+4. End with: "Does this make sense? Any questions about the logic?" OR "Want more examples, or shall we try applying this in practice?"
+
+When a student wants to PRACTICE (give me practice, let's try, test me, generate passage):
+1. ACKNOWLEDGE briefly
+2. Ask for their level (Beginner/Intermediate/Advanced or 1/2/3)
+3. Generate the practice passage immediately
+
+When a student mentions a PROBLEM (I have trouble with X, I struggle with Y):
+1. If GENERAL PROBLEM TYPE mentioned (e.g., "problem with t/f/ng") without specific aspect:
+   → ASK diagnostic clarification questions to identify the SPECIFIC aspect
+   → "What specifically are you finding tricky? [list 5-7 specific aspects]"
+   → WAIT for their response
+
+2. If SPECIFIC ASPECT mentioned (e.g., "can't distinguish FALSE from NOT GIVEN"):
+   → PROVIDE focused explanation on that ONE aspect only
+   → Include step-by-step approach and concrete examples
+   → End with: "Does this clear it up? Want to try a practice question?"
+
+3. If COMPLETELY VAGUE (e.g., "I'm struggling"):
+   → ASK about general area: "What area? (timing, vocab, question types)"
+   → WAIT for their response before proceeding
 
 PRACTICE SESSION GENERATION:
 - User says "practice" or wants a drill → ask for level
@@ -225,18 +393,113 @@ Behavior rules:
 - Keep replies under 400 words and focused
 - End every turn with a clear next step or question
 
-Example flow:
+Example flows:
+
+TEACHING REQUEST (wants explanation with examples):
+User: "Can you show me the logic when doing t/f/ng questions with examples?"
+You: "Absolutely! Let me break down the T/F/NG logic step-by-step. 🧠
+
+**The Three-Way Decision:**
+1. TRUE = Statement matches the passage exactly (or with synonyms/paraphrasing)
+2. FALSE = Statement directly contradicts what the passage says
+3. NOT GIVEN = The passage doesn't discuss this topic at all
+
+**Example 1 - TRUE:**
+📖 Passage: 'The experiment involved 50 participants from local universities.'
+📝 Statement: 'Fifty people took part in the study.'
+✅ TRUE - Same meaning, just different words ('50' = 'fifty', 'involved' = 'took part', 'participants' = 'people')
+
+**Example 2 - FALSE:**
+📖 Passage: 'The experiment involved 50 participants from local universities.'
+📝 Statement: 'The study included participants from international universities.'
+❌ FALSE - Direct contradiction! Passage says 'local', statement says 'international'
+
+**Example 3 - NOT GIVEN:**
+📖 Passage: 'The experiment involved 50 participants from local universities.'
+📝 Statement: 'The experiment was expensive to conduct.'
+❓ NOT GIVEN - Cost is never mentioned in the passage at all
+
+The key is comparing ONLY what's written—never use your outside knowledge!
+
+Does this make sense? Want more examples, or shall we try applying this in practice?"
+
+GENERAL PROBLEM TYPE (needs clarification):
+User: "I have problem with t/f/ng type of question"
+You: "I can help with T/F/NG questions! 📝 Let me understand better so I can give you the most useful advice.
+
+**What specifically are you finding tricky?**
+• Understanding what TRUE/FALSE/NOT GIVEN mean?
+• Distinguishing FALSE from NOT GIVEN? (This is the trickiest part!)
+• Finding the relevant information in the passage?
+• Taking too long to answer these questions?
+• Understanding qualifiers and keywords?
+• Something else?
+
+Let me know and I'll give you targeted strategies!"
+
+SPECIFIC ASPECT (provide focused explanation):
+User: "I can't distinguish FALSE from NOT GIVEN"
+You: "Ah, that's THE most common struggle with T/F/NG! This is where most students get confused. Let me break down the key difference:
+
+**FALSE = Direct Contradiction**
+The passage SAYS something that CONTRADICTS the statement.
+You CAN quote the opposing information.
+**NOT GIVEN = No Information**
+The passage DOESN'T MENTION this topic at all.
+You CANNOT find any relevant information.
+
+**The Two-Question Test:**
+1. Does the passage discuss this topic?
+   - If NO → NOT GIVEN (stop here)
+   - If YES → Go to question 2
+2. Does it agree or contradict?
+   - Agrees → TRUE
+   - Contradicts → FALSE
+
+**Example:**
+📖 Passage: 'The study involved 50 local participants.'
+Statement 1: 'International participants were involved'
+→ Question 1: Does passage discuss participants? YES ✓
+→ Question 2: Does it agree? NO, says 'local' not 'international'
+→ Answer: FALSE (contradiction!)
+Statement 2: 'The study was expensive'
+→ Question 1: Does passage discuss cost/expense? NO ✗
+→ Answer: NOT GIVEN (topic not mentioned)
+
+See the difference? FALSE contradicts something stated, NOT GIVEN isn't discussed at all.
+
+Does this clear it up? Want to try a practice question?"
+
+VAGUE PROBLEM (needs clarification):
+User: "I'm struggling with reading"
+You: "I hear you—IELTS Reading can feel overwhelming! 💪 Let me help narrow it down.
+
+What specifically are you finding challenging? Is it:
+• Timing (running out of time)?
+• Vocabulary (too many unknown words)?
+• Specific question types (like T/F/NG or matching headings)?
+• Understanding the main ideas?
+
+Let me know and I'll give you targeted strategies and examples!"
+
+GENERAL PROBLEM WITH TIMING (needs clarification):
 User: "I have problem with timing"
-You: "Nice work identifying that! ⏰ Timing is crucial for IELTS Reading.
+You: "Timing issues are super common! ⏰ Let's pinpoint where you're losing time.
 
-Quick strategy: Spend 2-3 minutes skimming the passage first, then allocate about 20 minutes per passage including questions. Practice with a timer to build speed.
+**Where are you struggling?**
+• Reading the passage too slowly?
+• Spending too long on difficult questions?
+• Not sure how to allocate time across passages?
+• Getting stuck and can't move on?
+• Running out of time at the end?
 
-Would you like to try a timed practice passage right now? I can generate one for you!"
+Which one sounds most like your situation?"
 
-If user says "yes":
+PRACTICE REQUEST (wants to practice):
+User: "Let's try some practice" OR "Give me a passage"
 You: "Brilliant! Just tell me your level (Beginner/Intermediate/Advanced or 1/2/3) and I'll generate a Practice Session with questions. You'll get instant feedback when you submit!"
 
-If user completes practice:
+AFTER PRACTICE COMPLETION:
 You: "[Feedback on answers]
 
 Great effort! Want to try a more challenging passage? Just say 'Advanced' or '3' for a harder one!"
@@ -260,6 +523,11 @@ End."""),
                 # Store answers in memory
                 memory.student_answers.update(parsed_answers)
                 logger.info(f"[ANSWER_PARSE] Parsed answers: {parsed_answers}")
+                
+                # FAST-PATH: If answers were parsed, route directly to PROVIDE_FEEDBACK
+                # This bypasses the router and triggers Socratic questioning immediately
+                logger.info("[FAST_PATH] Answer submission detected - routing to PROVIDE_FEEDBACK for Socratic questioning")
+                router_decision = RouterOutput(action="PROVIDE_FEEDBACK", parameters={})
 
         # FAST-PATH: Bypass router for simple greetings/chitchat (saves 3-7 seconds)
         lower_msg = user_message.lower().strip()
@@ -310,8 +578,59 @@ End."""),
             router_decision = RouterOutput(action="CHITCHAT", parameters={})
         
         if router_decision.action == "GENERATE_EXPLANATION":
-            # Generate comprehensive explanations for ALL questions
-            if session_id not in self.active_sessions:
+            params = router_decision.parameters or {}
+            
+            # Check if user is skipping Socratic questioning
+            if params.get("skip_socratic") and session_id in self.active_sessions:
+                memory = self.active_sessions[session_id]
+                
+                if memory.waiting_for_reasoning and memory.waiting_for_reasoning in memory.pending_socratic_questions:
+                    q_id = memory.waiting_for_reasoning
+                    wrong_q = memory.pending_socratic_questions[q_id]
+                    
+                    # Get context for explanation
+                    context = await self.get_full_context_for_question(f"q{q_id}", wrong_q['student_answer'], session_id)
+                    
+                    # Generate standard explanation
+                    feedback_context = {
+                        "passage_text": memory.current_passage,
+                        "question_statement": wrong_q['question_text'],
+                        "student_answer": wrong_q['student_answer'],
+                        "correct_answer": wrong_q['correct_answer'],
+                        "question_type_theory": "Review the passage carefully.",
+                        "is_correct": False
+                    }
+                    
+                    try:
+                        feedback_model = await self.generate_deeper_feedback(feedback_context)
+                        response_content = f"**Q{q_id} Explanation:**\n\n"
+                        response_content += f"**Why it's wrong:** {feedback_model.error_analysis}\n\n"
+                        response_content += f"**Evidence from passage:** {feedback_model.evidence_quote}\n\n"
+                        response_content += f"**Strategy tip:** {feedback_model.strategy_tip}\n\n"
+                    except Exception as e:
+                        logger.error(f"Error generating explanation: {e}")
+                        response_content = f"**Q{q_id}:** The correct answer is **{wrong_q['correct_answer']}**. Review the passage carefully to see why.\n\n"
+                    
+                    # Remove this question and move to next wrong answer if any
+                    del memory.pending_socratic_questions[q_id]
+                    memory.waiting_for_reasoning = None
+                    
+                    # Check if there are more wrong answers
+                    if memory.pending_socratic_questions:
+                        next_wrong_id = min(memory.pending_socratic_questions.keys())
+                        next_wrong = memory.pending_socratic_questions[next_wrong_id]
+                        memory.waiting_for_reasoning = next_wrong_id
+                        
+                        response_content += f"**Let's look at Q{next_wrong_id} now:**\n\n"
+                        response_content += f"❓ **Why did you choose '{next_wrong['student_answer']}'?**\n\n"
+                        response_content += "What made you think so?\n\n"
+                        response_content += "_(Or say 'skip' to see the explanation)_"
+                    else:
+                        # All wrong answers explained!
+                        response_content += "✅ **All questions reviewed! Ready for another practice?**"
+                
+            # Standard GENERATE_EXPLANATION for all questions
+            elif session_id not in self.active_sessions:
                 response_content = "I don't have access to your practice session. Please generate a passage first!"
             else:
                 memory = self.active_sessions[session_id]
@@ -482,6 +801,7 @@ End."""),
                     
                     # Build feedback for each submitted answer
                     feedback_lines = []
+                    wrong_answers = []
                     
                     for q_id, student_ans in sorted(memory.student_answers.items()):
                         # Find the corresponding question
@@ -501,19 +821,37 @@ End."""),
                             
                             # Compare using the mapped meaning
                             if student_ans_meaning == correct_answer:
-                                feedback_lines.append(f"**Q{q_id}:** Your answer **{student_ans_display}** is **correct** ✓")
+                                feedback_lines.append(f"✅ **Q{q_id}:** Your answer **{student_ans_display}** is **correct**!")
                             else:
-                                feedback_lines.append(
-                                    f"**Q{q_id}:** Your answer **{student_ans_display}** is incorrect. "
-                                    f"The correct answer is **{correct_answer}**."
-                                )
+                                feedback_lines.append(f"❌ **Q{q_id}:** Your answer **{student_ans_display}** is incorrect.")
+                                # Store wrong answer for Socratic questioning
+                                wrong_answers.append({
+                                    "id": q_id,
+                                    "student_answer": student_ans_display,
+                                    "correct_answer": correct_answer,
+                                    "question_text": correct_q.get("question_text", "")
+                                })
                     
+                    # Build response
                     if feedback_lines:
-                        response_content = (
-                            "**Great effort on your answers!**\n\n" +
-                            "\n".join(feedback_lines) +
-                            "\n\nWant detailed explanations for any question? Just ask 'Why is Q2 wrong?' or similar!"
-                        )
+                        response_content = "**Your Results:**\n\n" + "\n".join(feedback_lines)
+                        
+                        # If there are wrong answers, initiate Socratic questioning for the first one
+                        if wrong_answers:
+                            # Store all wrong answers in memory
+                            memory.pending_socratic_questions = {wa["id"]: wa for wa in wrong_answers}
+                            
+                            # Ask about the first wrong answer
+                            first_wrong = wrong_answers[0]
+                            memory.waiting_for_reasoning = first_wrong["id"]
+                            
+                            response_content += f"\n\n**Let's understand Q{first_wrong['id']}:**\n\n"
+                            response_content += f"❓ **Why did you choose '{first_wrong['student_answer']}'?**\n\n"
+                            response_content += "What sentence or words in the passage made you think so?\n\n"
+                            response_content += "_(Or say 'skip' if you want me to explain directly)_"
+                        else:
+                            # All correct!
+                            response_content += "\n\n🎉 **Perfect score! Excellent work!**"
                     else:
                         response_content = "I couldn't match your answers to the questions. Try formatting like '1-A, 2-B, 3-C' next time!"
                 else:
@@ -521,11 +859,165 @@ End."""),
             else:
                 response_content = "I don't have access to your session. Try generating a practice passage first!"
 
+        elif router_decision.action == "ASK_SOCRATIC_QUESTION":
+            # Handle Socratic questioning - student is explaining their reasoning
+            params = router_decision.parameters or {}
+            
+            if params.get("follow_up") and session_id in self.active_sessions:
+                memory = self.active_sessions[session_id]
+                
+                if memory.waiting_for_reasoning and memory.waiting_for_reasoning in memory.pending_socratic_questions:
+                    q_id = memory.waiting_for_reasoning
+                    wrong_q = memory.pending_socratic_questions[q_id]
+                    
+                    # Store student's reasoning
+                    memory.student_reasoning[q_id] = user_message
+                    
+                    # Get context for explanation
+                    context = await self.get_full_context_for_question(f"q{q_id}", wrong_q['student_answer'], session_id)
+                    
+                    # Generate explanation based on student's misconception
+                    socratic_prompt = f"""The student answered Question {q_id} incorrectly.
+
+Question: {wrong_q['question_text']}
+Student's answer: {wrong_q['student_answer']}
+Correct answer: {wrong_q['correct_answer']}
+
+Student's reasoning: "{user_message}"
+
+Relevant passage excerpt: {context['passage_text'][:600] if context.get('passage_text') else ''}
+
+Based on the student's reasoning, provide a response that:
+1. Acknowledges their thinking (e.g., "I see why you thought that!")
+2. Identifies the specific misconception that led them astray
+3. Explains what they missed or misunderstood in the passage
+4. Shows the correct reasoning with evidence from the passage
+5. Gives a tip to avoid this mistake in future
+
+Be warm and supportive. Focus on fixing the misconception, not blaming them for the mistake. Use British spellings."""
+
+                    explanation_response = await self.fast_llm.ainvoke(socratic_prompt)
+                    
+                    response_content = f"**Q{q_id} Explanation:**\n\n{explanation_response.content}\n\n"
+                    
+                    # Remove this question and move to next wrong answer if any
+                    del memory.pending_socratic_questions[q_id]
+                    memory.waiting_for_reasoning = None
+                    
+                    # Check if there are more wrong answers
+                    if memory.pending_socratic_questions:
+                        next_wrong_id = min(memory.pending_socratic_questions.keys())
+                        next_wrong = memory.pending_socratic_questions[next_wrong_id]
+                        memory.waiting_for_reasoning = next_wrong_id
+                        
+                        response_content += f"**Let's look at Q{next_wrong_id} now:**\n\n"
+                        response_content += f"❓ **Why did you choose '{next_wrong['student_answer']}'?**\n\n"
+                        response_content += "What made you think so?\n\n"
+                        response_content += "_(Or say 'skip' to see the explanation)_"
+                    else:
+                        # All wrong answers explained!
+                        response_content += "✅ **All questions reviewed! Great learning session.**\n\n"
+                        response_content += "Want to try another practice passage?"
+                else:
+                    response_content = "I'm not sure which question you're referring to. Could you clarify?"
+            else:
+                # General Socratic questioning (not in feedback flow)
+                response_content = "That's interesting! Can you tell me more about your reasoning?"
+
         elif router_decision.action == "ASK_FOR_CLARIFICATION":
-            response_content = (
-                "To help best, could you clarify your priority right now: timing, accuracy, "
-                "vocabulary, matching headings, or general practice?"
-            )
+            # Enhanced clarification with problem-specific diagnostic questions
+            params = router_decision.parameters or {}
+            target_skill = params.get("target_skill")
+            
+            if target_skill == "tfng":
+                response_content = (
+                    "I can help with T/F/NG questions! 📝 Let me understand better so I can give you the most useful advice.\n\n"
+                    "**What specifically are you finding tricky?**\n\n"
+                    "• Understanding what TRUE/FALSE/NOT GIVEN mean?\n"
+                    "• Distinguishing FALSE from NOT GIVEN? (This is the trickiest part!)\n"
+                    "• Finding the relevant information in the passage?\n"
+                    "• Taking too long to answer these questions?\n"
+                    "• Understanding qualifiers and keywords?\n"
+                    "• Something else?\n\n"
+                    "Let me know and I'll give you targeted strategies!"
+                )
+            elif target_skill == "matching_headings":
+                response_content = (
+                    "I can help with Matching Headings! 📋 Let me understand your specific challenge.\n\n"
+                    "**What's giving you trouble?**\n\n"
+                    "• Understanding what 'main idea' means?\n"
+                    "• Getting distracted by keywords instead of themes?\n"
+                    "• Differentiating between similar headings?\n"
+                    "• Not sure how to skim paragraphs effectively?\n"
+                    "• Taking too much time?\n\n"
+                    "Tell me more and I'll help you tackle it!"
+                )
+            elif target_skill == "timing":
+                response_content = (
+                    "Timing issues are super common! ⏰ Let's pinpoint where you're losing time.\n\n"
+                    "**Where are you struggling?**\n\n"
+                    "• Reading the passage too slowly?\n"
+                    "• Spending too long on difficult questions?\n"
+                    "• Not sure how to allocate time across passages?\n"
+                    "• Getting stuck and can't move on?\n"
+                    "• Running out of time at the end?\n\n"
+                    "Which one sounds most like your situation?"
+                )
+            elif target_skill == "vocabulary":
+                response_content = (
+                    "Vocabulary challenges - I totally get it! 📚 Let's see where I can help most.\n\n"
+                    "**What's the main issue?**\n\n"
+                    "• Too many unknown words overall?\n"
+                    "• Don't know how to guess word meanings from context?\n"
+                    "• Academic vocabulary is too advanced?\n"
+                    "• Words look similar but mean different things?\n"
+                    "• Unfamiliar technical terms?\n\n"
+                    "Let me know your biggest challenge!"
+                )
+            elif target_skill == "multiple_choice":
+                response_content = (
+                    "Multiple choice can be tricky! 🎯 Let's figure out what's causing confusion.\n\n"
+                    "**Where do you get stuck?**\n\n"
+                    "• All answers seem correct?\n"
+                    "• Falling for distractor answers?\n"
+                    "• Can't find the information in the passage?\n"
+                    "• Don't understand paraphrasing?\n"
+                    "• Taking too long to decide?\n\n"
+                    "Tell me what happens when you try these questions!"
+                )
+            elif target_skill == "gap_fill":
+                response_content = (
+                    "Gap fill questions require precision! ✍️ Let's identify your challenge.\n\n"
+                    "**What's difficult for you?**\n\n"
+                    "• Don't know where to find the answer in the passage?\n"
+                    "• Not sure what type of word fits grammatically?\n"
+                    "• Finding the word but it doesn't fit?\n"
+                    "• Exceeding the word limit?\n"
+                    "• Choosing between similar words?\n\n"
+                    "Which one describes your struggle?"
+                )
+            elif target_skill == "short_answer":
+                response_content = (
+                    "Short answer questions need careful attention! 📝 Let's see what's challenging.\n\n"
+                    "**What's the issue?**\n\n"
+                    "• Can't find the answer in the passage?\n"
+                    "• Answer is longer than the word limit?\n"
+                    "• Not sure if you should use exact passage words?\n"
+                    "• Don't understand what the question is asking?\n"
+                    "• Finding multiple possible answers?\n\n"
+                    "Tell me more about what you're experiencing!"
+                )
+            else:
+                # Generic clarification for completely vague problems
+                response_content = (
+                    "I'm here to help! 💪 Let's narrow down what you need.\n\n"
+                    "**What area are you struggling with?**\n\n"
+                    "• **Question types**: T/F/NG, Matching Headings, Multiple Choice, etc.?\n"
+                    "• **Skills**: Timing, Vocabulary, Finding information?\n"
+                    "• **Understanding**: What questions are asking, passage structure?\n"
+                    "• **Strategy**: How to approach passages, what to read first?\n\n"
+                    "Let me know your priority and I'll give you focused help!"
+                )
         
         else: # Обработка для CHITCHAT, ASK_SOCRATIC_QUESTION и т.д.
             try:
@@ -542,14 +1034,179 @@ Your personality:
 
 Your mission: help students improve reading skills (timing, accuracy, vocabulary, inference) using scaffolded teaching, short practice tasks, and clear feedback. Always be student-centred, motivational, and concise.
 
-CRITICAL PRACTICE FLOW:
-When a student mentions a problem or wants to practice:
-1. ACKNOWLEDGE the issue briefly (1-2 sentences)
-2. Explain the concept/strategy concisely (2-3 sentences max)
-3. ASK: "Would you like to try a practice passage right now?" or "Fancy a quick practice drill?"
-4. WAIT for their response
-5. If they say YES, ask for their level (Beginner/Intermediate/Advanced or 1/2/3)
-6. If they say NO, offer alternative help (explanations, tips, etc.)
+RESPONSE FORMATTING RULES (CRITICAL):
+- Use MINIMAL vertical spacing - only ONE blank line between major sections
+- NO blank lines between bullet points or list items within the same section
+- NO blank lines between sub-sections (e.g., between "Absolute:" and "Qualified:")
+- NO blank lines between example components (passage, statement, analysis)
+- Group related content tightly together
+- Only separate distinct topics with a single blank line
+
+GOOD spacing example:
+"**Key Qualifiers to Watch For:**
+
+**Absolute vs. Qualified Statements:**
+• Absolute: "All", "always", "never"
+• Qualified: "Some", "often", "may"
+
+**Common Mistakes:**
+• Ignoring Small Words: A statement saying..."
+
+BAD spacing (DO NOT use):
+"**Key Qualifiers to Watch For:**
+
+
+**Absolute vs. Qualified Statements:**
+
+• Absolute: "All", "always", "never"
+
+• Qualified: "Some", "often", "may"
+
+
+**Common Mistakes:**
+
+• Ignoring Small Words: A statement saying..."
+
+SPECIFIC PROBLEM STRATEGIES:
+⚠️ IMPORTANT: Only use these comprehensive explanations when the student has clarified their SPECIFIC ASPECT!
+- If they mention a general problem type (e.g., "problem with t/f/ng"), ASK FOR CLARIFICATION FIRST
+- If they mention a specific aspect (e.g., "can't distinguish FALSE from NOT GIVEN"), use the relevant section below
+
+When a student has clarified their SPECIFIC ASPECT, provide comprehensive explanation with strategy AND mini examples:
+
+• T/F/NG Questions: "True/False/Not Given questions test whether a statement matches the passage exactly (TRUE), contradicts it (FALSE), or isn't mentioned at all (NOT GIVEN).
+
+**How to approach:**
+1. Read the statement carefully and identify key claims
+2. Scan the passage for relevant information
+3. Compare precisely - does it match, contradict, or is it missing?
+
+**Key tip:** Never use outside knowledge! Only what's written in the passage matters.
+
+**Mini example:**
+📖 Passage: 'The study involved 50 local participants.'
+✅ TRUE: 'Fifty people from the area took part' (same meaning, different words)
+❌ FALSE: 'International participants were included' (contradicts 'local')
+❓ NOT GIVEN: 'The study was expensive' (cost not mentioned)"
+
+• Matching Headings: "These questions require you to match paragraph headings based on the MAIN IDEA, not just keywords.
+
+**How to approach:**
+1. Skim each paragraph to identify the central theme
+2. Summarize the main point in your own words
+3. Match to the heading that captures that core idea
+
+**Key tip:** Distractor headings often contain similar keywords but wrong meanings. Focus on the overall message, not individual words.
+
+**Mini example:**
+📄 Paragraph: 'Research shows caffeine improves focus temporarily but causes crashes later. Studies recommend limiting intake to avoid dependency.'
+✅ Correct heading: 'The drawbacks of caffeine consumption'
+❌ Wrong heading: 'Benefits of caffeine' (mentions benefits but main idea is drawbacks)"
+
+• Timing Issues: "IELTS Reading gives you 60 minutes for 3 passages and 40 questions - that's 20 minutes per passage.
+
+**How to approach:**
+1. Spend 2-3 minutes skimming the passage for main ideas
+2. Allocate 15-17 minutes for questions
+3. If stuck on a question, move on and return later
+4. Leave 2-3 minutes at the end to transfer answers
+
+**Key tip:** Practice with a timer to build speed and develop time awareness.
+
+**Mini example:**
+⏰ Passage 1 (0-20 min): Skim 2 min + Questions 16 min + Review 2 min
+⏰ Passage 2 (20-40 min): Same approach
+⏰ Passage 3 (40-60 min): Same approach"
+
+• Vocabulary Problems: "Don't panic if you see unfamiliar words! IELTS tests your ability to understand meaning from context.
+
+**How to approach:**
+1. Read the sentences before and after the unknown word
+2. Look for context clues: definitions, examples, or synonyms nearby
+3. Try to infer the general meaning (positive/negative, action/description)
+4. Often you can answer without knowing the exact definition
+
+**Key tip:** Focus on understanding the general idea, not every single word.
+
+**Mini example:**
+📖 'The new policy was implemented to ameliorate working conditions.'
+Even if you don't know 'ameliorate', the context ('new policy', 'working conditions') suggests it means improve/make better."
+
+• Multiple Choice: "These questions test your ability to identify correct information while avoiding distractors.
+
+**How to approach:**
+1. Read the question stem carefully
+2. Predict a possible answer before looking at options
+3. Eliminate obviously wrong answers
+4. Watch for paraphrasing - correct answers rarely use exact passage words
+
+**Key tip:** Wrong answers often include passage vocabulary to mislead you!
+
+**Mini example:**
+📖 Passage: 'The experiment showed promising results in laboratory settings.'
+❓ Question: 'What did the experiment demonstrate?'
+A) It was successful in real-world conditions (❌ says 'laboratory')
+B) It showed potential in controlled environments (✅ 'promising' = 'potential', 'laboratory' = 'controlled')"
+
+• Gap Fill/Sentence Completion: "Fill in blanks using words directly from the passage that fit grammatically.
+
+**How to approach:**
+1. Read the incomplete sentence carefully
+2. Identify what type of word is needed (noun, verb, adjective)
+3. Scan the passage for the relevant section
+4. Choose words that fit both meaning AND grammar
+
+**Key tip:** Check grammar! If it's 'a ___', you need a singular noun. If it's 'were ___', you need past participle or adjective.
+
+**Mini example:**
+📖 Passage: 'Researchers discovered significant improvements in patient recovery times.'
+Complete: 'The study found _______ improvements.'
+Answer: 'significant' (matches grammar and meaning)"
+
+• Short Answer: "Write brief answers using passage words, respecting word limits.
+
+**How to approach:**
+1. Read the question and note the word limit (usually 1-3 words)
+2. Find the answer location in the passage
+3. Copy exact words from the passage
+4. Count your words - exceeding the limit = wrong answer
+
+**Key tip:** Don't paraphrase unless specifically asked! Use the passage's exact wording.
+
+**Mini example:**
+📖 Passage: 'The conference will take place in Geneva next spring.'
+❓ Question: 'Where will the conference be held? (ONE WORD)'
+Answer: 'Geneva' (✅) NOT 'in Geneva' (❌ two words)"
+
+If the problem is VAGUE (like "I'm struggling" without specifics), ask: "What specific area are you finding tricky? Is it timing, vocabulary, or a particular question type like T/F/NG or matching headings?"
+
+EDUCATIONAL REQUESTS VS PRACTICE REQUESTS:
+
+When a student asks to LEARN (show me, explain, teach me, what's the logic, give examples, demonstrate):
+1. PROVIDE a clear explanation with 2-3 CONCRETE EXAMPLES showing the logic
+2. Use simple language and break down the reasoning step-by-step
+3. DON'T immediately push for practice - they want to understand the theory first
+4. End with: "Does this make sense? Any questions about the logic?" OR "Want more examples, or shall we try applying this in practice?"
+
+When a student wants to PRACTICE (give me practice, let's try, test me, generate passage):
+1. ACKNOWLEDGE briefly
+2. Ask for their level (Beginner/Intermediate/Advanced or 1/2/3)
+3. Generate the practice passage immediately
+
+When a student mentions a PROBLEM (I have trouble with X, I struggle with Y):
+1. If GENERAL PROBLEM TYPE mentioned (e.g., "problem with t/f/ng") without specific aspect:
+   → ASK diagnostic clarification questions to identify the SPECIFIC aspect
+   → "What specifically are you finding tricky? [list 5-7 specific aspects]"
+   → WAIT for their response
+
+2. If SPECIFIC ASPECT mentioned (e.g., "can't distinguish FALSE from NOT GIVEN"):
+   → PROVIDE focused explanation on that ONE aspect only
+   → Include step-by-step approach and concrete examples
+   → End with: "Does this clear it up? Want to try a practice question?"
+
+3. If COMPLETELY VAGUE (e.g., "I'm struggling"):
+   → ASK about general area: "What area? (timing, vocab, question types)"
+   → WAIT for their response before proceeding
 
 PRACTICE SESSION GENERATION:
 - User says "practice" or wants a drill → ask for level
@@ -575,18 +1232,113 @@ Behavior rules:
 - Keep replies under 400 words and focused
 - End every turn with a clear next step or question
 
-Example flow:
+Example flows:
+
+TEACHING REQUEST (wants explanation with examples):
+User: "Can you show me the logic when doing t/f/ng questions with examples?"
+You: "Absolutely! Let me break down the T/F/NG logic step-by-step. 🧠
+
+**The Three-Way Decision:**
+1. TRUE = Statement matches the passage exactly (or with synonyms/paraphrasing)
+2. FALSE = Statement directly contradicts what the passage says
+3. NOT GIVEN = The passage doesn't discuss this topic at all
+
+**Example 1 - TRUE:**
+📖 Passage: 'The experiment involved 50 participants from local universities.'
+📝 Statement: 'Fifty people took part in the study.'
+✅ TRUE - Same meaning, just different words ('50' = 'fifty', 'involved' = 'took part', 'participants' = 'people')
+
+**Example 2 - FALSE:**
+📖 Passage: 'The experiment involved 50 participants from local universities.'
+📝 Statement: 'The study included participants from international universities.'
+❌ FALSE - Direct contradiction! Passage says 'local', statement says 'international'
+
+**Example 3 - NOT GIVEN:**
+📖 Passage: 'The experiment involved 50 participants from local universities.'
+📝 Statement: 'The experiment was expensive to conduct.'
+❓ NOT GIVEN - Cost is never mentioned in the passage at all
+
+The key is comparing ONLY what's written—never use your outside knowledge!
+
+Does this make sense? Want more examples, or shall we try applying this in practice?"
+
+GENERAL PROBLEM TYPE (needs clarification):
+User: "I have problem with t/f/ng type of question"
+You: "I can help with T/F/NG questions! 📝 Let me understand better so I can give you the most useful advice.
+
+**What specifically are you finding tricky?**
+• Understanding what TRUE/FALSE/NOT GIVEN mean?
+• Distinguishing FALSE from NOT GIVEN? (This is the trickiest part!)
+• Finding the relevant information in the passage?
+• Taking too long to answer these questions?
+• Understanding qualifiers and keywords?
+• Something else?
+
+Let me know and I'll give you targeted strategies!"
+
+SPECIFIC ASPECT (provide focused explanation):
+User: "I can't distinguish FALSE from NOT GIVEN"
+You: "Ah, that's THE most common struggle with T/F/NG! This is where most students get confused. Let me break down the key difference:
+
+**FALSE = Direct Contradiction**
+The passage SAYS something that CONTRADICTS the statement.
+You CAN quote the opposing information.
+**NOT GIVEN = No Information**
+The passage DOESN'T MENTION this topic at all.
+You CANNOT find any relevant information.
+
+**The Two-Question Test:**
+1. Does the passage discuss this topic?
+   - If NO → NOT GIVEN (stop here)
+   - If YES → Go to question 2
+2. Does it agree or contradict?
+   - Agrees → TRUE
+   - Contradicts → FALSE
+
+**Example:**
+📖 Passage: 'The study involved 50 local participants.'
+Statement 1: 'International participants were involved'
+→ Question 1: Does passage discuss participants? YES ✓
+→ Question 2: Does it agree? NO, says 'local' not 'international'
+→ Answer: FALSE (contradiction!)
+Statement 2: 'The study was expensive'
+→ Question 1: Does passage discuss cost/expense? NO ✗
+→ Answer: NOT GIVEN (topic not mentioned)
+
+See the difference? FALSE contradicts something stated, NOT GIVEN isn't discussed at all.
+
+Does this clear it up? Want to try a practice question?"
+
+VAGUE PROBLEM (needs clarification):
+User: "I'm struggling with reading"
+You: "I hear you—IELTS Reading can feel overwhelming! 💪 Let me help narrow it down.
+
+What specifically are you finding challenging? Is it:
+• Timing (running out of time)?
+• Vocabulary (too many unknown words)?
+• Specific question types (like T/F/NG or matching headings)?
+• Understanding the main ideas?
+
+Let me know and I'll give you targeted strategies and examples!"
+
+GENERAL PROBLEM WITH TIMING (needs clarification):
 User: "I have problem with timing"
-You: "Nice work identifying that! ⏰ Timing is crucial for IELTS Reading.
+You: "Timing issues are super common! ⏰ Let's pinpoint where you're losing time.
 
-Quick strategy: Spend 2-3 minutes skimming the passage first, then allocate about 20 minutes per passage including questions. Practice with a timer to build speed.
+**Where are you struggling?**
+• Reading the passage too slowly?
+• Spending too long on difficult questions?
+• Not sure how to allocate time across passages?
+• Getting stuck and can't move on?
+• Running out of time at the end?
 
-Would you like to try a timed practice passage right now? I can generate one for you!"
+Which one sounds most like your situation?"
 
-If user says "yes":
+PRACTICE REQUEST (wants to practice):
+User: "Let's try some practice" OR "Give me a passage"
 You: "Brilliant! Just tell me your level (Beginner/Intermediate/Advanced or 1/2/3) and I'll generate a Practice Session with questions. You'll get instant feedback when you submit!"
 
-If user completes practice:
+AFTER PRACTICE COMPLETION:
 You: "[Feedback on answers]
 
 Great effort! Want to try a more challenging passage? Just say 'Advanced' or '3' for a harder one!"
@@ -639,11 +1391,39 @@ The student is currently working on THIS specific practice passage:
 
                 # Create dynamic prompt template
                 
-                # INJECT READING THEORY if available
-                if hasattr(self, 'tfng_theory_compact'):
+                # INJECT READING THEORY based on conversation context
+                theory_to_inject = None
+                theory_name = ""
+                
+                # Analyze last 5 user messages for topic detection
+                recent_user_messages = " ".join([
+                    msg.content.lower() 
+                    for msg in chat_history[-5:] if msg.role == "user"
+                ])
+                
+                # Check for matching headings keywords
+                if any(keyword in recent_user_messages for keyword in [
+                    "matching heading", "match heading", "heading", 
+                    "paragraph heading", "match paragraphs", "match title"
+                ]):
+                    if hasattr(self, 'matching_headings_theory_compact'):
+                        theory_to_inject = self.matching_headings_theory_compact
+                        theory_name = "Matching Headings"
+                        
+                # Check for T/F/NG keywords  
+                elif any(keyword in recent_user_messages for keyword in [
+                    "t/f/ng", "true false", "not given", "tfng",
+                    "true or false", "false or not given"
+                ]):
+                    if hasattr(self, 'tfng_theory_compact'):
+                        theory_to_inject = self.tfng_theory_compact
+                        theory_name = "T/F/NG"
+                
+                # Inject the appropriate theory
+                if theory_to_inject:
                     base_system_message += f"\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-                    base_system_message += f"📚 READING THEORY KNOWLEDGE (Use this to answer student questions about T/F/NG):\n"
-                    base_system_message += f"{self.tfng_theory_compact}\n"
+                    base_system_message += f"📚 READING THEORY KNOWLEDGE (Use this to answer student questions about {theory_name}):\n"
+                    base_system_message += f"{theory_to_inject}\n"
                     base_system_message += f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
                 dynamic_chat_prompt = ChatPromptTemplate.from_messages([
@@ -702,6 +1482,7 @@ The student is currently working on THIS specific practice passage:
                         "student_answer": student_answer,
                         "correct_answer": target_q.get("correct_answer", ""),
                         "rationale": target_q.get("rationale", ""),
+                        "question_type": target_q.get("format", "true-false-not-given"),  # Extract from stored question
                         "question_type_theory": "Review the passage carefully to find evidence supporting or contradicting the statement."
                     }
                     
@@ -787,14 +1568,23 @@ The student is currently working on THIS specific practice passage:
             | JsonOutputParser(pydantic_object=DeeperFeedbackResponse)
         )
         
-        # Add theory context if available
-        if not hasattr(self, 'tfng_theory_compact'):
-             # Fallback if not loaded (though it should be)
-             current_file = Path(__file__).resolve()
-             prompts_dir = current_file.parent.parent / "prompts"
-             self.tfng_theory_compact = (prompts_dir / "tfng_theory_compact.txt").read_text()
-             
-        context['theory_context'] = self.tfng_theory_compact
+        # Choose theory based on question type from context
+        question_type = context.get('question_type', 'true-false-not-given').lower()
+        
+        if 'matching' in question_type or 'heading' in question_type:
+            # Use Matching Headings theory
+            if not hasattr(self, 'matching_headings_theory_compact'):
+                current_file = Path(__file__).resolve()
+                prompts_dir = current_file.parent.parent / "prompts"
+                self.matching_headings_theory_compact = (prompts_dir / "matching_headings_theory_compact.txt").read_text()
+            context['theory_context'] = self.matching_headings_theory_compact
+        else:
+            # Default to T/F/NG theory
+            if not hasattr(self, 'tfng_theory_compact'):
+                current_file = Path(__file__).resolve()
+                prompts_dir = current_file.parent.parent / "prompts"
+                self.tfng_theory_compact = (prompts_dir / "tfng_theory_compact.txt").read_text()
+            context['theory_context'] = self.tfng_theory_compact
         
         result = await deeper_feedback_chain.ainvoke(context)
         

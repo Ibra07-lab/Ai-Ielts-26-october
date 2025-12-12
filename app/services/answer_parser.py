@@ -19,6 +19,20 @@ def parse_student_answers(message: str) -> Dict[int, str]:
         Dict mapping question_id to answer (e.g., {1: "A", 2: "B", 3: "C"})
     """
     answers = {}
+
+    # Pattern 0: Letter-number mappings like "A-2, B-1, C-4"
+    # Common in Matching Headings where items are A/B/C/D and answers are 1..n
+    pattern0 = r'\b([A-Za-z])\s*[-:]\s*(\d{1,2})\b'
+    pairs0 = list(re.finditer(pattern0, message))
+    if pairs0:
+        for m in pairs0:
+            letter = m.group(1).upper()
+            q_num = ord(letter) - ord('A') + 1  # A->1, B->2, ...
+            answers[q_num] = m.group(2)  # keep numeric answer as string (e.g., "2")
+
+    # If we parsed any A-1 style pairs, return early to avoid conflicting patterns
+    if answers:
+        return answers
     
     # Pattern 1: "1-A, 2-B, 3-C" or "Q1-A, Q2-B" or "1-TRUE, 2-FALSE"
     pattern1 = r'(?:Q|q)?(\d+)\s*[-:]\s*([A-Ca-c]|TRUE|FALSE|NOT GIVEN|True|False|Not Given|true|false|not given)'

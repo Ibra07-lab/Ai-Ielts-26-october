@@ -847,337 +847,274 @@
           "More headings than paragraphs (distractors included)"
         ]
       },
-      "whatIsIt": {
-        "description": "These questions test your ability to identify the main idea or theme of a paragraph. You must match each paragraph with the most suitable heading from a list of options. There are always extra headings to distract you.",
-        "skillTested": "Your ability to identify main ideas and distinguish them from supporting details",
-        "howItWorks": "You match headings to paragraphs based on the main idea, not specific details.",
-        "scoringImpact": "Typically 5-8 questions per set, worth 1 point each. This question type often appears with longer passages."
-      },
-      "example": {
-        "passage": {
-          "paragraphA": "The ancient city of Petra in Jordan attracts over one million visitors annually, making it the country's most popular tourist destination. The influx of tourists has brought significant economic benefits to the region, creating jobs in hospitality, transportation, and guiding services. Local businesses have flourished, with restaurants, hotels, and souvenir shops experiencing steady growth over the past decade.",
-          "paragraphB": "However, the environmental cost of mass tourism has become increasingly apparent. The constant foot traffic has led to erosion of the ancient stone structures, while littering and inadequate waste management systems have polluted the surrounding desert landscape. Archaeologists warn that without immediate intervention, some of the site's most fragile monuments may suffer irreversible damage within the next 20 years."
-        },
-        "headings": [
-          "i. Economic advantages of tourism",
-          "ii. Environmental damage caused by visitors",
-          "iii. The history of Petra's discovery",
-          "iv. Threats to archaeological preservation",
-          "v. Government investment in infrastructure"
-        ],
-        "questions": [
+      "detailedTheory": {
+        "sections": [
           {
-            "id": 1,
-            "text": "Paragraph A",
-            "correctAnswer": "i",
-            "thinkingProcess": "Focus is on economic benefits - jobs, business growth, money. Main idea = economic advantages.",
-            "explanation": "The entire paragraph discusses economic benefits (jobs, business growth)"
+            "id": "section-1",
+            "title": "SECTION 1: WHAT IS MATCHING HEADINGS?",
+            "subsections": [
+              {
+                "id": "overview",
+                "title": "1.1 Overview",
+                "content": "In this task, you are given a list of headings (marked with Roman numerals: i, ii, iii, iv...) and a text divided into sections or paragraphs (marked A, B, C...). Your task is to choose the heading that best reflects the main idea of each paragraph. There will always be more headings than paragraphs. This means some headings are 'distractors' that you will not use."
+              },
+              {
+                "id": "skills-tested",
+                "title": "1.2 What This Question Type Tests",
+                "description": "Matching Headings assesses your ability to distinguish the 'Gist' (the overall meaning) from specific details.",
+                "skills": [
+                  {
+                    "skill": "Skimming",
+                    "meaning": "Reading quickly to understand the general theme"
+                  },
+                  {
+                    "skill": "Identifying Main Ideas",
+                    "meaning": "Finding the core message of a block of text"
+                  },
+                  {
+                    "skill": "Differentiation",
+                    "meaning": "Telling the difference between a main point and a supporting example"
+                  },
+                  {
+                    "skill": "Paraphrasing",
+                    "meaning": "Recognizing that the heading summarizes the text using different words"
+                  }
+                ],
+                "keyInsight": "This is arguably the most difficult reading task because you cannot simply look for keywords. You must understand the purpose of the paragraph."
+              }
+            ]
           },
           {
-            "id": 2,
-            "text": "Paragraph B",
-            "correctAnswer": "iv",
-            "thinkingProcess": "Focus is on environmental problems AND warnings about damage to monuments. Which heading is more complete? Heading ii mentions environmental damage, but heading iv captures the archaeological concern. The paragraph emphasizes archaeological threats more than general environmental issues.",
-            "explanation": "While environmental damage is mentioned, the main idea centers on threats to the archaeological site and potential irreversible damage"
+            "id": "section-2",
+            "title": "SECTION 2: UNDERSTANDING THE TASK DYNAMICS",
+            "subsections": [
+              {
+                "id": "role-of-heading",
+                "title": "2.1 The Role of a Heading",
+                "content": "A correct heading acts like a Title. It must cover the content of the entire paragraph, not just one sentence within it.",
+                "example": {
+                  "heading": "The financial cost of space travel",
+                  "requirement": "The Paragraph must discuss money, budget, or expenses throughout the majority of the text"
+                }
+              },
+              {
+                "id": "role-of-distractors",
+                "title": "2.2 The Role of Distractors",
+                "content": "The extra headings are not random. They are designed to trick you.",
+                "criteria": [
+                  "The Detail Distractor: A heading that covers only one specific sentence or example in the paragraph, but not the main idea",
+                  "The Keyword Distractor: A heading that contains a specific word found in the text, but the meaning does not match"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-3",
+            "title": "SECTION 3: THE KEY DISTINCTION — MAIN IDEA vs. SUPPORTING DETAIL",
+            "intro": "This is where most students lose marks. You must learn to ignore details when looking for the main idea.",
+            "subsections": [
+              {
+                "id": "the-difference",
+                "title": "3.1 The Difference",
+                "comparison": {
+                  "Main Idea": [
+                    "The writer's primary argument or topic"
+                  ],
+                  "Supporting Detail": [
+                    "Statistics, names, dates, or examples used to prove the main idea"
+                  ]
+                }
+              },
+              {
+                "id": "scope-test",
+                "title": "3.2 The Scope Test",
+                "content": "When you think you have found the right heading, ask yourself: 'Does this heading cover 80% of the paragraph, or only 20%?'",
+                "criteria": [
+                  "Covers 80-100%: Likely the Correct Heading",
+                  "Covers 10-20%: Likely a Detail Distractor"
+                ]
+              },
+              {
+                "id": "comparison-example",
+                "title": "3.3 Comparison Example",
+                "passage": "While solar power is becoming cheaper, the initial installation cost remains a barrier for many households. Homeowners must pay thousands of dollars upfront for panels and batteries. Although government subsidies exist, they often do not cover the full expense, making solar energy a luxury for the wealthy.",
+                "examples": [
+                  {
+                    "heading": "Government subsidies for green energy",
+                    "analysis": "Detail - mentioned only once",
+                    "answer": "WRONG"
+                  },
+                  {
+                    "heading": "The declining price of technology",
+                    "analysis": "Detail - mentioned in the first clause only",
+                    "answer": "WRONG"
+                  },
+                  {
+                    "heading": "Financial obstacles to adopting solar power",
+                    "analysis": "Main Idea - covers the whole paragraph",
+                    "answer": "CORRECT"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-4",
+            "title": "SECTION 4: STRATEGY & TECHNIQUE",
+            "subsections": [
+              {
+                "id": "step-by-step",
+                "title": "4.1 Step-by-Step Approach",
+                "steps": [
+                  {
+                    "step": 1,
+                    "title": "Analyze the Headings First",
+                    "actions": [
+                      "Read the list of headings before the text",
+                      "Underline keywords (nouns, adjectives)",
+                      "Try to identify the difference between similar headings"
+                    ]
+                  },
+                  {
+                    "step": 2,
+                    "title": "Read Paragraph A (Topic Sentences)",
+                    "actions": [
+                      "Read the first two sentences and the last sentence of the paragraph",
+                      "The main idea is often located here",
+                      "Warning: If the paragraph starts with a story or example, the main idea is likely in the middle"
+                    ]
+                  },
+                  {
+                    "step": 3,
+                    "title": "Create Your Own Title",
+                    "actions": [
+                      "Before looking back at the list, ask yourself: 'In three words, what was this paragraph about?'"
+                    ]
+                  },
+                  {
+                    "step": 4,
+                    "title": "Match and Eliminate",
+                    "actions": [
+                      "Look for the heading that matches your summary",
+                      "If you find a match, write it down and cross it off the list",
+                      "If unsure between two headings, write both (e.g., A = iv / vi) and move on"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "signal-words",
+                "title": "4.2 Signal Words to Watch",
+                "content": "Writers use specific words to signal the main idea.",
+                "categories": [
+                  {
+                    "category": "Contrast Words (However, Although, But)",
+                    "rule": "The main idea is usually after these words",
+                    "example": "Many people think X. However, the reality is Y. → The main idea is Y"
+                  },
+                  {
+                    "category": "Conclusion Words (Therefore, Thus, As a result)",
+                    "rule": "These usually summarize the main point"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-5",
+            "title": "SECTION 5: EXAMPLE WALKTHROUGH",
+            "subsections": [
+              {
+                "id": "passage-example",
+                "title": "Passage Excerpt",
+                "passage": "For centuries, the construction of bridges involved locally sourced materials such as wood and stone. These materials were abundant and cheap, but they limited the span and durability of the structures. Wooden bridges would rot, and stone bridges were difficult to build over deep water. It wasn't until the Industrial Revolution brought iron and steel that engineers could span great distances.",
+                "headings": [
+                  "i. The environmental impact of bridges",
+                  "ii. Why modern bridges are superior",
+                  "iii. Limitations of early building materials",
+                  "iv. The Industrial Revolution"
+                ],
+                "question": "Which heading matches Paragraph A?",
+                "examples": [
+                  {
+                    "heading": "i. Environmental impact",
+                    "analysis": "NOT GIVEN. The text mentions materials, but not their impact on nature",
+                    "answer": "WRONG"
+                  },
+                  {
+                    "heading": "iv. Industrial Revolution",
+                    "analysis": "TRAP. It is mentioned in the last sentence, but it is not what the whole paragraph is about",
+                    "answer": "WRONG"
+                  },
+                  {
+                    "heading": "ii. Modern bridges superior",
+                    "analysis": "CLOSE. It implies modern materials are better, but the focus is on the past",
+                    "answer": "WRONG"
+                  },
+                  {
+                    "heading": "iii. Limitations of early materials",
+                    "analysis": "CORRECT. The paragraph lists wood and stone (early materials) and explains why they were bad (limited span, rot, hard to build)",
+                    "answer": "CORRECT"
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
-      "commonMistakes": [
-        {
-          "title": "Matching based on a single word",
-          "description": "Students pick a heading because one word appears in both the heading and paragraph, but the heading must match the MAIN idea, not just a detail or keyword."
-        },
-        {
-          "title": "Choosing a heading that describes only one sentence",
-          "description": "A heading must represent the entire paragraph's main idea, not just one sentence or example within it."
-        },
-        {
-          "title": "Confusing main ideas with supporting examples",
-          "description": "Supporting details and examples are used to illustrate the main idea - they are not the main idea themselves."
-        },
-        {
-          "title": "Not reading the whole paragraph",
-          "description": "The main idea might not be in the first sentence alone. You must read the entire paragraph to understand its overall purpose."
-        },
-        {
-          "title": "Falling for distractor headings",
-          "description": "Headings that use words from the paragraph but misrepresent the main idea, or overly specific headings that match one detail but not the overall point."
-        }
-      ],
-      "trapPatterns": [
-        {
-          "type": "Word repetition trap",
-          "description": "Headings that use words from the paragraph but misrepresent the main idea"
-        },
-        {
-          "type": "Over-specific headings",
-          "description": "Headings that match one detail but not the overall point"
-        },
-        {
-          "type": "Similar headings",
-          "description": "Two or more headings with subtle but important differences - testing your precision"
-        }
-      ],
-      "warningSign": "If you match a heading too quickly based on one word, STOP and reread the entire paragraph",
-      "strategyTips": [
-        {
-          "step": 1,
-          "title": "Read all headings first",
-          "description": "Familiarize yourself with all the options before reading paragraphs to understand what you're looking for"
-        },
-        {
-          "step": 2,
-          "title": "Read the first and last sentences of each paragraph",
-          "description": "These often contain the main idea or topic sentence"
-        },
-        {
-          "step": 3,
-          "title": "Identify the main idea",
-          "description": "Ask yourself: What is this paragraph MAINLY about? Ignore minor details and examples"
-        },
-        {
-          "step": 4,
-          "title": "Look for repeated themes",
-          "description": "Concepts or ideas that appear throughout the paragraph usually indicate the main theme"
-        },
-        {
-          "step": 5,
-          "title": "Match and eliminate",
-          "description": "Cross out headings as you use them. This helps you focus on remaining options"
-        },
-        {
-          "step": 6,
-          "title": "Match concepts, not keywords",
-          "description": "The heading will paraphrase the main idea using different words - don't expect exact word matches"
-        }
-      ],
-      "keyTechniques": {
-        "topicSentence": "Focus on the topic sentence (usually first or second sentence) which introduces the main idea",
-        "repeatedConcepts": "Look for themes or concepts that are repeated throughout the paragraph",
-        "elimination": "Eliminate headings as you use them to avoid confusion",
-        "avoidKeywords": "Don't match based on keywords alone - match concepts and main ideas"
-      },
-      "timeManagement": {
-        "timePerQuestion": "2-3 minutes per paragraph",
-        "totalTime": "10-15 minutes total for a full set",
-        "tip": "This question type takes longer than others. Budget your time accordingly and don't rush."
-      },
-      "dosAndDonts": {
-        "dos": [
-          "Read the entire paragraph before choosing",
-          "Focus on the main idea, not supporting details",
-          "Cross out headings you've already used",
-          "Check if the first and last sentences support your choice",
-          "Read all heading options before making decisions"
-        ],
-        "donts": [
-          "Match based on word repetition alone",
-          "Rush - this question type requires careful thinking",
-          "Choose a heading that only matches part of the paragraph",
-          "Forget that there are extra, unused headings",
-          "Use a heading more than once"
-        ]
-      },
-      "advancedTips": [
-        {
-          "title": "Difficulty variations",
-          "description": "Early paragraphs (A, B, C) often have clearer main ideas; later ones may be more subtle"
-        },
-        {
-          "title": "Check for example answers",
-          "description": "Always check if an example passage is given with a heading already matched - this helps you understand the level of generality required"
-        },
-        {
-          "title": "Similar headings strategy",
-          "description": "If two headings seem similar, carefully note their differences - they're testing your precision in understanding nuances"
-        },
-        {
-          "title": "Start with the easiest",
-          "description": "One heading is usually very obvious - start with the easiest paragraph to build momentum and eliminate options"
-        }
-      ],
-      "emergencyStrategy": {
-        "whenRunningOutOfTime": "Read only the first two and last sentences of remaining paragraphs, then make your best guess",
-        "confidenceBooster": "One heading is usually very obvious - start with the easiest paragraph to build momentum"
-      },
-      "masteryCheck": {
-        "theoryQuiz": [
+      "commonPitfalls": {
+        "title": "Common Mistakes & Pitfalls",
+        "description": "The 8 Most Common Errors Students Make",
+        "mistakes": [
           {
             "id": 1,
-            "question": "Should you match headings based on keywords appearing in both the heading and paragraph?",
-            "correctAnswer": "No, you should match based on the main idea, not keywords",
-            "explanation": "Keyword matching is a common trap. You must identify main ideas, which are often paraphrased."
+            "title": "Matching Keywords (The 'Word Spot' Trap)",
+            "trap": "You see the word 'Volcano' in the text and 'Volcanic' in the heading, so you match them immediately.",
+            "rule": "Read the sentence containing the word. Does the heading describe the whole paragraph or just that one word? Usually, exact word matches are traps."
           },
           {
             "id": 2,
-            "question": "What part of the paragraph usually contains the main idea?",
-            "correctAnswer": "Usually in the topic sentence (first or second sentence) and supported by the conclusion",
-            "explanation": "The topic sentence typically introduces the main idea, while the rest provides supporting details."
+            "title": "Reading Only the First Sentence",
+            "trap": "You rely 100% on the first sentence.",
+            "rule": "While often true, the main idea can be in the second sentence (especially if the first sentence is a 'hook' or a rhetorical question). Always check the middle and end."
           },
           {
             "id": 3,
-            "question": "Why are there more headings than paragraphs?",
-            "correctAnswer": "To include distractors that test your precision",
-            "explanation": "Extra headings serve as distractors to test whether you can accurately identify main ideas versus related but incorrect options."
+            "title": "Spending Too Much Time on One Paragraph",
+            "trap": "You spend 5 minutes staring at Paragraph B because you can't decide.",
+            "rule": "If you are stuck, leave it. Do the easier paragraphs first. When you come back, you will have fewer headings to choose from."
           },
           {
             "id": 4,
-            "question": "How can you tell the difference between a main idea and a supporting detail?",
-            "correctAnswer": "The main idea is what the entire paragraph is about; supporting details are examples or evidence that illustrate it",
-            "explanation": "Supporting details explain, prove, or illustrate the main idea but are not the central point themselves."
-          }
-        ],
-        "miniPractice": {
-          "passage": "While renewable energy technologies have become more affordable in recent years, the initial investment remains prohibitively expensive for many developing nations. Solar panels and wind turbines require substantial upfront capital that these countries often lack. International funding programs have been established to address this gap, but bureaucratic hurdles and strict eligibility requirements mean many nations cannot access these resources.",
-          "headings": [
-            "i. The falling cost of renewable technology",
-            "ii. Financial barriers preventing renewable energy adoption",
-            "iii. How developing nations produce energy"
-          ],
-          "correctAnswer": "ii",
-          "explanation": "Although the paragraph mentions falling costs, the MAIN idea is about financial barriers that prevent adoption, not the cost reduction itself. The entire paragraph focuses on why developing nations cannot afford or access renewable energy."
-        },
-        "selfAssessment": [
-          "I can distinguish between main ideas and supporting details",
-          "I read the entire paragraph before matching a heading",
-          "I don't rely on keyword matching alone",
-          "I can eliminate distractors confidently",
-          "I can explain why wrong headings don't fit"
-        ],
-        "readyWhen": "You score 100% on the understanding quiz and can explain why wrong headings don't fit"
-      },
-      "theoryQuiz": {
-        "title": "Matching Headings - Theory Understanding",
-        "questions": [
-          {
-            "id": 1,
-            "type": "multiple-choice",
-            "text": "Should you match headings based on keywords appearing in both the heading and paragraph?",
-            "options": [
-              "Yes, keyword matching is the fastest and most accurate method",
-              "No, you should match based on the main idea, not keywords",
-              "Yes, but only if the keyword appears more than twice",
-              "No, you should only use the first sentence"
-            ],
-            "correctAnswer": "b",
-            "explanation": "Keyword matching is a common trap. IELTS tests your ability to identify main ideas, which are often paraphrased rather than using exact words."
+            "title": "Not Crossing Out Used Headings",
+            "trap": "You keep re-reading the full list of headings for every single paragraph.",
+            "rule": "Eliminate headings as you go. This saves mental energy and reduces confusion."
           },
-          {
-            "id": 2,
-            "type": "multiple-choice",
-            "text": "What part of the paragraph usually contains the main idea?",
-            "options": [
-              "Only in the middle sentences",
-              "Always in the last sentence",
-              "Usually in the topic sentence (first or second sentence) and supported by the conclusion",
-              "Evenly distributed throughout"
-            ],
-            "correctAnswer": "c",
-            "explanation": "The topic sentence typically introduces the main idea, while the rest of the paragraph provides supporting details."
-          },
-          {
-            "id": 3,
-            "type": "multiple-choice",
-            "text": "Why are there more headings than paragraphs in this question type?",
-            "options": [
-              "To give you more options in case you're unsure",
-              "It's a mistake in the test design",
-              "To include distractors that test your precision",
-              "So you can choose your favorite heading style"
-            ],
-            "correctAnswer": "c",
-            "explanation": "Extra headings serve as distractors to test whether you can accurately identify main ideas versus related but incorrect options."
-          },
-          {
-            "id": 4,
-            "type": "multiple-choice",
-            "text": "How much time should you allocate per paragraph for matching headings?",
-            "options": [
-              "30 seconds - work quickly",
-              "5 minutes - be very thorough",
-              "2-3 minutes per paragraph",
-              "It doesn't matter, just finish all questions"
-            ],
-            "correctAnswer": "c",
-            "explanation": "Matching headings requires careful thought; 2-3 minutes per paragraph allows proper analysis without rushing."
-          }
-        ]
-      },
-      "practicalQuiz": {
-        "passage": {
-          "paragraphA": "The introduction of artificial intelligence in healthcare has revolutionized diagnostic accuracy. Machine learning algorithms can now analyze medical images with precision that rivals or exceeds human radiologists. A 2023 study showed that AI systems correctly identified lung cancer in CT scans 94% of the time, compared to 88% for human doctors. This technology has proven particularly valuable in regions with limited access to specialist physicians.",
-          "paragraphB": "Despite these technological advances, many patients express discomfort with AI-driven diagnoses. Surveys indicate that 65% of patients prefer human doctors to make final medical decisions, even when AI provides supporting analysis. Trust issues stem from concerns about algorithmic bias, lack of transparency in how AI reaches conclusions, and fears about data privacy. Healthcare providers report that patient anxiety often increases when they learn AI was involved in their diagnosis.",
-          "paragraphC": "The economic implications of AI in healthcare extend beyond diagnostic improvements. Hospitals implementing AI systems report initial costs averaging $2.5 million, including software, training, and infrastructure upgrades. However, long-term savings emerge through reduced diagnostic errors, shorter hospital stays, and more efficient resource allocation. Some healthcare economists project that widespread AI adoption could reduce overall healthcare costs by 15-20% within a decade.",
-          "paragraphD": "Medical schools worldwide are now integrating AI training into their curricula. Future doctors must learn not only traditional diagnostic skills but also how to interpret AI-generated insights and communicate them effectively to patients. The University of Toronto recently launched a mandatory course on AI literacy for all first-year medical students. Educators emphasize that AI should augment, not replace, human clinical judgment."
-        },
-        "headings": [
-          "i. Superior diagnostic performance of AI systems",
-          "ii. Patient resistance to automated medical decisions",
-          "iii. The cost-benefit analysis of healthcare AI",
-          "iv. Training the next generation of AI-literate physicians",
-          "v. Government regulation of medical technology",
-          "vi. The history of AI development",
-          "vii. AI's role in surgical procedures",
-          "viii. Financial investment and long-term savings in AI healthcare"
-        ],
-        "questions": [
           {
             "id": 5,
-            "type": "matching-headings",
-            "text": "Paragraph A",
-            "correctAnswer": "i",
-            "explanation": "The paragraph's main focus is on how AI has improved diagnostic accuracy, with specific statistics showing AI outperforming human doctors."
+            "title": "Confusing Examples with Main Points",
+            "trap": "The paragraph tells a story about a specific farmer. You choose a heading about 'Farming methods.'",
+            "rule": "The farmer is just an example. What point is the writer proving by using the farmer?"
           },
           {
             "id": 6,
-            "type": "matching-headings",
-            "text": "Paragraph B",
-            "correctAnswer": "ii",
-            "explanation": "The main idea centers on patient discomfort and preference for human doctors over AI, despite technological capabilities."
+            "title": "Ignoring Distractors",
+            "trap": "You forget that there are 2-3 extra headings that you will not use.",
+            "rule": "Do not force a heading to fit just because it's left over. It might be a distractor."
           },
           {
             "id": 7,
-            "type": "matching-headings",
-            "text": "Paragraph C",
-            "correctAnswer": "viii",
-            "explanation": "While heading iii is tempting, heading viii is more precise as the paragraph specifically discusses initial investment costs and long-term financial savings."
+            "title": "Looking for Specific Details",
+            "trap": "You treat this like a 'Gap Fill' question, looking for names and dates.",
+            "rule": "Switch your brain to 'Summary Mode.' You are looking for general themes, not specific data points."
           },
           {
             "id": 8,
-            "type": "matching-headings",
-            "text": "Paragraph D",
-            "correctAnswer": "iv",
-            "explanation": "The paragraph discusses how medical schools are preparing future doctors to work with AI technology."
+            "title": "Ignoring Plurals",
+            "trap": "The heading says 'The causes of poverty' (Plural). The paragraph discusses only one cause.",
+            "rule": "If the heading is plural, the paragraph must list more than one factor. If it only lists one, that heading is wrong."
           }
-        ],
-        "miniPractice": {
-          "paragraph": "While renewable energy technologies have become more affordable in recent years, the initial investment remains prohibitively expensive for many developing nations. Solar panels and wind turbines require substantial upfront capital that these countries often lack. International funding programs have been established to address this gap, but bureaucratic hurdles and strict eligibility requirements mean many nations cannot access these resources.",
-          "headings": [
-            "i. The falling cost of renewable technology",
-            "ii. Financial barriers preventing renewable energy adoption",
-            "iii. How developing nations produce energy"
-          ],
-          "correctAnswer": "ii",
-          "explanation": "Although the paragraph mentions falling costs, the main idea is about financial barriers that prevent adoption, not the cost reduction itself."
-        }
-      },
-      "scoring": {
-        "excellent": {
-          "range": "7-8",
-          "message": "Excellent! You understand the main idea concept"
-        },
-        "good": {
-          "range": "5-6",
-          "message": "Good progress, review questions where you confused details with main ideas"
-        },
-        "needsReview": {
-          "range": "3-4",
-          "message": "Review the theory section focusing on main idea vs. supporting details"
-        },
-        "needsStudy": {
-          "range": "0-2",
-          "message": "Study the theory section again and practice identifying topic sentences"
-        }
+        ]
       }
     },
     {
