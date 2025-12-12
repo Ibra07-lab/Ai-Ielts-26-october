@@ -3,6 +3,7 @@ import { Send, Bot, User, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
 import { sendChatMessage, generateSessionId, ChatMessage } from '@/services/chatApi';
 import { useToast } from '@/components/ui/use-toast';
 import ReactMarkdown from 'react-markdown';
@@ -64,11 +65,17 @@ export default function ReadingTutorChat({ droppedQuestionId }: ReadingTutorChat
 
   // Format assistant messages: collapse excessive blank lines and auto-number "Statements:" blocks
   const formatAssistantContent = (raw: string): string => {
-    // Collapse 3+ blank lines to just 2
+    // Collapse 3+ blank lines to just 2 (keep one blank line between sections)
     let processed = raw.replace(/\n{3,}/g, '\n\n');
 
     // Fix loose lists: "1. \n Text" -> "1. Text"
     processed = processed.replace(/^(\d+\.|[-*])\s+\n\s*/gm, '$1 ');
+
+    // Remove blank lines BEFORE list items to keep lists compact
+    processed = processed.replace(/\n\s*\n(?=\s*(?:\d+\.|[-*]|•)\s)/g, '\n');
+
+    // Remove blank lines BETWEEN consecutive list items (numbered or bullets)
+    processed = processed.replace(/(\n\s*(?:\d+\.|[-*]|•)\s[^\n]+)\n\s*\n(?=\s*(?:\d+\.|[-*]|•)\s)/g, '$1\n');
 
     // Auto-number lines directly after a "Statements:" header until a blank line
     return processed.replace(/(Statements?:\s*\n)([\s\S]+)/i, (_, header: string, rest: string) => {
@@ -198,91 +205,84 @@ export default function ReadingTutorChat({ droppedQuestionId }: ReadingTutorChat
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-3 scroll-smooth custom-scrollbar bg-slate-50/50 dark:bg-slate-950/50">
-        {messages.map((message) => (
-          <div
-            key={message.id}
-            className={`flex gap-4 ${message.role === 'user' ? 'justify-end' : 'justify-start'
-              } animate-in fade-in slide-in-from-bottom-4 duration-500`}
-          >
-            {/* Bot Avatar */}
-            {message.role === 'assistant' && (
-              <div className="w-9 h-9 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
-                <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full p-1.5">
-                  <Bot className="h-4 w-4 text-white" />
-                </div>
-              </div>
-            )}
-
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 scroll-smooth custom-scrollbar bg-slate-50/50 dark:bg-slate-950/50">
+        <div className="max-w-3xl mx-auto space-y-3">
+          {messages.map((message) => (
             <div
-              className={`flex flex-col max-w-[90%] sm:max-w-[80%] md:max-w-[70%] ${message.role === 'user' ? 'items-end' : 'items-start'
-                }`}
+              key={message.id}
+              className="flex gap-3 animate-in fade-in slide-in-from-bottom-4 duration-500"
             >
-              <div
-                className={`px-4 py-2 rounded-2xl shadow-sm text-[15px] leading-snug ${message.role === 'user'
-                  ? 'bg-blue-600 text-white rounded-tr-sm shadow-blue-500/10'
-                  : 'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-slate-800 dark:text-slate-200 rounded-tl-sm shadow-sm'
-                  }`}
-              >
-                <div className="chat-content text-left">
-                  <ReactMarkdown
-                    components={{
-                      p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
-                      strong: ({ children }) => (
-                        <strong className={`font-semibold ${message.role === 'user' ? 'text-white' : 'text-indigo-600 dark:text-indigo-400'}`}>
-                          {children}
-                        </strong>
-                      ),
-                      ul: ({ children }) => <ul className="my-2 pl-4 list-disc space-y-1">{children}</ul>,
-                      ol: ({ children }) => <ol className="my-2 pl-4 list-decimal space-y-1">{children}</ol>,
-                      li: ({ children }) => <li className="pl-1">{children}</li>,
-                      code: ({ children }) => (
-                        <code className={`px-1.5 py-0.5 rounded text-[14px] font-semibold ${message.role === 'user'
-                          ? 'bg-white/20 text-white'
-                          : 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-100 dark:border-emerald-800'
-                          }`}>
-                          {children}
-                        </code>
-                      ),
-                    }}
-                  >
-                    {message.role === 'assistant'
-                      ? formatAssistantContent(message.content)
-                      : message.content}
-                  </ReactMarkdown>
+              {/* Avatar */}
+              {message.role === 'assistant' ? (
+                <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
+                  <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full p-1.5">
+                    <Bot className="h-3.5 w-3.5 text-white" />
+                  </div>
+                </div>
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0 shadow-md shadow-blue-500/20 mt-1">
+                  <User className="h-3.5 w-3.5 text-white" />
+                </div>
+              )}
+
+              {/* Message Card */}
+              <div className="flex-1 min-w-0">
+                <Card className="py-0 gap-0 border shadow-sm bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
+                  <CardContent className="p-4 text-[15px] leading-snug">
+                    <div className="chat-content text-left text-slate-800 dark:text-slate-200">
+                      <ReactMarkdown
+                        components={{
+                          p: ({ children }) => <p className="mb-1 last:mb-0">{children}</p>,
+                          strong: ({ children }) => (
+                            <strong className="font-semibold text-indigo-600 dark:text-indigo-400">
+                              {children}
+                            </strong>
+                          ),
+                          ul: ({ children }) => <ul className="my-1 pl-4 list-disc space-y-0.5">{children}</ul>,
+                          ol: ({ children }) => <ol className="my-1 pl-4 list-decimal space-y-0.5">{children}</ol>,
+                          li: ({ children }) => <li className="pl-1">{children}</li>,
+                          code: ({ children }) => (
+                            <code className="px-1.5 py-0.5 rounded text-[14px] font-semibold bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-100 dark:border-emerald-800">
+                              {children}
+                            </code>
+                          ),
+                        }}
+                      >
+                        {message.role === 'assistant'
+                          ? formatAssistantContent(message.content)
+                          : message.content}
+                      </ReactMarkdown>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          ))}
+
+          {/* Loading indicator */}
+          {isLoading && (
+            <div className="flex gap-3 animate-in fade-in duration-300">
+              <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
+                <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full p-1.5">
+                  <Bot className="h-3.5 w-3.5 text-white" />
                 </div>
               </div>
-            </div>
-
-
-            {/* User Avatar */}
-            {message.role === 'user' && (
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0 shadow-md shadow-blue-500/20 mt-1 ring-2 ring-white dark:ring-slate-900">
-                <User className="h-4 w-4 text-white" />
-              </div>
-            )}
-          </div>
-        ))}
-
-        {/* Loading indicator */}
-        {isLoading && (
-          <div className="flex gap-4 justify-start animate-in fade-in duration-300">
-            <div className="w-9 h-9 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center flex-shrink-0 shadow-sm">
-              <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full p-1.5">
-                <Bot className="h-4 w-4 text-white" />
+              <div className="flex-1 min-w-0">
+                <Card className="py-0 gap-0 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+                  <CardContent className="p-5">
+                    <div className="flex space-x-1.5 items-center h-full">
+                      <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce delay-75"></div>
+                      <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce delay-150"></div>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             </div>
-            <div className="bg-white dark:bg-slate-900 px-5 py-4 rounded-2xl rounded-tl-sm shadow-sm border border-slate-100 dark:border-slate-800">
-              <div className="flex space-x-1.5 items-center h-full">
-                <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce"></div>
-                <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce delay-75"></div>
-                <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce delay-150"></div>
-              </div>
-            </div>
-          </div>
-        )}
+          )}
 
-        <div ref={messagesEndRef} />
+          <div ref={messagesEndRef} />
+        </div>
       </div>
 
       {/* Input Area */}

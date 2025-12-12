@@ -212,6 +212,11 @@ class ConversationMemory(BaseModel):
     # Student's submitted answers {question_id: answer}
     student_answers: Dict[int, str] = Field(default_factory=dict)
     
+    # Socratic questioning state for wrong answers
+    pending_socratic_questions: Dict[int, Dict[str, Any]] = Field(default_factory=dict)  # {question_id: {student_answer, correct_answer, question_text}}
+    waiting_for_reasoning: Optional[int] = None  # question_id we're waiting for student reasoning on
+    student_reasoning: Dict[int, str] = Field(default_factory=dict)  # {question_id: reasoning_text}
+    
     def add_follow_up(self, item: str, trigger_after: int = 3) -> None:
         """Add something to follow up on after n exchanges."""
         self.follow_up_items.append({

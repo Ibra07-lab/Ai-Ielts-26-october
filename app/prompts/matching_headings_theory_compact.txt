@@ -1,0 +1,168 @@
+============================================================
+MATCHING HEADINGS - CORE CONCEPT
+============================================================
+
+WHAT IS IT?
+  • Match paragraph headings based on MAIN IDEA, not keywords
+  • More headings than paragraphs (distractors included)
+  • Tests: Skimming, identifying main ideas, paraphrasing
+
+THE KEY DISTINCTION:
+  Main Idea = The writer's primary argument/topic (covers 80%+ of paragraph)
+  Supporting Detail = Statistics, examples, dates used to prove the main idea (covers ~20%)
+
+CRITICAL RULE:
+  A correct heading acts like a TITLE - it must cover the content of the ENTIRE paragraph, not just one sentence.
+
+============================================================
+DISTRACTOR TYPES (TRAPS TO AVOID)
+============================================================
+
+1. Detail Distractor:
+   • Covers only ONE sentence or example in the paragraph
+   • Not the main idea
+
+2. Keyword Distractor:
+   • Contains a word found in the text
+   • BUT the meaning doesn't match the overall paragraph
+
+THE SCOPE TEST:
+   Ask: "Does this heading cover 80% of the paragraph or only 20%?"
+   • 80-100% = Correct Heading
+   • 10-20% = Detail Distractor
+
+============================================================
+5-STEP STRATEGY
+============================================================
+
+Step 1: Analyze Headings First
+  • Read all headings before the text
+  • Underline keywords (nouns, adjectives)
+  • Identify differences between similar headings
+
+Step 2: Read Topic Sentences
+  • First two sentences + last sentence of paragraph
+  • Main idea often located here
+  • Warning: If paragraph starts with story/example, main idea may be in middle
+
+Step 3: Create Your Own Title
+  • Before looking at headings, ask: "In 3 words, what is this paragraph about?"
+  • Summarize the main point in your own words
+
+Step 4: Match and Eliminate
+  • Find heading that matches your summary
+  • Cross off used headings as you go
+  • If unsure between two, write both and move on
+
+Step 5: Return to Difficult Ones
+  • Do easy paragraphs first
+  • Fewer headings left = easier choices for difficult paragraphs
+
+============================================================
+SIGNAL WORDS TO WATCH
+============================================================
+
+Contrast Words (However, Although, But):
+  • Main idea is usually AFTER these words
+  • Example: "Many think X. However, the reality is Y." → Main idea is Y
+
+Conclusion Words (Therefore, Thus, As a result):
+  • These summarize the main point
+  • Often indicate the paragraph's central message
+
+============================================================
+TOP 8 COMMON MISTAKES
+============================================================
+
+1. Matching Keywords (Word Spot Trap)
+   Trap: See "volcano" in text and "volcanic" in heading, match immediately
+   Rule: Read full context. Does heading describe whole paragraph or just that word?
+   → Exact word matches are usually traps
+
+2. Reading Only First Sentence
+   Trap: Rely 100% on first sentence
+   Rule: Main idea can be in second sentence (especially if first is a hook/question)
+   → Always check middle and end
+
+3. Spending Too Much Time on One Paragraph
+   Trap: Spend 5 minutes on one paragraph
+   Rule: Skip difficult ones, do easy first, return later with fewer options
+
+4. Not Crossing Out Used Headings
+   Trap: Re-read full list every time
+   Rule: Eliminate as you go to save mental energy
+
+5. Confusing Examples with Main Points
+   Trap: Paragraph about a farmer → choose "Farming methods"
+   Rule: Farmer is just an example. What point is the writer proving?
+
+6. Ignoring Distractors
+   Trap: Forget there are 2-3 extra headings
+   Rule: Don't force a heading just because it's left over
+
+7. Looking for Specific Details
+   Trap: Treat like gap-fill, looking for names/dates
+   Rule: Switch to "Summary Mode" - look for general themes
+
+8. Ignoring Plurals
+   Trap: Heading says "causes" (plural), paragraph discusses only one cause
+   Rule: Plural heading = paragraph must list multiple factors
+
+============================================================
+EXAMPLE WALKTHROUGH
+============================================================
+
+Passage: "For centuries, bridge construction used locally sourced materials like wood and stone. These materials were abundant and cheap, but limited span and durability. Wooden bridges would rot, stone bridges were difficult over deep water. It wasn't until the Industrial Revolution brought iron and steel that engineers could span great distances."
+
+Headings:
+i. Environmental impact of bridges
+ii. Why modern bridges are superior
+iii. Limitations of early building materials
+iv. The Industrial Revolution
+
+Analysis:
+❌ i. Environmental impact
+   → NOT mentioned (nature/environment never discussed)
+
+❌ iv. Industrial Revolution
+   → TRAP (mentioned last sentence only, not whole paragraph)
+
+❌ ii. Modern bridges superior
+   → CLOSE (implies modern better, but focus is on past)
+
+✅ iii. Limitations of early materials
+   → CORRECT (lists wood/stone as early materials, explains why they were bad: 
+      limited span, rot, hard to build)
+
+Key Insight: Options i, ii, iv all appear in the text, but only iii captures what the ENTIRE paragraph is about.
+
+============================================================
+PRACTICAL TIPS
+============================================================
+
+• Process of Elimination: Use 3-4 easy paragraphs to eliminate obvious wrong headings
+• Time Management: 1-2 minutes per paragraph maximum (6-8 paragraphs = 10-12 minutes total)
+• Check Twice: After matching all, re-read first sentence of each paragraph to verify your choice
+• Trust Paraphrasing: Correct headings rarely use exact words from the passage
+• Watch for Scope: If heading is too narrow (mentions one detail) or too broad (covers multiple paragraphs), it's wrong
+
+============================================================
+COMMON SIGNAL PATTERNS
+============================================================
+
+Paragraph Pattern 1 - Problem/Solution:
+  "X is a problem... However, Y provides a solution..."
+  → Heading focuses on Y (the solution), not X (the problem mention)
+
+Paragraph Pattern 2 - Comparison:
+  "While X has benefits... Y has drawbacks..."
+  → Heading captures the comparison itself, not just X or Y alone
+
+Paragraph Pattern 3 - Cause/Effect:
+  "Due to A, B occurred... As a result, C happened..."
+  → Heading focuses on the main effect (B or C), not just the cause (A)
+
+Paragraph Pattern 4 - Historical Progression:
+  "In the past X... Later Y... Now Z..."
+  → Heading captures the change/evolution, not just one time period
+

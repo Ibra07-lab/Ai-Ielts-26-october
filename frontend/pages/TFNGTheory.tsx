@@ -107,16 +107,18 @@ export default function TFNGTheory() {
                                         {/* Answer Meanings */}
                                         {subsection.answerMeanings && (
                                             <div className="grid gap-3">
-                                                {subsection.answerMeanings.map((item: any, i: number) => (
-                                                    <div key={i} className="p-4 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50">
-                                                        <div className="font-bold text-lg text-emerald-600 dark:text-emerald-400 mb-1">
-                                                            {item.answer}
+                                                {subsection.answerMeanings
+                                                    .filter((item: any) => item.answer !== "NOT GIVEN")
+                                                    .map((item: any, i: number) => (
+                                                        <div key={i} className="p-4 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50">
+                                                            <div className="font-bold text-lg text-emerald-600 dark:text-emerald-400 mb-1">
+                                                                {item.answer}
+                                                            </div>
+                                                            <div className="text-slate-700 dark:text-slate-300">
+                                                                {item.meaning}
+                                                            </div>
                                                         </div>
-                                                        <div className="text-slate-700 dark:text-slate-300">
-                                                            {item.meaning}
-                                                        </div>
-                                                    </div>
-                                                ))}</div>
+                                                    ))}</div>
                                         )}
 
                                         {/* Important Note */}
@@ -255,7 +257,7 @@ export default function TFNGTheory() {
 
                                 {/* Core Difference Comparison */}
                                 {section.content.coreDifference && (
-                                    <div className="grid md:grid-cols-2 gap-4">
+                                    <div className="grid md:grid-cols-1 gap-4">
                                         <Card className="border-rose-200 dark:border-rose-800">
                                             <CardHeader>
                                                 <CardTitle className="text-rose-600 dark:text-rose-400">FALSE</CardTitle>
@@ -265,21 +267,6 @@ export default function TFNGTheory() {
                                                     {section.content.coreDifference.FALSE?.map((item: string, i: number) => (
                                                         <li key={i} className="flex items-start gap-2 text-sm">
                                                             <XCircle className="w-4 h-4 text-rose-500 mt-0.5 flex-shrink-0" />
-                                                            <span>{item}</span>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </CardContent>
-                                        </Card>
-                                        <Card className="border-slate-200 dark:border-slate-700">
-                                            <CardHeader>
-                                                <CardTitle className="text-slate-600 dark:text-slate-400">NOT GIVEN</CardTitle>
-                                            </CardHeader>
-                                            <CardContent>
-                                                <ul className="space-y-2">
-                                                    {section.content.coreDifference.NOT_GIVEN?.map((item: string, i: number) => (
-                                                        <li key={i} className="flex items-start gap-2 text-sm">
-                                                            <AlertCircle className="w-4 h-4 text-slate-500 mt-0.5 flex-shrink-0" />
                                                             <span>{item}</span>
                                                         </li>
                                                     ))}

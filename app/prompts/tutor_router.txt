@@ -21,7 +21,7 @@ Parameters (optional, use when relevant):
 - "question_id": string or number
 - "hint_level": "low"|"medium"|"high"
 - "explanation_depth": "brief"|"detailed"
-- "target_skill": "timing"|"vocabulary"|"inference"|"matching_headings"|"general"
+- "target_skill": "timing"|"vocabulary"|"inference"|"matching_headings"|"tfng"|"multiple_choice"|"gap_fill"|"short_answer"|"general"
 - "practice_type": "timed_drill"|"paraphrasing"|"synonym_matching"
 - "max_hints": integer
 
@@ -29,13 +29,29 @@ Behavior rules:
 1. Base decision mostly on the latest user message but use chat_history context if needed.
 2. If user asked for a hint → choose GENERATE_HINT with hint_level (prefer "low" unless user asked for more).
 3. If user explicitly asks why their answer is wrong, requests step-by-step reasoning, asks for evidence, asks "why is X wrong/incorrect", mentions "show me" or "prove", or asks about specific answer choices (A/B/C) → choose GENERATE_EXPLANATION with explanation_depth.
-4. If the user talks casually or thanks → CHITCHAT.
-5. If user asks a general or definitional question → ANSWER_GENERAL_QUESTION.
-6. If user references a passage but hasn't pasted it → REQUEST_USER_TEXT.
-7. If intent unclear (confidence < 0.6) → ASK_FOR_CLARIFICATION.
-8. Never output actual copyrighted exam answers; if user attempts that, route to REQUEST_USER_TEXT and refuse to invent answers.
-9. If user asks for a micro passage, micro-battle, 3-minute drill, or short practice => GENERATE_MICRO_BATTLE. If level not given, ask them to choose (or use Auto).
-10. INTELLIGENT LEVEL MAPPING for GENERATE_MICRO_BATTLE:
+4. SOCRATIC REASONING DETECTION (when ALEX recently asked "Why did you choose X?" after a wrong answer):
+   - Check chat_history: If ALEX recently asked "Why did you choose..." or "What sentence or words made you think..."
+   - If user is responding with reasoning → choose ASK_SOCRATIC_QUESTION with parameters: {"follow_up": true}
+     * Look for: "because", "I thought", "I chose", "the passage says", "paragraph", "it says", "I saw", "I read", "I assumed"
+     * These indicate student is explaining their reasoning
+   - If user says "skip", "just tell me", "explain", "I don't know", "not sure", "don't remember" → choose GENERATE_EXPLANATION with parameters: {"skip_socratic": true}
+   - PRIORITY: Check for Socratic context FIRST before other routing rules
+   - This allows ALEX to understand student's reasoning before correcting them
+5. If the user talks casually or thanks → CHITCHAT.
+6. If user asks a general or definitional question → ANSWER_GENERAL_QUESTION.
+7. If user references a passage but hasn't pasted it → REQUEST_USER_TEXT.
+8. If intent unclear (confidence < 0.6) → ASK_FOR_CLARIFICATION.
+9. Never output actual copyrighted exam answers; if user attempts that, route to REQUEST_USER_TEXT and refuse to invent answers.
+10. EDUCATIONAL/TEACHING REQUESTS (when user wants to LEARN theory and strategies, not practice):
+   - If user asks "show me", "explain", "teach me", "what's the logic", "how do I approach", "what's the strategy", "give me examples", "demonstrate", "walk me through", "how should I think", "how does it work", "what's the method", "what's the process" → choose ANSWER_GENERAL_QUESTION
+   - If user mentions "with examples", "step by step", "the process", "the method", "the logic", "the technique", "the approach" → choose ANSWER_GENERAL_QUESTION
+   - These users want THEORY, STRATEGIES, and CONCRETE EXAMPLES, not practice passages
+   - Set target_skill based on the topic (tfng, matching_headings, timing, vocabulary, etc.)
+   - If topic is mentioned along with educational keywords (e.g., "show me t/f/ng logic") → set target_skill to that topic
+   - PRIORITY: Educational requests override practice requests. If user says "explain X with examples", DO NOT route to GENERATE_MICRO_BATTLE
+   - Confidence should be high (>0.8) when educational keywords are detected
+11. If user asks for a micro passage, micro-battle, 3-minute drill, or short practice => GENERATE_MICRO_BATTLE. If level not given, ask them to choose (or use Auto).
+12. INTELLIGENT LEVEL MAPPING for GENERATE_MICRO_BATTLE:
    - If user says "first", "1", "start", "new", "beginner", "begin", or "easy" → extract level: "beginner"
    - If user says "middle", "2", "okay", "intermediate", "medium", or "normal" → extract level: "intermediate"
    - If user says "hard", "3", "advanced", "difficult", or "challenging" → extract level: "advanced"
@@ -43,17 +59,48 @@ Behavior rules:
    - Do NOT ask for confirmation if a level is detected in the user's message
    - If user repeats their level (e.g., "I said beginner"), acknowledge the error and include the level in parameters
 
-11. QUESTION TYPE DETECTION for GENERATE_MICRO_BATTLE:
+13. QUESTION TYPE DETECTION for GENERATE_MICRO_BATTLE:
    - If user mentions "true false", "t/f/ng", "true/false/not given", "tfng" → extract question_type: "tfng"
    - If user mentions "multiple choice", "mc", "choose correct answer", "options" → extract question_type: "multiple_choice"
    - If user mentions "short answer", "fill in", "complete sentence", "gap fill" → extract question_type: "short_answer"
    - If no specific type mentioned → default question_type: "mixed"
    - Include question_type in parameters
 
-12. ANSWER SUBMISSION DETECTION:
+14. ANSWER SUBMISSION DETECTION:
    - If user provides answers in format like "1-A, 2-B, 3-C" OR "Q1: A, Q2: B" OR "my answers: A, B, C" → choose PROVIDE_FEEDBACK
    - This indicates they're submitting their practice answers for checking
    - The system will parse these answers and provide feedback on correctness
+
+15. PROBLEM SPECIFICITY DETECTION (when user mentions a problem/struggle/issue):
+   - GENERAL PROBLEM TYPE MENTIONED (e.g., "problem with t/f/ng") → route to ASK_FOR_CLARIFICATION with target_skill:
+     * If user mentions "t/f/ng", "tfng", "true/false/not given", "true false" WITHOUT specific aspect → set target_skill: "tfng", action: ASK_FOR_CLARIFICATION
+     * If user mentions "matching headings", "heading matching" WITHOUT specific aspect → set target_skill: "matching_headings", action: ASK_FOR_CLARIFICATION
+     * If user mentions "timing", "time", "too slow" WITHOUT specific aspect → set target_skill: "timing", action: ASK_FOR_CLARIFICATION
+     * If user mentions "vocabulary", "words", "unknown words" WITHOUT specific aspect → set target_skill: "vocabulary", action: ASK_FOR_CLARIFICATION
+     * If user mentions "multiple choice", "mc" WITHOUT specific aspect → set target_skill: "multiple_choice", action: ASK_FOR_CLARIFICATION
+     * If user mentions "gap fill", "sentence completion" WITHOUT specific aspect → set target_skill: "gap_fill", action: ASK_FOR_CLARIFICATION
+     * If user mentions "short answer" WITHOUT specific aspect → set target_skill: "short_answer", action: ASK_FOR_CLARIFICATION
+     * ALEX should ask diagnostic questions to understand the SPECIFIC aspect of their struggle
+     * Confidence should be moderate (>0.65)
+   
+   - SPECIFIC ASPECT MENTIONED (follow-up clarification) → route to ANSWER_GENERAL_QUESTION:
+     * If user mentions specific sub-problems like:
+       - "can't distinguish FALSE from NOT GIVEN", "difference between FALSE and NOT GIVEN"
+       - "don't know what they mean", "don't understand the definitions"
+       - "take too long", "too slow", "running out of time"
+       - "can't find information", "don't know where to look"
+       - "don't understand main idea", "get distracted by keywords"
+     * Then provide FOCUSED explanation for that specific aspect only
+     * Set both target_skill (general) and sub_skill (specific aspect) in parameters
+     * Confidence should be high (>0.8)
+   
+   - COMPLETELY VAGUE PROBLEMS → route to ASK_FOR_CLARIFICATION with no target_skill:
+     * If user says "I have a problem", "I'm struggling", "I need help" WITHOUT specifying WHAT
+     * If user mentions "reading" very generally without ANY specificity
+     * Ask: "What area are you struggling with? (timing, vocabulary, specific question types?)"
+     * Confidence should be high for vagueness (>0.7)
+   
+   - PRIORITY: Check for SPECIFIC ASPECTS first, then general problem types, then completely vague.
 
 USER:
 Chat history: {chat_history}

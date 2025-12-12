@@ -1,0 +1,865 @@
+2025-12-08 20:56:48,579 - DEBUG - Using proactor: IocpProactor
+2025-12-08 20:58:07,784 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2025-12-08 20:58:07,786 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2025-12-08 20:58:08,167 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001B55B6830E0>
+2025-12-08 20:58:08,167 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001B55B319950> server_hostname='api.openai.com' timeout=None
+2025-12-08 20:58:08,330 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001B55B86A0D0>
+2025-12-08 20:58:08,331 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2025-12-08 20:58:08,332 - DEBUG - send_request_headers.complete
+2025-12-08 20:58:08,332 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2025-12-08 20:58:08,333 - DEBUG - send_request_body.complete
+2025-12-08 20:58:08,333 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2025-12-08 20:58:17,413 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 08 Dec 2025 15:58:13 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'ielts-agent'), (b'openai-processing-ms', b'7649'), (b'openai-project', b'proj_p2TG3sHr67NTFigiOV4yQBrK'), (b'openai-version', b'2020-10-01'), (b'x-envoy-upstream-service-time', b'7993'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'200000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'195061'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'1.481s'), (b'x-request-id', b'req_977ac0b52b64457ca938ef71a75ac1ef'), (b'x-openai-proxy-wasm', b'v0.1'), (b'cf-cache-status', b'DYNAMIC'), (b'Set-Cookie', b'__cf_bm=Sw12HuZFkPNtgzrulLlFEbHn3dxNMz16k.TmaYHcJvs-1765209493-1.0.1.1-yDvpvPoFtszyqGBb2SYh_w7moKYWRV9a8ARXzp3QOlZMKNB_HBpLqv.W5HrTIqhUgq1Ae0lWq_cKi9lYRsbsoNJKetRdOC.0knt84jbV3wM; path=/; expires=Mon, 08-Dec-25 16:28:13 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'Set-Cookie', b'_cfuvid=_08K9zEoZetM5UdHubfZd_CGTUfH4k_g_KnlWmUoSXk-1765209493245-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9aad764cddc465a3-FRA'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2025-12-08 20:58:17,416 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-08 20:58:17,425 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2025-12-08 20:58:17,427 - DEBUG - receive_response_body.complete
+2025-12-08 20:58:17,428 - DEBUG - response_closed.started
+2025-12-08 20:58:17,428 - DEBUG - response_closed.complete
+2025-12-08 20:58:17,429 - DEBUG - HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers([('date', 'Mon, 08 Dec 2025 15:58:13 GMT'), ('content-type', 'application/json'), ('transfer-encoding', 'chunked'), ('connection', 'keep-alive'), ('access-control-expose-headers', 'X-Request-ID'), ('openai-organization', 'ielts-agent'), ('openai-processing-ms', '7649'), ('openai-project', 'proj_p2TG3sHr67NTFigiOV4yQBrK'), ('openai-version', '2020-10-01'), ('x-envoy-upstream-service-time', '7993'), ('x-ratelimit-limit-requests', '10000'), ('x-ratelimit-limit-tokens', '200000'), ('x-ratelimit-remaining-requests', '9999'), ('x-ratelimit-remaining-tokens', '195061'), ('x-ratelimit-reset-requests', '8.64s'), ('x-ratelimit-reset-tokens', '1.481s'), ('x-request-id', 'req_977ac0b52b64457ca938ef71a75ac1ef'), ('x-openai-proxy-wasm', 'v0.1'), ('cf-cache-status', 'DYNAMIC'), ('set-cookie', '__cf_bm=Sw12HuZFkPNtgzrulLlFEbHn3dxNMz16k.TmaYHcJvs-1765209493-1.0.1.1-yDvpvPoFtszyqGBb2SYh_w7moKYWRV9a8ARXzp3QOlZMKNB_HBpLqv.W5HrTIqhUgq1Ae0lWq_cKi9lYRsbsoNJKetRdOC.0knt84jbV3wM; path=/; expires=Mon, 08-Dec-25 16:28:13 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), ('strict-transport-security', 'max-age=31536000; includeSubDomains; preload'), ('x-content-type-options', 'nosniff'), ('set-cookie', '_cfuvid=_08K9zEoZetM5UdHubfZd_CGTUfH4k_g_KnlWmUoSXk-1765209493245-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), ('server', 'cloudflare'), ('cf-ray', '9aad764cddc465a3-FRA'), ('content-encoding', 'gzip'), ('alt-svc', 'h3=":443"; ma=86400')])
+2025-12-08 20:58:17,430 - DEBUG - request_id: req_977ac0b52b64457ca938ef71a75ac1ef
+2025-12-08 21:02:00,657 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2025-12-08 21:02:00,659 - DEBUG - close.started
+2025-12-08 21:02:00,660 - DEBUG - close.complete
+2025-12-08 21:02:00,660 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2025-12-08 21:02:11,899 - DEBUG - connect_tcp.failed exception=ConnectError(gaierror(11001, 'getaddrinfo failed'))
+2025-12-08 21:02:11,907 - DEBUG - Encountered Exception
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 101, in handle_async_request
+    raise exc
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 124, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_backends\auto.py", line 31, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_backends\anyio.py", line 113, in connect_tcp
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\openai\_base_client.py", line 1529, in request
+    response = await self._client.send(
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 11001] getaddrinfo failed
+2025-12-08 21:02:12,187 - DEBUG - 2 retries left
+2025-12-08 21:02:12,188 - INFO - Retrying request to /chat/completions in 0.490008 seconds
+2025-12-08 21:02:12,700 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2025-12-08 21:02:12,701 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2025-12-08 21:02:23,915 - DEBUG - connect_tcp.failed exception=ConnectError(gaierror(11001, 'getaddrinfo failed'))
+2025-12-08 21:02:23,916 - DEBUG - Encountered Exception
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 101, in handle_async_request
+    raise exc
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 124, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_backends\auto.py", line 31, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_backends\anyio.py", line 113, in connect_tcp
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\openai\_base_client.py", line 1529, in request
+    response = await self._client.send(
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 11001] getaddrinfo failed
+2025-12-08 21:02:23,920 - DEBUG - 1 retry left
+2025-12-08 21:02:23,920 - INFO - Retrying request to /chat/completions in 0.881564 seconds
+2025-12-08 21:02:24,818 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2025-12-08 21:02:24,819 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2025-12-08 21:02:24,820 - DEBUG - connect_tcp.failed exception=ConnectError(gaierror(11001, 'getaddrinfo failed'))
+2025-12-08 21:02:24,821 - DEBUG - Encountered Exception
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 101, in handle_async_request
+    raise exc
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 124, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_backends\auto.py", line 31, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_backends\anyio.py", line 113, in connect_tcp
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\openai\_base_client.py", line 1529, in request
+    response = await self._client.send(
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 11001] getaddrinfo failed
+2025-12-08 21:02:24,827 - DEBUG - Raising connection error
+2025-12-08 21:04:19,806 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2025-12-08 21:04:19,806 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2025-12-08 21:04:31,839 - DEBUG - connect_tcp.failed exception=ConnectError(gaierror(11001, 'getaddrinfo failed'))
+2025-12-08 21:04:31,840 - DEBUG - Encountered Exception
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 101, in handle_async_request
+    raise exc
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 124, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_backends\auto.py", line 31, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_backends\anyio.py", line 113, in connect_tcp
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\openai\_base_client.py", line 1529, in request
+    response = await self._client.send(
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 11001] getaddrinfo failed
+2025-12-08 21:04:31,844 - DEBUG - 2 retries left
+2025-12-08 21:04:31,845 - INFO - Retrying request to /chat/completions in 0.433491 seconds
+2025-12-08 21:04:32,300 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2025-12-08 21:04:32,301 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2025-12-08 21:04:44,323 - DEBUG - connect_tcp.failed exception=ConnectError(gaierror(11001, 'getaddrinfo failed'))
+2025-12-08 21:04:44,324 - DEBUG - Encountered Exception
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 101, in handle_async_request
+    raise exc
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 124, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_backends\auto.py", line 31, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_backends\anyio.py", line 113, in connect_tcp
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\openai\_base_client.py", line 1529, in request
+    response = await self._client.send(
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 11001] getaddrinfo failed
+2025-12-08 21:04:44,328 - DEBUG - 1 retry left
+2025-12-08 21:04:44,328 - INFO - Retrying request to /chat/completions in 0.870533 seconds
+2025-12-08 21:04:45,217 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2025-12-08 21:04:45,218 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2025-12-08 21:04:57,256 - DEBUG - connect_tcp.failed exception=ConnectError(gaierror(11001, 'getaddrinfo failed'))
+2025-12-08 21:04:57,257 - DEBUG - Encountered Exception
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 101, in handle_async_request
+    raise exc
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 124, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_backends\auto.py", line 31, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_backends\anyio.py", line 113, in connect_tcp
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\openai\_base_client.py", line 1529, in request
+    response = await self._client.send(
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 11001] getaddrinfo failed
+2025-12-08 21:04:57,261 - DEBUG - Raising connection error
+2025-12-08 21:05:12,795 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2025-12-08 21:05:12,796 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2025-12-08 21:05:24,826 - DEBUG - connect_tcp.failed exception=ConnectError(gaierror(11001, 'getaddrinfo failed'))
+2025-12-08 21:05:24,827 - DEBUG - Encountered Exception
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 101, in handle_async_request
+    raise exc
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 124, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_backends\auto.py", line 31, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_backends\anyio.py", line 113, in connect_tcp
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\openai\_base_client.py", line 1529, in request
+    response = await self._client.send(
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 11001] getaddrinfo failed
+2025-12-08 21:05:24,832 - DEBUG - 2 retries left
+2025-12-08 21:05:24,832 - INFO - Retrying request to /chat/completions in 0.393058 seconds
+2025-12-08 21:05:25,244 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2025-12-08 21:05:25,245 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2025-12-08 21:05:25,246 - DEBUG - connect_tcp.failed exception=ConnectError(gaierror(11001, 'getaddrinfo failed'))
+2025-12-08 21:05:25,247 - DEBUG - Encountered Exception
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 101, in handle_async_request
+    raise exc
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 124, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_backends\auto.py", line 31, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_backends\anyio.py", line 113, in connect_tcp
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\openai\_base_client.py", line 1529, in request
+    response = await self._client.send(
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 11001] getaddrinfo failed
+2025-12-08 21:05:25,253 - DEBUG - 1 retry left
+2025-12-08 21:05:25,253 - INFO - Retrying request to /chat/completions in 0.915234 seconds
+2025-12-08 21:05:26,188 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2025-12-08 21:05:26,188 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2025-12-08 21:05:26,191 - DEBUG - connect_tcp.failed exception=ConnectError(gaierror(11001, 'getaddrinfo failed'))
+2025-12-08 21:05:26,191 - DEBUG - Encountered Exception
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 101, in handle_async_request
+    raise exc
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 124, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_backends\auto.py", line 31, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_backends\anyio.py", line 113, in connect_tcp
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\openai\_base_client.py", line 1529, in request
+    response = await self._client.send(
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 11001] getaddrinfo failed
+2025-12-08 21:05:26,197 - DEBUG - Raising connection error
+2025-12-08 21:07:39,290 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2025-12-08 21:07:39,291 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2025-12-08 21:07:42,487 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001B55B86AE90>
+2025-12-08 21:07:42,488 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001B55B319950> server_hostname='api.openai.com' timeout=None
+2025-12-08 21:07:42,620 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001B55B69ED70>
+2025-12-08 21:07:42,621 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2025-12-08 21:07:42,622 - DEBUG - send_request_headers.complete
+2025-12-08 21:07:42,622 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2025-12-08 21:07:42,623 - DEBUG - send_request_body.complete
+2025-12-08 21:07:42,624 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2025-12-08 21:07:51,019 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 08 Dec 2025 16:07:46 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'ielts-agent'), (b'openai-processing-ms', b'7347'), (b'openai-project', b'proj_p2TG3sHr67NTFigiOV4yQBrK'), (b'openai-version', b'2020-10-01'), (b'x-envoy-upstream-service-time', b'7360'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'200000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'195075'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'1.477s'), (b'x-request-id', b'req_c183492df4e14d51b712976838d24040'), (b'x-openai-proxy-wasm', b'v0.1'), (b'cf-cache-status', b'DYNAMIC'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9aad8451f90e904e-FRA'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2025-12-08 21:07:51,021 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-08 21:07:51,021 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2025-12-08 21:07:51,022 - DEBUG - receive_response_body.complete
+2025-12-08 21:07:51,022 - DEBUG - response_closed.started
+2025-12-08 21:07:51,023 - DEBUG - response_closed.complete
+2025-12-08 21:07:51,023 - DEBUG - HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers({'date': 'Mon, 08 Dec 2025 16:07:46 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'access-control-expose-headers': 'X-Request-ID', 'openai-organization': 'ielts-agent', 'openai-processing-ms': '7347', 'openai-project': 'proj_p2TG3sHr67NTFigiOV4yQBrK', 'openai-version': '2020-10-01', 'x-envoy-upstream-service-time': '7360', 'x-ratelimit-limit-requests': '10000', 'x-ratelimit-limit-tokens': '200000', 'x-ratelimit-remaining-requests': '9999', 'x-ratelimit-remaining-tokens': '195075', 'x-ratelimit-reset-requests': '8.64s', 'x-ratelimit-reset-tokens': '1.477s', 'x-request-id': 'req_c183492df4e14d51b712976838d24040', 'x-openai-proxy-wasm': 'v0.1', 'cf-cache-status': 'DYNAMIC', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'server': 'cloudflare', 'cf-ray': '9aad8451f90e904e-FRA', 'content-encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'})
+2025-12-08 21:07:51,024 - DEBUG - request_id: req_c183492df4e14d51b712976838d24040
+2025-12-08 21:08:38,956 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2025-12-08 21:08:38,956 - DEBUG - close.started
+2025-12-08 21:08:38,957 - DEBUG - close.complete
+2025-12-08 21:08:38,957 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2025-12-08 21:08:41,497 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001B55B69EEA0>
+2025-12-08 21:08:41,497 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001B55B319950> server_hostname='api.openai.com' timeout=None
+2025-12-08 21:08:41,709 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001B55B653650>
+2025-12-08 21:08:41,710 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2025-12-08 21:08:41,710 - DEBUG - send_request_headers.complete
+2025-12-08 21:08:41,711 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2025-12-08 21:08:41,711 - DEBUG - send_request_body.complete
+2025-12-08 21:08:41,712 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2025-12-08 21:08:46,341 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 08 Dec 2025 16:08:42 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'ielts-agent'), (b'openai-processing-ms', b'1472'), (b'openai-project', b'proj_p2TG3sHr67NTFigiOV4yQBrK'), (b'openai-version', b'2020-10-01'), (b'x-envoy-upstream-service-time', b'1703'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'200000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'194715'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'1.585s'), (b'x-request-id', b'req_b358e4e81add412faa3534ac7214d298'), (b'x-openai-proxy-wasm', b'v0.1'), (b'cf-cache-status', b'DYNAMIC'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9aad85c3abd89208-FRA'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2025-12-08 21:08:46,342 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-08 21:08:46,343 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2025-12-08 21:08:46,347 - DEBUG - receive_response_body.complete
+2025-12-08 21:08:46,348 - DEBUG - response_closed.started
+2025-12-08 21:08:46,348 - DEBUG - response_closed.complete
+2025-12-08 21:08:46,348 - DEBUG - HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers({'date': 'Mon, 08 Dec 2025 16:08:42 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'access-control-expose-headers': 'X-Request-ID', 'openai-organization': 'ielts-agent', 'openai-processing-ms': '1472', 'openai-project': 'proj_p2TG3sHr67NTFigiOV4yQBrK', 'openai-version': '2020-10-01', 'x-envoy-upstream-service-time': '1703', 'x-ratelimit-limit-requests': '10000', 'x-ratelimit-limit-tokens': '200000', 'x-ratelimit-remaining-requests': '9999', 'x-ratelimit-remaining-tokens': '194715', 'x-ratelimit-reset-requests': '8.64s', 'x-ratelimit-reset-tokens': '1.585s', 'x-request-id': 'req_b358e4e81add412faa3534ac7214d298', 'x-openai-proxy-wasm': 'v0.1', 'cf-cache-status': 'DYNAMIC', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'server': 'cloudflare', 'cf-ray': '9aad85c3abd89208-FRA', 'content-encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'})
+2025-12-08 21:08:46,349 - DEBUG - request_id: req_b358e4e81add412faa3534ac7214d298
+2025-12-08 21:08:52,573 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2025-12-08 21:08:52,574 - DEBUG - close.started
+2025-12-08 21:08:52,575 - DEBUG - close.complete
+2025-12-08 21:08:52,575 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2025-12-08 21:08:52,736 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001B55BCF0490>
+2025-12-08 21:08:52,737 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001B55B319950> server_hostname='api.openai.com' timeout=None
+2025-12-08 21:08:53,303 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001B55BCF1590>
+2025-12-08 21:08:53,303 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2025-12-08 21:08:53,304 - DEBUG - send_request_headers.complete
+2025-12-08 21:08:53,304 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2025-12-08 21:08:53,305 - DEBUG - send_request_body.complete
+2025-12-08 21:08:53,305 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2025-12-08 21:09:03,732 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 08 Dec 2025 16:08:59 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'ielts-agent'), (b'openai-processing-ms', b'4863'), (b'openai-project', b'proj_p2TG3sHr67NTFigiOV4yQBrK'), (b'openai-version', b'2020-10-01'), (b'x-envoy-upstream-service-time', b'5413'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'200000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'194658'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'1.602s'), (b'x-request-id', b'req_f63ebe58bed84e0bb45ad084a02a10b8'), (b'x-openai-proxy-wasm', b'v0.1'), (b'cf-cache-status', b'DYNAMIC'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9aad8610ee8a65de-FRA'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2025-12-08 21:09:03,733 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-08 21:09:03,733 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2025-12-08 21:09:03,734 - DEBUG - receive_response_body.complete
+2025-12-08 21:09:03,734 - DEBUG - response_closed.started
+2025-12-08 21:09:03,735 - DEBUG - response_closed.complete
+2025-12-08 21:09:03,735 - DEBUG - HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers({'date': 'Mon, 08 Dec 2025 16:08:59 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'access-control-expose-headers': 'X-Request-ID', 'openai-organization': 'ielts-agent', 'openai-processing-ms': '4863', 'openai-project': 'proj_p2TG3sHr67NTFigiOV4yQBrK', 'openai-version': '2020-10-01', 'x-envoy-upstream-service-time': '5413', 'x-ratelimit-limit-requests': '10000', 'x-ratelimit-limit-tokens': '200000', 'x-ratelimit-remaining-requests': '9999', 'x-ratelimit-remaining-tokens': '194658', 'x-ratelimit-reset-requests': '8.64s', 'x-ratelimit-reset-tokens': '1.602s', 'x-request-id': 'req_f63ebe58bed84e0bb45ad084a02a10b8', 'x-openai-proxy-wasm': 'v0.1', 'cf-cache-status': 'DYNAMIC', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'server': 'cloudflare', 'cf-ray': '9aad8610ee8a65de-FRA', 'content-encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'})
+2025-12-08 21:09:03,736 - DEBUG - request_id: req_f63ebe58bed84e0bb45ad084a02a10b8
+2025-12-08 21:09:27,501 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2025-12-08 21:09:27,502 - DEBUG - close.started
+2025-12-08 21:09:27,502 - DEBUG - close.complete
+2025-12-08 21:09:27,502 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2025-12-08 21:09:27,622 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001B55BCFC350>
+2025-12-08 21:09:27,623 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001B55B319950> server_hostname='api.openai.com' timeout=None
+2025-12-08 21:09:27,832 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001B55BCFD050>
+2025-12-08 21:09:27,832 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2025-12-08 21:09:27,833 - DEBUG - send_request_headers.complete
+2025-12-08 21:09:27,833 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2025-12-08 21:09:27,834 - DEBUG - send_request_body.complete
+2025-12-08 21:09:27,834 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2025-12-08 21:09:35,329 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 08 Dec 2025 16:09:31 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'ielts-agent'), (b'openai-processing-ms', b'6919'), (b'openai-project', b'proj_p2TG3sHr67NTFigiOV4yQBrK'), (b'openai-version', b'2020-10-01'), (b'x-envoy-upstream-service-time', b'6958'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'200000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'194446'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'1.666s'), (b'x-request-id', b'req_d9506007de6a45b8b384e04b7ff2004f'), (b'x-openai-proxy-wasm', b'v0.1'), (b'cf-cache-status', b'DYNAMIC'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9aad86e368087e1c-FRA'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2025-12-08 21:09:35,330 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-08 21:09:35,330 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2025-12-08 21:09:35,372 - DEBUG - receive_response_body.complete
+2025-12-08 21:09:35,372 - DEBUG - response_closed.started
+2025-12-08 21:09:35,373 - DEBUG - response_closed.complete
+2025-12-08 21:09:35,373 - DEBUG - HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers({'date': 'Mon, 08 Dec 2025 16:09:31 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'access-control-expose-headers': 'X-Request-ID', 'openai-organization': 'ielts-agent', 'openai-processing-ms': '6919', 'openai-project': 'proj_p2TG3sHr67NTFigiOV4yQBrK', 'openai-version': '2020-10-01', 'x-envoy-upstream-service-time': '6958', 'x-ratelimit-limit-requests': '10000', 'x-ratelimit-limit-tokens': '200000', 'x-ratelimit-remaining-requests': '9999', 'x-ratelimit-remaining-tokens': '194446', 'x-ratelimit-reset-requests': '8.64s', 'x-ratelimit-reset-tokens': '1.666s', 'x-request-id': 'req_d9506007de6a45b8b384e04b7ff2004f', 'x-openai-proxy-wasm': 'v0.1', 'cf-cache-status': 'DYNAMIC', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'server': 'cloudflare', 'cf-ray': '9aad86e368087e1c-FRA', 'content-encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'})
+2025-12-08 21:09:35,373 - DEBUG - request_id: req_d9506007de6a45b8b384e04b7ff2004f
+2025-12-08 21:10:07,755 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2025-12-08 21:10:07,756 - DEBUG - close.started
+2025-12-08 21:10:07,756 - DEBUG - close.complete
+2025-12-08 21:10:07,757 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2025-12-08 21:10:08,041 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001B55BCE7980>
+2025-12-08 21:10:08,041 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001B55B319950> server_hostname='api.openai.com' timeout=None
+2025-12-08 21:10:08,232 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001B55BCE7C50>
+2025-12-08 21:10:08,233 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2025-12-08 21:10:08,234 - DEBUG - send_request_headers.complete
+2025-12-08 21:10:08,234 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2025-12-08 21:10:08,234 - DEBUG - send_request_body.complete
+2025-12-08 21:10:08,235 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2025-12-08 21:10:15,610 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 08 Dec 2025 16:10:11 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'ielts-agent'), (b'openai-processing-ms', b'5698'), (b'openai-project', b'proj_p2TG3sHr67NTFigiOV4yQBrK'), (b'openai-version', b'2020-10-01'), (b'x-envoy-upstream-service-time', b'6060'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'200000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'194222'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'1.733s'), (b'x-request-id', b'req_27f2a814e88644ae89d6eb27ba1e619d'), (b'x-openai-proxy-wasm', b'v0.1'), (b'cf-cache-status', b'DYNAMIC'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9aad87e03fe7d36a-FRA'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2025-12-08 21:10:15,611 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-08 21:10:15,611 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2025-12-08 21:10:15,611 - DEBUG - receive_response_body.complete
+2025-12-08 21:10:15,611 - DEBUG - response_closed.started
+2025-12-08 21:10:15,612 - DEBUG - response_closed.complete
+2025-12-08 21:10:15,612 - DEBUG - HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers({'date': 'Mon, 08 Dec 2025 16:10:11 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'access-control-expose-headers': 'X-Request-ID', 'openai-organization': 'ielts-agent', 'openai-processing-ms': '5698', 'openai-project': 'proj_p2TG3sHr67NTFigiOV4yQBrK', 'openai-version': '2020-10-01', 'x-envoy-upstream-service-time': '6060', 'x-ratelimit-limit-requests': '10000', 'x-ratelimit-limit-tokens': '200000', 'x-ratelimit-remaining-requests': '9999', 'x-ratelimit-remaining-tokens': '194222', 'x-ratelimit-reset-requests': '8.64s', 'x-ratelimit-reset-tokens': '1.733s', 'x-request-id': 'req_27f2a814e88644ae89d6eb27ba1e619d', 'x-openai-proxy-wasm': 'v0.1', 'cf-cache-status': 'DYNAMIC', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'server': 'cloudflare', 'cf-ray': '9aad87e03fe7d36a-FRA', 'content-encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'})
+2025-12-08 21:10:15,612 - DEBUG - request_id: req_27f2a814e88644ae89d6eb27ba1e619d
+2025-12-08 21:13:48,623 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2025-12-08 21:13:48,623 - DEBUG - close.started
+2025-12-08 21:13:48,624 - DEBUG - close.complete
+2025-12-08 21:13:48,624 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2025-12-08 21:13:49,235 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001B55BCF7150>
+2025-12-08 21:13:49,235 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001B55B319950> server_hostname='api.openai.com' timeout=None
+2025-12-08 21:13:49,393 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001B55BCF7310>
+2025-12-08 21:13:49,394 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2025-12-08 21:13:49,395 - DEBUG - send_request_headers.complete
+2025-12-08 21:13:49,395 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2025-12-08 21:13:49,396 - DEBUG - send_request_body.complete
+2025-12-08 21:13:49,396 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2025-12-08 21:13:56,809 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 08 Dec 2025 16:13:52 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'ielts-agent'), (b'openai-processing-ms', b'6742'), (b'openai-project', b'proj_p2TG3sHr67NTFigiOV4yQBrK'), (b'openai-version', b'2020-10-01'), (b'x-envoy-upstream-service-time', b'6770'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'200000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'193959'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'1.812s'), (b'x-request-id', b'req_4fabd9a1485a4c6d9ec4a35899665cea'), (b'x-openai-proxy-wasm', b'v0.1'), (b'cf-cache-status', b'DYNAMIC'), (b'Set-Cookie', b'__cf_bm=CDdyKwpafn9N1KTDkstQtOa.Jk3j9nGNcy.CmLmPepA-1765210432-1.0.1.1-P3lVdtY0S5hHKG14PvD4BNre9920PZyDDyW17WAYhETOfqgonuoYDV9mCC3p1S88ghI.clkI3qPRMMu4xIbkZxOggBMDkIJm4YNWLPoAmhY; path=/; expires=Mon, 08-Dec-25 16:43:52 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9aad8d463f97dcb9-FRA'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2025-12-08 21:13:56,810 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-08 21:13:56,811 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2025-12-08 21:13:56,811 - DEBUG - receive_response_body.complete
+2025-12-08 21:13:56,812 - DEBUG - response_closed.started
+2025-12-08 21:13:56,812 - DEBUG - response_closed.complete
+2025-12-08 21:13:56,812 - DEBUG - HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers({'date': 'Mon, 08 Dec 2025 16:13:52 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'access-control-expose-headers': 'X-Request-ID', 'openai-organization': 'ielts-agent', 'openai-processing-ms': '6742', 'openai-project': 'proj_p2TG3sHr67NTFigiOV4yQBrK', 'openai-version': '2020-10-01', 'x-envoy-upstream-service-time': '6770', 'x-ratelimit-limit-requests': '10000', 'x-ratelimit-limit-tokens': '200000', 'x-ratelimit-remaining-requests': '9999', 'x-ratelimit-remaining-tokens': '193959', 'x-ratelimit-reset-requests': '8.64s', 'x-ratelimit-reset-tokens': '1.812s', 'x-request-id': 'req_4fabd9a1485a4c6d9ec4a35899665cea', 'x-openai-proxy-wasm': 'v0.1', 'cf-cache-status': 'DYNAMIC', 'set-cookie': '__cf_bm=CDdyKwpafn9N1KTDkstQtOa.Jk3j9nGNcy.CmLmPepA-1765210432-1.0.1.1-P3lVdtY0S5hHKG14PvD4BNre9920PZyDDyW17WAYhETOfqgonuoYDV9mCC3p1S88ghI.clkI3qPRMMu4xIbkZxOggBMDkIJm4YNWLPoAmhY; path=/; expires=Mon, 08-Dec-25 16:43:52 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'server': 'cloudflare', 'cf-ray': '9aad8d463f97dcb9-FRA', 'content-encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'})
+2025-12-08 21:13:56,812 - DEBUG - request_id: req_4fabd9a1485a4c6d9ec4a35899665cea

@@ -222,28 +222,6 @@ export default function ReadingTheory() {
                       </ul>
                     )}
 
-                    {/* Comparison Table (False vs NG) */}
-                    {sub.comparison && !Array.isArray(sub.comparison) && (
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div className="p-3 border border-rose-200 dark:border-rose-800 rounded bg-rose-50 dark:bg-rose-900/10">
-                          <h4 className="font-bold text-rose-700 dark:text-rose-300 mb-2">FALSE</h4>
-                          <ul className="space-y-1 text-sm text-rose-800 dark:text-rose-200">
-                            {sub.comparison.FALSE?.map((c: string, i: number) => (
-                              <li key={i} className="flex gap-2"><XCircle className="w-4 h-4 flex-shrink-0" /> {c}</li>
-                            ))}
-                          </ul>
-                        </div>
-                        <div className="p-3 border border-slate-200 dark:border-slate-700 rounded bg-slate-50 dark:bg-slate-800">
-                          <h4 className="font-bold text-slate-700 dark:text-slate-300 mb-2">NOT GIVEN</h4>
-                          <ul className="space-y-1 text-sm text-slate-800 dark:text-slate-200">
-                            {sub.comparison.NOT_GIVEN?.map((c: string, i: number) => (
-                              <li key={i} className="flex gap-2"><HelpCircle className="w-4 h-4 flex-shrink-0" /> {c}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    )}
-
                     {/* Flowchart (Two Question Test) */}
                     {sub.flowchart && (
                       <div className="space-y-2">
@@ -267,13 +245,29 @@ export default function ReadingTheory() {
                         </div>
                         <div className="grid gap-2">
                           {sub.examples.map((ex: any, i: number) => (
-                            <div key={i} className="flex items-center justify-between p-2 border-b border-slate-100 dark:border-slate-800">
-                              <span className="text-sm text-slate-600 dark:text-slate-400 flex-1">"{ex.statement}"</span>
-                              <div className="text-right ml-4">
-                                <span className={`font-bold text-xs px-2 py-1 rounded ${ex.answer === 'TRUE' ? 'bg-emerald-100 text-emerald-800' :
-                                  ex.answer === 'FALSE' ? 'bg-rose-100 text-rose-800' :
-                                    'bg-slate-100 text-slate-800'
+                            <div key={i} className={`p-3 border-l-4 rounded-lg ${
+                              ex.answer === 'CORRECT' 
+                                ? 'border-emerald-500 dark:border-emerald-600 bg-emerald-50/50 dark:bg-emerald-900/20' 
+                                : 'border-rose-500 dark:border-rose-600 bg-rose-50/50 dark:bg-rose-900/20'
+                            }`}>
+                              <div className="space-y-2">
+                                <div className="flex items-start justify-between gap-3">
+                                  <span className="text-sm font-semibold text-slate-800 dark:text-slate-200 flex-1">
+                                    {ex.heading || ex.statement}
+                                  </span>
+                                  <span className={`font-bold text-xs px-2 py-1 rounded whitespace-nowrap ${
+                                    ex.answer === 'CORRECT' ? 'bg-emerald-600 dark:bg-emerald-700 text-white' :
+                                    ex.answer === 'TRUE' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300' :
+                                    ex.answer === 'FALSE' ? 'bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300' :
+                                    ex.answer === 'WRONG' ? 'bg-rose-600 dark:bg-rose-700 text-white' :
+                                    'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200'
                                   }`}>{ex.answer}</span>
+                                </div>
+                                {ex.analysis && (
+                                  <p className="text-xs text-slate-600 dark:text-slate-400 italic">
+                                    💡 {ex.analysis}
+                                  </p>
+                                )}
                               </div>
                             </div>
                           ))}
@@ -309,29 +303,88 @@ export default function ReadingTheory() {
                       </div>
                     )}
 
-                    {/* Example Box */}
-                    {sub.example && (
-                      <div className="mt-2 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-lg border border-slate-200 dark:border-slate-700">
-                        <h4 className="text-xs font-bold text-slate-500 uppercase mb-2">Example</h4>
-                        {sub.example.passage && (
-                          <div className="mb-2 italic text-slate-700 dark:text-slate-300">"{sub.example.passage}"</div>
-                        )}
-                        {sub.example.statement && (
-                          <div className="mb-2 text-slate-800 dark:text-slate-200">Statement: "{sub.example.statement}"</div>
-                        )}
-                        <div className="flex items-center gap-2 mb-1">
-                          <Badge variant="outline" className="bg-white dark:bg-slate-800">Answer: {sub.example.answer}</Badge>
-                        </div>
-                        {sub.example.explanation && (
-                          <p className="text-sm text-slate-600 dark:text-slate-400">{sub.example.explanation}</p>
-                        )}
-                      </div>
-                    )}
-
                     {/* Critical Point */}
                     {sub.criticalPoint && (
                       <div className="p-3 bg-rose-50 dark:bg-rose-900/10 border-l-4 border-rose-500 text-sm text-rose-900 dark:text-rose-100">
                         <span className="font-bold">Critical:</span> {sub.criticalPoint}
+                      </div>
+                    )}
+
+                    {/* Categories (for Signal Words, etc.) */}
+                    {sub.categories && (
+                      <div className="space-y-3">
+                        {sub.categories.map((cat: any, i: number) => (
+                          <div key={i} className="p-3 bg-blue-50 dark:bg-blue-900/10 rounded-lg border border-blue-100 dark:border-blue-800">
+                            <h4 className="font-bold text-blue-900 dark:text-blue-100 mb-2">{cat.category}</h4>
+                            {cat.rule && <p className="text-sm text-blue-800 dark:text-blue-200 mb-2">{cat.rule}</p>}
+                            {cat.example && <p className="text-xs text-blue-700 dark:text-blue-300 italic bg-blue-100 dark:bg-blue-900/20 p-2 rounded">{cat.example}</p>}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Generic Comparison Table (Main Idea vs Supporting Detail, etc.) */}
+                    {sub.comparison && typeof sub.comparison === 'object' && !Array.isArray(sub.comparison) && !sub.comparison.FALSE && (
+                      <div className="grid md:grid-cols-2 gap-4">
+                        {Object.entries(sub.comparison).map(([key, values]: [string, any]) => (
+                          <div key={key} className="p-3 border border-slate-200 dark:border-slate-700 rounded bg-slate-50 dark:bg-slate-800">
+                            <h4 className="font-bold text-slate-700 dark:text-slate-300 mb-2">{key}</h4>
+                            <ul className="space-y-1 text-sm text-slate-600 dark:text-slate-400">
+                              {Array.isArray(values) && values.map((v: string, i: number) => (
+                                <li key={i} className="flex gap-2">
+                                  <span className="text-emerald-500">•</span>
+                                  <span>{v}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Examples with headings analysis (Matching Headings format) */}
+                    {sub.examples && !sub.passage && sub.examples[0]?.heading && (
+                      <div className="space-y-3">
+                        {sub.headings && (
+                          <div className="p-3 bg-purple-50 dark:bg-purple-900/10 rounded-lg border border-purple-100 dark:border-purple-800">
+                            <h4 className="font-bold text-purple-900 dark:text-purple-100 mb-2">Available Headings:</h4>
+                            <ul className="text-sm space-y-1">
+                              {sub.headings.map((h: string, i: number) => (
+                                <li key={i} className="text-purple-800 dark:text-purple-200">{h}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                        {sub.question && (
+                          <p className="font-semibold text-lg text-slate-900 dark:text-slate-100 mb-2">{sub.question}</p>
+                        )}
+                        <div className="grid gap-3">
+                          {sub.examples.map((ex: any, i: number) => (
+                            <div key={i} className="p-3 border border-slate-200 dark:border-slate-700 rounded-lg hover:border-slate-300 dark:hover:border-slate-600 transition-colors">
+                              <div className="flex items-start justify-between gap-3">
+                                <div className="flex-1">
+                                  <span className="font-semibold text-slate-800 dark:text-slate-200 block mb-1">{ex.heading}</span>
+                                  <p className="text-sm text-slate-600 dark:text-slate-400">{ex.analysis}</p>
+                                </div>
+                                <span className={`text-xs font-bold px-2 py-1 rounded whitespace-nowrap ${
+                                  ex.answer === 'CORRECT' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300' : 
+                                  'bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-300'
+                                }`}>{ex.answer}</span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Example with heading/requirement format */}
+                    {sub.example && sub.example.heading && (
+                      <div className="p-4 bg-indigo-50 dark:bg-indigo-900/10 rounded-lg border border-indigo-100 dark:border-indigo-800">
+                        <p className="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase mb-2">Example:</p>
+                        <p className="font-semibold text-indigo-900 dark:text-indigo-100 mb-2">{sub.example.heading}</p>
+                        {sub.example.requirement && (
+                          <p className="text-sm text-indigo-800 dark:text-indigo-200">{sub.example.requirement}</p>
+                        )}
                       </div>
                     )}
                   </div>
@@ -385,6 +438,7 @@ export default function ReadingTheory() {
       )}
 
       {/* 2. Example */}
+      {theoryContent.example && (
       <Card className="border-l-4 border-l-purple-500 shadow-sm">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl flex items-center gap-2">
@@ -473,8 +527,10 @@ export default function ReadingTheory() {
           </div>
         </CardContent>
       </Card>
+      )}
 
       {/* 3. Common Mistakes */}
+      {theoryContent.commonMistakes && (
       <section className="space-y-4">
         <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
           <XCircle className="w-6 h-6 text-rose-500" />
@@ -492,8 +548,10 @@ export default function ReadingTheory() {
           ))}
         </div>
       </section>
+      )}
 
       {/* 4. Strategy & Tips */}
+      {theoryContent.strategyTips && (
       <section className="space-y-4">
         <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Strategy & Tips</h2>
         <div className="relative space-y-8 before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-300 before:to-transparent">
@@ -512,33 +570,37 @@ export default function ReadingTheory() {
           ))}
         </div>
       </section>
+      )}
 
       {/* Signal Words (T/F/NG specific) */}
       {mc?.signalWords && (
-        <section className="space-y-4">
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-            🎯 Signal Words to Watch
-          </h2>
-          <p className="text-slate-600 dark:text-slate-400">{mc.signalWords.description}</p>
+        <section className="space-y-3">
+          <div>
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2 mb-1">
+              🎯 Signal Words to Watch
+            </h2>
+            <p className="text-sm text-slate-600 dark:text-slate-400">{mc.signalWords.description}</p>
+          </div>
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid md:grid-cols-3 gap-3">
+            {/* Qualifiers */}
             {mc.signalWords.qualifiers && (
-              <Card className="border-orange-200 dark:border-orange-800">
-                <CardHeader>
-                  <CardTitle className="text-lg text-orange-600 dark:text-orange-400">
-                    {mc.signalWords.qualifiers.title}
+              <Card className="border-l-4 border-l-orange-500 shadow-sm">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm font-bold text-slate-900 dark:text-slate-100">
+                    1. {mc.signalWords.qualifiers.title.replace('Qualifiers (Often Create FALSE Traps)', 'Absolute vs. Qualified Statements')}
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
+                <CardContent className="pt-2">
+                  <div className="space-y-1">
                     {mc.signalWords.qualifiers.examples?.map((ex: any, i: number) => (
-                      <div key={i} className="p-2 bg-orange-50 dark:bg-orange-900/20 rounded text-sm">
-                        <div className="flex justify-between items-start gap-2">
-                          <span className="text-slate-600 dark:text-slate-400">"{ex.passage}"</span>
-                          <span className="text-slate-400">→</span>
-                          <span className="text-slate-600 dark:text-slate-400">"{ex.question}"</span>
+                      <div key={i} className="px-2 py-1.5 bg-orange-50/50 dark:bg-orange-900/10 rounded text-xs leading-snug">
+                        <div className="flex items-center gap-2">
+                          <span className="text-slate-700 dark:text-slate-300 font-medium flex-1">"{ex.passage}"</span>
+                          <span className="text-slate-400 text-[10px]">→</span>
+                          <span className="text-slate-700 dark:text-slate-300 font-medium flex-1">"{ex.question}"</span>
                         </div>
-                        <div className="mt-1 text-xs font-semibold text-orange-700 dark:text-orange-300">
+                        <div className="mt-0.5 text-[11px] font-bold text-orange-600 dark:text-orange-400">
                           {ex.result}
                         </div>
                       </div>
@@ -548,23 +610,51 @@ export default function ReadingTheory() {
               </Card>
             )}
 
+            {/* Comparatives */}
             {mc.signalWords.comparatives && (
-              <Card className="border-purple-200 dark:border-purple-800">
-                <CardHeader>
-                  <CardTitle className="text-lg text-purple-600 dark:text-purple-400">
-                    {mc.signalWords.comparatives.title}
+              <Card className="border-l-4 border-l-purple-500 shadow-sm">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm font-bold text-slate-900 dark:text-slate-100">
+                    2. {mc.signalWords.comparatives.title}
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
+                <CardContent className="pt-2">
+                  <div className="space-y-1">
                     {mc.signalWords.comparatives.examples?.map((ex: any, i: number) => (
-                      <div key={i} className="p-2 bg-purple-50 dark:bg-purple-900/20 rounded text-sm">
-                        <div className="flex justify-between items-start gap-2">
-                          <span className="text-slate-600 dark:text-slate-400">"{ex.passage}"</span>
-                          <span className="text-slate-400">→</span>
-                          <span className="text-slate-600 dark:text-slate-400">"{ex.question}"</span>
+                      <div key={i} className="px-2 py-1.5 bg-purple-50/50 dark:bg-purple-900/10 rounded text-xs leading-snug">
+                        <div className="flex items-center gap-2">
+                          <span className="text-slate-700 dark:text-slate-300 font-medium flex-1">"{ex.passage}"</span>
+                          <span className="text-slate-400 text-[10px]">→</span>
+                          <span className="text-slate-700 dark:text-slate-300 font-medium flex-1">"{ex.question}"</span>
                         </div>
-                        <div className="mt-1 text-xs font-semibold text-purple-700 dark:text-purple-300">
+                        <div className="mt-0.5 text-[11px] font-bold text-purple-600 dark:text-purple-400">
+                          {ex.result}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Time & Sequence */}
+            {mc.signalWords.timeSequence && (
+              <Card className="border-l-4 border-l-blue-500 shadow-sm">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm font-bold text-slate-900 dark:text-slate-100">
+                    3. {mc.signalWords.timeSequence.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="pt-2">
+                  <div className="space-y-1">
+                    {mc.signalWords.timeSequence.examples?.map((ex: any, i: number) => (
+                      <div key={i} className="px-2 py-1.5 bg-blue-50/50 dark:bg-blue-900/10 rounded text-xs leading-snug">
+                        <div className="flex items-center gap-2">
+                          <span className="text-slate-700 dark:text-slate-300 font-medium flex-1">"{ex.passage}"</span>
+                          <span className="text-slate-400 text-[10px]">→</span>
+                          <span className="text-slate-700 dark:text-slate-300 font-medium flex-1">"{ex.question}"</span>
+                        </div>
+                        <div className="mt-0.5 text-[11px] font-bold text-blue-600 dark:text-blue-400">
                           {ex.result}
                         </div>
                       </div>
@@ -636,8 +726,130 @@ export default function ReadingTheory() {
                           </div>
                         )}
                       </div>
+                      {mistake.example.analysis && Array.isArray(mistake.example.analysis) && (
+                        <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded">
+                          <div className="text-xs font-bold text-slate-500 uppercase mb-2">Analysis</div>
+                          <ul className="space-y-1">
+                            {mistake.example.analysis.map((item: string, idx: number) => (
+                              <li key={idx} className="text-xs text-slate-700 dark:text-slate-300">
+                                {item}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {mistake.example.answer && (
+                        <div className="p-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded">
+                          <div className="text-xs font-bold text-blue-600 dark:text-blue-400">
+                            Answer: {mistake.example.answer}
+                          </div>
+                        </div>
+                      )}
+                      {mistake.example.reasoning && (
+                        <div className="p-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded">
+                          <div className="text-xs text-amber-800 dark:text-amber-200">
+                            💭 {mistake.example.reasoning}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
+                  
+                  {/* commonQualifierTraps - array of trap examples */}
+                  {mistake.commonQualifierTraps && Array.isArray(mistake.commonQualifierTraps) && (
+                    <div className="space-y-2">
+                      <div className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                        Common Qualifier Traps:
+                      </div>
+                      {mistake.commonQualifierTraps.map((trap: any, idx: number) => (
+                        <div key={idx} className="p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded space-y-2">
+                          <div className="grid md:grid-cols-2 gap-2">
+                            <div>
+                              <div className="text-xs font-bold text-slate-500 uppercase mb-1">Passage</div>
+                              <div className="text-sm italic text-slate-700 dark:text-slate-300">
+                                "{trap.passage}"
+                              </div>
+                            </div>
+                            <div>
+                              <div className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase mb-1">Statement</div>
+                              <div className="text-sm text-blue-900 dark:text-blue-100">
+                                "{trap.statement}"
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="text-rose-600 dark:text-rose-400 font-semibold">
+                              ⚠️ Missed: {trap.missedWord}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  
+                  {/* examples - array of examples (for negatives, etc) */}
+                  {mistake.examples && Array.isArray(mistake.examples) && (
+                    <div className="space-y-2">
+                      <div className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                        Examples:
+                      </div>
+                      {mistake.examples.map((ex: any, idx: number) => (
+                        <div key={idx} className="p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded space-y-2">
+                          <div className="grid gap-2">
+                            {ex.passageSays && (
+                              <div>
+                                <span className="text-xs font-bold text-slate-500">Passage says: </span>
+                                <span className="text-sm italic text-slate-700 dark:text-slate-300">
+                                  "{ex.passageSays}"
+                                </span>
+                              </div>
+                            )}
+                            {ex.means && (
+                              <div>
+                                <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">Means: </span>
+                                <span className="text-sm text-emerald-700 dark:text-emerald-300">
+                                  {ex.means}
+                                </span>
+                              </div>
+                            )}
+                            {ex.statement && (
+                              <div>
+                                <span className="text-xs font-bold text-blue-600 dark:text-blue-400">Statement: </span>
+                                <span className="text-sm text-blue-900 dark:text-blue-100">
+                                  "{ex.statement}"
+                                </span>
+                              </div>
+                            )}
+                            {ex.answer && (
+                              <div className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                                ✓ Answer: {ex.answer}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  
+                  {/* reality and strategy fields */}
+                  {mistake.reality && (
+                    <div className="p-3 bg-amber-50 dark:bg-amber-900/20 border-l-4 border-amber-500 rounded">
+                      <div className="text-xs font-bold text-amber-700 dark:text-amber-300 uppercase mb-1">Reality</div>
+                      <div className="text-sm text-amber-800 dark:text-amber-200">
+                        {mistake.reality}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {mistake.strategy && (
+                    <div className="p-3 bg-emerald-50 dark:bg-emerald-900/20 border-l-4 border-emerald-500 rounded">
+                      <div className="text-xs font-bold text-emerald-700 dark:text-emerald-300 uppercase mb-1">Strategy</div>
+                      <div className="text-sm text-emerald-800 dark:text-emerald-200">
+                        💡 {mistake.strategy}
+                      </div>
+                    </div>
+                  )}
+                  
                   {mistake.rule && (
                     <div className="p-3 bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 rounded">
                       <div className="text-sm font-semibold text-blue-900 dark:text-blue-100">
@@ -724,6 +936,7 @@ export default function ReadingTheory() {
       )}
 
       {/* Time Management */}
+      {theoryContent.timeManagement && (
       <Card className="bg-slate-900 text-white border-none">
         <CardContent className="p-6 flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -744,6 +957,7 @@ export default function ReadingTheory() {
           </div>
         </CardContent>
       </Card>
+      )}
     </div>
   );
 }
