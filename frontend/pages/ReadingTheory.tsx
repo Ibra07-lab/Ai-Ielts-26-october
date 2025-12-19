@@ -12,7 +12,8 @@ import {
   HelpCircle,
   Puzzle,
   ArrowRight,
-  AlertCircle
+  AlertCircle,
+  Table
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -41,6 +42,8 @@ const getTheoryIcon = (id: string) => {
       return <PenLine className="w-6 h-6 text-pink-500" />;
     case 'matching-features':
       return <Puzzle className="w-6 h-6 text-indigo-500" />;
+    case 'table-completion':
+      return <Table className="w-6 h-6 text-cyan-500" />;
     default:
       return <BookOpen className="w-6 h-6 text-slate-500" />;
   }
@@ -56,8 +59,59 @@ export default function ReadingTheory() {
 
   // Handle different JSON structures for different question types
   // Some types have detailedTheory.sections, others have sections directly
+  // Define Strict Interfaces
+  interface TheoryExample {
+    passage?: string;
+    question?: string;
+    options?: string[];
+    answer?: string;
+    correct?: string;
+    wrong?: string | string[];
+    explanation?: string | Record<string, string>;
+    distractor?: string;
+    analysis?: string | string[];
+    // Legacy fields for backward compatibility
+    validInference?: string;
+    invalidAssumption?: string;
+    wrongThinking?: string;
+    correctThinking?: string;
+    optionB?: string;
+    optionC?: string;
+    [key: string]: any;
+  }
+
+  interface TheoryRule {
+    rule?: string;
+    title?: string;
+    description?: string;
+    examples?: string[];
+    example?: TheoryExample | string;
+  }
+
+  interface TheorySubsection {
+    id?: string;
+    title: string;
+    content?: string;
+    description?: string;
+    examples?: TheoryExample[];
+    rules?: TheoryRule[];
+    // ... catch-all for other specific fields
+    [key: string]: any;
+  }
+
+  // Helper to normalize examples to array
+  const normalizeExamples = (sub: any): TheoryExample[] => {
+    if (sub.examples && Array.isArray(sub.examples)) return sub.examples;
+    if (sub.example && typeof sub.example === 'object') return [sub.example];
+    return [];
+  };
+
   const sections = theoryContent?.detailedTheory?.sections || theoryContent?.sections;
   const mc = theoryContent as any;
+
+  // Dev mode warning helper
+  const RENDERED_KEYS = ['id', 'title', 'content', 'description', 'examples', 'example', 'rules', 'steps', 'flowchart', 'comparison', 'levels', 'formats', 'predictions', 'list', 'questionWords', 'grammarClues', 'signalPatterns', 'categories', 'recommendations', 'average', 'rationale', 'comparisonTable', 'criticalPoint', 'types', 'typicalInstructions', 'paraphrasePatterns', 'answerMeanings', 'skills', 'keyInsight', 'criteria', 'intro', 'subsections', 'passage'];
+
 
   // Show theory list
   if (!selectedTheory) {
@@ -176,6 +230,66 @@ export default function ReadingTheory() {
                     {sub.content && <p className="text-slate-700 dark:text-slate-300">{sub.content}</p>}
                     {sub.description && <p className="text-slate-700 dark:text-slate-300">{sub.description}</p>}
 
+                    {/* Analysis (List) */}
+                    {sub.analysis && Array.isArray(sub.analysis) && (
+                      <div className="bg-indigo-50 dark:bg-indigo-900/10 p-4 rounded-lg border border-indigo-100 dark:border-indigo-800">
+                        <h4 className="text-sm font-bold text-indigo-800 dark:text-indigo-200 uppercase mb-2">Analysis</h4>
+                        <ul className="list-disc ml-4 space-y-1 text-sm text-indigo-700 dark:text-indigo-300">
+                          {sub.analysis.map((point: string, i: number) => (
+                            <li key={i}>{point}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {sub.passage && (
+                      <div className="p-4 bg-slate-100 dark:bg-slate-800 rounded-lg border-l-4 border-slate-500 italic text-slate-700 dark:text-slate-300 leading-relaxed">
+                        "{sub.passage}"
+                      </div>
+                    )}
+
+                    {/* Table Renderer */}
+                    {sub.tables && sub.tables.length > 0 && (
+                      <div className="space-y-6 my-4">
+                        {sub.tables.map((table: any, tblIdx: number) => (
+                          <div key={tblIdx} className="overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm">
+                            <div className="overflow-x-auto">
+                              <table className="w-full text-sm text-left border-collapse">
+                                <thead>
+                                  <tr className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
+                                    {table.headers.map((header: string, hIdx: number) => (
+                                      <th key={hIdx} className="p-3 border-b border-slate-200 dark:border-slate-700 font-bold whitespace-nowrap">
+                                        {header}
+                                      </th>
+                                    ))}
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {table.rows.map((row: string[], rIdx: number) => (
+                                    <tr key={rIdx} className="border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                                      {row.map((cell: string, cIdx: number) => (
+                                        <td key={cIdx} className="p-3 border-r border-slate-100 dark:border-slate-800 last:border-r-0 text-slate-700 dark:text-slate-300">
+                                          {cell.includes('Gap') ? (
+                                            <span className="font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20 px-2 py-0.5 rounded">
+                                              {cell}
+                                            </span>
+                                          ) : cell.includes('**') ? (
+                                            <span dangerouslySetInnerHTML={{ __html: cell.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+                                          ) : (
+                                            cell
+                                          )}
+                                        </td>
+                                      ))}
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
                     {/* Answer Meanings */}
                     {sub.answerMeanings && (
                       <div className="grid gap-3">
@@ -225,8 +339,75 @@ export default function ReadingTheory() {
                       </ul>
                     )}
 
-                    {/* Flowchart (Two Question Test) */}
-                    {sub.flowchart && (
+                    {/* Rules (for Golden Rules, etc.) */}
+                    {sub.rules && Array.isArray(sub.rules) && (
+                      <div className="space-y-4">
+                        {sub.rules.map((ruleItem: any, i: number) => (
+                          <div key={i} className="p-4 bg-blue-50 dark:bg-blue-900/10 border-l-4 border-blue-500 rounded-lg">
+                            <h4 className="font-bold text-blue-900 dark:text-blue-100 mb-2">
+                              {ruleItem.rule || ruleItem.title}
+                            </h4>
+                            {ruleItem.description && (
+                              <p className="text-sm text-blue-800 dark:text-blue-200 mb-2">{ruleItem.description}</p>
+                            )}
+                            {ruleItem.examples && Array.isArray(ruleItem.examples) && (
+                              <ul className="list-disc ml-5 space-y-1 text-sm text-blue-700 dark:text-blue-300">
+                                {ruleItem.examples.map((ex: string, j: number) => (
+                                  <li key={j}>{ex}</li>
+                                ))}
+                              </ul>
+                            )}
+                            {ruleItem.example && typeof ruleItem.example === 'object' && (
+                              <div className="mt-3 p-3 bg-white dark:bg-slate-800 rounded border border-blue-200 dark:border-blue-700">
+                                <div className="space-y-2 text-sm">
+                                  {ruleItem.example.passage && (
+                                    <div>
+                                      <span className="font-semibold text-slate-600 dark:text-slate-400">Passage:</span>{' '}
+                                      <span className="italic text-slate-700 dark:text-slate-300">"{ruleItem.example.passage}"</span>
+                                    </div>
+                                  )}
+                                  {ruleItem.example.question && (
+                                    <div>
+                                      <span className="font-semibold text-slate-600 dark:text-slate-400">Question:</span>{' '}
+                                      <span className="text-slate-700 dark:text-slate-300">{ruleItem.example.question}</span>
+                                    </div>
+                                  )}
+                                  {ruleItem.example.instruction && (
+                                    <div>
+                                      <span className="font-semibold text-slate-600 dark:text-slate-400">Instruction:</span>{' '}
+                                      <span className="text-slate-700 dark:text-slate-300">{ruleItem.example.instruction}</span>
+                                    </div>
+                                  )}
+                                  {ruleItem.example.correct && (
+                                    <div className="flex items-start gap-2">
+                                      <CheckCircle className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                                      <span className="text-emerald-700 dark:text-emerald-300">{ruleItem.example.correct}</span>
+                                    </div>
+                                  )}
+                                  {ruleItem.example.wrong && (
+                                    <div className="flex items-start gap-2">
+                                      <XCircle className="w-4 h-4 text-rose-500 mt-0.5 flex-shrink-0" />
+                                      {Array.isArray(ruleItem.example.wrong) ? (
+                                        <ul className="space-y-1">
+                                          {ruleItem.example.wrong.map((w: string, k: number) => (
+                                            <li key={k} className="text-rose-700 dark:text-rose-300">{w}</li>
+                                          ))}
+                                        </ul>
+                                      ) : (
+                                        <span className="text-rose-700 dark:text-rose-300">{ruleItem.example.wrong}</span>
+                                      )}
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Flowchart (Two Question Test - T/F/NG only) */}
+                    {sub.flowchart && Array.isArray(sub.flowchart) && sub.flowchart[0]?.question && (
                       <div className="space-y-2">
                         {sub.flowchart.map((step: any, i: number) => (
                           <div key={i} className="p-3 bg-indigo-50 dark:bg-indigo-900/10 border border-indigo-100 dark:border-indigo-800 rounded text-center">
@@ -240,8 +421,8 @@ export default function ReadingTheory() {
                       </div>
                     )}
 
-                    {/* Comparison Examples */}
-                    {sub.examples && sub.passage && (
+                    {/* Comparison Examples (T/F/NG only - not Short Answer) */}
+                    {sub.examples && sub.passage && !sub.examples[0]?.stepByStep && (
                       <div className="space-y-3">
                         <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded italic text-slate-700 dark:text-slate-300">
                           "{sub.passage}"
@@ -249,8 +430,8 @@ export default function ReadingTheory() {
                         <div className="grid gap-2">
                           {sub.examples.map((ex: any, i: number) => (
                             <div key={i} className={`p-3 border-l-4 rounded-lg ${ex.answer === 'CORRECT'
-                                ? 'border-emerald-500 dark:border-emerald-600 bg-emerald-50/50 dark:bg-emerald-900/20'
-                                : 'border-rose-500 dark:border-rose-600 bg-rose-50/50 dark:bg-rose-900/20'
+                              ? 'border-emerald-500 dark:border-emerald-600 bg-emerald-50/50 dark:bg-emerald-900/20'
+                              : 'border-rose-500 dark:border-rose-600 bg-rose-50/50 dark:bg-rose-900/20'
                               }`}>
                               <div className="space-y-2">
                                 <div className="flex items-start justify-between gap-3">
@@ -258,10 +439,10 @@ export default function ReadingTheory() {
                                     {ex.heading || ex.statement}
                                   </span>
                                   <span className={`font-bold text-xs px-2 py-1 rounded whitespace-nowrap ${ex.answer === 'CORRECT' ? 'bg-emerald-600 dark:bg-emerald-700 text-white' :
-                                      ex.answer === 'TRUE' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300' :
-                                        ex.answer === 'FALSE' ? 'bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300' :
-                                          ex.answer === 'WRONG' ? 'bg-rose-600 dark:bg-rose-700 text-white' :
-                                            'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200'
+                                    ex.answer === 'TRUE' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300' :
+                                      ex.answer === 'FALSE' ? 'bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300' :
+                                        ex.answer === 'WRONG' ? 'bg-rose-600 dark:bg-rose-700 text-white' :
+                                          'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200'
                                     }`}>{ex.answer}</span>
                                 </div>
                                 {ex.analysis && (
@@ -304,6 +485,34 @@ export default function ReadingTheory() {
                       </div>
                     )}
 
+                    {/* Flowchart (Short Answer Strategy) */}
+                    {sub.flowchart && Array.isArray(sub.flowchart) && sub.flowchart[0]?.title && (
+                      <div className="space-y-3">
+                        {sub.flowchart.map((step: any, i: number) => (
+                          <div key={i} className="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-l-4 border-blue-500 rounded-lg">
+                            <div className="flex items-start gap-3">
+                              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 dark:bg-blue-700 flex items-center justify-center text-white font-bold">
+                                {step.step}
+                              </div>
+                              <div className="flex-1">
+                                <h5 className="font-bold text-blue-900 dark:text-blue-100 mb-1">{step.title}</h5>
+                                {step.description && (
+                                  <p className="text-sm text-blue-800 dark:text-blue-200 mb-2">{step.description}</p>
+                                )}
+                                {step.actions && Array.isArray(step.actions) && (
+                                  <ul className="list-disc ml-5 space-y-1 text-sm text-blue-700 dark:text-blue-300">
+                                    {step.actions.map((action: string, j: number) => (
+                                      <li key={j}>{action}</li>
+                                    ))}
+                                  </ul>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
                     {/* Critical Point */}
                     {sub.criticalPoint && (
                       <div className="p-3 bg-rose-50 dark:bg-rose-900/10 border-l-4 border-rose-500 text-sm text-rose-900 dark:text-rose-100">
@@ -311,16 +520,460 @@ export default function ReadingTheory() {
                       </div>
                     )}
 
-                    {/* Categories (for Signal Words, etc.) */}
-                    {sub.categories && (
+
+
+                    {/* Types (Question types, etc.) */}
+                    {sub.types && Array.isArray(sub.types) && (
                       <div className="space-y-3">
-                        {sub.categories.map((cat: any, i: number) => (
-                          <div key={i} className="p-3 bg-blue-50 dark:bg-blue-900/10 rounded-lg border border-blue-100 dark:border-blue-800">
-                            <h4 className="font-bold text-blue-900 dark:text-blue-100 mb-2">{cat.category}</h4>
-                            {cat.rule && <p className="text-sm text-blue-800 dark:text-blue-200 mb-2">{cat.rule}</p>}
-                            {cat.example && <p className="text-xs text-blue-700 dark:text-blue-300 italic bg-blue-100 dark:bg-blue-900/20 p-2 rounded">{cat.example}</p>}
+                        {sub.types.map((typeItem: any, i: number) => (
+                          <div key={i} className="p-3 bg-indigo-50 dark:bg-indigo-900/10 border-l-4 border-indigo-500 rounded">
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 mb-1">{typeItem.type || typeItem.title}</h5>
+                            {typeItem.description && (
+                              <p className="text-sm text-indigo-800 dark:text-indigo-200 mb-2">{typeItem.description}</p>
+                            )}
+                            {typeItem.examples && Array.isArray(typeItem.examples) && (
+                              <ul className="list-disc ml-5 space-y-1 text-sm text-indigo-700 dark:text-indigo-300">
+                                {typeItem.examples.map((ex: string, j: number) => (
+                                  <li key={j}>{ex}</li>
+                                ))}
+                              </ul>
+                            )}
                           </div>
                         ))}
+                      </div>
+                    )}
+
+                    {/* Question Words Strategy */}
+                    {sub.questionWords && Array.isArray(sub.questionWords) && (
+                      <div className="grid md:grid-cols-2 gap-3">
+                        {sub.questionWords.map((qw: any, i: number) => (
+                          <div key={i} className="p-3 bg-purple-50 dark:bg-purple-900/10 border border-purple-200 dark:border-purple-800 rounded-lg">
+                            <div className="font-bold text-purple-900 dark:text-purple-100 mb-2">
+                              {qw.questionWord}
+                            </div>
+                            <div className="space-y-1 text-xs">
+                              <div>
+                                <span className="font-semibold text-purple-700 dark:text-purple-300">Answer type:</span>{' '}
+                                <span className="text-purple-600 dark:text-purple-400">{qw.answerType}</span>
+                              </div>
+                              <div>
+                                <span className="font-semibold text-purple-700 dark:text-purple-300">Signal words:</span>{' '}
+                                <span className="text-purple-600 dark:text-purple-400">{qw.signalWords}</span>
+                              </div>
+                              {qw.example && (
+                                <div className="mt-2 p-2 bg-purple-100 dark:bg-purple-900/20 rounded italic text-purple-800 dark:text-purple-200">
+                                  {qw.example}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Predictions */}
+                    {sub.predictions && Array.isArray(sub.predictions) && (
+                      <ul className="space-y-1 ml-5 list-disc text-slate-700 dark:text-slate-300">
+                        {sub.predictions.map((p: string, i: number) => <li key={i}>{p}</li>)}
+                      </ul>
+                    )}
+
+                    {/* Simple List */}
+                    {sub.list && (
+                      <ul className="list-disc ml-5 space-y-1 text-slate-700 dark:text-slate-300">
+                        {sub.list.map((item: string, i: number) => <li key={i}>{item}</li>)}
+                      </ul>
+                    )}
+
+                    {/* Formats (Multiple Choice) */}
+                    {sub.formats && Array.isArray(sub.formats) && (
+                      <div className="grid gap-3 mt-4">
+                        {sub.formats.map((fmt: any, i: number) => (
+                          <div key={i} className="p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm">
+                            <h4 className="font-bold text-slate-800 dark:text-slate-200 mb-1">{fmt.format}</h4>
+                            <p className="text-sm text-slate-600 dark:text-slate-400">{fmt.description}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Levels (Stated/Implied/Assumed) */}
+                    {sub.levels && Array.isArray(sub.levels) && (
+                      <div className="space-y-3 mt-4">
+                        {sub.levels.map((lvl: any, i: number) => (
+                          <div key={i} className="p-4 bg-slate-50 dark:bg-slate-800/50 border-l-4 border-indigo-500 rounded">
+                            <h4 className="font-bold text-indigo-900 dark:text-indigo-100 mb-2">{lvl.level}</h4>
+                            {lvl.characteristics && (
+                              <ul className="list-disc ml-5 space-y-1 text-sm text-slate-600 dark:text-slate-400">
+                                {lvl.characteristics.map((c: string, k: number) => (
+                                  <li key={k}>{c}</li>
+                                ))}
+                              </ul>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* UNIFIED EXAMPLES RENDERER */}
+                    {normalizeExamples(sub).length > 0 && !sub.comparison && !sub.grammerClues && !sub.formats && !sub.paraphrasePatterns && (
+                      <div className="space-y-6 mt-4">
+                        {normalizeExamples(sub).map((ex: TheoryExample, i: number) => (
+                          <div key={i} className="space-y-3">
+                            {/* Example Passage context */}
+                            {(ex.passage || (i === 0 && sub.passage)) && (
+                              <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded italic text-slate-700 dark:text-slate-300 border-l-4 border-slate-400">
+                                "{ex.passage || sub.passage}"
+                              </div>
+                            )}
+
+                            {/* Question Text */}
+                            {ex.question && (
+                              <div className="font-medium text-slate-900 dark:text-slate-100 px-1">
+                                {ex.questionNumber ? `Q${ex.questionNumber}: ` : 'Q: '}{ex.question}
+                              </div>
+                            )}
+
+
+
+                            {/* Instruction */}
+                            {ex.instruction && (
+                              <div className="p-3 bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800 rounded">
+                                <div className="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase mb-1">Instruction</div>
+                                <p className="text-sm text-amber-800 dark:text-amber-200">{ex.instruction}</p>
+                              </div>
+                            )}
+
+                            {/* 1. Inference Type (Valid/Invalid) */}
+                            {ex.validInference && (
+                              <div className="grid md:grid-cols-2 gap-4">
+                                <div className="p-3 bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-200 dark:border-emerald-800 rounded">
+                                  <div className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase mb-1">Valid Inference</div>
+                                  <p className="text-sm text-emerald-800 dark:text-emerald-200">{ex.validInference}</p>
+                                </div>
+                                <div className="p-3 bg-rose-50 dark:bg-rose-900/10 border border-rose-200 dark:border-rose-800 rounded">
+                                  <div className="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase mb-1">Invalid Assumption</div>
+                                  <p className="text-sm text-rose-800 dark:text-rose-200">{ex.invalidAssumption}</p>
+                                </div>
+                              </div>
+                            )}
+
+                            {/* 2. Gap Fill / Analysis Type */}
+                            {ex.analysis && typeof ex.analysis === 'string' && (
+                              <div className="p-4 border border-slate-200 dark:border-slate-700 rounded-lg">
+                                <div className="text-sm text-slate-600 dark:text-slate-400 bg-yellow-50 dark:bg-yellow-900/10 p-2 rounded mb-2">
+                                  <strong>Analysis:</strong> {ex.analysis}
+                                </div>
+                                {ex.answer && (
+                                  <div className="font-bold text-emerald-600 dark:text-emerald-400">
+                                    Answer: {ex.answer}
+                                  </div>
+                                )}
+                              </div>
+                            )}
+
+                            {/* 3. MCQ Options Type */}
+                            {ex.options && (
+                              <div className="space-y-2 mb-4">
+                                {ex.options.map((opt: string, k: number) => (
+                                  <div key={k} className={`p-2 rounded text-sm border ${(ex.correctAnswer && opt.startsWith(ex.correctAnswer)) || (ex.answer && opt.startsWith(ex.answer))
+                                    ? "bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-200 font-medium"
+                                    : "bg-slate-50 dark:bg-slate-800 border-transparent text-slate-600 dark:text-slate-400"
+                                    }`}>
+                                    {opt}
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+
+                            {/* Explanation / Why */}
+                            {ex.explanation && (
+                              <div className="mt-2 text-sm text-slate-600 dark:text-slate-400 bg-blue-50 dark:bg-blue-900/10 p-2 rounded">
+                                <span className="font-bold text-blue-700 dark:text-blue-300">Explanation:</span>{' '}
+                                {typeof ex.explanation === 'string' ? ex.explanation : JSON.stringify(ex.explanation)}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Typical Instructions */}
+                    {sub.typicalInstructions && (
+                      <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700">
+                        <h4 className="font-bold text-slate-700 dark:text-slate-300 mb-2">Typical Instructions:</h4>
+                        <ul className="list-disc ml-5 space-y-1 text-slate-600 dark:text-slate-400 italic">
+                          {sub.typicalInstructions.map((inst: string, i: number) => (
+                            <li key={i}>"{inst}"</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Paraphrase Patterns Table */}
+                    {sub.paraphrasePatterns && (
+                      <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700">
+                        <table className="w-full text-sm text-left border-collapse">
+                          <thead>
+                            <tr className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                              <th className="p-3 border-b border-slate-200 dark:border-slate-700">Passage Says</th>
+                              <th className="p-3 border-b border-slate-200 dark:border-slate-700">Sentence Stem Says</th>
+                              <th className="p-3 border-b border-slate-200 dark:border-slate-700">Type of Paraphrase</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {sub.paraphrasePatterns.map((row: any, i: number) => (
+                              <tr key={i} className="border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                                <td className="p-3 border-r border-slate-100 dark:border-slate-800 font-medium text-rose-700 dark:text-rose-400">"{row.passage}"</td>
+                                <td className="p-3 border-r border-slate-100 dark:border-slate-800 font-medium text-emerald-700 dark:text-emerald-400">"{row.stem}"</td>
+                                <td className="p-3 text-slate-600 dark:text-slate-400">{row.type}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    )}
+
+                    {/* Detailed Example Analysis (Gap Fill / General) */}
+                    {sub.example && sub.example.passage && sub.example.analysis && (
+                      <div className="space-y-3">
+                        <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded italic text-slate-700 dark:text-slate-300">
+                          "{sub.example.passage}"
+                        </div>
+                        <div className="p-4 border border-slate-200 dark:border-slate-700 rounded-lg">
+                          <p className="font-medium text-slate-900 dark:text-slate-100 mb-2">{sub.example.question}</p>
+                          <div className="text-sm text-slate-600 dark:text-slate-400 bg-yellow-50 dark:bg-yellow-900/10 p-2 rounded mb-2">
+                            <strong>Analysis:</strong> {sub.example.analysis}
+                          </div>
+                          <div className="font-bold text-emerald-600 dark:text-emerald-400">
+                            Answer: {sub.example.answer}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Grammar Clues */}
+                    {sub.grammarClues && (
+                      <div className="space-y-6">
+                        {sub.grammarClues.beforeGap && (
+                          <div>
+                            <h5 className="font-bold text-slate-700 dark:text-slate-300 mb-2">Before the gap:</h5>
+                            <div className="overflow-x-auto rounded-lg border border-blue-100 dark:border-blue-800">
+                              <table className="w-full text-sm text-left border-collapse">
+                                <thead>
+                                  <tr className="bg-blue-50 dark:bg-blue-900/20 text-blue-900 dark:text-blue-100">
+                                    <th className="p-2 border-b border-blue-100 dark:border-blue-800">What Comes Before</th>
+                                    <th className="p-2 border-b border-blue-100 dark:border-blue-800">Gap Needs</th>
+                                    <th className="p-2 border-b border-blue-100 dark:border-blue-800">Example</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {sub.grammarClues.beforeGap.map((row: any, i: number) => (
+                                    <tr key={i} className="border-b border-blue-50 dark:border-blue-900/10">
+                                      <td className="p-2 border-r border-blue-50 dark:border-blue-900/10 font-medium text-blue-800 dark:text-blue-200">{row.clue}</td>
+                                      <td className="p-2 border-r border-blue-50 dark:border-blue-900/10 text-slate-700 dark:text-slate-300">{row.needs}</td>
+                                      <td className="p-2 text-slate-500 dark:text-slate-400 italic">{row.example}</td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        )}
+                        {sub.grammarClues.afterGap && (
+                          <div>
+                            <h5 className="font-bold text-slate-700 dark:text-slate-300 mb-2">After the gap:</h5>
+                            <div className="overflow-x-auto rounded-lg border border-purple-100 dark:border-purple-800">
+                              <table className="w-full text-sm text-left border-collapse">
+                                <thead>
+                                  <tr className="bg-purple-50 dark:bg-purple-900/20 text-purple-900 dark:text-purple-100">
+                                    <th className="p-2 border-b border-purple-100 dark:border-purple-800">What Comes After</th>
+                                    <th className="p-2 border-b border-purple-100 dark:border-purple-800">Gap Needs</th>
+                                    <th className="p-2 border-b border-purple-100 dark:border-purple-800">Example</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {sub.grammarClues.afterGap.map((row: any, i: number) => (
+                                    <tr key={i} className="border-b border-purple-50 dark:border-purple-900/10">
+                                      <td className="p-2 border-r border-purple-50 dark:border-purple-900/10 font-medium text-purple-800 dark:text-purple-200">{row.clue}</td>
+                                      <td className="p-2 border-r border-purple-50 dark:border-purple-900/10 text-slate-700 dark:text-slate-300">{row.needs}</td>
+                                      <td className="p-2 text-slate-500 dark:text-slate-400 italic">{row.example}</td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Signal Patterns */}
+                    {sub.signalPatterns && (
+                      <div className="overflow-x-auto rounded-lg border border-amber-100 dark:border-amber-800">
+                        <table className="w-full text-sm text-left border-collapse">
+                          <thead>
+                            <tr className="bg-amber-50 dark:bg-amber-900/20 text-amber-900 dark:text-amber-100">
+                              <th className="p-2 border-b border-amber-100 dark:border-amber-800">Sentence Pattern</th>
+                              <th className="p-2 border-b border-amber-100 dark:border-amber-800">Look For in Passage</th>
+                              <th className="p-2 border-b border-amber-100 dark:border-amber-800">Example/Type</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {sub.signalPatterns.map((row: any, i: number) => (
+                              <tr key={i} className="border-b border-amber-50 dark:border-amber-900/10">
+                                <td className="p-2 border-r border-amber-50 dark:border-amber-900/10 font-medium text-amber-800 dark:text-amber-200">"{row.pattern}"</td>
+                                <td className="p-2 border-r border-amber-50 dark:border-amber-900/10 text-slate-700 dark:text-slate-300 italic">{row.lookFor}</td>
+                                <td className="p-2 text-slate-600 dark:text-slate-400">{row.type}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    )}
+
+                    {/* Categories (Signal Words & Phrases to Watch) */}
+                    {sub.categories && Array.isArray(sub.categories) && (
+                      <div className="grid gap-3">
+                        {sub.categories.map((cat: any, i: number) => (
+                          <div key={i} className="border border-slate-200 dark:border-slate-800 rounded-lg overflow-hidden">
+                            <div className="p-3 bg-slate-50 dark:bg-slate-800/80 font-bold text-indigo-900 dark:text-indigo-100 border-b border-slate-200 dark:border-slate-800">
+                              {cat.category}
+                            </div>
+                            <div className="p-3 space-y-2">
+                              {cat.examples && Array.isArray(cat.examples) && (
+                                <ul className="space-y-1 text-sm text-slate-600 dark:text-slate-400">
+                                  {cat.examples.map((ex: any, k: number) => (
+                                    <li key={k} className="list-none">
+                                      {typeof ex === 'string' ? (
+                                        <div className="flex gap-2">
+                                          <span className="text-slate-400">•</span>
+                                          <span>{ex}</span>
+                                        </div>
+                                      ) : (
+                                        <div className="flex flex-col sm:flex-row gap-2 bg-slate-50 dark:bg-slate-900/50 p-2 rounded border border-slate-100 dark:border-slate-800 mb-1">
+                                          {ex.passageSays && (
+                                            <div className="flex-1">
+                                              <div className="text-[10px] uppercase text-slate-400 font-bold">Passage</div>
+                                              <div className="font-medium text-slate-700 dark:text-slate-300">"{ex.passageSays}"</div>
+                                            </div>
+                                          )}
+                                          {ex.questionClaims && (
+                                            <div className="flex-1 border-l sm:border-l-0 sm:border-t-0 border-slate-200 dark:border-slate-700 pl-2 sm:pl-0">
+                                              <div className="text-[10px] uppercase text-indigo-400 font-bold">Question</div>
+                                              <div className="font-medium text-indigo-700 dark:text-indigo-300">"{ex.questionClaims}"</div>
+                                            </div>
+                                          )}
+                                          {ex.answer && (
+                                            <div className="flex items-center">
+                                              <div className={`text-xs font-bold px-2 py-1 rounded ${ex.answer.includes('FALSE') ? 'bg-rose-100 text-rose-800' :
+                                                ex.answer.includes('TRUE') ? 'bg-emerald-100 text-emerald-800' :
+                                                  'bg-slate-200 text-slate-800'
+                                                }`}>
+                                                {ex.answer}
+                                              </div>
+                                            </div>
+                                          )}
+                                        </div>
+                                      )}
+                                    </li>
+                                  ))}
+                                </ul>
+                              )}
+                              {cat.lookFor && (
+                                <div className="text-sm bg-indigo-50 dark:bg-indigo-900/10 p-2 rounded text-indigo-800 dark:text-indigo-200">
+                                  <span className="font-semibold">Look For:</span> {cat.lookFor}
+                                </div>
+                              )}
+                              {cat.rule && (
+                                <div className="text-sm bg-blue-50 dark:bg-blue-900/10 p-2 rounded text-blue-800 dark:text-blue-200">
+                                  <span className="font-semibold">Rule:</span> {cat.rule}
+                                </div>
+                              )}
+                              {cat.example && typeof cat.example === 'string' && (
+                                <div className="text-sm italic text-slate-500 dark:text-slate-400">
+                                  Ex: {cat.example}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Walkthrough Examples (Multiple Choice) */}
+                    {sub.examples && Array.isArray(sub.examples) && sub.examples[0]?.options && (
+                      <div className="space-y-6">
+                        {/* Global passage for the section if exists */}
+                        {sub.passage && (
+                          <div className="p-4 bg-slate-100 dark:bg-slate-800/80 rounded border-l-4 border-slate-400 text-slate-700 dark:text-slate-300 italic mb-4">
+                            <span className="block font-bold text-xs text-slate-500 not-italic mb-1">PASSAGE EXCERPT</span>
+                            "{sub.passage}"
+                          </div>
+                        )}
+
+                        {sub.examples.map((ex: any, i: number) => (
+                          <div key={i} className="border border-slate-200 dark:border-slate-700 rounded-lg p-4 bg-white dark:bg-slate-900">
+                            <div className="font-bold text-slate-900 dark:text-slate-100 mb-3">
+                              <span className="text-indigo-500 mr-2">Q{ex.questionNumber}.</span>
+                              {ex.question}
+                            </div>
+                            <div className="space-y-2 mb-4">
+                              {ex.options.map((opt: string, k: number) => (
+                                <div key={k} className={`p-2 rounded text-sm border ${ex.correctAnswer && opt.startsWith(ex.correctAnswer)
+                                  ? "bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-200 font-medium"
+                                  : "bg-slate-50 dark:bg-slate-800 border-transparent text-slate-600 dark:text-slate-400"
+                                  }`}>
+                                  {opt}
+                                </div>
+                              ))}
+                            </div>
+
+                            {ex.explanation && (
+                              <div className="text-sm space-y-2 mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
+                                <div className="font-bold text-slate-700 dark:text-slate-300 mb-1">Explanation:</div>
+                                {typeof ex.explanation === 'object' ? (
+                                  <div className="grid gap-2">
+                                    {Object.entries(ex.explanation).map(([key, desc]: [string, any]) => (
+                                      <div key={key} className={`flex gap-2 ${key === ex.correctAnswer ? 'text-emerald-700 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-500'}`}>
+                                        <span className="font-bold w-4">{key}:</span>
+                                        <span>{desc}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                ) : (
+                                  <p className="text-slate-600 dark:text-slate-400">{ex.explanation}</p>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Recommendations (Time Management) */}
+                    {sub.recommendations && Array.isArray(sub.recommendations) && (
+                      <div className="grid gap-2">
+                        {sub.recommendations.map((rec: any, i: number) => (
+                          <div key={i} className="flex items-center gap-3 p-2 bg-slate-50 dark:bg-slate-800 rounded">
+                            <Clock className="w-4 h-4 text-slate-500" />
+                            <span className="font-semibold text-slate-700 dark:text-slate-300">{rec.questionCount || rec.count}:</span>
+                            <span className="text-sm text-slate-600 dark:text-slate-400">{rec.recommendedTime || rec.time}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Average/Rationale */}
+                    {sub.average && (
+                      <div className="p-3 bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800 rounded">
+                        <span className="font-semibold text-amber-900 dark:text-amber-100">Average: </span>
+                        <span className="text-amber-800 dark:text-amber-200">{sub.average}</span>
+                      </div>
+                    )}
+                    {sub.rationale && (
+                      <div className="p-3 bg-blue-50 dark:bg-blue-900/10 border-l-4 border-blue-500 rounded">
+                        <p className="text-sm text-blue-800 dark:text-blue-200">{sub.rationale}</p>
                       </div>
                     )}
 
@@ -340,6 +993,30 @@ export default function ReadingTheory() {
                             </ul>
                           </div>
                         ))}
+                      </div>
+                    )}
+
+                    {/* Comparison Table (for Short Answer Direct vs Indirect, etc.) */}
+                    {sub.comparisonTable && Array.isArray(sub.comparisonTable) && (
+                      <div className="overflow-x-auto">
+                        <table className="w-full border-collapse">
+                          <thead>
+                            <tr className="bg-slate-100 dark:bg-slate-800">
+                              <th className="border border-slate-300 dark:border-slate-600 px-4 py-2 text-left font-bold text-slate-700 dark:text-slate-300">Aspect</th>
+                              <th className="border border-slate-300 dark:border-slate-600 px-4 py-2 text-left font-bold text-emerald-600 dark:text-emerald-400">Direct</th>
+                              <th className="border border-slate-300 dark:border-slate-600 px-4 py-2 text-left font-bold text-blue-600 dark:text-blue-400">Indirect</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {sub.comparisonTable.map((row: any, i: number) => (
+                              <tr key={i} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                                <td className="border border-slate-300 dark:border-slate-600 px-4 py-2 font-semibold text-slate-800 dark:text-slate-200">{row.aspect}</td>
+                                <td className="border border-slate-300 dark:border-slate-600 px-4 py-2 text-sm text-slate-700 dark:text-slate-300">{row.direct}</td>
+                                <td className="border border-slate-300 dark:border-slate-600 px-4 py-2 text-sm text-slate-700 dark:text-slate-300">{row.indirect}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
                       </div>
                     )}
 
@@ -368,7 +1045,7 @@ export default function ReadingTheory() {
                                   <p className="text-sm text-slate-600 dark:text-slate-400">{ex.analysis}</p>
                                 </div>
                                 <span className={`text-xs font-bold px-2 py-1 rounded whitespace-nowrap ${ex.answer === 'CORRECT' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300' :
-                                    'bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-300'
+                                  'bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-300'
                                   }`}>{ex.answer}</span>
                               </div>
                             </div>
@@ -387,374 +1064,629 @@ export default function ReadingTheory() {
                         )}
                       </div>
                     )}
+
+                    {/* Walkthrough Examples with Step-by-Step (Short Answer Section 5) */}
+                    {sub.passage && sub.examples && Array.isArray(sub.examples) && sub.examples[0]?.stepByStep && (
+                      <div className="space-y-6">
+                        <div className="p-4 bg-slate-100 dark:bg-slate-800 rounded-lg">
+                          <h4 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Passage</h4>
+                          <p className="italic text-slate-700 dark:text-slate-300 leading-relaxed">"{sub.passage}"</p>
+                        </div>
+                        {sub.examples.map((ex: any, i: number) => (
+                          <div key={i} className="border border-emerald-200 dark:border-emerald-800 rounded-lg overflow-hidden">
+                            <div className="bg-emerald-100 dark:bg-emerald-900/30 p-3">
+                              <div className="flex items-start justify-between gap-3">
+                                <div className="flex-1">
+                                  <div className="text-xs font-bold text-emerald-700 dark:text-emerald-300 uppercase mb-1">
+                                    Question {ex.questionNumber}
+                                  </div>
+                                  <p className="font-semibold text-emerald-900 dark:text-emerald-100 mb-1">{ex.question}</p>
+                                  {ex.instruction && (
+                                    <p className="text-xs text-emerald-700 dark:text-emerald-300 italic">({ex.instruction})</p>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="p-4 bg-white dark:bg-slate-900 space-y-3">
+                              {ex.stepByStep && Array.isArray(ex.stepByStep) && (
+                                <div>
+                                  <h5 className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Step-by-Step Solution:</h5>
+                                  <ol className="space-y-1.5">
+                                    {ex.stepByStep.map((step: string, j: number) => (
+                                      <li key={j} className="flex gap-2 text-sm">
+                                        <span className="text-blue-500 font-semibold">{j + 1}.</span>
+                                        <span className="text-slate-700 dark:text-slate-300">{step}</span>
+                                      </li>
+                                    ))}
+                                  </ol>
+                                </div>
+                              )}
+                              <div className="pt-2 border-t border-slate-200 dark:border-slate-700">
+                                <div className="flex items-start gap-2">
+                                  <CheckCircle className="w-5 h-5 text-emerald-500 mt-0.5 flex-shrink-0" />
+                                  <div>
+                                    <span className="font-bold text-emerald-700 dark:text-emerald-300">Answer: </span>
+                                    <span className="text-slate-900 dark:text-slate-100 font-medium">{ex.answer}</span>
+                                  </div>
+                                </div>
+                                {ex.commonError && (
+                                  <div className="flex items-start gap-2 mt-2">
+                                    <XCircle className="w-5 h-5 text-rose-500 mt-0.5 flex-shrink-0" />
+                                    <div>
+                                      <span className="font-bold text-rose-700 dark:text-rose-300">Common Error: </span>
+                                      <span className="text-slate-700 dark:text-slate-300 text-sm">{ex.commonError}</span>
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Mistakes Array (Short Answer Section 6) */}
+                    {sub.mistakes && Array.isArray(sub.mistakes) && (
+                      <div className="space-y-4">
+                        {sub.mistakes.map((mistake: any, i: number) => (
+                          <div key={i} className="border-l-4 border-rose-500 bg-rose-50 dark:bg-rose-900/10 rounded-lg p-4">
+                            <div className="flex items-start gap-3 mb-3">
+                              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-rose-600 dark:bg-rose-700 flex items-center justify-center text-white font-bold">
+                                {mistake.id}
+                              </div>
+                              <div className="flex-1">
+                                <h5 className="font-bold text-rose-900 dark:text-rose-100 mb-1">{mistake.title}</h5>
+                                {mistake.trap && (
+                                  <p className="text-sm text-rose-800 dark:text-rose-200 mb-2">
+                                    <span className="font-semibold">The Trap: </span>{mistake.trap}
+                                  </p>
+                                )}
+                              </div>
+                            </div>
+                            {mistake.example && (
+                              <div className="space-y-2 bg-white dark:bg-slate-900 rounded p-3">
+                                {mistake.example.passage && (
+                                  <div>
+                                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400">Passage: </span>
+                                    <span className="text-sm italic text-slate-700 dark:text-slate-300">"{mistake.example.passage}"</span>
+                                  </div>
+                                )}
+                                {mistake.example.question && (
+                                  <div>
+                                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400">Question: </span>
+                                    <span className="text-sm text-slate-700 dark:text-slate-300">{mistake.example.question}</span>
+                                  </div>
+                                )}
+                                {mistake.example.instruction && (
+                                  <div>
+                                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400">Instruction: </span>
+                                    <span className="text-sm text-slate-700 dark:text-slate-300">{mistake.example.instruction}</span>
+                                  </div>
+                                )}
+                                {mistake.example.wrong && (
+                                  <div className="flex items-start gap-2">
+                                    <XCircle className="w-4 h-4 text-rose-500 mt-0.5 flex-shrink-0" />
+                                    <div className="flex-1">
+                                      <span className="text-xs font-bold text-rose-600 dark:text-rose-400">Wrong: </span>
+                                      {Array.isArray(mistake.example.wrong) ? (
+                                        <ul className="list-disc ml-4 text-sm text-rose-700 dark:text-rose-300">
+                                          {mistake.example.wrong.map((w: string, j: number) => (
+                                            <li key={j}>{w}</li>
+                                          ))}
+                                        </ul>
+                                      ) : (
+                                        <span className="text-sm text-rose-700 dark:text-rose-300">{mistake.example.wrong}</span>
+                                      )}
+                                    </div>
+                                  </div>
+                                )}
+                                {mistake.example.correct && (
+                                  <div className="flex items-start gap-2">
+                                    <CheckCircle className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                                    <div>
+                                      <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">Correct: </span>
+                                      <span className="text-sm text-emerald-700 dark:text-emerald-300">{mistake.example.correct}</span>
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                            {mistake.betterExample && (
+                              <div className="mt-2 p-3 bg-blue-50 dark:bg-blue-900/20 rounded">
+                                <p className="text-xs font-bold text-blue-600 dark:text-blue-400 mb-1">Better Example:</p>
+                                <div className="space-y-1 text-sm text-blue-800 dark:text-blue-200">
+                                  {mistake.betterExample.question && <div><span className="font-semibold">Q:</span> {mistake.betterExample.question}</div>}
+                                  {mistake.betterExample.passage && <div><span className="font-semibold">Passage:</span> {mistake.betterExample.passage}</div>}
+                                  {mistake.betterExample.answer && <div><span className="font-semibold">A:</span> {mistake.betterExample.answer}</div>}
+                                </div>
+                              </div>
+                            )}
+                            {mistake.rule && (
+                              <div className="mt-3 p-3 bg-amber-50 dark:bg-amber-900/20 border-l-4 border-amber-500 rounded">
+                                <p className="text-sm font-semibold text-amber-900 dark:text-amber-100">
+                                  <span className="text-amber-600 dark:text-amber-400">💡 Rule:</span> {mistake.rule}
+                                </p>
+                              </div>
+                            )}
+                            {mistake.correct && !mistake.example && (
+                              <div className="mt-2 p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded">
+                                <p className="text-sm text-emerald-800 dark:text-emerald-200">{mistake.correct}</p>
+                              </div>
+                            )}
+                            {mistake.why && (
+                              <div className="mt-2 p-3 bg-blue-50 dark:bg-blue-900/20 rounded">
+                                <p className="text-sm font-semibold text-blue-800 dark:text-blue-200">Why? {mistake.why}</p>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 ))}
+
+                {/* Direct Section Content (e.g. Multiple Choice Section 5 Walkthrough) - Unified */}
+                {normalizeExamples(section).length > 0 && (
+                  <div className="space-y-6 mt-6 pt-6 border-t border-slate-200 dark:border-slate-800">
+                    {/* Section-level passage */}
+                    {section.passage && (
+                      <div className="p-4 bg-slate-100 dark:bg-slate-800/80 rounded border-l-4 border-slate-400 text-slate-700 dark:text-slate-300 italic mb-4">
+                        <span className="block font-bold text-xs text-slate-500 not-italic mb-1">PASSAGE EXCERPT</span>
+                        "{section.passage}"
+                      </div>
+                    )}
+
+                    {normalizeExamples(section).map((ex: TheoryExample, i: number) => (
+                      <div key={i} className="border border-slate-200 dark:border-slate-700 rounded-lg p-4 bg-white dark:bg-slate-900">
+                        <div className="font-bold text-slate-900 dark:text-slate-100 mb-3">
+                          <span className="text-indigo-500 mr-2">{ex.questionNumber ? `Q${ex.questionNumber}.` : 'Q.'}</span>
+                          {ex.question}
+                        </div>
+                        <div className="space-y-2 mb-4">
+                          {ex.options?.map((opt: string, k: number) => (
+                            <div key={k} className={`p-2 rounded text-sm border ${(ex.correctAnswer && opt.startsWith(ex.correctAnswer))
+                              ? "bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-200 font-medium"
+                              : "bg-slate-50 dark:bg-slate-800 border-transparent text-slate-600 dark:text-slate-400"
+                              }`}>
+                              {opt}
+                            </div>
+                          ))}
+                        </div>
+
+                        {ex.explanation && (
+                          <div className="text-sm space-y-2 mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
+                            <div className="font-bold text-slate-700 dark:text-slate-300 mb-1">Explanation:</div>
+                            {typeof ex.explanation === 'object' ? (
+                              <div className="grid gap-2">
+                                {Object.entries(ex.explanation).map(([key, desc]: [string, any]) => (
+                                  <div key={key} className={`flex gap-2 ${key === ex.correctAnswer ? 'text-emerald-700 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-500'}`}>
+                                    <span className="font-bold w-4">{key}:</span>
+                                    <span>{desc}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            ) : (
+                              <p className="text-slate-600 dark:text-slate-400">{ex.explanation}</p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
           ))}
         </div>
-      )}
+      )
+      }
 
 
       {/* 2. Example */}
-      {theoryContent.example && (
-        <Card className="border-l-4 border-l-purple-500 shadow-sm">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-xl flex items-center gap-2">
-              <BookOpen className="w-5 h-5 text-purple-500" />
-              Example
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid md:grid-cols-2 gap-0 border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-              {/* Passage Side */}
-              <div className="p-6 bg-slate-50 dark:bg-slate-800/50 border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-700">
-                <h3 className="text-sm font-bold text-slate-500 uppercase mb-4">Passage Excerpt</h3>
-                {typeof theoryContent.example.passage === 'string' ? (
-                  <p className="text-slate-800 dark:text-slate-200 font-serif leading-loose">
-                    "{theoryContent.example.passage}"
-                  </p>
-                ) : typeof theoryContent.example.passage === 'object' ? (
-                  <div className="space-y-4">
-                    {Object.entries(theoryContent.example.passage as Record<string, string>)
-                      .sort(([a], [b]) => a.localeCompare(b))
-                      .map(([paraKey, paraText]) => (
-                        <div key={paraKey}>
-                          <span className="text-xs font-bold text-slate-400 uppercase mb-1 block">
-                            {paraKey.replace(/^paragraph/i, 'Paragraph ')}
-                          </span>
-                          <p className="text-slate-800 dark:text-slate-200 font-serif leading-loose">{paraText}</p>
-                        </div>
-                      ))}
-                  </div>
-                ) : null}
-              </div>
-
-              {/* Question Side */}
-              <div className="p-6 bg-white dark:bg-slate-900">
-                <h3 className="text-sm font-bold text-slate-500 uppercase mb-4">Questions & Answers</h3>
-
-                {theoryContent.example.headings && (
-                  <div className="mb-6 p-4 border border-slate-200 dark:border-slate-700 rounded-lg">
-                    <h4 className="text-xs font-bold text-slate-500 uppercase mb-2">List of Headings</h4>
-                    <ul className="space-y-1">
-                      {theoryContent.example.headings.map((heading: string, idx: number) => (
-                        <li key={idx} className="text-sm text-slate-700 dark:text-slate-300 flex gap-2">
-                          <span className="font-mono text-slate-400">{['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii', 'viii', 'ix', 'x'][idx]}</span>
-                          {heading}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                <div className="space-y-6">
-                  {theoryContent.example.questions.map((q: any) => (
-                    <div key={q.id} className="space-y-3">
-                      <div className="font-medium text-slate-900 dark:text-slate-100">
-                        <span className="text-slate-400 mr-2">{q.id}.</span>
-                        {q.text}
-                      </div>
-
-                      {q.options && (
-                        <ul className="ml-6 space-y-1">
-                          {q.options.map((opt: string, idx: number) => (
-                            <li key={idx} className="text-sm text-slate-600 dark:text-slate-400 list-disc">{opt}</li>
-                          ))}
-                        </ul>
-                      )}
-
-                      <div className="mt-2 p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border border-emerald-100 dark:border-emerald-800/50">
-                        <div className="flex items-start gap-2">
-                          <CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
-                          <div>
-                            <p className="text-sm font-bold text-emerald-800 dark:text-emerald-300">
-                              Answer: {q.correctAnswer}
-                            </p>
-                            {q.explanation && (
-                              <p className="text-sm text-emerald-700 dark:text-emerald-400 mt-1">
-                                {q.explanation}
-                              </p>
-                            )}
+      {
+        theoryContent.example && (
+          <Card className="border-l-4 border-l-purple-500 shadow-sm">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-xl flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-purple-500" />
+                Example
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid md:grid-cols-2 gap-0 border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
+                {/* Passage Side */}
+                <div className="p-6 bg-slate-50 dark:bg-slate-800/50 border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-700">
+                  <h3 className="text-sm font-bold text-slate-500 uppercase mb-4">Passage Excerpt</h3>
+                  {typeof theoryContent.example.passage === 'string' ? (
+                    <p className="text-slate-800 dark:text-slate-200 font-serif leading-loose">
+                      "{theoryContent.example.passage}"
+                    </p>
+                  ) : typeof theoryContent.example.passage === 'object' ? (
+                    <div className="space-y-4">
+                      {Object.entries(theoryContent.example.passage as Record<string, string>)
+                        .sort(([a], [b]) => a.localeCompare(b))
+                        .map(([paraKey, paraText]) => (
+                          <div key={paraKey}>
+                            <span className="text-xs font-bold text-slate-400 uppercase mb-1 block">
+                              {paraKey.replace(/^paragraph/i, 'Paragraph ')}
+                            </span>
+                            <p className="text-slate-800 dark:text-slate-200 font-serif leading-loose">{paraText}</p>
                           </div>
-                        </div>
-                      </div>
+                        ))}
                     </div>
-                  ))}
+                  ) : null}
                 </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
 
-      {/* 3. Common Mistakes */}
-      {theoryContent.commonMistakes && (
-        <section className="space-y-4">
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-            <XCircle className="w-6 h-6 text-rose-500" />
-            Common Mistakes
-          </h2>
-          <div className="grid gap-3">
-            {theoryContent.commonMistakes.map((mistake: any, idx: number) => (
-              <div key={idx} className="flex gap-4 p-4 bg-rose-50 dark:bg-rose-900/10 border border-rose-100 dark:border-rose-900/30 rounded-lg">
-                <div className="text-rose-500 font-bold text-lg">!</div>
-                <div>
-                  <p className="font-bold text-rose-900 dark:text-rose-100">{mistake.title}</p>
-                  <p className="text-rose-800 dark:text-rose-200 text-sm mt-1">{mistake.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
+                {/* Question Side */}
+                <div className="p-6 bg-white dark:bg-slate-900">
+                  <h3 className="text-sm font-bold text-slate-500 uppercase mb-4">Questions & Answers</h3>
 
-      {/* 4. Strategy & Tips */}
-      {theoryContent.strategyTips && (
-        <section className="space-y-4">
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Strategy & Tips</h2>
-          <div className="relative space-y-8 before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-300 before:to-transparent">
-            {theoryContent.strategyTips.map((tip: any, idx: number) => (
-              <div key={tip.step} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 group-[.is-active]:bg-blue-500 text-slate-500 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
-                  {tip.step}
-                </div>
-                <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
-                  <div className="flex items-center justify-between space-x-2 mb-1">
-                    <div className="font-bold text-slate-900 dark:text-slate-100">{tip.title}</div>
-                  </div>
-                  <div className="text-slate-700 dark:text-slate-300 text-sm">{tip.description}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Signal Words (T/F/NG specific) */}
-      {mc?.signalWords && (
-        <section className="space-y-3">
-          <div>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2 mb-1">
-              🎯 Signal Words to Watch
-            </h2>
-            <p className="text-sm text-slate-600 dark:text-slate-400">{mc.signalWords.description}</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-3">
-            {/* Qualifiers */}
-            {mc.signalWords.qualifiers && (
-              <Card className="border-l-4 border-l-orange-500 shadow-sm">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-bold text-slate-900 dark:text-slate-100">
-                    1. {mc.signalWords.qualifiers.title.replace('Qualifiers (Often Create FALSE Traps)', 'Absolute vs. Qualified Statements')}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pt-2">
-                  <div className="space-y-1">
-                    {mc.signalWords.qualifiers.examples?.map((ex: any, i: number) => (
-                      <div key={i} className="px-2 py-1.5 bg-orange-50/50 dark:bg-orange-900/10 rounded text-xs leading-snug">
-                        <div className="flex items-center gap-2">
-                          <span className="text-slate-700 dark:text-slate-300 font-medium flex-1">"{ex.passage}"</span>
-                          <span className="text-slate-400 text-[10px]">→</span>
-                          <span className="text-slate-700 dark:text-slate-300 font-medium flex-1">"{ex.question}"</span>
-                        </div>
-                        <div className="mt-0.5 text-[11px] font-bold text-orange-600 dark:text-orange-400">
-                          {ex.result}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Comparatives */}
-            {mc.signalWords.comparatives && (
-              <Card className="border-l-4 border-l-purple-500 shadow-sm">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-bold text-slate-900 dark:text-slate-100">
-                    2. {mc.signalWords.comparatives.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pt-2">
-                  <div className="space-y-1">
-                    {mc.signalWords.comparatives.examples?.map((ex: any, i: number) => (
-                      <div key={i} className="px-2 py-1.5 bg-purple-50/50 dark:bg-purple-900/10 rounded text-xs leading-snug">
-                        <div className="flex items-center gap-2">
-                          <span className="text-slate-700 dark:text-slate-300 font-medium flex-1">"{ex.passage}"</span>
-                          <span className="text-slate-400 text-[10px]">→</span>
-                          <span className="text-slate-700 dark:text-slate-300 font-medium flex-1">"{ex.question}"</span>
-                        </div>
-                        <div className="mt-0.5 text-[11px] font-bold text-purple-600 dark:text-purple-400">
-                          {ex.result}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Time & Sequence */}
-            {mc.signalWords.timeSequence && (
-              <Card className="border-l-4 border-l-blue-500 shadow-sm">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-bold text-slate-900 dark:text-slate-100">
-                    3. {mc.signalWords.timeSequence.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pt-2">
-                  <div className="space-y-1">
-                    {mc.signalWords.timeSequence.examples?.map((ex: any, i: number) => (
-                      <div key={i} className="px-2 py-1.5 bg-blue-50/50 dark:bg-blue-900/10 rounded text-xs leading-snug">
-                        <div className="flex items-center gap-2">
-                          <span className="text-slate-700 dark:text-slate-300 font-medium flex-1">"{ex.passage}"</span>
-                          <span className="text-slate-400 text-[10px]">→</span>
-                          <span className="text-slate-700 dark:text-slate-300 font-medium flex-1">"{ex.question}"</span>
-                        </div>
-                        <div className="mt-0.5 text-[11px] font-bold text-blue-600 dark:text-blue-400">
-                          {ex.result}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-          </div>
-        </section>
-      )}
-
-      {/* Common Pitfalls (T/F/NG specific) */}
-      {mc?.commonPitfalls && (
-        <section className="space-y-6">
-          <div>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2 mb-2">
-              ⚠️ {mc.commonPitfalls.title}
-            </h2>
-            <p className="text-slate-600 dark:text-slate-400">{mc.commonPitfalls.description}</p>
-          </div>
-
-          <div className="space-y-4">
-            {mc.commonPitfalls.mistakes?.map((mistake: any) => (
-              <Card key={mistake.id} className="border-l-4 border-l-rose-500">
-                <CardHeader className="pb-3">
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center">
-                      <span className="text-rose-600 dark:text-rose-400 font-bold">{mistake.id}</span>
+                  {theoryContent.example.headings && (
+                    <div className="mb-6 p-4 border border-slate-200 dark:border-slate-700 rounded-lg">
+                      <h4 className="text-xs font-bold text-slate-500 uppercase mb-2">List of Headings</h4>
+                      <ul className="space-y-1">
+                        {theoryContent.example.headings.map((heading: string, idx: number) => (
+                          <li key={idx} className="text-sm text-slate-700 dark:text-slate-300 flex gap-2">
+                            <span className="font-mono text-slate-400">{['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii', 'viii', 'ix', 'x'][idx]}</span>
+                            {heading}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                    <div className="flex-1">
-                      <CardTitle className="text-lg text-rose-900 dark:text-rose-100">
-                        ❌ Mistake {mistake.id}: {mistake.title}
-                      </CardTitle>
-                      <p className="text-sm text-rose-700 dark:text-rose-300 mt-1">
-                        <span className="font-semibold">The Trap:</span> {mistake.trap}
-                      </p>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  {mistake.example?.passage && (
-                    <div className="space-y-2">
-                      <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded">
-                        <div className="text-xs font-bold text-slate-500 uppercase mb-1">Passage</div>
-                        <div className="text-sm italic text-slate-700 dark:text-slate-300">
-                          "{mistake.example.passage}"
+                  )}
+
+                  <div className="space-y-6">
+                    {theoryContent.example.questions.map((q: any) => (
+                      <div key={q.id} className="space-y-3">
+                        <div className="font-medium text-slate-900 dark:text-slate-100">
+                          <span className="text-slate-400 mr-2">{q.id}.</span>
+                          {q.text}
                         </div>
-                      </div>
-                      {mistake.example.statement && (
-                        <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded">
-                          <div className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase mb-1">Statement</div>
-                          <div className="text-sm text-blue-900 dark:text-blue-100">
-                            "{mistake.example.statement}"
-                          </div>
-                        </div>
-                      )}
-                      <div className="grid md:grid-cols-2 gap-2">
-                        {mistake.example.wrongThinking && (
-                          <div className="p-2 bg-rose-50 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-800 rounded">
-                            <div className="text-xs font-bold text-rose-600 dark:text-rose-400 mb-1">❌ Wrong</div>
-                            <div className="text-xs text-rose-800 dark:text-rose-200">{mistake.example.wrongThinking}</div>
-                          </div>
-                        )}
-                        {mistake.example.correctThinking && (
-                          <div className="p-2 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded">
-                            <div className="text-xs font-bold text-emerald-600 dark:text-emerald-400 mb-1">✓ Correct</div>
-                            <div className="text-xs text-emerald-800 dark:text-emerald-200">{mistake.example.correctThinking}</div>
-                          </div>
-                        )}
-                      </div>
-                      {mistake.example.analysis && Array.isArray(mistake.example.analysis) && (
-                        <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded">
-                          <div className="text-xs font-bold text-slate-500 uppercase mb-2">Analysis</div>
-                          <ul className="space-y-1">
-                            {mistake.example.analysis.map((item: string, idx: number) => (
-                              <li key={idx} className="text-xs text-slate-700 dark:text-slate-300">
-                                {item}
-                              </li>
+
+                        {q.options && (
+                          <ul className="ml-6 space-y-1">
+                            {q.options.map((opt: string, idx: number) => (
+                              <li key={idx} className="text-sm text-slate-600 dark:text-slate-400 list-disc">{opt}</li>
                             ))}
                           </ul>
-                        </div>
-                      )}
-                      {mistake.example.answer && (
-                        <div className="p-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded">
-                          <div className="text-xs font-bold text-blue-600 dark:text-blue-400">
-                            Answer: {mistake.example.answer}
-                          </div>
-                        </div>
-                      )}
-                      {mistake.example.reasoning && (
-                        <div className="p-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded">
-                          <div className="text-xs text-amber-800 dark:text-amber-200">
-                            💭 {mistake.example.reasoning}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  )}
+                        )}
 
-                  {/* commonQualifierTraps - array of trap examples */}
-                  {mistake.commonQualifierTraps && Array.isArray(mistake.commonQualifierTraps) && (
-                    <div className="space-y-2">
-                      <div className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                        Common Qualifier Traps:
-                      </div>
-                      {mistake.commonQualifierTraps.map((trap: any, idx: number) => (
-                        <div key={idx} className="p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded space-y-2">
-                          <div className="grid md:grid-cols-2 gap-2">
+                        <div className="mt-2 p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border border-emerald-100 dark:border-emerald-800/50">
+                          <div className="flex items-start gap-2">
+                            <CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
                             <div>
-                              <div className="text-xs font-bold text-slate-500 uppercase mb-1">Passage</div>
-                              <div className="text-sm italic text-slate-700 dark:text-slate-300">
-                                "{trap.passage}"
-                              </div>
-                            </div>
-                            <div>
-                              <div className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase mb-1">Statement</div>
-                              <div className="text-sm text-blue-900 dark:text-blue-100">
-                                "{trap.statement}"
-                              </div>
+                              <p className="text-sm font-bold text-emerald-800 dark:text-emerald-300">
+                                Answer: {q.correctAnswer}
+                              </p>
+                              {q.explanation && (
+                                <p className="text-sm text-emerald-700 dark:text-emerald-400 mt-1">
+                                  {q.explanation}
+                                </p>
+                              )}
                             </div>
                           </div>
-                          <div className="flex items-center justify-between text-xs">
-                            <span className="text-rose-600 dark:text-rose-400 font-semibold">
-                              ⚠️ Missed: {trap.missedWord}
-                            </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )
+      }
+
+      {/* 3. Common Mistakes */}
+      {
+        theoryContent.commonMistakes && (
+          <section className="space-y-4">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+              <XCircle className="w-6 h-6 text-rose-500" />
+              Common Mistakes
+            </h2>
+            <div className="grid gap-3">
+              {theoryContent.commonMistakes.map((mistake: any, idx: number) => (
+                <div key={idx} className="flex gap-4 p-4 bg-rose-50 dark:bg-rose-900/10 border border-rose-100 dark:border-rose-900/30 rounded-lg">
+                  <div className="text-rose-500 font-bold text-lg">!</div>
+                  <div>
+                    <p className="font-bold text-rose-900 dark:text-rose-100">{mistake.title}</p>
+                    <p className="text-rose-800 dark:text-rose-200 text-sm mt-1">{mistake.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {/* 4. Strategy & Tips */}
+      {
+        theoryContent.strategyTips && (
+          <section className="space-y-4">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Strategy & Tips</h2>
+            <div className="relative space-y-8 before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-300 before:to-transparent">
+              {theoryContent.strategyTips.map((tip: any, idx: number) => (
+                <div key={tip.step} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 group-[.is-active]:bg-blue-500 text-slate-500 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+                    {tip.step}
+                  </div>
+                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
+                    <div className="flex items-center justify-between space-x-2 mb-1">
+                      <div className="font-bold text-slate-900 dark:text-slate-100">{tip.title}</div>
+                    </div>
+                    <div className="text-slate-700 dark:text-slate-300 text-sm">{tip.description}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {/* Signal Words (T/F/NG specific) */}
+      {
+        mc?.signalWords && (
+          <section className="space-y-3">
+            <div>
+              <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2 mb-1">
+                🎯 Signal Words to Watch
+              </h2>
+              <p className="text-sm text-slate-600 dark:text-slate-400">{mc.signalWords.description}</p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-3">
+              {/* Qualifiers */}
+              {mc.signalWords.qualifiers && (
+                <Card className="border-l-4 border-l-orange-500 shadow-sm">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm font-bold text-slate-900 dark:text-slate-100">
+                      1. {mc.signalWords.qualifiers.title.replace('Qualifiers (Often Create FALSE Traps)', 'Absolute vs. Qualified Statements')}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-2">
+                    <div className="space-y-1">
+                      {mc.signalWords.qualifiers.examples?.map((ex: any, i: number) => (
+                        <div key={i} className="px-2 py-1.5 bg-orange-50/50 dark:bg-orange-900/10 rounded text-xs leading-snug">
+                          <div className="flex items-center gap-2">
+                            <span className="text-slate-700 dark:text-slate-300 font-medium flex-1">"{ex.passage}"</span>
+                            <span className="text-slate-400 text-[10px]">→</span>
+                            <span className="text-slate-700 dark:text-slate-300 font-medium flex-1">"{ex.question}"</span>
+                          </div>
+                          <div className="mt-0.5 text-[11px] font-bold text-orange-600 dark:text-orange-400">
+                            {ex.result}
                           </div>
                         </div>
                       ))}
                     </div>
-                  )}
+                  </CardContent>
+                </Card>
+              )}
 
-                  {/* examples - array of examples (for negatives, etc) */}
-                  {mistake.examples && Array.isArray(mistake.examples) && (
-                    <div className="space-y-2">
-                      <div className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                        Examples:
+              {/* Comparatives */}
+              {mc.signalWords.comparatives && (
+                <Card className="border-l-4 border-l-purple-500 shadow-sm">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm font-bold text-slate-900 dark:text-slate-100">
+                      2. {mc.signalWords.comparatives.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-2">
+                    <div className="space-y-1">
+                      {mc.signalWords.comparatives.examples?.map((ex: any, i: number) => (
+                        <div key={i} className="px-2 py-1.5 bg-purple-50/50 dark:bg-purple-900/10 rounded text-xs leading-snug">
+                          <div className="flex items-center gap-2">
+                            <span className="text-slate-700 dark:text-slate-300 font-medium flex-1">"{ex.passage}"</span>
+                            <span className="text-slate-400 text-[10px]">→</span>
+                            <span className="text-slate-700 dark:text-slate-300 font-medium flex-1">"{ex.question}"</span>
+                          </div>
+                          <div className="mt-0.5 text-[11px] font-bold text-purple-600 dark:text-purple-400">
+                            {ex.result}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Time & Sequence */}
+              {mc.signalWords.timeSequence && (
+                <Card className="border-l-4 border-l-blue-500 shadow-sm">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm font-bold text-slate-900 dark:text-slate-100">
+                      3. {mc.signalWords.timeSequence.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-2">
+                    <div className="space-y-1">
+                      {mc.signalWords.timeSequence.examples?.map((ex: any, i: number) => (
+                        <div key={i} className="px-2 py-1.5 bg-blue-50/50 dark:bg-blue-900/10 rounded text-xs leading-snug">
+                          <div className="flex items-center gap-2">
+                            <span className="text-slate-700 dark:text-slate-300 font-medium flex-1">"{ex.passage}"</span>
+                            <span className="text-slate-400 text-[10px]">→</span>
+                            <span className="text-slate-700 dark:text-slate-300 font-medium flex-1">"{ex.question}"</span>
+                          </div>
+                          <div className="mt-0.5 text-[11px] font-bold text-blue-600 dark:text-blue-400">
+                            {ex.result}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          </section>
+        )
+      }
+
+      {/* Common Pitfalls (T/F/NG specific) */}
+      {
+        mc?.commonPitfalls && (
+          <section className="space-y-6">
+            <div>
+              <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2 mb-2">
+                ⚠️ {mc.commonPitfalls.title}
+              </h2>
+              <p className="text-slate-600 dark:text-slate-400">{mc.commonPitfalls.description}</p>
+            </div>
+
+            <div className="space-y-4">
+              {mc.commonPitfalls.mistakes?.map((mistake: any) => (
+                <Card key={mistake.id} className="border-l-4 border-l-rose-500">
+                  <CardHeader className="pb-3">
+                    <div className="flex items-start gap-3">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center">
+                        <span className="text-rose-600 dark:text-rose-400 font-bold">{mistake.id}</span>
                       </div>
-                      {mistake.examples.map((ex: any, idx: number) => (
-                        <div key={idx} className="p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded space-y-2">
-                          <div className="grid gap-2">
+                      <div className="flex-1">
+                        <CardTitle className="text-lg text-rose-900 dark:text-rose-100">
+                          ❌ Mistake {mistake.id}: {mistake.title}
+                        </CardTitle>
+                        <p className="text-sm text-rose-700 dark:text-rose-300 mt-1">
+                          <span className="font-semibold">The Trap:</span> {mistake.trap}
+                        </p>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    {/* Singular Example Object */}
+                    {mistake.example && (
+                      <div className="space-y-3">
+                        {/* Context Box (Passage/Question) */}
+                        {(mistake.example.passage || mistake.example.question) && (
+                          <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded space-y-2">
+                            {mistake.example.passage && (
+                              <div>
+                                <div className="text-xs font-bold text-slate-500 uppercase mb-1">Passage</div>
+                                <div className="text-sm italic text-slate-700 dark:text-slate-300">"{mistake.example.passage}"</div>
+                              </div>
+                            )}
+                            {mistake.example.question && (
+                              <div>
+                                <div className="text-xs font-bold text-indigo-500 uppercase mb-1">Question</div>
+                                <div className="text-sm font-medium text-slate-800 dark:text-slate-200">"{mistake.example.question}"</div>
+                              </div>
+                            )}
+                          </div>
+                        )}
+
+                        {/* Options / Distractors */}
+                        {mistake.example.distractor && (
+                          <div className="p-2 bg-rose-50 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-800 rounded">
+                            <span className="text-xs font-bold text-rose-600 dark:text-rose-400">Distractor: </span>
+                            <span className="text-sm text-rose-800 dark:text-rose-200">"{mistake.example.distractor}"</span>
+                          </div>
+                        )}
+
+                        {/* Explicit Options (e.g. Mistake 1) */}
+                        {(mistake.example.optionB || mistake.example.optionC) && (
+                          <div className="space-y-2">
+                            {mistake.example.optionB && (
+                              <div className="p-2 bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800 rounded text-sm">
+                                <strong className="text-amber-800 dark:text-amber-300">Option B:</strong> {mistake.example.optionB}
+                              </div>
+                            )}
+                            {mistake.example.optionC && (
+                              <div className="p-2 bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-200 dark:border-emerald-800 rounded text-sm">
+                                <strong className="text-emerald-800 dark:text-emerald-300">Option C:</strong> {mistake.example.optionC}
+                              </div>
+                            )}
+                          </div>
+                        )}
+
+                        {/* Wrong/Correct Comparisons (e.g. Mistake 8) */}
+                        {mistake.example.wrong && (
+                          <div className="p-2 bg-rose-50 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-800 rounded text-sm">
+                            <strong className="text-rose-800 dark:text-rose-300">❌ Wrong:</strong> {mistake.example.wrong}
+                          </div>
+                        )}
+                        {mistake.example.correct && (
+                          <div className="p-2 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded text-sm">
+                            <strong className="text-emerald-800 dark:text-emerald-300">✓ Correct:</strong> {mistake.example.correct}
+                          </div>
+                        )}
+
+
+                        {/* Legacy: WrongThinking/CorrectThinking */}
+                        <div className="grid md:grid-cols-2 gap-2">
+                          {mistake.example.wrongThinking && (
+                            <div className="p-2 bg-rose-50 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-800 rounded">
+                              <div className="text-xs font-bold text-rose-600 dark:text-rose-400 mb-1">❌ Wrong</div>
+                              <div className="text-xs text-rose-800 dark:text-rose-200">{mistake.example.wrongThinking}</div>
+                            </div>
+                          )}
+                          {mistake.example.correctThinking && (
+                            <div className="p-2 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded">
+                              <div className="text-xs font-bold text-emerald-600 dark:text-emerald-400 mb-1">✓ Correct</div>
+                              <div className="text-xs text-emerald-800 dark:text-emerald-200">{mistake.example.correctThinking}</div>
+                            </div>
+                          )}
+                        </div>
+
+                        {mistake.example.analysis && Array.isArray(mistake.example.analysis) && (
+                          <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded">
+                            <div className="text-xs font-bold text-slate-500 uppercase mb-2">Analysis</div>
+                            <ul className="space-y-1">
+                              {mistake.example.analysis.map((item: string, idx: number) => (
+                                <li key={idx} className="text-xs text-slate-700 dark:text-slate-300">
+                                  {item}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                        {mistake.example.answer && (
+                          <div className="p-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded">
+                            <div className="text-xs font-bold text-blue-600 dark:text-blue-400">
+                              Answer: {mistake.example.answer}
+                            </div>
+                          </div>
+                        )}
+                        {mistake.example.reasoning && (
+                          <div className="p-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded">
+                            <div className="text-xs text-amber-800 dark:text-amber-200">
+                              💭 {mistake.example.reasoning}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Arrays of Examples (Mix of types) */}
+                    {mistake.examples && Array.isArray(mistake.examples) && (
+                      <div className="space-y-2">
+                        <div className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                          Examples:
+                        </div>
+                        {mistake.examples.map((ex: any, idx: number) => (
+                          <div key={idx} className="p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded space-y-2">
+                            {/* Type A: Passage / Distractor pair */}
+                            {ex.passage && (
+                              <div>
+                                <span className="text-xs font-bold text-slate-500">Passage: </span>
+                                <span className="text-sm italic text-slate-700 dark:text-slate-300">"{ex.passage}"</span>
+                              </div>
+                            )}
+                            {ex.distractor && (
+                              <div>
+                                <span className="text-xs font-bold text-rose-600 dark:text-rose-400">Distractor: </span>
+                                <span className="text-sm text-rose-800 dark:text-rose-200">"{ex.distractor}"</span>
+                              </div>
+                            )}
+
+                            {/* Type B: Qualifiers List */}
+                            {ex.qualifiers && Array.isArray(ex.qualifiers) && (
+                              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-1">
+                                {ex.qualifiers.map((q: string, k: number) => (
+                                  <li key={k} className="text-xs bg-white dark:bg-slate-900 p-1.5 rounded text-center border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 font-mono">
+                                    {q}
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+
+                            {/* Type C: Legacy T/F (PassageSays/Means) */}
                             {ex.passageSays && (
                               <div>
                                 <span className="text-xs font-bold text-slate-500">Passage says: </span>
@@ -785,88 +1717,148 @@ export default function ReadingTheory() {
                               </div>
                             )}
                           </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Top Level Explanations / Keys */}
+                    {mistake.whyWrong && (
+                      <div className="text-sm text-rose-700 dark:text-rose-300 italic flex gap-2">
+                        <span className="font-bold">Why Wrong:</span> {mistake.whyWrong}
+                      </div>
+                    )}
+
+                    {mistake.correct && typeof mistake.correct === 'string' && (
+                      <div className="p-3 bg-emerald-50 dark:bg-emerald-900/10 border-l-4 border-emerald-500 rounded text-sm text-emerald-800 dark:text-emerald-200">
+                        <span className="font-bold block mb-1">✓ Correction/Rule:</span>
+                        {mistake.correct}
+                      </div>
+                    )}
+
+                    {mistake.correctApproach && (
+                      <div className="p-3 bg-indigo-50 dark:bg-indigo-900/10 border-l-4 border-indigo-500 rounded text-sm text-indigo-800 dark:text-indigo-200">
+                        <span className="font-bold block mb-1">Strategy:</span>
+                        {mistake.correctApproach}
+                      </div>
+                    )}
+
+                    {mistake.process && (
+                      <div className="bg-slate-50 dark:bg-slate-800 p-3 rounded mt-2">
+                        <div className="text-xs font-bold text-slate-500 mb-2 uppercase">Elimination Process</div>
+                        <ul className="list-disc ml-4 space-y-1 text-sm text-slate-700 dark:text-slate-300">
+                          {mistake.process.map((step: string, i: number) => <li key={i}>{step}</li>)}
+                        </ul>
+                      </div>
+                    )}
+
+                    {mistake.signalWords && (
+                      <div className="mt-2">
+                        <div className="text-xs font-bold text-purple-600 dark:text-purple-400 mb-1">Signal Words:</div>
+                        <div className="flex flex-wrap gap-2">
+                          {mistake.signalWords.map((word: string, i: number) => (
+                            <span key={i} className="px-2 py-1 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 text-xs rounded border border-purple-100 dark:border-purple-800">{word}</span>
+                          ))}
                         </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* reality and strategy fields */}
-                  {mistake.reality && (
-                    <div className="p-3 bg-amber-50 dark:bg-amber-900/20 border-l-4 border-amber-500 rounded">
-                      <div className="text-xs font-bold text-amber-700 dark:text-amber-300 uppercase mb-1">Reality</div>
-                      <div className="text-sm text-amber-800 dark:text-amber-200">
-                        {mistake.reality}
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {mistake.strategy && (
-                    <div className="p-3 bg-emerald-50 dark:bg-emerald-900/20 border-l-4 border-emerald-500 rounded">
-                      <div className="text-xs font-bold text-emerald-700 dark:text-emerald-300 uppercase mb-1">Strategy</div>
-                      <div className="text-sm text-emerald-800 dark:text-emerald-200">
-                        💡 {mistake.strategy}
+                    {/* commonQualifierTraps - array of trap examples */}
+                    {mistake.commonQualifierTraps && Array.isArray(mistake.commonQualifierTraps) && (
+                      <div className="space-y-2">
+                        <div className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                          Common Qualifier Traps:
+                        </div>
+                        {mistake.commonQualifierTraps.map((trap: any, idx: number) => (
+                          <div key={idx} className="p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded space-y-2">
+                            <div className="grid md:grid-cols-2 gap-2">
+                              <div>
+                                <div className="text-xs font-bold text-slate-500 uppercase mb-1">Passage</div>
+                                <div className="text-sm italic text-slate-700 dark:text-slate-300">
+                                  "{trap.passage}"
+                                </div>
+                              </div>
+                              <div>
+                                <div className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase mb-1">Statement</div>
+                                <div className="text-sm text-blue-900 dark:text-blue-100">
+                                  "{trap.statement}"
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex items-center justify-between text-xs">
+                              <span className="text-rose-600 dark:text-rose-400 font-semibold">
+                                ⚠️ Missed: {trap.missedWord}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {mistake.rule && (
-                    <div className="p-3 bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 rounded">
-                      <div className="text-sm font-semibold text-blue-900 dark:text-blue-100">
-                        💡 Rule: {mistake.rule}
+                    {/* Fallback for Rule if not caught by Correct */}
+                    {mistake.rule && !mistake.correct && (
+                      <div className="p-3 bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 rounded">
+                        <div className="text-sm font-semibold text-blue-900 dark:text-blue-100">
+                          💡 Rule: {mistake.rule}
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </section>
-      )}
+                    )}
+
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
+        )
+      }
 
       {/* Warning Sign */}
-      {mc?.warningSign && (
-        <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 rounded-r-lg">
-          <h3 className="text-lg font-bold text-yellow-800 dark:text-yellow-200 mb-1">Warning</h3>
-          <p className="text-yellow-700 dark:text-yellow-300">{mc.warningSign}</p>
-        </div>
-      )}
+      {
+        mc?.warningSign && (
+          <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 rounded-r-lg">
+            <h3 className="text-lg font-bold text-yellow-800 dark:text-yellow-200 mb-1">Warning</h3>
+            <p className="text-yellow-700 dark:text-yellow-300">{mc.warningSign}</p>
+          </div>
+        )
+      }
 
       {/* Key Techniques */}
-      {mc?.keyTechniques && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-xl">Key Techniques</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid sm:grid-cols-2 gap-4">
-              {Object.entries(mc.keyTechniques).map(([k, v]: any) => (
-                <div key={`kt-${k}`} className="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
-                  <p className="text-xs font-bold text-slate-500 uppercase mb-1">{k}</p>
-                  <p className="font-medium text-slate-900 dark:text-slate-100">{String(v)}</p>
+      {
+        mc?.keyTechniques && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-xl">Key Techniques</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {Object.entries(mc.keyTechniques).map(([k, v]: any) => (
+                  <div key={`kt-${k}`} className="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                    <p className="text-xs font-bold text-slate-500 uppercase mb-1">{k}</p>
+                    <p className="font-medium text-slate-900 dark:text-slate-100">{String(v)}</p>
+                  </div>
+                ))}
+                <div className="p-3 bg-white/10 rounded-full">
+                  <Clock className="w-6 h-6 text-blue-400" />
                 </div>
-              ))}
-              <div className="p-3 bg-white/10 rounded-full">
-                <Clock className="w-6 h-6 text-blue-400" />
+                {theoryContent.timeManagement && (
+                  <div>
+                    <h3 className="font-bold text-lg">Time Management</h3>
+                    <p className="text-slate-300">
+                      {theoryContent.timeManagement.timePerQuestion} per question
+                    </p>
+                  </div>
+                )}
               </div>
-              {theoryContent.timeManagement && (
-                <div>
-                  <h3 className="font-bold text-lg">Time Management</h3>
-                  <p className="text-slate-300">
-                    {theoryContent.timeManagement.timePerQuestion} per question
+              {theoryContent.timeManagement?.tip && (
+                <div className="text-right max-w-xs hidden md:block">
+                  <p className="text-sm text-slate-400 italic">
+                    "{theoryContent.timeManagement.tip}"
                   </p>
                 </div>
               )}
-            </div>
-            {theoryContent.timeManagement?.tip && (
-              <div className="text-right max-w-xs hidden md:block">
-                <p className="text-sm text-slate-400 italic">
-                  "{theoryContent.timeManagement.tip}"
-                </p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      )}
-    </div>
+            </CardContent>
+          </Card>
+        )
+      }
+    </div >
   );
 }

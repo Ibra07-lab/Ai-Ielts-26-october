@@ -1,6 +1,461 @@
 {
   "questionTypes": [
     {
+      "id": "table-completion",
+      "name": "Table Completion",
+      "category": "basics",
+      "whatIsIt": {
+        "description": "You must fill gaps in a table using exact words from the passage. The table organizes information into rows and columns (comparisons, features, processes, etc.).",
+        "skillTested": "Scanning scattered information, understanding table structure, and recognizing relationships."
+      },
+      "recognition": {
+        "howToIdentify": [
+          "A table with rows and columns",
+          "Instructions like 'NO MORE THAN X WORDS'",
+          "Headings for columns and rows",
+          "Gaps appearing in different cells"
+        ]
+      },
+      "examples": [
+        {
+          "passage": "Traditional rice farming in Thailand relies on monsoon rains, but climate change has made rainfall unpredictable. To address this, the government introduced a drip irrigation subsidy program in 2018. Farmers who install drip systems receive financial support covering 60% of equipment costs.",
+          "questions": [
+            {
+              "id": 1,
+              "text": "Gap 1 in Table (Government Support for Thailand)",
+              "correctAnswer": "60%",
+              "explanation": "The passage states 'covering 60% of equipment costs'. Contains the exact answer."
+            }
+          ]
+        }
+      ],
+      "detailedTheory": {
+        "sections": [
+          {
+            "id": "section-1",
+            "title": "SECTION 1: WHAT IS TABLE COMPLETION?",
+            "subsections": [
+              {
+                "id": "overview",
+                "title": "1.1 Overview",
+                "content": "You must fill gaps in a table using **exact words from the passage**. The table organizes information into rows and columns (comparisons, features, processes, etc.).",
+                "list": [
+                  "Instruction: 'NO MORE THAN THREE WORDS'",
+                  "Instruction: 'NO MORE THAN TWO WORDS AND/OR A NUMBER'",
+                  "Instruction: 'ONE WORD ONLY'"
+                ],
+                "rules": [
+                  {
+                    "title": "Key Rules",
+                    "examples": [
+                      "Copy words exactly from the passage (no paraphrasing)",
+                      "Stay within the word limit",
+                      "Answers may be scattered across different paragraphs"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "skills",
+                "title": "1.2 What This Tests",
+                "list": [
+                  "Scanning scattered information",
+                  "Understanding table structure and logic",
+                  "Recognizing relationships between categories"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-2",
+            "title": "SECTION 2: HOW TABLES ARE ORGANIZED",
+            "subsections": [
+              {
+                "title": "Type 1: Comparison Table",
+                "description": "Compares different items across features.",
+                "tables": [
+                  {
+                    "headers": [
+                      "Item",
+                      "Advantage",
+                      "Disadvantage"
+                    ],
+                    "rows": [
+                      [
+                        "Solar Power",
+                        "Clean energy",
+                        "High initial cost"
+                      ],
+                      [
+                        "Wind Power",
+                        "(Gap 1)",
+                        "(Gap 2)"
+                      ]
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Type 2: Classification Table",
+                "description": "Groups items by type or category.",
+                "tables": [
+                  {
+                    "headers": [
+                      "Category",
+                      "Examples",
+                      "Characteristics"
+                    ],
+                    "rows": [
+                      [
+                        "Type A",
+                        "X, Y",
+                        "(Gap 1)"
+                      ],
+                      [
+                        "Type B",
+                        "(Gap 2)",
+                        "Fast, flexible"
+                      ]
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Type 3: Process/Sequence Table",
+                "description": "Shows steps or timeline.",
+                "tables": [
+                  {
+                    "headers": [
+                      "Stage",
+                      "Activity",
+                      "Duration"
+                    ],
+                    "rows": [
+                      [
+                        "Stage 1",
+                        "Planning",
+                        "(Gap 1)"
+                      ],
+                      [
+                        "Stage 2",
+                        "(Gap 2)",
+                        "6 weeks"
+                      ]
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Type 4: Features/Specifications",
+                "description": "Lists technical details or properties.",
+                "tables": [
+                  {
+                    "headers": [
+                      "Product",
+                      "Material",
+                      "Weight",
+                      "Price"
+                    ],
+                    "rows": [
+                      [
+                        "Product A",
+                        "Steel",
+                        "(Gap 1)",
+                        "$500"
+                      ],
+                      [
+                        "Product B",
+                        "(Gap 2)",
+                        "3 kg",
+                        "(Gap 3)"
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-3",
+            "title": "SECTION 3: STRATEGY (4 STEPS)",
+            "subsections": [
+              {
+                "title": "Step 1: Analyze the Table BEFORE Scanning (30 seconds)",
+                "content": "Ask yourself: What is being organized? What does each COLUMN represent? What does each ROW represent? What pattern do the completed cells show?",
+                "tables": [
+                  {
+                    "headers": [
+                      "Energy Source",
+                      "Main Benefit",
+                      "Main Problem"
+                    ],
+                    "rows": [
+                      [
+                        "Solar",
+                        "Renewable",
+                        "(Gap 1)"
+                      ],
+                      [
+                        "Wind",
+                        "(Gap 2)",
+                        "Inconsistent supply"
+                      ]
+                    ]
+                  }
+                ],
+                "analysis": [
+                  "Comparing energy sources",
+                  "Column 2 = benefits (positive things)",
+                  "Column 3 = problems (negative things)"
+                ]
+              },
+              {
+                "title": "Step 2: Use Completed Cells as \"GPS\"",
+                "content": "The filled cells tell you WHERE to scan in the passage.",
+                "example": {
+                  "passage": "If the table shows 'Singapore | Gap 1 | $15,000' → Find 'Singapore' in the passage usually. Look for '$15,000' nearby.",
+                  "instruction": "Work by TOPIC (row-by-row), NOT by gap number order."
+                },
+                "explanation": "❌ Wrong: Find Gap 1, then Gap 2 (jumping around). ✓ Right: Find Row 1 info, then Row 2 info."
+              },
+              {
+                "title": "Step 3: Match the Column Pattern",
+                "content": "Each column has a specific type of information. Your answer must match.",
+                "tables": [
+                  {
+                    "headers": [
+                      "Method",
+                      "Duration",
+                      "Success Rate"
+                    ],
+                    "rows": [
+                      [
+                        "Method A",
+                        "3 months",
+                        "75%"
+                      ],
+                      [
+                        "Method B",
+                        "(Gap)",
+                        "60%"
+                      ]
+                    ]
+                  }
+                ],
+                "rules": [
+                  {
+                    "title": "Logic Check",
+                    "examples": [
+                      "'Duration' column has TIME PERIODS",
+                      "Gap needs a time period (not a percentage)",
+                      "Scan for 'Method B' + time words"
+                    ]
+                  },
+                  {
+                    "title": "Grammar Pattern Check",
+                    "examples": [
+                      "All NOUNS → gap needs a NOUN",
+                      "All -ING VERBS → gap needs an -ING VERB",
+                      "All NUMBERS → gap needs a NUMBER"
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Step 4: Extract Exact Words",
+                "list": [
+                  "✓ Copy spelling and capitalization exactly",
+                  "✓ Use minimum words needed",
+                  "✓ If perfect answer exceeds limit, drop adjectives/articles"
+                ],
+                "example": {
+                  "passage": "The device uses advanced microprocessor technology",
+                  "question": "Limit: NO MORE THAN TWO WORDS. Gap: What technology?",
+                  "wrong": "advanced microprocessor technology (3 words)",
+                  "correct": "microprocessor technology (drop 'advanced')"
+                }
+              }
+            ]
+          },
+          {
+            "id": "section-4",
+            "title": "SECTION 4: DIFFICULT EXAMPLE WALKTHROUGH",
+            "subsections": [
+              {
+                "title": "Passage",
+                "passage": "Traditional rice farming in Thailand relies on monsoon rains, but climate change has made rainfall unpredictable, reducing yields by nearly 30% over the past decade. To address this, the government introduced a drip irrigation subsidy program in 2018. Farmers who install drip systems receive financial support covering 60% of equipment costs, though the remaining expenses—typically around 8,000 baht per hectare—remain a barrier for smallholders.\n\nIn contrast, Vietnam has focused on crop diversification, encouraging farmers to grow drought-resistant varieties alongside traditional rice. This approach requires minimal investment but demands training. The Ministry of Agriculture has trained over 15,000 farmers since 2019. Early results show improved resilience, though yields remain 15-20% lower than traditional methods during normal rainfall years."
+              },
+              {
+                "title": "The Task",
+                "content": "Complete the table. Choose NO MORE THAN THREE WORDS AND/OR A NUMBER.",
+                "tables": [
+                  {
+                    "headers": [
+                      "Country",
+                      "Solution",
+                      "Government Support",
+                      "Key Challenge"
+                    ],
+                    "rows": [
+                      [
+                        "Thailand",
+                        "Drip irrigation",
+                        "Covers (Gap 1) of equipment costs",
+                        "Remaining cost: (Gap 2) per hectare"
+                      ],
+                      [
+                        "Vietnam",
+                        "(Gap 3)",
+                        "Trained (Gap 4) farmers",
+                        "(Gap 5) during normal rainfall"
+                      ]
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Solution Breakdown",
+                "steps": [
+                  {
+                    "step": "Analyze",
+                    "title": "First Analysis",
+                    "actions": [
+                      "Comparing two countries",
+                      "Column 2 = solution",
+                      "Column 3 = support",
+                      "Column 4 = challenges",
+                      "Work Row by Row!"
+                    ]
+                  },
+                  {
+                    "step": "Gap 1",
+                    "title": "Thailand / Gov Support",
+                    "actions": [
+                      "Scan for 'Thailand' and 'equipment costs'",
+                      "Found: 'financial support covering 60% of equipment costs'",
+                      "Extract: '60%'",
+                      "Answer: 60%"
+                    ]
+                  },
+                  {
+                    "step": "Gap 2",
+                    "title": "Thailand / Challenge Cost",
+                    "actions": [
+                      "Scan for 'hectare' in Thailand section",
+                      "Found: 'expenses... around 8,000 baht per hectare'",
+                      "Extract: '8,000 baht'",
+                      "Answer: 8,000 baht"
+                    ]
+                  },
+                  {
+                    "step": "Gap 3",
+                    "title": "Vietnam / Solution",
+                    "actions": [
+                      "Scan for Vietnam + method",
+                      "Found: 'focused on crop diversification'",
+                      "Extract: 'crop diversification'",
+                      "Answer: crop diversification"
+                    ]
+                  },
+                  {
+                    "step": "Gap 4",
+                    "title": "Vietnam / Support (Farmers)",
+                    "actions": [
+                      "Scan for 'trained', 'farmers'",
+                      "Found: 'trained over 15,000 farmers'",
+                      "Extract: '15,000'",
+                      "Answer: 15,000"
+                    ]
+                  },
+                  {
+                    "step": "Gap 5",
+                    "title": "Vietnam / Challenge",
+                    "actions": [
+                      "Scan for problems/challenges/however/though",
+                      "Found: 'yields remain 15-20% lower'",
+                      "Need noun phrase? 'lower yields' is better than '15-20% lower'",
+                      "Answer: lower yields"
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Completed Table",
+                "tables": [
+                  {
+                    "headers": [
+                      "Country",
+                      "Solution",
+                      "Government Support",
+                      "Key Challenge"
+                    ],
+                    "rows": [
+                      [
+                        "Thailand",
+                        "Drip irrigation",
+                        "Covers **60%** of equipment costs",
+                        "Remaining cost: **8,000 baht** per hectare"
+                      ],
+                      [
+                        "Vietnam",
+                        "**crop diversification**",
+                        "Trained **15,000** farmers",
+                        "**lower yields** during normal rainfall"
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-5",
+            "title": "SECTION 5: QUICK STRATEGY & MISTAKES",
+            "subsections": [
+              {
+                "title": "Strategy Summary",
+                "rules": [
+                  {
+                    "title": "Step 1: Analyze",
+                    "description": "Spend 30 seconds asking: What is being compared? What does each column represent?"
+                  },
+                  {
+                    "title": "Step 2: 'GPS' Method",
+                    "description": "Use filled cells to find the location in the passage."
+                  },
+                  {
+                    "title": "Step 3: Column Pattern",
+                    "description": "Match the column type (e.g., if column is 'Benefits', your gap needs a benefit)."
+                  },
+                  {
+                    "title": "Step 4: Exact Words",
+                    "description": "Copy exactly (spelling/grammar) and stay within word limits."
+                  }
+                ]
+              },
+              {
+                "title": "Common Mistakes",
+                "rules": [
+                  {
+                    "title": "Gap Order Trap",
+                    "description": "Don't assume answer 2 comes after answer 1. Work row-by-row."
+                  },
+                  {
+                    "title": "Column Logic Error",
+                    "description": "Don't put a 'Material' in a 'Price' column."
+                  },
+                  {
+                    "title": "Word Limit",
+                    "description": "If limit is 2 words, 'advanced microprocessor' (2 words) is better than 'advanced microprocessor chip' (3 words)."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
       "id": "true-false-not-given",
       "name": "True/False/Not Given",
       "category": "factual-information",
@@ -16,35 +471,37 @@
           "Appears in nearly every IELTS Reading test"
         ]
       },
-      "example": {
-        "passage": "The honey bee population has declined by 30% over the past decade due to pesticide use and habitat loss. Scientists at Cambridge University have been studying this phenomenon since 2018. While some farmers have switched to organic methods, the majority still rely heavily on chemical pesticides. Research suggests that urban beekeeping programs could help stabilize bee populations in cities.",
-        "questions": [
-          {
-            "id": 1,
-            "text": "Honey bee numbers have fallen by 30% in the last ten years.",
-            "correctAnswer": "TRUE",
-            "explanation": "The passage directly states 'declined by 30% over the past decade.'"
-          },
-          {
-            "id": 2,
-            "text": "Cambridge University research began before 2018.",
-            "correctAnswer": "FALSE",
-            "explanation": "The text says 'since 2018,' meaning the research started in 2018, not before."
-          },
-          {
-            "id": 3,
-            "text": "Most farmers now use organic farming methods.",
-            "correctAnswer": "FALSE",
-            "explanation": "The passage states 'the majority still rely heavily on chemical pesticides,' contradicting the statement."
-          },
-          {
-            "id": 4,
-            "text": "Urban beekeeping can completely solve the bee population crisis.",
-            "correctAnswer": "NOT GIVEN",
-            "explanation": "The passage says it 'could help stabilize' but doesn't claim it will completely solve the crisis."
-          }
-        ]
-      },
+      "examples": [
+        {
+          "passage": "The honey bee population has declined by 30% over the past decade due to pesticide use and habitat loss. Scientists at Cambridge University have been studying this phenomenon since 2018. While some farmers have switched to organic methods, the majority still rely heavily on chemical pesticides. Research suggests that urban beekeeping programs could help stabilize bee populations in cities.",
+          "questions": [
+            {
+              "id": 1,
+              "text": "Honey bee numbers have fallen by 30% in the last ten years.",
+              "correctAnswer": "TRUE",
+              "explanation": "The passage directly states 'declined by 30% over the past decade.'"
+            },
+            {
+              "id": 2,
+              "text": "Cambridge University research began before 2018.",
+              "correctAnswer": "FALSE",
+              "explanation": "The text says 'since 2018,' meaning the research started in 2018, not before."
+            },
+            {
+              "id": 3,
+              "text": "Most farmers now use organic farming methods.",
+              "correctAnswer": "FALSE",
+              "explanation": "The passage states 'the majority still rely heavily on chemical pesticides,' contradicting the statement."
+            },
+            {
+              "id": 4,
+              "text": "Urban beekeeping can completely solve the bee population crisis.",
+              "correctAnswer": "NOT GIVEN",
+              "explanation": "The passage says it 'could help stabilize' but doesn't claim it will completely solve the crisis."
+            }
+          ]
+        }
+      ],
       "strategyTips": [
         {
           "step": 1,
@@ -1636,152 +2093,1987 @@
     },
     {
       "id": "gap-fill",
-      "name": "Gap Fill / Sentence Completion",
+      "name": "Sentence Completion / Gap Fill",
       "category": "detail-recognition",
-      "whatIsIt": {
-        "description": "These questions test your ability to find specific information and complete sentences with words from the passage. You must follow word limits (e.g., NO MORE THAN TWO WORDS).",
-        "skillTested": "Scanning for specific information and understanding context."
-      },
-      "example": {
-        "passage": "The Amazon rainforest produces approximately 20% of the world's oxygen and is home to over 390 billion individual trees. Scientists estimate that one in ten known species in the world lives in the Amazon ecosystem.",
-        "questions": [
+      "frequency": "High",
+      "detailedTheory": {
+        "sections": [
           {
-            "id": 1,
-            "text": "The Amazon rainforest generates about _____ of the planet's oxygen.",
-            "correctAnswer": "20%",
-            "explanation": "The passage states \"approximately 20% of the world's oxygen\""
+            "id": "section-1",
+            "title": "SECTION 1: WHAT IS SENTENCE COMPLETION?",
+            "subsections": [
+              {
+                "id": "overview",
+                "title": "1.1 Overview",
+                "content": "Sentence Completion (also called Gap Fill) requires you to complete sentences using words taken directly from the passage. You are given incomplete sentences with gaps, and you must fill each gap with the exact words from the text. The instructions will specify a word limit (usually 1, 2, or 3 words, and/or a number).",
+                "typicalInstructions": [
+                  "Complete the sentences below. Choose NO MORE THAN THREE WORDS from the passage for each answer.",
+                  "Complete the sentences using NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage.",
+                  "Complete each sentence with ONE WORD ONLY from the passage."
+                ],
+                "keyInsight": "This question type combines the scanning skills from Short Answer questions with the paraphrasing challenges from Matching Headings. You must find information that's expressed differently in the incomplete sentence."
+              },
+              {
+                "id": "what-it-tests",
+                "title": "1.2 What This Question Type Tests",
+                "list": [
+                  "Scanning: Quickly locating specific information in the passage.",
+                  "Paraphrase recognition: The sentence stem uses different words than the passage, but means the same thing.",
+                  "Grammar awareness: Your answer must fit the grammatical structure of the sentence.",
+                  "Word form recognition: Understanding whether you need a noun, verb, adjective, etc.",
+                  "Precise extraction: Selecting the exact words that complete the meaning.",
+                  "Following instructions: Adhering strictly to word limits."
+                ]
+              }
+            ]
           },
           {
-            "id": 2,
-            "text": "There are more than _____ trees in the Amazon.",
-            "correctAnswer": "390 billion",
-            "explanation": "The passage mentions \"over 390 billion individual trees\""
+            "id": "section-2",
+            "title": "SECTION 2: UNDERSTANDING THE TASK DYNAMICS",
+            "subsections": [
+              {
+                "id": "golden-rules",
+                "title": "2.1 The Golden Rules",
+                "rules": [
+                  {
+                    "title": "Rule 1: Copy Words Exactly from the Passage",
+                    "description": "You must use the exact words as they appear.",
+                    "examples": [
+                      "Do not change word forms (singular/plural, verb tenses)",
+                      "Do not use synonyms or paraphrase",
+                      "Do not add words that aren't in the passage"
+                    ],
+                    "example": {
+                      "passage": "The building was constructed using sustainable materials.",
+                      "question": "The construction utilized ___________.",
+                      "correct": "sustainable materials",
+                      "wrong": "eco-friendly materials (synonym, not from passage)"
+                    }
+                  },
+                  {
+                    "title": "Rule 2: Respect Word Limits",
+                    "description": "Follow the same word limit rules as Short Answer questions.",
+                    "example": {
+                      "instruction": "NO MORE THAN TWO WORDS",
+                      "passage": "The device operates at extremely high temperatures.",
+                      "question": "The device functions at ___________.",
+                      "correct": "high temperatures (2 words)",
+                      "wrong": "extremely high temperatures (3 words - exceeds limit)"
+                    }
+                  },
+                  {
+                    "title": "Rule 3: Grammar Must Be Correct",
+                    "description": "The completed sentence must be grammatically correct. Pay attention to articles, singular/plural, verb tense, and prepositions.",
+                    "example": {
+                      "passage": "...the impact of drought conditions on plant growth.",
+                      "question": "The researchers studied the impact of ___________ on plant growth.",
+                      "correct": "drought conditions (fits: 'impact of drought conditions')",
+                      "wrong": "drought condition (grammar error - should be plural to match passage)"
+                    }
+                  },
+                  {
+                    "title": "Rule 4: Maintain Original Meaning",
+                    "description": "Your completed sentence must mean the same thing as the information in the passage, even though different words are used in the sentence stem.",
+                    "example": {
+                      "passage": "Sales increased dramatically following the advertising campaign.",
+                      "question": "The advertising campaign resulted in a significant ___________ in sales.",
+                      "correct": "increase (maintains the meaning of 'increased dramatically')"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "types",
+                "title": "2.2 The Two Main Types",
+                "types": [
+                  {
+                    "title": "Type 1: Factual Completion",
+                    "description": "These sentences test your ability to find and extract specific information (names, dates, numbers, processes, causes, etc.).",
+                    "example": {
+                      "passage": "The research was funded by the National Science Foundation.",
+                      "question": "The ___________ provided funding for the research.",
+                      "answer": "National Science Foundation"
+                    }
+                  },
+                  {
+                    "title": "Type 2: Conceptual Completion",
+                    "description": "These sentences test understanding of relationships, causes, effects, purposes, or descriptions.",
+                    "example": {
+                      "passage": "Due to rising sea levels, coastal communities face increased flooding risks.",
+                      "question": "Coastal communities are at greater risk of flooding because of ___________.",
+                      "answer": "rising sea levels"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-3",
+            "title": "SECTION 3: THE KEY DISTINCTION — SENTENCE STEM vs. PASSAGE WORDING",
+            "subsections": [
+              {
+                "id": "paraphrasing",
+                "title": "3.1 Understanding Paraphrasing",
+                "content": "The incomplete sentence will almost NEVER use the exact same words as the passage. This is the main challenge.",
+                "example": {
+                  "passage": "The experiment demonstrated that regular exercise can reduce symptoms of anxiety.",
+                  "question": "The experiment showed that frequent physical activity can decrease feelings of ___________.",
+                  "answer": "anxiety",
+                  "analysis": "demonstrated → showed; regular exercise → frequent physical activity; reduce → decrease; symptoms of → feelings of"
+                }
+              },
+              {
+                "id": "paraphrase-patterns",
+                "title": "3.2 Common Paraphrase Patterns",
+                "paraphrasePatterns": [
+                  {
+                    "passage": "increased rapidly",
+                    "stem": "rose quickly",
+                    "type": "Synonym substitution"
+                  },
+                  {
+                    "passage": "due to climate change",
+                    "stem": "because of climate change",
+                    "type": "Structural paraphrase"
+                  },
+                  {
+                    "passage": "children under 12",
+                    "stem": "youngsters aged below 12",
+                    "type": "Word class change"
+                  },
+                  {
+                    "passage": "major advantage",
+                    "stem": "significant benefit",
+                    "type": "Synonym + synonym"
+                  },
+                  {
+                    "passage": "in order to reduce costs",
+                    "stem": "to cut expenses",
+                    "type": "Purpose paraphrase"
+                  },
+                  {
+                    "passage": "conducted the research",
+                    "stem": "carried out the study",
+                    "type": "Collocation change"
+                  }
+                ]
+              },
+              {
+                "id": "comparison",
+                "title": "3.3 Comparison Analysis",
+                "example": {
+                  "passage": "Deforestation in the Amazon has accelerated over the past decade, primarily driven by agricultural expansion and illegal logging operations.",
+                  "question": "The main causes of increased deforestation in the Amazon are the growth of farming and ___________.",
+                  "analysis": "accelerated... decade → increased deforestation; primarily driven by → main causes; agricultural expansion → growth of farming",
+                  "answer": "illegal logging operations"
+                }
+              }
+            ]
+          },
+          {
+            "id": "section-4",
+            "title": "SECTION 4: STRATEGY & TECHNIQUE",
+            "subsections": [
+              {
+                "id": "step-by-step",
+                "title": "4.1 Step-by-Step Approach",
+                "steps": [
+                  {
+                    "step": 1,
+                    "title": "Read the Instructions",
+                    "actions": [
+                      "Check the word limit",
+                      "Note if numbers are allowed",
+                      "Check limits for each set"
+                    ]
+                  },
+                  {
+                    "step": 2,
+                    "title": "Read All Incomplete Sentences First",
+                    "actions": [
+                      "Skim all sentences in the set",
+                      "Underline keywords",
+                      "Get an overview"
+                    ]
+                  },
+                  {
+                    "step": 3,
+                    "title": "Analyze the Gap",
+                    "actions": [
+                      "Determine word type needed (noun, verb, etc.)",
+                      "Check singular/plural",
+                      "Identify topic"
+                    ]
+                  },
+                  {
+                    "step": 4,
+                    "title": "Identify Keywords",
+                    "actions": [
+                      "Underline content words",
+                      "Think of synonyms"
+                    ]
+                  },
+                  {
+                    "step": 5,
+                    "title": "Scan the Passage",
+                    "actions": [
+                      "Follow passage order",
+                      "Scan for synonyms",
+                      "Find relevant section"
+                    ]
+                  },
+                  {
+                    "step": 6,
+                    "title": "Read Around the Answer",
+                    "actions": [
+                      "Read complete sentence",
+                      "Understand relationships"
+                    ]
+                  },
+                  {
+                    "step": 7,
+                    "title": "Extract the Answer",
+                    "actions": [
+                      "Select exact words",
+                      "Count words",
+                      "Check grammar"
+                    ]
+                  },
+                  {
+                    "step": 8,
+                    "title": "Verify",
+                    "actions": [
+                      "Read full sentence with answer",
+                      "Check meaning"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "time-management",
+                "title": "4.2 Time Management",
+                "recommendations": [
+                  {
+                    "count": "3 sentences",
+                    "time": "3-4 minutes"
+                  },
+                  {
+                    "count": "5 sentences",
+                    "time": "5-6 minutes"
+                  },
+                  {
+                    "count": "7 sentences",
+                    "time": "6-8 minutes"
+                  }
+                ],
+                "average": "60-75 seconds per sentence",
+                "rationale": "Takes longer than Short Answer because you must recognize paraphrases, not just scan for keywords."
+              },
+              {
+                "id": "grammar-clues",
+                "title": "4.3 Grammar Clues Strategy",
+                "grammarClues": {
+                  "beforeGap": [
+                    {
+                      "clue": "a / an / the",
+                      "needs": "Noun (singular or plural)",
+                      "example": "'The ___ was expensive.' → need a noun"
+                    },
+                    {
+                      "clue": "some / many / few",
+                      "needs": "Plural noun",
+                      "example": "'Many ___ were studied.' → need plural noun"
+                    },
+                    {
+                      "clue": "very / extremely / highly",
+                      "needs": "Adjective or adverb",
+                      "example": "'Extremely ___ temperatures' → need adjective"
+                    },
+                    {
+                      "clue": "to (infinitive)",
+                      "needs": "Base verb",
+                      "example": "'They decided to ___' → need verb"
+                    },
+                    {
+                      "clue": "Subject + auxiliary verb",
+                      "needs": "Verb (present/past participle) or adjective",
+                      "example": "'The device is ___' → verb-ing/verb-ed or adjective"
+                    },
+                    {
+                      "clue": "Preposition (in/on/at...)",
+                      "needs": "Noun or verb-ing",
+                      "example": "'by ___' → noun or gerund"
+                    }
+                  ],
+                  "afterGap": [
+                    {
+                      "clue": "Plural noun",
+                      "needs": "Adjective or number",
+                      "example": "'___ students attended' → number or adjective"
+                    },
+                    {
+                      "clue": "Singular noun",
+                      "needs": "Adjective, number, or article+noun",
+                      "example": "'___ research was conducted' → adjective"
+                    },
+                    {
+                      "clue": "Preposition",
+                      "needs": "Noun",
+                      "example": "'___ of energy' → noun"
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "signal-words",
+                "title": "4.4 Signal Words & Patterns",
+                "signalPatterns": [
+                  {
+                    "pattern": "The purpose of X is to ___",
+                    "lookFor": "in order to, to, aims to",
+                    "type": "Purpose/goal"
+                  },
+                  {
+                    "pattern": "X is caused by ___",
+                    "lookFor": "due to, because of, as a result of",
+                    "type": "Cause"
+                  },
+                  {
+                    "pattern": "X resulted in ___",
+                    "lookFor": "led to, caused, produced",
+                    "type": "Effect"
+                  },
+                  {
+                    "pattern": "The main ___ is X",
+                    "lookFor": "Superlatives, most important, primary",
+                    "type": "Importance"
+                  },
+                  {
+                    "pattern": "X is made from ___",
+                    "lookFor": "consists of, composed of, using",
+                    "type": "Composition"
+                  },
+                  {
+                    "pattern": "X occurs when ___",
+                    "lookFor": "if, during, after",
+                    "type": "Conditions/timing"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-5",
+            "title": "SECTION 5: EXAMPLE WALKTHROUGH",
+            "subsections": [
+              {
+                "id": "walkthrough",
+                "title": "Farming in Southeast Asia",
+                "passage": "Traditional farming methods in Southeast Asia have been transformed by technological innovations over the past two decades. The introduction of automated irrigation systems has enabled farmers to reduce water consumption by up to 40% while simultaneously increasing crop yields. These systems use sensors that monitor soil moisture levels and automatically adjust water flow based on real-time conditions. However, the high initial investment required—typically around $15,000 per hectare—has limited adoption primarily to large-scale commercial operations. Smaller family farms continue to rely on conventional techniques due to financial constraints.",
+                "examples": [
+                  {
+                    "questionNumber": 1,
+                    "question": "Technological advances have changed ___________ in Southeast Asia during the last twenty years.",
+                    "instruction": "NO MORE THAN THREE WORDS AND/OR A NUMBER",
+                    "stepByStep": [
+                      "Read instruction: NO MORE THAN THREE WORDS AND/OR A NUMBER",
+                      "Analyze gap: Noun (object of 'have changed')",
+                      "Topic: Something in Southeast Asia that technology changed",
+                      "Keywords: 'Technological advances' + 'Southeast Asia' + 'last twenty years'",
+                      "Think synonyms: 'Technological advances' = 'technological innovations'; 'changed' = 'transformed'; 'last twenty years' = 'past two decades'",
+                      "Scan passage: 'Traditional farming methods in Southeast Asia have been transformed by technological innovations...'",
+                      "Identify answer: 'traditional farming methods'",
+                      "Check limits: 3 words ✓",
+                      "Check grammar: 'have changed traditional farming methods' ✓"
+                    ],
+                    "answer": "traditional farming methods"
+                  },
+                  {
+                    "questionNumber": 2,
+                    "question": "Automated irrigation systems can decrease the amount of water used by as much as ___________.",
+                    "instruction": "NO MORE THAN THREE WORDS AND/OR A NUMBER",
+                    "stepByStep": [
+                      "Analyze gap: Number/percentage (indicated by 'as much as')",
+                      "Topic: Water reduction amount",
+                      "Keywords: 'Automated irrigation systems' + 'decrease' + 'water'",
+                      "Think synonyms: 'decrease the amount of water used' = 'reduce water consumption'",
+                      "Scan passage: 'enabled farmers to reduce water consumption by up to 40%'",
+                      "Identify answer: '40%'",
+                      "Check limits: 1 number ✓",
+                      "Check grammar: 'by as much as 40%' ✓"
+                    ],
+                    "answer": "40% (or: 40 percent)"
+                  },
+                  {
+                    "questionNumber": 3,
+                    "question": "The systems have sensors that check ___________ and control the water supply accordingly.",
+                    "instruction": "NO MORE THAN THREE WORDS AND/OR A NUMBER",
+                    "stepByStep": [
+                      "Analyze gap: Noun (object of 'check')",
+                      "Topic: What sensors monitor",
+                      "Keywords: 'sensors' + 'check' + 'control water supply'",
+                      "Think synonyms: 'check' = 'monitor'; 'control the water supply' = 'adjust water flow'",
+                      "Scan passage: 'use sensors that monitor soil moisture levels...'",
+                      "Identify answer: 'soil moisture levels'",
+                      "Check limits: 3 words ✓",
+                      "Check grammar: 'check soil moisture levels' ✓"
+                    ],
+                    "answer": "soil moisture levels"
+                  },
+                  {
+                    "questionNumber": 4,
+                    "question": "The cost of implementing the technology is approximately ___________ for each hectare.",
+                    "instruction": "NO MORE THAN THREE WORDS AND/OR A NUMBER",
+                    "stepByStep": [
+                      "Analyze gap: Number/amount (money)",
+                      "Topic: Implementation cost per hectare",
+                      "Keywords: 'cost' + 'technology' + 'hectare'",
+                      "Think synonyms: 'cost of implementing' = 'investment required'; 'approximately' = 'typically around'",
+                      "Scan passage: 'high initial investment required—typically around $15,000 per hectare'",
+                      "Identify answer: '$15,000'",
+                      "Check limits: 1 number ✓",
+                      "Check grammar: 'cost is approximately $15,000' ✓"
+                    ],
+                    "answer": "$15,000 (or: 15,000 dollars)"
+                  },
+                  {
+                    "questionNumber": 5,
+                    "question": "Small family farms still use traditional methods because of ___________.",
+                    "instruction": "NO MORE THAN THREE WORDS AND/OR A NUMBER",
+                    "stepByStep": [
+                      "Analyze gap: Noun (reason - follows 'because of')",
+                      "Topic: Why small farms don't adopt new technology",
+                      "Keywords: 'small family farms' + 'traditional methods' + 'because of'",
+                      "Think synonyms: 'because of' = 'due to'; 'traditional methods' = 'conventional techniques'",
+                      "Scan passage: 'Smaller family farms continue to rely on conventional techniques due to financial constraints'",
+                      "Identify answer: 'financial constraints'",
+                      "Check limits: 2 words ✓",
+                      "Check grammar: 'because of financial constraints' ✓"
+                    ],
+                    "answer": "financial constraints"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-6",
+            "title": "SECTION 6: COMMON MISTAKES & PITFALLS",
+            "subsections": [
+              {
+                "id": "mistakes",
+                "title": "The 10 Most Common Errors",
+                "mistakes": [
+                  {
+                    "id": 1,
+                    "title": "Mistake 1: Ignoring Grammar Clues",
+                    "trap": "You find the right topic area but choose words that don't fit grammatically.",
+                    "example": {
+                      "passage": "The research was conducted by leading scientists at Oxford University.",
+                      "question": "Oxford University's ___________ carried out the research.",
+                      "wrong": "leading scientists (redundant 'Oxford University's leading scientists')",
+                      "correct": "scientists"
+                    },
+                    "rule": "Read the ENTIRE sentence. Your answer must fit the grammatical structure perfectly."
+                  },
+                  {
+                    "id": 2,
+                    "title": "Mistake 2: Not Recognizing Paraphrases",
+                    "trap": "You search for the exact words from the sentence stem and can't find them.",
+                    "example": {
+                      "passage": "Rising temperatures have caused polar ice to melt at unprecedented rates.",
+                      "question": "The increase in global heat has resulted in the rapid melting of ___________.",
+                      "correct": "polar ice"
+                    },
+                    "rule": "The sentence stem WILL use different words. Think of synonyms before scanning."
+                  },
+                  {
+                    "id": 3,
+                    "title": "Mistake 3: Exceeding Word Limits",
+                    "trap": "You find a perfect phrase but it's too long.",
+                    "example": {
+                      "instruction": "NO MORE THAN TWO WORDS",
+                      "passage": "The device uses renewable solar energy to power operations.",
+                      "question": "The device is powered by ___________.",
+                      "wrong": "renewable solar energy (3 words)",
+                      "correct": "solar energy (2 words)"
+                    },
+                    "rule": "When the perfect answer is too long, keep only the essential words."
+                  },
+                  {
+                    "id": 4,
+                    "title": "Mistake 4: Changing Word Forms",
+                    "trap": "You change singular to plural, or vice versa, to make it 'sound better'.",
+                    "example": {
+                      "passage": "The study examined the effect of temperature change on coral.",
+                      "question": "The research investigated how ___________ affect coral.",
+                      "wrong": "temperature changes",
+                      "correct": "temperature change"
+                    },
+                    "rule": "Copy words EXACTLY. Don't change forms even if you think it sounds better."
+                  },
+                  {
+                    "id": 5,
+                    "title": "Mistake 5: Including Extra Words",
+                    "trap": "You include articles or prepositions that aren't needed.",
+                    "example": {
+                      "instruction": "NO MORE THAN TWO WORDS",
+                      "passage": "Participants were asked to complete daily exercise routines.",
+                      "question": "The participants had to do ___________ every day.",
+                      "wrong": "the daily exercise",
+                      "correct": "exercise routines (or: daily exercise)"
+                    },
+                    "rule": "Use minimum words. Don't add articles unless they're essential for grammar."
+                  },
+                  {
+                    "id": 6,
+                    "title": "Mistake 6: Answering from the Wrong Part of the Passage",
+                    "trap": "You find a word that fits grammatically but comes from a different section.",
+                    "rule": "Make sure your answer comes from the relevant section. Don't just grab a word that fits grammatically."
+                  },
+                  {
+                    "id": 7,
+                    "title": "Mistake 7: Not Reading the Full Sentence in the Passage",
+                    "trap": "You find a keyword and grab the nearest noun without reading the context.",
+                    "example": {
+                      "passage": "While some countries have strict regulations, enforcement remains weak in developing nations.",
+                      "question": "In developing nations, ___________ of regulations is insufficient.",
+                      "wrong": "countries (nearby word)",
+                      "correct": "enforcement"
+                    },
+                    "rule": "Read the complete sentence around your keyword. Understand the full meaning."
+                  },
+                  {
+                    "id": 8,
+                    "title": "Mistake 8: Using Pronouns Instead of Nouns",
+                    "trap": "The passage uses a pronoun (it, they, this) but you need the actual noun.",
+                    "example": {
+                      "passage": "Electric vehicles produce zero emissions. They also require less maintenance...",
+                      "question": "___________ need less maintenance compared to conventional vehicles.",
+                      "wrong": "they",
+                      "correct": "Electric vehicles"
+                    },
+                    "rule": "If the gap requires a noun, never use a pronoun. Find what the pronoun refers to."
+                  },
+                  {
+                    "id": 9,
+                    "title": "Mistake 9: Confusing Cause and Effect",
+                    "trap": "You mix up the cause with the result.",
+                    "example": {
+                      "passage": "Increased pollution has led to respiratory diseases...",
+                      "question": "Respiratory diseases are caused by ___________.",
+                      "correct": "increased pollution (the cause)"
+                    },
+                    "rule": "Pay attention to sentence structure. Is it asking for the cause or the effect?"
+                  },
+                  {
+                    "id": 10,
+                    "title": "Mistake 10: Leaving Gaps Unfilled",
+                    "trap": "You can't find the answer, so you leave it blank.",
+                    "rule": "Never leave any gap empty. Use scanning + grammar clues to make your best attempt."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-7",
+            "title": "SECTION 7: STRATEGY & TIPS SUMMARY",
+            "subsections": [
+              {
+                "id": "flowchart",
+                "title": "10-Step Strategy Flowchart",
+                "flowchart": [
+                  {
+                    "step": 1,
+                    "title": "Check Instructions",
+                    "actions": [
+                      "Note the word limit"
+                    ]
+                  },
+                  {
+                    "step": 2,
+                    "title": "Read All Sentences",
+                    "actions": [
+                      "Get an overview of topics"
+                    ]
+                  },
+                  {
+                    "step": 3,
+                    "title": "Analyze Each Gap",
+                    "actions": [
+                      "Word type?",
+                      "Singular/plural?",
+                      "Topic?"
+                    ]
+                  },
+                  {
+                    "step": 4,
+                    "title": "Identify Keywords",
+                    "actions": [
+                      "Underline content words"
+                    ]
+                  },
+                  {
+                    "step": 5,
+                    "title": "Think of Synonyms",
+                    "actions": [
+                      "What other words might be used?"
+                    ]
+                  },
+                  {
+                    "step": 6,
+                    "title": "Scan for Paraphrases",
+                    "actions": [
+                      "Look for synonyms"
+                    ]
+                  },
+                  {
+                    "step": 7,
+                    "title": "Read Context",
+                    "actions": [
+                      "Read full sentence in passage"
+                    ]
+                  },
+                  {
+                    "step": 8,
+                    "title": "Extract Exact Words",
+                    "actions": [
+                      "Copy precisely",
+                      "Count words"
+                    ]
+                  },
+                  {
+                    "step": 9,
+                    "title": "Grammar Check",
+                    "actions": [
+                      "Read completed sentence"
+                    ]
+                  },
+                  {
+                    "step": 10,
+                    "title": "Verify Meaning",
+                    "actions": [
+                      "Does it make sense?"
+                    ]
+                  }
+                ]
+              }
+            ]
           }
-        ]
-      },
-      "commonMistakes": [
-        {
-          "title": "Exceeding the word limit",
-          "description": "If it says NO MORE THAN TWO WORDS, you cannot write three words. You'll get zero marks even if the meaning is correct."
-        },
-        {
-          "title": "Changing the form of words",
-          "description": "Use the EXACT words from the passage. Don't change singular to plural or verb tenses."
-        },
-        {
-          "title": "Including unnecessary articles",
-          "description": "Don't write \"the 390 billion\" if the limit is two words. Write \"390 billion\" only."
-        },
-        {
-          "title": "Poor spelling",
-          "description": "Copy the spelling exactly from the passage. Misspelled answers receive no marks."
+        ],
+        "timeManagement": {
+          "timePerQuestion": "60-75 seconds per sentence",
+          "tip": "Gap fill takes longer than short answer due to heavy paraphrasing."
         }
-      ],
-      "strategyTips": [
-        {
-          "step": 1,
-          "title": "Read the instruction carefully",
-          "description": "Note the word limit (e.g., ONE WORD, TWO WORDS, THREE WORDS)"
-        },
-        {
-          "step": 2,
-          "title": "Identify keywords in the sentence",
-          "description": "Find words that will help you locate the answer in the passage"
-        },
-        {
-          "step": 3,
-          "title": "Scan for the relevant section",
-          "description": "Questions usually follow the order of the passage"
-        },
-        {
-          "step": 4,
-          "title": "Check grammar fits",
-          "description": "Your answer must make the sentence grammatically correct"
-        },
-        {
-          "step": 5,
-          "title": "Copy exactly and count words",
-          "description": "Use exact spelling and punctuation, verify word count"
-        }
-      ],
-      "timeManagement": {
-        "timePerQuestion": "~45 seconds to 1 minute per gap",
-        "tip": "These are usually quicker than other question types if you scan efficiently."
       }
     },
     {
       "id": "short-answer",
       "name": "Short Answer Questions",
       "category": "detail-recognition",
-      "whatIsIt": {
-        "description": "These questions require you to answer with specific information from the passage, following strict word limits. Answers are usually factual details like names, dates, or numbers.",
-        "skillTested": "Precise scanning and extracting factual information."
-      },
-      "example": {
-        "passage": "Marie Curie won the Nobel Prize in Physics in 1903 and the Nobel Prize in Chemistry in 1911, making her the first person to win Nobel Prizes in two different sciences. She conducted her groundbreaking research on radioactivity in Paris.",
-        "questions": [
+      "frequency": "Medium - appears in approximately 30-40% of IELTS Reading tests",
+      "detailedTheory": {
+        "sections": [
           {
-            "id": 1,
-            "text": "In which city did Marie Curie conduct her research? (NO MORE THAN ONE WORD)",
-            "correctAnswer": "Paris",
-            "explanation": "The passage states she conducted research \"in Paris\""
+            "id": "section-1",
+            "title": "SECTION 1: WHAT ARE SHORT ANSWER QUESTIONS?",
+            "subsections": [
+              {
+                "id": "overview",
+                "title": "1.1 Overview",
+                "content": "Short Answer Questions require you to answer questions using words taken directly from the passage. You must write your answers in the answer booklet, not choose from multiple options. The instructions will specify a word limit (usually 1, 2, or 3 words, and/or a number).",
+                "typicalInstructions": [
+                  "Answer the questions using NO MORE THAN THREE WORDS from the passage.",
+                  "Answer using NO MORE THAN TWO WORDS AND/OR A NUMBER.",
+                  "Answer using ONE WORD ONLY."
+                ],
+                "criticalRule": "You must copy words exactly as they appear in the passage. You cannot change the form, add words, or paraphrase."
+              },
+              {
+                "id": "skills-tested",
+                "title": "1.2 What This Question Type Tests",
+                "description": "Short Answer Questions assess several critical reading skills:",
+                "skills": [
+                  {
+                    "skill": "Scanning",
+                    "meaning": "Quickly locating specific information in the passage."
+                  },
+                  {
+                    "skill": "Precise word identification",
+                    "meaning": "Selecting the exact words that answer the question."
+                  },
+                  {
+                    "skill": "Understanding question words",
+                    "meaning": "Knowing what type of information is needed (Who? What? When? Where? Why? How?)."
+                  },
+                  {
+                    "skill": "Following instructions",
+                    "meaning": "Adhering strictly to word limits."
+                  },
+                  {
+                    "skill": "Grammar awareness",
+                    "meaning": "Ensuring your answer makes grammatical sense with the question."
+                  },
+                  {
+                    "skill": "Detail comprehension",
+                    "meaning": "Understanding specific facts, not general ideas."
+                  }
+                ],
+                "keyInsight": "This is one of the most straightforward IELTS question types IF you follow the rules. Most mistakes come from exceeding word limits or changing the passage words."
+              }
+            ]
           },
           {
-            "id": 2,
-            "text": "When did Curie win her first Nobel Prize? (NO MORE THAN ONE WORD)",
-            "correctAnswer": "1903",
-            "explanation": "The passage mentions \"Nobel Prize in Physics in 1903\""
+            "id": "section-2",
+            "title": "SECTION 2: UNDERSTANDING THE TASK DYNAMICS",
+            "subsections": [
+              {
+                "id": "golden-rules",
+                "title": "2.1 The Golden Rules",
+                "rules": [
+                  {
+                    "rule": "Rule 1: Copy Words Exactly",
+                    "description": "You must use the exact words from the passage. Do not: change singular to plural (or vice versa), change verb tenses, add articles (a, an, the) unless they're in the passage, paraphrase or use synonyms",
+                    "example": {
+                      "passage": "The research was funded by the European Space Agency.",
+                      "question": "Who funded the research?",
+                      "correct": "European Space Agency",
+                      "wrong": [
+                        "The ESA (abbreviation not in passage)",
+                        "Space agency in Europe (paraphrase)"
+                      ]
+                    }
+                  },
+                  {
+                    "rule": "Rule 2: Respect Word Limits",
+                    "description": "If the limit is 'NO MORE THAN THREE WORDS,' you can write: 1 word, 2 words, or 3 words. But NOT 4 or more words.",
+                    "example": {
+                      "instruction": "NO MORE THAN TWO WORDS",
+                      "passage": "The experiment took place in a secure underground laboratory.",
+                      "question": "Where did the experiment occur?",
+                      "correct": "underground laboratory (2 words)",
+                      "wrong": "secure underground laboratory (3 words - exceeds limit)"
+                    }
+                  },
+                  {
+                    "rule": "Rule 3: Hyphenated Words Count as One Word",
+                    "examples": [
+                      "well-established = 1 word",
+                      "twenty-first = 1 word",
+                      "state-of-the-art = 1 word"
+                    ]
+                  },
+                  {
+                    "rule": "Rule 4: Numbers and Words",
+                    "description": "When instructions say 'AND/OR A NUMBER,' you can include numbers.",
+                    "examples": [
+                      "3 months = counts as 2 words (number + word)",
+                      "2015 = counts as 1 word (or 1 number)",
+                      "$50,000 = counts as 1 number"
+                    ]
+                  },
+                  {
+                    "rule": "Rule 5: Grammatical Accuracy",
+                    "description": "Your answer must make grammatical sense when combined with the question.",
+                    "example": {
+                      "question": "What did researchers discover?",
+                      "passage": "Researchers discovered that bees can recognize human faces.",
+                      "correct": "bees can recognize (or: recognize human faces)",
+                      "wrong": "that bees (grammatically incomplete)"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "question-types",
+                "title": "2.2 Types of Short Answer Questions",
+                "types": [
+                  {
+                    "type": "Type 1: Factual Questions (Who/What/When/Where)",
+                    "description": "These ask for specific concrete information.",
+                    "examples": [
+                      "What type of energy does the plant use?",
+                      "When was the building constructed?",
+                      "Where did the study take place?"
+                    ]
+                  },
+                  {
+                    "type": "Type 2: Method/Process Questions (How)",
+                    "description": "These ask about methods, processes, or ways something is done.",
+                    "examples": [
+                      "How did researchers collect the data?",
+                      "How are the materials transported?"
+                    ]
+                  },
+                  {
+                    "type": "Type 3: Reason/Purpose Questions (Why)",
+                    "description": "These ask for causes, reasons, or purposes.",
+                    "examples": [
+                      "Why did the population decline?",
+                      "Why was the project delayed?"
+                    ]
+                  },
+                  {
+                    "type": "Type 4: Quantity/Measurement Questions (How much/many/long)",
+                    "description": "These ask for numbers, amounts, or durations.",
+                    "examples": [
+                      "How many participants were involved?",
+                      "How long did the experiment last?"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-3",
+            "title": "SECTION 3: THE KEY DISTINCTION — DIRECT vs. INDIRECT ANSWERS",
+            "subsections": [
+              {
+                "id": "direct-answers",
+                "title": "3.1 Direct Answer Locations",
+                "description": "Most short answer questions have direct answers—the information appears in a clear, straightforward sentence.",
+                "example": {
+                  "passage": "The conference will be held in Singapore in October 2024.",
+                  "question": "Where will the conference take place?",
+                  "answer": "Singapore",
+                  "note": "Direct - clearly stated"
+                }
+              },
+              {
+                "id": "indirect-answers",
+                "title": "3.2 Indirect Answer Locations",
+                "description": "Sometimes the answer is indirect—you must understand the context or find the information in a less obvious location.",
+                "example": {
+                  "passage": "Originally scheduled for March, the launch was postponed until June due to technical issues.",
+                  "question": "When did the launch actually occur?",
+                  "answer": "June",
+                  "note": "Indirect - you must understand 'postponed until' means the actual date"
+                }
+              },
+              {
+                "id": "comparison",
+                "title": "3.3 Comparison: Direct vs. Indirect",
+                "description": "Understanding the difference between direct and indirect answer locations:",
+                "comparisonTable": [
+                  {
+                    "aspect": "Location",
+                    "direct": "The answer immediately follows the question keyword",
+                    "indirect": "You must read surrounding sentences for context"
+                  },
+                  {
+                    "aspect": "Example",
+                    "direct": "The cost was $2 million.",
+                    "indirect": "Initially budgeted at $1 million, expenses eventually reached $2 million."
+                  },
+                  {
+                    "aspect": "Difficulty",
+                    "direct": "Easy - scan and find",
+                    "indirect": "Medium - requires comprehension"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-4",
+            "title": "SECTION 4: STRATEGY & TECHNIQUE",
+            "subsections": [
+              {
+                "id": "step-by-step",
+                "title": "4.1 Step-by-Step Approach",
+                "steps": [
+                  {
+                    "step": 1,
+                    "title": "Read the Instructions",
+                    "actions": [
+                      "Check the word limit carefully",
+                      "Note if numbers are allowed (AND/OR A NUMBER)",
+                      "Never skip this step—different questions may have different limits"
+                    ]
+                  },
+                  {
+                    "step": 2,
+                    "title": "Read the Question Carefully",
+                    "actions": [
+                      "Identify the question word: Who? What? When? Where? Why? How?",
+                      "Underline keywords (names, dates, specific nouns)",
+                      "Determine what type of information you need (person, place, time, number, reason)"
+                    ]
+                  },
+                  {
+                    "step": 3,
+                    "title": "Predict the Answer Type",
+                    "description": "Before scanning, know what you're looking for:",
+                    "predictions": [
+                      "Who? → Look for a name or job title",
+                      "When? → Look for a date or time expression",
+                      "Where? → Look for a location",
+                      "How many? → Look for a number",
+                      "Why? → Look for 'because,' 'due to,' 'as a result of'"
+                    ]
+                  },
+                  {
+                    "step": 4,
+                    "title": "Scan for Keywords",
+                    "actions": [
+                      "Questions usually follow passage order",
+                      "Scan for the keywords you underlined",
+                      "Look for synonyms/paraphrases of those keywords"
+                    ]
+                  },
+                  {
+                    "step": 5,
+                    "title": "Read Around the Answer",
+                    "actions": [
+                      "Don't just grab the first word you see",
+                      "Read the complete sentence (and the sentence before/after if needed)",
+                      "Ensure you understand the context"
+                    ]
+                  },
+                  {
+                    "step": 6,
+                    "title": "Extract the Exact Words",
+                    "actions": [
+                      "Select the minimum number of words that answer the question",
+                      "Stay within the word limit",
+                      "Copy spelling and capitalization exactly"
+                    ]
+                  },
+                  {
+                    "step": 7,
+                    "title": "Check Grammar",
+                    "actions": [
+                      "Read your answer with the question",
+                      "Does it make grammatical sense?",
+                      "Is it a complete answer to what was asked?"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "time-management",
+                "title": "4.2 Time Management",
+                "recommendations": [
+                  {
+                    "questionCount": "3 questions",
+                    "recommendedTime": "2-3 minutes"
+                  },
+                  {
+                    "questionCount": "5 questions",
+                    "recommendedTime": "3-5 minutes"
+                  },
+                  {
+                    "questionCount": "7+ questions",
+                    "recommendedTime": "5-7 minutes"
+                  }
+                ],
+                "average": "30-40 seconds per question",
+                "rationale": "You don't need to read the whole passage. You scan for specific information and extract it. This is one of the quickest question types if done correctly."
+              },
+              {
+                "id": "signal-words",
+                "title": "4.3 Signal Words & Question Word Strategy",
+                "description": "Understanding Question Words:",
+                "questionWords": [
+                  {
+                    "questionWord": "WHO",
+                    "answerType": "Person, organization, job title",
+                    "signalWords": "Names, roles, 'researcher,' 'team,' 'expert'",
+                    "example": "Who conducted the study? → 'Dr. Smith'"
+                  },
+                  {
+                    "questionWord": "WHAT",
+                    "answerType": "Thing, concept, type, action",
+                    "signalWords": "Nouns, specific terms",
+                    "example": "What type of fuel? → 'hydrogen'"
+                  },
+                  {
+                    "questionWord": "WHEN",
+                    "answerType": "Time, date, period",
+                    "signalWords": "Years, months, 'during,' 'in,' 'since'",
+                    "example": "When was it built? → '1987'"
+                  },
+                  {
+                    "questionWord": "WHERE",
+                    "answerType": "Place, location",
+                    "signalWords": "Countries, cities, 'in,' 'at'",
+                    "example": "Where did it occur? → 'Pacific Ocean'"
+                  },
+                  {
+                    "questionWord": "WHY",
+                    "answerType": "Reason, cause, purpose",
+                    "signalWords": "'because,' 'due to,' 'in order to,' 'as a result of'",
+                    "example": "Why did prices rise? → 'increased demand'"
+                  },
+                  {
+                    "questionWord": "HOW (method)",
+                    "answerType": "Process, method, manner",
+                    "signalWords": "'by,' 'through,' 'using,' 'via'",
+                    "example": "How is it produced? → 'fermentation'"
+                  },
+                  {
+                    "questionWord": "HOW MANY/MUCH",
+                    "answerType": "Quantity, number, amount",
+                    "signalWords": "Numbers, percentages, amounts",
+                    "example": "How many people? → '500'"
+                  },
+                  {
+                    "questionWord": "HOW LONG",
+                    "answerType": "Duration, time period",
+                    "signalWords": "'for,' time periods, 'over,' 'during'",
+                    "example": "How long did it last? → 'three years'"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-5",
+            "title": "SECTION 5: EXAMPLE WALKTHROUGH",
+            "subsections": [
+              {
+                "id": "walkthrough",
+                "title": "Amazon Rainforest Example",
+                "passage": "The Amazon rainforest, often referred to as the 'lungs of the Earth,' covers approximately 5.5 million square kilometers across nine countries in South America. The forest is home to an estimated 390 billion individual trees representing over 16,000 species. Deforestation has been a growing concern, with approximately 17% of the forest lost over the past 50 years, primarily due to agricultural expansion and logging. Conservation efforts, led by organizations such as the World Wildlife Fund, have focused on establishing protected areas and promoting sustainable land use practices.",
+                "examples": [
+                  {
+                    "questionNumber": 1,
+                    "question": "How many countries does the Amazon rainforest cover?",
+                    "instruction": "NO MORE THAN ONE WORD AND/OR A NUMBER",
+                    "stepByStep": [
+                      "Question word: 'How many' → I need a number",
+                      "Keywords: 'countries,' 'Amazon rainforest,' 'cover'",
+                      "Scan: Find 'Amazon rainforest' in the passage",
+                      "Locate: 'covers approximately 5.5 million square kilometers across nine countries'",
+                      "Extract: 'nine' (or '9')",
+                      "Check word limit: 1 word/number ✓",
+                      "Check grammar: 'How many countries? Nine.' ✓"
+                    ],
+                    "answer": "nine (or: 9)"
+                  },
+                  {
+                    "questionNumber": 2,
+                    "question": "What is the main cause of deforestation in the Amazon?",
+                    "instruction": "NO MORE THAN TWO WORDS",
+                    "stepByStep": [
+                      "Question word: 'What' → I need a thing/concept",
+                      "Keywords: 'main cause,' 'deforestation'",
+                      "Scan: Find 'deforestation' in the passage",
+                      "Locate: 'primarily due to agricultural expansion and logging'",
+                      "Extract: 'agricultural expansion' (2 words)",
+                      "Note: 'logging' is also mentioned, but 'primarily due to' suggests agricultural expansion is the main cause",
+                      "Check word limit: 2 words ✓",
+                      "Check grammar: 'What is the main cause? Agricultural expansion.' ✓"
+                    ],
+                    "answer": "agricultural expansion",
+                    "commonError": "Writing 'agricultural expansion and logging' (3 words - exceeds limit)"
+                  },
+                  {
+                    "questionNumber": 3,
+                    "question": "Which organization is mentioned as leading conservation efforts?",
+                    "instruction": "NO MORE THAN THREE WORDS",
+                    "stepByStep": [
+                      "Question word: 'Which' → I need a specific name",
+                      "Keywords: 'organization,' 'conservation efforts'",
+                      "Scan: Find 'conservation' in the passage",
+                      "Locate: 'led by organizations such as the World Wildlife Fund'",
+                      "Extract: 'World Wildlife Fund' (3 words)",
+                      "Check word limit: 3 words ✓",
+                      "Check grammar: 'Which organization? World Wildlife Fund.' ✓"
+                    ],
+                    "answer": "World Wildlife Fund"
+                  },
+                  {
+                    "questionNumber": 4,
+                    "question": "How much of the forest has been lost?",
+                    "instruction": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+                    "stepByStep": [
+                      "Question word: 'How much' → I need a quantity/percentage",
+                      "Keywords: 'forest,' 'lost'",
+                      "Scan: Find 'lost' in the passage",
+                      "Locate: 'approximately 17% of the forest lost'",
+                      "Extract: '17%' (1 number/word)",
+                      "Check word limit: 2 words/number ✓",
+                      "Check grammar: 'How much lost? 17%.' ✓"
+                    ],
+                    "answer": "17% (or: 17 percent)"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-6",
+            "title": "COMMON MISTAKES & PITFALLS",
+            "subsections": [
+              {
+                "id": "mistakes",
+                "title": "The 10 Most Common Errors Students Make",
+                "mistakes": [
+                  {
+                    "id": 1,
+                    "title": "Mistake 1: Exceeding the Word Limit",
+                    "trap": "You find the perfect answer, but it's 4 words and the limit is 3.",
+                    "example": {
+                      "passage": "The device was invented by renowned physicist Dr. Albert Chen.",
+                      "question": "Who invented the device?",
+                      "instruction": "NO MORE THAN TWO WORDS",
+                      "wrong": "Dr. Albert Chen (3 words - exceeds limit)",
+                      "correct": "Albert Chen (2 words) or if that doesn't make sense contextually: Dr. Chen (2 words)"
+                    },
+                    "rule": "When the perfect answer exceeds the limit, reduce to the essential information. Remove titles (Dr., Professor), articles (a, an, the), or adjectives if possible."
+                  },
+                  {
+                    "id": 2,
+                    "title": "Mistake 2: Changing the Words from the Passage",
+                    "trap": "You paraphrase or use synonyms instead of copying exactly.",
+                    "example": {
+                      "passage": "The study was conducted over a twelve-month period.",
+                      "question": "How long did the study last?",
+                      "wrong": [
+                        "one year (paraphrase)",
+                        "12 months (changed 'twelve' spelling)"
+                      ],
+                      "correct": "twelve-month period (exactly as written) or: twelve months"
+                    },
+                    "rule": "Copy words EXACTLY. Don't convert numbers between words and digits unless both forms appear in the passage."
+                  },
+                  {
+                    "id": 3,
+                    "title": "Mistake 3: Adding Extra Words",
+                    "trap": "You add articles (a, an, the) or other words that aren't in the passage.",
+                    "example": {
+                      "passage": "The materials were transported by rail.",
+                      "question": "How were materials transported?",
+                      "wrong": [
+                        "by rail (adding 'by' - not asked for, and 'rail' alone answers the question)",
+                        "the rail (adding 'the')"
+                      ],
+                      "correct": "rail"
+                    },
+                    "rule": "Use the minimum words necessary. If the question is 'How?' and the passage says 'by rail,' your answer is just 'rail' (unless the question specifically asks 'how were they transported' in which case 'by rail' might be needed for grammar).",
+                    "betterExample": {
+                      "question": "What method was used?",
+                      "passage": "transported by rail",
+                      "answer": "rail"
+                    }
+                  },
+                  {
+                    "id": 4,
+                    "title": "Mistake 4: Ignoring Grammar",
+                    "trap": "Your answer doesn't make grammatical sense with the question.",
+                    "example": {
+                      "passage": "Researchers analyzed data from 500 participants.",
+                      "question": "What did researchers do?",
+                      "wrong": "data (grammatically incomplete: 'What did researchers do? Data.' makes no sense)",
+                      "correct": "analyzed data (grammatically complete: 'What did researchers do? Analyzed data.')"
+                    },
+                    "rule": "Always read your answer WITH the question. It must form a grammatically correct sentence or phrase."
+                  },
+                  {
+                    "id": 5,
+                    "title": "Mistake 5: Copying Surrounding Words",
+                    "trap": "You copy words that are near the answer but don't actually answer the question.",
+                    "example": {
+                      "passage": "Due to severe weather conditions, the flight was delayed for three hours.",
+                      "question": "Why was the flight delayed?",
+                      "instruction": "NO MORE THAN THREE WORDS",
+                      "wrong": [
+                        "the flight was (these words are in the sentence but don't answer WHY)",
+                        "delayed for three (doesn't answer WHY)"
+                      ],
+                      "correct": "severe weather conditions (this is the reason - follows 'due to')"
+                    },
+                    "rule": "Understand the question type. For 'Why?' questions, look for cause/reason signal words (because, due to, as a result of)."
+                  },
+                  {
+                    "id": 6,
+                    "title": "Mistake 6: Misspelling or Changing Capitalization",
+                    "trap": "You misspell the word or change capital letters.",
+                    "example": {
+                      "passage": "The conference took place in Copenhagen.",
+                      "question": "Where was the conference held?",
+                      "wrong": [
+                        "copenhagen (incorrect - capital C is needed)",
+                        "Copenhagan (misspelling)"
+                      ],
+                      "correct": "Copenhagen (exactly as written)"
+                    },
+                    "rule": "Copy spelling and capitalization EXACTLY. If it's capitalized in the passage, capitalize it in your answer."
+                  },
+                  {
+                    "id": 7,
+                    "title": "Mistake 7: Not Reading the Full Context",
+                    "trap": "You grab the first word that matches a keyword without reading the complete sentence.",
+                    "example": {
+                      "passage": "While some experts recommend daily exercise, Dr. Martinez suggests that three times per week is sufficient for most people.",
+                      "question": "Who believes exercising three times weekly is enough?",
+                      "wrong": "some experts (you saw 'experts recommend' and stopped reading)",
+                      "correct": "Dr. Martinez (the sentence structure shows Dr. Martinez is the one with this specific opinion)"
+                    },
+                    "rule": "Always read the complete sentence and understand the context. Don't grab the first noun you see."
+                  },
+                  {
+                    "id": 8,
+                    "title": "Mistake 8: Including Question Words in Your Answer",
+                    "trap": "You include words from the question in your answer unnecessarily.",
+                    "example": {
+                      "passage": "The population increased by 15% over the decade.",
+                      "question": "By how much did the population increase?",
+                      "wrong": [
+                        "increased by 15% (repeating question words + exceeding word limit)",
+                        "population increased 15% (repeating question word)"
+                      ],
+                      "correct": "15%"
+                    },
+                    "rule": "Your answer should only contain the NEW information requested, not repeat the question words."
+                  },
+                  {
+                    "id": 9,
+                    "title": "Mistake 9: Confusing Hyphenated Words and Word Count",
+                    "trap": "You miscalculate how many words a hyphenated term counts as.",
+                    "example": {
+                      "instruction": "NO MORE THAN TWO WORDS",
+                      "passage": "The system uses state-of-the-art technology.",
+                      "question": "What type of technology is used?",
+                      "wrong": "state of the art technology (5 words - way over limit, and hyphens removed)",
+                      "correct": "state-of-the-art technology (2 words: 'state-of-the-art' = 1 hyphenated word, 'technology' = 1 word)"
+                    },
+                    "rule": "Hyphenated words = ONE word. Don't remove hyphens."
+                  },
+                  {
+                    "id": 10,
+                    "title": "Mistake 10: Leaving the Answer Blank",
+                    "trap": "You can't find the answer, so you leave it blank.",
+                    "correct": "Always write something. If you're unsure: Make your best guess using words from the relevant section, Ensure you stay within the word limit, Ensure it makes grammatical sense",
+                    "why": "Blank = 0 marks. A guess = possible mark. IELTS doesn't deduct points for wrong answers.",
+                    "rule": "Never leave any answer blank. Scan the passage for keywords and make an educated guess."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-7",
+            "title": "STRATEGY & TIPS SUMMARY",
+            "subsections": [
+              {
+                "id": "flowchart",
+                "title": "8-Step Strategy Flowchart",
+                "flowchart": [
+                  {
+                    "step": 1,
+                    "title": "Check Instructions",
+                    "description": "Note the word limit (1, 2, 3 words? AND/OR A NUMBER?)"
+                  },
+                  {
+                    "step": 2,
+                    "title": "Analyze the Question",
+                    "actions": [
+                      "What type? (Who/What/When/Where/Why/How)",
+                      "What information type needed? (name, date, number, reason, method)",
+                      "Underline keywords"
+                    ]
+                  },
+                  {
+                    "step": 3,
+                    "title": "Predict Answer Type",
+                    "description": "Before scanning, know what you're looking for (person? place? number?)"
+                  },
+                  {
+                    "step": 4,
+                    "title": "Scan for Keywords",
+                    "actions": [
+                      "Questions follow passage order",
+                      "Look for exact keywords or synonyms",
+                      "Find the relevant sentence(s)"
+                    ]
+                  },
+                  {
+                    "step": 5,
+                    "title": "Read Context",
+                    "description": "Don't grab the first word you see. Read the full sentence."
+                  },
+                  {
+                    "step": 6,
+                    "title": "Extract Exact Words",
+                    "actions": [
+                      "Minimum words needed",
+                      "Stay within limit",
+                      "Copy exactly (spelling, capitals)"
+                    ]
+                  },
+                  {
+                    "step": 7,
+                    "title": "Grammar Check",
+                    "description": "Read your answer with the question. Does it make sense?"
+                  },
+                  {
+                    "step": 8,
+                    "title": "Move On",
+                    "description": "Don't spend more than 40 seconds per question."
+                  }
+                ]
+              }
+            ]
           }
+        ],
+        "timeManagement": {
+          "timePerQuestion": "30-40 seconds average",
+          "tip": "Short answer questions are one of the quickest question types when done correctly."
+        }
+      }
+    },
+    {
+      "id": "yes-no-not-given",
+      "name": "Yes/No/Not Given",
+      "category": "basics",
+      "whatIsIt": {
+        "description": "Yes/No/Not Given (Y/N/NG) is similar to True/False/Not Given, but with one critical difference: it tests the writer's opinions, views, claims, or beliefs, NOT factual information. You are given a series of statements and must decide whether each one agrees with, contradicts, or is not mentioned regarding the writer's opinion in the passage.",
+        "skillTested": "Opinion identification, distinguishing claims from facts, understanding argumentation, and recognizing evaluative language. Key Insight: This question type does NOT test facts or your opinion. It ONLY tests what the WRITER thinks."
+      },
+      "recognition": {
+        "howToIdentify": [
+          "Instructions contain 'YES/NO/NOT GIVEN'",
+          "Questions ask about the writer's claims, views, or opinions",
+          "Passage contains argumentative or discursive text"
         ]
       },
-      "commonMistakes": [
+      "examples": [
         {
-          "title": "Writing complete sentences",
-          "description": "Short answers don't need full sentences. Just write the specific word(s) requested."
-        },
-        {
-          "title": "Ignoring word limits",
-          "description": "Stick to the word limit exactly. \"NO MORE THAN TWO WORDS\" means 1 or 2 words only."
-        },
-        {
-          "title": "Not using words from the passage",
-          "description": "Your answer must come directly from the passage, not your own knowledge."
-        },
-        {
-          "title": "Including extra information",
-          "description": "Only answer what is asked. Don't add extra details."
+          "passage": "Remote work policies have been implemented far too hastily, without adequate consideration of their long-term social consequences. While productivity may remain stable, the erosion of workplace relationships is, in my view, a serious concern that organizations have underestimated.",
+          "questions": [
+            {
+              "id": 1,
+              "text": "The writer believes that companies have not given enough thought to the social impact of remote work.",
+              "correctAnswer": "YES",
+              "explanation": "The writer states 'implemented far too hastily, without adequate consideration' and mentions 'social consequences' as 'a serious concern'. This clearly matches the statement."
+            }
+          ]
         }
       ],
       "strategyTips": [
         {
           "step": 1,
-          "title": "Identify the question word",
-          "description": "What, where, when, who, how many - tells you what type of answer to find"
+          "title": "Read the Statement Carefully",
+          "description": "Identify what OPINION or CLAIM is being tested. Note whose view it asks about (usually 'the writer'). Underline key opinion words."
         },
         {
           "step": 2,
-          "title": "Note the word limit",
-          "description": "Check if it's one word, two words, or three words maximum"
+          "title": "Identify Opinion Language",
+          "description": "Look for opinion markers (I believe, in my view), evaluative language (unfortunate, essential), and modal verbs (should, must)."
         },
         {
           "step": 3,
-          "title": "Scan for keywords",
-          "description": "Find the relevant section quickly using key terms from the question"
+          "title": "Locate the Relevant Section",
+          "description": "Statements usually follow passage order. Scan for keywords or synonyms."
         },
         {
           "step": 4,
-          "title": "Extract the precise answer",
-          "description": "Copy the answer exactly as it appears, don't paraphrase"
+          "title": "Determine: Fact or Opinion?",
+          "description": "Check if the text is reporting facts ('Studies show...') or expressing views ('I believe...'). Only the writer's views count."
         },
         {
           "step": 5,
-          "title": "Verify grammar and spelling",
-          "description": "Make sure your answer is grammatically correct and spelled correctly"
+          "title": "Compare the Writer's View",
+          "description": "Does it MATCH (YES), CONTRADICT (NO), or is it UNCLEAR/ABSENT (NOT GIVEN)?"
         }
       ],
-      "timeManagement": {
-        "timePerQuestion": "~45 seconds per question",
-        "tip": "Short answer questions should be quick. They test scanning ability, not reading comprehension."
+      "commonMistakes": [
+        {
+          "title": "Confusing Facts with Opinions",
+          "description": "If the passage says 'Research shows X', that is a FACT, not the writer's opinion. The answer is usually NOT GIVEN unless the writer explicitly agrees or disagrees."
+        },
+        {
+          "title": "Confusing Other People's Views",
+          "description": "'Experts argue...' or 'Critics claim...' represents OTHER people's views, not the writer's. Unless the writer adopts these views, they are not their opinion."
+        },
+        {
+          "title": "Using Your Own Opinion",
+          "description": "Your own knowledge or opinion is irrelevant. Only the writer's stated opinion matters."
+        },
+        {
+          "title": "Confusing NO with NOT GIVEN",
+          "description": "NO means the writer explicitly contradicts the statement. NOT GIVEN means the writer has not expressed an opinion on that specific point."
+        }
+      ],
+      "detailedTheory": {
+        "sections": [
+          {
+            "id": "section-1",
+            "title": "SECTION 1: WHAT IS YES/NO/NOT GIVEN?",
+            "subsections": [
+              {
+                "id": "overview",
+                "title": "1.1 Overview",
+                "content": "Yes/No/Not Given (Y/N/NG) is similar to True/False/Not Given, but with one critical difference: it tests the writer's opinions, views, claims, or beliefs, NOT factual information.",
+                "answerMeanings": [
+                  {
+                    "answer": "YES",
+                    "meaning": "The statement agrees with the writer's views or claims"
+                  },
+                  {
+                    "answer": "NO",
+                    "meaning": "The statement contradicts the writer's views or claims"
+                  },
+                  {
+                    "answer": "NOT GIVEN",
+                    "meaning": "The writer's opinion on this is not stated or is unclear"
+                  }
+                ]
+              },
+              {
+                "id": "skills",
+                "title": "1.2 What This Question Type Tests",
+                "list": [
+                  "Opinion identification: Recognizing when the writer is expressing a view vs. stating a fact",
+                  "Distinguishing claims from facts: Knowing what the writer believes vs. what they report",
+                  "Understanding argumentation: Following the writer's line of reasoning",
+                  "Recognizing evaluative language: Spotting opinion markers and stance indicators",
+                  "Inference of attitude: Understanding the writer's position even when not explicitly stated"
+                ],
+                "keyInsight": "This question type does NOT test facts or your opinion. It ONLY tests what the WRITER thinks, argues, suggests, or believes."
+              }
+            ]
+          },
+          {
+            "id": "section-2",
+            "title": "SECTION 2: UNDERSTANDING THE THREE ANSWERS",
+            "subsections": [
+              {
+                "title": "2.1 YES — The Statement Agrees with the Writer's View",
+                "description": "The answer is YES when the writer explicitly expresses this opinion or makes this claim.",
+                "example": {
+                  "passage": "\"Remote work policies have been implemented far too hastily, without adequate consideration of their long-term social consequences. While productivity may remain stable, the erosion of workplace relationships is, in my view, a serious concern that organizations have underestimated.\"",
+                  "statement": "\"The writer believes that companies have not given enough thought to the social impact of remote work.\"",
+                  "answer": "YES",
+                  "explanation": "The writer states \"implemented far too hastily, without adequate consideration\" and mentions \"social consequences\" as \"a serious concern that organizations have underestimated.\" This clearly matches the statement."
+                }
+              },
+              {
+                "title": "2.2 NO — The Statement Contradicts the Writer's View",
+                "description": "The answer is NO when the writer expresses the OPPOSITE opinion.",
+                "example": {
+                  "passage": "\"Contrary to popular belief, I would argue that artificial intelligence poses minimal threat to creative professions. The technology, while impressive, fundamentally lacks the human capacity for original thought and emotional depth that defines truly creative work.\"",
+                  "statement": "\"The writer thinks AI is a major danger to people in creative jobs.\"",
+                  "answer": "NO",
+                  "explanation": "The writer explicitly states AI \"poses minimal threat\" to creative professions, which directly contradicts \"major danger.\""
+                }
+              },
+              {
+                "title": "2.3 NOT GIVEN — The Writer's View Is Not Stated",
+                "description": "The answer is NOT GIVEN when the writer never expresses an opinion on this specific point.",
+                "example": {
+                  "passage": "\"Remote work policies have been implemented far too hastily, without adequate consideration of their long-term social consequences. Many employees report feeling isolated, though some studies suggest productivity remains stable.\"",
+                  "statement": "\"The writer believes productivity is unaffected by remote work.\"",
+                  "answer": "NOT GIVEN",
+                  "explanation": "The passage mentions \"some studies suggest productivity remains stable,\" but this is reporting what studies say, not what the writer believes. The writer's own opinion on productivity is not stated."
+                }
+              }
+            ]
+          },
+          {
+            "id": "section-3",
+            "title": "SECTION 3: THE KEY DISTINCTION — NO vs. NOT GIVEN",
+            "subsections": [
+              {
+                "title": "3.1 The Core Difference",
+                "types": [
+                  {
+                    "type": "NO",
+                    "description": "The writer HAS expressed an opinion. It is the OPPOSITE of the statement. You CAN quote the writer's contrary view."
+                  },
+                  {
+                    "type": "NOT GIVEN",
+                    "description": "The writer HAS NOT expressed an opinion on this. There is NO clear writer stance. You CANNOT determine what the writer thinks."
+                  }
+                ]
+              },
+              {
+                "title": "3.2 The Two-Question Test",
+                "list": [
+                  "Step 1: Has the writer expressed an opinion on this topic? (NO → NOT GIVEN, YES → Step 2)",
+                  "Step 2: Does the writer's opinion AGREE or CONTRADICT the statement? (AGREE → YES, CONTRADICT → NO)"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-4",
+            "title": "SECTION 4: STRATEGY & TECHNIQUE",
+            "subsections": [
+              {
+                "title": "4.1 Step-by-Step Approach",
+                "list": [
+                  "1. Read the Statement Carefully: Identify opinion/claim being tested.",
+                  "2. Identify Opinion Language: Look for markers like 'I believe', 'unfortunately', 'must'.",
+                  "3. Locate Relevant Section: Scan for keywords.",
+                  "4. Determine Fact or Opinion: Is it 'Studies show' (Fact) or 'I believe' (Opinion)?",
+                  "5. Compare Writer's View: Match (YES), Contradict (NO), or Absent (NOT GIVEN).",
+                  "6. Verify Your Answer: Quote the supporting evidence."
+                ]
+              },
+              {
+                "title": "4.3 Signal Words to Watch",
+                "lists": [
+                  {
+                    "title": "Opinion Markers (Writer's View)",
+                    "items": [
+                      "I believe",
+                      "In my view",
+                      "Essential",
+                      "Unfortunate",
+                      "Should",
+                      "Must",
+                      "Clearly"
+                    ]
+                  },
+                  {
+                    "title": "NOT the Writer's Opinion (Facts/Others)",
+                    "items": [
+                      "Studies show",
+                      "Experts say",
+                      "Some argue",
+                      "Statistics demonstrate",
+                      "May/Might (Speculation)"
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "4.4 Distinguishing Writer's Opinion from Reported Information",
+                "content": "Critical Skill: Recognize when the writer is: \n✓ Expressing their OWN view → Use for Y/N/NG answers\n✗ Reporting FACTS → NOT the writer's opinion\n✗ Stating OTHERS' opinions → NOT the writer's opinion",
+                "examples": [
+                  {
+                    "passage": "Studies have shown that meditation reduces stress.",
+                    "analysis": "This is Reporting research findings (FACT). Writer's opinion? NOT STATED (they're just reporting what studies found)."
+                  },
+                  {
+                    "passage": "While studies have shown that meditation reduces stress, I remain skeptical about its long-term benefits.",
+                    "analysis": "Reporting: 'studies have shown...' (FACT). Writer's opinion: 'I remain skeptical' (OPINION = doubt about long-term benefits)."
+                  },
+                  {
+                    "passage": "Meditation clearly offers significant mental health benefits that modern medicine has overlooked.",
+                    "analysis": "Writer's opinion: 'clearly offers significant benefits' + 'overlooked' (OPINION = positive view + criticism)."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-5",
+            "title": "SECTION 5: EXAMPLE WALKTHROUGH",
+            "subsections": [
+              {
+                "title": "Example Analysis",
+                "examples": [
+                  {
+                    "id": 1,
+                    "passage": "The debate over artificial intelligence in education has become increasingly polarized. Proponents argue that AI can personalize learning and reduce teacher workload, while critics worry about data privacy and the loss of human interaction. However, both sides miss the fundamental point: technology, regardless of its sophistication, should never replace the irreplaceable role of educators in fostering critical thinking and emotional intelligence.\n\nIn my view, AI tools should be strictly limited to administrative tasks such as grading and scheduling. The suggestion that algorithms can effectively teach complex subjects is, frankly, absurd. While I acknowledge that some students may benefit from adaptive learning software for basic skills practice, the idea that this constitutes genuine education is misguided. What concerns me most is the rush to adopt these technologies without adequate evaluation of their pedagogical value.",
+                    "question": "The writer believes AI can improve personalized learning.",
+                    "answer": "NO",
+                    "analysis": "Writer dismisses AI teaching complex subjects as \"absurd\" and limits it to admin tasks. This contradicts the proper personalization idea."
+                  },
+                  {
+                    "id": 2,
+                    "question": "The writer thinks both supporters and critics of AI in education are missing an important issue.",
+                    "answer": "YES",
+                    "analysis": "Writer explicitly states \"both sides miss the fundamental point\"."
+                  },
+                  {
+                    "id": 3,
+                    "question": "The writer believes some students can gain benefits from adaptive learning software.",
+                    "answer": "YES",
+                    "analysis": "Writer states \"I acknowledge that some students may benefit from adaptive learning software for basic skills practice\"."
+                  },
+                  {
+                    "id": 4,
+                    "question": "The writer supports the use of AI for administrative purposes in education.",
+                    "answer": "YES",
+                    "analysis": "Writer says \"AI tools should be strictly limited to administrative tasks\"."
+                  },
+                  {
+                    "id": 5,
+                    "question": "The writer believes that teachers' workloads have been excessive.",
+                    "answer": "NOT GIVEN",
+                    "analysis": "Passage says \"Proponents argue... reduce teacher workload\", but the writer never expresses their own view on current workloads."
+                  },
+                  {
+                    "id": 6,
+                    "question": "The writer thinks educational institutions are implementing AI too quickly.",
+                    "answer": "YES",
+                    "analysis": "Writer mentions \"rush to adopt these technologies without adequate evaluation\"."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-6",
+            "title": "COMMON MISTAKES & PITFALLS",
+            "subsections": [
+              {
+                "title": "The 10 Most Common Errors Students Make",
+                "mistakes": [
+                  {
+                    "id": 1,
+                    "title": "Confusing Facts with Opinions",
+                    "trap": "The passage states a fact, and you think it's the writer's opinion.",
+                    "example": {
+                      "passage": "Research shows that 70% of companies now use AI hiring tools.",
+                      "question": "The writer believes most companies use AI for recruitment.",
+                      "wrong": "YES — the passage says 70%",
+                      "correct": "NOT GIVEN — the passage reports research, not the writer's belief"
+                    },
+                    "rule": "'Research shows,' 'Studies indicate,' 'Data reveals' = FACTS, not writer's opinions."
+                  },
+                  {
+                    "id": 2,
+                    "title": "Confusing Other People's Views with the Writer's View",
+                    "trap": "The passage mentions what others think, and you assume it's the writer's opinion.",
+                    "example": {
+                      "passage": "Many experts argue that climate change is the greatest threat to humanity.",
+                      "question": "The writer believes climate change is humanity's biggest danger.",
+                      "wrong": "YES — it says climate change is the greatest threat",
+                      "correct": "NOT GIVEN — 'experts argue' ≠ writer's view"
+                    },
+                    "rule": "'Experts say,' 'Critics argue,' 'Some believe' = OTHER people's views, not the writer's."
+                  },
+                  {
+                    "id": 3,
+                    "title": "Using Your Own Opinion or Knowledge",
+                    "trap": "You agree with the statement, so you mark it YES.",
+                    "example": {
+                      "question": "The writer thinks exercise is good for health.",
+                      "wrong": "Of course exercise is healthy, so YES",
+                      "correct": "Only YES if the WRITER expresses this view in the passage"
+                    },
+                    "rule": "Your knowledge is irrelevant. Only the writer's stated opinion matters."
+                  },
+                  {
+                    "id": 4,
+                    "title": "Thinking Criticism = Complete Disagreement",
+                    "trap": "The writer criticizes something, so you think they're completely against it.",
+                    "example": {
+                      "passage": "While solar energy has potential, current implementation is inefficient and costly.",
+                      "question": "The writer believes solar energy has no value.",
+                      "wrong": "The writer criticizes it, so NO to value",
+                      "correct": "NO — Writer says 'has potential' (acknowledges value), even while criticizing implementation"
+                    },
+                    "rule": "Writers can hold nuanced views. Criticism of one aspect ≠ complete rejection."
+                  },
+                  {
+                    "id": 5,
+                    "title": "Confusing NOT GIVEN with NO",
+                    "trap": "You can't find the writer's opinion, so you choose NO.",
+                    "example": {
+                      "passage": "Electric vehicles are becoming more popular. Sales increased 40% last year.",
+                      "question": "The writer thinks the increase in sales is impressive.",
+                      "wrong": "NO — because 'impressive' isn't mentioned",
+                      "correct": "NOT GIVEN — The writer reports sales data but doesn't express if they find it impressive or not"
+                    },
+                    "rule": "NO = writer states OPPOSITE view. NOT GIVEN = writer's view is ABSENT."
+                  },
+                  {
+                    "id": 6,
+                    "title": "Misreading Conditional or Qualified Opinions",
+                    "trap": "You ignore words like 'only,' 'if,' 'unless,' 'some,' 'most.'",
+                    "example": {
+                      "passage": "AI can be beneficial only if used responsibly with proper oversight.",
+                      "question": "The writer thinks AI is beneficial.",
+                      "wrong": "YES — passage says 'can be beneficial'",
+                      "correct": "YES, but only with conditions (the 'only if' is crucial)"
+                    },
+                    "rule": "Pay attention to conditions and qualifiers. They change the meaning significantly."
+                  },
+                  {
+                    "id": 7,
+                    "title": "Assuming Balance = No Opinion",
+                    "trap": "The writer presents both sides, so you think they have no opinion.",
+                    "example": {
+                      "passage": "While renewable energy has advantages, fossil fuels remain more economically viable. However, the environmental cost of fossil fuels is, in my view, unacceptable.",
+                      "question": "The writer believes environmental factors outweigh economic considerations regarding fossil fuels.",
+                      "wrong": "NOT GIVEN — writer presents both sides",
+                      "correct": "YES — writer states 'environmental cost... is unacceptable' (taking a clear position)"
+                    },
+                    "rule": "Writers often present multiple views before stating their own. Find the opinion markers."
+                  },
+                  {
+                    "id": 8,
+                    "title": "Missing Implicit Opinions",
+                    "trap": "You only look for explicit 'I think' statements and miss implied stances.",
+                    "example": {
+                      "passage": "The government's handling of the crisis has been nothing short of catastrophic.",
+                      "question": "The writer is critical of the government's crisis response.",
+                      "wrong": "NOT GIVEN — writer doesn't say 'I criticize'",
+                      "correct": "YES — 'catastrophic' is highly evaluative language showing clear criticism"
+                    },
+                    "rule": "Strong evaluative language (catastrophic, brilliant, absurd, essential) reveals the writer's opinion even without 'I think'."
+                  },
+                  {
+                    "id": 9,
+                    "title": "Ignoring 'In My View' Signals",
+                    "trap": "You miss opinion markers and treat the statement as fact.",
+                    "example": {
+                      "passage": "The research findings are interesting, though I remain unconvinced about their practical applications.",
+                      "question": "The writer doubts the research has practical use.",
+                      "wrong": "NOT GIVEN — the passage doesn't say research is useless",
+                      "correct": "YES — 'I remain unconvinced about their practical applications' = doubt"
+                    },
+                    "rule": "'I remain unconvinced,' 'I doubt,' 'I question' are clear opinion markers."
+                  },
+                  {
+                    "id": 10,
+                    "title": "Overthinking Simple Statements",
+                    "trap": "You analyze so deeply that you miss the obvious writer stance.",
+                    "example": {
+                      "passage": "In my opinion, this approach is fundamentally flawed.",
+                      "question": "The writer thinks the approach has problems.",
+                      "wrong": "NOT GIVEN — 'fundamentally flawed' might mean something different than 'has problems'",
+                      "correct": "YES — 'fundamentally flawed' clearly means serious problems"
+                    },
+                    "rule": "Don't overcomplicate. If the writer's stance is clear and direct, trust it."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "matching-information",
+      "name": "Matching Information",
+      "category": "factual-information",
+      "whatIsIt": {
+        "description": "Identify which paragraph contains a specific piece of information.",
+        "skillTested": "Scanning and paraphrase recognition."
+      },
+      "detailedTheory": {
+        "sections": [
+          {
+            "title": "STRATEGY: STEP-BY-STEP",
+            "subsections": [
+              {
+                "steps": [
+                  {
+                    "step": 1,
+                    "title": "Analyze Statements",
+                    "actions": [
+                      "Think of synonyms."
+                    ]
+                  },
+                  {
+                    "step": 2,
+                    "title": "Scan Paragraphs",
+                    "actions": [
+                      "Search for the concept."
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "matching-features",
+      "name": "Matching Features",
+      "category": "factual-information",
+      "whatIsIt": {
+        "description": "Match statements to options like people or dates.",
+        "skillTested": "Scanning for names and dates."
+      },
+      "detailedTheory": {
+        "sections": [
+          {
+            "id": "strategy",
+            "title": "STRATEGY: STEP-BY-STEP",
+            "subsections": [
+              {
+                "steps": [
+                  {
+                    "step": 1,
+                    "title": "Locate Names",
+                    "actions": [
+                      "Underline all names in text."
+                    ]
+                  },
+                  {
+                    "step": 2,
+                    "title": "Match Views",
+                    "actions": [
+                      "Read around name for viewpoint."
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "matching-sentence-endings",
+      "name": "Matching Sentence Endings",
+      "category": "detail-recognition",
+      "whatIsIt": {
+        "description": "Complete sentence stems with correct endings.",
+        "skillTested": "Understanding relationships and grammar."
+      },
+      "detailedTheory": {
+        "sections": [
+          {
+            "title": "STRATEGY: STEP-BY-STEP",
+            "subsections": [
+              {
+                "steps": [
+                  {
+                    "step": 1,
+                    "title": "Locate Stems",
+                    "actions": [
+                      "Find stem in text."
+                    ]
+                  },
+                  {
+                    "step": 2,
+                    "title": "Match Grammar",
+                    "actions": [
+                      "Check grammar and meaning."
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "summary-completion",
+      "name": "Summary Completion",
+      "category": "detail-recognition",
+      "whatIsIt": {
+        "description": "Fill gaps in a summary of the passage.",
+        "skillTested": "Understanding main points."
+      },
+      "detailedTheory": {
+        "sections": [
+          {
+            "title": "STRATEGY: STEP-BY-STEP",
+            "subsections": [
+              {
+                "steps": [
+                  {
+                    "step": 1,
+                    "title": "Predict Word Type",
+                    "actions": [
+                      "Check grammar context."
+                    ]
+                  },
+                  {
+                    "step": 2,
+                    "title": "Scan Section",
+                    "actions": [
+                      "Find text section for summary."
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "note-completion",
+      "name": "Note Completion",
+      "category": "basics",
+      "whatIsIt": {
+        "description": "Complete bulleted notes based on text.",
+        "skillTested": "Selective fact extraction."
+      },
+      "detailedTheory": {
+        "sections": [
+          {
+            "title": "STRATEGY: STEP-BY-STEP",
+            "subsections": [
+              {
+                "steps": [
+                  {
+                    "step": 1,
+                    "title": "Use Headings",
+                    "actions": [
+                      "Anchor to note headings."
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "flow-chart-completion",
+      "name": "Flow Chart Completion",
+      "category": "basics",
+      "whatIsIt": {
+        "description": "Complete process charts.",
+        "skillTested": "Understanding sequences."
+      },
+      "detailedTheory": {
+        "sections": [
+          {
+            "title": "STRATEGY: STEP-BY-STEP",
+            "subsections": [
+              {
+                "steps": [
+                  {
+                    "step": 1,
+                    "title": "Follow Flow",
+                    "actions": [
+                      "Identify process stage."
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "diagram-label-completion",
+      "name": "Diagram Label Completion",
+      "category": "basics",
+      "whatIsIt": {
+        "description": "Label parts of a diagram.",
+        "skillTested": "Matching visual to text."
+      },
+      "detailedTheory": {
+        "sections": [
+          {
+            "title": "STRATEGY: STEP-BY-STEP",
+            "subsections": [
+              {
+                "steps": [
+                  {
+                    "step": 1,
+                    "title": "Scan Descriptions",
+                    "actions": [
+                      "Look for spatial terms."
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     }
   ]

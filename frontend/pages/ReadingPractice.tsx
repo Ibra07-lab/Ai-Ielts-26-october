@@ -77,8 +77,8 @@ function QuestionResult({
   return (
     <div
       className={`p-5 rounded-md border-l-2 cursor-pointer transition-colors ${isCorrect
-          ? 'bg-slate-50 dark:bg-slate-800/30 border-emerald-600/80 hover:bg-slate-100 dark:hover:bg-slate-800/50'
-          : 'bg-slate-50 dark:bg-slate-800/30 border-rose-700/80 hover:bg-slate-100 dark:hover:bg-slate-800/50'
+        ? 'bg-slate-50 dark:bg-slate-800/30 border-emerald-600/80 hover:bg-slate-100 dark:hover:bg-slate-800/50'
+        : 'bg-slate-50 dark:bg-slate-800/30 border-rose-700/80 hover:bg-slate-100 dark:hover:bg-slate-800/50'
         }`}
       onClick={() => setExpanded(!expanded)}
     >
@@ -562,8 +562,8 @@ function TableCompletion({
                         {/* Word count indicator */}
                         {answers[cell.gapNumber!] && (
                           <p className={`text-xs ${countWords(answers[cell.gapNumber!]) > wordLimit
-                              ? 'text-red-600 dark:text-red-400 font-semibold'
-                              : 'text-gray-500'
+                            ? 'text-red-600 dark:text-red-400 font-semibold'
+                            : 'text-gray-500'
                             }`}>
                             {countWords(answers[cell.gapNumber!])} / {wordLimit} words
                           </p>
@@ -733,7 +733,7 @@ function FlowChartCompletion({
                                   placeholder="..."
                                   aria-label={`Question ${node.gapNumber}: Enter answer`}
                                   className={`
-                                    inline-block min-w-[150px] max-w-[250px] px-3 py-1 text-center rounded transition-all
+                                    inline-block min-w-[100px] max-w-[140px] px-3 py-1 text-center rounded transition-all
                                     ${getNodeState(node.gapNumber!) === 'empty' ? 'border-2 border-dashed border-gray-400 bg-white dark:bg-gray-900' : ''}
                                     ${getNodeState(node.gapNumber!) === 'filled' ? 'border-2 border-green-500 bg-green-50 dark:bg-green-900/20' : ''}
                                     ${getNodeState(node.gapNumber!) === 'exceeded' ? 'border-2 border-red-500 bg-red-50 dark:bg-red-900/20' : ''}
@@ -778,8 +778,8 @@ function FlowChartCompletion({
                   {answers[node.gapNumber!] && !result && (
                     <div className="flex justify-center">
                       <p className={`text-xs font-medium ${countWords(answers[node.gapNumber!]) > wordLimit
-                          ? 'text-red-600 dark:text-red-400'
-                          : 'text-green-600 dark:text-green-400'
+                        ? 'text-red-600 dark:text-red-400'
+                        : 'text-green-600 dark:text-green-400'
                         }`}>
                         {countWords(answers[node.gapNumber!])} / {wordLimit} words
                         {countWords(answers[node.gapNumber!]) > wordLimit && ' - Exceeds limit!'}

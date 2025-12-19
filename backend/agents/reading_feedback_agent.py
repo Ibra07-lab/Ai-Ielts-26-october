@@ -7,7 +7,9 @@ the provided passage content.
 """
 
 import os
+import json
 import logging
+from pathlib import Path
 from typing import Dict, Any, Optional
 from pydantic import BaseModel, Field, validator
 from langchain_openai import ChatOpenAI
@@ -141,6 +143,9 @@ class ReadingFeedbackAgent:
         # Initialize output parser
         self.output_parser = JsonOutputParser(pydantic_object=FeedbackOutput)
         
+        # Load theory data
+        self.theory_data = self._load_theory_data()
+        
         # Build the prompt template
         self.prompt = ChatPromptTemplate.from_messages([
             ("system", SYSTEM_PROMPT),
@@ -151,7 +156,7 @@ class ReadingFeedbackAgent:
         self.chain = (
             RunnablePassthrough.assign(
                 format_instructions=lambda _: self.output_parser.get_format_instructions(),
-                question_type_guidance=lambda x: get_question_type_guidance(x["question_type"])
+                question_type_guidance=lambda x: self._get_dynamic_theory(x["question_type"])
             )
             | self.prompt
             | self.llm
@@ -251,6 +256,88 @@ class ReadingFeedbackAgent:
         except Exception as e:
             logger.error(f"Error generating feedback: {str(e)}", exc_info=True)
             raise Exception(f"Failed to generate feedback: {str(e)}")
+
+    def _load_theory_data(self) -> Dict[str, Any]:
+        """Load reading theory data from JSON file."""
+        try:
+            # Path relative to this file: ../data/reading-theory.json
+            base_path = Path(__file__).parent.parent
+            theory_path = base_path / "data" / "reading-theory.json"
+            
+            if not theory_path.exists():
+                logger.warning(f"Theory file not found at {theory_path}. Using fallback guidance.")
+                return {"questionTypes": []}
+                
+            with open(theory_path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            logger.error(f"Error loading theory data: {e}")
+            return {"questionTypes": []}
+
+    def _get_dynamic_theory(self, question_type: str) -> str:
+        """Extract and format theory for a specific question type."""
+        # Find matching theory in JSON
+        theory_item = None
+        
+        # Normalize question_type for searching
+        search_id = question_type.lower().replace("/", "-").replace(" ", "-")
+        
+        # Try finding by ID first
+        for item in self.theory_data.get("questionTypes", []):
+            if item.get("id") == search_id or item.get("name") == question_type:
+                theory_item = item
+                break
+        
+        if not theory_item:
+            # Fallback to hardcoded guidance if not found in JSON
+            return get_question_type_guidance(question_type)
+            
+        # Format theory for LLM consumption
+        guidance_parts = [f"GUIDANCE FOR {question_type.upper()}:"]
+        
+        # Add basic description
+        what_is_it = theory_item.get("whatIsIt", {})
+        if what_is_it.get("description"):
+            guidance_parts.append(f"Description: {what_is_it['description']}")
+            
+        # Add strategy steps if available in detailedTheory
+        detailed = theory_item.get("detailedTheory", {})
+        sections = detailed.get("sections", [])
+        
+        # Look for strategy/step-by-step section
+        for section in sections:
+            title = section.get("title", "").upper()
+            if "STRATEGY" in title or "STEP-BY-STEP" in title:
+                guidance_parts.append("\nSTRATEGY STEPS:")
+                for sub in section.get("subsections", []):
+                    if sub.get("steps"):
+                        for step in sub["steps"]:
+                            guidance_parts.append(f"- Step {step.get('step')}: {step.get('title')}")
+                            if step.get("actions"):
+                                for action in step["actions"]:
+                                    guidance_parts.append(f"  • {action}")
+                    elif sub.get("actions"):
+                         for action in sub["actions"]:
+                            guidance_parts.append(f"- {action}")
+
+        # Add common mistakes
+        common_mistakes = theory_item.get("commonMistakes")
+        if not common_mistakes:
+            # Check for section named "COMMON MISTAKES"
+            for section in sections:
+                title = section.get("title", "").upper()
+                if "MISTAKE" in title or "PITFALL" in title:
+                    for sub in section.get("subsections", []):
+                        if sub.get("mistakes"):
+                            common_mistakes = sub["mistakes"]
+                            break
+        
+        if common_mistakes:
+            guidance_parts.append("\nCOMMON MISTAKES TO WATCH FOR:")
+            for m in common_mistakes[:5]: # Take top 5 to save tokens
+                guidance_parts.append(f"- {m.get('title')}: {m.get('trap', m.get('description', ''))}")
+
+        return "\n".join(guidance_parts)
     
     def update_temperature(self, temperature: float) -> None:
         """

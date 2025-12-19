@@ -1,0 +1,629 @@
+{
+    "testId": 13,
+    "testName": "Test 13",
+    "passages":[
+              {
+                "id": 1,
+                "title": "The Vikings as Navigators: Maritime Innovation in the Medieval North Atlantic",
+                "level": "academic",
+                "estimatedTime": 20,
+                "paragraphs": [
+                  {
+            "id": "P1",
+            "text": "Between the late eighth and eleventh centuries, Viking seafarers undertook voyages that would have seemed impossible to their European contemporaries. They sailed from Scandinavia to Iceland, Greenland, and even North America—a journey of over 4,000 kilometers across open ocean—without benefit of the magnetic compass, which would not reach Europe until the twelfth century. For decades, maritime historians puzzled over how these navigators achieved such remarkable feats of ocean crossing. Recent archaeological and experimental research has shed light on an array of sophisticated techniques that Viking sailors employed, including the possible use of a legendary navigation tool known as the 'sunstone.' Understanding these methods not only illuminates medieval maritime capabilities but also challenges assumptions about the technological requirements for long-distance navigation."
+              },
+             {
+           "id": "P2",
+           "text": "The navigational challenges facing Viking sailors were considerable. In the North Atlantic, cloud cover obscures the sun for extended periods; data from modern meteorological studies indicate that skies over the Norwegian Sea are overcast approximately 60 percent of the time during summer sailing months. Fog presented an additional hazard, particularly near Iceland and Greenland. The magnetic compass would not become available to European navigators until around 1190, leaving Viking-age sailors without this crucial tool. However, several medieval Icelandic sagas make intriguing references to a sólarsteinn, or 'sunstone,' described as a mineral that could reveal the sun's position even when it was hidden by clouds or had dipped below the horizon. For centuries, scholars dismissed these references as mythological embellishments. The sunstone's existence seemed implausible until 1967, when Danish archaeologist Thorkild Ramskou proposed that certain crystals, particularly calcite (known as Iceland spar), could have functioned as polarizing filters to detect sunlight. This hypothesis gained credibility when a block of Iceland spar was discovered in 2013 among the wreckage of an Elizabethan vessel that sank near the Channel Islands in 1592. While postdating the Viking Age by several centuries, this finding demonstrated that crystals were still being carried aboard ships well after the compass's introduction, suggesting their navigational value."
+             },
+             {
+               "id": "P3",
+               "text": "The scientific principle underlying sunstone navigation relies on a property of light called polarization. Sunlight becomes partially polarized as it passes through Earth's atmosphere, creating a pattern across the sky that relates to the sun's position. Calcite crystals, particularly the transparent variety found in Iceland, exhibit strong double refraction, meaning they split incoming light into two rays. When rotated and viewed at specific angles, these crystals can detect the polarization pattern of skylight. Between 2005 and 2011, a team led by Professor Guy Ropars at the University of Rennes conducted laboratory experiments demonstrating that Iceland spar could determine solar position to within approximately 5 degrees accuracy, even under completely overcast skies. Subsequent research in 2018 tested this theory under realistic maritime conditions. Researchers aboard a vessel in the Arctic Ocean successfully used calcite crystals to navigate during periods of heavy cloud cover, achieving directional accuracy of 3 to 4 degrees. Critics, however, point out that these experiments were conducted by trained scientists aware of the principles involved. Some researchers argue that the technique would have been considerably more difficult for medieval sailors to master, particularly in rough seas. Moreover, no sunstone has yet been definitively identified in a confirmed Viking-age archaeological context, though the acidic Scandinavian soil tends to preserve little beyond metal and bone."
+             },
+              {
+               "id": "P4",
+           "text": "Vikings almost certainly employed multiple navigation methods in conjunction with, or independent of, any crystal-based techniques. Archaeological evidence from excavations at sites in Greenland has revealed fragments of wooden sun compasses—simple devices that used a central gnomon to cast shadows. By marking the shadow's length at local noon, navigators could maintain a relatively constant latitude, a technique known as 'latitude sailing.' The voyage from Norway to Greenland, for instance, involved sailing west along approximately the 61st parallel. Vikings also relied heavily on their accumulated knowledge of natural phenomena. They observed whale migration patterns, seabird flight paths, ocean swell directions, water color changes indicating shallow coastal waters, and even the presence of bioluminescent plankton. The medieval text Landnámabók (Book of Settlements) records that Flóki Vilgerðarson used ravens to locate Iceland around 868 CE, releasing them to observe which direction they flew toward land. Modern experimental archaeology has validated several of these methods. In 2016, a replica Viking vessel called Draken Harald Hårfagre sailed from Norway to Newfoundland using only medieval navigation techniques, successfully completing the 6,400-kilometer journey. The crew reported that maintaining awareness of the sun's position—even when obscured—combined with careful observation of sea conditions proved remarkably effective, though they acknowledged that experience and seafaring intuition played crucial roles."
+             },
+             {
+              "id": "P5",
+             "text": "The emerging picture of Viking navigation reveals a sophisticated, multi-faceted approach rather than reliance on any single technique. Whether or not sunstones were regularly employed remains debated among scholars, but the broader evidence demonstrates that Norse seafarers possessed extensive empirical knowledge of atmospheric and oceanic phenomena. Dr. Christian Keller of the University of Oslo notes that modern sailors, accustomed to GPS and electronic instruments, often underestimate the navigational capabilities achievable through careful observation and accumulated traditional knowledge. Ongoing research continues to investigate these questions. Teams are currently analyzing mineral samples from Viking-age sites across Scandinavia using advanced spectroscopic techniques to identify potential sunstone candidates. Meanwhile, computer modeling is being used to simulate Viking voyages under varying weather conditions, testing the reliability of different navigation methods. These interdisciplinary efforts promise to further illuminate one of maritime history's most enduring mysteries: how medieval sailors conquered the North Atlantic centuries before the technological innovations traditionally considered essential for ocean navigation."
+            }
+            ],
+            "questions":[
+                {
+  "id": 1,
+  "type": "matching-headings",
+  "title": "Questions 1-5",
+  "instructions": "The reading passage has five paragraphs, A-E. Choose the correct heading for paragraphs A-E from the list of headings below. Write the correct number, i-viii, in boxes 1-5 on your answer sheet.",
+  "questions": [
+    {
+      "id": 1,
+      "questionText": "Paragraph A",
+      "options": [
+        "From legendary artifact to scientific credibility",
+        "The physical principles enabling crystal-based direction-finding",
+        "Economic motivations behind Norse maritime expansion",
+        "Achieving oceanic voyages without modern navigational instruments",
+        "A diverse toolkit of complementary wayfinding methods",
+        "Ongoing investigations into traditional seafaring expertise",
+        "The discovery of Iceland spar in Elizabethan shipwrecks",
+        "Challenges in replicating medieval navigation under laboratory conditions"
+      ],
+      "correctAnswer": "Achieving oceanic voyages without modern navigational instruments",
+      "justification": "Paragraph A establishes that Vikings 'sailed from Scandinavia to Iceland, Greenland, and even North America' without benefit of the magnetic compass, which would not reach Europe until the twelfth century. The paragraph emphasizes this paradox of achieving long-distance ocean navigation without modern tools. The heading paraphrases 'without benefit of the magnetic compass' as 'without modern navigational instruments' and 'undertook voyages' as 'achieving oceanic voyages,' accurately capturing the paragraph's central theme of remarkable navigation achievements despite technological limitations.",
+      "evidenceQuote": "They sailed from Scandinavia to Iceland, Greenland, and even North America—a journey of over 4,000 kilometers across open ocean—without benefit of the magnetic compass, which would not reach Europe until the twelfth century"
+    },
+    {
+      "id": 2,
+      "questionText": "Paragraph B",
+      "options": [
+        "From legendary artifact to scientific credibility",
+        "The physical principles enabling crystal-based direction-finding",
+        "Economic motivations behind Norse maritime expansion",
+        "Achieving oceanic voyages without modern navigational instruments",
+        "A diverse toolkit of complementary wayfinding methods",
+        "Ongoing investigations into traditional seafaring expertise",
+        "The discovery of Iceland spar in Elizabethan shipwrecks",
+        "Challenges in replicating medieval navigation under laboratory conditions"
+      ],
+      "correctAnswer": "From legendary artifact to scientific credibility",
+      "justification": "Paragraph B traces the transformation of the sunstone from legendary status to scientific plausibility. It begins with saga references that 'scholars dismissed as mythological embellishments,' then describes how Ramskou's 1967 hypothesis 'gained credibility' when Iceland spar was discovered in a shipwreck, demonstrating 'navigational value.' The heading paraphrases this journey from 'mythological' to 'scientific credibility,' with 'legendary artifact' capturing the saga references and the progression 'from...to' reflecting the paragraph's narrative arc of changing scholarly perception.",
+      "evidenceQuote": "For centuries, scholars dismissed these references as mythological embellishments. The sunstone's existence seemed implausible until 1967, when Danish archaeologist Thorkild Ramskou proposed that certain crystals, particularly calcite (known as Iceland spar), could have functioned as polarizing filters to detect sunlight"
+    },
+    {
+      "id": 3,
+      "questionText": "Paragraph C",
+      "options": [
+        "From legendary artifact to scientific credibility",
+        "The physical principles enabling crystal-based direction-finding",
+        "Economic motivations behind Norse maritime expansion",
+        "Achieving oceanic voyages without modern navigational instruments",
+        "A diverse toolkit of complementary wayfinding methods",
+        "Ongoing investigations into traditional seafaring expertise",
+        "The discovery of Iceland spar in Elizabethan shipwrecks",
+        "Challenges in replicating medieval navigation under laboratory conditions"
+      ],
+      "correctAnswer": "The physical principles enabling crystal-based direction-finding",
+      "justification": "Paragraph C is devoted to explaining 'the scientific principle underlying sunstone navigation'—specifically how light polarization works and how calcite's double refraction property can detect it. The paragraph describes atmospheric polarization, crystal mechanics, and experimental validation. The heading paraphrases 'scientific principle' as 'physical principles,' 'sunstone navigation' as 'crystal-based direction-finding,' and 'underlying' as 'enabling.' The heading accurately captures the paragraph's focus on the scientific mechanisms rather than historical, archaeological, or practical aspects.",
+      "evidenceQuote": "The scientific principle underlying sunstone navigation relies on a property of light called polarization. Sunlight becomes partially polarized as it passes through Earth's atmosphere, creating a pattern across the sky that relates to the sun's position"
+    },
+    {
+      "id": 4,
+      "questionText": "Paragraph D",
+      "options": [
+        "From legendary artifact to scientific credibility",
+        "The physical principles enabling crystal-based direction-finding",
+        "Economic motivations behind Norse maritime expansion",
+        "Achieving oceanic voyages without modern navigational instruments",
+        "A diverse toolkit of complementary wayfinding methods",
+        "Ongoing investigations into traditional seafaring expertise",
+        "The discovery of Iceland spar in Elizabethan shipwrecks",
+        "Challenges in replicating medieval navigation under laboratory conditions"
+      ],
+      "correctAnswer": "A diverse toolkit of complementary wayfinding methods",
+      "justification": "Paragraph D's opening sentence explicitly states 'Vikings almost certainly employed multiple navigation methods,' then systematically describes sun compasses, latitude sailing, natural phenomena observation (whales, birds, swells, water color, plankton), and raven navigation. The paragraph emphasizes this multiplicity and how methods worked together. The heading paraphrases 'multiple navigation methods' as 'diverse toolkit of complementary wayfinding methods,' with 'toolkit' suggesting the practical collection of techniques and 'complementary' reflecting the phrase 'in conjunction with.'",
+      "evidenceQuote": "Vikings almost certainly employed multiple navigation methods in conjunction with, or independent of, any crystal-based techniques"
+    },
+    {
+      "id": 5,
+      "questionText": "Paragraph E",
+      "options": [
+        "From legendary artifact to scientific credibility",
+        "The physical principles enabling crystal-based direction-finding",
+        "Economic motivations behind Norse maritime expansion",
+        "Achieving oceanic voyages without modern navigational instruments",
+        "A diverse toolkit of complementary wayfinding methods",
+        "Ongoing investigations into traditional seafaring expertise",
+        "The discovery of Iceland spar in Elizabethan shipwrecks",
+        "Challenges in replicating medieval navigation under laboratory conditions"
+      ],
+      "correctAnswer": "Ongoing investigations into traditional seafaring expertise",
+      "justification": "Paragraph E emphasizes that 'ongoing research continues to investigate these questions,' describing current mineral analysis using spectroscopy and computer modeling of Viking voyages. The paragraph also highlights how modern sailors 'often underestimate the navigational capabilities achievable through accumulated traditional knowledge.' The heading paraphrases 'ongoing research continues to investigate' as 'ongoing investigations into,' and 'navigational capabilities achievable through accumulated traditional knowledge' as 'traditional seafaring expertise.'",
+      "evidenceQuote": "Ongoing research continues to investigate these questions. Teams are currently analyzing mineral samples from Viking-age sites across Scandinavia using advanced spectroscopic techniques to identify potential sunstone candidates"
+    }
+  ]
+},
+{
+  "id": 2,
+  "type": "true-false-not-given",
+  "title": "Questions 6-10",
+  "instructions": "Do the following statements agree with the information in the passage? Write TRUE if the statement agrees with the information, FALSE if the statement contradicts the information, or NOT GIVEN if there is no information on this in the passage.",
+  "questions": [
+    {
+      "id": 6,
+      "questionText": "Norse seafarers completed ocean crossings exceeding 4,000 kilometers without access to magnetic compass technology.",
+      "correctAnswer": "TRUE",
+      "justification": "Paragraph 1 explicitly states Vikings 'sailed from Scandinavia to Iceland, Greenland, and even North America—a journey of over 4,000 kilometers across open ocean—without benefit of the magnetic compass.' The statement paraphrases 'sailed...journey' as 'completed ocean crossings,' 'over' as 'exceeding,' and 'without benefit of' as 'without access to.'",
+      "evidenceQuote": "a journey of over 4,000 kilometers across open ocean—without benefit of the magnetic compass"
+    },
+    {
+      "id": 7,
+      "questionText": "Modern meteorological research indicates that cloud cover obscures the sky over the Norwegian Sea approximately half of the time during summer months.",
+      "correctAnswer": "FALSE",
+      "justification": "The passage states 'skies over the Norwegian Sea are overcast approximately 60 percent of the time during summer sailing months,' not 'approximately half' (which would be 50 percent). The statement distorts the statistic by changing 60% to approximately 50%.",
+      "evidenceQuote": "skies over the Norwegian Sea are overcast approximately 60 percent of the time during summer sailing months"
+    },
+    {
+      "id": 8,
+      "questionText": "The Iceland spar crystal recovered from the Elizabethan shipwreck in 2013 originated from quarries in Scandinavia.",
+      "correctAnswer": "NOT GIVEN",
+      "justification": "Paragraph 2 mentions 'a block of Iceland spar was discovered in 2013 among the wreckage of an Elizabethan vessel that sank near the Channel Islands in 1592,' but provides no information about the crystal's origin, manufacture location, or whether it came from Scandinavian quarries. The passage discusses the discovery but not the provenance of the crystal.",
+      "evidenceQuote": "a block of Iceland spar was discovered in 2013 among the wreckage of an Elizabethan vessel that sank near the Channel Islands in 1592"
+    },
+    {
+      "id": 9,
+      "questionText": "Research conducted at the University of Rennes demonstrated that Iceland spar could establish solar position with accuracy of roughly 5 degrees.",
+      "correctAnswer": "TRUE",
+      "justification": "Paragraph 3 states 'a team led by Professor Guy Ropars at the University of Rennes conducted laboratory experiments demonstrating that Iceland spar could determine solar position to within approximately 5 degrees accuracy.' The statement paraphrases 'experiments demonstrating' as 'demonstrated,' 'determine solar position' as 'establish solar position,' and 'approximately' as 'roughly.'",
+      "evidenceQuote": "Professor Guy Ropars at the University of Rennes conducted laboratory experiments demonstrating that Iceland spar could determine solar position to within approximately 5 degrees accuracy"
+    },
+    {
+      "id": 10,
+      "questionText": "Archaeologists have successfully identified sunstone crystals at confirmed Viking-age sites across Scandinavia.",
+      "correctAnswer": "FALSE",
+      "justification": "The passage explicitly states 'no sunstone has yet been definitively identified in a confirmed Viking-age archaeological context.' The statement contradicts this by claiming successful identification has occurred, reversing the meaning from 'none found' to 'have been found.'",
+      "evidenceQuote": "no sunstone has yet been definitively identified in a confirmed Viking-age archaeological context"
+    }
+  ]
+},
+{
+  "id": 3,
+  "type": "sentence-completion",
+  "completion_type": "sentences",
+  "title": "Questions 11-15",
+  "word_limit": "NO MORE THAN TWO WORDS",
+  "instructions": "Complete the sentences below. Choose NO MORE THAN TWO WORDS from the passage for each answer. Write your answers in boxes 27-31 on your answer sheet.",
+  "structure": "<div class='completion-sentences'><p>The magnetic compass did not become accessible to European sailors until approximately <strong>(11)_____</strong>.</p><p>A transparent variety of calcite known as <strong>(12)_____</strong> exhibits strong double refraction properties.</p><p>Laboratory experiments conducted at the University of Rennes showed that crystals could establish the sun's location to within <strong>(13)_____</strong>.</p><p>By recording shadow length at midday, navigators could sustain constant latitude using a method termed <strong>(14)_____</strong>.</p><p>Dr. Keller suggests that modern seafarers relying on electronic navigation often undervalue capabilities achievable through observation and accumulated <strong>(15)_____</strong>.</p></div>",
+  "questions": [
+    {
+      "id": 11,
+      "questionText": "Gap 11",
+      "context": "The magnetic compass did not become accessible to European sailors until approximately (11)_____.",
+      "correctAnswer": "1190",
+      "justification": "Paragraph 2 states 'The magnetic compass would not become available to European navigators until around 1190.' The sentence paraphrases 'would not become available to European navigators' as 'did not become accessible to European sailors' and 'around' as 'approximately.'",
+      "evidenceQuote": "The magnetic compass would not become available to European navigators until around 1190"
+    },
+    {
+      "id": 12,
+      "questionText": "Gap 12",
+      "context": "A transparent variety of calcite known as (12)_____ exhibits strong double refraction properties.",
+      "correctAnswer": "Iceland spar",
+      "justification": "Paragraph 2 identifies calcite as being 'known as Iceland spar,' and Paragraph 3 describes this as 'the transparent variety' that 'exhibit[s] strong double refraction.' The sentence combines information from both paragraphs to create the gap.",
+      "evidenceQuote": "Calcite crystals, particularly the transparent variety found in Iceland, exhibit strong double refraction"
+    },
+    {
+      "id": 13,
+      "questionText": "Gap 13",
+      "context": "Laboratory experiments conducted at the University of Rennes showed that crystals could establish the sun's location to within (13)_____.",
+      "correctAnswer": "5 degrees",
+      "justification": "Paragraph 3 states that Ropars at Rennes conducted 'laboratory experiments demonstrating that Iceland spar could determine solar position to within approximately 5 degrees accuracy.' The sentence paraphrases 'demonstrating' as 'showed' and 'determine solar position' as 'establish the sun's location.'",
+      "evidenceQuote": "Professor Guy Ropars at the University of Rennes conducted laboratory experiments demonstrating that Iceland spar could determine solar position to within approximately 5 degrees accuracy"
+    },
+    {
+      "id": 14,
+      "questionText": "Gap 14",
+      "context": "By recording shadow length at midday, navigators could sustain constant latitude using a method termed (14)_____.",
+      "correctAnswer": "latitude sailing",
+      "justification": "Paragraph 4 explains that 'by marking the shadow's length at local noon, navigators could maintain a relatively constant latitude, a technique known as latitude sailing.' The sentence paraphrases 'marking' as 'recording,' 'local noon' as 'midday,' 'maintain' as 'sustain,' and 'technique known as' as 'method termed.'",
+      "evidenceQuote": "By marking the shadow's length at local noon, navigators could maintain a relatively constant latitude, a technique known as 'latitude sailing'"
+    },
+    {
+      "id": 15,
+      "questionText": "Gap 15",
+      "context": "Dr. Keller suggests that modern seafarers relying on electronic navigation often undervalue capabilities achievable through observation and accumulated (15)_____.",
+      "correctAnswer": "traditional knowledge",
+      "justification": "Paragraph 5 states that 'Dr. Christian Keller...notes that modern sailors, accustomed to GPS and electronic instruments, often underestimate the navigational capabilities achievable through careful observation and accumulated traditional knowledge.' The sentence paraphrases 'notes' as 'suggests,' 'modern sailors' as 'modern seafarers,' and 'underestimate' as 'undervalue.'",
+      "evidenceQuote": "Dr. Christian Keller of the University of Oslo notes that modern sailors, accustomed to GPS and electronic instruments, often underestimate the navigational capabilities achievable through careful observation and accumulated traditional knowledge"
+   }
+   ]
+  }
+ ]
+},
+  {
+  "id": 2,
+  "title": "Manuscript Preservation: Balancing Conservation and Access in the Digital Age",
+  "level": "academic",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "P1",
+      "text": "The world's repositories house an estimated 350 million historical manuscripts, ranging from medieval illuminated texts to colonial-era administrative records. These documents constitute irreplaceable primary sources for understanding human civilization, yet they face an existential threat from the relentless process of material degradation. Paper acidification, ink corrosion, biological contamination, and environmental fluctuations conspire to render fragile manuscripts unreadable within decades rather than centuries. A 2019 survey conducted by the International Council on Archives revealed that approximately 43 percent of manuscript collections worldwide exhibit significant deterioration requiring urgent intervention. This crisis has galvanized conservators, chemists, and digital technologists to develop increasingly sophisticated preservation strategies that balance the imperative to save physical artifacts with the need to provide scholarly access."
+    },
+    {
+      "id": "P2",
+      "text": "Traditional conservation approaches, developed primarily in the late nineteenth and early twentieth centuries, focused on stabilizing manuscripts through chemical deacidification and environmental control. The prevailing method involved treating paper with alkaline solutions—typically magnesium bicarbonate or calcium hydroxide—to neutralize acidic compounds formed during the paper manufacturing process or introduced through atmospheric pollutants. Dr. Elena Vasiliev at the Russian State Library pioneered mass deacidification techniques in the 1980s, treating over 2 million pages using what became known as the Bookkeeper process. However, subsequent research by Professor Kofi Mensah's team at the University of Cape Town, published in 2017, demonstrated that alkaline treatments could inadvertently weaken certain historical inks, particularly iron gall ink commonly used in manuscripts from the fifteenth to nineteenth centuries. This ink, composed of tannic acids and iron sulfate, undergoes complex degradation reactions that can be accelerated rather than arrested by alkaline environments. Consequently, conservators increasingly recognize that no single preservation technique proves universally applicable; instead, each manuscript requires careful analysis of its constituent materials before treatment selection."
+    },
+    {
+      "id": "P3",
+      "text": "The digital revolution has fundamentally transformed preservation philosophy by enabling non-invasive documentation of manuscripts too fragile for physical handling. Multispectral imaging—a technique that captures images across wavelengths from ultraviolet through visible light to infrared—can recover text rendered invisible by fading, overwriting, or damage. The Archimedes Palimpsest Project, conducted between 1999 and 2008, exemplifies this approach's potential. Researchers employed imaging technologies to reveal mathematical treatises by the ancient Greek mathematician beneath thirteenth-century prayer texts that had been scraped away and overwritten. More recently, institutions such as the Bodleian Libraries at Oxford University have deployed advanced computed tomography (CT) scanning to virtually unwrap carbonized scrolls from Herculaneum, destroyed by Mount Vesuvius's eruption in 79 CE, without physically touching these extraordinarily brittle artifacts. Digital repositories now provide global access to manuscripts while original documents remain in climate-controlled storage, resolving the longstanding tension between preservation and accessibility. Nevertheless, digitization campaigns demand substantial financial investment; the British Library's digitization program, initiated in 2013 with the goal of making 40 million pages available online, required an estimated budget exceeding £25 million."
+    },
+    {
+      "id": "P4",
+      "text": "Alongside digital preservation, advances in materials science have yielded innovative chemical and biological approaches to manuscript stabilization. Recent research has focused on consolidating degraded parchment and paper fibers using nanocellulose—ultra-fine cellulose particles that can penetrate deteriorated material and provide structural reinforcement without altering the document's appearance or flexibility. Dr. Chiara Bernardi at the Istituto Centrale per il Restauro in Rome has successfully applied nanocellulose suspensions to repair severely damaged sixteenth-century Venetian shipping records, achieving fiber consolidation with minimal visual interference. Biological conservation represents an even more cutting-edge frontier. In 2021, Professor Jian Li's team at Fudan University identified specific bacterial enzymes capable of breaking down fungal contamination on paper without damaging cellulose fibers themselves. Field trials conducted on eighteenth-century Chinese administrative documents from humid storage conditions in Guangzhou showed that enzymatic cleaning removed 87 percent of fungal material while traditional chemical fumigation achieved only 62 percent removal and left potentially harmful residues. However, Dr. Mensah cautions that such techniques require extensive testing across diverse manuscript types, noting that 'what proves effective for one category of historical documents may prove catastrophic for another, given the extraordinary variability in historical papermaking and ink formulation practices.'"
+    },
+    {
+      "id": "P5",
+      "text": "The future of manuscript preservation lies in integrating these multidisciplinary approaches within comprehensive conservation strategies. Emerging technologies such as artificial intelligence are beginning to facilitate decision-making by analyzing manuscript composition and predicting optimal treatment protocols. Machine learning algorithms trained on datasets encompassing thousands of conservation interventions can potentially identify subtle material characteristics invisible to human observation and recommend preservation pathways with greater precision. Yet, as Dr. Vasiliev emphasizes, technology cannot substitute for the trained conservator's judgment, particularly when confronting unique or previously unknown degradation phenomena. The fundamental challenge remains unchanged: balancing immediate interventions that stabilize manuscripts for current use against long-term preservation ensuring these irreplaceable documents survive for future generations. With climate change introducing new environmental stresses and global heritage institutions operating under persistent budgetary constraints, manuscript conservation will increasingly require international collaboration, resource sharing, and continued innovation across scientific and humanistic disciplines."
+    }
+    ],
+       "questions":[
+        {
+  "id": 4,
+  "type": "matching-information",
+  "title": "Questions 16-19",
+  "instructions": "Which paragraph contains the following information? Write the correct letter, A-D, in boxes 1-4 on your answer sheet.",
+  "paragraphs_list": ["A", "B", "C", "D"],
+  "questions": [
+    {
+      "id": 16,
+      "questionText": "an instance where concealed ancient mathematical writings were recovered using advanced imaging techniques",
+      "correctAnswer": "C",
+      "justification": "Paragraph C describes the Archimedes Palimpsest Project, which employed multispectral imaging to reveal mathematical treatises by the ancient Greek mathematician that had been scraped away and overwritten with thirteenth-century prayer texts. This exemplifies digital technology recovering previously invisible ancient mathematical content.",
+      "evidenceQuote": "Researchers employed imaging technologies to reveal mathematical treatises by the ancient Greek mathematician beneath thirteenth-century prayer texts that had been scraped away and overwritten"
+    },
+    {
+      "id": 17,
+      "questionText": "comparative effectiveness data for biological versus chemical approaches to eliminating fungal contamination",
+      "correctAnswer": "D",
+      "justification": "Paragraph D presents field trial results comparing enzymatic cleaning (biological method achieving 87 percent fungal removal) with traditional chemical fumigation (62 percent removal) on eighteenth-century Chinese documents. This provides specific comparative data on biological versus chemical decontamination methods.",
+      "evidenceQuote": "enzymatic cleaning removed 87 percent of fungal material while traditional chemical fumigation achieved only 62 percent removal and left potentially harmful residues"
+    },
+    {
+      "id": 18,
+      "questionText": "an explanation of why standardized preservation protocols cannot be applied uniformly across all historical documents",
+      "correctAnswer": "B",
+      "justification": "Paragraph B explains that alkaline treatments, while effective for paper acidification, can inadvertently weaken iron gall ink used in many historical manuscripts. The paragraph concludes that 'no single preservation technique proves universally applicable' because each manuscript requires analysis of its constituent materials before treatment selection, directly addressing why uniform protocols fail.",
+      "evidenceQuote": "alkaline treatments could inadvertently weaken certain historical inks...conservators increasingly recognize that no single preservation technique proves universally applicable; instead, each manuscript requires careful analysis of its constituent materials"
+    },
+    {
+      "id": 19,
+      "questionText": "the proportion of global manuscript holdings that currently need immediate conservation attention",
+      "correctAnswer": "A",
+      "justification": "Paragraph A cites a 2019 International Council on Archives survey revealing that approximately 43 percent of manuscript collections worldwide exhibit significant deterioration requiring urgent intervention. This statistic directly quantifies the proportion of collections needing immediate attention.",
+      "evidenceQuote": "A 2019 survey conducted by the International Council on Archives revealed that approximately 43 percent of manuscript collections worldwide exhibit significant deterioration requiring urgent intervention"
+    }
+   ]
+ },
+ {
+  "id": 5,
+  "type": "multiple-choice",
+  "title": "Questions 20-24",
+  "instructions": "Choose the correct letter, A, B, C or D.",
+  "questions": [
+    {
+      "id": 20,
+      "questionText": "According to the passage, what did the 2019 International Council on Archives survey discover about manuscript collections globally?",
+      "options": [
+        "Nearly half of worldwide collections show serious deterioration requiring immediate intervention",
+        "Most repositories possess adequate resources for comprehensive manuscript preservation",
+        "Approximately 350 million manuscripts require urgent digital preservation",
+        "The majority of historical manuscripts originate from the medieval period"
+      ],
+      "correctAnswer": "Nearly half of worldwide collections show serious deterioration requiring immediate intervention",
+      "justification": "Paragraph A explicitly states that the 2019 survey 'revealed that approximately 43 percent of manuscript collections worldwide exhibit significant deterioration requiring urgent intervention.' The correct answer paraphrases '43 percent' as 'nearly half' and 'significant deterioration requiring urgent intervention' as 'serious deterioration requiring immediate intervention.'",
+      "evidenceQuote": "approximately 43 percent of manuscript collections worldwide exhibit significant deterioration requiring urgent intervention"
+    },
+    {
+      "id": 21,
+      "questionText": "What did Professor Mensah's 2017 research demonstrate about traditional conservation techniques?",
+      "options": [
+        "Alkaline solutions effectively preserve all varieties of historical inks without exception",
+        "The Bookkeeper process successfully treated over 2 million manuscript pages",
+        "Chemical deacidification methods can unintentionally damage certain historical inks",
+        "Iron gall ink requires higher alkaline concentration than other ink formulations"
+      ],
+      "correctAnswer": "Chemical deacidification methods can unintentionally damage certain historical inks",
+      "justification": "Paragraph B states that 'research by Professor Kofi Mensah's team... published in 2017, demonstrated that alkaline treatments could inadvertently weaken certain historical inks.' The correct answer paraphrases 'alkaline treatments' as 'chemical deacidification methods' and 'inadvertently weaken' as 'unintentionally damage.'",
+      "evidenceQuote": "alkaline treatments could inadvertently weaken certain historical inks, particularly iron gall ink"
+    },
+    {
+      "id": 22,
+      "questionText": "What can be inferred about the relationship between physical manuscript preservation and scholarly access before digital technologies became available?",
+      "options": [
+        "Scholars enjoyed unlimited access to manuscripts regardless of their fragile condition",
+        "Allowing researchers to handle manuscripts for study created conflicts with conservation objectives",
+        "Climate-controlled storage facilities were unavailable in most archival institutions",
+        "Researchers consistently preferred studying original documents rather than reproductions"
+      ],
+      "correctAnswer": "Allowing researchers to handle manuscripts for study created conflicts with conservation objectives",
+      "justification": "Paragraph C states that digital repositories 'provide global access to manuscripts while original documents remain in climate-controlled storage, resolving the longstanding tension between preservation and accessibility.' The phrase 'resolving the longstanding tension' implies a previous conflict between providing access (which requires handling) and preservation goals. The correct answer paraphrases this implicit conflict.",
+      "evidenceQuote": "resolving the longstanding tension between preservation and accessibility"
+    },
+    {
+      "id": 23,
+      "questionText": "What is the primary focus of paragraph D?",
+      "options": [
+        "The demonstrated superiority of nanocellulose treatment over conventional conservation methods",
+        "Dr. Bernardi's successful restoration project involving sixteenth-century Venetian documents",
+        "A definitive solution to fungal contamination affecting historical manuscripts",
+        "Innovative scientific preservation techniques and their need for extensive validation"
+      ],
+      "correctAnswer": "Innovative scientific preservation techniques and their need for extensive validation",
+      "justification": "Paragraph D discusses two major innovations—nanocellulose treatments (materials science) and bacterial enzymes (biological conservation)—but concludes with Dr. Mensah's caution that 'such techniques require extensive testing across diverse manuscript types.' The paragraph balances presenting cutting-edge approaches with emphasizing limitations and the need for careful validation, making D the most comprehensive summary.",
+      "evidenceQuote": "such techniques require extensive testing across diverse manuscript types... what proves effective for one category may prove catastrophic for another"
+    },
+    {
+      "id": 24,
+      "questionText": "Which of the following best characterizes the author's perspective on the role of emerging technologies in manuscript conservation?",
+      "options": [
+        "Advanced technologies are valuable tools but cannot replace expert professional judgment",
+        "Technological solutions have completely eliminated the need for traditional conservation expertise",
+        "Artificial intelligence will soon render human conservators obsolete in preservation work",
+        "Machine learning algorithms remain too unreliable for practical conservation applications"
+      ],
+      "correctAnswer": "Advanced technologies are valuable tools but cannot replace expert professional judgment",
+      "justification": "Paragraph E presents a balanced view: while discussing AI and machine learning as tools that can 'facilitate decision-making' and 'recommend preservation pathways with greater precision,' the author emphasizes that 'technology cannot substitute for the trained conservator's judgment.' This reflects integration of technology with human expertise rather than replacement. The passage advocates 'integrating these multidisciplinary approaches,' supporting option A's balanced characterization.",
+      "evidenceQuote": "technology cannot substitute for the trained conservator's judgment, particularly when confronting unique or previously unknown degradation phenomena"
+    }
+   ]
+  },
+  {
+  "id": 6,
+  "type": "short-answer",
+  "title": "Questions 25-27",
+  "instructions": "Answer the questions below. Choose NO MORE THAN THREE WORDS from the passage for each answer.",
+  "questions": [
+    {
+      "id": 25,
+      "questionText": "What percentage of manuscript collections worldwide exhibit significant deterioration?",
+      "correctAnswer": "approximately 43 percent",
+      "alternativeAnswers": ["43 percent", "43%"],
+      "justification": "Paragraph A explicitly states the 2019 survey finding using these exact words. Both 'approximately 43 percent' and '43 percent' are acceptable as they accurately reflect the passage content.",
+      "evidenceQuote": "approximately 43 percent of manuscript collections worldwide exhibit significant deterioration requiring urgent intervention"
+    },
+    {
+      "id": 26,
+      "questionText": "Who pioneered mass deacidification techniques in the 1980s?",
+      "correctAnswer": "Dr. Elena Vasiliev",
+      "alternativeAnswers": ["Elena Vasiliev"],
+      "justification": "Paragraph B clearly identifies Dr. Elena Vasiliev at the Russian State Library as the pioneer of mass deacidification techniques in the 1980s. Answer with or without the title 'Dr.' is acceptable following IELTS conventions.",
+      "evidenceQuote": "Dr. Elena Vasiliev at the Russian State Library pioneered mass deacidification techniques in the 1980s"
+    },
+    {
+      "id": 27,
+      "questionText": "Where are the carbonized scrolls that were virtually unwrapped using CT scanning from?",
+      "correctAnswer": "Herculaneum",
+      "alternativeAnswers": [],
+      "justification": "Paragraph C explicitly identifies Herculaneum as the location of origin for the carbonized scrolls that the Bodleian Libraries virtually unwrapped. This ancient city was destroyed by Mount Vesuvius in 79 CE.",
+      "evidenceQuote": "carbonized scrolls from Herculaneum, destroyed by Mount Vesuvius's eruption in 79 CE"
+    }
+   ]
+  }
+ ]
+},
+{
+  "id": 3,
+  "title": "The Limits of Artificial Intelligence in Human Decision-Making",
+  "level": "academic",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "P1",
+      "text": "Artificial intelligence has permeated virtually every sector of contemporary society, from healthcare diagnostics to financial risk assessment and criminal justice evaluations. A 2022 survey by the International Data Corporation revealed that approximately 73% of major global enterprises had integrated some form of AI-driven decision support into their operational frameworks, a figure that has nearly tripled since 2018. Yet notwithstanding this remarkable proliferation, a growing body of research suggests that the capacity of machine learning systems to replicate—let alone replace—nuanced human judgment remains fundamentally constrained. The limitations of AI in complex decision-making contexts are not merely technical hurdles awaiting resolution; rather, they reflect deeper epistemological boundaries that warrant careful examination."
+    },
+    {
+      "id": "P2",
+      "text": "One of the most significant constraints on AI decision-making pertains to what cognitive scientists term 'tacit knowledge'—the implicit understanding that humans acquire through lived experience but struggle to articulate explicitly. Dr. Yuki Tanaka, a researcher at the University of Tokyo's Cognitive Systems Laboratory, has demonstrated that approximately 67% of expert decisions in fields such as medicine and engineering rely on knowledge that practitioners cannot fully verbalize. This poses a fundamental challenge for machine learning algorithms, which are trained predominantly on codified, structured data. Tanaka's 2021 study, published in the Journal of Artificial Intelligence Research, found that even sophisticated neural networks failed to replicate the diagnostic accuracy of experienced physicians when confronted with atypical symptom presentations—cases where intuitive pattern recognition, stemming from years of clinical exposure, proved decisive. The algorithms performed admirably on textbook cases, achieving 94% accuracy, yet their performance declined to just 61% when patients presented with unusual symptom combinations falling outside standard diagnostic protocols. This discrepancy underscores a persistent gap: AI systems excel at processing explicit information but struggle to capture the contextual sensitivity that characterizes human expertise."
+    },
+    {
+      "id": "P3",
+      "text": "Equally problematic is AI's capacity to navigate ethical reasoning and value-laden judgments. Professor Amara Okonkwo, Director of the African Institute for Technology Ethics in Lagos, has argued that algorithmic decision-making operates within what she terms 'moral blindness'—an inability to genuinely weigh competing values or recognize the ethical stakes embedded in complex situations. Her research team analysed over 12,000 decisions made by AI systems across judicial, medical, and financial contexts in seven countries between 2019 and 2022. The findings revealed that while these systems demonstrated remarkable consistency, they frequently failed to account for morally relevant contextual factors. In one striking example, a sentencing recommendation algorithm deployed in Singapore consistently underweighted rehabilitation potential for first-time offenders from disadvantaged backgrounds, ostensibly because the training data reflected historical patterns of recidivism rather than prospective individual circumstances. The algorithm was not biased in any straightforward sense; rather, it lacked the moral imagination required to see beyond statistical correlations. This limitation becomes particularly acute when decisions involve trade-offs between efficiency and fairness, or when established precedents conflict with evolving societal values."
+    },
+    {
+      "id": "P4",
+      "text": "The healthcare sector provides perhaps the clearest illustration of these constraints, albeit one where perspectives remain sharply divided. Dr. Marcus Lindqvist, a bioethicist at the Karolinska Institute in Sweden, contends that clinical decision-making cannot be reduced to algorithmic procedures because it inherently involves what he describes as 'interpretive judgment.' When a physician decides whether to pursue aggressive treatment for a terminally ill patient, for instance, the decision unfolds through several interconnected stages: first, the gathering and weighting of clinical evidence; second, the assessment of patient preferences and quality-of-life considerations; third, the navigation of family dynamics and cultural beliefs; and finally, the integration of these disparate factors into a coherent recommendation. Lindqvist's 2023 analysis of 450 end-of-life decisions across hospitals in Germany, Brazil, and Japan found that in 78% of cases, physicians cited factors that no existing AI system could adequately quantify. Conversely, some researchers argue that these limitations may be temporary. Dr. Tanaka, for example, has suggested that advances in affective computing and multimodal learning could eventually enable machines to interpret emotional and social cues with greater sophistication. Nevertheless, critics maintain that even should such technical capabilities emerge, fundamental questions about whether AI ought to make decisions involving human dignity and autonomy would remain unresolved."
+    },
+    {
+      "id": "P5",
+      "text": "The implications of these limitations extend beyond individual decision contexts to broader questions about AI's appropriate societal role. A 2023 report from the World Economic Forum cautioned that over-reliance on algorithmic systems risks what the authors termed 'judgment atrophy'—a gradual erosion of human decision-making skills as individuals defer increasingly to machine recommendations. This concern has prompted regulatory bodies in the European Union and elsewhere to mandate 'meaningful human oversight' in high-stakes AI applications, though what precisely constitutes such oversight remains contested. Moving forward, the challenge lies not in perfecting AI systems but in cultivating what researchers at the Copenhagen Institute for Digital Ethics have described as 'complementary intelligence'—frameworks wherein human judgment and machine capabilities augment rather than supplant one another. The limits of AI, paradoxically, may ultimately illuminate what is most distinctively valuable about human reasoning."
+    }
+    ],
+       "questions":[
+    {
+  "id": 7,
+  "type": "true-false-not-given",
+  "title": "Questions 28-32",
+  "instructions": "Do the following statements agree with the views of the writer in the Reading Passage? Write YES if the statement agrees with the views of the writer, NO if the statement contradicts the views of the writer, NOT GIVEN if it is impossible to say what the writer thinks about this.",
+  "questions": [
+    {
+      "id": 28,
+      "questionText": "The writer considers AI's constraints in complex decision-making to be fundamental epistemological limitations rather than simply technical obstacles awaiting solutions.",
+      "correctAnswer": "YES",
+      "justification": "The writer explicitly states that AI limitations 'are not merely technical hurdles awaiting resolution; rather, they reflect deeper epistemological boundaries that warrant careful examination' (P1). This directly supports the statement's claim that constraints are epistemological, not technical.",
+      "evidenceQuote": "The limitations of AI in complex decision-making contexts are not merely technical hurdles awaiting resolution; rather, they reflect deeper epistemological boundaries"
+    },
+    {
+      "id": 29,
+      "questionText": "The writer believes that tacit knowledge constitutes one of the most substantial barriers to effective AI decision-making capabilities.",
+      "correctAnswer": "YES",
+      "justification": "The writer explicitly identifies tacit knowledge as 'one of the most significant constraints on AI decision-making' (P2 L1), describing how this implicit understanding poses 'a fundamental challenge for machine learning algorithms.' This clearly supports the statement's claim about tacit knowledge as a major barrier.",
+      "evidenceQuote": "One of the most significant constraints on AI decision-making pertains to what cognitive scientists term 'tacit knowledge'"
+    },
+    {
+      "id": 30,
+      "questionText": "The writer interprets the performance gap between AI handling standard cases versus atypical presentations as demonstrating AI's failure to capture the contextual awareness characteristic of human expertise.",
+      "correctAnswer": "YES",
+      "justification": "The writer explicitly states 'This discrepancy underscores a persistent gap: AI systems excel at processing explicit information but struggle to capture the contextual sensitivity that characterizes human expertise' (P2). This interpretation directly supports the statement's claim about AI failing to replicate human contextual awareness.",
+      "evidenceQuote": "This discrepancy underscores a persistent gap: AI systems excel at processing explicit information but struggle to capture the contextual sensitivity that characterizes human expertise"
+    },
+    {
+      "id": 31,
+      "questionText": "According to Professor Okonkwo, algorithmic systems operate with an inherent incapacity to authentically balance competing moral values in complex situations.",
+      "correctAnswer": "YES",
+      "justification": "The passage states that Professor Okonkwo 'has argued that algorithmic decision-making operates within what she terms \"moral blindness\"—an inability to genuinely weigh competing values or recognize the ethical stakes embedded in complex situations' (P3 L2-4). This directly supports the statement's claim about her view.",
+      "evidenceQuote": "algorithmic decision-making operates within what she terms 'moral blindness'—an inability to genuinely weigh competing values or recognize the ethical stakes"
+    },
+    {
+      "id": 32,
+      "questionText": "According to Dr. Lindqvist, medical decision-making can be effectively reduced to algorithmic procedures given sufficient data about patient circumstances.",
+      "correctAnswer": "NO",
+      "justification": "The passage explicitly states that 'Dr. Marcus Lindqvist...contends that clinical decision-making cannot be reduced to algorithmic procedures because it inherently involves what he describes as \"interpretive judgment\"' (P4 L2-4). This directly contradicts the statement's claim about reducibility to algorithms.",
+      "evidenceQuote": "Dr. Marcus Lindqvist...contends that clinical decision-making cannot be reduced to algorithmic procedures because it inherently involves what he describes as 'interpretive judgment'"
+    }
+  ]
+},
+{
+  "id": 8,
+  "type": "matching-features",
+  "title": "Questions 33-37",
+  "instructions": "Look at the following statements (Questions 33-37) and the list of researchers below. Match each statement with the correct researcher, A-G. Write the correct letter, A-G, in boxes 33-37 on your answer sheet. NB You may use any letter more than once.",
+  "features": [
+    {
+      "letter": "A",
+      "name": "Dr. Yuki Tanaka"
+    },
+    {
+      "letter": "B",
+      "name": "Professor Amara Okonkwo"
+    },
+    {
+      "letter": "C",
+      "name": "Dr. Marcus Lindqvist"
+    },
+    {
+      "letter": "D",
+      "name": "International Data Corporation"
+    },
+    {
+      "letter": "E",
+      "name": "World Economic Forum"
+    },
+    {
+      "letter": "F",
+      "name": "Copenhagen Institute for Digital Ethics researchers"
+    },
+    {
+      "letter": "G",
+      "name": "European Union regulatory bodies"
+    }
+  ],
+    "questions": [
+    {
+      "id": 33,
+      "questionText": "established that roughly two-thirds of specialist judgments in medical and technical fields depend on knowledge experts struggle to articulate",
+      "correctAnswer": "A",
+      "justification": "The passage explicitly states 'Dr. Yuki Tanaka...has demonstrated that approximately 67% of expert decisions in fields such as medicine and engineering rely on knowledge that practitioners cannot fully verbalize' (P2 L2-4). This clearly attributes the finding about tacit knowledge dependency to Dr. Tanaka. The feature paraphrases '67%' as 'two-thirds,' 'demonstrated' as 'established,' and 'cannot fully verbalize' as 'struggle to articulate.'",
+      "evidenceQuote": "Dr. Yuki Tanaka...has demonstrated that approximately 67% of expert decisions in fields such as medicine and engineering rely on knowledge that practitioners cannot fully verbalize"
+    },
+    {
+      "id": 34,
+      "questionText": "examined more than twelve thousand algorithmic determinations spanning legal, healthcare, and economic domains across multiple nations",
+      "correctAnswer": "B",
+      "justification": "The passage states 'Her research team analysed over 12,000 decisions made by AI systems across judicial, medical, and financial contexts in seven countries between 2019 and 2022' (P3 L4-6). This clearly attributes the analysis to Professor Okonkwo's team. Feature paraphrases 'analysed' as 'examined,' 'over 12,000 decisions made by AI systems' as 'more than twelve thousand algorithmic determinations,' and 'judicial, medical, and financial contexts' as 'legal, healthcare, and economic domains.'",
+      "evidenceQuote": "Her research team analysed over 12,000 decisions made by AI systems across judicial, medical, and financial contexts in seven countries between 2019 and 2022"
+    },
+    {
+      "id": 35,
+      "questionText": "conducted research on terminal care decisions revealing that physicians predominantly referenced considerations no current AI could adequately measure",
+      "correctAnswer": "C",
+      "justification": "The passage states 'Lindqvist's 2023 analysis of 450 end-of-life decisions across hospitals in Germany, Brazil, and Japan found that in 78% of cases, physicians cited factors that no existing AI system could adequately quantify' (P4 L9-11). This clearly attributes the research to Dr. Lindqvist. Feature paraphrases 'end-of-life decisions' as 'terminal care decisions,' '78% of cases' as 'predominantly,' 'cited factors' as 'referenced considerations,' and 'quantify' as 'measure.'",
+      "evidenceQuote": "Lindqvist's 2023 analysis of 450 end-of-life decisions...found that in 78% of cases, physicians cited factors that no existing AI system could adequately quantify"
+    },
+    {
+      "id": 36,
+      "questionText": "discovered that neural network diagnostic performance dropped significantly when confronted with non-standard symptom presentations",
+      "correctAnswer": "A",
+      "justification": "The passage states 'Tanaka's 2021 study...found that even sophisticated neural networks failed to replicate the diagnostic accuracy of experienced physicians when confronted with atypical symptom presentations' and 'their performance declined to just 61% when patients presented with unusual symptom combinations falling outside standard diagnostic protocols' (P2 L6-10). This clearly attributes the finding to Dr. Tanaka. Feature paraphrases 'performance declined to just 61%' as 'performance dropped significantly' and 'atypical symptom presentations/unusual symptom combinations' as 'non-standard symptom presentations.'",
+      "evidenceQuote": "Tanaka's 2021 study...found that even sophisticated neural networks failed to replicate the diagnostic accuracy...their performance declined to just 61% when patients presented with unusual symptom combinations"
+    },
+    {
+      "id": 37,
+      "questionText": "warned that excessive dependence on automated decision systems could lead to progressive deterioration of human judgment capabilities",
+      "correctAnswer": "E",
+      "justification": "The passage states 'A 2023 report from the World Economic Forum cautioned that over-reliance on algorithmic systems risks what the authors termed \"judgment atrophy\"—a gradual erosion of human decision-making skills' (P5 L2-4). This clearly attributes the warning to the World Economic Forum. Feature paraphrases 'cautioned' as 'warned,' 'over-reliance' as 'excessive dependence,' 'algorithmic systems' as 'automated decision systems,' 'risks' as 'could lead to,' and 'gradual erosion of human decision-making skills' as 'progressive deterioration of human judgment capabilities.'",
+      "evidenceQuote": "A 2023 report from the World Economic Forum cautioned that over-reliance on algorithmic systems risks what the authors termed 'judgment atrophy'—a gradual erosion of human decision-making skills"
+    }
+  ]
+},
+{
+  "id": 9,
+  "type": "flow-chart-completion",
+  "title": "Questions 38-40",
+  "instructions": "Complete the flow chart below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+  "word_limit": "NO MORE THAN TWO WORDS",
+  "flow_chart": {
+    "title": "The Stages of Clinical Decision-Making in End-of-Life Care",
+    "orientation": "vertical",
+    "nodes": [
+      {
+        "id": "node1",
+        "type": "stage",
+        "content": "Physician considers whether to pursue aggressive treatment for terminally ill patient",
+        "position": 1
+      },
+      {
+        "id": "gap38",
+        "type": "gap",
+        "content": "First, the doctor collects and evaluates __________",
+        "gapNumber": 38,
+        "correctAnswer": "clinical evidence",
+        "position": 2
+      },
+      {
+        "id": "node2",
+        "type": "stage",
+        "content": "Second, patient wishes and quality-of-life factors are assessed",
+        "position": 3
+      },
+      {
+        "id": "gap39",
+        "type": "gap",
+        "content": "Third, the physician navigates __________ and cultural beliefs",
+        "gapNumber": 39,
+        "correctAnswer": "family dynamics",
+        "position": 4
+      },
+      {
+        "id": "node3",
+        "type": "stage",
+        "content": "All disparate elements are integrated together",
+        "position": 5
+      },
+      {
+        "id": "gap40",
+        "type": "gap",
+        "content": "Finally, this produces a __________ for the patient",
+        "gapNumber": 40,
+        "correctAnswer": "coherent recommendation",
+        "position": 6
+      }
+    ],
+    "connections": [
+      { "from": "node1", "to": "gap38", "style": "solid" },
+      { "from": "gap38", "to": "node2", "style": "solid" },
+      { "from": "node2", "to": "gap39", "style": "solid" },
+      { "from": "gap39", "to": "node3", "style": "solid" },
+      { "from": "node3", "to": "gap40", "style": "solid" }
+    ]
+  },
+  "questions": [
+    {
+      "id": 38,
+      "gap_number": 38,
+      "correctAnswer": "clinical evidence",
+      "alternativeAnswers": [],
+      "justification": "Passage explicitly describes the first stage as 'the gathering and weighting of clinical evidence' (P4 L5-6). The answer is the exact two-word phrase from the passage. The flow chart paraphrases 'gathering and weighting' as 'collects and evaluates' using verbal forms instead of nominalization.",
+      "evidenceQuote": "first, the gathering and weighting of clinical evidence"
+    },
+    {
+      "id": 39,
+      "gap_number": 39,
+      "correctAnswer": "family dynamics",
+      "alternativeAnswers": [],
+      "justification": "Passage explicitly states the third stage involves 'the navigation of family dynamics and cultural beliefs' (P4 L7). The answer 'family dynamics' is the exact two-word phrase from the passage. The sentence structure requires this specific phrase to complete grammatically, as 'cultural beliefs' is already provided.",
+      "evidenceQuote": "third, the navigation of family dynamics and cultural beliefs"
+    },
+    {
+      "id": 40,
+      "gap_number": 40,
+      "correctAnswer": "coherent recommendation",
+      "alternativeAnswers": [],
+      "justification": "Passage explicitly describes the final stage as producing 'a coherent recommendation' (P4 L7-8). The answer is the exact two-word phrase from the passage representing the output of the clinical decision-making process. The flow chart uses 'produces' to paraphrase 'integration...into.'",
+      "evidenceQuote": "finally, the integration of these disparate factors into a coherent recommendation"
+    }
+    ]
+    }
+   ]
+  }
+ ]
+}
