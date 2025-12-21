@@ -75,6 +75,44 @@ export async function getDeeperFeedback(
   }
 }
 
+// Stream chat messages in real-time
+export async function streamChatMessage(
+  request: ChatRequest,
+  onChunk: (text: string) => void,
+): Promise<void> {
+  const response = await fetch(`${API_BASE_URL}/chat/stream`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(request),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
+  }
+
+  if (!response.body) {
+    throw new Error('Streaming is not supported by this browser or server.');
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let done = false;
+
+  while (!done) {
+    const { value, done: doneReading } = await reader.read();
+    done = doneReading;
+    if (value) {
+      const chunk = decoder.decode(value, { stream: !done });
+      if (chunk) {
+        onChunk(chunk);
+      }
+    }
+  }
+}
+
 // Generate a unique session ID
 export function generateSessionId(): string {
   return `session_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;

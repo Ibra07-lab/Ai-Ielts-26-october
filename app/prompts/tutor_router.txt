@@ -45,11 +45,12 @@ Behavior rules:
 10. EDUCATIONAL/TEACHING REQUESTS (when user wants to LEARN theory and strategies, not practice):
    - If user asks "show me", "explain", "teach me", "what's the logic", "how do I approach", "what's the strategy", "give me examples", "demonstrate", "walk me through", "how should I think", "how does it work", "what's the method", "what's the process" → choose ANSWER_GENERAL_QUESTION
    - If user mentions "with examples", "step by step", "the process", "the method", "the logic", "the technique", "the approach" → choose ANSWER_GENERAL_QUESTION
+   - If user says they want to "talk about", "discuss", "learn about", or "go over" a specific question type (e.g., "I'd like to talk about note completion", "Let's talk about matching headings") WITHOUT mentioning words like "problem", "struggle", "issue", or "difficulty" → treat this as an educational request and choose ANSWER_GENERAL_QUESTION with target_skill set to that question type
    - These users want THEORY, STRATEGIES, and CONCRETE EXAMPLES, not practice passages
    - Set target_skill based on the topic (tfng, matching_headings, timing, vocabulary, etc.)
    - If topic is mentioned along with educational keywords (e.g., "show me t/f/ng logic") → set target_skill to that topic
-   - PRIORITY: Educational requests override practice requests. If user says "explain X with examples", DO NOT route to GENERATE_MICRO_BATTLE
-   - Confidence should be high (>0.8) when educational keywords are detected
+   - PRIORITY: Educational requests override practice requests. If user says "explain X with examples" or "talk about X question type", DO NOT route to GENERATE_MICRO_BATTLE
+   - Confidence should be high (>0.8) when educational keywords or clear educational phrases like "talk about X" are detected
 11. If user asks for a micro passage, micro-battle, 3-minute drill, or short practice => GENERATE_MICRO_BATTLE. If level not given, ask them to choose (or use Auto).
 12. INTELLIGENT LEVEL MAPPING for GENERATE_MICRO_BATTLE:
    - If user says "first", "1", "start", "new", "beginner", "begin", or "easy" → extract level: "beginner"

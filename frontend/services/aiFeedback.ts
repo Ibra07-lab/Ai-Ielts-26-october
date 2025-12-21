@@ -26,6 +26,9 @@ export interface FeedbackResponse {
  * Get AI-powered feedback for a student's answer
  */
 export async function getAIFeedback(request: FeedbackRequest): Promise<FeedbackResponse> {
+  // Log outgoing request for debugging 422 issues
+  console.log('Sending AI Feedback request:', request);
+
   const response = await fetch(`${FEEDBACK_API_URL}/api/feedback`, {
     method: 'POST',
     headers: {
@@ -35,7 +38,25 @@ export async function getAIFeedback(request: FeedbackRequest): Promise<FeedbackR
   });
 
   if (!response.ok) {
-    throw new Error(`AI Feedback API error: ${response.statusText}`);
+    // Try to read detailed error from backend
+    let errorDetail = response.statusText;
+    try {
+      const errorData = await response.json();
+      console.error('AI Feedback API error details:', errorData);
+      if (typeof errorData === 'string') {
+        errorDetail = errorData;
+      } else if (errorData?.detail) {
+        errorDetail = Array.isArray(errorData.detail)
+          ? errorData.detail.map((d: any) => d.msg || JSON.stringify(d)).join('; ')
+          : errorData.detail;
+      } else if (errorData?.message) {
+        errorDetail = errorData.message;
+      }
+    } catch {
+      // ignore JSON parse errors, fall back to statusText
+    }
+
+    throw new Error(`AI Feedback API error: ${errorDetail}`);
   }
 
   return response.json();

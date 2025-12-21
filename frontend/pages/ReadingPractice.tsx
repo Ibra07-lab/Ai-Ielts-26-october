@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, startTransition } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { BookOpen, Clock, Send, RotateCcw, Highlighter, CheckCircle, XCircle, Lightbulb, AlertCircle, Sparkles, GraduationCap } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -1005,17 +1005,46 @@ export default function ReadingPractice() {
     setLoadingFeedback(prev => new Set(prev).add(questionId));
 
     try {
+      const passageText = passage?.paragraphs?.map(p => p.text).join('\n\n') || "";
+      const questionText = question.questionText || question.sentenceBeginning || "";
+      const questionType = question.type || "Multiple Choice";
+
+      // Debug info to help track 422 issues
+      console.log("Building AI Feedback request:", {
+        passageLength: passageText.length,
+        questionLength: questionText.length,
+        questionType,
+        hasCorrectAnswer: !!correctAnswer,
+        hasStudentAnswer: !!studentAnswer,
+        correctAnswer,
+        studentAnswer,
+      });
+
+      // Basic client-side validation to avoid obvious 422s
+      if (!passageText || passageText.length < 50) {
+        throw new Error(`Passage is too short (${passageText.length} characters, need at least 50).`);
+      }
+      if (!questionText || questionText.length < 5) {
+        throw new Error(`Question text is too short (${questionText.length} characters, need at least 5).`);
+      }
+      if (!correctAnswer) {
+        throw new Error("Correct answer is missing for this question.");
+      }
+      if (!studentAnswer) {
+        throw new Error("You need to submit an answer before requesting AI feedback.");
+      }
+
       const feedback = await getAIFeedback({
-        passage: passage?.paragraphs?.map(p => p.text).join('\n\n') || '',
-        question: question.questionText || question.sentenceBeginning || '',
-        question_type: question.type || 'Multiple Choice',
+        passage: passageText,
+        question: questionText,
+        question_type: questionType,
         correct_answer: correctAnswer,
-        student_answer: studentAnswer
+        student_answer: studentAnswer,
       });
 
       setAIFeedback(prev => ({
         ...prev,
-        [questionId]: feedback
+        [questionId]: feedback,
       }));
 
       toast({
@@ -1023,11 +1052,11 @@ export default function ReadingPractice() {
         description: "Scroll down to see detailed feedback",
       });
     } catch (error) {
-      console.error('Error getting AI feedback:', error);
+      console.error("Error getting AI feedback:", error);
       toast({
-        title: "Error",
-        description: "Failed to get AI feedback. Please try again.",
-        variant: "destructive"
+        title: "AI Feedback Error",
+        description: error instanceof Error ? error.message : "Failed to get AI feedback. Please try again.",
+        variant: "destructive",
       });
     } finally {
       setLoadingFeedback(prev => {
@@ -1880,12 +1909,14 @@ export default function ReadingPractice() {
                   <Card
                     key={test.testId}
                     onClick={() => {
-                      setSelectedTestId(test.testId);
-                      setSelectedTestIndex(null);
-                      setActiveSlideIndex(0);
-                      setAnswers({});
-                      setResult(null);
-                      setHighlights([]);
+                      startTransition(() => {
+                        setSelectedTestId(test.testId);
+                        setSelectedTestIndex(null);
+                        setActiveSlideIndex(0);
+                        setAnswers({});
+                        setResult(null);
+                        setHighlights([]);
+                      });
                     }}
                     className={`cursor-pointer group relative overflow-hidden transition-all duration-300 border-2
                     ${isSelected

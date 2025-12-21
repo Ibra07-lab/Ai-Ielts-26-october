@@ -5,7 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Send, Sparkles, BookOpen, History, Bot, User as UserIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { sendChatMessage, generateSessionId, ChatMessage as APIChatMessage } from "@/services/chatApi";
+import { sendChatMessage, streamChatMessage, generateSessionId, ChatMessage as APIChatMessage } from "@/services/chatApi";
 import ReactMarkdown from "react-markdown";
 
 type GreetingStyle = "short" | "medium" | "ultra";
@@ -61,6 +61,7 @@ export default function ReadingTutor() {
 	const listRef = useRef<HTMLDivElement | null>(null);
 	const inputRef = useRef<HTMLTextAreaElement | null>(null);
 	const hasText = input.trim().length > 0;
+	const [streamingEnabled, setStreamingEnabled] = useState(true);
 
 	type StructuredMatchingData = {
 		context: string[];
@@ -225,20 +226,85 @@ export default function ReadingTutor() {
 				content: m.content,
 			}));
 
-			const resp = await sendChatMessage({
-				session_id: sessionId,
-				messages: apiMessages,
-				dropped_question_id: null,
-			});
+			if (streamingEnabled) {
+				// True streaming: append chunks as they arrive from the backend
+				const assistantId = crypto.randomUUID();
 
-			setMessages((m) => [
-				...m,
-				{
-					id: crypto.randomUUID(),
-					role: "assistant",
-					content: resp.content,
-				},
-			]);
+				// Start with an empty assistant message
+				setMessages((m) => [
+					...m,
+					{
+						id: assistantId,
+						role: "assistant",
+						content: "",
+					},
+				]);
+
+				// Batch chunks for smoother streaming (less aggressive)
+				let buffer = "";
+				let isStreaming = true;
+
+				// Flush buffer to UI every 80ms
+				const flushInterval = setInterval(() => {
+					if (buffer.length > 0) {
+						const toFlush = buffer;
+						buffer = "";
+						setMessages((m) =>
+							m.map((msg) =>
+								msg.id === assistantId
+									? { ...msg, content: msg.content + toFlush }
+									: msg,
+							),
+						);
+					}
+					if (!isStreaming) {
+						clearInterval(flushInterval);
+					}
+				}, 80);
+
+				try {
+					await streamChatMessage(
+						{
+							session_id: sessionId,
+							messages: apiMessages,
+							dropped_question_id: null,
+						},
+						(chunk) => {
+							// Accumulate chunks in buffer
+							buffer += chunk;
+						},
+					);
+				} finally {
+					// Stream done: flush any remaining content and stop interval
+					isStreaming = false;
+					if (buffer.length > 0) {
+						setMessages((m) =>
+							m.map((msg) =>
+								msg.id === assistantId
+									? { ...msg, content: msg.content + buffer }
+									: msg,
+							),
+						);
+					}
+					clearInterval(flushInterval);
+				}
+			} else {
+				// Non-streaming: full response at once
+				const resp = await sendChatMessage({
+					session_id: sessionId,
+					messages: apiMessages,
+					dropped_question_id: null,
+				});
+
+				setMessages((m) => [
+					...m,
+					{
+						id: crypto.randomUUID(),
+						role: "assistant",
+						content: resp.content,
+					},
+				]);
+			}
 		} catch (e) {
 			setMessages((m) => [
 				...m,
@@ -293,6 +359,28 @@ export default function ReadingTutor() {
 							<p className="text-xs font-medium text-slate-500 dark:text-slate-400">Online & Ready</p>
 						</div>
 					</div>
+				</div>
+				<div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+					<span className="hidden sm:inline">Streaming</span>
+					<button
+						type="button"
+						onClick={() => setStreamingEnabled((prev) => !prev)}
+						className={cn(
+							"relative inline-flex h-6 w-11 items-center rounded-full border transition-colors",
+							streamingEnabled
+								? "bg-emerald-500/80 border-emerald-400"
+								: "bg-slate-200 dark:bg-slate-700 border-slate-300 dark:border-slate-600",
+						)}
+						aria-pressed={streamingEnabled}
+						aria-label="Toggle streaming responses"
+					>
+						<span
+							className={cn(
+								"inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform",
+								streamingEnabled ? "translate-x-5" : "translate-x-1",
+							)}
+						/>
+					</button>
 				</div>
 			</div>
 

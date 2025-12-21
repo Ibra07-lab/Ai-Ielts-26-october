@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends
+from fastapi.responses import StreamingResponse
 
 from app.services.agent_service import AgentService, DeeperFeedbackResponse
 from app.models.chat_models import DeeperFeedbackRequest, ChatRequest, ChatMessage
@@ -52,4 +53,25 @@ async def post_chat_message(
         dropped_question_id=request.dropped_question_id
     )
     return response_message
+
+
+@router.post("/chat/stream")
+async def post_chat_message_stream(
+    request: ChatRequest,
+    service: AgentService = Depends(get_agent_service)
+):
+    """
+    Streaming variant of the main chat endpoint.
+    Yields text chunks as Alex generates them in real-time.
+    """
+    async def text_stream():
+        async for chunk in service.stream_chat_message(
+            session_id=request.session_id,
+            messages=request.messages,
+            dropped_question_id=request.dropped_question_id
+        ):
+            # Plain text chunks; frontend concatenates them
+            yield chunk
+
+    return StreamingResponse(text_stream(), media_type="text/plain")
 

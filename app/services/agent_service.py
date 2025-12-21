@@ -1,5 +1,8 @@
 # app/services/agent_service.py
 
+import logging
+from pathlib import Path
+from typing import Literal, Dict, Any, Optional, List
 from pathlib import Path
 from typing import Literal, Dict, Any, Optional, List
 
@@ -1024,8 +1027,116 @@ Be warm and supportive. Focus on fixing the misconception, not blaming them for 
         
         else: # Обработка для CHITCHAT, ASK_SOCRATIC_QUESTION и т.д.
             try:
-                # Build base system message
-                base_system_message = """System: You are Alex, an expert IELTS Reading tutor with a warm, encouraging personality. You're a former IELTS examiner with 8 years of teaching experience, specialized in the IELTS Academic Reading module.
+                general_chain, history_messages = self._build_general_chain(
+                    session_id=session_id,
+                    chat_history=chat_history,
+                    user_message=user_message,
+                )
+                
+                response_content = await general_chain.ainvoke({
+                    "chat_history": history_messages,
+                    "user_message": user_message
+                })
+            except Exception as e:
+                print(f"Error in general chat: {e}")
+                response_content = (
+                    "Hi! 👋 I'm ALEX — your IELTS Reading Mentor. "
+                    "Tell me what you want to work on today: timing, accuracy, vocabulary, "
+                    "matching headings, or general practice. 😊"
+                )
+
+        return ChatMessage(role="assistant", content=response_content)
+
+    async def stream_chat_message(
+        self,
+        session_id: str,
+        messages: list[ChatMessage],
+        dropped_question_id: str | None,
+    ):
+        """
+        Streaming variant of handle_chat_message.
+        
+        - For CHITCHAT / general explanation, streams tokens as they're generated.
+        - For other actions, falls back to handle_chat_message and yields the full answer once.
+        """
+        if not messages:
+            yield "No messages provided."
+            return
+
+        chat_history = messages[:-1]
+        user_message = messages[-1].content
+        router_decision: Optional[RouterOutput] = None
+
+        # Run the router (non-streaming) to decide the action
+        try:
+            router_chain = (
+                ChatPromptTemplate.from_template(self.tutor_router_prompt_template)
+                | self.fast_llm
+                | JsonOutputParser(pydantic_object=RouterOutput)
+            )
+
+            formatted_history = "\n".join([f"{m.role}: {m.content}" for m in chat_history])
+            router_result = await router_chain.ainvoke({
+                "chat_history": formatted_history,
+                "user_message": user_message,
+            })
+            if isinstance(router_result, dict):
+                router_decision = RouterOutput(**router_result)
+            else:
+                router_decision = router_result
+        except Exception as e:
+            logger.error(f"[STREAM] Error in router, falling back to CHITCHAT: {e}")
+            router_decision = RouterOutput(action="CHITCHAT", parameters={})
+
+        action = router_decision.action
+
+        # Streamable branches: CHITCHAT and ANSWER_GENERAL_QUESTION
+        if action in {"CHITCHAT", "ANSWER_GENERAL_QUESTION"}:
+            try:
+                general_chain, history_messages = self._build_general_chain(
+                    session_id=session_id,
+                    chat_history=chat_history,
+                    user_message=user_message,
+                )
+
+                # Stream tokens as they arrive from the LLM
+                async for chunk in general_chain.astream({
+                    "chat_history": history_messages,
+                    "user_message": user_message,
+                }):
+                    # chunk is a piece of the final string from StrOutputParser
+                    if isinstance(chunk, str) and chunk:
+                        yield chunk
+            except Exception as e:
+                logger.error(f"[STREAM] Error during streaming generation: {e}")
+                yield "\n\nSorry, I had an error while generating this answer. Please try again."
+        else:
+            # For non-streamable actions (micro-battles, structured feedback, etc.),
+            # fall back to the regular handle_chat_message and yield the full result once
+            logger.info(f"[STREAM] Non-streamable action {action}, using handle_chat_message fallback.")
+            try:
+                response_message = await self.handle_chat_message(
+                    session_id=session_id,
+                    messages=messages,
+                    dropped_question_id=dropped_question_id,
+                )
+                yield response_message.content
+            except Exception as e:
+                logger.error(f"[STREAM] Error in fallback path: {e}")
+                yield "\n\nSorry, I encountered an error. Please try again."
+
+    def _build_general_chain(
+        self,
+        session_id: str,
+        chat_history: list[ChatMessage],
+        user_message: str,
+    ):
+        """
+        Build the dynamic general-chat chain and history messages.
+        This is shared between the normal and streaming paths.
+        """
+        # Build base system message
+        base_system_message = """System: You are Alex, an expert IELTS Reading tutor with a warm, encouraging personality. You're a former IELTS examiner with 8 years of teaching experience, specialized in the IELTS Academic Reading module.
 
 Your personality:
 - Encouraging but honest, using humour to lighten stress
@@ -1077,6 +1188,13 @@ If a student asks for help with a specific question type or skill, refer to the 
 - Break down the reasoning step-by-step.
 - If the problem is VAGUE (e.g., "I'm struggling"), ask for clarification to identify if it's timing, vocabulary, or a specific question type.
 
+WHEN A STUDENT WANTS TO TALK ABOUT A QUESTION TYPE (NO CLEAR PROBLEM YET):
+- If a student says they want to "talk about", "discuss", or "learn about" a specific question type (e.g., "I'd like to talk about note completion", "Let's talk about matching headings") but does NOT describe a detailed problem:
+- First give a SHORT explanation (2–4 concise bullet points) of what this question type tests and the core approach.
+- Then provide ONE simple IELTS-style mini example (very short passage or notes + ONE question + correct answer + 1–2 sentence reasoning).
+- Finish by asking which part feels hardest for them (for example: timing, finding information, understanding the question, or something else).
+- Keep this kind of response compact (roughly 250–300 words maximum) and avoid long diagnostic bullet lists until they answer your follow-up question.
+
 PRACTICE SESSION GENERATION:
 - If use wants a Practice Session or Exercise, ask for their level (Beginner/Intermediate/Advanced).
 - Once they provide a level, generate the practice immediately.
@@ -1088,14 +1206,14 @@ Behavior rules:
 - End every turn with a clear next step or question.
 """
 
-                # INJECT SESSION CONTEXT if available
-                if session_id in self.active_sessions:
-                    memory = self.active_sessions[session_id]
-                    if memory.current_passage and memory.current_questions:
-                        # Extract question texts for reference
-                        question_list = "\n".join([f"  Q{q.get('id')}: {q.get('question_text', '')}" for q in memory.current_questions])
-                        
-                        base_system_message += f"""
+        # INJECT SESSION CONTEXT if available
+        if session_id in self.active_sessions:
+            memory = self.active_sessions[session_id]
+            if memory.current_passage and memory.current_questions:
+                # Extract question texts for reference
+                question_list = "\n".join([f"  Q{q.get('id')}: {q.get('question_text', '')}" for q in memory.current_questions])
+                
+                base_system_message += f"""
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -1132,74 +1250,60 @@ The student is currently working on THIS specific practice passage:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
 
-                # Create dynamic prompt template
-                
-                # Analyze last 5 user messages for topic detection
-                recent_user_messages = " ".join([
-                    msg.content.lower() 
-                    for msg in chat_history[-5:] if msg.role == "user"
-                ])
-                
-                # Dynamic Question Type Analysis
-                detected_type = "Reading Basics"
-                if any(k in recent_user_messages for k in ["heading", "title", "paragraph"]):
-                    detected_type = "Matching Headings"
-                elif any(k in recent_user_messages for k in ["t/f/ng", "true", "false", "not given"]):
-                    detected_type = "True/False/Not Given"
-                elif any(k in recent_user_messages for k in ["y/n/ng", "yes", "no"]):
-                    detected_type = "Yes/No/Not Given"
-                elif any(k in recent_user_messages for k in ["mcq", "multiple choice", "choice"]):
-                    detected_type = "Multiple Choice"
-                elif any(k in recent_user_messages for k in ["gap", "sentence completion", "summary", "note", "table"]):
-                    detected_type = "Gap Fill"
-                elif any(k in recent_user_messages for k in ["short answer", "1-3 words"]):
-                    detected_type = "Short Answer"
-                elif any(k in recent_user_messages for k in ["match info", "information"]):
-                    detected_type = "Matching Information"
+        # Analyze last 5 user messages for topic detection
+        recent_user_messages = " ".join([
+            msg.content.lower() 
+            for msg in chat_history[-5:] if msg.role == "user"
+        ])
+        
+        # Dynamic Question Type Analysis
+        detected_type = "Reading Basics"
+        if any(k in recent_user_messages for k in ["heading", "title", "paragraph"]):
+            detected_type = "Matching Headings"
+        elif any(k in recent_user_messages for k in ["t/f/ng", "true", "false", "not given"]):
+            detected_type = "True/False/Not Given"
+        elif any(k in recent_user_messages for k in ["y/n/ng", "yes", "no"]):
+            detected_type = "Yes/No/Not Given"
+        elif any(k in recent_user_messages for k in ["mcq", "multiple choice", "choice"]):
+            detected_type = "Multiple Choice"
+        elif any(k in recent_user_messages for k in ["gap", "sentence completion", "summary", "note", "table"]):
+            detected_type = "Gap Fill"
+        elif any(k in recent_user_messages for k in ["short answer", "1-3 words"]):
+            detected_type = "Short Answer"
+        elif any(k in recent_user_messages for k in ["match info", "information"]):
+            detected_type = "Matching Information"
 
-                # Get the relevant theory dynamically
-                theory_to_inject = self._get_dynamic_theory(detected_type)
-                theory_name = detected_type
-                
-                # Inject the appropriate theory
-                if theory_to_inject and "Guidance for" not in theory_to_inject:
-                    base_system_message += f"\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-                    base_system_message += f"📚 EXPERT THEORY: {theory_name.upper()}\n"
-                    base_system_message += f"Use the strategies and steps below to teach or explain this concept to the student:\n\n"
-                    base_system_message += f"{theory_to_inject}\n"
-                    base_system_message += f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        # Get the relevant theory dynamically
+        theory_to_inject = self._get_dynamic_theory(detected_type)
+        theory_name = detected_type
+        
+        # Inject the appropriate theory
+        if theory_to_inject and "Guidance for" not in theory_to_inject:
+            base_system_message += f"\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+            base_system_message += f"📚 EXPERT THEORY: {theory_name.upper()}\n"
+            base_system_message += f"Use the strategies and steps below to teach or explain this concept to the student:\n\n"
+            base_system_message += f"{theory_to_inject}\n"
+            base_system_message += f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
-                dynamic_chat_prompt = ChatPromptTemplate.from_messages([
-                    ("system", base_system_message),
-                    MessagesPlaceholder(variable_name="chat_history"),
-                    ("user", "{user_message}")
-                ])
-                
-                general_chain = dynamic_chat_prompt | self.fast_llm | StrOutputParser()
-                
-                # Convert ChatMessage objects to LangChain message objects
-                history_messages = []
-                for m in chat_history:
-                    if m.role == "user":
-                        history_messages.append(HumanMessage(content=m.content))
-                    elif m.role == "assistant":
-                        history_messages.append(AIMessage(content=m.content))
-                    elif m.role == "system":
-                        history_messages.append(SystemMessage(content=m.content))
-                
-                response_content = await general_chain.ainvoke({
-                    "chat_history": history_messages,
-                    "user_message": user_message
-                })
-            except Exception as e:
-                print(f"Error in general chat: {e}")
-                response_content = (
-                    "Hi! 👋 I'm ALEX — your IELTS Reading Mentor. "
-                    "Tell me what you want to work on today: timing, accuracy, vocabulary, "
-                    "matching headings, or general practice. 😊"
-                )
-
-        return ChatMessage(role="assistant", content=response_content)
+        dynamic_chat_prompt = ChatPromptTemplate.from_messages([
+            ("system", base_system_message),
+            MessagesPlaceholder(variable_name="chat_history"),
+            ("user", "{user_message}"),
+        ])
+        
+        general_chain = dynamic_chat_prompt | self.fast_llm | StrOutputParser()
+        
+        # Convert ChatMessage objects to LangChain message objects
+        history_messages = []
+        for m in chat_history:
+            if m.role == "user":
+                history_messages.append(HumanMessage(content=m.content))
+            elif m.role == "assistant":
+                history_messages.append(AIMessage(content=m.content))
+            elif m.role == "system":
+                history_messages.append(SystemMessage(content=m.content))
+        
+        return general_chain, history_messages
 
     async def get_full_context_for_question(self, question_id, student_answer, session_id):
         """Retrieve context for a question, preferring active session memory over mock data."""

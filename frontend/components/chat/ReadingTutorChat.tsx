@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { sendChatMessage, generateSessionId, ChatMessage } from '@/services/chatApi';
+import { sendChatMessage, streamChatMessage, generateSessionId, ChatMessage } from '@/services/chatApi';
 import { useToast } from '@/components/ui/use-toast';
 import ReactMarkdown from 'react-markdown';
 
@@ -41,9 +41,10 @@ Drag a question here or tell me what you'd like to focus on today. 😊`;
 
 interface ReadingTutorChatProps {
   droppedQuestionId?: string | null;
+  streamingEnabled?: boolean;
 }
 
-export default function ReadingTutorChat({ droppedQuestionId }: ReadingTutorChatProps) {
+export default function ReadingTutorChat({ droppedQuestionId, streamingEnabled = true }: ReadingTutorChatProps) {
   const { toast } = useToast();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -138,19 +139,85 @@ export default function ReadingTutorChat({ droppedQuestionId }: ReadingTutorChat
         content: m.content,
       }));
 
-      const response = await sendChatMessage({
-        session_id: sessionId,
-        messages: apiMessages,
-        dropped_question_id: droppedQuestionId,
-      });
+      if (streamingEnabled) {
+        // True streaming: append chunks as they arrive from the backend
+        const assistantId = (Date.now() + 1).toString();
 
-      const assistantMessage = {
-        id: (Date.now() + 1).toString(),
-        ...response,
-        timestamp: new Date(),
-      };
+        // Start with an empty assistant message
+        setMessages(prev => [
+          ...prev,
+          {
+            id: assistantId,
+            role: 'assistant',
+            content: '',
+            timestamp: new Date(),
+          },
+        ]);
 
-      setMessages(prev => [...prev, assistantMessage]);
+        // Batch chunks for smoother streaming (less aggressive)
+        let buffer = '';
+        let isStreaming = true;
+
+        // Flush buffer to UI every 80ms
+        const flushInterval = setInterval(() => {
+          if (buffer.length > 0) {
+            const toFlush = buffer;
+            buffer = '';
+            setMessages(prev =>
+              prev.map(msg =>
+                msg.id === assistantId
+                  ? { ...msg, content: msg.content + toFlush }
+                  : msg,
+              ),
+            );
+          }
+          if (!isStreaming) {
+            clearInterval(flushInterval);
+          }
+        }, 80);
+
+        try {
+          await streamChatMessage(
+            {
+              session_id: sessionId,
+              messages: apiMessages,
+              dropped_question_id: droppedQuestionId,
+            },
+            (chunk) => {
+              // Accumulate chunks in buffer
+              buffer += chunk;
+            },
+          );
+        } finally {
+          // Stream done: flush any remaining content and stop interval
+          isStreaming = false;
+          if (buffer.length > 0) {
+            setMessages(prev =>
+              prev.map(msg =>
+                msg.id === assistantId
+                  ? { ...msg, content: msg.content + buffer }
+                  : msg,
+              ),
+            );
+          }
+          clearInterval(flushInterval);
+        }
+      } else {
+        // Non-streaming: full response at once
+        const response = await sendChatMessage({
+          session_id: sessionId,
+          messages: apiMessages,
+          dropped_question_id: droppedQuestionId,
+        });
+
+        const assistantMessage = {
+          id: (Date.now() + 1).toString(),
+          ...response,
+          timestamp: new Date(),
+        };
+
+        setMessages(prev => [...prev, assistantMessage]);
+      }
     } catch (error) {
       console.error('Error sending message:', error);
 
