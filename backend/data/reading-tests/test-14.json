@@ -1,487 +1,603 @@
 {
-    "testId": 14,
-    "testName": "Test 14",
-    "passages":[
-      {
-        "id": 1,
-        "title": "CRISPR Gene Editing: Promise and Peril in Modern Biotechnology",
-        "level": "academic",
-        "estimatedTime": 20,
-        "paragraphs": [
-          {
-            "id": "A",
-            "text": "In 2012, scientists demonstrated that a bacterial defense system could be adapted into a precise tool for editing DNA, fundamentally transforming the landscape of genetic research. This technology, known as CRISPR-Cas9, allows researchers to modify genes with unprecedented accuracy and efficiency. Unlike previous gene-editing methods that cost upwards of $50,000 and required months of laboratory work, CRISPR techniques can be performed for as little as $75 and completed within days. By 2023, over 7,000 research papers involving CRISPR were being published annually, and the technology had entered clinical trials for conditions ranging from inherited blood disorders to certain cancers. However, alongside this remarkable scientific progress, profound ethical questions have emerged about how far humanity should go in rewriting the genetic code of living organisms."
-          },
-          {
-            "id": "B",
-            "text": "The CRISPR-Cas9 system works through a remarkably elegant molecular mechanism. First, scientists design a short sequence of genetic material called guide RNA, which is programmed to match a specific target location in the DNA. This guide RNA then attaches to the Cas9 protein, an enzyme that functions like molecular scissors. Once introduced into a cell, the guide RNA directs the Cas9 protein to the precise location on the DNA strand, where the enzyme cuts both strands of the double helix. Following this cut, the cell's natural repair mechanisms activate, either disabling the targeted gene or, if a template is provided, inserting new genetic material. Dr. Maria Velasquez, a molecular biologist at the University of São Paulo, explains that this process mirrors how bacteria naturally defend themselves against viruses. Her research, published in 2021, demonstrated that the accuracy of CRISPR editing has improved significantly, with off-target effects—unintended cuts at wrong locations—reduced to below 1 percent in optimized systems. Nevertheless, even this small error rate raises concerns when editing is applied to human cells."
-          },
-          {
-            "id": "C",
-            "text": "Medical applications of CRISPR technology have advanced rapidly, offering hope for patients with previously untreatable genetic conditions. Sickle cell disease, which affects approximately 20 million people worldwide, has become a primary focus of clinical research. In December 2023, regulatory agencies in both the United Kingdom and the United States approved the first CRISPR-based therapy for this condition, marking a historic milestone. The treatment involves extracting a patient's blood stem cells, editing them to produce functional hemoglobin, and reinfusing them into the body. Clinical trials conducted between 2019 and 2023 showed that 93 percent of treated patients experienced significant reduction in painful crisis episodes. Professor Li Wei at Peking University's Institute of Genetics notes that similar approaches are being developed for beta-thalassemia, certain forms of blindness, and hereditary heart conditions. A 2022 analysis identified more than 50 clinical trials globally exploring CRISPR therapies, with the majority concentrated in China (38 percent), the United States (31 percent), and European nations (22 percent). These developments suggest that gene therapy may eventually become a standard treatment option for many inherited diseases."
-          },
-          {
-            "id": "D",
-            "text": "Despite these promising medical advances, CRISPR technology has ignited intense ethical debate, particularly regarding its potential application to human embryos. In November 2018, Chinese scientist He Jiankui announced that he had created the world's first gene-edited babies, twin girls whose DNA had been modified to potentially resist HIV infection. The scientific community responded with widespread condemnation, and He was subsequently sentenced to three years in prison for conducting illegal medical practices. This incident highlighted the distinction between somatic cell editing, which affects only the treated individual, and germline editing, which creates changes that can be passed to future generations. Dr. Samuel Okafor, a bioethicist at the University of Lagos, argues that germline modifications raise unprecedented concerns about consent, since future generations cannot agree to alterations made before their birth. Conversely, some researchers suggest that preventing serious hereditary diseases through embryo editing could be ethically justified. A 2021 survey of geneticists across 22 countries revealed that 67 percent supported therapeutic germline editing under strict regulation, while only 11 percent approved of editing for non-medical enhancements such as increased intelligence or athletic ability."
-          },
-          {
-            "id": "E",
-            "text": "The governance of CRISPR technology remains fragmented, with regulations varying considerably across nations. While most countries have banned reproductive germline editing, enforcement mechanisms differ substantially, and underground clinics offering unregulated gene modifications have reportedly emerged in some regions. Dr. Anna Lindqvist, who chairs the European Society for Gene and Cell Therapy, advocates for an international framework similar to agreements governing nuclear technology. She emphasizes that the pace of scientific advancement has outstripped society's ability to establish appropriate ethical boundaries. Looking ahead, next-generation editing tools such as base editing and prime editing promise even greater precision, potentially addressing current safety concerns. The coming decade will likely determine whether CRISPR fulfills its potential as a transformative medical technology or becomes associated primarily with the risks of genetic manipulation. What remains certain is that the decisions made now will shape human health—and perhaps human evolution—for generations to come."
-          }
-        ],
-            "questions":[
-              {
-                "id": 1,
-                "type": "summary-completion",
-                "completion_type": "summary",
-                "title": "Questions 1-5",
-                "word_limit": "NO MORE THAN TWO WORDS",
-                "instructions": "Complete the summary below. Choose NO MORE THAN TWO WORDS from the passage for each answer. Write your answers in boxes 1-5 on your answer sheet.",
-                "structure": "<div class='completion-summary'><p>CRISPR-Cas9 has transformed genetic research by enabling scientists to modify DNA with remarkable precision and at significantly lower cost than earlier techniques. The technology functions through an elegant molecular process in which a specially designed genetic sequence called <strong>(1)_____</strong> attaches to the Cas9 enzyme, directing it to cut specific DNA locations. Medical applications have advanced quickly, with regulatory approval granted in December 2023 for the first therapy targeting <strong>(2)_____</strong> disease, which affects millions of people globally. However, the creation of gene-edited babies in China ignited intense controversy about the technology's ethical boundaries. A crucial distinction exists between modifications affecting only individual patients and <strong>(3)_____</strong> editing, which produces heritable genetic changes. Survey data revealed that while most geneticists support therapeutic applications under strict oversight, only 11 percent approved modifications for non-medical <strong>(4)_____</strong>. Moving forward, experts advocate for international governance frameworks similar to those regulating <strong>(5)_____</strong> technology.</p></div>",
-                "questions": [
-                  {
-                    "id": 1,
-                    "questionText": "Gap 1",
-                    "correctAnswer": "guide RNA",
-                    "justification": "Paragraph B explains the CRISPR mechanism, stating that scientists design 'a short sequence of genetic material called guide RNA.' The summary paraphrases 'short sequence of genetic material' as 'specially designed genetic sequence' while preserving the exact technical term 'guide RNA' for the answer.",
-                    "evidenceQuote": "scientists design a short sequence of genetic material called guide RNA, which is programmed to match a specific target location"
-                  },
-                  {
-                    "id": 2,
-                    "questionText": "Gap 2",
-                    "correctAnswer": "sickle cell",
-                    "justification": "Paragraph C identifies sickle cell disease as 'a primary focus of clinical research' and notes that regulatory agencies approved 'the first CRISPR-based therapy for this condition' in December 2023. The summary paraphrases '20 million people worldwide' as 'millions of people globally.'",
-                    "evidenceQuote": "Sickle cell disease, which affects approximately 20 million people worldwide, has become a primary focus of clinical research"
-                  },
-                  {
-                    "id": 3,
-                    "questionText": "Gap 3",
-                    "correctAnswer": "germline",
-                    "justification": "Paragraph D explicitly distinguishes between 'somatic cell editing, which affects only the treated individual' and 'germline editing, which creates changes that can be passed to future generations.' The summary paraphrases 'affects only the treated individual' as 'affecting only individual patients' and 'passed to future generations' as 'heritable genetic changes.'",
-                    "evidenceQuote": "the distinction between somatic cell editing, which affects only the treated individual, and germline editing, which creates changes that can be passed to future generations"
-                  },
-                  {
-                    "id": 4,
-                    "questionText": "Gap 4",
-                    "correctAnswer": "enhancements",
-                    "justification": "Paragraph D reports that in a 2021 survey, 'only 11 percent approved of editing for non-medical enhancements.' The summary maintains the exact percentage and the phrase 'non-medical' while requiring students to identify the key term 'enhancements.'",
-                    "evidenceQuote": "only 11 percent approved of editing for non-medical enhancements such as increased intelligence or athletic ability"
-                  },
-                  {
-                    "id": 5,
-                    "questionText": "Gap 5",
-                    "correctAnswer": "nuclear",
-                    "justification": "Paragraph E states that Dr. Lindqvist 'advocates for an international framework similar to agreements governing nuclear technology.' The summary paraphrases 'agreements governing' as 'frameworks...regulating' while preserving 'nuclear' as the answer.",
-                    "evidenceQuote": "Dr. Anna Lindqvist...advocates for an international framework similar to agreements governing nuclear technology"
-                  }
-                ]
-              },
-              {
-                "id": 2,
-                "type": "true-false-not-given",
-                "title": "Questions 6-9",
-                "instructions": "Do the following statements agree with the information in the passage? Write TRUE if the statement agrees with the information, FALSE if the statement contradicts the information, or NOT GIVEN if there is no information on this in the passage.",
-                "questions": [
-                  {
-                    "id": 6,
-                    "questionText": "CRISPR gene editing is considerably less expensive and faster to perform than previous genetic modification methods.",
-                    "correctAnswer": "TRUE",
-                    "justification": "Paragraph A explicitly states that previous methods 'cost upwards of $50,000 and required months of laboratory work' while 'CRISPR techniques can be performed for as little as $75 and completed within days.' The statement paraphrases this cost and time comparison using 'considerably less expensive' and 'faster.'",
-                    "evidenceQuote": "Unlike previous gene-editing methods that cost upwards of $50,000 and required months of laboratory work, CRISPR techniques can be performed for as little as $75 and completed within days"
-                  },
-                  {
-                    "id": 7,
-                    "questionText": "According to the 2021 survey, the majority of geneticists approved of using CRISPR technology for non-medical enhancements.",
-                    "correctAnswer": "FALSE",
-                    "justification": "The passage states that 'only 11 percent approved of editing for non-medical enhancements such as increased intelligence or athletic ability.' The statement claims 'the majority' (more than 50%) approved, but the passage indicates only 11 percent supported this application.",
-                    "evidenceQuote": "only 11 percent approved of editing for non-medical enhancements such as increased intelligence or athletic ability"
-                  },
-                  {
-                    "id": 8,
-                    "questionText": "The twin girls whose DNA was modified by He Jiankui have successfully developed resistance to HIV.",
-                    "correctAnswer": "NOT GIVEN",
-                    "justification": "The passage mentions that the twins' DNA 'had been modified to potentially resist HIV infection' but provides no information about whether this modification actually succeeded in conferring HIV resistance. The word 'potentially' indicates uncertainty, and no outcome data is given.",
-                    "evidenceQuote": "twin girls whose DNA had been modified to potentially resist HIV infection"
-                  },
-                  {
-                    "id": 9,
-                    "questionText": "A bioethicist has argued that germline modifications raise ethical issues because those who will inherit the genetic changes cannot give their agreement beforehand.",
-                    "correctAnswer": "TRUE",
-                    "justification": "Paragraph D states that 'Dr. Samuel Okafor, a bioethicist at the University of Lagos, argues that germline modifications raise unprecedented concerns about consent, since future generations cannot agree to alterations made before their birth.' The statement paraphrases 'unprecedented concerns about consent' as 'ethical issues' and 'cannot agree to alterations made before their birth' as 'cannot give their agreement beforehand.'",
-                    "evidenceQuote": "Dr. Samuel Okafor, a bioethicist at the University of Lagos, argues that germline modifications raise unprecedented concerns about consent, since future generations cannot agree to alterations made before their birth"
-                  }
-                ]
-              },
-              {
-                "id": 3,
-                "type": "matching-information",
-                "title": "Questions 10-13",
-                "instructions": "Which paragraph contains the following information? Write the correct letter, A–E, in boxes 10-13 on your answer sheet.",
-                "paragraphs_list": ["A", "B", "C", "D", "E"],
-                "questions": [
-                  {
-                    "id": 10,
-                    "questionText": "a contrast between the expense and duration of earlier genetic modification techniques and current methods",
-                    "correctAnswer": "A",
-                    "justification": "Paragraph A explicitly compares previous gene-editing methods (costing 'upwards of $50,000' and requiring 'months of laboratory work') with CRISPR techniques (performed 'for as little as $75' and completed 'within days'). This is the only paragraph providing this cost-time comparison between old and new approaches.",
-                    "evidenceQuote": "Unlike previous gene-editing methods that cost upwards of $50,000 and required months of laboratory work, CRISPR techniques can be performed for as little as $75 and completed within days"
-                  },
-                  {
-                    "id": 11,
-                    "questionText": "an explanation of how the technology replicates a natural microbial defense system",
-                    "correctAnswer": "B",
-                    "justification": "Paragraph B contains Dr. Maria Velasquez's explanation that the CRISPR-Cas9 process 'mirrors how bacteria naturally defend themselves against viruses.' This is the only paragraph explaining the biological origin of the mechanism as a bacterial defense adaptation.",
-                    "evidenceQuote": "Dr. Maria Velasquez, a molecular biologist at the University of São Paulo, explains that this process mirrors how bacteria naturally defend themselves against viruses"
-                  },
-                  {
-                    "id": 12,
-                    "questionText": "legal penalties imposed on a researcher for conducting unauthorized genetic experiments on humans",
-                    "correctAnswer": "D",
-                    "justification": "Paragraph D describes the case of He Jiankui, who 'was subsequently sentenced to three years in prison for conducting illegal medical practices' after creating gene-edited babies. This is the only paragraph discussing legal consequences for a scientist's unauthorized human experiments.",
-                    "evidenceQuote": "The scientific community responded with widespread condemnation, and He was subsequently sentenced to three years in prison for conducting illegal medical practices"
-                  },
-                  {
-                    "id": 13,
-                    "questionText": "a proposal that oversight of this biotechnology should mirror approaches used for managing atomic power",
-                    "correctAnswer": "E",
-                    "justification": "Paragraph E contains Dr. Anna Lindqvist's advocacy for 'an international framework similar to agreements governing nuclear technology.' This is the only paragraph proposing that CRISPR governance should follow the model established for nuclear technology regulation.",
-                    "evidenceQuote": "Dr. Anna Lindqvist, who chairs the European Society for Gene and Cell Therapy, advocates for an international framework similar to agreements governing nuclear technology"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "id": 1,
-            "title": "Managing Antibiotic Resistance in Hospitals: Stewardship Programmes and Barriers",
-            "level": "academic",
-            "estimatedTime": 15,
-            "paragraphs": [
-              {
-                "id": "P1",
-                "text": "Antimicrobial resistance (AMR) represents one of the most pressing public health challenges confronting modern healthcare systems. Within hospital settings, where antibiotics are used extensively, resistant bacteria pose particular threats to patient safety and treatment outcomes. According to the 2019 Global Burden of Disease Study, an estimated 4.95 million deaths worldwide were associated with bacterial AMR that year, with approximately 1.27 million directly attributable to resistant infections. Antimicrobial stewardship programmes (ASPs)—coordinated interventions designed to optimise antibiotic use, improve patient outcomes, and reduce resistance—have emerged as the primary institutional response to this escalating crisis. Nevertheless, despite widespread recognition of their importance, implementing effective stewardship remains fraught with challenges."
-              },
-              {
-                "id": "P2",
-                "text": "The architecture of hospital stewardship programmes typically encompasses several interconnected elements. Dr. Helena Markovic, an infectious disease specialist at the Vienna Medical Institute, led an 18-month study examining ASP implementation across 34 European hospitals, published in the Journal of Hospital Infection in 2023. Her team identified four core operational stages that characterise successful programmes: prospective audit of antibiotic prescriptions by trained pharmacists, real-time feedback to prescribing clinicians within 48 hours, formulary restriction limiting access to broad-spectrum agents without specialist approval, and systematic de-escalation protocols initiated once culture results become available. Markovic's findings demonstrated a 27% reduction in broad-spectrum antibiotic usage among participating institutions, suggesting that structured interventions can meaningfully influence prescribing behaviour. However, she cautioned that such improvements tend to plateau after approximately 14 months without sustained institutional commitment."
-              },
-              {
-                "id": "P3",
-                "text": "While the theoretical benefits of stewardship are well-documented, practical implementation faces substantial obstacles that vary considerably across different healthcare contexts. Professor James Thornton, a public health researcher at McGill University, conducted a comprehensive 2021 survey examining ASP adoption rates globally. His analysis revealed striking geographical disparities: whereas 73% of hospitals in high-income countries reported having formal stewardship structures, only 38% of institutions in low-middle income countries had implemented such programmes. Thornton attributed this gap primarily to resource constraints, noting that effective ASPs require dedicated personnel—typically infectious disease physicians and clinical pharmacists—whose availability differs markedly by region. In Southeast Asian hospitals surveyed, for instance, the ratio of clinical pharmacists to beds averaged 1:180, compared to approximately 1:45 in Western European facilities. Beyond staffing, Thornton identified cultural factors, including physician autonomy concerns and hierarchical reluctance to question senior colleagues' prescribing decisions. It appears that even well-resourced institutions struggle with what he termed 'prescriber resistance'—the tendency of clinicians to view stewardship interventions as challenges to their clinical judgment rather than collaborative quality improvement."
-              },
-              {
-                "id": "P4",
-                "text": "Various strategies have been proposed to address these implementation barriers, though each carries distinct advantages and limitations. Dr. Amira Okonkwo, a health systems researcher at the African Centre for Disease Control, has advocated for technology-enabled solutions in resource-limited settings. Her 2022 pilot study in three Nigerian teaching hospitals tested smartphone-based prescribing support tools that provided antibiotic recommendations aligned with local resistance patterns. The intervention achieved a 19% improvement in guideline-concordant prescribing at minimal infrastructure cost. Conversely, high-resource settings have increasingly adopted restrictive formulary approaches. A 2017 initiative at Hamburg University Hospital implemented pre-authorisation requirements for 12 broad-spectrum antibiotics, resulting in a 22% decrease in resistant Gram-negative infections over 36 months and estimated annual savings of €3.2 million. Critics of restrictive models, however, argue that such approaches may inadvertently delay appropriate treatment in critically ill patients—a trade-off that Okonkwo suggests disproportionately affects institutions lacking 24-hour specialist coverage. Arguably, the optimal approach depends heavily on local context, existing infrastructure, and patient population characteristics."
-              },
-              {
-                "id": "P5",
-                "text": "Moving forward, experts increasingly emphasise that sustainable stewardship requires integration into broader hospital quality frameworks rather than functioning as isolated programmes. The European Antimicrobial Resistance Surveillance Network's 2023 report recommended embedding ASP metrics into institutional performance dashboards alongside patient safety indicators. Such integration, proponents argue, elevates stewardship from a specialist concern to an organisational priority. Additionally, education-focused interventions—including regular case-based training and transparent communication of resistance data to clinical teams—appear to enhance long-term behavioural change more effectively than purely restrictive measures. Whether these multifaceted approaches can overcome entrenched prescribing habits and resource limitations remains to be definitively established, yet the accumulating evidence suggests that well-designed, contextually appropriate stewardship programmes represent an essential component of modern hospital infection control."
-              }
-            ],
-            "questions":[
+  "testId": 14,
+  "testName": "Test 14",
+  "passages": [
+    {
+      "id": 1,
+      "title": "CRISPR Gene Editing: Promise and Peril in Modern Biotechnology",
+      "level": "academic",
+      "estimatedTime": 20,
+      "paragraphs": [
+        {
+          "id": "A",
+          "text": "In 2012, scientists demonstrated that a bacterial defense system could be adapted into a precise tool for editing DNA, fundamentally transforming the landscape of genetic research. This technology, known as CRISPR-Cas9, allows researchers to modify genes with unprecedented accuracy and efficiency. Unlike previous gene-editing methods that cost upwards of $50,000 and required months of laboratory work, CRISPR techniques can be performed for as little as $75 and completed within days. By 2023, over 7,000 research papers involving CRISPR were being published annually, and the technology had entered clinical trials for conditions ranging from inherited blood disorders to certain cancers. However, alongside this remarkable scientific progress, profound ethical questions have emerged about how far humanity should go in rewriting the genetic code of living organisms."
+        },
+        {
+          "id": "B",
+          "text": "The CRISPR-Cas9 system works through a remarkably elegant molecular mechanism. First, scientists design a short sequence of genetic material called guide RNA, which is programmed to match a specific target location in the DNA. This guide RNA then attaches to the Cas9 protein, an enzyme that functions like molecular scissors. Once introduced into a cell, the guide RNA directs the Cas9 protein to the precise location on the DNA strand, where the enzyme cuts both strands of the double helix. Following this cut, the cell's natural repair mechanisms activate, either disabling the targeted gene or, if a template is provided, inserting new genetic material. Dr. Maria Velasquez, a molecular biologist at the University of São Paulo, explains that this process mirrors how bacteria naturally defend themselves against viruses. Her research, published in 2021, demonstrated that the accuracy of CRISPR editing has improved significantly, with off-target effects—unintended cuts at wrong locations—reduced to below 1 percent in optimized systems. Nevertheless, even this small error rate raises concerns when editing is applied to human cells."
+        },
+        {
+          "id": "C",
+          "text": "Medical applications of CRISPR technology have advanced rapidly, offering hope for patients with previously untreatable genetic conditions. Sickle cell disease, which affects approximately 20 million people worldwide, has become a primary focus of clinical research. In December 2023, regulatory agencies in both the United Kingdom and the United States approved the first CRISPR-based therapy for this condition, marking a historic milestone. The treatment involves extracting a patient's blood stem cells, editing them to produce functional hemoglobin, and reinfusing them into the body. Clinical trials conducted between 2019 and 2023 showed that 93 percent of treated patients experienced significant reduction in painful crisis episodes. Professor Li Wei at Peking University's Institute of Genetics notes that similar approaches are being developed for beta-thalassemia, certain forms of blindness, and hereditary heart conditions. A 2022 analysis identified more than 50 clinical trials globally exploring CRISPR therapies, with the majority concentrated in China (38 percent), the United States (31 percent), and European nations (22 percent). These developments suggest that gene therapy may eventually become a standard treatment option for many inherited diseases."
+        },
+        {
+          "id": "D",
+          "text": "Despite these promising medical advances, CRISPR technology has ignited intense ethical debate, particularly regarding its potential application to human embryos. In November 2018, Chinese scientist He Jiankui announced that he had created the world's first gene-edited babies, twin girls whose DNA had been modified to potentially resist HIV infection. The scientific community responded with widespread condemnation, and He was subsequently sentenced to three years in prison for conducting illegal medical practices. This incident highlighted the distinction between somatic cell editing, which affects only the treated individual, and germline editing, which creates changes that can be passed to future generations. Dr. Samuel Okafor, a bioethicist at the University of Lagos, argues that germline modifications raise unprecedented concerns about consent, since future generations cannot agree to alterations made before their birth. Conversely, some researchers suggest that preventing serious hereditary diseases through embryo editing could be ethically justified. A 2021 survey of geneticists across 22 countries revealed that 67 percent supported therapeutic germline editing under strict regulation, while only 11 percent approved of editing for non-medical enhancements such as increased intelligence or athletic ability."
+        },
+        {
+          "id": "E",
+          "text": "The governance of CRISPR technology remains fragmented, with regulations varying considerably across nations. While most countries have banned reproductive germline editing, enforcement mechanisms differ substantially, and underground clinics offering unregulated gene modifications have reportedly emerged in some regions. Dr. Anna Lindqvist, who chairs the European Society for Gene and Cell Therapy, advocates for an international framework similar to agreements governing nuclear technology. She emphasizes that the pace of scientific advancement has outstripped society's ability to establish appropriate ethical boundaries. Looking ahead, next-generation editing tools such as base editing and prime editing promise even greater precision, potentially addressing current safety concerns. The coming decade will likely determine whether CRISPR fulfills its potential as a transformative medical technology or becomes associated primarily with the risks of genetic manipulation. What remains certain is that the decisions made now will shape human health—and perhaps human evolution—for generations to come."
+        }
+      ],
+      "questions": [
+        {
+          "id": 1,
+          "type": "summary-completion",
+          "completion_type": "summary",
+          "title": "Questions 1-5",
+          "word_limit": "NO MORE THAN TWO WORDS",
+          "instructions": "Complete the summary below. Choose NO MORE THAN TWO WORDS from the passage for each answer. Write your answers in boxes 1-5 on your answer sheet.",
+          "structure": "<div class='completion-summary'><p>CRISPR-Cas9 has transformed genetic research by enabling scientists to modify DNA with remarkable precision and at significantly lower cost than earlier techniques. The technology functions through an elegant molecular process in which a specially designed genetic sequence called <strong>(1)_____</strong> attaches to the Cas9 enzyme, directing it to cut specific DNA locations. Medical applications have advanced quickly, with regulatory approval granted in December 2023 for the first therapy targeting <strong>(2)_____</strong> disease, which affects millions of people globally. However, the creation of gene-edited babies in China ignited intense controversy about the technology's ethical boundaries. A crucial distinction exists between modifications affecting only individual patients and <strong>(3)_____</strong> editing, which produces heritable genetic changes. Survey data revealed that while most geneticists support therapeutic applications under strict oversight, only 11 percent approved modifications for non-medical <strong>(4)_____</strong>. Moving forward, experts advocate for international governance frameworks similar to those regulating <strong>(5)_____</strong> technology.</p></div>",
+          "questions": [
+            {
+              "id": 1,
+              "questionText": "Gap 1",
+              "correctAnswer": "guide RNA",
+              "justification": "Paragraph B explains the CRISPR mechanism, stating that scientists design 'a short sequence of genetic material called guide RNA.' The summary paraphrases 'short sequence of genetic material' as 'specially designed genetic sequence' while preserving the exact technical term 'guide RNA' for the answer.",
+              "evidenceQuote": "scientists design a short sequence of genetic material called guide RNA, which is programmed to match a specific target location"
+            },
+            {
+              "id": 2,
+              "questionText": "Gap 2",
+              "correctAnswer": "sickle cell",
+              "justification": "Paragraph C identifies sickle cell disease as 'a primary focus of clinical research' and notes that regulatory agencies approved 'the first CRISPR-based therapy for this condition' in December 2023. The summary paraphrases '20 million people worldwide' as 'millions of people globally.'",
+              "evidenceQuote": "Sickle cell disease, which affects approximately 20 million people worldwide, has become a primary focus of clinical research"
+            },
+            {
+              "id": 3,
+              "questionText": "Gap 3",
+              "correctAnswer": "germline",
+              "justification": "Paragraph D explicitly distinguishes between 'somatic cell editing, which affects only the treated individual' and 'germline editing, which creates changes that can be passed to future generations.' The summary paraphrases 'affects only the treated individual' as 'affecting only individual patients' and 'passed to future generations' as 'heritable genetic changes.'",
+              "evidenceQuote": "the distinction between somatic cell editing, which affects only the treated individual, and germline editing, which creates changes that can be passed to future generations"
+            },
+            {
+              "id": 4,
+              "questionText": "Gap 4",
+              "correctAnswer": "enhancements",
+              "justification": "Paragraph D reports that in a 2021 survey, 'only 11 percent approved of editing for non-medical enhancements.' The summary maintains the exact percentage and the phrase 'non-medical' while requiring students to identify the key term 'enhancements.'",
+              "evidenceQuote": "only 11 percent approved of editing for non-medical enhancements such as increased intelligence or athletic ability"
+            },
+            {
+              "id": 5,
+              "questionText": "Gap 5",
+              "correctAnswer": "nuclear",
+              "justification": "Paragraph E states that Dr. Lindqvist 'advocates for an international framework similar to agreements governing nuclear technology.' The summary paraphrases 'agreements governing' as 'frameworks...regulating' while preserving 'nuclear' as the answer.",
+              "evidenceQuote": "Dr. Anna Lindqvist...advocates for an international framework similar to agreements governing nuclear technology"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "type": "true-false-not-given",
+          "title": "Questions 6-9",
+          "instructions": "Do the following statements agree with the information in the passage? Write TRUE if the statement agrees with the information, FALSE if the statement contradicts the information, or NOT GIVEN if there is no information on this in the passage.",
+          "questions": [
+            {
+              "id": 6,
+              "questionText": "CRISPR gene editing is considerably less expensive and faster to perform than previous genetic modification methods.",
+              "correctAnswer": "TRUE",
+              "justification": "Paragraph A explicitly states that previous methods 'cost upwards of $50,000 and required months of laboratory work' while 'CRISPR techniques can be performed for as little as $75 and completed within days.' The statement paraphrases this cost and time comparison using 'considerably less expensive' and 'faster.'",
+              "evidenceQuote": "Unlike previous gene-editing methods that cost upwards of $50,000 and required months of laboratory work, CRISPR techniques can be performed for as little as $75 and completed within days"
+            },
+            {
+              "id": 7,
+              "questionText": "According to the 2021 survey, the majority of geneticists approved of using CRISPR technology for non-medical enhancements.",
+              "correctAnswer": "FALSE",
+              "justification": "The passage states that 'only 11 percent approved of editing for non-medical enhancements such as increased intelligence or athletic ability.' The statement claims 'the majority' (more than 50%) approved, but the passage indicates only 11 percent supported this application.",
+              "evidenceQuote": "only 11 percent approved of editing for non-medical enhancements such as increased intelligence or athletic ability"
+            },
+            {
+              "id": 8,
+              "questionText": "The twin girls whose DNA was modified by He Jiankui have successfully developed resistance to HIV.",
+              "correctAnswer": "NOT GIVEN",
+              "justification": "The passage mentions that the twins' DNA 'had been modified to potentially resist HIV infection' but provides no information about whether this modification actually succeeded in conferring HIV resistance. The word 'potentially' indicates uncertainty, and no outcome data is given.",
+              "evidenceQuote": "twin girls whose DNA had been modified to potentially resist HIV infection"
+            },
+            {
+              "id": 9,
+              "questionText": "A bioethicist has argued that germline modifications raise ethical issues because those who will inherit the genetic changes cannot give their agreement beforehand.",
+              "correctAnswer": "TRUE",
+              "justification": "Paragraph D states that 'Dr. Samuel Okafor, a bioethicist at the University of Lagos, argues that germline modifications raise unprecedented concerns about consent, since future generations cannot agree to alterations made before their birth.' The statement paraphrases 'unprecedented concerns about consent' as 'ethical issues' and 'cannot agree to alterations made before their birth' as 'cannot give their agreement beforehand.'",
+              "evidenceQuote": "Dr. Samuel Okafor, a bioethicist at the University of Lagos, argues that germline modifications raise unprecedented concerns about consent, since future generations cannot agree to alterations made before their birth"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "type": "matching-information",
+          "title": "Questions 10-13",
+          "instructions": "Which paragraph contains the following information? Write the correct letter, A–E, in boxes 10-13 on your answer sheet.",
+          "paragraphs_list": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ],
+          "questions": [
+            {
+              "id": 10,
+              "questionText": "a contrast between the expense and duration of earlier genetic modification techniques and current methods",
+              "correctAnswer": "A",
+              "justification": "Paragraph A explicitly compares previous gene-editing methods (costing 'upwards of $50,000' and requiring 'months of laboratory work') with CRISPR techniques (performed 'for as little as $75' and completed 'within days'). This is the only paragraph providing this cost-time comparison between old and new approaches.",
+              "evidenceQuote": "Unlike previous gene-editing methods that cost upwards of $50,000 and required months of laboratory work, CRISPR techniques can be performed for as little as $75 and completed within days"
+            },
+            {
+              "id": 11,
+              "questionText": "an explanation of how the technology replicates a natural microbial defense system",
+              "correctAnswer": "B",
+              "justification": "Paragraph B contains Dr. Maria Velasquez's explanation that the CRISPR-Cas9 process 'mirrors how bacteria naturally defend themselves against viruses.' This is the only paragraph explaining the biological origin of the mechanism as a bacterial defense adaptation.",
+              "evidenceQuote": "Dr. Maria Velasquez, a molecular biologist at the University of São Paulo, explains that this process mirrors how bacteria naturally defend themselves against viruses"
+            },
+            {
+              "id": 12,
+              "questionText": "legal penalties imposed on a researcher for conducting unauthorized genetic experiments on humans",
+              "correctAnswer": "D",
+              "justification": "Paragraph D describes the case of He Jiankui, who 'was subsequently sentenced to three years in prison for conducting illegal medical practices' after creating gene-edited babies. This is the only paragraph discussing legal consequences for a scientist's unauthorized human experiments.",
+              "evidenceQuote": "The scientific community responded with widespread condemnation, and He was subsequently sentenced to three years in prison for conducting illegal medical practices"
+            },
+            {
+              "id": 13,
+              "questionText": "a proposal that oversight of this biotechnology should mirror approaches used for managing atomic power",
+              "correctAnswer": "E",
+              "justification": "Paragraph E contains Dr. Anna Lindqvist's advocacy for 'an international framework similar to agreements governing nuclear technology.' This is the only paragraph proposing that CRISPR governance should follow the model established for nuclear technology regulation.",
+              "evidenceQuote": "Dr. Anna Lindqvist, who chairs the European Society for Gene and Cell Therapy, advocates for an international framework similar to agreements governing nuclear technology"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Managing Antibiotic Resistance in Hospitals: Stewardship Programmes and Barriers",
+      "level": "academic",
+      "estimatedTime": 15,
+      "paragraphs": [
+        {
+          "id": "P1",
+          "text": "Antimicrobial resistance (AMR) represents one of the most pressing public health challenges confronting modern healthcare systems. Within hospital settings, where antibiotics are used extensively, resistant bacteria pose particular threats to patient safety and treatment outcomes. According to the 2019 Global Burden of Disease Study, an estimated 4.95 million deaths worldwide were associated with bacterial AMR that year, with approximately 1.27 million directly attributable to resistant infections. Antimicrobial stewardship programmes (ASPs)—coordinated interventions designed to optimise antibiotic use, improve patient outcomes, and reduce resistance—have emerged as the primary institutional response to this escalating crisis. Nevertheless, despite widespread recognition of their importance, implementing effective stewardship remains fraught with challenges."
+        },
+        {
+          "id": "P2",
+          "text": "The architecture of hospital stewardship programmes typically encompasses several interconnected elements. Dr. Helena Markovic, an infectious disease specialist at the Vienna Medical Institute, led an 18-month study examining ASP implementation across 34 European hospitals, published in the Journal of Hospital Infection in 2023. Her team identified four core operational stages that characterise successful programmes: prospective audit of antibiotic prescriptions by trained pharmacists, real-time feedback to prescribing clinicians within 48 hours, formulary restriction limiting access to broad-spectrum agents without specialist approval, and systematic de-escalation protocols initiated once culture results become available. Markovic's findings demonstrated a 27% reduction in broad-spectrum antibiotic usage among participating institutions, suggesting that structured interventions can meaningfully influence prescribing behaviour. However, she cautioned that such improvements tend to plateau after approximately 14 months without sustained institutional commitment."
+        },
+        {
+          "id": "P3",
+          "text": "While the theoretical benefits of stewardship are well-documented, practical implementation faces substantial obstacles that vary considerably across different healthcare contexts. Professor James Thornton, a public health researcher at McGill University, conducted a comprehensive 2021 survey examining ASP adoption rates globally. His analysis revealed striking geographical disparities: whereas 73% of hospitals in high-income countries reported having formal stewardship structures, only 38% of institutions in low-middle income countries had implemented such programmes. Thornton attributed this gap primarily to resource constraints, noting that effective ASPs require dedicated personnel—typically infectious disease physicians and clinical pharmacists—whose availability differs markedly by region. In Southeast Asian hospitals surveyed, for instance, the ratio of clinical pharmacists to beds averaged 1:180, compared to approximately 1:45 in Western European facilities. Beyond staffing, Thornton identified cultural factors, including physician autonomy concerns and hierarchical reluctance to question senior colleagues' prescribing decisions. It appears that even well-resourced institutions struggle with what he termed 'prescriber resistance'—the tendency of clinicians to view stewardship interventions as challenges to their clinical judgment rather than collaborative quality improvement."
+        },
+        {
+          "id": "P4",
+          "text": "Various strategies have been proposed to address these implementation barriers, though each carries distinct advantages and limitations. Dr. Amira Okonkwo, a health systems researcher at the African Centre for Disease Control, has advocated for technology-enabled solutions in resource-limited settings. Her 2022 pilot study in three Nigerian teaching hospitals tested smartphone-based prescribing support tools that provided antibiotic recommendations aligned with local resistance patterns. The intervention achieved a 19% improvement in guideline-concordant prescribing at minimal infrastructure cost. Conversely, high-resource settings have increasingly adopted restrictive formulary approaches. A 2017 initiative at Hamburg University Hospital implemented pre-authorisation requirements for 12 broad-spectrum antibiotics, resulting in a 22% decrease in resistant Gram-negative infections over 36 months and estimated annual savings of €3.2 million. Critics of restrictive models, however, argue that such approaches may inadvertently delay appropriate treatment in critically ill patients—a trade-off that Okonkwo suggests disproportionately affects institutions lacking 24-hour specialist coverage. Arguably, the optimal approach depends heavily on local context, existing infrastructure, and patient population characteristics."
+        },
+        {
+          "id": "P5",
+          "text": "Moving forward, experts increasingly emphasise that sustainable stewardship requires integration into broader hospital quality frameworks rather than functioning as isolated programmes. The European Antimicrobial Resistance Surveillance Network's 2023 report recommended embedding ASP metrics into institutional performance dashboards alongside patient safety indicators. Such integration, proponents argue, elevates stewardship from a specialist concern to an organisational priority. Additionally, education-focused interventions—including regular case-based training and transparent communication of resistance data to clinical teams—appear to enhance long-term behavioural change more effectively than purely restrictive measures. Whether these multifaceted approaches can overcome entrenched prescribing habits and resource limitations remains to be definitively established, yet the accumulating evidence suggests that well-designed, contextually appropriate stewardship programmes represent an essential component of modern hospital infection control."
+        }
+      ],
+      "questions": [
+        {
+          "id": 4,
+          "type": "matching-headings",
+          "title": "Questions 14-18",
+          "instructions": "The reading passage has five paragraphs, P1-P5. Choose the correct heading for paragraphs P1-P5 from the list of headings below. Write the correct number, i-viii, in boxes 14-18 on your answer sheet.",
+          "questions": [
+            {
+              "id": 14,
+              "questionText": "Paragraph A",
+              "options": [
+                "Structural components underlying effective programme design",
+                "The financial benefits of restrictive antibiotic policies",
+                "Why global implementation faces significant hurdles",
+                "The extent of antimicrobial resistance and coordinated responses",
+                "Comparing intervention approaches and their limitations",
+                "General challenges in contemporary hospital administration",
+                "Incorporating stewardship into broader quality frameworks",
+                "The significance of clinical pharmacist ratios"
+              ],
+              "correctAnswer": "The extent of antimicrobial resistance and coordinated responses",
+              "justification": "Paragraph A introduces the massive scale of the problem (4.95 million associated deaths) and subsequently defines Antimicrobial Stewardship Programmes (ASPs) as the primary institutional response. The heading captures this dual focus: 'extent of antimicrobial resistance' relates to the statistics provided, and 'coordinated responses' relates to the introduction of ASPs.",
+              "evidenceQuote": "According to the 2019 Global Burden of Disease Study, an estimated 4.95 million deaths worldwide were associated with bacterial AMR that year... Antimicrobial stewardship programmes... have emerged as the primary institutional response to this escalating crisis."
+            },
+            {
+              "id": 15,
+              "questionText": "Paragraph B",
+              "options": [
+                "Structural components underlying effective programme design",
+                "The financial benefits of restrictive antibiotic policies",
+                "Why global implementation faces significant hurdles",
+                "The extent of antimicrobial resistance and coordinated responses",
+                "Comparing intervention approaches and their limitations",
+                "General challenges in contemporary hospital administration",
+                "Incorporating stewardship into broader quality frameworks",
+                "The significance of clinical pharmacist ratios"
+              ],
+              "correctAnswer": "Structural components underlying effective programme design",
+              "justification": "Paragraph B outlines the specific operational elements that make up a successful stewardship programme. It lists four distinct stages (audit, feedback, restriction, de-escalation). The heading 'Structural components' accurately summarizes these four operational stages described in the text.",
+              "evidenceQuote": "The architecture of hospital stewardship programmes typically encompasses several interconnected elements... Her team identified four core operational stages that characterise successful programmes"
+            },
+            {
+              "id": 16,
+              "questionText": "Paragraph C",
+              "options": [
+                "Structural components underlying effective programme design",
+                "The financial benefits of restrictive antibiotic policies",
+                "Why global implementation faces significant hurdles",
+                "The extent of antimicrobial resistance and coordinated responses",
+                "Comparing intervention approaches and their limitations",
+                "General challenges in contemporary hospital administration",
+                "Incorporating stewardship into broader quality frameworks",
+                "The significance of clinical pharmacist ratios"
+              ],
+              "correctAnswer": "Why global implementation faces significant hurdles",
+              "justification": "Paragraph C focuses entirely on the difficulties of implementing these programmes worldwide, citing geographical disparities, resource constraints (staffing), and cultural factors like hierarchy. The heading paraphrases 'substantial obstacles that vary considerably' as 'significant hurdles' regarding global implementation.",
+              "evidenceQuote": "While the theoretical benefits of stewardship are well-documented, practical implementation faces substantial obstacles that vary considerably across different healthcare contexts."
+            },
+            {
+              "id": 17,
+              "questionText": "Paragraph D",
+              "options": [
+                "Structural components underlying effective programme design",
+                "The financial benefits of restrictive antibiotic policies",
+                "Why global implementation faces significant hurdles",
+                "The extent of antimicrobial resistance and coordinated responses",
+                "Comparing intervention approaches and their limitations",
+                "General challenges in contemporary hospital administration",
+                "Incorporating stewardship into broader quality frameworks",
+                "The significance of clinical pharmacist ratios"
+              ],
+              "correctAnswer": "Comparing intervention approaches and their limitations",
+              "justification": "Paragraph D contrasts two specific strategies: technology-enabled solutions in low-resource settings and restrictive formulary approaches in high-resource settings. It explicitly discusses the pros (efficiency, savings) and cons (treatment delays) of these methods. The heading reflects this comparative analysis.",
+              "evidenceQuote": "Various strategies have been proposed to address these implementation barriers, though each carries distinct advantages and limitations."
+            },
+            {
+              "id": 18,
+              "questionText": "Paragraph E",
+              "options": [
+                "Structural components underlying effective programme design",
+                "The financial benefits of restrictive antibiotic policies",
+                "Why global implementation faces significant hurdles",
+                "The extent of antimicrobial resistance and coordinated responses",
+                "Comparing intervention approaches and their limitations",
+                "General challenges in contemporary hospital administration",
+                "Incorporating stewardship into broader quality frameworks",
+                "The significance of clinical pharmacist ratios"
+              ],
+              "correctAnswer": "Incorporating stewardship into broader quality frameworks",
+              "justification": "Paragraph E argues that stewardship should not be an isolated specialist concern but must be embedded into the larger hospital system, such as performance dashboards and patient safety indicators. The heading matches the paragraph's main argument about integration.",
+              "evidenceQuote": "Moving forward, experts increasingly emphasise that sustainable stewardship requires integration into broader hospital quality frameworks rather than functioning as isolated programmes."
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "type": "matching-sentence-endings",
+          "title": "Questions 19-22",
+          "instructions": "Complete each sentence with the correct ending, A–G. Write the correct letter, A-G, next to questions 19-22 on your answer sheet.",
+          "sentence_endings": [
+            {
+              "letter": "A",
+              "text": "differences in the availability of dedicated specialist personnel."
+            },
+            {
+              "letter": "B",
+              "text": "that coordinated programmes can significantly influence how clinicians prescribe antibiotics."
+            },
+            {
+              "letter": "C",
+              "text": "the widespread adoption of mobile technology solutions across resource-limited healthcare settings."
+            },
+            {
+              "letter": "D",
+              "text": "tend to produce more lasting behavioural modifications than purely restrictive policies."
+            },
+            {
+              "letter": "E",
+              "text": "both a decrease in drug-resistant infections and substantial annual financial savings."
+            },
+            {
+              "letter": "F",
+              "text": "the complete elimination of broad-spectrum antibiotic prescriptions across European hospitals."
+            },
+            {
+              "letter": "G",
+              "text": "cultural attitudes toward challenging prescribing decisions made by senior colleagues."
+            }
+          ],
+          "questions": [
+            {
+              "id": 19,
+              "questionText": "Research conducted by Dr. Markovic's team demonstrated",
+              "correctAnswer": "B",
+              "justification": "Paragraph B details the results of Markovic's 18-month study, stating that findings showed a 27% reduction in usage, 'suggesting that structured interventions can meaningfully influence prescribing behaviour.' Ending B accurately paraphrases this conclusion regarding the influence on clinicians.",
+              "evidenceQuote": "Markovic's findings demonstrated a 27% reduction in broad-spectrum antibiotic usage among participating institutions, suggesting that structured interventions can meaningfully influence prescribing behaviour."
+            },
+            {
+              "id": 20,
+              "questionText": "Professor Thornton attributed the disparity in programme adoption between wealthy and developing nations primarily to",
+              "correctAnswer": "A",
+              "justification": "In Paragraph C, Thornton analyzes the gap between high-income (73% adoption) and low-middle income (38% adoption) countries. He explicitly attributes this 'primarily to resource constraints,' specifically noting the requirement for 'dedicated personnel' like infectious disease physicians and pharmacists. Ending A reflects this focus on personnel availability.",
+              "evidenceQuote": "Thornton attributed this gap primarily to resource constraints, noting that effective ASPs require dedicated personnel—typically infectious disease physicians and clinical pharmacists—whose availability differs markedly by region."
+            },
+            {
+              "id": 21,
+              "questionText": "The pre-authorisation requirements introduced at Hamburg University Hospital resulted in",
+              "correctAnswer": "E",
+              "justification": "Paragraph D describes the specific outcomes of the Hamburg initiative. It lists two distinct results: a '22% decrease in resistant Gram-negative infections' and 'estimated annual savings of €3.2 million.' Ending E combines these clinical and financial outcomes into a single summary.",
+              "evidenceQuote": "A 2017 initiative at Hamburg University Hospital implemented pre-authorisation requirements... resulting in a 22% decrease in resistant Gram-negative infections over 36 months and estimated annual savings of €3.2 million."
+            },
+            {
+              "id": 22,
+              "questionText": "The passage suggests that training-based stewardship interventions",
+              "correctAnswer": "D",
+              "justification": "Paragraph E contrasts educational interventions with restrictive ones. It states that education-focused methods (training) 'appear to enhance long-term behavioural change more effectively than purely restrictive measures.' Ending D captures this comparison regarding the durability of behavioural modification.",
+              "evidenceQuote": "education-focused interventions... appear to enhance long-term behavioural change more effectively than purely restrictive measures."
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "type": "yes-no-not-given",
+          "title": "Questions 23-26",
+          "instructions": "Do the following statements agree with the claims of the writer in the Reading Passage? In boxes 23-26 on your answer sheet, write YES if the statement agrees with the claims of the writer, NO if the statement contradicts the claims of the writer, NOT GIVEN if it is impossible to say what the writer thinks about this.",
+          "questions": [
+            {
+              "id": 23,
+              "questionText": "According to Dr. Markovic, the benefits achieved by stewardship programmes may diminish over time without continued organisational support.",
+              "correctAnswer": "YES",
+              "justification": "Dr. Markovic explicitly expressed this view when she warned about the sustainability of results. The statement accurately paraphrases her warning that programme gains require ongoing support (sustained commitment) to avoid plateauing.",
+              "evidenceQuote": "she cautioned that such improvements tend to plateau after approximately 14 months without sustained institutional commitment"
+            },
+            {
+              "id": 24,
+              "questionText": "Professor Thornton considers cultural attitudes toward questioning senior colleagues to be the primary barrier to stewardship programme implementation in developing countries.",
+              "correctAnswer": "NO",
+              "justification": "The statement contradicts the passage. Thornton attributes the gap 'primarily to resource constraints' (specifically staffing). Cultural factors and hierarchical reluctance are mentioned as additional factors 'beyond staffing,' not the primary barrier.",
+              "evidenceQuote": "Thornton attributed this gap primarily to resource constraints, noting that effective ASPs require dedicated personnel"
+            },
+            {
+              "id": 25,
+              "questionText": "The writer believes that the Hamburg University Hospital's restrictive approach represents a more effective stewardship model than Dr. Okonkwo's smartphone-based intervention.",
+              "correctAnswer": "NOT GIVEN",
+              "justification": "The passage provides data on the success of both approaches (Hamburg's savings/infection reduction vs. Okonkwo's guideline adherence). However, the writer does not rank them or state that one is better than the other. Instead, the text suggests the 'optimal approach depends heavily on local context.'",
+              "evidenceQuote": "Arguably, the optimal approach depends heavily on local context, existing infrastructure, and patient population characteristics"
+            },
+            {
+              "id": 26,
+              "questionText": "The writer suggests that educational stewardship interventions produce more lasting changes in prescribing behaviour than approaches based purely on restriction.",
+              "correctAnswer": "YES",
+              "justification": "The statement agrees with the writer's view in paragraph E. The text explicitly states that education-focused interventions 'appear to enhance long-term behavioural change more effectively' than restrictive measures.",
+              "evidenceQuote": "education-focused interventions...appear to enhance long-term behavioural change more effectively than purely restrictive measures"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Open Science Versus Patents: Evaluating Innovation Outcomes in the Modern Research Landscape",
+      "level": "academic",
+      "estimatedTime": 15,
+      "paragraphs": [
+        {
+          "id": "P1",
+          "text": "The tension between proprietary intellectual property regimes and open-access knowledge sharing has become increasingly salient in contemporary innovation policy discourse. Patents, which confer time-limited monopoly rights in exchange for public disclosure, have long been regarded as essential incentives for research and development investment. Yet the emergence of open science movements—characterised by unrestricted data sharing, collaborative methodologies, and preprint dissemination—has prompted fundamental questions about whether alternative frameworks might yield superior innovation outcomes. A 2021 analysis by the Organisation for Economic Cooperation and Development estimated that global patent applications exceeded 3.4 million annually, representing a 45% increase over the preceding decade. Notwithstanding this expansion, critics contend that the system increasingly impedes rather than facilitates knowledge diffusion, particularly in rapidly evolving fields such as biotechnology and artificial intelligence."
+        },
+        {
+          "id": "P2",
+          "text": "Proponents of patent-based innovation argue that exclusive rights provide indispensable market signals and financial incentives. Dr. Marcus Chen, an economist specialising in intellectual property, has articulated what he terms the 'appropriability thesis'—the claim that without guaranteed returns, firms would systematically underinvest in high-risk research. His longitudinal analysis of pharmaceutical development between 2005 and 2020 found that patent-protected compounds attracted, on average, 2.7 times more late-stage clinical trial funding than their unprotected counterparts. Chen proposes a four-stage evaluation framework for assessing innovation system effectiveness: initial research investment quantification, knowledge spillover measurement through citation analysis, time-to-market calculation for commercialised innovations, and ultimate welfare impact assessment via consumer access metrics. This methodology, he contends, reveals patents' continued relevance, albeit with significant sectoral variation. Professor Elena Vasquez has offered qualified support for this position, though she emphasises that the appropriability thesis assumes relatively low transaction costs for licensing—an assumption that frequently proves problematic in practice."
+        },
+        {
+          "id": "P3",
+          "text": "The open science paradigm, conversely, proceeds from fundamentally different premises regarding how knowledge production optimally functions. Dr. Kwame Asante, whose research examines collaborative scientific networks, has documented what he characterises as the 'cumulative advantage' of unrestricted information exchange. His 2022 meta-analysis synthesising 89 studies across twelve countries found that openly shared datasets generated approximately 31% more derivative publications than proprietary equivalents over five-year periods. Asante argues that patents create artificial scarcity in what economists term non-rivalrous goods—resources whose consumption by one party does not diminish availability to others. Insofar as scientific knowledge exhibits these characteristics, he maintains, proprietary restrictions impose deadweight losses without corresponding efficiency gains. The Human Genome Project, which made sequence data freely available rather than pursuing patent protection, is frequently cited as emblematic of open science's potential; subsequent analyses suggest it catalysed research applications valued at substantially more than the $3.8 billion initial investment, though precise quantification remains contested."
+        },
+        {
+          "id": "P4",
+          "text": "Recent scholarship has increasingly questioned whether this debate admits of any universal resolution, suggesting instead that optimal arrangements depend critically on disciplinary context, development stage, and market structure. Professor Ingrid Hoffmann, drawing on institutional economics, has proposed that neither pure openness nor comprehensive patenting represents an efficient endpoint. Her comparative analysis of software and pharmaceutical innovation reveals strikingly divergent patterns: whereas open-source software development demonstrates robust productivity without patent incentives, pharmaceutical research appears substantially more dependent on appropriability mechanisms. Hoffmann attributes this discrepancy to fundamental differences in imitation costs—the expense required for competitors to replicate innovations. Where these costs are naturally high, as with complex molecules requiring extensive testing, patents may prove redundant; where low, as with easily copied code, alternative coordination mechanisms such as licensing consortia may substitute effectively. Critics of this contingency approach, however, object that it provides insufficient guidance for policymakers confronting hybrid technologies that span multiple sectors. Hoffmann acknowledges this limitation but maintains that simplistic either/or frameworks obscure rather than illuminate the underlying tradeoffs."
+        },
+        {
+          "id": "P5",
+          "text": "The practical implications of this ongoing debate extend well beyond academic discourse into pressing questions of public health, technological competitiveness, and scientific equity. Emerging evidence suggests that developing nations may derive disproportionate benefits from open-access regimes, though the magnitude of this effect remains inadequately characterised. The COVID-19 pandemic brought these tensions into sharp relief: some observers credited patent waivers with accelerating vaccine distribution, while others maintained that initial development speed depended critically on proprietary incentive structures. What appears increasingly clear is that innovation ecosystems require more sophisticated governance than simple advocacy for either complete openness or comprehensive protection permits. Whether hybrid models—such as patent pools, compulsory licensing frameworks, or tiered access systems—can capture the advantages of both approaches while mitigating their respective limitations constitutes perhaps the central policy question confronting research institutions in the coming decades."
+        }
+      ],
+      "questions": [
+        {
+          "id": 7,
+          "type": "note-completion",
+          "title": "Questions 27–33",
+          "instructions": "Complete the notes below. Choose NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer.",
+          "word_limit": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+          "selected_section": "B–C",
+          "structure": "<p class='notes-title'>PATENTS AND OPEN SCIENCE CLAIMS</p><h3>Patent-based rationale (Chen)</h3><ul><li>(27)_____ explains why firms need assured returns.</li><li>Pharma evidence: patent-protected compounds received (28)_____ more late-stage trial funding.</li><li>Suggested way to judge systems: a (29)_____ evaluation framework.</li><li>One method for tracking spillovers: (30)_____</li></ul><h3>Open science evidence (Asante)</h3><ul><li>Benefit of free exchange described as (31)_____</li><li>2022 synthesis: open datasets produced around (32)_____ more derivative publications.</li><li>Patents can impose scarcity on economists' (33)_____</li></ul>",
+          "questions": [
+            {
+              "id": 27,
+              "gap_number": 27,
+              "correctAnswer": "appropriability thesis",
+              "word_count": 2,
+              "paragraph": "B",
+              "evidenceQuote": "Dr. Marcus Chen, an economist specialising in intellectual property, has articulated what he terms the 'appropriability thesis'—the claim that without guaranteed returns, firms would systematically underinvest in high-risk research.",
+              "justification": "The note matches information in paragraph B. The text explicitly states that Chen calls his core argument the 'appropriability thesis'."
+            },
+            {
+              "id": 28,
+              "gap_number": 28,
+              "correctAnswer": "2.7 times",
+              "word_count": 2,
+              "paragraph": "B",
+              "evidenceQuote": "His longitudinal analysis of pharmaceutical development between 2005 and 2020 found that patent-protected compounds attracted, on average, 2.7 times more late-stage clinical trial funding than their unprotected counterparts.",
+              "justification": "The note matches information in paragraph B. The text explicitly states that patent-protected compounds attracted '2.7 times' more late-stage clinical trial funding."
+            },
+            {
+              "id": 29,
+              "gap_number": 29,
+              "correctAnswer": "four-stage",
+              "word_count": 1,
+              "paragraph": "B",
+              "evidenceQuote": "Chen proposes a four-stage evaluation framework for assessing innovation system effectiveness: initial research investment quantification, knowledge spillover measurement through citation analysis, time-to-market calculation for commercialised innovations, and ultimate welfare impact assessment via consumer access metrics.",
+              "justification": "The note matches information in paragraph B. The text explicitly states that Chen proposes a 'four-stage' evaluation framework."
+            },
+            {
+              "id": 30,
+              "gap_number": 30,
+              "correctAnswer": "citation analysis",
+              "word_count": 2,
+              "paragraph": "B",
+              "evidenceQuote": "Chen proposes a four-stage evaluation framework for assessing innovation system effectiveness: initial research investment quantification, knowledge spillover measurement through citation analysis, time-to-market calculation for commercialised innovations, and ultimate welfare impact assessment via consumer access metrics.",
+              "justification": "The note matches information in paragraph B. The text explicitly states that knowledge spillovers are measured through 'citation analysis'."
+            },
+            {
+              "id": 31,
+              "gap_number": 31,
+              "correctAnswer": "cumulative advantage",
+              "word_count": 2,
+              "paragraph": "C",
+              "evidenceQuote": "Dr. Kwame Asante, whose research examines collaborative scientific networks, has documented what he characterises as the 'cumulative advantage' of unrestricted information exchange.",
+              "justification": "The note matches information in paragraph C. The text explicitly states that Asante describes the benefit of unrestricted exchange as 'cumulative advantage'."
+            },
+            {
+              "id": 32,
+              "gap_number": 32,
+              "correctAnswer": "31%",
+              "word_count": 1,
+              "paragraph": "C",
+              "evidenceQuote": "His 2022 meta-analysis synthesising 89 studies across twelve countries found that openly shared datasets generated approximately 31% more derivative publications than proprietary equivalents over five-year periods.",
+              "justification": "The note matches information in paragraph C. The text explicitly states that openly shared datasets generated approximately '31%' more derivative publications."
+            },
+            {
+              "id": 33,
+              "gap_number": 33,
+              "correctAnswer": "non-rivalrous goods",
+              "word_count": 2,
+              "paragraph": "C",
+              "evidenceQuote": "Asante argues that patents create artificial scarcity in what economists term non-rivalrous goods—resources whose consumption by one party does not diminish availability to others.",
+              "justification": "The note matches information in paragraph C. The text explicitly states that patents create artificial scarcity in 'non-rivalrous goods'."
+            }
+          ]
+        },
 {
-  "id": 4,
-  "type": "matching-headings",
-  "title": "Questions 4-8",
-  "instructions": "The reading passage has five paragraphs, P1-P5. Choose the correct heading for paragraphs P1-P5 from the list of headings below. Write the correct number, i-viii, in boxes 4-8 on your answer sheet.",
+  "id": 8,
+  "type": "multiple-choice",
+  "title": "Questions 34-36",
+  "instructions": "Choose the correct letter, A, B, C or D.",
   "questions": [
     {
-      "id": 14,
-      "questionText": "Paragraph A",
+      "id": 34,
+      "questionText": "According to the passage, how have global patent applications changed over the past decade?",
       "options": [
-        "Structural components underlying effective programme design",
-        "The financial benefits of restrictive antibiotic policies",
-        "Why global implementation faces significant hurdles",
-        "The extent of antimicrobial resistance and coordinated responses",
-        "Comparing intervention approaches and their limitations",
-        "General challenges in contemporary hospital administration",
-        "Incorporating stewardship into broader quality frameworks",
-        "The significance of clinical pharmacist ratios"
+        "They have decreased by approximately half",
+        "They have increased by nearly half",
+        "They have remained relatively stable",
+        "They have more than doubled in volume"
       ],
-      "correctAnswer": "The extent of antimicrobial resistance and coordinated responses",
-      "justification": "Paragraph A introduces the massive scale of the problem (4.95 million associated deaths) and subsequently defines Antimicrobial Stewardship Programmes (ASPs) as the primary institutional response. The heading captures this dual focus: 'extent of antimicrobial resistance' relates to the statistics provided, and 'coordinated responses' relates to the introduction of ASPs.",
-      "evidenceQuote": "According to the 2019 Global Burden of Disease Study, an estimated 4.95 million deaths worldwide were associated with bacterial AMR that year... Antimicrobial stewardship programmes... have emerged as the primary institutional response to this escalating crisis."
+      "correctAnswer": "They have increased by nearly half",
+      "justification": "Paragraph 1 explicitly states that global patent applications exceeded 3.4 million annually, 'representing a 45% increase over the preceding decade.' The correct answer paraphrases '45% increase' as 'increased by nearly half,' maintaining the core meaning.",
+      "evidenceQuote": "representing a 45% increase over the preceding decade"
     },
     {
-      "id": 15,
-      "questionText": "Paragraph B",
+      "id":35,
+      "questionText": "What did Dr. Chen's longitudinal analysis of pharmaceutical development reveal about patent protection?",
       "options": [
-        "Structural components underlying effective programme design",
-        "The financial benefits of restrictive antibiotic policies",
-        "Why global implementation faces significant hurdles",
-        "The extent of antimicrobial resistance and coordinated responses",
-        "Comparing intervention approaches and their limitations",
-        "General challenges in contemporary hospital administration",
-        "Incorporating stewardship into broader quality frameworks",
-        "The significance of clinical pharmacist ratios"
+        "Unprotected compounds attracted more early-stage research investment",
+        "Patent protection had minimal effect on overall research funding levels",
+        "Protected compounds received substantially more funding for advanced clinical trials",
+        "Funding levels remained consistent regardless of intellectual property status"
       ],
-      "correctAnswer": "Structural components underlying effective programme design",
-      "justification": "Paragraph B outlines the specific operational elements that make up a successful stewardship programme. It lists four distinct stages (audit, feedback, restriction, de-escalation). The heading 'Structural components' accurately summarizes these four operational stages described in the text.",
-      "evidenceQuote": "The architecture of hospital stewardship programmes typically encompasses several interconnected elements... Her team identified four core operational stages that characterise successful programmes"
+      "correctAnswer": "Protected compounds received substantially more funding for advanced clinical trials",
+      "justification": "Paragraph 2 states that 'patent-protected compounds attracted, on average, 2.7 times more late-stage clinical trial funding than their unprotected counterparts.' The correct answer paraphrases 'late-stage clinical trial funding' as 'funding for advanced clinical trials' and '2.7 times more' as 'substantially more.'",
+      "evidenceQuote": "patent-protected compounds attracted, on average, 2.7 times more late-stage clinical trial funding than their unprotected counterparts"
     },
     {
-      "id": 16,
-      "questionText": "Paragraph C",
+      "id": 36,
+      "questionText": "What can be inferred about Professor Vasquez's position regarding the appropriability thesis?",
       "options": [
-        "Structural components underlying effective programme design",
-        "The financial benefits of restrictive antibiotic policies",
-        "Why global implementation faces significant hurdles",
-        "The extent of antimicrobial resistance and coordinated responses",
-        "Comparing intervention approaches and their limitations",
-        "General challenges in contemporary hospital administration",
-        "Incorporating stewardship into broader quality frameworks",
-        "The significance of clinical pharmacist ratios"
+        "She considers it theoretically sound but limited by real-world complications",
+        "She fundamentally disagrees with its underlying assumptions",
+        "She believes it applies equally well across all innovation sectors",
+        "She advocates for eliminating patent protection entirely"
       ],
-      "correctAnswer": "Why global implementation faces significant hurdles",
-      "justification": "Paragraph C focuses entirely on the difficulties of implementing these programmes worldwide, citing geographical disparities, resource constraints (staffing), and cultural factors like hierarchy. The heading paraphrases 'substantial obstacles that vary considerably' as 'significant hurdles' regarding global implementation.",
-      "evidenceQuote": "While the theoretical benefits of stewardship are well-documented, practical implementation faces substantial obstacles that vary considerably across different healthcare contexts."
-    },
-    {
-      "id": 17,
-      "questionText": "Paragraph D",
-      "options": [
-        "Structural components underlying effective programme design",
-        "The financial benefits of restrictive antibiotic policies",
-        "Why global implementation faces significant hurdles",
-        "The extent of antimicrobial resistance and coordinated responses",
-        "Comparing intervention approaches and their limitations",
-        "General challenges in contemporary hospital administration",
-        "Incorporating stewardship into broader quality frameworks",
-        "The significance of clinical pharmacist ratios"
-      ],
-      "correctAnswer": "Comparing intervention approaches and their limitations",
-      "justification": "Paragraph D contrasts two specific strategies: technology-enabled solutions in low-resource settings and restrictive formulary approaches in high-resource settings. It explicitly discusses the pros (efficiency, savings) and cons (treatment delays) of these methods. The heading reflects this comparative analysis.",
-      "evidenceQuote": "Various strategies have been proposed to address these implementation barriers, though each carries distinct advantages and limitations."
-    },
-    {
-      "id": 18,
-      "questionText": "Paragraph E",
-      "options": [
-        "Structural components underlying effective programme design",
-        "The financial benefits of restrictive antibiotic policies",
-        "Why global implementation faces significant hurdles",
-        "The extent of antimicrobial resistance and coordinated responses",
-        "Comparing intervention approaches and their limitations",
-        "General challenges in contemporary hospital administration",
-        "Incorporating stewardship into broader quality frameworks",
-        "The significance of clinical pharmacist ratios"
-      ],
-      "correctAnswer": "Incorporating stewardship into broader quality frameworks",
-      "justification": "Paragraph E argues that stewardship should not be an isolated specialist concern but must be embedded into the larger hospital system, such as performance dashboards and patient safety indicators. The heading matches the paragraph's main argument about integration.",
-      "evidenceQuote": "Moving forward, experts increasingly emphasise that sustainable stewardship requires integration into broader hospital quality frameworks rather than functioning as isolated programmes."
+      "correctAnswer": "She considers it theoretically sound but limited by real-world complications",
+      "justification": "Paragraph 2 states Vasquez 'has offered qualified support for this position' while emphasising that it 'assumes relatively low transaction costs for licensing—an assumption that frequently proves problematic in practice.' This implies she accepts the theory in principle but recognises practical limitations.",
+      "evidenceQuote": "Professor Elena Vasquez has offered qualified support for this position, though she emphasises that the appropriability thesis assumes relatively low transaction costs for licensing—an assumption that frequently proves problematic in practice"
     }
   ]
 },
 {
-  "id": 5,
-  "type": "matching-sentence-endings",
-  "title": "Questions 18-21",
-  "instructions": "Complete each sentence with the correct ending, A–G. Write the correct letter, A-G, next to questions 18-21 on your answer sheet.",
-  "sentence_endings": [
+  "id": 9,
+  "type": "matching-features",
+  "title": "Questions 37-40",
+  "instructions": "Look at the following statements (Questions 37-40) and the list of researchers below. Match each statement with the correct researcher, A-G. Write the correct letter, A-G, next to Questions 37-40. NB You may use any letter more than once.",
+  "features": [
     {
       "letter": "A",
-      "text": "differences in the availability of dedicated specialist personnel."
+      "name": "Dr. Marcus Chen"
     },
     {
       "letter": "B",
-      "text": "that coordinated programmes can significantly influence how clinicians prescribe antibiotics."
+      "name": "Professor Elena Vasquez"
     },
     {
       "letter": "C",
-      "text": "the widespread adoption of mobile technology solutions across resource-limited healthcare settings."
+      "name": "Dr. Kwame Asante"
     },
     {
       "letter": "D",
-      "text": "tend to produce more lasting behavioural modifications than purely restrictive policies."
+      "name": "Professor Ingrid Hoffmann"
     },
     {
       "letter": "E",
-      "text": "both a decrease in drug-resistant infections and substantial annual financial savings."
+      "name": "The Organisation for Economic Cooperation and Development"
     },
     {
       "letter": "F",
-      "text": "the complete elimination of broad-spectrum antibiotic prescriptions across European hospitals."
+      "name": "The Human Genome Project"
     },
     {
       "letter": "G",
-      "text": "cultural attitudes toward challenging prescribing decisions made by senior colleagues."
+      "name": "Critics of the contingency approach"
     }
   ],
   "questions": [
     {
-      "id": 18,
-      "questionText": "Research conducted by Dr. Markovic's team demonstrated",
-      "correctAnswer": "B",
-      "justification": "Paragraph B details the results of Markovic's 18-month study, stating that findings showed a 27% reduction in usage, 'suggesting that structured interventions can meaningfully influence prescribing behaviour.' Ending B accurately paraphrases this conclusion regarding the influence on clinicians.",
-      "evidenceQuote": "Markovic's findings demonstrated a 27% reduction in broad-spectrum antibiotic usage among participating institutions, suggesting that structured interventions can meaningfully influence prescribing behaviour."
-    },
-    {
-      "id": 19,
-      "questionText": "Professor Thornton attributed the disparity in programme adoption between wealthy and developing nations primarily to",
+      "id": 37,
+      "questionText": "found that drug compounds with intellectual property protection received considerably more financing for advanced clinical testing",
       "correctAnswer": "A",
-      "justification": "In Paragraph C, Thornton analyzes the gap between high-income (73% adoption) and low-middle income (38% adoption) countries. He explicitly attributes this 'primarily to resource constraints,' specifically noting the requirement for 'dedicated personnel' like infectious disease physicians and pharmacists. Ending A reflects this focus on personnel availability.",
-      "evidenceQuote": "Thornton attributed this gap primarily to resource constraints, noting that effective ASPs require dedicated personnel—typically infectious disease physicians and clinical pharmacists—whose availability differs markedly by region."
+      "justification": "Paragraph 2 explicitly attributes this finding to Dr. Chen: 'His longitudinal analysis of pharmaceutical development between 2005 and 2020 found that patent-protected compounds attracted, on average, 2.7 times more late-stage clinical trial funding than their unprotected counterparts.' The statement paraphrases these specific findings regarding funding disparities.",
+      "evidenceQuote": "His longitudinal analysis of pharmaceutical development between 2005 and 2020 found that patent-protected compounds attracted, on average, 2.7 times more late-stage clinical trial funding than their unprotected counterparts"
     },
     {
-      "id": 20,
-      "questionText": "The pre-authorisation requirements introduced at Hamburg University Hospital resulted in",
-      "correctAnswer": "E",
-      "justification": "Paragraph D describes the specific outcomes of the Hamburg initiative. It lists two distinct results: a '22% decrease in resistant Gram-negative infections' and 'estimated annual savings of €3.2 million.' Ending E combines these clinical and financial outcomes into a single summary.",
-      "evidenceQuote": "A 2017 initiative at Hamburg University Hospital implemented pre-authorisation requirements... resulting in a 22% decrease in resistant Gram-negative infections over 36 months and estimated annual savings of €3.2 million."
+      "id": 38,
+      "questionText": "demonstrated through comprehensive cross-national research that unrestricted data yielded substantially higher rates of follow-up scholarship",
+      "correctAnswer": "C",
+      "justification": "Paragraph 3 attributes this finding to Dr. Asante. It states his 'meta-analysis synthesising 89 studies across twelve countries' (comprehensive cross-national research) found that 'openly shared datasets generated approximately 31% more derivative publications' (higher rates of follow-up scholarship).",
+      "evidenceQuote": "His 2022 meta-analysis synthesising 89 studies across twelve countries found that openly shared datasets generated approximately 31% more derivative publications than proprietary equivalents"
     },
     {
-      "id": 21,
-      "questionText": "The passage suggests that training-based stewardship interventions",
+      "id": 39,
+      "questionText": "observed markedly contrasting innovation dynamics between the computer programming and drug development industries",
       "correctAnswer": "D",
-      "justification": "Paragraph E contrasts educational interventions with restrictive ones. It states that education-focused methods (training) 'appear to enhance long-term behavioural change more effectively than purely restrictive measures.' Ending D captures this comparison regarding the durability of behavioural modification.",
-      "evidenceQuote": "education-focused interventions... appear to enhance long-term behavioural change more effectively than purely restrictive measures."
+      "justification": "Paragraph 4 details Professor Hoffmann's comparative analysis. The text states she reveals 'strikingly divergent patterns' between 'software' (computer programming) and 'pharmaceutical' (drug development) innovation.",
+      "evidenceQuote": "Her comparative analysis of software and pharmaceutical innovation reveals strikingly divergent patterns"
+    },
+    {
+      "id": 40,
+      "questionText": "developed a methodology incorporating multiple stages for measuring how effectively innovation systems perform",
+      "correctAnswer": "A",
+      "justification": "Paragraph 2 mentions that Chen 'proposes a four-stage evaluation framework for assessing innovation system effectiveness.' This aligns directly with developing a methodology incorporating multiple stages for measuring performance.",
+      "evidenceQuote": "Chen proposes a four-stage evaluation framework for assessing innovation system effectiveness"
     }
-  ]
-},
-{
-  "id": 6,
-  "type": "yes-no-not-given",
-  "title": "Questions 22-25",
-  "instructions": "Do the following statements agree with the claims of the writer in the Reading Passage? In boxes 22-25 on your answer sheet, write YES if the statement agrees with the claims of the writer, NO if the statement contradicts the claims of the writer, NOT GIVEN if it is impossible to say what the writer thinks about this.",
-  "questions": [
-    {
-      "id": 22,
-      "questionText": "According to Dr. Markovic, the benefits achieved by stewardship programmes may diminish over time without continued organisational support.",
-      "correctAnswer": "YES",
-      "justification": "Dr. Markovic explicitly expressed this view when she warned about the sustainability of results. The statement accurately paraphrases her warning that programme gains require ongoing support (sustained commitment) to avoid plateauing.",
-      "evidenceQuote": "she cautioned that such improvements tend to plateau after approximately 14 months without sustained institutional commitment"
-    },
-    {
-      "id": 23,
-      "questionText": "Professor Thornton considers cultural attitudes toward questioning senior colleagues to be the primary barrier to stewardship programme implementation in developing countries.",
-      "correctAnswer": "NO",
-      "justification": "The statement contradicts the passage. Thornton attributes the gap 'primarily to resource constraints' (specifically staffing). Cultural factors and hierarchical reluctance are mentioned as additional factors 'beyond staffing,' not the primary barrier.",
-      "evidenceQuote": "Thornton attributed this gap primarily to resource constraints, noting that effective ASPs require dedicated personnel"
-    },
-    {
-      "id": 24,
-      "questionText": "The writer believes that the Hamburg University Hospital's restrictive approach represents a more effective stewardship model than Dr. Okonkwo's smartphone-based intervention.",
-      "correctAnswer": "NOT GIVEN",
-      "justification": "The passage provides data on the success of both approaches (Hamburg's savings/infection reduction vs. Okonkwo's guideline adherence). However, the writer does not rank them or state that one is better than the other. Instead, the text suggests the 'optimal approach depends heavily on local context.'",
-      "evidenceQuote": "Arguably, the optimal approach depends heavily on local context, existing infrastructure, and patient population characteristics"
-    },
-    {
-      "id": 25,
-      "questionText": "The writer suggests that educational stewardship interventions produce more lasting changes in prescribing behaviour than approaches based purely on restriction.",
-      "correctAnswer": "YES",
-      "justification": "The statement agrees with the writer's view in paragraph E. The text explicitly states that education-focused interventions 'appear to enhance long-term behavioural change more effectively' than restrictive measures.",
-      "evidenceQuote": "education-focused interventions...appear to enhance long-term behavioural change more effectively than purely restrictive measures"
-    }
-  ]
-}
-            ]
-          },
-{
-  "id": 1,
-  "title": "Open Science Versus Patents: Evaluating Innovation Outcomes in the Modern Research Landscape",
-  "level": "academic",
-  "estimatedTime": 15,
-  "paragraphs": [
-    {
-      "id": "P1",
-      "text": "The tension between proprietary intellectual property regimes and open-access knowledge sharing has become increasingly salient in contemporary innovation policy discourse. Patents, which confer time-limited monopoly rights in exchange for public disclosure, have long been regarded as essential incentives for research and development investment. Yet the emergence of open science movements—characterised by unrestricted data sharing, collaborative methodologies, and preprint dissemination—has prompted fundamental questions about whether alternative frameworks might yield superior innovation outcomes. A 2021 analysis by the Organisation for Economic Cooperation and Development estimated that global patent applications exceeded 3.4 million annually, representing a 45% increase over the preceding decade. Notwithstanding this expansion, critics contend that the system increasingly impedes rather than facilitates knowledge diffusion, particularly in rapidly evolving fields such as biotechnology and artificial intelligence."
-    },
-    {
-      "id": "P2",
-      "text": "Proponents of patent-based innovation argue that exclusive rights provide indispensable market signals and financial incentives. Dr. Marcus Chen, an economist specialising in intellectual property, has articulated what he terms the 'appropriability thesis'—the claim that without guaranteed returns, firms would systematically underinvest in high-risk research. His longitudinal analysis of pharmaceutical development between 2005 and 2020 found that patent-protected compounds attracted, on average, 2.7 times more late-stage clinical trial funding than their unprotected counterparts. Chen proposes a four-stage evaluation framework for assessing innovation system effectiveness: initial research investment quantification, knowledge spillover measurement through citation analysis, time-to-market calculation for commercialised innovations, and ultimate welfare impact assessment via consumer access metrics. This methodology, he contends, reveals patents' continued relevance, albeit with significant sectoral variation. Professor Elena Vasquez has offered qualified support for this position, though she emphasises that the appropriability thesis assumes relatively low transaction costs for licensing—an assumption that frequently proves problematic in practice."
-    },
-    {
-      "id": "P3",
-      "text": "The open science paradigm, conversely, proceeds from fundamentally different premises regarding how knowledge production optimally functions. Dr. Kwame Asante, whose research examines collaborative scientific networks, has documented what he characterises as the 'cumulative advantage' of unrestricted information exchange. His 2022 meta-analysis synthesising 89 studies across twelve countries found that openly shared datasets generated approximately 31% more derivative publications than proprietary equivalents over five-year periods. Asante argues that patents create artificial scarcity in what economists term non-rivalrous goods—resources whose consumption by one party does not diminish availability to others. Insofar as scientific knowledge exhibits these characteristics, he maintains, proprietary restrictions impose deadweight losses without corresponding efficiency gains. The Human Genome Project, which made sequence data freely available rather than pursuing patent protection, is frequently cited as emblematic of open science's potential; subsequent analyses suggest it catalysed research applications valued at substantially more than the $3.8 billion initial investment, though precise quantification remains contested."
-    },
-    {
-      "id": "P4",
-      "text": "Recent scholarship has increasingly questioned whether this debate admits of any universal resolution, suggesting instead that optimal arrangements depend critically on disciplinary context, development stage, and market structure. Professor Ingrid Hoffmann, drawing on institutional economics, has proposed that neither pure openness nor comprehensive patenting represents an efficient endpoint. Her comparative analysis of software and pharmaceutical innovation reveals strikingly divergent patterns: whereas open-source software development demonstrates robust productivity without patent incentives, pharmaceutical research appears substantially more dependent on appropriability mechanisms. Hoffmann attributes this discrepancy to fundamental differences in imitation costs—the expense required for competitors to replicate innovations. Where these costs are naturally high, as with complex molecules requiring extensive testing, patents may prove redundant; where low, as with easily copied code, alternative coordination mechanisms such as licensing consortia may substitute effectively. Critics of this contingency approach, however, object that it provides insufficient guidance for policymakers confronting hybrid technologies that span multiple sectors. Hoffmann acknowledges this limitation but maintains that simplistic either/or frameworks obscure rather than illuminate the underlying tradeoffs."
-    },
-    {
-      "id": "P5",
-      "text": "The practical implications of this ongoing debate extend well beyond academic discourse into pressing questions of public health, technological competitiveness, and scientific equity. Emerging evidence suggests that developing nations may derive disproportionate benefits from open-access regimes, though the magnitude of this effect remains inadequately characterised. The COVID-19 pandemic brought these tensions into sharp relief: some observers credited patent waivers with accelerating vaccine distribution, while others maintained that initial development speed depended critically on proprietary incentive structures. What appears increasingly clear is that innovation ecosystems require more sophisticated governance than simple advocacy for either complete openness or comprehensive protection permits. Whether hybrid models—such as patent pools, compulsory licensing frameworks, or tiered access systems—can capture the advantages of both approaches while mitigating their respective limitations constitutes perhaps the central policy question confronting research institutions in the coming decades."
-    }
-  ],
-  "questions":[
-    {
-      "id": 7,
-      "type": "summary-completion",
-      "completion_type": "notes",
-      "title": "Questions 26–32",
-      "instructions": "Complete the notes below. Choose NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer.",
-      "word_limit": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
-      "structure": "<div class='completion-notes'><p><strong>Patent-based rationale (Chen)</strong></p><ul><li>Central argument: the <strong>(26)_____</strong> explains why firms need assured returns.</li><li>Pharma evidence: patent-protected compounds received <strong>(27)_____</strong> more late-stage trial funding.</li><li>Suggested way to judge systems: a <strong>(28)_____</strong> evaluation framework.</li><li>One method for tracking spillovers: <strong>(29)_____</strong>.</li></ul><p><strong>Open science evidence (Asante)</strong></p><ul><li>Benefit of free exchange described as <strong>(30)_____</strong>.</li><li>2022 synthesis: open datasets produced around <strong>(31)_____</strong> more derivative publications.</li><li>Patents can impose scarcity on economists\u2019 <strong>(32)_____</strong>.</li></ul></div>",
-      "questions": [
-        {
-          "id": 26,
-          "gap_number": 26,
-          "correctAnswer": "appropriability thesis",
-          "evidenceQuote": "Dr. Marcus Chen... has articulated what he terms the 'appropriability thesis'—the claim that without guaranteed returns, firms would systematically underinvest",
-          "evidenceLocation": "Paragraph B",
-          "justification": "The passage identifies the 'appropriability thesis' as the specific term Chen uses..."
-        },
-        {
-          "id": 27,
-          "gap_number": 27,
-          "correctAnswer": "2.7 times",
-          "evidenceQuote": "found that patent-protected compounds attracted, on average, 2.7 times more late-stage clinical trial funding",
-          "evidenceLocation": "Paragraph B",
-          "justification": "The text explicitly quantifies the funding difference..."
-        },
-        {
-          "id": 28,
-          "gap_number": 28,
-          "correctAnswer": "four-stage",
-          "evidenceQuote": "Chen proposes a four-stage evaluation framework for assessing innovation system effectiveness",
-          "evidenceLocation": "Paragraph B",
-          "justification": "The passage explicitly names the methodology..."
-        },
-        {
-          "id": 29,
-          "gap_number": 29,
-          "correctAnswer": "citation analysis",
-          "evidenceQuote": "knowledge spillover measurement through citation analysis",
-          "evidenceLocation": "Paragraph B",
-          "justification": "The text specifies that 'citation analysis' is the method used..."
-        },
-        {
-          "id": 30,
-          "gap_number": 30,
-          "correctAnswer": "cumulative advantage",
-          "evidenceQuote": "documented what he characterises as the 'cumulative advantage' of unrestricted information exchange",
-          "evidenceLocation": "Paragraph C",
-          "justification": "Asante specifically characterizes the benefit as 'cumulative advantage'."
-        },
-        {
-          "id": 31,
-          "gap_number": 31,
-          "correctAnswer": "31%",
-          "evidenceQuote": "openly shared datasets generated approximately 31% more derivative publications",
-          "evidenceLocation": "Paragraph C",
-          "justification": "The meta-analysis explicitly states a '31%' increase."
-        },
-        {
-          "id": 32,
-          "gap_number": 32,
-          "correctAnswer": "non-rivalrous goods",
-          "evidenceQuote": "Asante argues that patents create artificial scarcity in what economists term non-rivalrous goods",
-          "evidenceLocation": "Paragraph C",
-          "justification": "The passage says economists use the term 'non-rivalrous goods'."
-        }
-      ]
-    }
-
-
-
-
-
-
-
-
-
-
-
-  ]}
-    ]
+   ]
   }
+ ]
+}
+]
+}

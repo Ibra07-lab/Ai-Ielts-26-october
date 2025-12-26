@@ -1,0 +1,40 @@
+{
+  "testId": 16,
+  "testName": "Test 16",
+  "passages": [
+{
+  "id": 1,
+  "title": "The Science of Sleep Stages and Quality",
+  "level": "intermediate",
+  "estimatedTime": 15,
+  "paragraphs": [
+    {
+      "id": "A",
+      "text": "Sleep is a fundamental biological process that occupies roughly one-third of human existence. Despite spending approximately 33 percent of their lives asleep, many people remain unaware of the complex mechanisms that govern this essential activity. Sleep is not a uniform state of unconsciousness but rather a dynamic process involving distinct stages, each serving unique physiological functions. In recent decades, scientific understanding of these stages has expanded significantly, revealing how various factors can influence overall sleep quality. According to research published in Sleep Medicine Reviews in 2021, approximately 45 percent of adults worldwide report experiencing poor sleep quality, prompting researchers to investigate both the nature of sleep stages and the elements that disrupt them."
+    },
+    {
+      "id": "B",
+      "text": "The scientific study of sleep stages began in earnest during the mid-twentieth century. In 1953, researchers at the University of Chicago made a groundbreaking discovery when they identified a unique phase of sleep characterised by rapid eye movements, subsequently termed REM sleep. This finding revolutionised the field and established that sleep consists of distinct phases rather than a single, continuous state. Subsequent research throughout the 1960s led to the classification of Non-REM sleep into multiple stages based on brain wave patterns. Work conducted at Stanford University's Sleep Research Centre between 1957 and 1975 established the foundation for modern sleep research and introduced the concept of sleep architecture—the structured pattern of sleep stages occurring throughout the night. This framework remains central to how scientists understand and measure sleep quality today."
+    },
+    {
+      "id": "C",
+      "text": "Modern sleep science recognises two primary categories of sleep: Non-Rapid Eye Movement (NREM) sleep and Rapid Eye Movement (REM) sleep. NREM sleep is further divided into three stages, each progressively deeper than the last. During the first stage, which typically lasts between five and ten minutes, the body begins to relax and brain activity starts to slow. The second stage involves further reduction in body temperature and heart rate, while the third stage, known as deep sleep, is crucial for physical restoration and immune function. REM sleep, occurring approximately 90 minutes after falling asleep, is characterised by increased brain activity similar to wakefulness and is essential for memory consolidation. Dr. Helena Richter, a neuroscientist at the Max Planck Institute in Germany, has demonstrated that individuals typically experience four to six complete sleep cycles per night. Significantly, the proportion of REM sleep increases in later cycles, rising by approximately 50 percent compared to earlier periods."
+    },
+    {
+      "id": "D",
+      "text": "Understanding what affects sleep quality requires examining multiple environmental and biological factors. First, exposure to artificial light, particularly blue light from electronic devices, suppresses the production of melatonin—a hormone that regulates the sleep-wake cycle, also known as the circadian rhythm. Subsequently, this hormonal disruption delays the onset of sleep and reduces overall sleep depth. Following this initial disruption, the body struggles to maintain consistent progression through sleep stages. Finally, the cumulative effect is a reduction in restorative deep sleep and REM phases. A 2019 study by the Tokyo Institute of Sleep Medicine found that participants who used smartphones within two hours of bedtime experienced 23 percent less deep sleep than those who avoided such devices. Dr. Yuki Tanaka, who led this research, noted that temperature regulation also plays a critical role. Room temperatures exceeding 24 degrees Celsius were associated with increased nighttime awakenings and reduced sleep efficiency."
+    },
+    {
+      "id": "E",
+      "text": "Research has revealed notable differences in sleep patterns between populations with varying lifestyle habits. In a comparative study examining sleep quality in urban versus rural communities across Australia and Japan, investigators observed that urban residents averaged 6.2 hours of sleep per night compared to 7.4 hours among rural participants. However, the distinction extended beyond mere duration. Urban dwellers spent approximately 18 percent less time in deep sleep stages despite similar overall time in bed. Conversely, rural populations demonstrated more consolidated sleep patterns with fewer nighttime awakenings. While both groups were affected by factors such as caffeine consumption and stress levels, the intensity of artificial lighting in cities appeared to be the primary differentiating factor. Nevertheless, the study noted that individual variations in sleep needs remained substantial, with some participants functioning well on six hours while others required nine hours for comparable rest."
+    },
+    {
+      "id": "F",
+      "text": "The growing body of research on sleep stages and quality has significant implications for public health. Understanding the delicate balance of sleep architecture enables individuals to make informed decisions about their sleep environment and habits. Health organisations worldwide now recommend between seven and nine hours of sleep for adults, though quality is equally important as quantity. Future research directions include personalised sleep interventions based on individual circadian patterns. Ultimately, prioritising sleep quality represents an accessible yet powerful strategy for improving overall wellbeing."
+    }
+      ],
+      "questions": [
+      ]
+    }
+]
+}

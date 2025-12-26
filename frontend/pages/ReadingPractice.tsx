@@ -386,19 +386,22 @@ function SummaryCompletion({
 
   const raw: string = group?.structure || "";
   const normalized = raw.replace(/<strong>\((\d+)\)_____<\/strong>/g, "($1)_____");
-  const stripped = normalized
-    .replace(/<\/?div[^>]*>/g, "")
-    .replace(/<\/?p[^>]*>/g, "");
+  // Don't strip div/p if it's a note-style completion
+  const isNotes = group?.completion_type === "notes" || group?.type === "note-completion";
+  const stripped = isNotes
+    ? normalized
+    : normalized.replace(/<\/?div[^>]*>/g, "").replace(/<\/?p[^>]*>/g, "");
+
   const parts = stripped.split(/(\(\d+\)_____)/g);
   let gapIndex = 0;
 
   return (
     <div className="space-y-2">
-      {group?.word_limit && (
+      {group?.word_limit && !isNotes && (
         <p className="text-xs italic text-gray-500">{group.word_limit}</p>
       )}
-      <div className="bg-gray-50 dark:bg-gray-800 p-3 rounded relative z-0">
-        <div className="text-sm leading-6">
+      <div className={`${isNotes ? 'completion-notes' : 'bg-gray-50 dark:bg-gray-800 p-3 rounded'} relative z-0`}>
+        <div className={`${isNotes ? '' : 'text-sm leading-6'}`}>
           {parts.map((part: string, idx: number) => {
             const match = part.match(/^\((\d+)\)_____$/);
             if (match) {
@@ -415,13 +418,16 @@ function SummaryCompletion({
                   onMouseDown={(e) => e.stopPropagation()}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <span className="text-[10px] text-gray-500">{labelNum})</span>
+                  <span className={isNotes ? "text-base font-bold mr-1" : "text-[10px] text-gray-500"}>{labelNum})</span>
                   <input
                     type="text"
                     tabIndex={0}
                     disabled={!!result}
-                    className={`px-2 py-1 border rounded text-xs w-28 bg-white dark:bg-gray-900 relative z-20 pointer-events-auto focus:outline-none focus:ring-2 ${exceeded || hasInvalidNumber ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'
-                      }`}
+                    className={isNotes
+                      ? "bg-transparent border-t-0 border-l-0 border-r-0 border-b-2 border-dotted border-slate-400 focus:border-blue-500 focus:border-solid transition-all focus:outline-none w-32 px-1"
+                      : `px-2 py-1 border rounded text-xs w-28 bg-white dark:bg-gray-900 focus:ring-2 relative z-20 pointer-events-auto focus:outline-none ${exceeded || hasInvalidNumber ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'}`
+                    }
+                    style={isNotes ? { borderRadius: 0, paddingBottom: 2 } : {}}
                     value={value}
                     ref={(el) => {
                       if (qid != null) summaryInputRefs.current[qid] = el;
@@ -448,7 +454,7 @@ function SummaryCompletion({
                     onKeyDown={(e) => e.stopPropagation()}
                     onKeyUp={(e) => e.stopPropagation()}
                   />
-                  {!result && (
+                  {!result && !isNotes && (
                     <span
                       className={`text-[10px] ${exceeded || hasInvalidNumber ? 'text-red-600' : 'text-gray-500'
                         }`}
@@ -2287,7 +2293,7 @@ export default function ReadingPractice() {
                                     handleAnswerChange={handleAnswerChange}
                                     summaryInputRefs={summaryInputRefs}
                                   />
-                                ) : questionGroup.type === "summary-completion" ? (
+                                ) : questionGroup.type === "summary-completion" || (questionGroup.type === "note-completion" && questionGroup.structure) ? (
                                   <SummaryCompletion
                                     group={questionGroup}
                                     answers={answers}
@@ -2630,7 +2636,7 @@ export default function ReadingPractice() {
                                   handleAnswerChange={handleAnswerChange}
                                   summaryInputRefs={summaryInputRefs}
                                 />
-                              ) : questionGroup.type === "summary-completion" ? (
+                              ) : questionGroup.type === "summary-completion" || (questionGroup.type === "note-completion" && questionGroup.structure) ? (
                                 <SummaryCompletion
                                   group={questionGroup}
                                   answers={answers}

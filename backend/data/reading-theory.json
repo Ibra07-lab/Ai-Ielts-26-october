@@ -29,6 +29,121 @@
           ]
         }
       ],
+      "quiz": [
+        {
+          "type": "concept-check",
+          "question": "If the instruction says 'NO MORE THAN TWO WORDS', can you write '60 percent' as your answer?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "correctAnswer": "Yes",
+          "explanation": "'60 percent' is two words, which fits within the limit. You could also write '60%' as one word."
+        },
+        {
+          "type": "concept-check",
+          "question": "Should you paraphrase words when filling table gaps?",
+          "options": [
+            "Yes, use synonyms",
+            "No, copy exactly from passage"
+          ],
+          "correctAnswer": "No, copy exactly from passage",
+          "explanation": "Table completion requires EXACT words from the passage. Never paraphrase or change anything."
+        },
+        {
+          "type": "concept-check",
+          "question": "Where might you find answers for a single table?",
+          "options": [
+            "All in one paragraph",
+            "Scattered across different paragraphs"
+          ],
+          "correctAnswer": "Scattered across different paragraphs",
+          "explanation": "Table answers are often scattered throughout the passage. You may need to scan multiple paragraphs."
+        },
+        {
+          "type": "mini-practice",
+          "microText": "The solar installation program launched in 2019 achieved a 40% reduction in energy costs for participating households.",
+          "statement": "Gap: Cost reduction achieved = _____",
+          "question": "What should fill this gap? (ONE WORD AND/OR A NUMBER)",
+          "options": [
+            "40%",
+            "40% reduction",
+            "energy costs"
+          ],
+          "correctAnswer": "40%",
+          "explanation": "The gap asks for 'cost reduction achieved'. '40%' is the exact value from the passage and fits the word limit."
+        },
+        {
+          "type": "mini-practice",
+          "microText": "Wind turbines in the Netherlands generate approximately 15 gigawatts of clean electricity annually.",
+          "statement": "Gap: Annual output = _____ gigawatts",
+          "question": "What number fills this gap?",
+          "options": [
+            "15",
+            "approximately 15",
+            "clean"
+          ],
+          "correctAnswer": "15",
+          "explanation": "The gap structure shows 'gigawatts' is already there, so you only need '15'. Don't repeat words already in the table."
+        },
+        {
+          "type": "concept-check",
+          "question": "What should you do FIRST when approaching a table completion task?",
+          "options": [
+            "Start filling gaps immediately",
+            "Read column and row headings to understand the table structure"
+          ],
+          "correctAnswer": "Read column and row headings to understand the table structure",
+          "explanation": "Understanding the table structure helps you know what type of information each gap needs (dates, names, percentages, etc.)."
+        },
+        {
+          "type": "mini-practice",
+          "microText": "Dr. Martinez conducted research on coral bleaching between 2015 and 2020, publishing her findings in the Marine Biology Journal.",
+          "statement": "Gap: Publication venue = _____",
+          "question": "What fills this gap? (NO MORE THAN THREE WORDS)",
+          "options": [
+            "Marine Biology Journal",
+            "Marine Biology",
+            "the Marine Biology Journal"
+          ],
+          "correctAnswer": "Marine Biology Journal",
+          "explanation": "The exact name is 'Marine Biology Journal' (3 words). Adding 'the' would make it 4 words, exceeding the limit."
+        },
+        {
+          "type": "concept-check",
+          "question": "If a gap needs a number and you find 'approximately 500', what do you write?",
+          "options": [
+            "approximately 500",
+            "500",
+            "about 500"
+          ],
+          "correctAnswer": "500",
+          "explanation": "For number-focused gaps, include only the essential value. 'Approximately' is a qualifier, not part of the answer."
+        },
+        {
+          "type": "mini-practice",
+          "microText": "The factory implemented water recycling systems, resulting in a 30% decrease in water consumption.",
+          "statement": "Gap: Environmental improvement = reduced water use by _____",
+          "question": "What value completes this gap?",
+          "options": [
+            "30%",
+            "30% decrease",
+            "water consumption"
+          ],
+          "correctAnswer": "30%",
+          "explanation": "The table already says 'reduced water use by', so '30%' completes the meaning. Don't add redundant words."
+        },
+        {
+          "type": "concept-check",
+          "question": "What happens if your answer exceeds the word limit?",
+          "options": [
+            "It's still marked correct if meaning is right",
+            "It's marked wrong regardless of meaning"
+          ],
+          "correctAnswer": "It's marked wrong regardless of meaning",
+          "explanation": "IELTS strictly enforces word limits. Even if your meaning is correct, exceeding the limit = wrong answer."
+        }
+      ],
       "detailedTheory": {
         "sections": [
           {
@@ -63,6 +178,31 @@
                   "Understanding table structure and logic",
                   "Recognizing relationships between categories"
                 ]
+              }
+            ],
+            "quiz": [
+              {
+                "type": "concept-check",
+                "question": "If the instruction says 'NO MORE THAN TWO WORDS', can you write '60 percent' as your answer?",
+                "options": [
+                  "Yes",
+                  "No"
+                ],
+                "correctAnswer": "Yes",
+                "explanation": "'60 percent' is two words, so it fits within the limit. You could also write '60%' (one word with a number)."
+              },
+              {
+                "type": "mini-practice",
+                "microText": "The solar installation program launched in 2019 achieved a 40% reduction in energy costs for participating households.",
+                "statement": "Gap in table: Cost reduction achieved = _____",
+                "question": "What word(s) from the text should fill this gap?",
+                "options": [
+                  "40%",
+                  "40% reduction",
+                  "energy costs"
+                ],
+                "correctAnswer": "40%",
+                "explanation": "The gap asks for 'cost reduction achieved'. The passage says '40% reduction' — if the word limit is ONE WORD AND/OR A NUMBER, '40%' is the answer."
               }
             ]
           },
@@ -3881,43 +4021,6 @@
       }
     },
     {
-      "id": "matching-features",
-      "name": "Matching Features",
-      "category": "factual-information",
-      "whatIsIt": {
-        "description": "Match statements to options like people or dates.",
-        "skillTested": "Scanning for names and dates."
-      },
-      "detailedTheory": {
-        "sections": [
-          {
-            "id": "strategy",
-            "title": "STRATEGY: STEP-BY-STEP",
-            "subsections": [
-              {
-                "steps": [
-                  {
-                    "step": 1,
-                    "title": "Locate Names",
-                    "actions": [
-                      "Underline all names in text."
-                    ]
-                  },
-                  {
-                    "step": 2,
-                    "title": "Match Views",
-                    "actions": [
-                      "Read around name for viewpoint."
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
       "id": "matching-sentence-endings",
       "name": "Matching Sentence Endings",
       "category": "detail-recognition",
@@ -4067,6 +4170,862 @@
                     "title": "Scan Descriptions",
                     "actions": [
                       "Look for spatial terms."
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "matching-features",
+      "name": "Matching Features",
+      "category": "matching",
+      "whatIsIt": {
+        "description": "Matching Features is an IELTS Reading question type where you must connect statements or claims to specific people, theories, dates, places, or organizations mentioned in the passage. Unlike simple matching tasks, this question type requires you to understand WHO said, believed, discovered, or did WHAT — not just recognize names.",
+        "skillTested": "Understanding attribution (who said what), tracking opinions and claims across multiple paragraphs, paraphrase recognition, scanning for names and entities, distinguishing similar viewpoints, and attention to scope and attribution."
+      },
+      "recognition": {
+        "howToIdentify": [
+          "Instructions say: \"Match each statement with the correct researcher/theory/period, A–D\"",
+          "A list of features (people, theories, dates, places, or organizations) is provided with letters (A, B, C, etc.)",
+          "Instructions often include: \"NB: You may use any letter more than once\"",
+          "Statements describe opinions, findings, claims, or actions that must be attributed to the correct source",
+          "The question requires understanding WHO holds a view, not just recognizing names"
+        ]
+      },
+      "strategyTips": [
+        {
+          "step": 1,
+          "title": "Read Instructions Carefully",
+          "description": "Before anything else, check: Can options be used more than once? How many options are there vs. how many statements? What type of features are you matching (people/theories/dates)? If instructions say \"You may use any letter more than once,\" expect repetition."
+        },
+        {
+          "step": 2,
+          "title": "Scan and Underline All Features in the Passage",
+          "description": "Quickly skim the passage and circle or underline every name/feature from the list. Note the paragraph where each appears. Be aware that some may appear multiple times. This creates a \"map\" so you know where to look later."
+        },
+        {
+          "step": 3,
+          "title": "Identify Key Meaning Words in Each Statement",
+          "description": "For each statement, identify the main concept (what is being claimed?), action verbs (discovered, rejected, proposed, questioned), qualifiers (always, sometimes, initially, primarily), and unique details (specific numbers, time periods, conditions). Underline these in the statement before searching."
+        },
+        {
+          "step": 4,
+          "title": "Locate the Relevant Paragraph(s)",
+          "description": "Use your \"map\" from Step 2 to find where the relevant content might be. Start with the most distinctive word in the statement. Check all paragraphs where the relevant features appear. Don't stop at the first possible match — verify."
+        },
+        {
+          "step": 5,
+          "title": "Match by MEANING, Not by Word Match",
+          "description": "This is the most important step. Paraphrase is guaranteed — focus on IDEAS, not vocabulary. Example: \"children learn by copying adults\" matches \"language develops through imitation.\" But \"rejected the proposal\" does NOT match \"mentioned the proposal.\""
+        },
+        {
+          "step": 6,
+          "title": "Use Elimination for Close Matches",
+          "description": "When stuck between two options: Write down what EACH person actually says, compare both to the statement, identify the specific detail that matches one but not the other, and eliminate the weaker match."
+        },
+        {
+          "step": 7,
+          "title": "Double-Check Attribution",
+          "description": "Before confirming, ask yourself: \"WHO actually holds this view? Am I certain this isn't someone ELSE's opinion being reported?\" Check for phrases like \"According to X...\", \"X argues that...\", \"Unlike Y, X believes...\", \"X challenged the view that...\""
+        }
+      ],
+      "commonMistakes": [
+        {
+          "title": "Matching Based on Name Proximity",
+          "description": "Choosing a person because their name is near relevant words. Students scan for keywords and pick the nearest name. Correction: Read the FULL sentence to confirm WHO actually holds the view."
+        },
+        {
+          "title": "Forgetting Options Can Repeat",
+          "description": "Avoiding using the same letter twice, assuming each person is used once. Correction: Check instructions — if reuse is allowed, expect it."
+        },
+        {
+          "title": "Stopping at the First Match",
+          "description": "Choosing the first person who seems right due to time pressure and quick scanning. Correction: Verify the match is complete — check other options too."
+        },
+        {
+          "title": "Ignoring Qualifiers in Statements",
+          "description": "Missing words like \"initially,\" \"mainly,\" \"only\" because you focus only on main nouns and verbs. Correction: Underline qualifiers — they often determine the correct answer."
+        },
+        {
+          "title": "Confusing 'Mentioned' with 'Believes'",
+          "description": "Assuming someone agrees with an idea they merely discuss. Correction: Look for opinion verbs: argues, supports, rejects, criticizes — not just \"says.\""
+        },
+        {
+          "title": "Not Checking All Paragraphs",
+          "description": "Only looking at the paragraph where the name first appears, assuming all info about one person is together. Correction: Scan the whole passage — information is often distributed across multiple paragraphs."
+        },
+        {
+          "title": "Falling for Exact Word Matches",
+          "description": "Choosing an answer because the statement words match the passage exactly. Correction: IELTS uses word matches as traps — always verify meaning, not just vocabulary."
+        },
+        {
+          "title": "Rushing the Instructions",
+          "description": "Not noticing key instructions about reuse because you start too quickly. Correction: Spend 20 seconds reading instructions completely."
+        },
+        {
+          "title": "Guessing Without Elimination",
+          "description": "Randomly guessing when unsure due to time pressure. Correction: Use elimination — rule out options that definitely don't work before guessing."
+        },
+        {
+          "title": "Misreading Opinion Direction",
+          "description": "Choosing someone who DISAGREES when the statement says AGREES, not tracking positive/negative framing. Correction: Identify whether the statement is positive or negative about the idea."
+        }
+      ],
+      "detailedTheory": {
+        "sections": [
+          {
+            "id": "typical-formats",
+            "title": "Typical Formats",
+            "subsections": [
+              {
+                "id": "format-variations",
+                "title": "Format Variations",
+                "content": "Matching Features questions appear in several variations depending on what type of \"features\" you're matching statements to:",
+                "tables": [
+                  {
+                    "headers": [
+                      "Feature Type",
+                      "You match it to..."
+                    ],
+                    "rows": [
+                      [
+                        "People",
+                        "Statements/Claims (e.g. who said what)"
+                      ],
+                      [
+                        "Theories",
+                        "Descriptions (e.g. which theory explains this)"
+                      ],
+                      [
+                        "Years/Periods",
+                        "Events/Developments (e.g. when did this happen)"
+                      ],
+                      [
+                        "Places",
+                        "Characteristics (e.g. what is special about this location)"
+                      ],
+                      [
+                        "Organizations",
+                        "Actions/Initiatives (e.g. who launched this project)"
+                      ]
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "key-format-rules",
+                "title": "Key Format Rules",
+                "content": "Understanding these rules is essential before attempting any Matching Features question:",
+                "callouts": [
+                  {
+                    "type": "warning",
+                    "title": "Options can be used MORE THAN ONCE",
+                    "content": "The instructions often state: \"You may use any letter more than once.\" This means one person/feature may be the answer to multiple statements. Look for 'NB' in instructions!"
+                  },
+                  {
+                    "type": "info",
+                    "title": "Some options may NOT be used at all",
+                    "content": "Not every person or feature listed will necessarily be an answer. Don't force a match just because an option hasn't been used."
+                  },
+                  {
+                    "type": "info",
+                    "title": "Statements do NOT follow passage order",
+                    "content": "Unlike some IELTS question types, the statements are often jumbled. You must search across the entire passage."
+                  }
+                ]
+              },
+              {
+                "id": "your-task",
+                "title": "Your Task",
+                "content": "Follow this workflow to solve the questions:",
+                "visualMap": [
+                  {
+                    "title": "Read",
+                    "description": "Read the statement carefully"
+                  },
+                  {
+                    "title": "Locate",
+                    "description": "Find info in passage"
+                  },
+                  {
+                    "title": "Identify",
+                    "description": "Match feature (A, B, C)"
+                  },
+                  {
+                    "title": "Write",
+                    "description": "Write letter on sheet"
+                  }
+                ],
+                "checklistTitle": "Exam Workflow Checklist",
+                "checklist": [
+                  "Read the numbered statement carefully to identify keywords",
+                  "Locate the relevant section in the passage using your keywords",
+                  "Identify which feature (person, place, etc.) matches the statement",
+                  "Write the correct letter (A, B, C, etc.) on your answer sheet"
+                ]
+              }
+            ],
+            "quiz": [
+              {
+                "type": "concept-check",
+                "question": "In Matching Features, can the same letter (e.g., 'A') be the correct answer for multiple questions?",
+                "options": [
+                  "Yes, always check instructions",
+                  "No, each letter is used once"
+                ],
+                "correctAnswer": "Yes, always check instructions",
+                "explanation": "IELTS instructions often say 'You may use any letter more than once.' Always read the instructions carefully before assuming each letter is used only once."
+              },
+              {
+                "type": "mini-practice",
+                "microText": "Dr. Chen argues that climate change is primarily caused by industrial emissions. Professor Silva disputes this, maintaining that natural cycles play a greater role.",
+                "statement": "This researcher believes human activity is the main driver of climate change.",
+                "question": "Which researcher matches this statement?",
+                "options": [
+                  "Dr. Chen",
+                  "Professor Silva"
+                ],
+                "correctAnswer": "Dr. Chen",
+                "explanation": "'Human activity' paraphrases 'industrial emissions'. Dr. Chen argues this is the primary cause. Professor Silva disagrees, emphasizing natural cycles instead."
+              }
+            ]
+          },
+          {
+            "id": "skills-tested",
+            "title": "What This Question Type Tests",
+            "subsections": [
+              {
+                "id": "core-skills",
+                "title": "Core Skills Assessed",
+                "content": "Matching Features is designed to test your ability to perform several key reading skills:",
+                "callouts": [
+                  {
+                    "type": "info",
+                    "title": "Understanding \"Who Said What\"",
+                    "content": "Accurately attributing opinions, findings, and claims to the correct source. Recognizing when the passage reports someone else's view vs. the author's view."
+                  },
+                  {
+                    "type": "info",
+                    "title": "Tracking Opinions, Claims, and Actions",
+                    "content": "Following multiple viewpoints throughout a passage. Distinguishing between what someone *did*, *said*, *believed*, and *concluded*."
+                  },
+                  {
+                    "type": "info",
+                    "title": "Paraphrase Recognition",
+                    "content": "Statements use different words than the passage. You must recognize the same idea expressed differently."
+                  },
+                  {
+                    "type": "info",
+                    "title": "Scanning for Names & Entities",
+                    "content": "Quickly locating where specific people/features are discussed. Understanding that one person may be mentioned in multiple paragraphs."
+                  },
+                  {
+                    "type": "info",
+                    "title": "Distinguishing Similar Viewpoints",
+                    "content": "Separating researchers who have overlapping but different ideas. Noticing small but crucial differences in position."
+                  },
+                  {
+                    "type": "info",
+                    "title": "Attention to Scope and Attribution",
+                    "content": "Understanding who actually holds a view (not just who mentions it). Recognizing whether a claim is general or specific."
+                  }
+                ]
+              },
+              {
+                "id": "why-difficult",
+                "title": "Why Matching Features Is Difficult",
+                "content": "IELTS deliberately designs this question type to confuse you. The examiners create difficulty through several trap types:",
+                "tables": [
+                  {
+                    "headers": [
+                      "Trap Type",
+                      "Description"
+                    ],
+                    "rows": [
+                      [
+                        "Similar opinions",
+                        "Two researchers say almost the same thing, with one key difference"
+                      ],
+                      [
+                        "Multiple mentions",
+                        "One person appears in several paragraphs with different ideas"
+                      ],
+                      [
+                        "Misleading word matches",
+                        "A statement uses exact words from the passage, but under the wrong name"
+                      ],
+                      [
+                        "Reported speech confusion",
+                        "Person A mentions Person B's theory — which person gets credit?"
+                      ],
+                      [
+                        "Partial matches",
+                        "A statement is 80% correct for one person, but 100% correct for another"
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "understanding-features",
+            "title": "Understanding the Features (The Options)",
+            "subsections": [
+              {
+                "id": "what-are-features",
+                "title": "What Are \"Features\"?",
+                "content": "In IELTS terminology, features are the list of options you must match statements to. Common feature types include:",
+                "tables": [
+                  {
+                    "headers": [
+                      "Feature Category",
+                      "Examples"
+                    ],
+                    "rows": [
+                      [
+                        "People",
+                        "Researchers, scientists, historians, authors"
+                      ],
+                      [
+                        "Theories",
+                        "Cognitive Load Theory, Plate Tectonics, Behaviourism"
+                      ],
+                      [
+                        "Time Periods",
+                        "1950s, Medieval era, Phase 1 of the study"
+                      ],
+                      [
+                        "Organizations",
+                        "WHO, NASA, Oxford University"
+                      ],
+                      [
+                        "Places",
+                        "Countries, cities, archaeological sites"
+                      ],
+                      [
+                        "Categories",
+                        "Traditional approach vs. Modern approach"
+                      ]
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "information-distribution",
+                "title": "Critical Understanding: Information Distribution",
+                "content": "Information is not linear:",
+                "callouts": [
+                  {
+                    "type": "warning",
+                    "title": "One feature can appear in MULTIPLE parts",
+                    "content": "A researcher might be introduced in paragraph 2, their main theory might be explained in paragraph 4, and a criticism of their work might appear in paragraph 6. You cannot assume all information about one person is in one place."
+                  }
+                ]
+              },
+              {
+                "id": "names-not-answers",
+                "title": "Why Names ≠ Answers",
+                "content": "Seeing a name near a concept does NOT mean that person created or supports that concept.",
+                "callouts": [
+                  {
+                    "type": "warning",
+                    "title": "Example: The Rejection Trap",
+                    "content": "Consider: *\"Dr. Williams rejected the theory proposed by Dr. Singh, arguing that...\"* \n\n• If a statement describes the rejected theory → Answer: Dr. Singh.\n• If a statement describes the criticism → Answer: Dr. Williams.\n\nThe relationship between the name and the idea is everything."
+                  }
+                ]
+              },
+              {
+                "id": "features-example",
+                "title": "Example: How This Works in Practice",
+                "content": "See the strategy in action:",
+                "callouts": [
+                  {
+                    "type": "info",
+                    "title": "1. Passage Excerpt",
+                    "content": "Research into childhood language acquisition has produced competing theories. Dr. Rebecca Foster (A) argues that children are born with an innate capacity for grammar, a position known as nativism. In contrast, Professor David Leigh (B) emphasizes the role of **environmental input**, suggesting that language develops **primarily through imitation** and reinforcement. A third perspective comes from Dr. Yuki Tanaka (C), who proposes an interactionist view, claiming that both biological readiness and social interaction are equally necessary."
+                  },
+                  {
+                    "type": "warning",
+                    "title": "2. Statement to Match",
+                    "content": "\"This researcher believes that **exposure to language from caregivers** is the **main driver** of language learning.\""
+                  },
+                  {
+                    "type": "tip",
+                    "title": "3. Answer & Analysis",
+                    "content": "Correct Answer: B (Professor David Leigh)\n\nReasoning:\n• \"**Exposure from caregivers**\" matches \"**environmental input**\".\n• \"**Main driver**\" matches \"**primarily through imitation**\".\n\nWhy not others?\n• Dr. Foster focuses on innate capacity (internal).\n• Tanaka focuses on both equally (neither is \"main\")."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "similar-opinions-trap",
+            "title": "The Biggest Trap — Similar Opinions",
+            "subsections": [
+              {
+                "id": "how-ielts-confuses",
+                "title": "How IELTS Creates Confusion",
+                "content": "The most challenging aspect of Matching Features is when two or more people hold similar views with subtle differences. IELTS uses this strategy deliberately to test whether you truly understand the content or are just matching words."
+              },
+              {
+                "id": "similarity-trap-types",
+                "title": "Types of Similarity Traps",
+                "content": "There are three main types of similarity traps you'll encounter:",
+                "tables": [
+                  {
+                    "headers": [
+                      "Trap Type",
+                      "Example Situation"
+                    ],
+                    "rows": [
+                      [
+                        "Same Topic, Different Opinion",
+                        "Person A: Climate change is primarily human-caused.\nPerson B: Climate change is primarily natural.\n(Opposite conclusions on same topic)"
+                      ],
+                      [
+                        "Same Conclusion, Different Reasoning",
+                        "Person A: Supports renewable energy because it creates jobs.\nPerson B: Supports renewable energy because it reduces pollution.\n(Different justifications for same view)"
+                      ],
+                      [
+                        "Same General Area, Different Specifics",
+                        "Person A: Education improves economic mobility.\nPerson B: Education improves social cohesion.\n(Different focus within same field)"
+                      ]
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "separating-viewpoints",
+                "title": "How to Separate Similar Viewpoints",
+                "content": "Look for UNIQUE DETAILS that distinguish one person from another:",
+                "tables": [
+                  {
+                    "headers": [
+                      "Detail to Watch",
+                      "Comparison Example"
+                    ],
+                    "rows": [
+                      [
+                        "Time references",
+                        "\"initially\" vs. \"eventually\""
+                      ],
+                      [
+                        "Cause mentioned",
+                        "\"due to economics\" vs. \"due to politics\""
+                      ],
+                      [
+                        "Degree of certainty",
+                        "\"might\" vs. \"definitely\""
+                      ],
+                      [
+                        "Scope",
+                        "\"in some cases\" vs. \"universally\""
+                      ],
+                      [
+                        "Evaluation words",
+                        "\"positive\" vs. \"problematic\""
+                      ]
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "similar-views-example",
+                "title": "Mini Example: Separating Similar Views",
+                "content": "See this in action:",
+                "callouts": [
+                  {
+                    "type": "info",
+                    "title": "1. Mini Passage Excerpt",
+                    "content": "Research into childhood language acquisition has produced competing theories. Dr. Rebecca Foster (A) argues that children are born with an innate capacity for grammar (nativism). In contrast, Professor David Leigh (B) emphasizes the role of **environmental input**, suggesting that language develops **primarily through imitation** and reinforcement. A third perspective comes from Dr. Yuki Tanaka (C), who proposes an interactionist view, claiming that both biological readiness and social interaction are equally necessary."
+                  },
+                  {
+                    "type": "warning",
+                    "title": "2. Example Statement",
+                    "content": "\"This researcher believes that **exposure to language from caregivers** is the **main driver** of language learning.\""
+                  },
+                  {
+                    "type": "tip",
+                    "title": "3. Correct Answer & Analysis",
+                    "content": "Correct Answer: B (Professor David Leigh)\n\nWhy B?\n• \"**Exposure from caregivers**\" matches \"**environmental input**\".\n• \"**Main driver**\" matches \"**primarily through imitation**\".\n\nWhy not others?\n• Dr. Foster focuses on innate capacity (internal, not exposure).\n• Dr. Tanaka says both are equally important (one is not the \"main\" driver)."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "paraphrase-patterns",
+            "title": "Paraphrase & Language Signals",
+            "subsections": [
+              {
+                "id": "understanding-paraphrase",
+                "title": "Understanding IELTS Paraphrase Patterns",
+                "content": "Paraphrasing is the key:",
+                "callouts": [
+                  {
+                    "type": "tip",
+                    "title": "Exact Words = Danger",
+                    "content": "Every Matching Features statement uses paraphrase. The exact words from the passage almost never appear in the questions. You must learn to recognize equivalent meanings."
+                  }
+                ]
+              },
+              {
+                "id": "opinion-verbs",
+                "title": "Opinion and Reporting Verbs",
+                "content": "These verbs signal whose view is being presented and how they relate to the idea:",
+                "tables": [
+                  {
+                    "headers": [
+                      "Verb",
+                      "Meaning / Stance"
+                    ],
+                    "rows": [
+                      [
+                        "argues",
+                        "presents a reasoned position"
+                      ],
+                      [
+                        "claims",
+                        "states (sometimes with less certainty)"
+                      ],
+                      [
+                        "suggests",
+                        "proposes tentatively"
+                      ],
+                      [
+                        "maintains",
+                        "continues to believe / holds firm"
+                      ],
+                      [
+                        "rejects",
+                        "disagrees with / opposes"
+                      ],
+                      [
+                        "questions",
+                        "expresses doubt about"
+                      ],
+                      [
+                        "acknowledges",
+                        "admits/accepts (concession)"
+                      ],
+                      [
+                        "emphasizes",
+                        "stresses as important"
+                      ],
+                      [
+                        "concludes",
+                        "reaches a final decision"
+                      ],
+                      [
+                        "proposes",
+                        "puts forward an idea"
+                      ]
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "reporting-structures",
+                "title": "Reporting Structures to Watch",
+                "content": "These phrases tell you WHO holds the view:",
+                "tables": [
+                  {
+                    "headers": [
+                      "Structure",
+                      "Who holds the view?"
+                    ],
+                    "rows": [
+                      [
+                        "\"According to X,...\"",
+                        "X's view follows"
+                      ],
+                      [
+                        "\"X believes that...\"",
+                        "X's belief"
+                      ],
+                      [
+                        "\"In X's view,...\"",
+                        "X's perspective"
+                      ],
+                      [
+                        "\"X points out that...\"",
+                        "X's observation"
+                      ],
+                      [
+                        "\"As X notes,...\"",
+                        "X's comment"
+                      ],
+                      [
+                        "\"X's research shows...\"",
+                        "X's findings"
+                      ],
+                      [
+                        "\"X challenges the idea that...\"",
+                        "X DISAGREES with what follows"
+                      ]
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "paraphrase-pattern-examples",
+                "title": "Common Paraphrase Patterns with Examples",
+                "content": "Learn to recognize these six common paraphrase patterns:",
+                "tables": [
+                  {
+                    "headers": [
+                      "Paraphrase Pattern",
+                      "Example of Transformation"
+                    ],
+                    "rows": [
+                      [
+                        "Synonym Replacement",
+                        "\"initial research\" → \"early studies\""
+                      ],
+                      [
+                        "Grammatical Transformation",
+                        "\"Children acquire language rapidly\" → \"the rapid acquisition of language\""
+                      ],
+                      [
+                        "Cause/Effect Reversal",
+                        "\"Stress causes poor sleep\" → \"Poor sleep results from stress\""
+                      ],
+                      [
+                        "Positive/Negative Flip",
+                        "\"He rejected the theory\" → \"He did not accept the theory\""
+                      ],
+                      [
+                        "Abstract ↔ Concrete",
+                        "\"financial constraints\" → \"lack of money\""
+                      ],
+                      [
+                        "Clause Restructuring",
+                        "\"Although initially skeptical, Davis eventually agreed\" → \"Davis came to accept the idea despite early doubts\""
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "distractors-traps",
+            "title": "Common Distractors & Traps",
+            "content": "Be aware of these common traps used to confuse you:",
+            "callouts": [
+              {
+                "type": "warning",
+                "title": "Trap 1: Word Match Under the Wrong Name",
+                "content": "How it works: The statement contains exact words from the passage — but those words appear near a different person.\n\nExample: Statement matches \"memory consolidation\". Passage: \"Dr. Park discussed memory consolidation, but it was Dr. Cho who conducted the key experiments on it.\"\n\nAnswer: Dr. Cho (who actually researched it), not Park."
+              },
+              {
+                "type": "warning",
+                "title": "Trap 2: Opinion vs. Action Confusion",
+                "content": "How it works: A person describes something without agreeing with it.\n\nExample: Statement: \"Supports standardized testing.\"\nPassage: \"Professor Ellis explained the arguments in favor of standardized testing before presenting her own critique.\"\n\nAnswer: NOT Ellis (she criticizes it)."
+              },
+              {
+                "type": "warning",
+                "title": "Trap 3: Same Person, Multiple Ideas",
+                "content": "How it works: One person appears multiple times with different claims (e.g. Early Theory vs. Revised Theory).\n\nSolution: Check which SPECIFIC idea the statement describes. Don't stop at the first mention of the name."
+              },
+              {
+                "type": "warning",
+                "title": "Trap 4: General View vs. Specific Claim",
+                "content": "How it works: Statement asks for a specific detail, but the person only holds a general position.\n\nExample: Statement: \"Music improves math.\"\nPassage: \"Dr. Adams argues that arts education benefits academic performance generally.\"\n\nAnswer: NOT Adams (too general)."
+              },
+              {
+                "type": "warning",
+                "title": "Trap 5: Extreme vs. Qualified Language",
+                "content": "How it works: Mismatch in certainty.\n\n• \"may contribute\" ≠ \"definitely causes\"\n• \"in some cases\" ≠ \"always\"\n• \"suggests\" ≠ \"proves\"\n\nWatch for: always, never, all, none, must."
+              },
+              {
+                "type": "warning",
+                "title": "Trap 6: Chronological Confusion",
+                "content": "How it works: Mixing up time periods.\n\nExample: Statement: \"First use of steam power.\"\nPassage: \"Developed in 18th century, widespread in 19th.\"\n\nAnswer: 18th century (First use), not 19th."
+              },
+              {
+                "type": "warning",
+                "title": "Trap 7: Third-Party Attribution",
+                "content": "How it works: Person A describes Person B's belief.\n\nExample: \"Johnson outlined the theory first proposed by Smith.\"\nStatement: \"Originated the theory.\"\n\nAnswer: Smith (Proposer), not Johnson (Describer)."
+              }
+            ]
+          },
+          {
+            "id": "practice-walkthrough",
+            "title": "Quick Practice Walkthrough",
+            "subsections": [
+              {
+                "id": "practice-passage",
+                "title": "Practice Passage",
+                "content": "Read this short excerpt:",
+                "callouts": [
+                  {
+                    "type": "tip",
+                    "title": "Passage Excerpt",
+                    "content": "*The debate over the origins of human language has produced several competing hypotheses. Dr. Amanda Rivers (A) advocates the gestural theory, arguing that spoken language evolved from hand movements and physical gestures used by early humans. Professor Lin Zhao (B) disputes this view, maintaining instead that language developed directly from vocalizations, pointing to the sophisticated vocal communication observed in primates. Meanwhile, Dr. Marcus Webb (C) proposes a hybrid model, suggesting that both gestural and vocal elements contributed simultaneously to language evolution, with neither being primary.*\n\nOptions: A (Rivers), B (Zhao), C (Webb)"
+                  }
+                ]
+              },
+              {
+                "id": "practice-questions",
+                "title": "Questions and Explanations",
+                "content": "Try to answer, then check the logic:",
+                "interactiveQuestions": [
+                  {
+                    "id": "q1-rivers",
+                    "statement": "1. Believes language originated from physical movements",
+                    "options": [
+                      "A",
+                      "B",
+                      "C"
+                    ],
+                    "correctAnswer": "A",
+                    "answerText": "A (Dr. Amanda Rivers)",
+                    "reasoning": "• \"Physical movements\" paraphrases \"hand movements and physical gestures\".\n• Dr. Rivers is explicitly linked to the \"gestural theory\"."
+                  },
+                  {
+                    "id": "q2-zhao",
+                    "statement": "2. Argues vocal sounds were the direct source",
+                    "options": [
+                      "A",
+                      "B",
+                      "C"
+                    ],
+                    "correctAnswer": "B",
+                    "answerText": "B (Professor Lin Zhao)",
+                    "reasoning": "• \"Direct source\" matches \"developed directly from vocalizations\".\n• Zhao critiques the gestural view and proposes this vocal-first model."
+                  },
+                  {
+                    "id": "q3-webb",
+                    "statement": "3. Maintains language arose from multiple sources at once",
+                    "options": [
+                      "A",
+                      "B",
+                      "C"
+                    ],
+                    "correctAnswer": "C",
+                    "answerText": "C (Dr. Marcus Webb)",
+                    "reasoning": "• \"Multiple sources at once\" matches \"both... contributed simultaneously\".\n• Webb proposes a \"hybrid model\" (interaction of factors)."
+                  }
+                ]
+              },
+              {
+                "id": "practice-takeaways",
+                "title": "Key Takeaways",
+                "content": "Did you notice these patterns?",
+                "checklistTitle": "Skills Verified",
+                "checklist": [
+                  "Paraphrase is constant — \"simultaneously\" → \"at the same time\"",
+                  "Opinion verbs matter — \"advocates,\" \"disputes,\" \"proposes\" — each shows a different stance",
+                  "Qualifiers are crucial — \"directly\" in Q2 matches the passage exactly",
+                  "Process of elimination works — Each researcher has a clearly different position"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "final-checklist",
+            "title": "Final Exam Checklist",
+            "subsections": [
+              {
+                "id": "quick-checklist",
+                "title": "20-Second Checklist Before Confirming Answers",
+                "content": "Use this rapid checklist before moving on to ensure you haven't fallen into common traps:",
+                "checklistTitle": "Safety Verification",
+                "checklist": [
+                  "Did I check if options can repeat? — Look at NB in instructions",
+                  "Am I matching MEANING, not just WORDS? — Words can be traps",
+                  "Did I verify WHO actually holds this view? — Not who mentions it, who believes it",
+                  "Did I check for qualifier words? — Always, mainly, initially, only — these change meaning",
+                  "Did I look at ALL relevant paragraphs? — One person can appear multiple times",
+                  "Did I eliminate impossible options first? — Even if unsure, narrow down",
+                  "Does my answer match the statement COMPLETELY? — Partial matches are wrong answers",
+                  "Have I written a letter (not a word or name)? — Format matters"
+                ]
+              },
+              {
+                "id": "final-reminder",
+                "title": "Final Reminder",
+                "content": "Matching Features tests your ability to understand WHO said or believes WHAT.",
+                "callouts": [
+                  {
+                    "type": "tip",
+                    "title": "Trust Your Understanding",
+                    "content": "The passage contains the information. The statements contain paraphrases. Your job is to connect them accurately by understanding MEANING and ATTRIBUTION. Don't trust word matches. Trust understanding."
+                  }
+                ]
+              },
+              {
+                "id": "time-management",
+                "title": "Time Management",
+                "content": "For optimal performance, follow these time guidelines:",
+                "tables": [
+                  {
+                    "headers": [
+                      "Action",
+                      "Time Allocation"
+                    ],
+                    "rows": [
+                      [
+                        "Read instructions + scan features",
+                        "1–2 minutes"
+                      ],
+                      [
+                        "Answer each question",
+                        "1–1.5 minutes"
+                      ],
+                      [
+                        "Review uncertain answers",
+                        "30–60 seconds"
+                      ],
+                      [
+                        "Total for 5 questions",
+                        "6–7 minutes"
+                      ]
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "quick-reference",
+                "title": "Quick Reference Summary",
+                "content": "Keep these key points in mind:",
+                "tables": [
+                  {
+                    "headers": [
+                      "Key Element",
+                      "Summary"
+                    ],
+                    "rows": [
+                      [
+                        "Question Type",
+                        "Match statements to features (people/theories/dates)"
+                      ],
+                      [
+                        "Main Skill",
+                        "Attribution — who said/believes what"
+                      ],
+                      [
+                        "Biggest Trap",
+                        "Similar opinions between different people"
+                      ],
+                      [
+                        "Key Strategy",
+                        "Match meaning, not words"
+                      ],
+                      [
+                        "Time per Question",
+                        "~1 minute"
+                      ],
+                      [
+                        "Always Check",
+                        "Instructions for option reuse"
+                      ]
                     ]
                   }
                 ]

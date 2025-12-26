@@ -1,0 +1,33 @@
+2025-12-24 21:18:10,382 - DEBUG - Using proactor: IocpProactor
+2025-12-24 21:18:31,143 - INFO - [THEORY] Successfully loaded theory data from C:\Users\Honor\Ai-Ielts-26-october-9\backend\data\reading-theory.json
+2025-12-24 21:18:31,178 - ERROR - [STREAM] Error in router, falling back to CHITCHAT: 'Input to ChatPromptTemplate is missing variables {\'"skip_socratic"\', \'"follow_up"\'}.  Expected: [\'"follow_up"\', \'"skip_socratic"\', \'chat_history\', \'user_message\'] Received: [\'chat_history\', \'user_message\']\nNote: if you intended {"skip_socratic"} to be part of the string and not a variable, please escape it with double curly braces like: \'{{"skip_socratic"}}\'.\nFor troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/INVALID_PROMPT_INPUT '
+2025-12-24 21:18:31,623 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2025-12-24 21:18:31,624 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2025-12-24 21:18:32,036 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x0000025428C2BA10>
+2025-12-24 21:18:32,037 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x00000254288E3C50> server_hostname='api.openai.com' timeout=None
+2025-12-24 21:18:32,194 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x0000025428C57110>
+2025-12-24 21:18:32,195 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2025-12-24 21:18:32,196 - DEBUG - send_request_headers.complete
+2025-12-24 21:18:32,196 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2025-12-24 21:18:32,197 - DEBUG - send_request_body.complete
+2025-12-24 21:18:32,197 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2025-12-24 21:18:32,589 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 401, b'Unauthorized', [(b'Date', b'Wed, 24 Dec 2025 16:18:32 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'413'), (b'Connection', b'keep-alive'), (b'vary', b'Origin'), (b'x-request-id', b'req_f62b8c0539c74d0f87885613a1a90792'), (b'x-envoy-upstream-service-time', b'11'), (b'x-openai-proxy-wasm', b'v0.1'), (b'cf-cache-status', b'DYNAMIC'), (b'Set-Cookie', b'__cf_bm=F1d0uYODaDX0PYT0gg6yEDRyInNPqsapCzPwhVmwsgc-1766593112-1.0.1.1-_ms9jPyYz9bIU2YpZCWhBz.QFihKrOKnDzwkdCvwvax4DSdoBvUFgDJ0s7yMQp.GGC7UMqhWkhVeoTlIWUx4gN9gpgvg7WNCHOTkdjBKJYQ; path=/; expires=Wed, 24-Dec-25 16:48:32 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'Set-Cookie', b'_cfuvid=955rrliJRzB.YGdN7kYHwLQA3wQ3MmnaLSX4v1R0ags-1766593112221-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9b316a45f904d279-FRA'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2025-12-24 21:18:32,591 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-12-24 21:18:32,591 - DEBUG - HTTP Response: POST https://api.openai.com/v1/chat/completions "401 Unauthorized" Headers([('date', 'Wed, 24 Dec 2025 16:18:32 GMT'), ('content-type', 'application/json; charset=utf-8'), ('content-length', '413'), ('connection', 'keep-alive'), ('vary', 'Origin'), ('x-request-id', 'req_f62b8c0539c74d0f87885613a1a90792'), ('x-envoy-upstream-service-time', '11'), ('x-openai-proxy-wasm', 'v0.1'), ('cf-cache-status', 'DYNAMIC'), ('set-cookie', '__cf_bm=F1d0uYODaDX0PYT0gg6yEDRyInNPqsapCzPwhVmwsgc-1766593112-1.0.1.1-_ms9jPyYz9bIU2YpZCWhBz.QFihKrOKnDzwkdCvwvax4DSdoBvUFgDJ0s7yMQp.GGC7UMqhWkhVeoTlIWUx4gN9gpgvg7WNCHOTkdjBKJYQ; path=/; expires=Wed, 24-Dec-25 16:48:32 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), ('strict-transport-security', 'max-age=31536000; includeSubDomains; preload'), ('x-content-type-options', 'nosniff'), ('set-cookie', '_cfuvid=955rrliJRzB.YGdN7kYHwLQA3wQ3MmnaLSX4v1R0ags-1766593112221-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), ('server', 'cloudflare'), ('cf-ray', '9b316a45f904d279-FRA'), ('alt-svc', 'h3=":443"; ma=86400')])
+2025-12-24 21:18:32,592 - DEBUG - request_id: req_f62b8c0539c74d0f87885613a1a90792
+2025-12-24 21:18:32,592 - DEBUG - Encountered httpx.HTTPStatusError
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\openai\_base_client.py", line 1574, in request
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '401 Unauthorized' for url 'https://api.openai.com/v1/chat/completions'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
+2025-12-24 21:18:32,634 - DEBUG - Not retrying
+2025-12-24 21:18:32,634 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2025-12-24 21:18:32,634 - DEBUG - receive_response_body.complete
+2025-12-24 21:18:32,635 - DEBUG - response_closed.started
+2025-12-24 21:18:32,635 - DEBUG - response_closed.complete
+2025-12-24 21:18:32,635 - DEBUG - Re-raising status error
+2025-12-24 21:18:32,637 - ERROR - [STREAM] Error during streaming generation: Error code: 401 - {'error': {'message': 'Incorrect API key provided: k-proj-E*******************************************************************************************************************************************************LIMA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}

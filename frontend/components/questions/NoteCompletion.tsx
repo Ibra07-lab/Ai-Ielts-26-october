@@ -33,7 +33,7 @@ export default function NoteCompletion({
               aria-label={`Gap ${labelNum}`}
               type="text"
               disabled={!!result}
-              className="px-1 border-b border-gray-400 bg-transparent w-36 focus:outline-none focus:border-gray-700"
+              className="px-1 border-b-2 border-dotted border-slate-400 bg-transparent w-36 focus:outline-none focus:border-blue-500 focus:border-solid transition-all"
               value={answers[qid] || ""}
               onChange={(e) => onAnswerChange(qid, e.target.value)}
             />
@@ -56,7 +56,7 @@ export default function NoteCompletion({
             aria-label={`Gap ${qid}`}
             type="text"
             disabled={!!result}
-            className="px-1 border-b border-gray-400 bg-transparent w-36 focus:outline-none focus:border-gray-700 mx-1"
+            className="px-1 border-b-2 border-dotted border-slate-400 bg-transparent w-36 focus:outline-none focus:border-blue-500 focus:border-solid transition-all mx-1"
             value={answers[qid] || ""}
             onChange={(e) => onAnswerChange(qid, e.target.value)}
           />
@@ -73,7 +73,7 @@ export default function NoteCompletion({
           aria-label={`Gap ${qid}`}
           type="text"
           disabled={!!result}
-          className="px-1 border-b border-gray-400 bg-transparent w-36 focus:outline-none focus:border-gray-700"
+          className="px-1 border-b-2 border-dotted border-slate-400 bg-transparent w-36 focus:outline-none focus:border-blue-500 focus:border-solid transition-all"
           value={answers[qid] || ""}
           onChange={(e) => onAnswerChange(qid, e.target.value)}
         />
@@ -82,24 +82,26 @@ export default function NoteCompletion({
   };
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       {group?.word_limit && (
         <p className="text-xs italic text-gray-500">{group.word_limit}</p>
       )}
-      <ul className="space-y-2 list-disc pl-6">
-        {items.map((q: any) => {
-          const context =
-            (q?.context as string) ||
-            (q?.questionText as string) ||
-            "";
-          return (
-            <li key={q.id} className="text-sm">
-              <Label className="sr-only">Gap {q.id}</Label>
-              {renderInlineWithBlank(context, q.id)}
-            </li>
-          );
-        })}
-      </ul>
+      <div className="completion-notes">
+        <ul className="space-y-3">
+          {items.map((q: any) => {
+            const context =
+              (q?.context as string) ||
+              (q?.questionText as string) ||
+              "";
+            return (
+              <li key={q.id} className="text-sm">
+                <Label className="sr-only">Gap {q.id}</Label>
+                {renderInlineWithBlank(context, q.id)}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 }

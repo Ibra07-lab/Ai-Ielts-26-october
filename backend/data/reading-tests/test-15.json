@@ -1,0 +1,684 @@
+{
+  "testId": 15,
+  "testName": "Test 15",
+  "passages": [
+{
+  "id": 1,
+  "title": "The Science of Sleep Stages and Quality",
+  "level": "intermediate",
+  "estimatedTime": 15,
+  "paragraphs": [
+    {
+      "id": "A",
+      "text": "Sleep is a fundamental biological process that occupies roughly one-third of human existence. Despite spending approximately 33 percent of their lives asleep, many people remain unaware of the complex mechanisms that govern this essential activity. Sleep is not a uniform state of unconsciousness but rather a dynamic process involving distinct stages, each serving unique physiological functions. In recent decades, scientific understanding of these stages has expanded significantly, revealing how various factors can influence overall sleep quality. According to research published in Sleep Medicine Reviews in 2021, approximately 45 percent of adults worldwide report experiencing poor sleep quality, prompting researchers to investigate both the nature of sleep stages and the elements that disrupt them."
+    },
+    {
+      "id": "B",
+      "text": "The scientific study of sleep stages began in earnest during the mid-twentieth century. In 1953, researchers at the University of Chicago made a groundbreaking discovery when they identified a unique phase of sleep characterised by rapid eye movements, subsequently termed REM sleep. This finding revolutionised the field and established that sleep consists of distinct phases rather than a single, continuous state. Subsequent research throughout the 1960s led to the classification of Non-REM sleep into multiple stages based on brain wave patterns. Work conducted at Stanford University's Sleep Research Centre between 1957 and 1975 established the foundation for modern sleep research and introduced the concept of sleep architecture—the structured pattern of sleep stages occurring throughout the night. This framework remains central to how scientists understand and measure sleep quality today."
+    },
+    {
+      "id": "C",
+      "text": "Modern sleep science recognises two primary categories of sleep: Non-Rapid Eye Movement (NREM) sleep and Rapid Eye Movement (REM) sleep. NREM sleep is further divided into three stages, each progressively deeper than the last. During the first stage, which typically lasts between five and ten minutes, the body begins to relax and brain activity starts to slow. The second stage involves further reduction in body temperature and heart rate, while the third stage, known as deep sleep, is crucial for physical restoration and immune function. REM sleep, occurring approximately 90 minutes after falling asleep, is characterised by increased brain activity similar to wakefulness and is essential for memory consolidation. Dr. Helena Richter, a neuroscientist at the Max Planck Institute in Germany, has demonstrated that individuals typically experience four to six complete sleep cycles per night. Significantly, the proportion of REM sleep increases in later cycles, rising by approximately 50 percent compared to earlier periods."
+    },
+    {
+      "id": "D",
+      "text": "Understanding what affects sleep quality requires examining multiple environmental and biological factors. First, exposure to artificial light, particularly blue light from electronic devices, suppresses the production of melatonin—a hormone that regulates the sleep-wake cycle, also known as the circadian rhythm. Subsequently, this hormonal disruption delays the onset of sleep and reduces overall sleep depth. Following this initial disruption, the body struggles to maintain consistent progression through sleep stages. Finally, the cumulative effect is a reduction in restorative deep sleep and REM phases. A 2019 study by the Tokyo Institute of Sleep Medicine found that participants who used smartphones within two hours of bedtime experienced 23 percent less deep sleep than those who avoided such devices. Dr. Yuki Tanaka, who led this research, noted that temperature regulation also plays a critical role. Room temperatures exceeding 24 degrees Celsius were associated with increased nighttime awakenings and reduced sleep efficiency."
+    },
+    {
+      "id": "E",
+      "text": "Research has revealed notable differences in sleep patterns between populations with varying lifestyle habits. In a comparative study examining sleep quality in urban versus rural communities across Australia and Japan, investigators observed that urban residents averaged 6.2 hours of sleep per night compared to 7.4 hours among rural participants. However, the distinction extended beyond mere duration. Urban dwellers spent approximately 18 percent less time in deep sleep stages despite similar overall time in bed. Conversely, rural populations demonstrated more consolidated sleep patterns with fewer nighttime awakenings. While both groups were affected by factors such as caffeine consumption and stress levels, the intensity of artificial lighting in cities appeared to be the primary differentiating factor. Nevertheless, the study noted that individual variations in sleep needs remained substantial, with some participants functioning well on six hours while others required nine hours for comparable rest."
+    },
+    {
+      "id": "F",
+      "text": "The growing body of research on sleep stages and quality has significant implications for public health. Understanding the delicate balance of sleep architecture enables individuals to make informed decisions about their sleep environment and habits. Health organisations worldwide now recommend between seven and nine hours of sleep for adults, though quality is equally important as quantity. Future research directions include personalised sleep interventions based on individual circadian patterns. Ultimately, prioritising sleep quality represents an accessible yet powerful strategy for improving overall wellbeing."
+    }
+      ],
+      "questions": [
+        {
+  "id": 1,
+  "type": "multiple-choice",
+  "title": "Questions 1-5",
+  "instructions": "Choose the correct letter, A, B, C or D.",
+  "questions": [
+    {
+      "id": 1,
+      "questionText": "According to the passage, where was the sleep phase involving rapid eye movements first discovered?",
+      "options": [
+        "Stanford University's Sleep Research Centre",
+        "The University of Chicago",
+        "The Max Planck Institute in Germany",
+        "The Tokyo Institute of Sleep Medicine"
+      ],
+      "correctAnswer": "The University of Chicago",
+      "justification": "Paragraph B explicitly states that in 1953, researchers at the University of Chicago identified a unique phase of sleep characterised by rapid eye movements, which was subsequently termed REM sleep. The question paraphrases 'REM sleep' as 'the sleep phase involving rapid eye movements.'",
+      "evidenceQuote": "\"In 1953, researchers at the University of Chicago made a groundbreaking discovery when they identified a unique phase of sleep characterised by rapid eye movements\""
+    },
+    {
+      "id": 2,
+      "questionText": "What did Dr. Tanaka's research team discover about participants who used mobile phones before sleeping?",
+      "options": [
+        "They fell asleep approximately 23 percent faster than non-users",
+        "They experienced nearly a quarter less restorative sleep",
+        "They had more frequent dreams during REM phases",
+        "They required fewer complete sleep cycles per night"
+      ],
+      "correctAnswer": "They experienced nearly a quarter less restorative sleep",
+      "justification": "Paragraph D states that the 2019 Tokyo Institute study led by Dr. Tanaka found participants who used smartphones within two hours of bedtime 'experienced 23 percent less deep sleep.' The correct answer paraphrases this as 'nearly a quarter less restorative sleep,' where 'deep sleep' is rephrased as 'restorative sleep' (supported by paragraph C's description of deep sleep as 'crucial for physical restoration').",
+      "evidenceQuote": "\"participants who used smartphones within two hours of bedtime experienced 23 percent less deep sleep than those who avoided such devices\""
+    },
+    {
+      "id": 3,
+      "questionText": "What is the primary focus of paragraph E?",
+      "options": [
+        "The biological mechanisms that regulate human sleep patterns",
+        "Comparing sleep characteristics between different population groups",
+        "The historical development of sleep research methodologies",
+        "Recommending optimal sleep durations for various age groups"
+      ],
+      "correctAnswer": "Comparing sleep characteristics between different population groups",
+      "justification": "Paragraph E is structured around a comparative study examining sleep quality differences between urban and rural communities across Australia and Japan. It contrasts sleep duration (6.2 vs 7.4 hours), deep sleep percentage (18 percent difference), and sleep consolidation patterns between these groups, making 'comparing sleep characteristics between different population groups' the best summary of its main focus.",
+      "evidenceQuote": "\"In a comparative study examining sleep quality in urban versus rural communities across Australia and Japan, investigators observed that urban residents averaged 6.2 hours of sleep per night compared to 7.4 hours among rural participants\""
+    },
+    {
+      "id": 4,
+      "questionText": "What can be inferred about potential improvements to urban residents' sleep quality?",
+      "options": [
+        "Moving to rural areas is the only effective solution for better sleep",
+        "Reducing exposure to city lighting could have beneficial effects",
+        "Urban populations are biologically adapted to require less deep sleep",
+        "Increasing caffeine consumption would help regulate sleep patterns"
+      ],
+      "correctAnswer": "Reducing exposure to city lighting could have beneficial effects",
+      "justification": "Paragraph E states that 'the intensity of artificial lighting in cities appeared to be the primary differentiating factor' between urban and rural sleep patterns. Since artificial lighting is identified as the main cause of urban sleep problems, it can logically be inferred that reducing this exposure could improve urban sleep quality. The passage does not state this directly but supports this inference.",
+      "evidenceQuote": "\"the intensity of artificial lighting in cities appeared to be the primary differentiating factor\""
+    },
+    {
+      "id": 5,
+      "questionText": "Based on information throughout the passage, which statement best reflects the author's view on addressing sleep problems?",
+      "options": [
+        "Technological solutions have largely eliminated common sleep disorders",
+        "Sleep quality depends entirely on factors beyond individual control",
+        "Understanding sleep mechanisms can empower people to improve their rest",
+        "Professional medical intervention is necessary for most sleep issues"
+      ],
+      "correctAnswer": "Understanding sleep mechanisms can empower people to improve their rest",
+      "justification": "The passage concludes in paragraph F that 'Understanding the delicate balance of sleep architecture enables individuals to make informed decisions about their sleep environment and habits' and describes prioritising sleep quality as 'an accessible yet powerful strategy for improving overall wellbeing.' This supports the inference that knowledge empowers individual action, synthesizing the educational tone throughout the passage.",
+      "evidenceQuote": "\"Understanding the delicate balance of sleep architecture enables individuals to make informed decisions about their sleep environment and habits\""
+    }
+  ]
+},
+{
+  "id": 2,
+  "type": "matching-headings",
+  "title": "Questions 6-11",
+  "instructions": "The reading passage has six paragraphs, A-F. Choose the correct heading for each paragraph from the list of headings below.",
+  "questions": [
+    {
+      "id": 6,
+      "questionText": "Paragraph A",
+      "options": [
+        "The initial identification of rapid eye movements",
+        "Pioneering developments in the study of sleep",
+        "The broader significance of sleep research for wellbeing",
+        "Introducing sleep as a dynamic biological process",
+        "The structure and characteristics of sleep phases",
+        "Environmental factors that compromise restful sleep",
+        "Comparing rest patterns between urban and rural populations",
+        "Medical interventions for sleep-related disorders",
+        "Individual genetic factors influencing sleep requirements"
+      ],
+      "correctAnswer": "Introducing sleep as a dynamic biological process",
+      "justification": "Paragraph A challenges the common perception of sleep as a 'uniform state of unconsciousness,' defining it instead as a 'dynamic process involving distinct stages.' The heading accurately captures this introductory definition and the biological focus of the opening paragraph.",
+      "evidenceQuote": "Sleep is not a uniform state of unconsciousness but rather a dynamic process involving distinct stages, each serving unique physiological functions."
+    },
+    {
+      "id": 7,
+      "questionText": "Paragraph B",
+      "options": [
+        "The initial identification of rapid eye movements",
+        "Pioneering developments in the study of sleep",
+        "The broader significance of sleep research for wellbeing",
+        "Introducing sleep as a dynamic biological process",
+        "The structure and characteristics of sleep phases",
+        "Environmental factors that compromise restful sleep",
+        "Comparing rest patterns between urban and rural populations",
+        "Medical interventions for sleep-related disorders",
+        "Individual genetic factors influencing sleep requirements"
+      ],
+      "correctAnswer": "Pioneering developments in the study of sleep",
+      "justification": "Paragraph B traces the chronological development of sleep science from 1953 through 1975, highlighting groundbreaking discoveries and foundational research. The heading paraphrases this historical focus, with 'pioneering developments' capturing the revolutionary nature of the discoveries like REM sleep and sleep architecture.",
+      "evidenceQuote": "This finding revolutionised the field and established that sleep consists of distinct phases... established the foundation for modern sleep research"
+    },
+    {
+      "id": 8,
+      "questionText": "Paragraph C",
+      "options": [
+        "The initial identification of rapid eye movements",
+        "Pioneering developments in the study of sleep",
+        "The broader significance of sleep research for wellbeing",
+        "Introducing sleep as a dynamic biological process",
+        "The structure and characteristics of sleep phases",
+        "Environmental factors that compromise restful sleep",
+        "Comparing rest patterns between urban and rural populations",
+        "Medical interventions for sleep-related disorders",
+        "Individual genetic factors influencing sleep requirements"
+      ],
+      "correctAnswer": "The structure and characteristics of sleep phases",
+      "justification": "Paragraph C provides a structured overview of sleep categories (NREM and REM), describing each stage's duration, characteristics, and functions. The heading accurately captures this descriptive focus, with 'structure' reflecting the staged progression and 'characteristics' encompassing the physical descriptions.",
+      "evidenceQuote": "NREM sleep is further divided into three stages, each progressively deeper than the last... REM sleep... is characterised by increased brain activity similar to wakefulness"
+    },
+    {
+      "id": 9,
+      "questionText": "Paragraph D",
+      "options": [
+        "The initial identification of rapid eye movements",
+        "Pioneering developments in the study of sleep",
+        "The broader significance of sleep research for wellbeing",
+        "Introducing sleep as a dynamic biological process",
+        "The structure and characteristics of sleep phases",
+        "Environmental factors that compromise restful sleep",
+        "Comparing rest patterns between urban and rural populations",
+        "Medical interventions for sleep-related disorders",
+        "Individual genetic factors influencing sleep requirements"
+      ],
+      "correctAnswer": "Environmental factors that compromise restful sleep",
+      "justification": "Paragraph D systematically examines factors that disrupt sleep quality, specifically highlighting artificial light, electronic devices, and temperature. The heading paraphrases these as 'environmental factors' that 'compromise' (reduce the quality of) sleep.",
+      "evidenceQuote": "exposure to artificial light... suppresses the production of melatonin... Room temperatures exceeding 24 degrees Celsius were associated with increased nighttime awakenings"
+    },
+    {
+      "id": 10,
+      "questionText": "Paragraph E",
+      "options": [
+        "The initial identification of rapid eye movements",
+        "Pioneering developments in the study of sleep",
+        "The broader significance of sleep research for wellbeing",
+        "Introducing sleep as a dynamic biological process",
+        "The structure and characteristics of sleep phases",
+        "Environmental factors that compromise restful sleep",
+        "Comparing rest patterns between urban and rural populations",
+        "Medical interventions for sleep-related disorders",
+        "Individual genetic factors influencing sleep requirements"
+      ],
+      "correctAnswer": "Comparing rest patterns between urban and rural populations",
+      "justification": "Paragraph E is structured around a comparative study examining sleep quality differences between urban and rural communities. The heading directly captures this comparative focus, referring to the 'urban versus rural' distinction central to the paragraph.",
+      "evidenceQuote": "In a comparative study examining sleep quality in urban versus rural communities across Australia and Japan, investigators observed that urban residents averaged 6.2 hours of sleep per night compared to 7.4 hours among rural participants"
+    },
+    {
+      "id": 11,
+      "questionText": "Paragraph F",
+      "options": [
+        "The initial identification of rapid eye movements",
+        "Pioneering developments in the study of sleep",
+        "The broader significance of sleep research for wellbeing",
+        "Introducing sleep as a dynamic biological process",
+        "The structure and characteristics of sleep phases",
+        "Environmental factors that compromise restful sleep",
+        "Comparing rest patterns between urban and rural populations",
+        "Medical interventions for sleep-related disorders",
+        "Individual genetic factors influencing sleep requirements"
+      ],
+      "correctAnswer": "The broader significance of sleep research for wellbeing",
+      "justification": "Paragraph F discusses the implications of sleep research for public health and provides recommendations for individuals. The heading paraphrases 'public health implications' as 'broader significance' and emphasizes the connection to 'wellbeing' mentioned in the conclusion.",
+      "evidenceQuote": "The growing body of research on sleep stages and quality has significant implications for public health... prioritising sleep quality represents an accessible yet powerful strategy for improving overall wellbeing"
+    }
+  ]
+},
+{
+  "id": 3,
+  "type": "summary-completion",
+  "completion_type": "summary",
+  "title": "Questions 12-14",
+  "word_limit": "NO MORE THAN TWO WORDS",
+  "instructions": "Complete the summary below. Choose NO MORE THAN TWO WORDS from the passage for each answer. Write your answers in boxes 27-29 on your answer sheet.",
+  "structure": "<div class='completion-summary'><p>Scientific understanding of sleep has evolved considerably since researchers first identified REM sleep in 1953. Sleep is now recognized as a dynamic process involving distinct phases, each serving specific physiological purposes. The two main categories are Non-Rapid Eye Movement sleep and Rapid Eye Movement sleep, with the latter being essential for <strong>(12)_____</strong>. Various environmental factors can compromise sleep quality, including exposure to <strong>(13)_____</strong> from electronic devices, which inhibits the production of melatonin. Comparative studies of urban and rural populations have shown that city residents experience significantly less restorative sleep, with <strong>(14)_____</strong> identified as the primary differentiating factor. Experts emphasize that both duration and quality matter for overall wellbeing.</p></div>",
+  "questions": [
+    {
+      "id": 12,
+      "questionText": "Gap 12",
+      "correctAnswer": "memory consolidation",
+      "justification": "Paragraph C explicitly states that REM sleep 'is essential for memory consolidation.' The summary paraphrases 'REM sleep' as 'the latter' (referring back to the second category mentioned) and maintains the phrase 'essential for' to create a clear grammatical structure for the gap.",
+      "evidenceQuote": "REM sleep... is characterised by increased brain activity similar to wakefulness and is essential for memory consolidation"
+    },
+    {
+      "id": 13,
+      "questionText": "Gap 13",
+      "correctAnswer": "blue light",
+      "justification": "Paragraph D identifies 'blue light from electronic devices' as the specific type of artificial light that suppresses melatonin. The summary restructures the sentence by paraphrasing 'suppresses' as 'inhibits' while preserving the key term.",
+      "evidenceQuote": "exposure to artificial light, particularly blue light from electronic devices, suppresses the production of melatonin"
+    },
+    {
+      "id": 14,
+      "questionText": "Gap 14",
+      "correctAnswer": "artificial lighting",
+      "justification": "Paragraph E states that 'the intensity of artificial lighting in cities appeared to be the primary differentiating factor' between urban and rural sleep patterns. The summary paraphrases 'appeared to be' as 'identified as'.",
+      "evidenceQuote": "the intensity of artificial lighting in cities appeared to be the primary differentiating factor"
+    }
+  ]
+}
+      ]
+    },
+{
+  "id": 2,
+  "title": "Managing Electronic Waste: Incentives, Informal Recycling, and Safer Processing",
+  "level": "moderate",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "A",
+      "text": "Electronic waste, commonly referred to as e-waste, represents one of the fastest-growing waste streams globally. According to a 2020 report by the United Nations Environment Programme, the world generated approximately 53.6 million tonnes of e-waste in 2019, an increase of 21 per cent over the preceding five years. This discarded electronic equipment contains valuable materials—including gold, copper, and rare earth elements—worth an estimated $57 billion annually, yet only 17.4 per cent is formally recycled. The remainder is exported, landfilled, or processed through informal channels that may expose workers and communities to hazardous substances. Addressing this challenge requires understanding the complex interplay between economic incentives, informal recycling practices, and the development of safer processing methods."
+    },
+    {
+      "id": "B",
+      "text": "The global framework for managing hazardous waste, including e-waste, was established under the Basel Convention in 1989, initially focusing on restricting transboundary movements of dangerous materials from developed to developing nations. However, by the mid-2000s, policymakers recognised that effective e-waste management required more nuanced approaches. Research conducted by the International E-Waste Consortium between 2008 and 2015 found that prohibition alone had proven insufficient, as informal recycling operations continued to expand in response to growing electronic consumption. The study revealed that between 70 and 85 per cent of e-waste processing in developing countries occurred through unregulated channels, driven largely by economic necessity and inadequate formal infrastructure. This finding prompted a significant shift toward policies that sought to integrate rather than eliminate informal activities."
+    },
+    {
+      "id": "C",
+      "text": "Dr. Anika Patel, an environmental economist at the Delhi Institute for Sustainable Development, has been instrumental in advancing incentive-based approaches to e-waste management. Her research, published in the Journal of Environmental Economics in 2019, demonstrated that deposit-refund schemes could significantly increase collection rates in urban areas. Under such systems, consumers pay a small additional fee when purchasing electronic devices, which is subsequently refunded upon proper disposal. Patel's analysis of pilot programmes in Mumbai and São Paulo indicated that these initiatives increased formal collection rates by up to 40 per cent within the first two years of implementation. Following collection, materials are sorted and channelled to certified processors, where hazardous components are separated from recoverable materials. Patel argues that such programmes appear to work most effectively when combined with accessible drop-off locations and sustained public awareness campaigns, though success rates seem to vary considerably across different urban contexts."
+    },
+    {
+      "id": "D",
+      "text": "While incentive programmes address collection challenges, the processing of e-waste presents equally significant concerns. Professor Chen Wei, a materials scientist at Singapore's Institute for Environmental Technology, has developed innovative methods for extracting valuable metals without the toxic emissions associated with traditional techniques. Conventional acid-bath extraction, widely used in informal settings, releases harmful fumes containing lead, mercury, and cadmium. Chen's electrochemical approach, by contrast, uses controlled electrical currents to separate metals from circuit boards at substantially lower temperatures. Initially, collected circuit boards undergo mechanical shredding into uniform particles. Subsequently, these fragments are immersed in specialised electrolyte solutions. At this stage, electrical currents selectively dissolve target metals from the substrate material. Following purification, the recovered materials reach industrial-grade purity suitable for reuse in manufacturing. A 2021 study published in Sustainable Materials Technology found that Chen's method could recover approximately 95 per cent of gold content while reducing toxic emissions by 85 per cent compared to acid-based processes. However, the initial capital investment required may limit adoption in resource-constrained settings."
+    },
+    {
+      "id": "E",
+      "text": "The contrast between formal and informal e-waste systems is particularly evident when comparing practices in Japan and Ghana. Japan's Home Appliance Recycling Law, implemented in 2001, requires manufacturers to establish collection networks and achieve specified recycling rates. Consequently, the country processes over 90 per cent of discarded electronics through certified facilities that meet stringent environmental standards. By comparison, Ghana's Agbogbloshie district in Accra has become one of the world's largest informal e-waste processing sites, where approximately 10,000 workers manually dismantle equipment using rudimentary tools. Research conducted by the World Health Organization in 2017 documented that soil samples from this area contained lead concentrations 2.5 times higher than internationally recognised safety thresholds. These findings suggest that workers in such environments face considerable health risks, including respiratory diseases and neurological damage. Nonetheless, the informal sector provides essential livelihoods for communities where formal employment opportunities remain severely limited. This tension between economic necessity and health protection has prompted international organisations to explore hybrid models."
+    },
+    {
+      "id": "F",
+      "text": "Dr. Samuel Okonkwo, a public health specialist at the University of Lagos, has questioned the practicality of transplanting formal recycling frameworks to developing economies. In a 2022 paper for Environmental Health Perspectives, Okonkwo argued that overly prescriptive regulations might inadvertently push e-waste processing further underground, potentially making conditions worse for workers. He contends that policymakers tend to underestimate the social embeddedness of informal recycling networks, which often function as crucial economic lifelines for marginalised communities. Rather than imposing external standards, Okonkwo advocates for gradual capacity building that provides informal workers with safer tools and training while preserving their livelihoods. This approach, sometimes called formalisation from below, emphasises incremental improvements over immediate compliance with international standards. Critics of this position suggest that such incremental approaches may be too slow to address urgent health impacts, potentially exposing workers to hazardous conditions for extended periods while awaiting improvements."
+    },
+    {
+      "id": "G",
+      "text": "On balance, effective e-waste management likely requires combining multiple strategies tailored to local contexts. Incentive programmes may prove most applicable in regions with established retail infrastructure, while safer processing technologies could potentially be adapted for both formal facilities and improved informal operations. The ongoing challenge lies in balancing environmental protection with economic realities, particularly in regions where informal recycling represents a significant source of income. International cooperation, including technology transfer and capacity building, will arguably be essential for achieving sustainable solutions. As global electronic consumption continues to expand, addressing e-waste will remain a critical environmental and public health priority for decades to come."
+    }
+  ],
+  "questions": [
+    {
+  "id": 4,
+  "type": "true-false-not-given",
+  "title": "Questions 15-19",
+  "instructions": "Do the following statements agree with the views of the writer in the Reading Passage? In boxes 15-19 on your answer sheet, write YES if the statement agrees with the views of the writer, NO if the statement contradicts the views of the writer, NOT GIVEN if it is impossible to say what the writer thinks about this.",
+  "questions": [
+    {
+      "id": 15,
+      "questionText": "In Dr. Patel's view, deposit-refund programmes achieve optimal results when supported by continuous public education efforts.",
+      "correctAnswer": "YES",
+      "justification": "Dr. Patel explicitly argues that incentive programmes 'appear to work most effectively when combined with accessible drop-off locations and sustained public awareness campaigns.' This supports the statement regarding the necessity of continuous education (public awareness) for optimal results.",
+      "evidenceQuote": "Patel argues that such programmes appear to work most effectively when combined with accessible drop-off locations and sustained public awareness campaigns"
+    },
+    {
+      "id": 16,
+      "questionText": "The writer considers the integration of various context-specific approaches necessary for effective e-waste management.",
+      "correctAnswer": "YES",
+      "justification": "In the final paragraph, the writer explicitly states that 'effective e-waste management likely requires combining multiple strategies tailored to local contexts.' This aligns with the statement about the necessity of integrating context-specific approaches.",
+      "evidenceQuote": "On balance, effective e-waste management likely requires combining multiple strategies tailored to local contexts."
+    },
+    {
+      "id": 17,
+      "questionText": "Dr. Okonkwo argues that developing countries should rapidly implement international e-waste regulatory standards.",
+      "correctAnswer": "NO",
+      "justification": "The statement contradicts the text. Dr. Okonkwo advocates for 'incremental improvements over immediate compliance with international standards' and warns that 'overly prescriptive regulations' might make conditions worse.",
+      "evidenceQuote": "Rather than imposing external standards, Okonkwo advocates for gradual capacity building... emphasises incremental improvements over immediate compliance with international standards."
+    },
+    {
+      "id": 18,
+      "questionText": "The writer believes individual countries can adequately address e-waste challenges through national policies alone, without international collaboration.",
+      "correctAnswer": "NO",
+      "justification": "The statement contradicts the writer's view found in the conclusion. The writer asserts that 'International cooperation... will arguably be essential for achieving sustainable solutions,' implying that national policies alone are insufficient.",
+      "evidenceQuote": "International cooperation, including technology transfer and capacity building, will arguably be essential for achieving sustainable solutions."
+    },
+    {
+      "id": 19,
+      "questionText": "The writer considers Dr. Okonkwo's gradual capacity building approach more practical than Dr. Patel's incentive-based schemes for developing nations.",
+      "correctAnswer": "NOT GIVEN",
+      "justification": "While the passage discusses both Dr. Patel's incentive schemes and Dr. Okonkwo's capacity building, the writer does not compare them in terms of practicality or rank one above the other. The conclusion suggests combining strategies rather than choosing one over the other.",
+      "evidenceQuote": "effective e-waste management likely requires combining multiple strategies tailored to local contexts"
+    }
+  ]
+},
+{
+  "id": 5,
+  "type": "matching-features",
+  "title": "Questions 20-23",
+  "instructions": "Look at the following statements (Questions 20-23) and the list of researchers below. Match each statement with the correct researcher, A-E. Write the correct letter, A-E, in boxes 20-23 on your answer sheet. NB You may use any letter more than once.",
+  "features": [
+    {
+      "letter": "A",
+      "name": "Dr. Anika Patel"
+    },
+    {
+      "letter": "B",
+      "name": "Professor Chen Wei"
+    },
+    {
+      "letter": "C",
+      "name": "Dr. Samuel Okonkwo"
+    },
+    {
+      "letter": "D",
+      "name": "International E-Waste Consortium"
+    },
+    {
+      "letter": "E",
+      "name": "World Health Organization"
+    }
+  ],
+  "questions": [
+    {
+      "id": 20,
+      "questionText": "demonstrated that consumer incentive systems can substantially boost recycling participation in metropolitan areas",
+      "correctAnswer": "A",
+      "justification": "The passage states that Dr. Patel's 'research...demonstrated that deposit-refund schemes could significantly increase collection rates in urban areas.' The statement paraphrases 'deposit-refund schemes' as 'consumer incentive systems' and 'urban areas' as 'metropolitan areas.'",
+      "evidenceQuote": "Her research, published in the Journal of Environmental Economics in 2019, demonstrated that deposit-refund schemes could significantly increase collection rates in urban areas"
+    },
+    {
+      "id": 21,
+      "questionText": "developed a technique employing electrical processes to extract precious metals from electronic components at reduced heat levels",
+      "correctAnswer": "B",
+      "justification": "The passage explicitly attributes this to Professor Chen Wei, stating his method 'uses controlled electrical currents to separate metals from circuit boards at substantially lower temperatures.' This matches the description of employing electrical processes at reduced heat levels.",
+      "evidenceQuote": "Chen's electrochemical approach, by contrast, uses controlled electrical currents to separate metals from circuit boards at substantially lower temperatures"
+    },
+    {
+      "id": 22,
+      "questionText": "contends that excessively strict regulations could inadvertently drive processing activities into unmonitored sectors",
+      "correctAnswer": "C",
+      "justification": "The passage states that Dr. Okonkwo 'argued that overly prescriptive regulations might inadvertently push e-waste processing further underground.' This aligns with the statement about strict regulations driving activities into unmonitored sectors.",
+      "evidenceQuote": "Okonkwo argued that overly prescriptive regulations might inadvertently push e-waste processing further underground, potentially making conditions worse for workers"
+    },
+    {
+      "id": 23,
+      "questionText": "acknowledged that substantial upfront investment requirements could restrict implementation in economically disadvantaged contexts",
+      "correctAnswer": "B",
+      "justification": "The passage notes regarding Chen's method that 'the initial capital investment required may limit adoption in resource-constrained settings.' This characteristic of the technology is directly associated with the description of Chen's work.",
+      "evidenceQuote": "However, the initial capital investment required may limit adoption in resource-constrained settings"
+    }
+  ]
+},
+{
+  "id": 6,
+  "type": "multiple-choice",
+  "title": "Questions 24-27",
+  "instructions": "Choose the correct letter, A, B, C or D.",
+  "questions": [
+    {
+      "id": 24,
+      "questionText": "According to the passage, what proportion of global electronic waste is currently processed through formal recycling channels?",
+      "options": [
+        "Approximately 21 percent",
+        "Less than one-fifth",
+        "Between 70 and 85 percent",
+        "Over 90 percent"
+      ],
+      "correctAnswer": "Less than one-fifth",
+      "justification": "Paragraph A explicitly states that 'only 17.4 per cent is formally recycled.' The correct answer paraphrases this as 'less than one-fifth' (17.4% being less than 20%), maintaining the core meaning while using different expression.",
+      "evidenceQuote": "only 17.4 per cent is formally recycled"
+    },
+    {
+      "id": 25,
+      "questionText": "According to the passage, what was one outcome of implementing deposit-refund programmes in Mumbai and São Paulo?",
+      "options": [
+        "Hazardous component separation became more efficient",
+        "Consumer awareness campaigns became unnecessary",
+        "Informal recycling operations were completely eliminated",
+        "Collection through official channels increased by as much as 40 percent"
+      ],
+      "correctAnswer": "Collection through official channels increased by as much as 40 percent",
+      "justification": "Paragraph C states that Patel's 'analysis of pilot programmes in Mumbai and São Paulo indicated that these initiatives increased formal collection rates by up to 40 per cent within the first two years.' The correct answer paraphrases 'formal collection rates' as 'collection through official channels' and maintains 'up to 40 per cent.'",
+      "evidenceQuote": "Patel's analysis of pilot programmes in Mumbai and São Paulo indicated that these initiatives increased formal collection rates by up to 40 per cent"
+    },
+    {
+      "id": 26,
+      "questionText": "What can be inferred from the comparison between Japan and Ghana's e-waste processing systems?",
+      "options": [
+        "Formal recycling systems inevitably lead to higher unemployment rates in developing countries",
+        "Informal recycling operations provide no economic benefits to local communities",
+        "Implementing formal regulatory frameworks may present significant challenges in developing economies",
+        "Ghana's processing methods are more environmentally sustainable than Japan's certified facilities"
+      ],
+      "correctAnswer": "Implementing formal regulatory frameworks may present significant challenges in developing economies",
+      "justification": "The passage contrasts Japan's successful formal system with Ghana's informal sector, then notes 'the informal sector provides essential livelihoods for communities where formal employment opportunities remain severely limited,' creating 'tension between economic necessity and health protection.' This contrast supports the inference that implementing formal frameworks faces significant challenges in developing contexts.",
+      "evidenceQuote": "the informal sector provides essential livelihoods for communities where formal employment opportunities remain severely limited. This tension between economic necessity and health protection has prompted international organisations to explore hybrid models"
+    },
+    {
+      "id": 27,
+      "questionText": "Which of the following best describes Dr. Okonkwo's position on e-waste management in developing countries?",
+      "options": [
+        "Gradual improvement approaches should prioritise worker safety while maintaining economic opportunities",
+        "International regulatory standards should be immediately enforced across all countries",
+        "Informal recycling should be eliminated and replaced entirely by formal facilities",
+        "Technological innovations are more important than changes to regulatory policy"
+      ],
+      "correctAnswer": "Gradual improvement approaches should prioritise worker safety while maintaining economic opportunities",
+      "justification": "Paragraph F presents Okonkwo's advocacy for 'gradual capacity building that provides informal workers with safer tools and training while preserving their livelihoods,' an approach 'sometimes called formalisation from below' that 'emphasises incremental improvements over immediate compliance.' This matches the description of prioritising worker safety while maintaining economic opportunities through gradual rather than immediate changes.",
+      "evidenceQuote": "Okonkwo advocates for gradual capacity building that provides informal workers with safer tools and training while preserving their livelihoods"
+    }
+  ]
+ }
+]
+},
+{
+  "id": 3,
+  "title": "Governing the Ungovernable: Authority, Consent, and Risk in Geoengineering Decisions",
+  "level": "advanced",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "A",
+      "text": "The prospect of deliberately modifying Earth's climate system to counteract anthropogenic warming has shifted from speculative fiction to active research agenda, yet governance frameworks necessary to oversee such interventions remain conspicuously underdeveloped. Geoengineering technologies—ranging from solar radiation management to enhanced carbon removal—present a fundamental asymmetry: any nation, or conceivably even well-resourced private actors, could deploy interventions whose effects transcend territorial boundaries and affect populations who had no voice in the decision. This governance vacuum raises profound questions about who possesses the legitimate authority to make such consequential choices, and through what mechanisms global risks might be equitably managed."
+    },
+    {
+      "id": "B",
+      "text": "The contemporary governance debate emerged gradually over two decades. Early discussions in the 1990s treated geoengineering as technological curiosity, but a 2006 essay by Nobel laureate Paul Crutzen catalyzed serious scientific and policy engagement. By 2011, the Oxford Geoengineering Principles had been articulated, proposing voluntary guidelines emphasizing public participation and independent assessment. Nevertheless, these principles remain non-binding, and the 2015 Paris Agreement notably excluded explicit provisions for geoengineering governance. A 2019 report by the United Nations Environment Programme identified this lacuna as critical, noting that research activities were proceeding in at least 17 countries while international regulatory structures lagged substantially behind technological capabilities."
+    },
+    {
+      "id": "C",
+      "text": "Dr. Elena Vasquez, a climate policy researcher at the University of São Paulo, contends that the transboundary nature of geoengineering necessitates robust international governance before any deployment occurs. In Vasquez's view, the irreversibility of certain interventions—particularly stratospheric aerosol injection, which could alter precipitation patterns across continents—demands what she terms \"precautionary multilateralism.\" This framework would require binding international agreement on research parameters, risk thresholds, and decision-making protocols prior to even large-scale experimentation. Vasquez argues that existing institutions, including the Intergovernmental Panel on Climate Change, lack the mandate and enforcement capacity to govern geoengineering effectively, necessitating an entirely new international body with authority to approve, monitor, and if necessary terminate interventions crossing predetermined risk thresholds."
+    },
+    {
+      "id": "D",
+      "text": "Empirical research lends some support to Vasquez's precautionary position. A 2021 meta-analysis of public perception studies across 23 countries, conducted by the European Climate Foundation, found that 67.3% of respondents expressed concern about unilateral geoengineering deployment, while 58.2% supported international governance requirements before research beyond small-scale modeling. Longitudinal data from a seven-year study by researchers at the Max Planck Institute for Meteorology indicated that as public understanding of geoengineering increased between 2014 and 2021, support for formal governance structures rose from 41% to 63% among informed participants. These findings suggest that informed publics may broadly favor institutional constraints on geoengineering actors."
+    },
+    {
+      "id": "E",
+      "text": "However, Dr. Henrik Lindqvist, an atmospheric scientist formerly at Stockholm University, challenges the feasibility of achieving meaningful international consensus within climatically relevant timeframes. Lindqvist argues that historical precedents for environmental treaty-making—including the 18-year negotiation period for the United Nations Convention on the Law of the Sea—suggest comprehensive geoengineering governance could require decades to materialize. Given projections that climate tipping points may be crossed within 15 to 30 years, Lindqvist contends that insisting on international agreement before research proceeds could foreclose potentially valuable options. He advocates instead for a \"transparency-accountability\" model in which nations pursuing geoengineering research would be obligated to share methodologies, findings, and risk assessments publicly, without requiring prior international approval for non-deployment research activities."
+    },
+    {
+      "id": "F",
+      "text": "Professor Michael Okonkwo, an environmental philosopher at the University of Cape Town, offers a perspective that partially aligns with both positions while introducing distinct concerns. Okonkwo agrees with Vasquez that unilateral deployment would be ethically indefensible, yet he questions whether state-centric governance adequately represents affected parties. His framework of \"procedural climate justice\" emphasizes that those most vulnerable to both climate change and geoengineering side effects—often populations in the Global South—must possess substantive, not merely consultative, decision-making roles. Okonkwo is skeptical of Lindqvist's transparency model, arguing that information-sharing without consent requirements reproduces existing power asymmetries between technologically advanced nations and those lacking capacity to evaluate disclosed risks."
+    },
+    {
+      "id": "G",
+      "text": "A more integrative position has been articulated by Dr. Priya Sharma, a risk management specialist at the Singapore-MIT Alliance for Research and Technology. Sharma's \"Adaptive Governance Protocol\" attempts to reconcile precautionary concerns with the practical constraints Lindqvist identifies. The framework involves five sequential stages: first, establishing baseline risk assessment criteria through inclusive international dialogue; subsequently, implementing tiered research authorization distinguishing laboratory studies from field experiments; third, creating rapid-response review mechanisms capable of assessing emerging evidence within months rather than years; fourth, developing conditional deployment thresholds linked to verified climate trajectory data; and finally, instituting mandatory reassessment cycles ensuring governance evolves alongside technological developments. Sharma argues this approach acknowledges uncertainty without precluding action, though critics note it presupposes institutional capacities that may not yet exist."
+    },
+    {
+      "id": "H",
+      "text": "Methodological limitations complicate efforts to evaluate these competing governance frameworks. A 2023 study published in Global Environmental Change acknowledged that existing models of governance effectiveness rely predominantly on retrospective analysis of environmental treaties, whose negotiation contexts differ substantially from geoengineering scenarios. Furthermore, attempts to model stakeholder preferences face significant challenges: cross-cultural survey instruments may inadequately capture diverse conceptualizations of risk and consent across different societies. Okonkwo has noted research suggesting that \"risk\" itself is understood differently across cultural contexts, raising questions about whether any universal governance framework can adequately accommodate such heterogeneity."
+    },
+    {
+      "id": "I",
+      "text": "The geoengineering governance debate thus remains unresolved, with fundamental disagreements persisting about the appropriate balance between precaution and flexibility, the legitimacy of national versus international authority, and the meaning of meaningful consent in a globally interconnected climate system. What emerges clearly is that governance challenges may prove more complex than the technological problems they seek to address. As Sharma observes, \"We are attempting to govern technologies whose full implications we cannot yet foresee, through institutions we have not yet built.\""
+    }
+  ],
+  "questions": [
+    {
+  "id": 7,
+  "type": "multiple-choice",
+  "title": "Questions 28-32",
+  "instructions": "Choose the correct letter, A, B, C or D.",
+  "questions": [
+    {
+      "id": 28,
+      "questionText": "According to paragraph D, how did public support for formal governance structures change among informed participants between 2014 and 2021?",
+      "options": [
+        "It increased substantially, from approximately 41% to over 60%",
+        "It remained relatively stable throughout the study period",
+        "It declined as participants became more familiar with the technology",
+        "It fluctuated significantly before returning to its original level"
+      ],
+      "correctAnswer": "It increased substantially, from approximately 41% to over 60%",
+      "justification": "The passage explicitly states that 'support for formal governance structures rose from 41% to 63% among informed participants' during this period. The correct answer paraphrases 'rose' as 'increased substantially' and '63%' as 'over 60%' while maintaining factual accuracy.",
+      "evidenceQuote": "\"support for formal governance structures rose from 41% to 63% among informed participants\""
+    },
+    {
+      "id": 29,
+      "questionText": "According to paragraph C, what does Dr. Vasquez believe is required before any large-scale geoengineering experimentation?",
+      "options": [
+        "Private sector organizations should complete initial feasibility assessments",
+        "National governments should independently establish regulatory guidelines",
+        "The IPCC should first demonstrate effective enforcement capabilities",
+        "Binding international agreements on research parameters and risk thresholds"
+      ],
+      "correctAnswer": "Binding international agreements on research parameters and risk thresholds",
+      "justification": "Vasquez's framework 'would require binding international agreement on research parameters, risk thresholds, and decision-making protocols prior to even large-scale experimentation.' The correct answer paraphrases this requirement while maintaining key elements of 'binding,' 'international,' and 'risk thresholds.'",
+      "evidenceQuote": "\"require binding international agreement on research parameters, risk thresholds, and decision-making protocols prior to even large-scale experimentation\""
+    },
+    {
+      "id": 30,
+      "questionText": "What is the main purpose of paragraph G?",
+      "options": [
+        "To argue that immediate geoengineering deployment is necessary to address climate emergencies",
+        "To criticize the impracticality of achieving meaningful international consensus on governance",
+        "To introduce a phased governance model that aims to reconcile competing concerns",
+        "To demonstrate that existing international institutions can adequately manage geoengineering"
+      ],
+      "correctAnswer": "To introduce a phased governance model that aims to reconcile competing concerns",
+      "justification": "Paragraph G presents Dr. Sharma's 'Adaptive Governance Protocol,' which involves five sequential stages and 'attempts to reconcile precautionary concerns with the practical constraints Lindqvist identifies.' The correct answer captures both the staged nature of the approach and its goal of balancing different perspectives.",
+      "evidenceQuote": "\"Sharma's 'Adaptive Governance Protocol' attempts to reconcile precautionary concerns with the practical constraints Lindqvist identifies\""
+    },
+    {
+      "id": 31,
+      "questionText": "Based on paragraph E, what can be inferred about Dr. Lindqvist's perspective on the timeline for establishing comprehensive international geoengineering governance?",
+      "options": [
+        "Comprehensive governance agreements have already been successfully achieved for comparable challenges",
+        "The required negotiations may extend beyond the timeframe before climate tipping points occur",
+        "International cooperation could realistically be achieved within a decade if appropriately prioritized",
+        "Governance frameworks are ultimately irrelevant to effective climate intervention strategies"
+      ],
+      "correctAnswer": "The required negotiations may extend beyond the timeframe before climate tipping points occur",
+      "justification": "Lindqvist argues that treaty-making can require 'decades to materialize' (citing the 18-year Law of the Sea negotiation) while 'climate tipping points may be crossed within 15 to 30 years.' The logical inference is that governance negotiations may not conclude before critical thresholds are reached.",
+      "evidenceQuote": "\"comprehensive geoengineering governance could require decades to materialize. Given projections that climate tipping points may be crossed within 15 to 30 years\""
+    },
+    {
+      "id": 32,
+      "questionText": "Based on the passage, which position would both Dr. Vasquez and Professor Okonkwo most likely endorse?",
+      "options": [
+        "Individual nations should have autonomy to pursue geoengineering research independently",
+        "Transparency measures alone provide sufficient protection for affected populations",
+        "The Intergovernmental Panel on Climate Change should assume primary governance authority",
+        "Unilateral geoengineering deployment by any single nation would be ethically unjustifiable"
+      ],
+      "correctAnswer": "Unilateral geoengineering deployment by any single nation would be ethically unjustifiable",
+      "justification": "The passage explicitly states that 'Okonkwo agrees with Vasquez that unilateral deployment would be ethically indefensible.' This represents a clear point of documented agreement between both scholars, directly supporting the correct answer's paraphrase of 'indefensible' as 'unjustifiable.'",
+      "evidenceQuote": "\"Okonkwo agrees with Vasquez that unilateral deployment would be ethically indefensible\""
+    }
+  ]
+},
+{
+  "id": 8,
+  "type": "matching-features",
+  "title": "Questions 33-38",
+  "instructions": "Look at the following statements (Questions 33-37) and the list of researchers and organizations below. Match each statement with the correct researcher or organization, A-G. Write the correct letter, A-G, in boxes 33-37 on your answer sheet. NB You may use any letter more than once.",
+  "features": [
+    {
+      "letter": "A",
+      "name": "Dr. Elena Vasquez"
+    },
+    {
+      "letter": "B",
+      "name": "Dr. Henrik Lindqvist"
+    },
+    {
+      "letter": "C",
+      "name": "Professor Michael Okonkwo"
+    },
+    {
+      "letter": "D",
+      "name": "Dr. Priya Sharma"
+    },
+    {
+      "letter": "E",
+      "name": "Paul Crutzen"
+    },
+    {
+      "letter": "F",
+      "name": "The European Climate Foundation"
+    },
+    {
+      "letter": "G",
+      "name": "Researchers at the Max Planck Institute for Meteorology"
+    }
+  ],
+  "questions": [
+    {
+      "id": 33,
+      "questionText": "developed a multi-phase governance structure intended to balance precautionary principles with practical implementation needs",
+      "correctAnswer": "D",
+      "justification": "Paragraph G explicitly states that 'Sharma's \"Adaptive Governance Protocol\" attempts to reconcile precautionary concerns with the practical constraints Lindqvist identifies.' The statement paraphrases 'five sequential stages' as a 'multi-phase structure' and 'reconcile precautionary concerns' as 'balance precautionary principles.'",
+      "evidenceQuote": "\"Sharma's 'Adaptive Governance Protocol' attempts to reconcile precautionary concerns with the practical constraints Lindqvist identifies. The framework involves five sequential stages\""
+    },
+    {
+      "id": 34,
+      "questionText": "proposes that countries conducting climate intervention studies should publicly disclose their methods without requiring prior international endorsement",
+      "correctAnswer": "B",
+      "justification": "Paragraph E states that Lindqvist 'advocates instead for a \"transparency-accountability\" model in which nations pursuing geoengineering research would be obligated to share methodologies... without requiring prior international approval.' The statement transforms 'nations pursuing' to 'countries conducting' and 'prior international approval' to 'prior international endorsement.'",
+      "evidenceQuote": "\"He advocates instead for a 'transparency-accountability' model in which nations pursuing geoengineering research would be obligated to share methodologies, findings, and risk assessments publicly, without requiring prior international approval\""
+    },
+    {
+      "id": 35,
+      "questionText": "contends that communities most susceptible to climate and intervention impacts require meaningful decision-making authority rather than merely advisory input",
+      "correctAnswer": "C",
+      "justification": "Paragraph F states that Okonkwo emphasizes that 'those most vulnerable... must possess substantive, not merely consultative, decision-making roles.' The statement paraphrases 'most vulnerable' as 'most susceptible' and contrasts 'substantive' authority with 'merely advisory input.'",
+      "evidenceQuote": "\"those most vulnerable to both climate change and geoengineering side effects—often populations in the Global South—must possess substantive, not merely consultative, decision-making roles\""
+    },
+    {
+      "id": 36,
+      "questionText": "maintains that compulsory international accords establishing research boundaries and risk limits must precede significant experimental activities",
+      "correctAnswer": "A",
+      "justification": "Paragraph C states that Vasquez's framework 'would require binding international agreement on research parameters, risk thresholds... prior to even large-scale experimentation.' The statement transforms 'binding' to 'compulsory' and 'prior to large-scale experimentation' to 'precede significant experimental activities.'",
+      "evidenceQuote": "\"This framework would require binding international agreement on research parameters, risk thresholds, and decision-making protocols prior to even large-scale experimentation\""
+    },
+    {
+      "id": 37,
+      "questionText": "expresses doubt that disclosure obligations alone adequately address inequities between technically capable nations and those unable to independently assess shared risk data",
+      "correctAnswer": "C",
+      "justification": "Paragraph F states that 'Okonkwo is skeptical of Lindqvist's transparency model,' arguing it 'reproduces existing power asymmetries' between advanced nations and 'those lacking capacity to evaluate disclosed risks.' The statement paraphrases 'skeptical' as 'expresses doubt' and describes the imbalance in assessment capabilities.",
+      "evidenceQuote": "\"Okonkwo is skeptical of Lindqvist's transparency model, arguing that information-sharing without consent requirements reproduces existing power asymmetries between technologically advanced nations and those lacking capacity to evaluate disclosed risks\""
+    }
+  ]
+},
+{
+  "id": 9,
+  "type": "summary-completion",
+  "completion_type": "summary",
+  "title": "Questions 38-40",
+  "word_limit": "NO MORE THAN TWO WORDS",
+  "instructions": "Complete the summary below. Choose NO MORE THAN TWO WORDS from the passage for each answer. Write your answers in boxes 38-40 on your answer sheet.",
+  "structure": "<div class='completion-summary'><p>Climate intervention technologies have advanced faster than the regulatory structures needed to oversee them, leaving a significant governance void. While a 2006 essay by Paul Crutzen prompted serious policy discussions, voluntary frameworks established since then remain <strong>(38)_____</strong>. Various governance approaches have been proposed: Dr. Vasquez advocates mandatory international accords before any deployment occurs, whereas Dr. Lindqvist proposes a <strong>(39)_____</strong> model requiring public disclosure without prior international endorsement. Dr. Sharma's framework seeks to reconcile these perspectives through adaptive, phased oversight. However, assessing these proposals is complicated by the reality that concepts such as risk may be understood differently across <strong>(40)_____</strong>.</p></div>",
+  "questions": [
+    {
+      "id": 38,
+      "questionText": "Gap 27",
+      "correctAnswer": "non-binding",
+      "justification": "The passage explicitly states that the Oxford Geoengineering Principles 'remain non-binding.' The summary paraphrases 'these principles' as 'voluntary frameworks established since then' while preserving the key descriptor 'non-binding' as the gap answer, testing understanding of the weakness in current governance arrangements.",
+      "evidenceQuote": "\"Nevertheless, these principles remain non-binding, and the 2015 Paris Agreement notably excluded explicit provisions for geoengineering governance\""
+    },
+    {
+      "id": 39,
+      "questionText": "Gap 28",
+      "correctAnswer": "transparency-accountability",
+      "justification": "The passage states that Lindqvist 'advocates instead for a \"transparency-accountability\" model' with specific requirements for sharing research publicly. The summary substantially paraphrases 'without requiring prior international approval' as 'without prior international endorsement' and 'obligated to share' as 'requiring public disclosure,' while preserving the technical term naming his framework as the answer.",
+      "evidenceQuote": "\"He advocates instead for a 'transparency-accountability' model in which nations pursuing geoengineering research would be obligated to share methodologies, findings, and risk assessments publicly\""
+    },
+    {
+      "id": 40,
+      "questionText": "Gap 29",
+      "correctAnswer": "cultural contexts",
+      "justification": "The passage states that 'risk' is 'understood differently across cultural contexts.' The summary maintains much of the original phrasing for this methodological point while testing the key phrase identifying the source of variation.",
+      "evidenceQuote": "\"Okonkwo has noted research suggesting that 'risk' itself is understood differently across cultural contexts, raising questions about whether any universal governance framework can adequately accommodate such heterogeneity\""
+    }
+   ]
+  }
+ ]
+}
+]
+}
