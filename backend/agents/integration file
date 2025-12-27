@@ -1,0 +1,93 @@
+"""
+Direct OpenAI Chat Completion approach (no assistant API)
+This approach manually calls your MCP tools and passes data to GPT
+"""
+
+import os
+import json
+from openai import OpenAI
+from dotenv import load_dotenv
+import asyncio
+
+# Import your MCP tools
+import sys
+
+sys.path.append("backend/agents")
+from reading_mcp_tools import (
+    get_passage,
+    get_question,
+    get_correct_answer,
+    get_student_answer,
+    get_error_profile,
+)
+# Reuse the same expert IELTS Reading system prompt used in openai_direct_feedback
+from openai_direct_feedback import SYSTEM_PROMPT
+
+load_dotenv()
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+
+async def get_deeper_feedback_direct(
+    user_id: int,
+    test_id: int,
+    passage_id: int,
+    question_id: int
+) -> dict:
+    """
+    Get feedback by manually calling MCP tools and passing to GPT.
+    
+    This approach doesn't require MCP server integration with OpenAI.
+    """
+    # Step 1: Gather all data using MCP tools
+    print("Fetching data from MCP tools...")
+    
+    passage_data = await get_passage(test_id, passage_id)
+    question_data = await get_question(test_id, passage_id, question_id)
+    correct_answer_data = await get_correct_answer(test_id, passage_id, question_id)
+    student_answer_data = await get_student_answer(user_id, test_id, passage_id, question_id)
+    error_profile_data = await get_error_profile(user_id)
+    
+    # Step 2: Construct prompt with all data
+    user_message = f"""Please analyze this student's IELTS Reading answer:
+
+**Passage Information:**
+Title: {passage_data['title']}
+Paragraphs: {json.dumps(passage_data['paragraphs'], indent=2)}
+
+**Question:**
+{question_data['questionText']}
+Type: {question_data['type']}
+Options: {json.dumps(question_data.get('options', []))}
+
+**Correct Answer:** {correct_answer_data['correctAnswer']}
+
+**Student's Answer:** {student_answer_data['studentAnswer']}
+
+**Student's Error Profile:**
+- Overall Accuracy: {error_profile_data['overallAccuracy']*100:.1f}%
+- Total Sessions: {error_profile_data['totalSessions']}
+- Total Questions: {error_profile_data['totalQuestions']}
+- Total Correct: {error_profile_data['totalCorrect']}
+
+Please provide detailed feedback following the JSON format specified in your instructions."""
+
+    # Step 3: Call OpenAI
+    response = client.chat.completions.create(
+        model="gpt-4-turbo-preview",
+        messages=[
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": user_message}
+        ],
+        temperature=0.3,
+        response_format={"type": "json_object"}
+    )
+    
+    # Step 4: Parse response
+    feedback = json.loads(response.choices[0].message.content)
+    return feedback
+
+
+# Synchronous wrapper
+def get_feedback_sync(user_id: int, test_id: int, passage_id: int, question_id: int) -> dict:
+    """Sync wrapper for async function."""
+    return asyncio.run(get_deeper_feedback_direct(user_id, test_id, passage_id, question_id))

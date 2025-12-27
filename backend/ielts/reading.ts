@@ -2,6 +2,64 @@ import { api } from "encore.dev/api";
 import { ieltsDB } from "./db";
 import * as fs from "node:fs";
 import * as path from "node:path";
+import { promisify } from "node:util";
+import { execFile } from "node:child_process";
+
+const execFileAsync = promisify(execFile);
+// Deeper AI feedback response shape (matches Python JSON)
+export interface DeeperFeedbackResponse {
+  verdict: string;
+  correctAnswer: string;
+  whyStudentIsWrong: {
+    reason: string;
+    studentMistakePattern: string;
+  };
+  evidence: {
+    quote: string;
+    analysis: string;
+  };
+  strategyTip: {
+    name: string;
+    steps: string[];
+  };
+  personalizedAdvice: string;
+}
+
+// Get deeper AI feedback for a specific question
+export const getReadingDeeperFeedback = api<
+  { userId: number; testId: number; passageId: number; questionId: number },
+  DeeperFeedbackResponse
+>(
+  { expose: true, method: "POST", path: "/reading/deeper-feedback" },
+  async ({ userId, testId, passageId, questionId }) => {
+    // Path to the Python script (relative to project root)
+    const scriptPath = path.join(__dirname, "../agents/openai_direct_feedback.py");
+
+    try {
+      const { stdout } = await execFileAsync(
+        "python",
+        [
+          scriptPath,
+          String(userId),
+          String(testId),
+          String(passageId),
+          String(questionId),
+        ],
+        {
+          timeout: 60000, // 60s timeout; adjust as needed
+        }
+      );
+
+      const feedback = JSON.parse(stdout) as DeeperFeedbackResponse;
+      return feedback;
+    } catch (error: any) {
+      console.error("[DeeperFeedback] Error calling Python script:", error);
+      throw new Error(
+        "Failed to generate deeper feedback. Please try again later."
+      );
+    }
+  }
+);
 
 export interface ReadingPassage {
   id: number;
@@ -999,6 +1057,63 @@ export const getReadingSessions = api<{ userId: number }, { sessions: ReadingSes
     `;
 
     return { sessions };
+  }
+);
+
+// Retrieves the latest reading session for a specific test and passage.
+export const getLatestReadingSession = api<
+  { userId: number; testId: number; passageId: number },
+  { 
+    id: number; 
+    userId: number; 
+    testId: number; 
+    passageId: number; 
+    userAnswers: Record<number, string>; 
+    correctAnswers: Record<number, string>;
+    score: number; 
+    totalQuestions: number; 
+    createdAt: string;
+  }
+>(
+  { expose: true, method: "GET", path: "/users/:userId/reading/sessions/latest" },
+  async ({ userId, testId, passageId }) => {
+    // Query most recent session matching testId + passageId
+    // Note: Adjust the passage_title pattern based on how you store test/passage metadata
+    const session = await ieltsDB.queryRow<{
+      id: number;
+      userId: number;
+      passageTitle: string;
+      userAnswers: string;
+      correctAnswers: string;
+      score: number;
+      totalQuestions: number;
+      createdAt: string;
+    }>`
+      SELECT id, user_id as "userId", passage_title as "passageTitle",
+             user_answers as "userAnswers", correct_answers as "correctAnswers",
+             score, total_questions as "totalQuestions", created_at as "createdAt"
+      FROM reading_sessions
+      WHERE user_id = ${userId} 
+        AND passage_title LIKE ${`%Test ${testId}%Passage ${passageId}%`}
+      ORDER BY created_at DESC
+      LIMIT 1
+    `;
+    
+    if (!session) {
+      throw new Error(`No session found for user ${userId}, test ${testId}, passage ${passageId}`);
+    }
+    
+    return {
+      id: session.id,
+      userId: session.userId,
+      testId,
+      passageId,
+      userAnswers: JSON.parse(session.userAnswers),
+      correctAnswers: JSON.parse(session.correctAnswers),
+      score: session.score,
+      totalQuestions: session.totalQuestions,
+      createdAt: session.createdAt
+    };
   }
 );
 
