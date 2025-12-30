@@ -3995,25 +3995,352 @@
       "detailedTheory": {
         "sections": [
           {
-            "title": "STRATEGY: STEP-BY-STEP",
+            "id": "section-1",
+            "title": "SECTION 1 — What \"Matching Information\" actually tests",
             "subsections": [
               {
-                "steps": [
+                "id": "overview",
+                "title": "What includes",
+                "content": "Matching Information questions test your ability to **locate specific details, facts, examples, or descriptions** within a passage and identify which paragraph contains them.",
+                "list": [
+                  "**Scanning ability**: Finding particular pieces of information quickly in a text",
+                  "**Paraphrase recognition**: Understanding that the same idea can be expressed differently",
+                  "**Detail comprehension**: Recognising specific facts (research findings, reasons, examples, descriptions, dates, statistics) rather than general themes"
+                ]
+              },
+              {
+                "id": "differences",
+                "title": "How this differs from other question types",
+                "tables": [
                   {
-                    "step": 1,
-                    "title": "Analyze Statements",
-                    "actions": [
-                      "Think of synonyms."
-                    ]
-                  },
-                  {
-                    "step": 2,
-                    "title": "Scan Paragraphs",
-                    "actions": [
-                      "Search for the concept."
+                    "headers": [
+                      "Matching Information",
+                      "Matching Headings",
+                      "True/False/Not Given"
+                    ],
+                    "rows": [
+                      [
+                        "Asks: *Which paragraph contains this specific fact/detail?*",
+                        "Asks: *What is the main idea of each paragraph?*",
+                        "Asks: *Does this statement agree with the passage?*"
+                      ],
+                      [
+                        "Focuses on **one specific detail** per statement",
+                        "Focuses on **overall paragraph meaning**",
+                        "Tests whether information is confirmed, contradicted, or absent"
+                      ],
+                      [
+                        "Multiple statements can match the **same paragraph**",
+                        "Each heading used **only once**",
+                        "Statements follow passage order"
+                      ]
                     ]
                   }
+                ],
+                "keyInsight": "**Key principle**: You are hunting for **where a particular piece of information is mentioned**, not summarising what a paragraph is generally about."
+              }
+            ]
+          },
+          {
+            "id": "section-2",
+            "title": "SECTION 2 — What the questions look like in the exam",
+            "subsections": [
+              {
+                "id": "format",
+                "title": "Typical format",
+                "content": "You receive a list of statements (usually 5–8) and must match each to a paragraph (labelled A, B, C, etc.).",
+                "exampleInstruction": "Which paragraph contains the following information?\nWrite the correct letter, A–H, in boxes 1–6 on your answer sheet."
+              },
+              {
+                "id": "statements",
+                "title": "How statements are written",
+                "list": [
+                  "Statements are **never copied directly** from the passage",
+                  "They **paraphrase** specific details using synonyms and restructured grammar",
+                  "They describe **concrete facts**: a specific example, a research finding, a reason for something, a date or statistic, a comparison or contrast, a historical event"
                 ]
+              },
+              {
+                "id": "paraphrasing",
+                "title": "Why paraphrasing matters",
+                "content": "If the passage says: *\"Urban temperatures rose by 3°C between 1990 and 2010,\"*\nThe statement might say: *\"A measurement showing climate change over two decades\"*\nYou must recognise that these express the **same factual content**."
+              },
+              {
+                "id": "order",
+                "title": "Order of statements",
+                "content": "**Statements do NOT follow the order of the passage.** Statement 5 might match Paragraph B, while Statement 1 matches Paragraph F. This is deliberate and tests true scanning ability."
+              }
+            ]
+          },
+          {
+            "id": "section-3",
+            "title": "SECTION 3 — What students MUST match",
+            "subsections": [
+              {
+                "id": "matching-task",
+                "title": "What you're matching",
+                "content": "Each statement describes **one specific piece of information** (a detail, fact, or example). Your task is to identify **which paragraph contains that exact information**."
+              },
+              {
+                "id": "critical-rules",
+                "title": "Critical rules",
+                "rules": [
+                  {
+                    "rule": "More than one statement can match the same paragraph",
+                    "example": "Statement 2: *A reason why bees are declining* → Paragraph C\nStatement 5: *An example of pesticide impact* → Paragraph C\nBoth match C because that paragraph discusses pesticide effects on bees."
+                  },
+                  {
+                    "rule": "Not all paragraphs will be used",
+                    "description": "If there are 7 paragraphs (A–G) and 6 statements, at least one paragraph will have no match."
+                  },
+                  {
+                    "rule": "You are NOT matching headings or main ideas",
+                    "description": "Even if Paragraph D is \"about technology,\" you only choose D if it contains the **specific technological detail** mentioned in the statement."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-4",
+            "title": "SECTION 4 — Step-by-step strategy (exam conditions)",
+            "subsections": [
+              {
+                "id": "step-1",
+                "title": "Step 1: Read the statements FIRST (not the passage)",
+                "list": [
+                  "Before reading the full passage, carefully read all the Matching Information statements",
+                  "Underline **key content words** in each statement (nouns, verbs describing actions, specific details)",
+                  "Do NOT read the passage introduction yet"
+                ],
+                "rationale": "**Why?** You're training your brain what to scan for. Reading the passage first wastes time."
+              },
+              {
+                "id": "step-2",
+                "title": "Step 2: Identify the key information in each statement",
+                "content": "For each statement, ask yourself: *\"What type of information am I looking for?\"*",
+                "examples": [
+                  "*\"A reference to government policy in the 1980s\"* → Look for: **dates, legislation, government**",
+                  "*\"An example of consumer behaviour changing\"* → Look for: **specific examples, people's habits, change**",
+                  "*\"A reason why the system failed\"* → Look for: **causes, explanations, 'because,' 'due to'**"
+                ]
+              },
+              {
+                "id": "step-3",
+                "title": "Step 3: Scan paragraphs for information anchors",
+                "content": "Now skim-read each paragraph looking for **signals** (dates, names, examples, statistics).",
+                "list": [
+                  "**Don't read every word**—your eyes should hunt for relevant content",
+                  "When you spot a potential match, **read that section carefully** (2–3 sentences around it)"
+                ]
+              },
+              {
+                "id": "step-4",
+                "title": "Step 4: Confirm the match by checking meaning, not just keywords",
+                "content": "Before writing your answer, verify:",
+                "list": [
+                  "✅ **Does this paragraph contain the exact fact described in the statement?**",
+                  "✅ **Is the meaning the same, even if words differ?**",
+                  "❌ **Does the paragraph only mention the topic but not the specific detail?**"
+                ],
+                "trap": "**Example of a trap:**\n- Statement: *\"Evidence that children's screen time has increased\"*\n- Paragraph E mentions children and screens but gives no data or evidence—**not a match**\n- Paragraph F says *\"Studies show children now spend 5 hours daily on devices, up from 2 hours in 2005\"*—**this is a match** (evidence = studies/data; increased = up from)"
+              },
+              {
+                "id": "step-5",
+                "title": "Step 5: Move on if uncertain; return later",
+                "content": "If you're unsure, mark the statement and return after completing other questions. Sometimes another question type (e.g., True/False/Not Given) will help you understand paragraph content better."
+              }
+            ]
+          },
+          {
+            "id": "section-5",
+            "title": "SECTION 5 — Common traps and mistakes",
+            "subsections": [
+              {
+                "id": "trap-1",
+                "title": "Trap 1: Confusing Matching Information with Matching Headings",
+                "content": "**Wrong thinking**: \"Paragraph C is about renewable energy, and the statement mentions solar power, so it's C.\"\n**Correct thinking**: \"Does Paragraph C contain the **specific fact** about solar power mentioned in the statement?\"\n**Remember**: Matching Information requires the **specific detail**, not just the topic."
+              },
+              {
+                "id": "trap-2",
+                "title": "Trap 2: Matching based on identical keywords instead of meaning",
+                "example": {
+                  "statement": "*\"A description of how animals adapt to urban environments\"*",
+                  "wrongMatch": "Paragraph B mentions \"animals\" and \"cities\" but discusses **threats to wildlife**, not **adaptation** (Choosing B because of surface-level keyword matching)",
+                  "correctMatch": "Paragraph D uses different words (\"species,\" \"metropolitan areas,\" \"behavioral changes\") but describes **adaptation** (D, because the meaning matches)"
+                }
+              },
+              {
+                "id": "trap-3",
+                "title": "Trap 3: Choosing a paragraph that mentions the topic but lacks the exact information",
+                "example": {
+                  "statement": "*\"Research findings showing health benefits of meditation\"*",
+                  "wrongMatch": "Paragraph F discusses meditation's popularity—**no match** (popularity ≠ research findings)",
+                  "correctMatch": "Paragraph G states *\"A 2018 study found meditation reduced cortisol by 20%\"*—**match** (research = study; health benefits = reduced cortisol)"
+                },
+                "rule": "**Rule**: The paragraph must contain **both the subject AND the specific type of information** (e.g., research, reason, example)."
+              },
+              {
+                "id": "trap-4",
+                "title": "Trap 4: Assuming answers follow paragraph order",
+                "content": "Students often think: Statement 1 = Paragraph A, Statement 2 = Paragraph B. **This is false.** Answers are deliberately scrambled."
+              }
+            ]
+          },
+          {
+            "id": "section-6",
+            "title": "SECTION 6 — Language signals that help matching",
+            "subsections": [
+              {
+                "id": "dates",
+                "title": "1. Dates and time references",
+                "examples": [
+                  "in the 1990s",
+                  "since 2005",
+                  "during the 19th century"
+                ],
+                "whyUseful": "Easy to spot; help you quickly eliminate or confirm paragraphs",
+                "demo": "Statement: *\"A historical event from the early 1900s\"* → Scan for: **1900–1920, early twentieth century, pre-war period**"
+              },
+              {
+                "id": "names",
+                "title": "2. Names (people, places, organisations)",
+                "examples": [
+                  "Dr. Ahmed's research",
+                  "The World Health Organization",
+                  "residents of Tokyo"
+                ],
+                "whyUseful": "Proper nouns stand out visually; often signal specific examples or studies",
+                "demo": "Statement: *\"A study conducted in Scandinavia\"* → Scan for: **Sweden, Norway, Denmark, Nordic countries**"
+              },
+              {
+                "id": "numbers",
+                "title": "3. Numbers, percentages, statistics",
+                "examples": [
+                  "25%",
+                  "a third of",
+                  "doubled",
+                  "a 50% increase"
+                ],
+                "whyUseful": "Numbers are visually distinct; signal research findings or comparisons",
+                "demo": "Statement: *\"Evidence of economic growth\"* → Scan for: **GDP rose, 15% increase, economic expansion, growth rate**"
+              },
+              {
+                "id": "research",
+                "title": "4. Research-related language",
+                "examples": [
+                  "Researchers found",
+                  "According to a study",
+                  "Evidence suggests",
+                  "Analysis revealed"
+                ],
+                "whyUseful": "Signals factual findings",
+                "demo": "Statement: *\"Research showing a link between diet and mood\"* → Scan for: **study, investigation, scientists discovered, correlation**"
+              },
+              {
+                "id": "cause-effect",
+                "title": "5. Cause–effect markers",
+                "examples": [
+                  "because",
+                  "as a result",
+                  "led to",
+                  "due to",
+                  "consequently",
+                  "caused by"
+                ],
+                "whyUseful": "Help identify reasons and explanations",
+                "demo": "Statement: *\"A reason for the decline in bee populations\"* → Scan for: **because, caused by, due to, result of** (followed by information about bees declining)"
+              },
+              {
+                "id": "examples",
+                "title": "6. Example indicators",
+                "examples": [
+                  "For instance",
+                  "such as",
+                  "one example",
+                  "illustrated by"
+                ],
+                "whyUseful": "Signal specific cases",
+                "demo": "Statement: *\"An example of renewable technology\"* → Scan for: **for example, such as, like, including** (followed by tech names: solar, wind, etc.)"
+              }
+            ]
+          },
+          {
+            "id": "section-7",
+            "title": "SECTION 7 — Example walkthrough (mini-demo)",
+            "subsections": [
+              {
+                "id": "statement",
+                "title": "Statement to match",
+                "content": "> *\"A comparison between urban and rural internet access rates\"*"
+              },
+              {
+                "id": "paragraph-c",
+                "title": "Paragraph C (summary)",
+                "content": "> \"Internet access has become essential in modern society. In cities, nearly 95% of households have broadband connections, enabling remote work and online education. However, infrastructure challenges mean that rural areas often lack high-speed connectivity.\"",
+                "analysis": [
+                  "**Does it contain a comparison?** Yes: \"cities\" vs. \"rural areas\"",
+                  "**Does it mention internet access?** Yes: \"broadband connections,\" \"connectivity\"",
+                  "**Does it give rates/data?** Yes: \"95% of households\" (urban implied); rural described as lacking access"
+                ],
+                "conclusion": "✅ **This is a MATCH** — the paragraph compares urban (95%) and rural (lack of) internet access."
+              },
+              {
+                "id": "paragraph-f",
+                "title": "Paragraph F (summary)",
+                "content": "> \"Digital literacy varies significantly across age groups. Younger generations, who grew up with technology, adapt quickly to new platforms. Older adults, particularly in retirement, often require training to navigate online services.\"",
+                "analysis": [
+                  "**Does it contain a comparison?** Yes, but between **age groups**, not urban/rural",
+                  "**Does it mention internet access rates?** No — it discusses **literacy and skills**, not access/availability"
+                ],
+                "conclusion": "❌ **This is NOT a match** — though \"internet\" and \"comparison\" appear, the **specific information** (urban vs. rural access rates) is absent."
+              },
+              {
+                "id": "reasoning",
+                "title": "Why reasoning matters",
+                "content": "Both paragraphs discuss internet-related topics. A student matching by keywords alone might choose Paragraph F because it contains \"technology\" and \"online.\" But **only Paragraph C contains the exact information**: a comparison of access rates between urban and rural areas."
+              }
+            ]
+          },
+          {
+            "id": "section-8",
+            "title": "SECTION 8 — Final examiner tips",
+            "subsections": [
+              {
+                "id": "tip-1",
+                "title": "Tip 1: Trust paraphrase, not word matching",
+                "content": "Band 7.5+ candidates know that **the statement and passage will use different vocabulary**. Train yourself to recognise meaning equivalence:",
+                "examples": [
+                  "\"young people\" = \"adolescents,\" \"youth,\" \"teenagers\"",
+                  "\"increased\" = \"rose,\" \"grew,\" \"climbed,\" \"went up\"",
+                  "\"a study\" = \"research,\" \"investigation,\" \"survey,\" \"analysis\""
+                ],
+                "action": "**Practice paraphrasing** when you review answers."
+              },
+              {
+                "id": "tip-2",
+                "title": "Tip 2: Eliminate impossible paragraphs quickly",
+                "content": "If a statement mentions *\"20th-century architecture\"* and Paragraph B discusses medieval castles, **cross off B immediately**. Efficient elimination saves time for difficult matches."
+              },
+              {
+                "id": "tip-3",
+                "title": "Tip 3: The paragraph must contain BOTH elements of the statement",
+                "content": "If the statement says *\"A government initiative to reduce pollution,\"* the paragraph must mention:\n1. **Government/policy action** (not just pollution mentioned by scientists)\n2. **Reduction efforts** (not pollution increasing)\n**Both components** must be present."
+              },
+              {
+                "id": "tip-4",
+                "title": "Tip 4: Accuracy over speed",
+                "content": "Matching Information is one of the hardest IELTS Reading tasks because:\n- Answers are unordered\n- Paraphrasing is heavy\n- Multiple answers can share a paragraph\n**Don't rush.** A single careless error costs a mark. High-scoring candidates spend extra time **verifying** their matches by re-reading the relevant sentence in the passage."
+              },
+              {
+                "id": "tip-5",
+                "title": "Tip 5: If two paragraphs seem possible, re-read the statement",
+                "content": "Sometimes Paragraph C and Paragraph F both seem relevant. Go back to the statement and ask:\n- *\"Which paragraph contains the **exact type of information** specified?\"*\n- *\"Am I being distracted by topic similarity rather than factual content?\"*\nThe correct answer will match **both the subject and the type of detail** (example, reason, research, etc.)."
+              },
+              {
+                "id": "final-word",
+                "title": "Final word from the examiner",
+                "content": "Matching Information rewards **precision and paraphrase recognition**, not guessing or skimming. Students who succeed treat each statement as a research question: *\"Where exactly is this fact located?\"* Master this mindset, and this question type becomes manageable."
               }
             ]
           }
@@ -4031,25 +4358,298 @@
       "detailedTheory": {
         "sections": [
           {
-            "title": "STRATEGY: STEP-BY-STEP",
+            "id": "section-1",
+            "title": "SECTION 1 — What \"Matching Sentence Endings\" actually tests",
             "subsections": [
               {
+                "id": "assessment",
+                "title": "What is being assessed",
+                "content": "Matching Sentence Endings questions test your ability to **understand logical relationships and complete ideas coherently** by connecting the first half of a sentence with the appropriate conclusion.",
+                "list": [
+                  "**Logical comprehension**: Understanding how ideas connect (cause leads to effect, claim leads to evidence, action leads to result)",
+                  "**Relational thinking**: Recognizing relationships such as:\n- Cause → Effect\n- Condition → Consequence\n- Comparison → Contrast\n- Statement → Qualification/Limitation\n- Problem → Solution/Result",
+                  "**Paraphrase recognition**: Identifying when different words express the same logical relationship",
+                  "**Grammatical coherence**: Ensuring sentence halves combine correctly in terms of grammar and meaning",
+                  "**Precision in meaning**: Distinguishing between similar but subtly different ideas"
+                ]
+              },
+              {
+                "id": "meaning-continuity",
+                "title": "Why this focuses on meaning continuity",
+                "content": "Unlike tasks that test factual retrieval, Matching Sentence Endings assesses your ability to **follow the logic of an argument or explanation**.\n\n**The sentence beginning** introduces an idea, situation, claim, or condition.\n**The correct ending** must **logically complete** that idea in a way that:\n- Makes grammatical sense\n- Preserves the intended meaning\n- Reflects the relationship expressed in the passage",
+                "example": {
+                  "passage": "Deforestation in tropical regions has accelerated rapidly due to commercial agriculture, resulting in significant loss of biodiversity.",
+                  "summary": "Beginning: \"The expansion of commercial agriculture has led to...\"\n\nCorrect Ending: \"...a substantial decline in species diversity.\"\n\n**Why**: \"led to\" signals a **cause-effect relationship**; the ending correctly captures the **effect** (biodiversity loss) using paraphrase (decline in species diversity).\n\n**Incorrect Ending**: \"...increased food production in tropical areas.\"\n**Why**: While possibly true, this represents a *different* consequence—not the one the passage emphasizes in this context."
+                }
+              },
+              {
+                "id": "core-principle",
+                "title": "Core principle",
+                "content": "Matching Sentence Endings rewards students who can **trace the logical flow of ideas** and recognize when two halves form a **coherent, meaningful statement** that accurately reflects passage content—not those who simply match repeated keywords."
+              }
+            ]
+          },
+          {
+            "id": "section-2",
+            "title": "SECTION 2 — What the task looks like in the exam",
+            "subsections": [
+              {
+                "id": "format",
+                "title": "Format and structure",
+                "content": "You receive:\n- **Sentence beginnings** (numbered 1–7, typically)\n- **Sentence endings** (labeled A–K or similar, typically)\n\n**Typical instruction**:\n> *Complete each sentence with the correct ending, A–J, below.*\n> *Write the correct letter, A–J, in boxes 1–7 on your answer sheet.*"
+              },
+              {
+                "id": "characteristics",
+                "title": "Key format characteristics",
+                "list": [
+                  "**1. Endings are usually longer than beginnings**: They carry the **completion of the idea**—the result, explanation, or consequence—which often requires more detail.\nExample:\nBeginning: \"Early studies suggested that...\"\nEnding: \"...urban pollution levels were primarily caused by industrial emissions rather than vehicle exhaust.\"",
+                  "**2. There are always more endings than beginnings (distractors)**: 6 beginnings vs 9 endings means 3 distractors. Each ending can be used **only once**. Even if an ending fits grammatically, if used elsewhere, it cannot be the answer.",
+                  "**3. Sentence beginnings follow passage order**: **Yes**, the task follows sequence. Sentence 1 appears early, Sentence 7 later. **Strategic advantage**: If you find info for Sentence 3, Sentence 4 must be further down.",
+                  "**4. Endings do NOT follow any particular order**: The list of endings is deliberately scrambled (e.g., Sentence 1 -> Ending F, Sentence 2 -> Ending A)."
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-3",
+            "title": "SECTION 3 — What students MUST match",
+            "subsections": [
+              {
+                "id": "beginnings-contain",
+                "title": "What sentence beginnings typically contain",
+                "list": [
+                  "**1. Subjects and agents**: \"Researchers discovered that...\", \"The new policy aimed to...\"",
+                  "**2. Claims or statements**: \"Evidence suggests that...\", \"Critics argue that...\"",
+                  "**3. Situations or conditions**: \"When temperatures exceed 30°C...\", \"In regions with limited rainfall...\"",
+                  "**4. Actions or processes**: \"The company implemented measures to...\""
+                ]
+              },
+              {
+                "id": "endings-contain",
+                "title": "What sentence endings typically contain",
+                "list": [
+                  "**1. Results or consequences**: \"...significant environmental degradation in coastal areas.\"",
+                  "**2. Reasons or explanations**: \"...insufficient funding prevented completion of critical infrastructure.\"",
+                  "**3. Conditions or qualifications**: \"...applied under controlled laboratory conditions.\"",
+                  "**4. Limitations or contrasts**: \"...practical implementation proved more challenging than anticipated.\"",
+                  "**5. Comparisons**: \"...they rely heavily on chemical fertilizers and mechanized equipment.\"",
+                  "**6. Specific details or examples**: \"...it reduces dependence on finite fossil fuel resources.\""
+                ]
+              },
+              {
+                "id": "logic-grammar",
+                "title": "Must match LOGICALLY and GRAMMATICALLY",
+                "content": "**Logical fit**: The ending must complete the **meaning** expressed in the passage.\n\n**Grammatical fit**: The ending must form a **grammatically correct sentence** when combined with the beginning.\n\n**Example of logical but grammatically incorrect match**:\nBeginning: \"Scientists believes that...\" (grammar error in beginning for demo)\nEnding: \"...climate change accelerates biodiversity loss.\"\nCombined: \"Scientists believes that...\" -> **Incorrect** (Subject-verb agreement)\n\n**Example of grammatically correct but logically wrong match**:\nPassage: \"Pollution from factories increased, causing respiratory illnesses.\"\nBeginning: \"The rise in industrial emissions resulted in...\"\nEnding A: \"...improved manufacturing efficiency.\" (Grammatically fine, but factually wrong context)\nEnding B: \"...widespread health problems among city residents.\" (Correct logic + grammar)\n\n✅ **Correct Answer: B**"
+              }
+            ]
+          },
+          {
+            "id": "section-4",
+            "title": "SECTION 4 — Step-by-step strategy (exam conditions)",
+            "subsections": [
+              {
+                "id": "strategy-steps",
                 "steps": [
                   {
                     "step": 1,
-                    "title": "Locate Stems",
+                    "title": "Read all beginnings first",
                     "actions": [
-                      "Find stem in text."
+                      "Read through all sentence beginnings to understand the topic.",
+                      "Identify what is being introduced (claim? condition? comparison?).",
+                      "Notice logical connectors: 'Although...' (expect contrast), 'Because...' (expect reason)."
                     ]
                   },
                   {
                     "step": 2,
-                    "title": "Match Grammar",
+                    "title": "Predict the ending type",
                     "actions": [
-                      "Check grammar and meaning."
+                      "For each beginning, mentally note the type of completion needed.",
+                      "\"X led to...\" -> Needs Result/Consequence.",
+                      "\"Unlike X, Y...\" -> Needs Difference/Comparison.",
+                      "\"X is effective when...\" -> Needs Condition."
+                    ]
+                  },
+                  {
+                    "step": 3,
+                    "title": "Underline key meaning words",
+                    "actions": [
+                      "Underline conceptual meaning, not just keywords.",
+                      "Example: In \"Modern agricultural techniques have resulted in...\", underline the whole subject and the result signal.",
+                      "Don't just look for \"agricultural\"; look for the concept of *modern methods -> result*."
+                    ]
+                  },
+                  {
+                    "step": 4,
+                    "title": "Scan passage for the concept",
+                    "actions": [
+                      "Start from the beginning of the relevant section (answers follow order).",
+                      "Scan for the **concept** expressed in Sentence 1.",
+                      "When found, **read carefully**. The complete idea will be there, likely paraphrased."
+                    ]
+                  },
+                  {
+                    "step": 5,
+                    "title": "Identify paraphrased logic",
+                    "actions": [
+                      "The passage and endings use different vocabulary.",
+                      "Example: \"Drought\" (passage) = \"Insufficient rainfall\" (beginning).",
+                      "\"Caused widespread crop failure\" (passage) = \"Resulted in significant agricultural losses\" (ending).",
+                      "Match **ideas and logical relationships**, not words."
+                    ]
+                  },
+                  {
+                    "step": 6,
+                    "title": "Select the valid ending",
+                    "actions": [
+                      "Identify 2-3 endings that are **grammatically possible**.",
+                      "Check which one **logically completes the idea** as expressed in the text.",
+                      "Verify the meaning relationship (contrast, cause-effect) is correct."
+                    ]
+                  },
+                  {
+                    "step": 7,
+                    "title": "Verify grammar and meaning",
+                    "actions": [
+                      "**Final Verification**: Read the complete sentence aloud (mentally).",
+                      "**Grammar check**: Subject-verb agreement? Tense consistency?",
+                      "**Meaning check**: Does it accurately reflect the passage? Is it precise?",
+                      "Cross off the used ending to avoid reusing it."
                     ]
                   }
                 ]
+              }
+            ]
+          },
+          {
+            "id": "section-5",
+            "title": "SECTION 5 — Common traps and mistakes",
+            "subsections": [
+              {
+                "title": "Trap 1: Choosing endings that repeat words but distort meaning",
+                "content": "**Scenario**: Passage mentions \"Urban sprawl increased traffic... reducing quality of life.\"\nBeginning: \"The expansion of cities has led to...\"\nTrap Ending: \"...improved infrastructure...\" (Contains relevant words but positive outcome, contradicting negative passage).\nCorrect Ending: \"...deteriorating living conditions...\" (Matches negative meaning).\n**Lesson**: Keyword overlap does NOT equal correct meaning."
+              },
+              {
+                "title": "Trap 2: Ignoring logical connectors (because, although, while)",
+                "content": "**Scenario**: Beginning \"Although the technology was innovative...\"\n\"Although\" signals **contrast**—expect a limitation or negative.\nTrap Ending: \"...it revolutionized the industry.\" (No contrast).\nCorrect Ending: \"...widespread adoption was hindered by high costs.\" (Provides contrast).\n**Must respect**: Although/Despite (Contrast), Because/Since (Reason), So that (Purpose), Unlike (Comparison/Difference)."
+              },
+              {
+                "title": "Trap 3: Selecting endings that are grammatically incorrect",
+                "content": "**Example**: Beginning \"Researchers found that the treatment was...\"\nTrap Ending: \"...reducing symptoms effectively.\" (\"was reducing\" - awkward).\nCorrect Ending: \"...effective in reducing symptoms.\" (Adjective completes \"was\").\n**Always read the complete sentence** to check for tense mismatch or awkward flow."
+              },
+              {
+                "title": "Trap 4: Distraction by true endings from different sentences",
+                "content": "**Scenario**: Passage discusses Solar Panels and Wind Turbines.\nBeginning relates to **Solar Panels**.\nTrap Ending: Describes a fact about **Wind Turbines** that is true in the text but **wrong for this sentence**.\n**Lesson**: An ending can be factually accurate yet the **wrong match** for the specific beginning."
+              },
+              {
+                "title": "Trap 5: Matching based on topic similarity vs idea completion",
+                "content": "**Scenario**: Topic is Climate Change/Migration.\nBeginning: \"Changes in global temperatures have caused...\"\nTrap Ending: \"...increased awareness of environmental issues.\" (Also climate topic, but describes human response).\nCorrect Ending: \"...alterations in avian migratory behavior.\" (Describes the direct physical consequence mentioned).\n**Distinction**: Topic Match (superficial) vs Idea Completion (logical)."
+              }
+            ]
+          },
+          {
+            "id": "section-6",
+            "title": "SECTION 6 — Language signals",
+            "subsections": [
+              {
+                "title": "1. Cause–effect relationships",
+                "content": "**Signals**: Led to, Resulted in, Caused by, Due to.\n**Passage signals**: \"consequently\", \"as a result\", \"therefore\".\n**Example**: Passage \"Factory closure resulted in unemployment.\" -> Beginning \"Shutdown led to...\" -> Ending \"...sharp increase in joblessness.\""
+              },
+              {
+                "title": "2. Contrast markers",
+                "content": "**Signals**: Although, Despite, While, Even though.\n**Passage signals**: \"however\", \"but\", \"yet\", \"on the other hand\".\n**Example**: Passage \"Medication effective but side effects.\" -> Beginning \"Despite efficacy...\" -> Ending \"...experienced adverse reactions.\""
+              },
+              {
+                "title": "3. Qualifiers and limitations",
+                "content": "**Signals**: X is effective only when..., X works best if..., Provided that.\n**Passage signals**: \"only\", \"as long as\", \"unless\".\n**Match**: Requirements or Results under specific conditions."
+              },
+              {
+                "title": "4. Comparisons and contrasts",
+                "content": "**Signals**: Unlike X, In contrast to, Differs from.\n**Passage signals**: \"whereas\", \"while\".\n**Match**: Differences. Example: \"Unlike conventional farming... contemporary methods utilize machinery.\""
+              },
+              {
+                "title": "5. Purpose and intention",
+                "content": "**Signals**: Designed to, The aim of X was to, Intended to.\n**Passage signals**: \"in order to\", \"so that\", \"with the goal of\".\n**Match**: Goals/Intentions."
+              },
+              {
+                "title": "6. Temporal and sequential relationships",
+                "content": "**Signals**: Before X, After, Once, During.\n**Passage signals**: \"initially\", \"subsequently\", \"finally\".\n**Match**: Sequential events. Example: \"Once regulations enforced...\" -> \"After implementation... emissions declined.\""
+              }
+            ]
+          },
+          {
+            "id": "section-7",
+            "title": "SECTION 7 — Example walkthrough (mini-demo)",
+            "subsections": [
+              {
+                "title": "Task",
+                "content": "**Sentence Beginning**: \"3. Unlike earlier generations of computers,...\"\n**Options**:\nA. ...modern devices consume significantly more electricity.\nB. ...contemporary models are far more compact and energy-efficient.\nC. ...technological advances have transformed society."
+              },
+              {
+                "title": "Passage",
+                "content": "*\"The evolution of computing technology has been remarkable. Earlier generations of computers were enormous machines that occupied entire rooms and required vast amounts of power to operate. In contrast, contemporary computers are small, portable devices that consume minimal energy while delivering exponentially greater processing power.\"*"
+              },
+              {
+                "title": "Analysis",
+                "steps": [
+                  {
+                    "step": "1",
+                    "title": "Analyze Beginning",
+                    "actions": [
+                      "\"Unlike\" = Contrast.",
+                      "Subject = earlier generations.",
+                      "Expect: Info about MODERN computers being DIFFERENT."
+                    ]
+                  },
+                  {
+                    "step": "2",
+                    "title": "Locate",
+                    "actions": [
+                      "Found \"Earlier' vs 'Contemporary'."
+                    ]
+                  },
+                  {
+                    "step": "3",
+                    "title": "Evaluate Endings",
+                    "actions": [
+                      "\"Consume more electricity\" -> **Contradicts passage** (says \"minimal energy\"). ❌ Wrong.",
+                      "\"Compact and energy-efficient\" -> Matches \"small, portable\" and \"minimal energy\". ✅ **Correct**.",
+                      "\"Transformed society\" -> **Subject shift**. Comparing \"earlier computers\" to \"technological advances\" is illogical. ❌ Wrong."
+                    ]
+                  },
+                  {
+                    "step": "4",
+                    "title": "Final Answer",
+                    "actions": [
+                      "**Answer: B**"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-8",
+            "title": "SECTION 8 — Final examiner tips",
+            "subsections": [
+              {
+                "title": "Tip 1: Logic trumps vocabulary",
+                "content": "**Low-band approach**: Search for repeated words.\n**High-band approach**: Identify the **logical relationship** (Cause/Effect, Contrast) in the passage, then find the ending that **completes that relationship**.\n**Training**: Create a table with Columns: Sentence Beginning | Relationship | Correct Ending. Focus on the relationship column."
+              },
+              {
+                "title": "Tip 2: Grammatical fit is non-negotiable",
+                "content": "**Before confirming**: Combine Beginning + Ending and **read aloud mentally**. Listen for awkwardness, tense mismatches, or structural errors.\nExample: \"Technique was...\" + \"...reducing\" (Awkward) vs \"...effective in reducing\" (Correct).\n**Time cost**: 3-5 seconds. **Value**: Saves marks."
+              },
+              {
+                "title": "Tip 3: Three-filter approach",
+                "content": "Systematically eliminate distractors:\n**Filter 1: Grammar** - Cross off endings that create errors.\n**Filter 2: Logic Type** - Does it provide the right info type? (e.g., Needs Result vs Reason).\n**Filter 3: Meaning Accuracy** - Does it match the passage exactly?"
+              },
+              {
+                "title": "Tip 4: Track used endings",
+                "content": "Each ending is used **once**. Cross them off. If stuck on Q3 between D and F, and Q4 is clearly D, then Q3 must be F. Use process of elimination strategically."
+              },
+              {
+                "title": "Tip 5: Pay attention to qualifiers",
+                "content": "Small words change meaning: **All vs Some**, **Mainly vs Exclusively**, **Slightly vs Significantly**.\nExample: Ending says \"all species\" but passage says \"some species\" -> **Wrong**.\nBand 8+ candidates notice these immediately."
               }
             ]
           }
@@ -4067,22 +4667,332 @@
       "detailedTheory": {
         "sections": [
           {
-            "title": "STRATEGY: STEP-BY-STEP",
+            "id": "section-1",
+            "title": "SECTION 1 — What \"Summary Completion\" actually tests",
             "subsections": [
               {
+                "id": "assessment",
+                "title": "What is being assessed",
+                "list": [
+                  "**Main point comprehension**: Understanding the core ideas rather than every detail",
+                  "**Paraphrase recognition**: Recognising when different words express the same meaning",
+                  "**Grammar awareness**: Knowing what type of word fits grammatically (noun, verb, adjective, etc.)",
+                  "**Accurate information retrieval**: Locating precise facts or concepts needed to complete logical meaning"
+                ]
+              },
+              {
+                "id": "meaning-matters",
+                "title": "Why meaning matters",
+                "content": "The summary is **NOT a direct copy** of passage sentences. It is a **rewritten version** that captures essential ideas using different vocabulary and sentence structures. You must understand **what the passage means**, not just hunt for identical words.",
+                "example": {
+                  "passage": "The company experienced significant financial difficulties and was forced to reduce its workforce by 30%.",
+                  "summary": "Due to economic ______, the firm had to cut staff numbers substantially.",
+                  "explanation": "The answer is **\"problems\"** or **\"difficulties\"** (depending on word limit and list availability)—not \"financial\" or \"workforce.\" You're completing **meaning**, not copying words."
+                }
+              },
+              {
+                "id": "core-principle",
+                "title": "Core principle",
+                "content": "Summary Completion rewards students who can **distill key information and recognize when ideas have been rephrased**, not those who simply match surface-level vocabulary."
+              }
+            ]
+          },
+          {
+            "id": "section-2",
+            "title": "SECTION 2 — What the summary looks like in the exam",
+            "subsections": [
+              {
+                "id": "origin",
+                "title": "Where the summary comes from",
+                "content": "The summary typically covers **a specific section** of the passage (e.g., paragraphs C–E) or, less commonly, the entire passage. The instructions will usually indicate which part."
+              },
+              {
+                "id": "gaps-design",
+                "title": "How gaps are designed",
+                "content": "Gaps remove **key information**, not minor details. Missing words usually represent central concepts, important causes/effects, critical facts, or essential descriptions.",
+                "rules": [
+                  {
+                    "title": "Note",
+                    "description": "Minor connecting words implies grammar testing, but usually content words are tested (nouns, verbs)."
+                  }
+                ]
+              },
+              {
+                "id": "order",
+                "title": "Does the summary follow passage order?",
+                "content": "**Yes.** Summary Completion **always follows the order of the passage**. Gap 1 appears early in the section; Gap 5 appears later. This is different from Matching Information."
+              },
+              {
+                "id": "types",
+                "title": "Two types of Summary Completion",
+                "tables": [
+                  {
+                    "headers": [
+                      "Type 1: With a word list",
+                      "Type 2: Without a word list"
+                    ],
+                    "rows": [
+                      [
+                        "You choose answers from a provided list (A–K)",
+                        "You take answers directly from the passage"
+                      ],
+                      [
+                        "Words may be synonyms, distractors, or correct answers",
+                        "Must follow word limit (e.g., 'ONE WORD')"
+                      ],
+                      [
+                        "All answers come from the list; do NOT use passage words",
+                        "Must copy spelling exactly from the passage"
+                      ],
+                      [
+                        "Some words in the list will NOT be used",
+                        "All answers must be actual words from the text"
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-3",
+            "title": "SECTION 3 — What students MUST complete",
+            "subsections": [
+              {
+                "id": "word-types",
+                "title": "What kind of words are usually missing",
+                "list": [
+                  "1. **Nouns** (most frequent) e.g. \"required significant ______\" -> investment",
+                  "2. **Adjectives** e.g. \"proved ______\" -> effective",
+                  "3. **Verbs** e.g. \"Researchers ______ that\" -> discovered",
+                  "4. **Numbers, dates, names**"
+                ]
+              },
+              {
+                "id": "grammar-restriction",
+                "title": "How grammar restricts possible answers",
+                "content": "**Critical rule**: The answer must fit **grammatically** into the summary sentence. If it doesn't, it's wrong—even if it appears in the passage.",
+                "tables": [
+                  {
+                    "headers": [
+                      "Grammar clue",
+                      "What you need",
+                      "Example"
+                    ],
+                    "rows": [
+                      [
+                        "\"a/an ______\"",
+                        "Singular countable noun",
+                        "\"an ______ solution\" → innovative (adj)"
+                      ],
+                      [
+                        "\"The ______ was...\"",
+                        "Noun (subject)",
+                        "\"The ______ was significant\" → increase"
+                      ],
+                      [
+                        "\"They ______ the data\"",
+                        "Verb (past likely)",
+                        "\"They ______ the data\" → analyzed"
+                      ]
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "spelling",
+                "title": "Why correct spelling is essential",
+                "content": "For Type 2 (from passage), you MUST spell the word **exactly as it appears**. Spelling errors = wrong answer. British/American spelling differences must match the text.",
+                "rules": [
+                  {
+                    "title": "Examiner Advice",
+                    "description": "Copy carefully. Check every letter."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-4",
+            "title": "SECTION 4 — Common traps and mistakes",
+            "subsections": [
+              {
+                "id": "trap-1",
+                "title": "Trap 1: Meaning vs Grammar",
+                "content": "Copying words that fit grammatically but change the meaning. Always check which word the summary is paraphrasing.",
+                "examples": [
+                  "Summary says 'project was completed despite ______'. Passage says 'faced obstacles and delays'. If summary implies specific hurdle, check logic."
+                ]
+              },
+              {
+                "id": "trap-2",
+                "title": "Trap 2: Exceeding word limit",
+                "content": "Word limit violations are automatic zeros. Count carefully. Hyphenated words count as one if they are one in the text."
+              },
+              {
+                "id": "trap-3",
+                "title": "Trap 3: Wrong word form",
+                "content": "If you need an adjective but copy a noun, it's wrong (Type 2). For Type 1, choose the correct form from the list."
+              },
+              {
+                "id": "trap-4",
+                "title": "Trap 4: Proximity Trap",
+                "content": "Choosing a word just because it's near the keywords. Always check the logical relationship (subject, object, action)."
+              }
+            ]
+          },
+          {
+            "id": "section-5",
+            "title": "SECTION 5 — Language signals",
+            "subsections": [
+              {
+                "title": "1. Cause–effect connectors",
+                "content": "**Summary**: 'due to', 'caused by'. **Passage**: 'because', 'since', 'stems from'."
+              },
+              {
+                "title": "2. Contrast markers",
+                "content": "**Summary**: 'however', 'although'. **Passage**: 'but', 'yet', 'while'."
+              },
+              {
+                "title": "3. Result phrases",
+                "content": "**Summary**: 'led to', 'resulted in'. **Passage**: 'consequently', 'therefore'."
+              },
+              {
+                "title": "4. Examples and explanations",
+                "content": "**Summary**: 'such as', 'including'. **Passage**: 'for instance', 'like'."
+              }
+            ]
+          },
+          {
+            "id": "section-6",
+            "title": "SECTION 6 — Example walkthrough (mini-demo)",
+            "subsections": [
+              {
+                "title": "The Task",
+                "content": "**Summary**: \"Researchers found that regular exercise led to ______ in participants' mental health.\" (Limit: NO MORE THAN TWO WORDS)"
+              },
+              {
+                "title": "The Passage",
+                "content": "*\"A study conducted over six months revealed that individuals who engaged in consistent physical activity experienced significant improvements in their psychological well-being and mood stability.\"*"
+              },
+              {
+                "title": "Analysis",
+                "steps": [
+                  {
+                    "step": "1",
+                    "title": "Predict",
+                    "actions": [
+                      "Grammar: 'led to ______' -> Noun.",
+                      "Meaning: Outcome of exercise."
+                    ]
+                  },
+                  {
+                    "step": "2",
+                    "title": "Identify Paraphrases",
+                    "actions": [
+                      "Found -> Revealed",
+                      "Regular exercise -> Consistent physical activity",
+                      "Mental health -> Psychological well-being"
+                    ]
+                  },
+                  {
+                    "step": "3",
+                    "title": "Match Meaning",
+                    "actions": [
+                      "'Led to' = 'Experienced'",
+                      "Result = 'Improvements'"
+                    ]
+                  },
+                  {
+                    "step": "4",
+                    "title": "Check",
+                    "actions": [
+                      "'Improvements' (1 word) fits.",
+                      "'Significant improvements' (2 words) also fits."
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-7",
+            "title": "SECTION 7 — Final examiner tips",
+            "subsections": [
+              {
+                "title": "Tip 1: Grammar is non-negotiable",
+                "content": "Always read the full sentence with your answer. If it sounds wrong, it is wrong."
+              },
+              {
+                "title": "Tip 2: Respect word limits",
+                "content": "Violations = automatic zero. Count carefully."
+              },
+              {
+                "title": "Tip 3: Master paraphrase recognition",
+                "content": "Don't key-word hunt. Train to spot meaning equivalence."
+              },
+              {
+                "title": "Tip 4: Use summary order",
+                "content": "If Gap 2 appears before Gap 1 in the text, you made a mistake."
+              },
+              {
+                "title": "Tip 5: Type 1 Strategy",
+                "content": "Eliminate grammatically impossible options first."
+              },
+              {
+                "title": "Tip 6: Type 2 Strategy",
+                "content": "Copy spelling exactly letter-by-letter."
+              }
+            ]
+          },
+          {
+            "id": "section-8",
+            "title": "SECTION 8 — Step-by-step strategy",
+            "subsections": [
+              {
+                "id": "strategy-steps",
                 "steps": [
                   {
                     "step": 1,
-                    "title": "Predict Word Type",
+                    "title": "Read summary FIRST and predict",
                     "actions": [
-                      "Check grammar context."
+                      "Read entire summary to get the topic.",
+                      "Predict word type (noun, verb?)",
+                      "Predict meaning (reason? result?)"
                     ]
                   },
                   {
                     "step": 2,
-                    "title": "Scan Section",
+                    "title": "Identify key ideas and paraphrases",
                     "actions": [
-                      "Find text section for summary."
+                      "Underline content words (topic, actions, details).",
+                      "Anticipate synonyms (e.g. 'led to' -> 'resulted in')."
+                    ]
+                  },
+                  {
+                    "step": 3,
+                    "title": "Locate section in passage",
+                    "actions": [
+                      "Start from the beginning of the relevant section.",
+                      "Scan for the first idea.",
+                      "Do NOT jump around; follow the order."
+                    ]
+                  },
+                  {
+                    "step": 4,
+                    "title": "Match meaning, not words",
+                    "actions": [
+                      "Does this sentence express the same idea?",
+                      "Which word corresponds to the missing info?"
+                    ]
+                  },
+                  {
+                    "step": 5,
+                    "title": "Check grammar and limits",
+                    "actions": [
+                      "Read sentence with answer inserted.",
+                      "Count words.",
+                      "Check spelling exactly."
                     ]
                   }
                 ]
@@ -4103,18 +5013,326 @@
       "detailedTheory": {
         "sections": [
           {
-            "title": "STRATEGY: STEP-BY-STEP",
+            "id": "section-1",
+            "title": "SECTION 1 — What \"Note Completion\" actually tests",
             "subsections": [
               {
-                "steps": [
+                "id": "assessment",
+                "title": "What is being assessed",
+                "list": [
+                  "**Precise information retrieval**: Locating exact facts, details, and data points",
+                  "**Scanning accuracy**: Finding specific information quickly within a text",
+                  "**Paraphrase recognition**: Understanding when notes use different words to express passage content",
+                  "**Grammatical awareness**: Knowing what type of word fits into incomplete note structures",
+                  "**Attention to detail**: Copying information exactly as it appears, respecting spelling and word limits"
+                ]
+              },
+              {
+                "id": "extraction-vs-summary",
+                "title": "Why this focuses on extraction, not summarization",
+                "content": "Unlike Summary Completion, which condenses main ideas, **Note Completion extracts concrete details** (names, dates, numbers, factual descriptions).",
+                "tables": [
                   {
-                    "step": 1,
-                    "title": "Use Headings",
-                    "actions": [
-                      "Anchor to note headings."
+                    "headers": [
+                      "Summary Completion",
+                      "Note Completion"
+                    ],
+                    "rows": [
+                      [
+                        "Tests understanding of main ideas",
+                        "Tests extraction of specific facts"
+                      ],
+                      [
+                        "Requires comprehension of overall meaning",
+                        "Requires locating precise data points"
+                      ]
                     ]
                   }
                 ]
+              },
+              {
+                "id": "core-principle",
+                "title": "Core principle",
+                "content": "You are **not** interpreting or paraphrasing—you are **finding and copying** exact information. The notes act as a **factual record** or **data extraction framework**."
+              }
+            ]
+          },
+          {
+            "id": "section-2",
+            "title": "SECTION 2 — What the notes look like in the exam",
+            "subsections": [
+              {
+                "id": "structure",
+                "title": "Structure of notes",
+                "content": "Notes are presented in abbreviations, bullet points, and headings. They **mirror the structure** and **visual hierarchy** of the passage section.",
+                "example": {
+                  "passage": "Example format:\nEarly innovations\n• First panel created in: _____\n• Main material: _____\nModern applications\n• Used primarily in _____"
+                }
+              },
+              {
+                "id": "order",
+                "title": "Does the summary follow passage order?",
+                "content": "**Yes.** Note Completion **always follows the sequential order** of the passage. Gap 1 appears before Gap 2 in both notes and text."
+              },
+              {
+                "id": "types",
+                "title": "Two types of Note Completion",
+                "tables": [
+                  {
+                    "headers": [
+                      "Type 1: With a word list",
+                      "Type 2: Without a word list"
+                    ],
+                    "rows": [
+                      [
+                        "Choose answers from provided list (A–L)",
+                        "Take answers directly from the passage"
+                      ],
+                      [
+                        "Write the corresponding letter",
+                        "Must follow strict word limits"
+                      ],
+                      [
+                        "List includes synonyms/distractors",
+                        "Must copy spelling exactly"
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-3",
+            "title": "SECTION 3 — What students MUST complete",
+            "subsections": [
+              {
+                "id": "missing-info",
+                "title": "Types of information usually missing",
+                "list": [
+                  "**Factual data**: Dates ('Discovered in ____'), Numbers ('Increased by ____'), Measurements",
+                  "**Names and labels**: People, Places, Organizations, Terms",
+                  "**Descriptive information**: Materials ('Made from ____'), Characteristics",
+                  "**Reasons/Causes/Results**: 'Cause of failure: ____'",
+                  "**Process steps**: 'First step: ____'"
+                ]
+              },
+              {
+                "id": "word-types",
+                "title": "Common word types",
+                "list": [
+                  "1. **Nouns** (most common)",
+                  "2. **Numbers and dates**",
+                  "3. **Adjectives**",
+                  "4. **Noun phrases**"
+                ]
+              },
+              {
+                "id": "spelling",
+                "title": "Why spelling and accuracy are essential",
+                "content": "For Type 2, you must copy **exactly** as written (British/American, capitalization, hyphenation). **One letter wrong = answer marked incorrect**."
+              }
+            ]
+          },
+          {
+            "id": "section-4",
+            "title": "SECTION 4 — Step-by-step strategy (exam conditions)",
+            "subsections": [
+              {
+                "id": "strategy-steps",
+                "steps": [
+                  {
+                    "step": 1,
+                    "title": "Read notes first",
+                    "actions": [
+                      "Understand topic and structure/headings.",
+                      "Notice logical flow (process? history?)."
+                    ]
+                  },
+                  {
+                    "step": 2,
+                    "title": "Predict answer type",
+                    "actions": [
+                      "Ask: 'What kind of word is missing?' (Date? Place? Noun?)",
+                      "Mark each gap prediction."
+                    ]
+                  },
+                  {
+                    "step": 3,
+                    "title": "Identify paraphrases",
+                    "actions": [
+                      "Identify content words in notes.",
+                      "Anticipate synonyms (e.g., 'Main benefit' -> 'Primary advantage')."
+                    ]
+                  },
+                  {
+                    "step": 4,
+                    "title": "Scan the passage",
+                    "actions": [
+                      "Start at relevant section.",
+                      "Look for signals (numbers, names, capitalized words).",
+                      "Follow passage order."
+                    ]
+                  },
+                  {
+                    "step": 5,
+                    "title": "Select exact words",
+                    "actions": [
+                      "Identify corresponding word(s).",
+                      "Check grammatical fit.",
+                      "Verify meaning match."
+                    ]
+                  },
+                  {
+                    "step": 6,
+                    "title": "Check limits & spelling",
+                    "actions": [
+                      "Check word count ('NO MORE THAN...').",
+                      "Check grammar in context.",
+                      "Check spelling letter-by-letter."
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-5",
+            "title": "SECTION 5 — Common traps and mistakes",
+            "subsections": [
+              {
+                "title": "Trap 1: Correct but not required",
+                "content": "Writing true information that doesn't answer the specific note. (e.g. Writing the *time* when asked for *location*)."
+              },
+              {
+                "title": "Trap 2: Too general/incomplete",
+                "content": "Writing 'lack' instead of 'rainfall' when note says 'lack of _____'. Choose the specific noun."
+              },
+              {
+                "title": "Trap 3: Exceeding word limit",
+                "content": "Writing 'renewable biomass' (2 words) when limit is ONE WORD. Answer 'biomass'."
+              },
+              {
+                "title": "Trap 4: Using synonyms (Type 2)",
+                "content": "You cannot write 'rocks' if passage says 'stones'. Copy exact passage vocabulary."
+              },
+              {
+                "title": "Trap 5: Ignoring units/qualifiers",
+                "content": "If note says '_____ km', write '150', not '150 km'. Don't repeat units."
+              }
+            ]
+          },
+          {
+            "id": "section-6",
+            "title": "SECTION 6 — Language signals",
+            "subsections": [
+              {
+                "title": "1. Numbers and measurements",
+                "content": "Digits, percentages, units stand out visually. Easy to scan."
+              },
+              {
+                "title": "2. Cause–effect indicators",
+                "content": "**Notes**: 'Reason for', 'Due to'. **Passage**: 'because', 'stemmed from', 'consequently'."
+              },
+              {
+                "title": "3. Process markers",
+                "content": "**Notes**: 'First step', 'Then'. **Passage**: 'initially', 'subsequently', 'ultimately'."
+              },
+              {
+                "title": "4. Examples",
+                "content": "**Notes**: 'Such as', 'Include'. **Passage**: 'for instance', 'like'."
+              },
+              {
+                "title": "5. Comparative",
+                "content": "**Notes**: 'Most common', 'Largest'. **Passage**: 'the primary', 'mainly'."
+              },
+              {
+                "title": "6. Definitions",
+                "content": "**Notes**: 'Known as'. **Passage**: 'referred to as', 'termed'."
+              }
+            ]
+          },
+          {
+            "id": "section-7",
+            "title": "SECTION 7 — Example walkthrough",
+            "subsections": [
+              {
+                "title": "Task",
+                "content": "**Note**: \"Location: community center in _____\" (Limit: ONE WORD)"
+              },
+              {
+                "title": "Passage",
+                "content": "*\"The solar panel installation project took place at the community center in Riverside, a small town...\"*"
+              },
+              {
+                "title": "Analysis",
+                "steps": [
+                  {
+                    "step": "1",
+                    "title": "Understand",
+                    "actions": [
+                      "Asking for place name after 'in'."
+                    ]
+                  },
+                  {
+                    "step": "2",
+                    "title": "Predict",
+                    "actions": [
+                      "Proper noun (City/Town)."
+                    ]
+                  },
+                  {
+                    "step": "3",
+                    "title": "Locate",
+                    "actions": [
+                      "Found 'community center in Riverside'."
+                    ]
+                  },
+                  {
+                    "step": "4",
+                    "title": "Verify",
+                    "actions": [
+                      "'Riverside' is the place. 'Small town' is too general."
+                    ]
+                  },
+                  {
+                    "step": "5",
+                    "title": "Final Answer",
+                    "actions": [
+                      "**Riverside**"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-8",
+            "title": "SECTION 8 — Final examiner tips",
+            "subsections": [
+              {
+                "title": "Tip 1: Precision beats speed",
+                "content": "Wrong spelling or word limit violation = 0 marks. Spend extra seconds copying carefully."
+              },
+              {
+                "title": "Tip 2: Match meaning, not keywords",
+                "content": "Don't just hunt for 'problem'. Look for 'shortage', 'lack', 'inadequate'."
+              },
+              {
+                "title": "Tip 3: Check word limits obsessively",
+                "content": "Count on your fingers. 'Well-established' = 1 word. 'Well established' = 2 words."
+              },
+              {
+                "title": "Tip 4: Use note structure",
+                "content": "Notes provide a structural preview (History -> Modern). Use this to navigate."
+              },
+              {
+                "title": "Tip 5: Pick most specific",
+                "content": "If limit allows, 'oak timber' is better than 'timber'. If not, use head noun."
+              },
+              {
+                "title": "Tip 6: Don't leave blanks",
+                "content": "Guessing has no penalty. Use grammar logic to guess."
               }
             ]
           }

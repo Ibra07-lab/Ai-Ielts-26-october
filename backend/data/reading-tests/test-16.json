@@ -4,37 +4,618 @@
   "passages": [
 {
   "id": 1,
-  "title": "The Science of Sleep Stages and Quality",
+  "title": "From Plant to Page: The Science and History of Paper",
   "level": "intermediate",
-  "estimatedTime": 15,
+  "estimatedTime": 20,
   "paragraphs": [
     {
       "id": "A",
-      "text": "Sleep is a fundamental biological process that occupies roughly one-third of human existence. Despite spending approximately 33 percent of their lives asleep, many people remain unaware of the complex mechanisms that govern this essential activity. Sleep is not a uniform state of unconsciousness but rather a dynamic process involving distinct stages, each serving unique physiological functions. In recent decades, scientific understanding of these stages has expanded significantly, revealing how various factors can influence overall sleep quality. According to research published in Sleep Medicine Reviews in 2021, approximately 45 percent of adults worldwide report experiencing poor sleep quality, prompting researchers to investigate both the nature of sleep stages and the elements that disrupt them."
+      "text": "Paper remains one of the most widely used materials in contemporary society, with global production exceeding 400 million tonnes annually. Despite the growth of digital technologies, demand continues to rise by approximately 2% each year, driven by packaging requirements and emerging economies. At its core, paper is a remarkably simple material: a network of plant fibres pressed together and dried. Yet the science behind transforming raw plant material into this versatile product involves complex chemical and mechanical processes that have evolved over nearly two millennia. Understanding these fundamentals reveals not only how paper gains its characteristic properties but also why certain plant sources have dominated the industry while others remain underutilised."
     },
     {
       "id": "B",
-      "text": "The scientific study of sleep stages began in earnest during the mid-twentieth century. In 1953, researchers at the University of Chicago made a groundbreaking discovery when they identified a unique phase of sleep characterised by rapid eye movements, subsequently termed REM sleep. This finding revolutionised the field and established that sleep consists of distinct phases rather than a single, continuous state. Subsequent research throughout the 1960s led to the classification of Non-REM sleep into multiple stages based on brain wave patterns. Work conducted at Stanford University's Sleep Research Centre between 1957 and 1975 established the foundation for modern sleep research and introduced the concept of sleep architecture—the structured pattern of sleep stages occurring throughout the night. This framework remains central to how scientists understand and measure sleep quality today."
+      "text": "The invention of paper is traditionally attributed to Cai Lun, a Chinese court official, in 105 CE, though archaeological evidence suggests rudimentary paper-like materials existed earlier. Cai Lun's innovation involved processing bark, hemp, and old rags into a pulp that could be formed into thin sheets. This technique spread gradually westward, reaching the Islamic world by the 8th century and arriving in Europe through Spain around 1150 CE. According to research published by the Leiden University Centre for Historical Studies in 2019, early European paper mills initially relied on cotton and linen rags rather than fresh plant material, a practice that persisted for approximately 600 years. The transition to wood-based paper in the mid-19th century marked a fundamental shift that would ultimately determine the modern industry's structure."
     },
     {
       "id": "C",
-      "text": "Modern sleep science recognises two primary categories of sleep: Non-Rapid Eye Movement (NREM) sleep and Rapid Eye Movement (REM) sleep. NREM sleep is further divided into three stages, each progressively deeper than the last. During the first stage, which typically lasts between five and ten minutes, the body begins to relax and brain activity starts to slow. The second stage involves further reduction in body temperature and heart rate, while the third stage, known as deep sleep, is crucial for physical restoration and immune function. REM sleep, occurring approximately 90 minutes after falling asleep, is characterised by increased brain activity similar to wakefulness and is essential for memory consolidation. Dr. Helena Richter, a neuroscientist at the Max Planck Institute in Germany, has demonstrated that individuals typically experience four to six complete sleep cycles per night. Significantly, the proportion of REM sleep increases in later cycles, rising by approximately 50 percent compared to earlier periods."
+      "text": "Dr. Helena Varga, a materials scientist at the Chengdu Institute of Materials Science, has spent over fifteen years investigating the structural properties that make certain plant fibres suitable for papermaking. In a 2021 study, Varga explained that the key component is cellulose, a long-chain carbohydrate that forms the rigid walls of plant cells. Paper's strength derives from how these cellulose fibres interlock and bond when processed correctly. However, raw plant material also contains lignin, a compound that binds cellulose fibres together in living plants but causes paper to yellow and weaken over time if not removed. Varga's research demonstrated that fibres measuring between 1 and 3 millimetres in length generally produce the strongest paper, as they provide sufficient surface area for bonding while remaining flexible enough to form smooth sheets."
     },
     {
       "id": "D",
-      "text": "Understanding what affects sleep quality requires examining multiple environmental and biological factors. First, exposure to artificial light, particularly blue light from electronic devices, suppresses the production of melatonin—a hormone that regulates the sleep-wake cycle, also known as the circadian rhythm. Subsequently, this hormonal disruption delays the onset of sleep and reduces overall sleep depth. Following this initial disruption, the body struggles to maintain consistent progression through sleep stages. Finally, the cumulative effect is a reduction in restorative deep sleep and REM phases. A 2019 study by the Tokyo Institute of Sleep Medicine found that participants who used smartphones within two hours of bedtime experienced 23 percent less deep sleep than those who avoided such devices. Dr. Yuki Tanaka, who led this research, noted that temperature regulation also plays a critical role. Room temperatures exceeding 24 degrees Celsius were associated with increased nighttime awakenings and reduced sleep efficiency."
+      "text": "The transformation from plant to paper follows a sequence that, despite modern mechanisation, retains fundamental similarities to ancient methods. First, raw plant material is harvested and transported to processing facilities. Subsequently, this material undergoes pulping, a process that separates individual fibres either chemically, using alkaline solutions, or mechanically, using grinding equipment. Following pulping, the fibres are beaten or refined—a critical stage during which the fibre walls are partially broken down through a process called fibrillation, increasing their surface area for bonding. Professor Kenji Nakamura, a paper technology specialist at Kyoto University, emphasises that traditional Japanese craftsmen would beat fibres by hand for between 30 and 60 minutes to achieve optimal quality. Finally, the pulp suspension is spread onto screens, pressed to remove water, and dried, with hydrogen bonds forming between adjacent fibres to create the finished sheet."
     },
     {
       "id": "E",
-      "text": "Research has revealed notable differences in sleep patterns between populations with varying lifestyle habits. In a comparative study examining sleep quality in urban versus rural communities across Australia and Japan, investigators observed that urban residents averaged 6.2 hours of sleep per night compared to 7.4 hours among rural participants. However, the distinction extended beyond mere duration. Urban dwellers spent approximately 18 percent less time in deep sleep stages despite similar overall time in bed. Conversely, rural populations demonstrated more consolidated sleep patterns with fewer nighttime awakenings. While both groups were affected by factors such as caffeine consumption and stress levels, the intensity of artificial lighting in cities appeared to be the primary differentiating factor. Nevertheless, the study noted that individual variations in sleep needs remained substantial, with some participants functioning well on six hours while others required nine hours for comparable rest."
+      "text": "Contemporary paper production relies predominantly on wood pulp, which accounts for approximately 85% of global output. However, non-wood fibres—including bamboo, kenaf, and agricultural residues such as wheat straw—are attracting renewed attention. A 2022 report by the International Paper Research Consortium found that processing certain non-wood fibres requires up to 40% less energy than conventional wood pulping, primarily because these materials contain lower concentrations of lignin. Brazil has emerged as a leader in eucalyptus-based paper, with plantations covering over 7 million hectares, while China has invested substantially in bamboo processing facilities. Nevertheless, wood remains dominant for practical reasons: established supply chains, consistent fibre quality, and economies of scale developed over more than a century. The choice of fibre source ultimately depends on regional availability, environmental regulations, and the specific properties required in the final product."
     },
     {
       "id": "F",
-      "text": "The growing body of research on sleep stages and quality has significant implications for public health. Understanding the delicate balance of sleep architecture enables individuals to make informed decisions about their sleep environment and habits. Health organisations worldwide now recommend between seven and nine hours of sleep for adults, though quality is equally important as quantity. Future research directions include personalised sleep interventions based on individual circadian patterns. Ultimately, prioritising sleep quality represents an accessible yet powerful strategy for improving overall wellbeing."
+      "text": "Environmental pressures are reshaping the papermaking industry's relationship with plant fibres. Approximately 25 to 30 percent of global paper production now incorporates recycled fibres, though these degrade with each processing cycle, limiting reuse potential. Researchers are exploring enzyme treatments that could extend fibre lifespan while reducing chemical inputs. Meanwhile, the growing interest in agricultural waste streams offers possibilities for integrating paper production with farming operations. As Varga observes, the fundamental chemistry binding cellulose fibres together remains unchanged from ancient times—what continues to evolve is our understanding of how to harness these natural structures more efficiently."
     }
       ],
       "questions": [
-      ]
+        {
+  "id": 1,
+  "type": "true-false-not-given",
+  "title": "Questions 1-5",
+  "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
+  "questions": [
+    {
+      "id": 1,
+      "questionText": "Global demand for paper continues to grow each year, partly due to requirements from the packaging sector.",
+      "correctAnswer": "TRUE",
+      "justification": "Paragraph A explicitly states that paper demand 'continues to rise by approximately 2% each year, driven by packaging requirements and emerging economies.' The statement paraphrases 'rise' as 'grow' and accurately reflects that packaging is one driver of demand.",
+      "evidenceQuote": "\"demand continues to rise by approximately 2% each year, driven by packaging requirements\""
+    },
+    {
+      "id": 2,
+      "questionText": "Paper-making technology reached Europe before it spread to the Islamic world.",
+      "correctAnswer": "FALSE",
+      "justification": "The passage states paper-making reached 'the Islamic world by the 8th century' and arrived 'in Europe through Spain around 1150 CE.' Since the 8th century predates the 12th century, the technology reached the Islamic world first, making the statement false.",
+      "evidenceQuote": "\"reaching the Islamic world by the 8th century and arriving in Europe through Spain around 1150 CE\""
+    },
+    {
+      "id": 3,
+      "questionText": "Leaving lignin in paper causes it to become discoloured and deteriorate over time.",
+      "correctAnswer": "TRUE",
+      "justification": "Paragraph C states that lignin 'causes paper to yellow and weaken over time if not removed.' The statement accurately paraphrases 'yellow' as 'become discoloured,' 'weaken' as 'deteriorate,' and the condition 'if not removed' as 'leaving lignin in.'",
+      "evidenceQuote": "\"causes paper to yellow and weaken over time if not removed\""
+    },
+    {
+      "id": 4,
+      "questionText": "Wood-based paper production requires less energy than processing non-wood plant fibres.",
+      "correctAnswer": "FALSE",
+      "justification": "Paragraph E states that 'processing certain non-wood fibres requires up to 40% less energy than conventional wood pulping.' This indicates that wood pulping actually requires more energy, contradicting the statement.",
+      "evidenceQuote": "\"processing certain non-wood fibres requires up to 40% less energy than conventional wood pulping\""
+    },
+    {
+      "id": 5,
+      "questionText": "Recycled paper fibres are more economical to process than fibres from fresh plant material.",
+      "correctAnswer": "NOT GIVEN",
+      "justification": "Paragraph F mentions that recycled fibres are used in '25 to 30 percent of global paper production' and notes technical limitations like degradation. However, the passage provides no information about the comparative cost or economic efficiency ('more economical') of processing recycled versus fresh fibres.",
+      "evidenceQuote": "\"Approximately 25 to 30 percent of global paper production now incorporates recycled fibres, though these degrade with each processing cycle\""
     }
+  ]
+},
+{
+  "id": 2,
+  "type": "matching-headings",
+  "title": "Questions 6-11",
+  "instructions": "The reading passage has six paragraphs, A-F. Choose the correct heading for each paragraph from the list of headings below. Write the correct number, i-viii, in boxes 6-11 on your answer sheet.",
+  "questions": [
+    {
+      "id": 6,
+      "questionText": "Paragraph A",
+      "options": [
+        "Stages in converting plant material to finished sheets",
+        "The structural properties that determine paper quality",
+        "Weighing the advantages of different raw materials",
+        "The enduring importance of a fundamental material",
+        "How paper-making spread across continents",
+        "The commercial profitability of modern paper mills",
+        "Ecological pressures and emerging solutions",
+        "The superior quality of handmade paper products"
+      ],
+      "correctAnswer": "The enduring importance of a fundamental material",
+      "justification": "Paragraph A focuses on the continued relevance of paper, stating it 'remains one of the most widely used materials' and that demand 'continues to rise' despite digital trends (Enduring importance). It also defines paper as a 'remarkably simple material' at its core (Fundamental material). The heading synthesizes these two main points.",
+      "evidenceQuote": "\"Paper remains one of the most widely used materials in contemporary society... demand continues to rise... At its core, paper is a remarkably simple material\""
+    },
+    {
+      "id": 7,
+      "questionText": "Paragraph B",
+      "options": [
+        "Stages in converting plant material to finished sheets",
+        "The structural properties that determine paper quality",
+        "Weighing the advantages of different raw materials",
+        "The enduring importance of a fundamental material",
+        "How paper-making spread across continents",
+        "The commercial profitability of modern paper mills",
+        "Ecological pressures and emerging solutions",
+        "The superior quality of handmade paper products"
+      ],
+      "correctAnswer": "How paper-making spread across continents",
+      "justification": "Paragraph B traces the geographical journey of paper-making technology from its origins in China (105 CE), through the Islamic world (8th century), and finally to Europe (1150 CE). The heading captures this central theme of westward dissemination.",
+      "evidenceQuote": "\"This technique spread gradually westward, reaching the Islamic world by the 8th century and arriving in Europe through Spain around 1150 CE\""
+    },
+    {
+      "id": 8,
+      "questionText": "Paragraph C",
+      "options": [
+        "Stages in converting plant material to finished sheets",
+        "The structural properties that determine paper quality",
+        "Weighing the advantages of different raw materials",
+        "The enduring importance of a fundamental material",
+        "How paper-making spread across continents",
+        "The commercial profitability of modern paper mills",
+        "Ecological pressures and emerging solutions",
+        "The superior quality of handmade paper products"
+      ],
+      "correctAnswer": "The structural properties that determine paper quality",
+      "justification": "Paragraph C focuses on the scientific understanding of plant fibres, explaining how cellulose structure creates paper strength while lignin causes deterioration. The heading accurately captures the paragraph's focus on the specific physical characteristics (structural properties) that dictate the final product's quality.",
+      "evidenceQuote": "\"investigating the structural properties that make certain plant fibres suitable... Paper's strength derives from how these cellulose fibres interlock and bond\""
+    },
+    {
+      "id": 9,
+      "questionText": "Paragraph D",
+      "options": [
+        "Stages in converting plant material to finished sheets",
+        "The structural properties that determine paper quality",
+        "Weighing the advantages of different raw materials",
+        "The enduring importance of a fundamental material",
+        "How paper-making spread across continents",
+        "The commercial profitability of modern paper mills",
+        "Ecological pressures and emerging solutions",
+        "The superior quality of handmade paper products"
+      ],
+      "correctAnswer": "Stages in converting plant material to finished sheets",
+      "justification": "Paragraph D systematically describes the manufacturing sequence: harvesting, pulping, beating/refining, and drying. The heading paraphrases 'transformation from plant to paper follows a sequence' as 'stages in converting'.",
+      "evidenceQuote": "\"The transformation from plant to paper follows a sequence... undergoes pulping... fibres are beaten... pulp suspension is spread onto screens\""
+    },
+    {
+      "id": 10,
+      "questionText": "Paragraph E",
+      "options": [
+        "Stages in converting plant material to finished sheets",
+        "The structural properties that determine paper quality",
+        "Weighing the advantages of different raw materials",
+        "The enduring importance of a fundamental material",
+        "How paper-making spread across continents",
+        "The commercial profitability of modern paper mills",
+        "Ecological pressures and emerging solutions",
+        "The superior quality of handmade paper products"
+      ],
+      "correctAnswer": "Weighing the advantages of different raw materials",
+      "justification": "Paragraph E explicitly compares wood pulp with non-wood alternatives like bamboo and wheat straw, discussing energy efficiency, regional availability, and supply chain factors. The heading captures the paragraph's evaluative approach to choosing between different fibre sources.",
+      "evidenceQuote": "\"Contemporary paper production relies predominantly on wood pulp... However, non-wood fibres... are attracting renewed attention\""
+    },
+    {
+      "id": 11,
+      "questionText": "Paragraph F",
+      "options": [
+        "Stages in converting plant material to finished sheets",
+        "The structural properties that determine paper quality",
+        "Weighing the advantages of different raw materials",
+        "The enduring importance of a fundamental material",
+        "How paper-making spread across continents",
+        "The commercial profitability of modern paper mills",
+        "Ecological pressures and emerging solutions",
+        "The superior quality of handmade paper products"
+      ],
+      "correctAnswer": "Ecological pressures and emerging solutions",
+      "justification": "Paragraph F discusses how environmental factors are forcing changes in the industry, leading to innovations such as enzyme treatments and the use of agricultural waste. The heading accurately reflects the combination of the problem (ecological pressures) and the responses (emerging solutions).",
+      "evidenceQuote": "\"Environmental pressures are reshaping the papermaking industry's relationship... Researchers are exploring enzyme treatments\""
+    }
+  ]
+},
+{
+  "id": 3,
+  "type": "matching-information",
+  "title": "Questions 12-15",
+  "instructions": "Which paragraph contains the following information? Write the correct letter, A–F, in boxes 12-15 on your answer sheet.",
+  "paragraphs_list": ["A", "B", "C", "D", "E", "F"],
+  "questions": [
+    {
+      "id": 12,
+      "questionText": "the geographical pathway through which paper-making knowledge reached European nations",
+      "correctAnswer": "B",
+      "justification": "Paragraph B traces the spread of paper-making from China to Europe, specifically stating it reached 'the Islamic world by the 8th century and arriving in Europe through Spain around 1150 CE.' This provides the geographical route (China → Islamic world → Spain → Europe) that matches the question's focus on the transmission pathway.",
+      "evidenceQuote": "\"This technique spread gradually westward, reaching the Islamic world by the 8th century and arriving in Europe through Spain around 1150 CE\""
+    },
+    {
+      "id": 13,
+      "questionText": "a compound that must be removed during manufacturing to prevent the finished product from becoming discoloured and fragile",
+      "correctAnswer": "C",
+      "justification": "Paragraph C discusses lignin as a 'compound that binds cellulose fibres together in living plants but causes paper to yellow and weaken over time if not removed.' The question paraphrases 'yellow' as 'discoloured' and 'weaken' as 'fragile,' matching the paragraph's explanation of why lignin removal is necessary.",
+      "evidenceQuote": "\"lignin, a compound that binds cellulose fibres together in living plants but causes paper to yellow and weaken over time if not removed\""
+    },
+    {
+      "id": 14,
+      "questionText": "the mechanism by which processed fibres unite to create the final material",
+      "correctAnswer": "D",
+      "justification": "Paragraph D explains the paper-making process, specifically describing how 'hydrogen bonds forming between adjacent fibres' creates the finished sheet. It also details fibrillation, which increases 'surface area for bonding.' This matches the question's focus on how fibres unite or bond together.",
+      "evidenceQuote": "\"dried, with hydrogen bonds forming between adjacent fibres to create the finished sheet\""
+    },
+    {
+      "id": 15,
+      "questionText": "why processing certain alternative plant materials consumes less power than traditional methods",
+      "correctAnswer": "E",
+      "justification": "Paragraph E states that 'processing certain non-wood fibres requires up to 40% less energy than conventional wood pulping, primarily because these materials contain lower concentrations of lignin.' This directly explains why alternative materials (non-wood fibres) require less energy (power) to process—due to their lower lignin content.",
+      "evidenceQuote": "\"processing certain non-wood fibres requires up to 40% less energy than conventional wood pulping, primarily because these materials contain lower concentrations of lignin\""
+    }
+  ]
+}
+      ]
+    },
+    {
+  "id": 2,
+  "title": "The Remote Work Shift: Navigating Transport Emissions and Urban Economic Transformation",
+  "level": "advanced",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "A",
+      "text": "The widespread adoption of remote work, accelerated dramatically by global events in 2020, has prompted fundamental questions about its lasting effects on urban transportation systems and metropolitan economies. While initial assessments suggested that reduced commuting would deliver substantial environmental benefits, subsequent analysis has revealed a considerably more complex picture. Cities worldwide are now grappling with how to incorporate remote work patterns into long-term planning, recognising that the relationship between where people work and how cities function extends far beyond simple calculations of vehicle kilometres avoided. This transition represents what some analysts describe as the most significant shift in urban mobility patterns since the mass adoption of the private automobile in the mid-twentieth century."
+    },
+    {
+      "id": "B",
+      "text": "Remote work existed well before its recent surge, though its scale remained modest. A 2018 report by the Global Institute for Sustainable Cities estimated that only 4.7% of workers in developed economies worked primarily from home. Dr. Mariana Castellanos, an urban sustainability researcher at the University of São Paulo, notes that early telecommuting studies from the 1990s and early 2000s consistently predicted environmental benefits from reduced travel demand. However, these projections often relied on simplified assumptions about behavioural patterns. Research conducted between 2005 and 2015 by the European Transport Research Alliance began identifying what would later become central concerns: namely, that workers freed from daily commutes might increase other forms of travel, and that household energy consumption could partially offset transport-related savings. By 2019, approximately 8% of the workforce in major economies had adopted some form of regular remote work, though concentrated heavily in knowledge-based sectors."
+    },
+    {
+      "id": "C",
+      "text": "The environmental case for remote work centres on the elimination of commuting, which accounts for a significant portion of personal transport emissions. Castellanos has argued that peak-hour traffic reduction generates disproportionate benefits, as vehicles in congested conditions produce substantially higher emissions per kilometre than those in free-flowing traffic. A 2022 study published in the Journal of Sustainable Transport found that workers who shifted to fully remote arrangements reduced their transport-related carbon dioxide emissions by an average of 58%, equivalent to approximately 2.4 tonnes annually per person in high-income countries. Furthermore, the study indicated that businesses with predominantly remote workforces could reduce their facility-related emissions by up to 40% through consolidating or downsizing office space. These findings appear to support the view that remote work constitutes a viable component of broader decarbonisation strategies, particularly in service-based economies where physical presence is not operationally essential."
+    },
+    {
+      "id": "D",
+      "text": "However, Professor Henrik Lindqvist, a transport economist at Stockholm University, contends that such calculations frequently underestimate what researchers term the rebound effect—behavioural changes that partially or fully offset anticipated environmental gains. Lindqvist's research, published in 2021, documented a four-stage pattern among newly remote workers. Initially, total travel decreases sharply as commuting ceases. Subsequently, household energy consumption rises as workers heat, cool, and power home offices throughout the day. At this stage, local trips for shopping, errands, and leisure tend to increase, often replacing efficient public transport commutes with private vehicle journeys. Ultimately, some workers relocate to larger properties in suburban or semi-rural areas, leading to longer journeys for all purposes. Lindqvist found that within eighteen months, the net emissions reduction among his study cohort had diminished from an initial 54% to merely 12%, suggesting that behavioural adaptation may substantially erode the environmental benefits of remote work over time."
+    },
+    {
+      "id": "E",
+      "text": "The magnitude of these effects varies considerably across different urban contexts. Research comparing Tokyo and Amsterdam illustrates this geographical dimension. In Tokyo, where average commute distances exceed 35 kilometres and public transport dominates modal share, remote workers achieved persistent emission reductions averaging 41% over a three-year period. The city's compact residential areas and limited space for relocation meant that the suburban migration effect remained negligible. By contrast, in Amsterdam, where commute distances average only 12 kilometres and cycling represents a significant portion of transport, the environmental benefits proved more modest—approximately 18% reduction—while concerns about urban centre vitality emerged more prominently. A 2023 analysis by the World Economic Forum suggested that cities with extensive public transport networks and high residential density may experience more durable emission reductions from remote work, whereas car-dependent cities with available peripheral land could see benefits diminish as workers disperse geographically."
+    },
+    {
+      "id": "F",
+      "text": "Beyond environmental considerations, remote work poses significant challenges for urban economies. Dr. Ayumi Nakagawa, an urban economist at Tokyo Metropolitan University, has documented what she describes as the hollowing-out effect in central business districts. Her research indicates that commercial vacancy rates in major city centres increased by between 15% and 28% between 2020 and 2023, with cascading effects on retail establishments, restaurants, and service providers dependent on office worker patronage. Nakagawa estimates that for every 10% reduction in central city commuters, local retail revenue declines by approximately 6.5%. This presents policymakers with a fundamental tension: measures that encourage remote work for environmental reasons may simultaneously undermine the economic foundations of urban centres. Nevertheless, Nakagawa suggests that cities might adapt through mixed-use development and residential conversion of commercial properties, though such transitions typically require between five and fifteen years to materialise fully."
+    },
+    {
+      "id": "G",
+      "text": "The emerging consensus among researchers suggests that hybrid arrangements—combining remote and office-based work—may offer a pragmatic balance between competing objectives. Such models could potentially retain some emission reduction benefits while maintaining sufficient urban activity to support city economies. However, optimal configurations likely depend on local conditions, including existing transport infrastructure, housing markets, and economic structures. Castellanos argues that urban policy must now evolve beyond treating remote work as either universally beneficial or problematic, instead developing nuanced frameworks that account for context-specific trade-offs. The long-term trajectory remains uncertain, as both technological developments and societal preferences continue to evolve."
+    }
+  ],
+  "questions": [
+{
+  "id": 4,
+  "type": "matching-information",
+  "title": "Questions 16-20",
+  "instructions": "Which paragraph contains the following information? Write the correct letter, A–G, in boxes 16-20 on your answer sheet.",
+  "paragraphs_list": ["A", "B", "C", "D", "E", "F", "G"],
+  "questions": [
+    {
+      "id": 16,
+      "questionText": "a sequential description of how workers' behaviour evolves after transitioning to home-based employment",
+      "correctAnswer": "D",
+      "justification": "Paragraph D describes Lindqvist's documented 'four-stage pattern among newly remote workers,' detailing how behaviour changes from initial travel reduction through increased home energy use, more local trips, and eventual relocation. This matches the question's focus on the sequential evolution of worker behaviour.",
+      "evidenceQuote": "\"Lindqvist's research, published in 2021, documented a four-stage pattern among newly remote workers. Initially, total travel decreases sharply... Subsequently, household energy consumption rises... At this stage, local trips... tend to increase... Ultimately, some workers relocate\""
+    },
+    {
+      "id": 17,
+      "questionText": "the financial consequences for businesses that depend on the presence of office employees in urban centres",
+      "correctAnswer": "F",
+      "justification": "Paragraph F specifically discusses Dr. Nakagawa's research on 'cascading effects on retail establishments, restaurants, and service providers dependent on office worker patronage,' including the quantified relationship between commuter reduction and retail revenue decline.",
+      "evidenceQuote": "\"with cascading effects on retail establishments, restaurants, and service providers dependent on office worker patronage. Nakagawa estimates that for every 10% reduction in central city commuters, local retail revenue declines by approximately 6.5%\""
+    },
+    {
+      "id": 18,
+      "questionText": "early indications that home-based workers might engage in travel patterns that counterbalance environmental gains",
+      "correctAnswer": "B",
+      "justification": "Paragraph B discusses research conducted between 2005 and 2015 by the European Transport Research Alliance that 'began identifying what would later become central concerns: namely, that workers freed from daily commutes might increase other forms of travel.' This matches the question's focus on early warnings about offsetting travel behaviour.",
+      "evidenceQuote": "\"Research conducted between 2005 and 2015 by the European Transport Research Alliance began identifying what would later become central concerns: namely, that workers freed from daily commutes might increase other forms of travel\""
+    },
+    {
+      "id": 19,
+      "questionText": "a contrast between two metropolitan areas regarding the persistence of emission reductions from remote working",
+      "correctAnswer": "E",
+      "justification": "Paragraph E explicitly compares Tokyo and Amsterdam, noting that Tokyo achieved 'persistent emission reductions averaging 41% over a three-year period' while Amsterdam's 'environmental benefits proved more modest—approximately 18% reduction.' This is the only paragraph providing a direct geographical comparison of emission reduction outcomes.",
+      "evidenceQuote": "\"Research comparing Tokyo and Amsterdam illustrates this geographical dimension. In Tokyo... remote workers achieved persistent emission reductions averaging 41%... By contrast, in Amsterdam... the environmental benefits proved more modest—approximately 18% reduction\""
+    },
+    {
+      "id": 20,
+      "questionText": "an explanation of why reducing rush-hour vehicle use produces greater environmental benefits than equivalent reductions at other times",
+      "correctAnswer": "C",
+      "justification": "Paragraph C contains Castellanos's argument that 'peak-hour traffic reduction generates disproportionate benefits, as vehicles in congested conditions produce substantially higher emissions per kilometre than those in free-flowing traffic.' This explains why peak-hour reductions are more beneficial.",
+      "evidenceQuote": "\"Castellanos has argued that peak-hour traffic reduction generates disproportionate benefits, as vehicles in congested conditions produce substantially higher emissions per kilometre than those in free-flowing traffic\""
+    }
+  ]
+},
+{
+  "id": 5,
+  "type": "true-false-not-given",
+  "title": "Questions 21-25",
+  "instructions": "Do the following statements agree with the views of the writer in the Reading Passage? In boxes 21-25 on your answer sheet, write YES if the statement agrees with the views of the writer, NO if the statement contradicts the views of the writer, NOT GIVEN if it is impossible to say what the writer thinks about this.",
+  "questions": [
+    {
+      "id": 21,
+      "questionText": "The writer considers the transition to remote work as historically comparable to the widespread adoption of automobiles.",
+      "correctAnswer": "YES",
+      "justification": "The writer explicitly describes remote work as 'the most significant shift in urban mobility patterns since the mass adoption of the private automobile in the mid-twentieth century' (Para A). This direct comparison indicates the writer views the current transition as equivalent in historical significance to automobile adoption.",
+      "evidenceQuote": "\"This transition represents what some analysts describe as the most significant shift in urban mobility patterns since the mass adoption of the private automobile in the mid-twentieth century\""
+    },
+    {
+      "id": 22,
+      "questionText": "The writer suggests that initial research on telecommuting provided reliable forecasts of long-term environmental outcomes.",
+      "correctAnswer": "NO",
+      "justification": "The writer explicitly states that early telecommuting studies 'often relied on simplified assumptions about behavioural patterns' (Para B), indicating these projections were not reliable. The writer also notes that 'subsequent analysis has revealed a considerably more complex picture' (Para A), directly contradicting the claim that early research was reliable.",
+      "evidenceQuote": "\"these projections often relied on simplified assumptions about behavioural patterns\""
+    },
+    {
+      "id": 23,
+      "questionText": "According to Dr. Castellanos, decreasing vehicle use during rush hours produces environmental advantages that exceed those from equivalent reductions at other times.",
+      "correctAnswer": "YES",
+      "justification": "Paragraph C states that 'Castellanos has argued that peak-hour traffic reduction generates disproportionate benefits, as vehicles in congested conditions produce substantially higher emissions per kilometre than those in free-flowing traffic.' This supports the statement regarding greater benefits during rush hours.",
+      "evidenceQuote": "\"Castellanos has argued that peak-hour traffic reduction generates disproportionate benefits, as vehicles in congested conditions produce substantially higher emissions per kilometre\""
+    },
+    {
+      "id": 24,
+      "questionText": "The writer believes remote work delivers consistent environmental benefits regardless of local urban conditions.",
+      "correctAnswer": "NO",
+      "justification": "The writer explicitly argues the opposite. Paragraph E demonstrates geographical variation ('The magnitude of these effects varies considerably across different urban contexts'), and Paragraph G states that 'optimal configurations likely depend on local conditions.' The writer emphasises context-dependency, directly contradicting the claim of consistent benefits.",
+      "evidenceQuote": "\"The magnitude of these effects varies considerably across different urban contexts... optimal configurations likely depend on local conditions\""
+    },
+    {
+      "id": 25,
+      "questionText": "The writer considers the environmental advantages of remote work to be more important than maintaining urban economic vitality.",
+      "correctAnswer": "NOT GIVEN",
+      "justification": "While the passage discusses both environmental benefits (Para C) and urban economic challenges (Para F), the writer presents this as 'a fundamental tension' and advocates for frameworks managing 'trade-offs' (Para G). The writer does not express a personal view on which consideration is prioritized.",
+      "evidenceQuote": "\"This presents policymakers with a fundamental tension: measures that encourage remote work for environmental reasons may simultaneously undermine the economic foundations of urban centres\""
+    }
+  ]
+},
+{
+  "id": 6,
+  "type": "summary-completion",
+  "completion_type": "summary",
+  "title": "Questions 26-28",
+  "word_limit": "NO MORE THAN TWO WORDS",
+  "instructions": "Complete the summary below. Choose NO MORE THAN TWO WORDS from the passage for each answer. Write your answers in boxes 26-28 on your answer sheet.",
+  "structure": "<div class='completion-summary'><p>The shift to home-based employment has raised complex questions about its long-term impact on urban systems. While initial assessments predicted environmental benefits from reduced commuting, subsequent analysis revealed behavioural adaptations that can offset these gains. Professor Lindqvist documented a <strong>(26)_____</strong> pattern showing how workers gradually increase travel and energy use after initially reducing their journeys. Research comparing Tokyo and Amsterdam demonstrated that emission reduction outcomes vary significantly depending on urban characteristics such as commute distances and housing density. Meanwhile, Dr. Nakagawa identified a significant economic challenge affecting city centres, describing a <strong>(27)_____</strong> effect as businesses dependent on office workers experienced declining revenues. The emerging consensus suggests that <strong>(28)_____</strong> arrangements, which combine office and remote work, may offer the most practical balance between environmental and economic objectives.</p></div>",
+  "questions": [
+    {
+      "id": 26,
+      "questionText": "Gap 26",
+      "correctAnswer": "four-stage",
+      "justification": "Paragraph D explicitly describes Lindqvist's research documenting 'a four-stage pattern' of behavioural change among remote workers. The summary paraphrases 'newly remote workers' as 'workers' and restructures the description of the pattern.",
+      "evidenceQuote": "\"Lindqvist's research, published in 2021, documented a four-stage pattern among newly remote workers\""
+    },
+    {
+      "id": 27,
+      "questionText": "Gap 27",
+      "correctAnswer": "hollowing-out",
+      "justification": "Paragraph F introduces Nakagawa's concept of 'the hollowing-out effect' to describe the decline in central business district activity. The summary paraphrases 'central business districts' as 'city centres' and 'commercial vacancy rates increased' as 'businesses experienced declining revenues,' preserving the key technical term.",
+      "evidenceQuote": "\"Dr. Ayumi Nakagawa, an urban economist at Tokyo Metropolitan University, has documented what she describes as the hollowing-out effect in central business districts\""
+    },
+    {
+      "id": 28,
+      "questionText": "Gap 28",
+      "correctAnswer": "hybrid",
+      "justification": "Paragraph G presents the synthesis position that 'hybrid arrangements—combining remote and office-based work—may offer a pragmatic balance.' The summary closely paraphrases this, substituting 'pragmatic balance' with 'practical balance' and 'between competing objectives' for the passage's reference to environmental and economic goals.",
+      "evidenceQuote": "\"The emerging consensus among researchers suggests that hybrid arrangements—combining remote and office-based work—may offer a pragmatic balance\""
+    }
+  ]
+}
+]
+    },
+{
+  "id": 2,
+  "title": "Algorithmic Justice: Evaluating the Role of Predictive Tools in Criminal Sentencing Decisions",
+  "level": "advanced",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "A",
+      "text": "The deployment of algorithmic risk assessment instruments in criminal justice systems has generated considerable scholarly debate. These tools, which analyse defendant characteristics to predict recidivism likelihood, are now used in judicial proceedings across North America, Europe, and parts of Asia-Pacific. Proponents argue such instruments offer consistency and efficiency unattainable through human judgment alone. Critics, however, contend that these systems may entrench existing biases while obscuring the reasoning behind consequential decisions. This controversy raises fundamental questions about the appropriate relationship between computational methods and judicial discretion in determining individuals' liberty."
+    },
+    {
+      "id": "B",
+      "text": "The use of statistical methods in sentencing decisions is not itself novel. Actuarial risk instruments emerged in the 1970s, primarily for parole determinations, based on regression analyses of demographic and criminal history variables. What distinguishes contemporary algorithmic tools is their reliance on machine learning techniques capable of processing vastly larger datasets and identifying non-linear patterns invisible to earlier methods. A 2019 systematic review commissioned by the European Commission documented that over 60 jurisdictions had adopted some form of algorithmic assessment by that date. Between 2015 and 2022, implementation rates increased 3.2-fold in member states of the European Union alone, reflecting growing institutional confidence in these approaches."
+    },
+    {
+      "id": "C",
+      "text": "Dr. Helena Varga, a computational sociologist at Uppsala University, represents a cautiously optimistic perspective on algorithmic integration. Varga argues that these systems, when properly designed and implemented, may reduce certain forms of human cognitive bias that pervade conventional judicial decision-making. In her analysis, judges exhibit well-documented anchoring effects, in-group preferences, and susceptibility to legally irrelevant factors such as time of day or proximity to meal breaks. \"The question,\" Varga contends, \"is not whether algorithms are perfect, but whether they perform better than the deeply flawed alternative.\" She advocates for what she terms transparent algorithmic assistance—systems that provide recommendations while making their underlying logic accessible to both courts and defendants."
+    },
+    {
+      "id": "D",
+      "text": "Supporting this position, longitudinal research conducted between 2016 and 2021 by the Netherlands Institute for the Study of Crime and Law Enforcement examined 12,400 sentencing decisions across three jurisdictions. The study found that judicial determinations without algorithmic input showed 23% greater variance in similar cases compared to algorithm-assisted decisions. Furthermore, a 2020 meta-analysis published in the Journal of Quantitative Criminology, synthesising findings from 34 studies, concluded that well-calibrated risk instruments predicted recidivism with an accuracy rate of 67-72%, whereas unaided judicial predictions achieved approximately 58-63%. Such findings, Varga argues, establish a prima facie case for algorithmic integration, though she acknowledges that accuracy alone cannot resolve legitimacy concerns."
+    },
+    {
+      "id": "E",
+      "text": "Notwithstanding these empirical findings, Professor Kwame Asante, a legal philosopher at the University of Cape Town, raises fundamental objections that extend beyond questions of accuracy. Asante distinguishes between predictive accuracy and procedural justice, arguing that even a demonstrably accurate system may be illegitimate if it violates due process principles. His critique centres on what he terms algorithmic opacity—the difficulty or impossibility of explaining how specific variables combine to produce individual risk scores. \"A defendant has the right to understand and contest the basis for restrictions on their liberty,\" Asante argues. \"When a proprietary algorithm treats this reasoning as a trade secret, it undermines the very foundation of adversarial justice.\" This concern, he maintains, applies regardless of aggregate accuracy statistics."
+    },
+    {
+      "id": "F",
+      "text": "Research has documented troubling patterns consistent with Asante's concerns. A comprehensive audit by the Brookings Institution in 2021 found that risk scores generated by leading commercial tools correlated significantly with defendants' postal codes and socioeconomic indicators—proxies, critics argue, for race and class. In one jurisdiction studied, defendants from the lowest-income quartile received high-risk classifications at 2.7 times the rate of those from the highest quartile, even after controlling for criminal history variables. The African Union's Judicial Affairs Committee has subsequently issued guidelines recommending that member states require full algorithmic disclosure before permitting such tools in court proceedings. Asante views these disparities as symptomatic of deeper structural problems that technical refinements cannot adequately address."
+    },
+    {
+      "id": "G",
+      "text": "A more nuanced position emerges from the work of Dr. Rafael Mendes, a policy analyst at the Brazilian Institute for Judicial Reform. Mendes challenges the dichotomy between algorithmic and human judgment, observing that documented bias in automated systems typically reflects biased training data rather than inherent computational limitations—a distinction with significant practical implications. Building on this observation, he proposes a conditional deployment framework comprising five sequential stages: first, pre-implementation equity auditing to identify potential disparate impacts; subsequently, transparent model documentation accessible to legal professionals; third, ongoing performance monitoring disaggregated by demographic categories; fourth, mandatory appellate review procedures for contested scores; and ultimately, systematic sunset provisions requiring periodic reauthorisation. This framework, Mendes argues, addresses Asante's procedural concerns while preserving the consistency benefits Varga emphasises."
+    },
+    {
+      "id": "H",
+      "text": "Nevertheless, significant methodological limitations constrain current knowledge. Dr. Yuki Tanaka, an experimental psychologist at Kyoto University, observes that many comparative studies suffer from selection effects—jurisdictions adopting algorithmic tools may differ systematically from those that do not, confounding attempts to isolate algorithmic impacts. Furthermore, the dependent variable of recidivism is itself measured through re-arrest or reconviction, which reflects policing and prosecutorial decisions as much as actual reoffending behaviour. Tanaka notes that only 7 of 34 studies in the aforementioned meta-analysis controlled adequately for this measurement problem, potentially inflating apparent algorithmic advantages. These limitations, she suggests, warrant considerable caution in drawing policy conclusions from existing evidence."
+    },
+    {
+      "id": "I",
+      "text": "The debate thus remains unresolved, though its contours have become clearer. Proponents and critics increasingly agree that implementation conditions matter more than abstract capabilities. Whether algorithmic tools enhance or undermine justice depends substantially on factors the instruments themselves cannot address: the quality of training data, the transparency of deployment, and the preservation of meaningful human oversight. As Mendes observes, \"The technology is neither saviour nor villain—it is a mirror reflecting the priorities we encode into it.\" Future research must grapple with questions current studies leave open, particularly regarding long-term societal effects."
+    }
+  ],
+  "questions": [
+{
+  "id": 7,
+  "type": "matching-headings",
+  "title": "Questions 29-33",
+  "instructions": "The reading passage has nine paragraphs, A-I. Choose the correct heading for paragraphs C-G from the list of headings below. Write the correct number, i-viii, in boxes 29-33 on your answer sheet.",
+  "questions": [
+    {
+      "id": 29,
+      "questionText": "Paragraph C",
+      "options": [
+        "A conditional framework for structured algorithm deployment",
+        "Documented correlations between risk scores and socioeconomic indicators",
+        "Commercial pressures influencing algorithmic design",
+        "Addressing judicial cognitive limitations through computational methods",
+        "How defendants benefit from algorithmic consistency",
+        "From early statistical models to contemporary machine learning",
+        "Why accuracy alone fails to satisfy legal standards",
+        "Empirical support for algorithm-assisted decision-making"
+      ],
+      "correctAnswer": "Addressing judicial cognitive limitations through computational methods",
+      "justification": "Paragraph C presents Dr. Varga's position that algorithmic systems can address well-documented cognitive biases in human judges. The heading paraphrases 'human cognitive bias' as 'judicial cognitive limitations' and 'algorithmic systems' as 'computational methods', capturing the paragraph's focus on using technology to mitigate human error.",
+      "evidenceQuote": "\"The question is not whether algorithms are perfect, but whether they perform better than the deeply flawed alternative\""
+    },
+    {
+      "id": 30,
+      "questionText": "Paragraph D",
+      "options": [
+        "A conditional framework for structured algorithm deployment",
+        "Documented correlations between risk scores and socioeconomic indicators",
+        "Commercial pressures influencing algorithmic design",
+        "Addressing judicial cognitive limitations through computational methods",
+        "How defendants benefit from algorithmic consistency",
+        "From early statistical models to contemporary machine learning",
+        "Why accuracy alone fails to satisfy legal standards",
+        "Empirical support for algorithm-assisted decision-making"
+      ],
+      "correctAnswer": "Empirical support for algorithm-assisted decision-making",
+      "justification": "Paragraph D presents specific research findings supporting algorithmic integration, including a Netherlands longitudinal study and a meta-analysis. The heading captures this focus on research evidence ('empirical support') and the context of algorithmic tools aiding judicial decisions ('algorithm-assisted decision-making').",
+      "evidenceQuote": "\"well-calibrated risk instruments predicted recidivism with an accuracy rate of 67-72%, whereas unaided judicial predictions achieved approximately 58-63%\""
+    },
+    {
+      "id": 31,
+      "questionText": "Paragraph E",
+      "options": [
+        "A conditional framework for structured algorithm deployment",
+        "Documented correlations between risk scores and socioeconomic indicators",
+        "Commercial pressures influencing algorithmic design",
+        "Addressing judicial cognitive limitations through computational methods",
+        "How defendants benefit from algorithmic consistency",
+        "From early statistical models to contemporary machine learning",
+        "Why accuracy alone fails to satisfy legal standards",
+        "Empirical support for algorithm-assisted decision-making"
+      ],
+      "correctAnswer": "Why accuracy alone fails to satisfy legal standards",
+      "justification": "Paragraph E presents Professor Asante's argument that even accurate algorithms may be illegitimate if they violate due process. The heading captures this distinction: Asante's core claim is that 'predictive accuracy' is insufficient to meet 'procedural justice' requirements (legal standards).",
+      "evidenceQuote": "\"A defendant has the right to understand and contest the basis for restrictions on their liberty... When a proprietary algorithm treats this reasoning as a trade secret, it undermines the very foundation of adversarial justice\""
+    },
+    {
+      "id": 32,
+      "questionText": "Paragraph F",
+      "options": [
+        "A conditional framework for structured algorithm deployment",
+        "Documented correlations between risk scores and socioeconomic indicators",
+        "Commercial pressures influencing algorithmic design",
+        "Addressing judicial cognitive limitations through computational methods",
+        "How defendants benefit from algorithmic consistency",
+        "From early statistical models to contemporary machine learning",
+        "Why accuracy alone fails to satisfy legal standards",
+        "Empirical support for algorithm-assisted decision-making"
+      ],
+      "correctAnswer": "Documented correlations between risk scores and socioeconomic indicators",
+      "justification": "Paragraph F presents specific research findings showing correlations between risk scores and socioeconomic factors. The heading directly paraphrases the paragraph's content: the Brookings audit 'documented' these 'correlations' with 'socioeconomic indicators' (a term explicitly used in the text).",
+      "evidenceQuote": "\"defendants from the lowest-income quartile received high-risk classifications at 2.7 times the rate of those from the highest quartile\""
+    },
+    {
+      "id": 33,
+      "questionText": "Paragraph G",
+      "options": [
+        "A conditional framework for structured algorithm deployment",
+        "Documented correlations between risk scores and socioeconomic indicators",
+        "Commercial pressures influencing algorithmic design",
+        "Addressing judicial cognitive limitations through computational methods",
+        "How defendants benefit from algorithmic consistency",
+        "From early statistical models to contemporary machine learning",
+        "Why accuracy alone fails to satisfy legal standards",
+        "Empirical support for algorithm-assisted decision-making"
+      ],
+      "correctAnswer": "A conditional framework for structured algorithm deployment",
+      "justification": "Paragraph G details Dr. Mendes's proposal for conditional algorithmic deployment through a structured five-stage process. The heading paraphrases 'conditional deployment framework' and captures the systematic nature ('structured') of the five sequential stages outlined in the text.",
+      "evidenceQuote": "\"he proposes a conditional deployment framework comprising five sequential stages: first, pre-implementation equity auditing...\""
+    }
+  ]
+},
+{
+  "id": 8,
+  "type": "matching-features",
+  "title": "Questions 34-38",
+  "instructions": "Look at the following statements (Questions 34-38) and the list of researchers below. Match each statement with the correct researcher, A-G. Write the correct letter, A-G, in boxes 34-38 on your answer sheet. NB You may use any letter more than once.",
+  "features": [
+    {
+      "letter": "A",
+      "name": "Dr. Helena Varga"
+    },
+    {
+      "letter": "B",
+      "name": "Professor Kwame Asante"
+    },
+    {
+      "letter": "C",
+      "name": "Dr. Rafael Mendes"
+    },
+    {
+      "letter": "D",
+      "name": "Dr. Yuki Tanaka"
+    },
+    {
+      "letter": "E",
+      "name": "Netherlands Institute for the Study of Crime and Law Enforcement"
+    },
+    {
+      "letter": "F",
+      "name": "Brookings Institution"
+    },
+    {
+      "letter": "G",
+      "name": "African Union's Judicial Affairs Committee"
+    }
+  ],
+  "questions": [
+    {
+      "id": 34,
+      "questionText": "proposes computational tools that reveal their reasoning processes to judicial authorities and accused persons",
+      "correctAnswer": "A",
+      "justification": "Paragraph C explicitly states that Varga 'advocates for what she terms transparent algorithmic assistance—systems that provide recommendations while making their underlying logic accessible to both courts and defendants.' The statement paraphrases 'underlying logic accessible' as 'reveal their reasoning processes' and 'courts and defendants' as 'judicial authorities and accused persons.'",
+      "evidenceQuote": "\"She advocates for what she terms transparent algorithmic assistance—systems that provide recommendations while making their underlying logic accessible to both courts and defendants.\""
+    },
+    {
+      "id": 35,
+      "questionText": "maintains that individuals facing sentencing must be able to comprehend and challenge the rationale for limitations on their freedom",
+      "correctAnswer": "B",
+      "justification": "Paragraph E quotes Asante stating, 'A defendant has the right to understand and contest the basis for restrictions on their liberty.' The statement paraphrases 'understand and contest' as 'comprehend and challenge' and 'restrictions on their liberty' as 'limitations on their freedom.'",
+      "evidenceQuote": "\"A defendant has the right to understand and contest the basis for restrictions on their liberty\""
+    },
+    {
+      "id": 36,
+      "questionText": "argues that discriminatory outcomes in automated systems stem from prejudiced source information rather than fundamental technical constraints",
+      "correctAnswer": "C",
+      "justification": "Paragraph G states that Mendes observes 'documented bias in automated systems typically reflects biased training data rather than inherent computational limitations.' The statement paraphrases 'biased training data' as 'prejudiced source information' and 'inherent computational limitations' as 'fundamental technical constraints.'",
+      "evidenceQuote": "\"Mendes challenges the dichotomy between algorithmic and human judgment, observing that documented bias in automated systems typically reflects biased training data rather than inherent computational limitations\""
+    },
+    {
+      "id": 37,
+      "questionText": "observed that a minority of research papers in a major synthesis properly accounted for methodological concerns",
+      "correctAnswer": "D",
+      "justification": "Paragraph H states that 'Tanaka notes that only 7 of 34 studies in the aforementioned meta-analysis controlled adequately for this measurement problem.' The statement paraphrases '7 of 34 studies' as 'a minority of research papers' and 'controlled adequately' as 'properly accounted for.'",
+      "evidenceQuote": "\"Tanaka notes that only 7 of 34 studies in the aforementioned meta-analysis controlled adequately for this measurement problem\""
+    },
+    {
+      "id": 38,
+      "questionText": "considers documented inequalities to be indicative of underlying systemic issues beyond the scope of technical modifications",
+      "correctAnswer": "B",
+      "justification": "Paragraph F concludes by stating 'Asante views these disparities as symptomatic of deeper structural problems that technical refinements cannot adequately address.' The statement paraphrases 'symptomatic of deeper structural problems' as 'indicative of underlying systemic issues.'",
+      "evidenceQuote": "\"Asante views these disparities as symptomatic of deeper structural problems that technical refinements cannot adequately address.\""
+    }
+  ]
+},
+{
+  "id": 9,
+  "type": "true-false-not-given",
+  "title": "Questions 39-40",
+  "instructions": "Do the following statements agree with the claims of the writer in the Reading Passage? In boxes 39-40 on your answer sheet, write YES if the statement agrees with the claims of the writer, NO if the statement contradicts the claims of the writer, NOT GIVEN if it is impossible to say what the writer thinks about this.",
+  "questions": [
+    {
+      "id": 39,
+      "questionText": "Dr. Helena Varga believes that conventional judicial decision-making is affected by factors that should have no bearing on legal outcomes.",
+      "correctAnswer": "YES",
+      "justification": "In Paragraph C, the text states that in Varga's analysis, judges exhibit 'susceptibility to legally irrelevant factors such as time of day or proximity to meal breaks.' This agrees with the statement that decisions are influenced by factors with no legitimate legal relevance.",
+      "evidenceQuote": "\"judges exhibit well-documented anchoring effects, in-group preferences, and susceptibility to legally irrelevant factors such as time of day or proximity to meal breaks\""
+    },
+    {
+      "id": 40,
+      "questionText": "The writer believes that Dr. Mendes's conditional deployment framework would successfully resolve the disagreement between algorithm supporters and critics.",
+      "correctAnswer": "NOT GIVEN",
+      "justification": "While Paragraph G reports Mendes's claim that his framework 'addresses Asante's procedural concerns,' the writer does not express a personal opinion on the framework's success. In fact, Paragraph I concludes that 'the debate thus remains unresolved,' suggesting the writer does not view the problem as solved.",
+      "evidenceQuote": "\"This framework, Mendes argues, addresses Asante's procedural concerns... The debate thus remains unresolved\""
+    }
+   ]
+  }
+ ]
+}
 ]
 }

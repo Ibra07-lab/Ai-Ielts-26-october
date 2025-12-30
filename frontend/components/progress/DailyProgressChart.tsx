@@ -1,4 +1,4 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { TrendingUp } from "lucide-react";
 
@@ -17,21 +17,22 @@ interface DailyProgressChartProps {
     data: DailyProgressData[];
 }
 
+// New "Cool" Palette
 const COLORS = {
-    listening: "#8b5cf6", // Purple
-    reading: "#10b981",   // Green
-    writing: "#0ea5e9",   // Light Blue
-    speaking: "#ef4444",  // Red
-    vocabulary: "#f97316" // Orange
+    listening: "#22D3EE", // Cyan
+    reading: "#3B82F6",   // Blue
+    writing: "#6366F1",   // Indigo
+    speaking: "#A855F7",  // Purple
+    vocabulary: "#F43F5E" // Pink (Accent)
 };
 
 const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
         const data = payload[0].payload;
         return (
-            <div className="bg-slate-900 border border-slate-800 p-4 rounded-xl shadow-xl text-white min-w-[200px] animate-in fade-in zoom-in-95 duration-200">
+            <div className="bg-[#1E293B] border border-[#334155] p-4 rounded-xl shadow-xl text-white min-w-[200px] animate-in fade-in zoom-in-95 duration-200">
                 <p className="text-slate-400 text-sm mb-2 font-medium">{data.fullDate}</p>
-                <div className="flex justify-between items-center mb-3 pb-3 border-b border-slate-800">
+                <div className="flex justify-between items-center mb-3 pb-3 border-b border-[#334155]">
                     <span className="font-bold text-lg">Overall Progress</span>
                     <span className="font-bold text-lg">{data.total} Tasks</span>
                 </div>
@@ -57,12 +58,9 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 export default function DailyProgressChart({ data }: DailyProgressChartProps) {
-    // Calculate max value for Y-axis domain to add some headroom
-    const maxValue = Math.max(...data.map(d => d.total), 5);
-
     return (
-        <Card className="bg-slate-950 border-slate-900 shadow-2xl overflow-hidden">
-            <CardHeader className="border-b border-slate-900/50 pb-4">
+        <Card className="bg-[#1E293B] border-[#334155] shadow-sm overflow-hidden">
+            <CardHeader className="border-b border-[#334155] pb-4">
                 <div className="flex items-center justify-between">
                     <div>
                         <CardTitle className="text-white flex items-center gap-2">
@@ -76,7 +74,7 @@ export default function DailyProgressChart({ data }: DailyProgressChartProps) {
                     <div className="flex gap-4 text-xs">
                         {Object.entries(COLORS).map(([key, color]) => (
                             <div key={key} className="flex items-center gap-1.5">
-                                <div className="w-2 h-2 rounded-full shadow-[0_0_8px]" style={{ backgroundColor: color, boxShadow: `0 0 8px ${color}` }} />
+                                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: color }} />
                                 <span className="capitalize text-slate-400">{key}</span>
                             </div>
                         ))}
@@ -89,30 +87,25 @@ export default function DailyProgressChart({ data }: DailyProgressChartProps) {
                         <BarChart
                             data={data}
                             margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
-                            barSize={40}
+                            barSize={32} // Thicker bars
                         >
-                            <defs>
-                                {/* Add gradients/glows if needed, but solid colors with shadow effect are cleaner for stacked bars */}
-                                <pattern id="hatched" patternUnits="userSpaceOnUse" width="4" height="4">
-                                    <path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2" style={{ stroke: '#334155', strokeWidth: 1 }} />
-                                </pattern>
-                            </defs>
                             <CartesianGrid
-                                strokeDasharray="3 3"
+                                strokeDasharray="" // Solid line
                                 vertical={false}
-                                stroke="#1e293b"
+                                stroke="#334155" // Faint solid line
+                                strokeOpacity={0.4}
                             />
                             <XAxis
                                 dataKey="date"
                                 stroke="#64748b"
-                                tick={{ fill: '#64748b', fontSize: 12 }}
+                                tick={{ fill: '#94A3B8', fontSize: 12 }} // Slate-400
                                 tickLine={false}
                                 axisLine={false}
                                 dy={10}
                             />
                             <YAxis
                                 stroke="#64748b"
-                                tick={{ fill: '#64748b', fontSize: 12 }}
+                                tick={{ fill: '#94A3B8', fontSize: 12 }} // Slate-400
                                 tickLine={false}
                                 axisLine={false}
                                 tickFormatter={(value) => `${value}`}
@@ -120,15 +113,23 @@ export default function DailyProgressChart({ data }: DailyProgressChartProps) {
                             />
                             <Tooltip
                                 content={<CustomTooltip />}
-                                cursor={{ fill: 'rgba(255,255,255,0.05)', radius: 4 }}
+                                cursor={{ fill: '#334155', opacity: 0.2, radius: 4 }}
                             />
 
-                            {/* Stacked Bars */}
-                            <Bar dataKey="listening" stackId="a" fill={COLORS.listening} radius={[0, 0, 4, 4]} />
-                            <Bar dataKey="reading" stackId="a" fill={COLORS.reading} />
-                            <Bar dataKey="writing" stackId="a" fill={COLORS.writing} />
-                            <Bar dataKey="speaking" stackId="a" fill={COLORS.speaking} />
-                            <Bar dataKey="vocabulary" stackId="a" fill={COLORS.vocabulary} radius={[4, 4, 0, 0]} />
+                            {/* Stacked Bars with Border Radius on Top */}
+                            <Bar dataKey="listening" stackId="a" fill={COLORS.listening} radius={[0, 0, 0, 0]} />
+                            <Bar dataKey="reading" stackId="a" fill={COLORS.reading} radius={[0, 0, 0, 0]} />
+                            <Bar dataKey="writing" stackId="a" fill={COLORS.writing} radius={[0, 0, 0, 0]} />
+                            <Bar dataKey="speaking" stackId="a" fill={COLORS.speaking} radius={[0, 0, 0, 0]} />
+                            {/* The last one in the stack gets the radius if it has value, but since it's stacked, 
+                                we can give the top-most possible item a radius. 
+                                Recharts stacking radius logic can be tricky. 
+                                A common workaround is applying radius to the last item, but if that item is 0, it might look odd.
+                                For now, let's try applying it to the top one (vocabulary) and see.
+                                Ideally, we'd check which is the top-most non-zero value, but that requires custom shape.
+                                Let's stick to standard top radius for the last element in stack order.
+                            */}
+                            <Bar dataKey="vocabulary" stackId="a" fill={COLORS.vocabulary} radius={[6, 6, 0, 0]} />
                         </BarChart>
                     </ResponsiveContainer>
                 </div>

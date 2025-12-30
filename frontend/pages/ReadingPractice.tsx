@@ -704,7 +704,7 @@ function FlowChartCompletion({
               {/* Node Box */}
               {node.type === 'stage' ? (
                 // Stage Node - Filled box
-                <div className="w-full rounded-lg border border-gray-300 dark:border-gray-600 p-4 bg-gray-50 dark:bg-gray-800 shadow-sm">
+                <div className="w-full rounded-lg border border-gray-200 dark:border-gray-700/50 p-3 bg-gray-50/50 dark:bg-gray-800/50 shadow-sm">
                   <p className="text-sm text-center text-gray-900 dark:text-white">
                     {node.content}
                   </p>
@@ -714,19 +714,20 @@ function FlowChartCompletion({
                 <div className="w-full space-y-2">
                   <div className="relative">
                     {/* Gap Number Badge */}
-                    <div className="absolute -top-2 -left-2 bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold shadow-md z-10">
+                    <div className="absolute -top-2 -left-3 bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-[10px] font-bold shadow-md z-10">
                       {node.gapNumber}
                     </div>
 
                     {node.content ? (
                       // If content exists, display it with inline gap
-                      <div className="border border-gray-300 dark:border-gray-600 rounded-lg p-4 bg-gray-50 dark:bg-gray-800">
-                        <p className="text-sm text-gray-900 dark:text-white flex flex-wrap items-center gap-2">
+                      <div className="border border-gray-200 dark:border-gray-700/50 rounded-lg p-3 bg-gray-50/50 dark:bg-gray-800/50">
+                        <div className="text-sm text-gray-900 dark:text-white leading-relaxed">
                           {node.content.split('__________').map((part, idx, arr) => (
-                            <span key={idx} className="inline-flex items-center gap-2">
-                              <span>{part}</span>
+                            <>
+                              {part}
                               {idx < arr.length - 1 && (
-                                <Input
+                                <input
+                                  type="text"
                                   value={answers[node.gapNumber!] || ""}
                                   onChange={(e) => {
                                     const newValue = e.target.value;
@@ -739,19 +740,21 @@ function FlowChartCompletion({
                                   placeholder="..."
                                   aria-label={`Question ${node.gapNumber}: Enter answer`}
                                   className={`
-                                    inline-block min-w-[100px] max-w-[140px] px-3 py-1 text-center rounded transition-all
-                                    ${getNodeState(node.gapNumber!) === 'empty' ? 'border-2 border-dashed border-gray-400 bg-white dark:bg-gray-900' : ''}
-                                    ${getNodeState(node.gapNumber!) === 'filled' ? 'border-2 border-green-500 bg-green-50 dark:bg-green-900/20' : ''}
-                                    ${getNodeState(node.gapNumber!) === 'exceeded' ? 'border-2 border-red-500 bg-red-50 dark:bg-red-900/20' : ''}
-                                    ${getNodeState(node.gapNumber!) === 'correct' ? 'border-2 border-green-600 bg-green-100 dark:bg-green-900/40' : ''}
-                                    ${getNodeState(node.gapNumber!) === 'incorrect' ? 'border-2 border-red-600 bg-red-100 dark:bg-red-900/40' : ''}
-                                    focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                                    inline-block w-28 h-6 px-1 mx-1 -translate-y-[1px] align-middle transition-all
+                                    bg-transparent border-t-0 border-l-0 border-r-0 border-b-2 border-dotted
+                                    ${getNodeState(node.gapNumber!) === 'empty' ? 'border-slate-400 dark:border-slate-500' : ''}
+                                    ${getNodeState(node.gapNumber!) === 'filled' ? 'border-green-500 bg-green-50/20' : ''}
+                                    ${getNodeState(node.gapNumber!) === 'exceeded' ? 'border-red-500 bg-red-50/20' : ''}
+                                    ${getNodeState(node.gapNumber!) === 'correct' ? 'border-green-600 bg-green-100/20' : ''}
+                                    ${getNodeState(node.gapNumber!) === 'incorrect' ? 'border-red-600 bg-red-100/20' : ''}
+                                    focus:border-blue-500 focus:border-solid focus:ring-0 focus:outline-none rounded-none
+                                    text-sm text-center
                                   `}
                                 />
                               )}
-                            </span>
+                            </>
                           ))}
-                        </p>
+                        </div>
                       </div>
                     ) : (
                       // Fallback: standalone input (backward compatibility)
@@ -768,13 +771,13 @@ function FlowChartCompletion({
                         placeholder="Type your answer..."
                         aria-label={`Question ${node.gapNumber}: Enter answer`}
                         className={`
-                          w-full pl-4 pr-4 py-3 text-center rounded-lg transition-all
-                          ${getNodeState(node.gapNumber!) === 'empty' ? 'border-2 border-dashed border-gray-400 bg-white dark:bg-gray-900' : ''}
-                          ${getNodeState(node.gapNumber!) === 'filled' ? 'border-2 border-green-500 bg-green-50 dark:bg-green-900/20 shadow-sm' : ''}
-                          ${getNodeState(node.gapNumber!) === 'exceeded' ? 'border-2 border-red-500 bg-red-50 dark:bg-red-900/20' : ''}
-                          ${getNodeState(node.gapNumber!) === 'correct' ? 'border-2 border-green-600 bg-green-100 dark:bg-green-900/40' : ''}
-                          ${getNodeState(node.gapNumber!) === 'incorrect' ? 'border-2 border-red-600 bg-red-100 dark:bg-red-900/40' : ''}
-                          focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                          w-full px-4 py-2 text-center transition-all bg-transparent border-t-0 border-l-0 border-r-0 border-b-2 border-dotted
+                          ${getNodeState(node.gapNumber!) === 'empty' ? 'border-slate-400 dark:border-slate-500' : ''}
+                          ${getNodeState(node.gapNumber!) === 'filled' ? 'border-green-500 bg-green-50/20 shadow-sm' : ''}
+                          ${getNodeState(node.gapNumber!) === 'exceeded' ? 'border-red-500 bg-red-50/20' : ''}
+                          ${getNodeState(node.gapNumber!) === 'correct' ? 'border-green-600 bg-green-100/20' : ''}
+                          ${getNodeState(node.gapNumber!) === 'incorrect' ? 'border-red-600 bg-red-100/20' : ''}
+                          focus:border-blue-500 focus:border-solid focus:ring-0 focus:outline-none rounded-none
                         `}
                       />
                     )}
@@ -1906,7 +1909,6 @@ export default function ReadingPractice() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {testsData?.tests?.map((test: any, index: number) => {
-                const isSelected = selectedTestId === test.testId;
                 // Mock difficulty for visual variety
                 const difficulty = index % 3 === 0 ? "Hard" : index % 2 === 0 ? "Medium" : "Easy";
                 const difficultyColor = difficulty === "Hard" ? "text-rose-600 bg-rose-50 border-rose-200" : difficulty === "Medium" ? "text-amber-600 bg-amber-50 border-amber-200" : "text-emerald-600 bg-emerald-50 border-emerald-200";
@@ -1923,23 +1925,38 @@ export default function ReadingPractice() {
                         setResult(null);
                         setHighlights([]);
                       });
+                      // Immediately start the test
+                      setTimeout(() => enterTest(0), 50);
                     }}
-                    className={`cursor-pointer group relative overflow-hidden transition-all duration-300 border-2
-                    ${isSelected
-                        ? "border-blue-500 shadow-lg ring-2 ring-blue-200 dark:ring-blue-900"
-                        : "border-transparent hover:border-blue-200 hover:shadow-md dark:bg-slate-800 dark:hover:border-slate-600"
-                      }`}
+                    tabIndex={0}
+                    role="button"
+                    aria-label={`Start ${test.testName} - ${difficulty} difficulty, 60 minutes, ${test.totalQuestions} questions`}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        startTransition(() => {
+                          setSelectedTestId(test.testId);
+                          setSelectedTestIndex(null);
+                          setActiveSlideIndex(0);
+                          setAnswers({});
+                          setResult(null);
+                          setHighlights([]);
+                        });
+                        setTimeout(() => enterTest(0), 50);
+                      }
+                    }}
+                    className="cursor-pointer group relative overflow-hidden transition-all duration-200 border-2 border-transparent hover:border-[#0055ff] hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(0,85,255,0.3)] focus:border-[#0055ff] focus:-translate-y-1 focus:shadow-[0_0_20px_rgba(0,85,255,0.3)] focus:outline-none dark:bg-slate-800"
                   >
                     <CardHeader className="pb-3">
                       <div className="flex justify-between items-start mb-2">
-                        <div className={`p-2 rounded-lg ${isSelected ? 'bg-blue-100 text-blue-600' : 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300'}`}>
+                        <div className="p-2 rounded-lg bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300 group-hover:bg-blue-100 group-hover:text-blue-600 group-focus:bg-blue-100 group-focus:text-blue-600 transition-colors duration-200">
                           <BookOpen className="w-6 h-6" />
                         </div>
                         <span className={`text-xs font-bold px-2 py-1 rounded-full border ${difficultyColor} dark:bg-opacity-10`}>
                           {difficulty}
                         </span>
                       </div>
-                      <CardTitle className="text-lg font-bold text-slate-800 dark:text-slate-100 group-hover:text-blue-600 transition-colors">
+                      <CardTitle className="text-lg font-bold text-slate-800 dark:text-slate-100 group-hover:text-blue-600 group-focus:text-blue-600 transition-colors duration-200">
                         {test.testName}
                       </CardTitle>
                       <CardDescription className="flex items-center gap-2 mt-1">
@@ -1960,19 +1977,17 @@ export default function ReadingPractice() {
                           <div className="h-full bg-blue-500 w-0 rounded-full"></div>
                         </div>
 
-                        {isSelected && (
-                          <div className="pt-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                            <Button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                enterTest(0);
-                              }}
-                              className="w-full bg-blue-600 hover:bg-blue-700 text-white shadow-md group-hover:shadow-lg transition-all"
-                            >
-                              Start Test Now
-                            </Button>
-                          </div>
-                        )}
+                        {/* Button hidden by default, slides up on hover */}
+                        <div className="pt-4 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-focus:opacity-100 group-focus:translate-y-0 transition-all duration-200">
+                          <Button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                            }}
+                            className="w-full bg-blue-600 hover:bg-blue-700 text-white shadow-md pointer-events-none"
+                          >
+                            Start Test Now
+                          </Button>
+                        </div>
                       </div>
                     </CardContent>
                   </Card>

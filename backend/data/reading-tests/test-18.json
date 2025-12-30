@@ -1,0 +1,782 @@
+{
+    "testId": 18,
+    "testName": "Test 18",
+    "passages": [
+        {
+            "id": 1,
+            "title": "Mangrove Forests: Coastal Protection and Restoration",
+            "level": "intermediate",
+            "estimatedTime": 20,
+            "paragraphs": [
+                {
+                    "id": "A",
+                    "text": "Mangrove forests are unique coastal ecosystems found along tropical and subtropical shorelines around the world. These remarkable trees thrive in the challenging zone where land meets sea, tolerating saltwater conditions that would kill most plant species. Mangroves cover approximately 150,000 square kilometres globally, representing roughly 0.5 percent of the world's coastal areas. Despite this relatively small coverage, these forests play an outsized role in protecting coastlines from storms, waves, and erosion. In recent decades, scientists have increasingly recognized mangroves not merely as coastal features but as critical natural infrastructure. Understanding how these ecosystems function—and how to restore them where they have been lost—has become a priority for coastal communities worldwide."
+                },
+                {
+                    "id": "B",
+                    "text": "The protective value of mangroves remained largely underappreciated until the late twentieth century. For much of history, coastal wetlands were viewed as unproductive wastelands, and millions of hectares were cleared for agriculture, aquaculture, and urban development. However, following devastating tsunamis and hurricanes in the 1990s and early 2000s, researchers began documenting how mangrove forests had shielded some coastal areas while unprotected regions suffered severe damage. A 2006 study by the Global Coastal Resilience Initiative found that communities behind intact mangrove belts experienced up to 50 percent less damage during storm events compared to areas where mangroves had been removed. This research marked a turning point in coastal management policy. Subsequently, conservation efforts intensified, and by 2010, several international agreements had incorporated mangrove protection into climate adaptation strategies."
+                },
+                {
+                    "id": "C",
+                    "text": "The mechanism by which mangroves defend coastlines involves a process called wave attenuation—the gradual reduction of wave energy as water passes through obstacles. Dr. Amara Osei, a coastal ecologist at the West African Maritime Research Institute, has extensively studied this phenomenon. According to her research published in 2019, mangrove forests can reduce wave height by between 30 and 70 percent depending on forest width and density. This protective effect stems from the trees' distinctive root systems. Mangroves possess two types of specialized roots: prop roots, which extend from the trunk above water level and form dense tangles, and pneumatophores—vertical breathing roots that project upward from underground root networks. Together, these structures create natural barriers that absorb wave energy and slow water movement. Dr. Osei notes that a mangrove belt just 100 metres wide can provide protection comparable to artificial seawalls costing millions of dollars."
+                },
+                {
+                    "id": "D",
+                    "text": "Restoring degraded mangrove areas requires careful planning and an understanding of ecological processes. Dr. Kenji Watanabe, a restoration specialist at the Indonesian National Coastal Institute, has developed a systematic approach now used across Southeast Asia. First, site assessment determines whether environmental conditions can support mangrove growth, including evaluating water salinity, tidal patterns, and sediment composition. Subsequently, if the natural water flow has been disrupted by previous development, hydrology restoration work is undertaken to re-establish tidal connections. Following this preparatory phase, seedlings are cultivated in specialized nurseries for approximately six to eight months until they reach adequate size for transplanting. The young mangroves are then planted during low tide, typically spaced 1.5 metres apart to allow natural spreading. Finally, monitoring continues for three to five years to assess survival rates and address any problems. According to research conducted in 2021, this methodology achieves survival rates exceeding 85 percent in suitable locations."
+                },
+                {
+                    "id": "E",
+                    "text": "Implementation strategies for mangrove restoration vary considerably between regions. In Bangladesh, government-led programmes have planted approximately 120,000 hectares of mangroves along the Bay of Bengal since 1980, creating the world's largest coastal afforestation project. This approach relies on centralized planning and paid labour forces. Conversely, in the Philippines, community-based initiatives have proven particularly effective. Local fishing communities, who directly benefit from healthy mangrove ecosystems through improved fish populations, take responsibility for planting and maintaining mangrove areas. A 2018 comparative study found that community-managed projects demonstrated 25 percent higher long-term survival rates than government-managed sites, primarily because local stakeholders had greater motivation to protect the forests from illegal cutting and pollution. However, government projects covered significantly larger areas overall. Consequently, many experts now advocate for hybrid models combining large-scale government investment with community stewardship."
+                },
+                {
+                    "id": "F",
+                    "text": "Despite growing recognition of their value, mangrove forests continue to face serious threats. Globally, these ecosystems are disappearing at a rate of approximately 1 percent annually due to coastal development, pollution, and changing climate conditions. Rising sea levels pose a particular challenge, as mangroves may not be able to migrate inland quickly enough if coastal zones are already developed. Nevertheless, restoration efforts offer genuine hope. As research continues to refine restoration techniques and quantify protection benefits, mangroves are increasingly being integrated into national coastal defence strategies alongside traditional engineering approaches."
+                }
+            ],
+            "questions": [
+                {
+                    "id": 1,
+                    "type": "matching-information",
+                    "title": "Questions 1-4",
+                    "instructions": "Which paragraph contains the following information? Write the correct letter, A–F, in boxes 1-4 on your answer sheet.",
+                    "paragraphs_list": [
+                        "A",
+                        "B",
+                        "C",
+                        "D",
+                        "E",
+                        "F"
+                    ],
+                    "questions": [
+                        {
+                            "id": 1,
+                            "questionText": "evidence that extreme weather events led to increased scientific attention on forest protection functions",
+                            "correctAnswer": "B",
+                            "justification": "Paragraph B explicitly states that 'following devastating tsunamis and hurricanes in the 1990s and early 2000s, researchers began documenting how mangrove forests had shielded some coastal areas.' This directly describes how natural disasters prompted research into mangroves' protective role.",
+                            "evidenceQuote": "\"following devastating tsunamis and hurricanes in the 1990s and early 2000s, researchers began documenting how mangrove forests had shielded some coastal areas while unprotected regions suffered severe damage\""
+                        },
+                        {
+                            "id": 2,
+                            "questionText": "a description of how underground and above-ground root formations work together to diminish water force",
+                            "correctAnswer": "C",
+                            "justification": "Paragraph C provides detailed explanation of both root types—prop roots extending from trunks above water and pneumatophores projecting upward from underground networks—and explicitly states that 'Together, these structures create natural barriers that absorb wave energy and slow water movement.'",
+                            "evidenceQuote": "\"prop roots, which extend from the trunk above water level and form dense tangles, and pneumatophores—vertical breathing roots that project upward from underground root networks. Together, these structures create natural barriers that absorb wave energy\""
+                        },
+                        {
+                            "id": 3,
+                            "questionText": "the length of time young plants spend in controlled growing conditions before field placement",
+                            "correctAnswer": "D",
+                            "justification": "Paragraph D describes the restoration process and specifically states that 'seedlings are cultivated in specialized nurseries for approximately six to eight months until they reach adequate size for transplanting.' This is the only paragraph that mentions the nursery cultivation duration.",
+                            "evidenceQuote": "\"seedlings are cultivated in specialized nurseries for approximately six to eight months until they reach adequate size for transplanting\""
+                        },
+                        {
+                            "id": 4,
+                            "questionText": "a contrast between state-administered and locally managed approaches to ecosystem rehabilitation",
+                            "correctAnswer": "E",
+                            "justification": "Paragraph E explicitly compares Bangladesh's 'government-led programmes' using 'centralized planning and paid labour forces' with the Philippines' 'community-based initiatives' where 'local fishing communities...take responsibility for planting and maintaining mangrove areas.' This is the only paragraph that presents two contrasting implementation models.",
+                            "evidenceQuote": "\"This approach relies on centralized planning and paid labour forces. Conversely, in the Philippines, community-based initiatives have proven particularly effective. Local fishing communities...take responsibility for planting and maintaining mangrove areas\""
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "type": "sentence-completion",
+                    "title": "Questions 5-8",
+                    "word_limit": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+                    "instructions": "Complete the sentences below. Choose NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer.",
+                    "questions": [
+                        {
+                            "id": 5,
+                            "questionText": "Research revealed that areas protected by mangroves sustained up to _____ less damage in storms compared to unprotected regions.",
+                            "correctAnswer": "50 percent",
+                            "alternativeAnswers": [
+                                "50 percent",
+                                "50%"
+                            ],
+                            "evidenceQuote": "\"communities behind intact mangrove belts experienced up to 50 percent less damage during storm events compared to areas where mangroves had been removed\""
+                        },
+                        {
+                            "id": 6,
+                            "questionText": "The mechanism by which wave force gradually decreases when passing through obstacles is termed _____.",
+                            "correctAnswer": "wave attenuation",
+                            "alternativeAnswers": [
+                                "wave attenuation"
+                            ],
+                            "evidenceQuote": "\"a process called wave attenuation—the gradual reduction of wave energy as water passes through obstacles\""
+                        },
+                        {
+                            "id": 7,
+                            "questionText": "When planting, seedlings are positioned _____ apart to enable natural growth and spreading.",
+                            "correctAnswer": "1.5 metres",
+                            "alternativeAnswers": [
+                                "1.5 metres",
+                                "1.5 meters"
+                            ],
+                            "evidenceQuote": "\"The young mangroves are then planted during low tide, typically spaced 1.5 metres apart to allow natural spreading\""
+                        },
+                        {
+                            "id": 8,
+                            "questionText": "Studies showed that locally-run restoration efforts achieved survival rates _____ higher than centrally-organised projects.",
+                            "correctAnswer": "25 percent",
+                            "alternativeAnswers": [
+                                "25 percent",
+                                "25%"
+                            ],
+                            "evidenceQuote": "\"A 2018 comparative study found that community-managed projects demonstrated 25 percent higher long-term survival rates than government-managed sites\""
+                        }
+                    ]
+                },
+                {
+                    "id": 3,
+                    "type": "flow-chart-completion",
+                    "title": "Questions 9-11",
+                    "instructions": "Complete the flow chart below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+                    "word_limit": "NO MORE THAN TWO WORDS",
+                    "flow_chart": {
+                        "title": "The Mangrove Restoration Process",
+                        "orientation": "vertical",
+                        "nodes": [
+                            {
+                                "id": "node1",
+                                "type": "stage",
+                                "content": "Evaluation determines if site conditions support mangrove growth",
+                                "position": 1
+                            },
+                            {
+                                "id": "gap9",
+                                "type": "gap",
+                                "content": "If natural water flow was disrupted, restoration work re-establishes __________",
+                                "gapNumber": 9,
+                                "correctAnswer": "tidal connections",
+                                "position": 2
+                            },
+                            {
+                                "id": "gap10",
+                                "type": "gap",
+                                "content": "Young plants are grown in __________",
+                                "gapNumber": 10,
+                                "correctAnswer": "specialized nurseries",
+                                "position": 3
+                            },
+                            {
+                                "id": "node2",
+                                "type": "stage",
+                                "content": "Seedlings planted at low tide, positioned 1.5 metres apart",
+                                "position": 4
+                            },
+                            {
+                                "id": "gap11",
+                                "type": "gap",
+                                "content": "Observation for three to five years to evaluate __________",
+                                "gapNumber": 11,
+                                "correctAnswer": "survival rates",
+                                "position": 5
+                            }
+                        ],
+                        "connections": [
+                            {
+                                "from": "node1",
+                                "to": "gap9",
+                                "style": "solid"
+                            },
+                            {
+                                "from": "gap9",
+                                "to": "gap10",
+                                "style": "solid"
+                            },
+                            {
+                                "from": "gap10",
+                                "to": "node2",
+                                "style": "solid"
+                            },
+                            {
+                                "from": "node2",
+                                "to": "gap11",
+                                "style": "solid"
+                            }
+                        ]
+                    },
+                    "questions": [
+                        {
+                            "id": 9,
+                            "gap_number": 9,
+                            "correctAnswer": "tidal connections",
+                            "alternativeAnswers": [
+                                "tidal connections"
+                            ],
+                            "justification": "The passage explicitly states that when natural water flow has been disrupted, 'hydrology restoration work is undertaken to re-establish tidal connections.' The answer is the exact phrase describing what is restored.",
+                            "evidenceQuote": "\"hydrology restoration work is undertaken to re-establish tidal connections\""
+                        },
+                        {
+                            "id": 10,
+                            "gap_number": 10,
+                            "correctAnswer": "specialized nurseries",
+                            "alternativeAnswers": [
+                                "specialized nurseries"
+                            ],
+                            "justification": "The passage describes the cultivation phase where 'seedlings are cultivated in specialized nurseries for approximately six to eight months.' The answer identifies the specific location where young plants are grown.",
+                            "evidenceQuote": "\"seedlings are cultivated in specialized nurseries for approximately six to eight months\""
+                        },
+                        {
+                            "id": 11,
+                            "gap_number": 11,
+                            "correctAnswer": "survival rates",
+                            "alternativeAnswers": [
+                                "survival rates"
+                            ],
+                            "justification": "The passage describes the final phase where 'monitoring continues for three to five years to assess survival rates.' The answer identifies the specific metric being evaluated during the observation period.",
+                            "evidenceQuote": "\"monitoring continues for three to five years to assess survival rates and address any problems\""
+                        }
+                    ]
+                },
+{
+  "id": 4,
+  "type": "multiple-choice",
+  "title": "Questions 12-14",
+  "instructions": "Choose the correct letter, A, B, C or D.",
+  "questions": [
+    {
+      "id": 12,
+      "questionText": "According to the passage, what proportion of the world's coastal areas do mangrove forests cover?",
+      "options": [
+        "Approximately 1 percent",
+        "Around 0.5 percent",
+        "Nearly 25 percent",
+        "Less than 0.1 percent"
+      ],
+      "correctAnswer": "Around 0.5 percent",
+      "justification": "Paragraph A explicitly states that mangroves 'cover approximately 150,000 square kilometres globally, representing roughly 0.5 percent of the world's coastal areas.'",
+      "evidenceQuote": "\"Mangroves cover approximately 150,000 square kilometres globally, representing roughly 0.5 percent of the world's coastal areas\""
+    },
+    {
+      "id": 13,
+      "questionText": "What does Dr. Osei's research indicate about the effectiveness of mangrove forests in reducing wave impact?",
+      "options": [
+        "They eliminate wave energy completely in protected areas",
+        "They reduce wave height by between 30 and 70 percent",
+        "They are less effective than artificial coastal barriers",
+        "They only function during low tide conditions"
+      ],
+      "correctAnswer": "They reduce wave height by between 30 and 70 percent",
+      "justification": "Paragraph C states that 'According to her research published in 2019, mangrove forests can reduce wave height by between 30 and 70 percent depending on forest width and density.'",
+      "evidenceQuote": "\"mangrove forests can reduce wave height by between 30 and 70 percent depending on forest width and density\""
+    },
+    {
+      "id": 14,
+      "questionText": "What can be inferred about community-based mangrove restoration projects from the information in the passage?",
+      "options": [
+        "They require less initial investment than government programmes",
+        "They have replaced government-led initiatives in most developing countries",
+        "They tend to achieve better long-term outcomes due to local stakeholder commitment",
+        "They focus primarily on larger coastal areas than centralized programmes"
+      ],
+      "correctAnswer": "They tend to achieve better long-term outcomes due to local stakeholder commitment",
+      "justification": "Paragraph E states that community-managed projects 'demonstrated 25 percent higher long-term survival rates than government-managed sites, primarily because local stakeholders had greater motivation to protect the forests.'",
+      "evidenceQuote": "\"community-managed projects demonstrated 25 percent higher long-term survival rates than government-managed sites, primarily because local stakeholders had greater motivation to protect the forests\""
+    }
+  ]
+}
+            ]
+        },
+        {
+  "id": 2,
+  "title": "Precision Agriculture: Data, Sensors, and the Limits of Prediction",
+  "level": "moderate",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "A",
+      "text": "Precision agriculture represents one of the most ambitious applications of data science to food production. By combining satellite imagery, ground-based sensors, and sophisticated algorithms, farmers can theoretically apply water, fertilizers, and pesticides with unprecedented accuracy—reducing waste while maximizing yields. A 2019 report by the Global Food Security Initiative estimated that widespread adoption could decrease agricultural water usage by up to 25 percent and reduce chemical inputs by nearly 30 percent. However, despite these promising projections, the reality of implementing such systems has proven considerably more complex. The fundamental challenge lies not in collecting data, but in translating that data into reliable predictions about crop behavior across highly variable conditions."
+    },
+    {
+      "id": "B",
+      "text": "The technological foundations of precision agriculture emerged in the early 1990s, when differential GPS systems first enabled tractors to follow pre-programmed paths with centimetre-level accuracy. Initially, this technology served primarily to reduce overlap in field operations, saving fuel and time. By 2005, however, researchers at the International Agricultural Technology Institute had begun integrating GPS guidance with yield monitors, creating the first comprehensive maps of within-field productivity variation. This development marked a conceptual shift: rather than treating fields as uniform units, farmers could now visualize and potentially address specific problem areas. Subsequently, the introduction of affordable multispectral sensors after 2010 allowed real-time monitoring of crop health, though interpreting this flood of new data presented its own challenges."
+    },
+    {
+      "id": "C",
+      "text": "Dr. Yuki Tanaka, a systems engineer at the Pacific Agricultural Research Centre in New Zealand, has pioneered what she terms 'multi-modal sensor fusion'—the integration of data from various sensor types to create more robust field assessments. Her approach involves a systematic implementation process that has been adopted across multiple research stations. Initially, electromagnetic induction sensors map subsurface soil properties, identifying zones of different texture and moisture-holding capacity. Subsequently, optical sensors mounted on drones capture vegetation indices that indicate plant stress or nutrient deficiency. At this stage, the system cross-references these datasets with historical yield records and local weather patterns. Ultimately, machine learning algorithms generate zone-specific management recommendations. According to Tanaka's 2021 research, this integrated approach may improve prediction accuracy by approximately 40 percent compared to single-sensor systems. Nevertheless, she acknowledges that even combined datasets cannot fully capture the dynamic biological interactions occurring beneath the soil surface."
+    },
+    {
+      "id": "D",
+      "text": "Professor Marcus Okonkwo, director of the Soil Dynamics Laboratory at the University of Lagos, approaches the prediction challenge from a different perspective. While Tanaka focuses on improving sensor integration, Okonkwo argues that the fundamental problem lies in how soil variability is conceptualized. His research suggests that traditional models treat soil properties as static characteristics, when in reality they fluctuate significantly over short periods. A 2020 study by his team found that soil nitrogen availability could vary by 35 percent within a single week, depending on rainfall and microbial activity. Okonkwo proposes 'dynamic soil modeling' that incorporates temporal variation, though he concedes this requires substantially more frequent sampling—potentially increasing costs by 50 to 70 percent. For this reason, practical implementation has remained limited."
+    },
+    {
+      "id": "E",
+      "text": "The gap between theoretical potential and practical outcomes becomes evident when comparing implementation across different contexts. In the Netherlands, where farms average 32 hectares and soils have been extensively studied for decades, precision agriculture adoption exceeds 70 percent. Dutch farmers benefit from comprehensive soil databases and reliable connectivity. By contrast, in Brazil's Mato Grosso region—where individual farms may span 10,000 hectares of relatively undocumented terrain—adoption remains below 15 percent. A 2022 analysis by the European Soil Research Consortium found that prediction accuracy in Dutch fields averaged 78 percent, while systems in Brazil achieved only 52 percent. This disparity suggests that sensor technology alone cannot overcome fundamental gaps in baseline knowledge. Indeed, several researchers have noted that algorithms perform best in environments resembling their training data."
+    },
+    {
+      "id": "F",
+      "text": "Dr. Elena Vasquez, an agricultural economist at Argentina's National Institute of Agricultural Technology, raises more fundamental concerns about prediction-based farming. Her work examines what she calls 'the optimization paradox'—the observation that maximizing short-term efficiency may undermine long-term soil health. According to Vasquez, precision agriculture systems are calibrated to maximize yield over one or two seasons, potentially overlooking slower degradation processes. Furthermore, she suggests that emphasis on data-driven decisions may reduce farmers' reliance on traditional ecological knowledge. While acknowledging the technology's benefits, Vasquez argues that current systems work best as decision-support tools rather than autonomous management systems. Her 2023 study indicated that farms combining precision technology with experienced oversight achieved 23 percent higher long-term productivity than fully automated approaches."
+    },
+    {
+      "id": "G",
+      "text": "The emerging consensus among researchers appears to favor a more nuanced view of precision agriculture's capabilities. Rather than replacing human judgment, these technologies seem most effective when augmenting existing expertise. The challenge moving forward involves not only improving sensor accuracy and modeling sophistication, but also developing frameworks that appropriately balance technological optimization against ecological complexity. As climate variability increases, the limitations of prediction-based systems may become more pronounced, suggesting that flexibility and adaptive capacity could prove as valuable as precision itself."
+    }
+  ],
+  "questions": [
+    {
+  "id": 5,
+  "type": "matching-headings",
+  "title": "Questions 15-20",
+  "instructions": "The reading passage has seven paragraphs, A-G. Choose the correct heading for each paragraph from the list of headings below. Write the correct number, i-ix, in boxes 15-20 on your answer sheet.",
+  "questions": [
+    {
+      "id": 15,
+      "questionText": "Paragraph B",
+      "options": [
+        "Contrasting implementation outcomes across farming regions",
+        "The origins and progression of field monitoring technology",
+        "Economic obstacles to widespread technology adoption",
+        "An integrated methodology for combining sensor data",
+        "The gap between technological promise and practical reality",
+        "Reconceptualizing soil as a dynamic system",
+        "The tension between short-term optimization and lasting productivity",
+        "How automation can fully replace human decision-making",
+        "Technology supporting rather than supplanting expertise"
+      ],
+      "correctAnswer": "The origins and progression of field monitoring technology",
+      "justification": "Paragraph B traces the chronological development of precision agriculture technology from GPS in the 1990s through yield monitors to multispectral sensors. The heading paraphrases this evolutionary narrative.",
+      "evidenceQuote": "\"The technological foundations of precision agriculture emerged in the early 1990s... By 2005, however, researchers... had begun integrating GPS... Subsequently, the introduction of affordable multispectral sensors after 2010...\""
+    },
+    {
+      "id": 16,
+      "questionText": "Paragraph C",
+      "options": [
+        "Contrasting implementation outcomes across farming regions",
+        "The origins and progression of field monitoring technology",
+        "Economic obstacles to widespread technology adoption",
+        "An integrated methodology for combining sensor data",
+        "The gap between technological promise and practical reality",
+        "Reconceptualizing soil as a dynamic system",
+        "The tension between short-term optimization and lasting productivity",
+        "How automation can fully replace human decision-making",
+        "Technology supporting rather than supplanting expertise"
+      ],
+      "correctAnswer": "An integrated methodology for combining sensor data",
+      "justification": "Paragraph C describes Tanaka's systematic approach to combining multiple sensor types through a defined process. The heading captures the paragraph's focus on methodological integration.",
+      "evidenceQuote": "\"Dr. Yuki Tanaka... has pioneered what she terms 'multi-modal sensor fusion'—the integration of data from various sensor types to create more robust field assessments.\""
+    },
+    {
+      "id": 17,
+      "questionText": "Paragraph D",
+      "options": [
+        "Contrasting implementation outcomes across farming regions",
+        "The origins and progression of field monitoring technology",
+        "Economic obstacles to widespread technology adoption",
+        "An integrated methodology for combining sensor data",
+        "The gap between technological promise and practical reality",
+        "Reconceptualizing soil as a dynamic system",
+        "The tension between short-term optimization and lasting productivity",
+        "How automation can fully replace human decision-making",
+        "Technology supporting rather than supplanting expertise"
+      ],
+      "correctAnswer": "Reconceptualizing soil as a dynamic system",
+      "justification": "Paragraph D presents Okonkwo's argument that soil should be understood as temporally variable rather than static. The heading paraphrases 'how soil variability is conceptualized' as 'reconceptualizing' and 'fluctuate significantly' as 'dynamic system.'",
+      "evidenceQuote": "\"While Tanaka focuses on improving sensor integration, Okonkwo argues that the fundamental problem lies in how soil variability is conceptualized... traditional models treat soil properties as static... when in reality they fluctuate significantly\""
+    },
+    {
+      "id": 18,
+      "questionText": "Paragraph E",
+      "options": [
+        "Contrasting implementation outcomes across farming regions",
+        "The origins and progression of field monitoring technology",
+        "Economic obstacles to widespread technology adoption",
+        "An integrated methodology for combining sensor data",
+        "The gap between technological promise and practical reality",
+        "Reconceptualizing soil as a dynamic system",
+        "The tension between short-term optimization and lasting productivity",
+        "How automation can fully replace human decision-making",
+        "Technology supporting rather than supplanting expertise"
+      ],
+      "correctAnswer": "Contrasting implementation outcomes across farming regions",
+      "justification": "Paragraph E explicitly compares Netherlands and Brazil to demonstrate how context affects precision agriculture success. The heading paraphrases 'comparing implementation across different contexts' as 'contrasting implementation outcomes across farming regions.'",
+      "evidenceQuote": "\"The gap between theoretical potential and practical outcomes becomes evident when comparing implementation across different contexts.\""
+    },
+    {
+      "id": 19,
+      "questionText": "Paragraph F",
+      "options": [
+        "Contrasting implementation outcomes across farming regions",
+        "The origins and progression of field monitoring technology",
+        "Economic obstacles to widespread technology adoption",
+        "An integrated methodology for combining sensor data",
+        "The gap between technological promise and practical reality",
+        "Reconceptualizing soil as a dynamic system",
+        "The tension between short-term optimization and lasting productivity",
+        "How automation can fully replace human decision-making",
+        "Technology supporting rather than supplanting expertise"
+      ],
+      "correctAnswer": "The tension between short-term optimization and lasting productivity",
+      "justification": "Paragraph F centers on Vasquez's optimization paradox—the conflict between immediate efficiency gains and sustainable productivity. The heading captures this conflict.",
+      "evidenceQuote": "\"Her work examines what she calls 'the optimization paradox'—the observation that maximizing short-term efficiency may undermine long-term soil health.\""
+    },
+    {
+      "id": 20,
+      "questionText": "Paragraph G",
+      "options": [
+        "Contrasting implementation outcomes across farming regions",
+        "The origins and progression of field monitoring technology",
+        "Economic obstacles to widespread technology adoption",
+        "An integrated methodology for combining sensor data",
+        "The gap between technological promise and practical reality",
+        "Reconceptualizing soil as a dynamic system",
+        "The tension between short-term optimization and lasting productivity",
+        "How automation can fully replace human decision-making",
+        "Technology supporting rather than supplanting expertise"
+      ],
+      "correctAnswer": "Technology supporting rather than supplanting expertise",
+      "justification": "Paragraph G synthesizes the passage's argument, concluding that technology works best when supporting rather than replacing human expertise. The heading directly paraphrases 'augmenting existing expertise' as 'supporting expertise.'",
+      "evidenceQuote": "\"Rather than replacing human judgment, these technologies seem most effective when augmenting existing expertise.\""
+    }
+  ]
+},
+{
+  "id": 6,
+  "type": "multiple-choice",
+  "title": "Questions 21-24",
+  "instructions": "Choose the correct letter, A, B, C or D.",
+  "questions": [
+    {
+      "id": 21,
+      "questionText": "According to the passage, what was the initial primary use of GPS technology in agriculture?",
+      "options": [
+        "Mapping soil properties across different field zones",
+        "Monitoring crop health through multispectral imaging",
+        "Minimizing overlap during farming operations",
+        "Generating yield predictions through machine learning"
+      ],
+      "correctAnswer": "Minimizing overlap during farming operations",
+      "justification": "Paragraph B explicitly states that GPS technology 'Initially...served primarily to reduce overlap in field operations, saving fuel and time.' Option C paraphrases 'reduce overlap' as 'minimizing overlap' and 'field operations' as 'farming operations.'",
+      "evidenceQuote": "\"Initially, this technology served primarily to reduce overlap in field operations, saving fuel and time.\""
+    },
+    {
+      "id": 22,
+      "questionText": "What percentage improvement in prediction accuracy does Dr. Tanaka's research suggest multi-modal sensor fusion may achieve?",
+      "options": [
+        "Approximately 25 percent",
+        "Approximately 35 percent",
+        "Approximately 40 percent",
+        "Approximately 50 percent"
+      ],
+      "correctAnswer": "Approximately 40 percent",
+      "justification": "Paragraph C states that 'According to Tanaka's 2021 research, this integrated approach may improve prediction accuracy by approximately 40 percent compared to single-sensor systems.' The answer directly matches this figure.",
+      "evidenceQuote": "\"According to Tanaka's 2021 research, this integrated approach may improve prediction accuracy by approximately 40 percent compared to single-sensor systems.\""
+    },
+    {
+      "id": 23,
+      "questionText": "What can be inferred from the comparison between precision agriculture implementation in the Netherlands and Brazil?",
+      "options": [
+        "Brazilian farms are too large for any precision technology to be effective",
+        "Dutch farmers receive more government support for technology adoption",
+        "Existing baseline knowledge significantly affects prediction system performance",
+        "European soil types are inherently more suitable for sensor monitoring"
+      ],
+      "correctAnswer": "Existing baseline knowledge significantly affects prediction system performance",
+      "justification": "Paragraph E contrasts Netherlands (comprehensive soil databases, 78% accuracy) with Brazil (undocumented terrain, 52% accuracy) and explicitly states 'This disparity suggests that sensor technology alone cannot overcome fundamental gaps in baseline knowledge.' This supports the inference that prior knowledge affects system performance.",
+      "evidenceQuote": "\"This disparity suggests that sensor technology alone cannot overcome fundamental gaps in baseline knowledge.\""
+    },
+    {
+      "id": 24,
+      "questionText": "What is the main argument presented by Dr. Vasquez in the passage?",
+      "options": [
+        "Precision agriculture technology should be completely abandoned in favor of traditional methods",
+        "Short-term efficiency gains from automated systems may compromise sustainable productivity",
+        "Dynamic soil modeling is more accurate than multi-modal sensor fusion",
+        "Farmers in developing countries cannot benefit from data-driven agriculture"
+      ],
+      "correctAnswer": "Short-term efficiency gains from automated systems may compromise sustainable productivity",
+      "justification": "Paragraph F centers on Vasquez's 'optimization paradox'—the observation that maximizing short-term efficiency may undermine long-term soil health. She advocates for technology as 'decision-support tools rather than autonomous management systems,' finding that combined approaches achieved 23% higher long-term productivity.",
+      "evidenceQuote": "\"Her work examines what she calls 'the optimization paradox'—the observation that maximizing short-term efficiency may undermine long-term soil health.\""
+    }
+]
+},
+{
+  "id": 7,
+  "type": "true-false-not-given",
+  "title": "Questions 25-27",
+  "instructions": "Do the following statements agree with the views of the writer in the Reading Passage? Write YES if the statement agrees with the views of the writer, NO if the statement contradicts the views of the writer, NOT GIVEN if it is impossible to say what the writer thinks about this.",
+  "questions": [
+    {
+      "id": 25,
+      "questionText": "According to Dr. Vasquez, precision agriculture technology functions most effectively when used to support human decision-making rather than replace it entirely.",
+      "correctAnswer": "YES",
+      "justification": "Dr. Vasquez explicitly 'argues that current systems work best as decision-support tools rather than autonomous management systems' (Paragraph F). Her 2023 study also showed that 'farms combining precision technology with experienced oversight achieved 23 percent higher long-term productivity than fully automated approaches.'",
+      "evidenceQuote": "\"While acknowledging the technology's benefits, Vasquez argues that current systems work best as decision-support tools rather than autonomous management systems.\""
+    },
+    {
+      "id": 26,
+      "questionText": "Dr. Tanaka claims that her multi-modal sensor fusion approach can comprehensively capture all the biological processes occurring in agricultural soils.",
+      "correctAnswer": "NO",
+      "justification": "The passage explicitly states the opposite view: 'she acknowledges that even combined datasets cannot fully capture the dynamic biological interactions occurring beneath the soil surface' (Paragraph C). Tanaka recognizes the limitations of her approach rather than claiming comprehensive capture.",
+      "evidenceQuote": "\"Nevertheless, she acknowledges that even combined datasets cannot fully capture the dynamic biological interactions occurring beneath the soil surface.\""
+    },
+    {
+      "id": 27,
+      "questionText": "The writer considers Professor Okonkwo's dynamic soil modeling approach more promising for improving prediction accuracy than Dr. Tanaka's sensor fusion methodology.",
+      "correctAnswer": "NOT GIVEN",
+      "justification": "While the passage presents both Tanaka's multi-modal sensor fusion (Paragraph C) and Okonkwo's dynamic soil modeling (Paragraph D) as different approaches to the prediction challenge, the writer never expresses a comparative evaluation of which approach is more promising or effective.",
+      "evidenceQuote": "\"While Tanaka focuses on improving sensor integration, Okonkwo argues that the fundamental problem lies in how soil variability is conceptualized.\""
+    }
+  ]
+}
+  ]
+},
+{
+  "id": 3,
+  "title": "Cultivated Meat: Environmental Promise versus Energy Reality",
+  "level": "challenging",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "A",
+      "text": "Cultivated meat—protein grown from animal cells in bioreactors rather than harvested from slaughtered livestock—has been promoted as a transformative solution to the environmental costs of conventional animal agriculture. Advocates claim that cellular agriculture could dramatically reduce land use, water consumption, and greenhouse gas emissions while addressing animal welfare concerns. However, as commercial production facilities begin operating, questions have emerged about whether optimistic environmental projections adequately account for the technology's substantial energy demands. Critics argue that in regions dependent on fossil fuel electricity, cultivated meat may actually increase emissions rather than reduce them. This fundamental tension between theoretical environmental benefits and practical energy requirements now shapes the debate over cultivated meat's role in sustainable food systems."
+    },
+    {
+      "id": "B",
+      "text": "The first laboratory-produced burger was unveiled in 2013 in the Netherlands at a cost of approximately €250,000. Over the following decade, global investment surged to exceed $2.8 billion by 2022, while production costs declined by an estimated 99 percent. Early environmental assessments, conducted primarily between 2011 and 2015, projected that cultivated meat could reduce greenhouse gas emissions by 78 to 96 percent compared to conventional beef production. These figures generated considerable enthusiasm among environmental advocates and attracted substantial venture capital funding. However, the projections were based largely on theoretical models rather than data from functioning commercial facilities—a limitation that would subsequently attract scrutiny as the first pilot-scale production plants began generating empirical performance data."
+    },
+    {
+      "id": "C",
+      "text": "Dr. Amara Okonkwo, a biochemist at the Lagos Institute for Sustainable Food, has articulated the strongest defence of cultivated meat's environmental credentials. According to Okonkwo, the technology's primary advantage lies in what she terms the 'land use decoupling'—the fundamental separation of protein production from agricultural land requirements. Her analysis indicates that producing one kilogram of cultivated beef requires approximately 1.2 square metres of facility space, whereas conventional beef production demands between 164 and 326 square metres of agricultural land per kilogram. Beyond land efficiency, Okonkwo emphasises that cultivated meat eliminates methane emissions from enteric fermentation in ruminants, a source responsible for roughly 14.5 percent of global anthropogenic greenhouse gas emissions. These systemic advantages, she argues, represent genuine environmental progress regardless of current energy challenges."
+    },
+    {
+      "id": "D",
+      "text": "Supporting this position, a 2021 meta-analysis by the Global Sustainable Protein Initiative synthesised findings from 23 independent assessments. The review concluded that cultivated meat production could achieve a 52 to 87 percent reduction in overall environmental impact compared to conventional beef, provided that electricity generation is low-carbon. Water usage was projected to decrease by approximately 82 percent, primarily because cellular agriculture bypasses the inefficiencies of irrigating feed crops. Okonkwo contends that these figures demonstrate substantial environmental advantages even when energy consumption is accounted for. The meta-analysis did acknowledge, however, that outcomes depend critically on the carbon intensity of regional electricity grids—a qualification that would become central to subsequent debates."
+    },
+    {
+      "id": "E",
+      "text": "Professor Henrik Lindqvist, an energy systems researcher at the Stockholm Environmental Research Centre, has challenged these optimistic assessments by focusing on energy requirements. While Lindqvist does not dispute cultivated meat's potential to reduce land use, he argues that proponents have systematically underestimated the technology's electricity demands. Bioreactor-based production necessitates maintaining sterile conditions, precisely controlled temperatures between 36 and 38 degrees Celsius, and continuous nutrient circulation—all inherently energy-intensive processes. Lindqvist's 2022 analysis calculated that producing one kilogram of cultivated meat currently requires between 42 and 58 kilowatt-hours of electricity. This represents approximately 4.5 times the energy input for equivalent poultry production. In regions where electricity generation remains coal-dependent, Lindqvist emphasises, these energy demands could result in higher net emissions than conventional livestock systems, directly contradicting claims of environmental superiority."
+    },
+    {
+      "id": "F",
+      "text": "Evidence supporting Lindqvist's concerns emerged from a longitudinal study conducted between 2019 and 2023 by the European Commission's Joint Research Centre. The study examined pilot cultivated meat facilities across four continents and found that actual energy consumption exceeded initial projections by 23 to 47 percent, largely due to inefficiencies at sub-commercial production scales. More significantly, the research revealed stark regional differences in environmental outcomes. Facilities operating in Scandinavia, where over 85 percent of electricity comes from renewable sources, demonstrated net emission reductions of approximately 61 percent compared to conventional beef. By contrast, a comparable facility in Poland, where coal-fired generation predominates, showed emission increases of 12 to 18 percent relative to beef production. These findings suggest that cultivated meat's environmental credentials are fundamentally tied to the decarbonisation status of regional electricity grids rather than being an inherent property of the technology itself."
+    },
+    {
+      "id": "G",
+      "text": "A third perspective, however, suggests that both camps may be correct under different conditions. Dr. Mei-Lin Chen, a food technology specialist at the Singapore Food Technology Institute, has proposed what she terms a 'conditional benefits framework' for evaluating cultivated meat. Chen's approach involves three key analytical steps: first, determining the carbon intensity of the regional electricity grid where production would occur; second, calculating facility energy requirements based on demonstrated performance rather than theoretical projections; and third, modelling how grid decarbonisation trends will affect emissions over the technology's scaling timeline. Using this framework, Chen argues that both Okonkwo and Lindqvist present partially valid positions. The critical variable, Chen suggests, is temporal: cultivated meat deployed today in coal-dependent grids may indeed increase emissions, yet the same technology deployed in 2035, assuming continued renewable energy expansion, could deliver the environmental benefits that early proponents envisioned. The technology's sustainability credentials are thus not fixed but rather contingent on broader energy system transformations."
+    },
+    {
+      "id": "H",
+      "text": "Despite these analytical advances, significant uncertainties remain regarding whether the technology can successfully scale to commercial production levels. Current pilot facilities operate at volumes far below what would be required for meaningful food system impact, and it remains unclear whether the energy efficiency improvements anticipated by proponents will materialise at industrial scales. Additionally, the environmental impact of producing growth medium—the nutrient solution that feeds cultivated cells—has been inadequately characterised and may account for a substantial portion of total emissions. These knowledge gaps mean that definitive assessments of cultivated meat's environmental credentials remain premature, notwithstanding the sophistication of frameworks like Chen's."
+    },
+    {
+      "id": "I",
+      "text": "The debate surrounding cultivated meat thus illustrates a broader challenge in environmental technology assessment: distinguishing between a technology's theoretical potential and its practical impact under real-world conditions. While cellular agriculture offers demonstrable advantages in land and water efficiency, its climate benefits appear inseparable from the pace of electricity grid decarbonisation. Whether cultivated meat ultimately delivers on its environmental promise may depend less on the technology's intrinsic properties than on broader energy policy success. For decision-makers weighing research priorities and regulatory frameworks, this interdependence suggests that neither unconditional optimism nor blanket scepticism provides an adequate foundation for policy. Instead, the evidence points toward geographically differentiated approaches that account for regional energy contexts and temporal trajectories."
+    }
+  ],
+"questions": [
+    {
+  "id": 8,
+  "type": "matching-headings",
+  "title": "Questions 28-33",
+  "instructions": "The reading passage has 9 paragraphs, A-I. Choose the correct heading for each paragraph from the list of headings below. Write the correct number, i-x, in boxes 1-6 on your answer sheet.",
+  "example": {
+    "paragraph": "A",
+    "answer": "i",
+    "headingText": "The tension between theoretical potential and practical energy demands",
+    "justification": "Paragraph A introduces the core debate: cultivated meat is promoted for environmental benefits, yet questions about energy demands create 'fundamental tension between theoretical environmental benefits and practical energy requirements.'"
+  },
+  "questions": [
+    {
+      "id": 28,
+      "questionText": "Paragraph B",
+      "options": [
+        "The tension between theoretical potential and practical energy demands",
+        "Pioneering projections founded on theoretical assumptions",
+        "The case for spatial efficiency and reduced atmospheric pollution",
+        "Consumer attitudes towards laboratory-produced protein",
+        "Favourable research tempered by electricity source qualifications",
+        "Challenging sustainability claims through power consumption analysis",
+        "How regional electricity infrastructure shapes environmental performance",
+        "Bridging contrasting perspectives through conditional assessment",
+        "Capital investment trends in the cellular agriculture sector",
+        "Scaling from experimental facilities to commercial production"
+      ],
+      "correctAnswer": "Pioneering projections founded on theoretical assumptions",
+      "justification": "Paragraph B chronicles the technology's early development phase, emphasising that optimistic environmental projections (78-96% emission reductions) lacked empirical validation. The heading paraphrases 'early assessments' as 'pioneering projections' and 'theoretical models' as 'theoretical assumptions,' accurately capturing the paragraph's central critique of unfounded initial claims.",
+      "evidenceQuote": "\"the projections were based largely on theoretical models rather than data from functioning commercial facilities\""
+    },
+    {
+      "id": 29,
+      "questionText": "Paragraph C",
+      "options": [
+        "The tension between theoretical potential and practical energy demands",
+        "Pioneering projections founded on theoretical assumptions",
+        "The case for spatial efficiency and reduced atmospheric pollution",
+        "Consumer attitudes towards laboratory-produced protein",
+        "Favourable research tempered by electricity source qualifications",
+        "Challenging sustainability claims through power consumption analysis",
+        "How regional electricity infrastructure shapes environmental performance",
+        "Bridging contrasting perspectives through conditional assessment",
+        "Capital investment trends in the cellular agriculture sector",
+        "Scaling from experimental facilities to commercial production"
+      ],
+      "correctAnswer": "The case for spatial efficiency and reduced atmospheric pollution",
+      "justification": "Paragraph C presents Dr. Okonkwo's defence centred on two primary advantages: 'land use decoupling' (paraphrased as 'spatial efficiency') and elimination of 'methane emissions from enteric fermentation' (paraphrased as 'reduced atmospheric pollution'). The heading's structure 'The case for' captures the advocacy nature of Okonkwo's argument.",
+      "evidenceQuote": "\"the technology's primary advantage lies in what she terms the 'land use decoupling'—the fundamental separation of protein production from agricultural land requirements\""
+    },
+    {
+      "id": 30,
+      "questionText": "Paragraph D",
+      "options": [
+        "The tension between theoretical potential and practical energy demands",
+        "Pioneering projections founded on theoretical assumptions",
+        "The case for spatial efficiency and reduced atmospheric pollution",
+        "Consumer attitudes towards laboratory-produced protein",
+        "Favourable research tempered by electricity source qualifications",
+        "Challenging sustainability claims through power consumption analysis",
+        "How regional electricity infrastructure shapes environmental performance",
+        "Bridging contrasting perspectives through conditional assessment",
+        "Capital investment trends in the cellular agriculture sector",
+        "Scaling from experimental facilities to commercial production"
+      ],
+      "correctAnswer": "Favourable research tempered by electricity source qualifications",
+      "justification": "Paragraph D presents the Global Sustainable Protein Initiative's meta-analysis showing positive findings (52-87% reduction) while explicitly acknowledging the critical dependence on electricity carbon intensity. The heading paraphrases 'positive findings' as 'favourable research' and 'depends critically on carbon intensity' as 'tempered by electricity source qualifications.'",
+      "evidenceQuote": "\"outcomes depend critically on the carbon intensity of regional electricity grids\""
+    },
+    {
+      "id": 31,
+      "questionText": "Paragraph E",
+      "options": [
+        "The tension between theoretical potential and practical energy demands",
+        "Pioneering projections founded on theoretical assumptions",
+        "The case for spatial efficiency and reduced atmospheric pollution",
+        "Consumer attitudes towards laboratory-produced protein",
+        "Favourable research tempered by electricity source qualifications",
+        "Challenging sustainability claims through power consumption analysis",
+        "How regional electricity infrastructure shapes environmental performance",
+        "Bridging contrasting perspectives through conditional assessment",
+        "Capital investment trends in the cellular agriculture sector",
+        "Scaling from experimental facilities to commercial production"
+      ],
+      "correctAnswer": "Challenging sustainability claims through power consumption analysis",
+      "justification": "Paragraph E presents Lindqvist's critique, which explicitly 'challenges optimistic assessments by focusing on energy requirements.' The heading paraphrases 'challenged assessments' as 'challenging sustainability claims' and 'energy requirements' as 'power consumption analysis,' accurately reflecting the paragraph's sceptical analytical approach.",
+      "evidenceQuote": "\"proponents have systematically underestimated the technology's electricity demands\""
+    },
+    {
+      "id": 32,
+      "questionText": "Paragraph F",
+      "options": [
+        "The tension between theoretical potential and practical energy demands",
+        "Pioneering projections founded on theoretical assumptions",
+        "The case for spatial efficiency and reduced atmospheric pollution",
+        "Consumer attitudes towards laboratory-produced protein",
+        "Favourable research tempered by electricity source qualifications",
+        "Challenging sustainability claims through power consumption analysis",
+        "How regional electricity infrastructure shapes environmental performance",
+        "Bridging contrasting perspectives through conditional assessment",
+        "Capital investment trends in the cellular agriculture sector",
+        "Scaling from experimental facilities to commercial production"
+      ],
+      "correctAnswer": "How regional electricity infrastructure shapes environmental performance",
+      "justification": "Paragraph F provides empirical evidence demonstrating 'stark regional differences in environmental outcomes' based on grid composition, contrasting Scandinavia and Poland. The heading paraphrases 'regional electricity grids' as 'regional electricity infrastructure' and 'environmental outcomes' as 'environmental performance,' accurately capturing the paragraph's demonstration of geographical variability.",
+      "evidenceQuote": "\"cultivated meat's environmental credentials are fundamentally tied to the decarbonisation status of regional electricity grids\""
+    },
+    {
+      "id": 33,
+      "questionText": "Paragraph G",
+      "options": [
+        "The tension between theoretical potential and practical energy demands",
+        "Pioneering projections founded on theoretical assumptions",
+        "The case for spatial efficiency and reduced atmospheric pollution",
+        "Consumer attitudes towards laboratory-produced protein",
+        "Favourable research tempered by electricity source qualifications",
+        "Challenging sustainability claims through power consumption analysis",
+        "How regional electricity infrastructure shapes environmental performance",
+        "Bridging contrasting perspectives through conditional assessment",
+        "Capital investment trends in the cellular agriculture sector",
+        "Scaling from experimental facilities to commercial production"
+      ],
+      "correctAnswer": "Bridging contrasting perspectives through conditional assessment",
+      "justification": "Paragraph G presents Dr. Chen's 'conditional benefits framework' which explicitly synthesises the opposing views of Okonkwo and Lindqvist. The heading paraphrases 'both...partially valid positions' as 'bridging contrasting perspectives' and 'conditional benefits framework' as 'conditional assessment,' accurately capturing the paragraph's reconciliatory analytical approach.",
+      "evidenceQuote": "\"Chen argues that both Okonkwo and Lindqvist present partially valid positions. The critical variable, Chen suggests, is temporal\""
+    }
+  ]
+},
+{
+  "id": 9,
+  "type": "yes-no-not-given",
+  "title": "Questions 34-37",
+  "instructions": "Do the following statements agree with the views of the writer in the Reading Passage? Write YES if the statement agrees with the views of the writer, NO if the statement contradicts the views of the writer, NOT GIVEN if it is impossible to say what the writer thinks about this.",
+  "questions": [
+    {
+      "id": 34,
+      "questionText": "Dr. Chen argues that the positions held by Dr. Okonkwo and Professor Lindqvist both contain valid elements.",
+      "correctAnswer": "YES",
+      "justification": "Dr. Chen explicitly states that 'both Okonkwo and Lindqvist present partially valid positions,' indicating she considers each perspective to have merit under different conditions. Her 'conditional benefits framework' is designed specifically to reconcile these seemingly opposing viewpoints.",
+      "evidenceQuote": "\"Using this framework, Chen argues that both Okonkwo and Lindqvist present partially valid positions\""
+    },
+    {
+      "id": 35,
+      "questionText": "Professor Lindqvist disputes the claim that cultivated meat production could reduce agricultural land requirements compared to conventional livestock.",
+      "correctAnswer": "NO",
+      "justification": "The passage explicitly states that 'Lindqvist does not dispute cultivated meat's potential to reduce land use.' His critique focuses specifically on energy demands, not land efficiency. The statement's claim that he disputes land reduction directly contradicts his stated position.",
+      "evidenceQuote": "\"While Lindqvist does not dispute cultivated meat's potential to reduce land use, he argues that proponents have systematically underestimated the technology's electricity demands\""
+    },
+    {
+      "id": 36,
+      "questionText": "The writer considers Professor Lindqvist's energy analysis to be more persuasive than Dr. Okonkwo's arguments regarding land efficiency.",
+      "correctAnswer": "NOT GIVEN",
+      "justification": "While the passage presents both Lindqvist's energy concerns and Okonkwo's land efficiency arguments in detail, the writer never expresses a personal evaluation of which analysis is more convincing. The passage maintains a neutral, balanced presentation of both perspectives, and through Chen's framework suggests both have partial validity rather than ranking them.",
+      "evidenceQuote": "\"Chen argues that both Okonkwo and Lindqvist present partially valid positions. The critical variable, Chen suggests, is temporal\""
+    },
+    {
+      "id": 37,
+      "questionText": "According to the writer, effective policy decisions regarding cultivated meat should account for variations in regional energy systems.",
+      "correctAnswer": "YES",
+      "justification": "The writer concludes that 'the evidence points toward geographically differentiated approaches that account for regional energy contexts and temporal trajectories.' This explicitly endorses policy approaches that consider regional energy differences rather than applying uniform standards, directly supporting the statement's claim.",
+      "evidenceQuote": "\"the evidence points toward geographically differentiated approaches that account for regional energy contexts and temporal trajectories\""
+    }
+  ]
+},
+{
+  "id": 10,
+  "type": "multiple-choice",
+  "title": "Questions 38-40",
+  "instructions": "Choose the correct letter, A, B, C or D.",
+  "questions": [
+    {
+      "id": 38,
+      "questionText": "According to paragraph H, which aspect of cultivated meat production has been insufficiently examined?",
+      "options": [
+        "The emissions associated with producing the nutrient solution for cell growth",
+        "The precise temperature requirements for maintaining sterile bioreactor conditions",
+        "The comparative energy demands between cultivated meat and conventional poultry",
+        "The investment needed to establish pilot-scale production facilities"
+      ],
+      "correctAnswer": "The emissions associated with producing the nutrient solution for cell growth",
+      "justification": "Paragraph H explicitly states that 'the environmental impact of producing growth medium—the nutrient solution that feeds cultivated cells—has been inadequately characterised.' The correct answer paraphrases 'growth medium' as 'nutrient solution for cell growth' and 'inadequately characterised' as 'insufficiently examined.'",
+      "evidenceQuote": "\"the environmental impact of producing growth medium—the nutrient solution that feeds cultivated cells—has been inadequately characterised and may account for a substantial portion of total emissions\""
+    },
+    {
+      "id": 39,
+      "questionText": "What is the author's primary argument in the final paragraph?",
+      "options": [
+        "Cellular agriculture has definitively failed to achieve its promised environmental advantages",
+        "Land and water efficiency represent the only proven benefits of cultivated meat technology",
+        "Energy policy decisions have minimal influence on cultivated meat's climate impact",
+        "Cultivated meat's climate benefits are fundamentally dependent on progress in decarbonising electricity systems"
+      ],
+      "correctAnswer": "Cultivated meat's climate benefits are fundamentally dependent on progress in decarbonising electricity systems",
+      "justification": "The final paragraph's central argument is that 'its climate benefits appear inseparable from the pace of electricity grid decarbonisation' and 'whether cultivated meat ultimately delivers on its environmental promise may depend less on the technology's intrinsic properties than on broader energy policy success.'",
+      "evidenceQuote": "\"its climate benefits appear inseparable from the pace of electricity grid decarbonisation. Whether cultivated meat ultimately delivers on its environmental promise may depend less on the technology's intrinsic properties than on broader energy policy success\""
+    },
+    {
+      "id": 40,
+      "questionText": "What can be inferred from the passage about how policymakers should approach cultivated meat regulation?",
+      "options": [
+        "They should implement uniform global standards regardless of local energy infrastructure",
+        "They should develop region-specific frameworks based on local energy contexts and projected changes",
+        "They should provide unconditional support for the technology in all geographical areas",
+        "They should postpone all regulatory decisions until commercial-scale facilities demonstrate performance"
+      ],
+      "correctAnswer": "They should develop region-specific frameworks based on local energy contexts and projected changes",
+      "justification": "The passage concludes that 'the evidence points toward geographically differentiated approaches that account for regional energy contexts and temporal trajectories.' This directly supports the inference that policies should be tailored to local conditions.",
+      "evidenceQuote": "\"the evidence points toward geographically differentiated approaches that account for regional energy contexts and temporal trajectories\""
+    }
+  ]
+}
+            ]
+        }
+    ]
+}

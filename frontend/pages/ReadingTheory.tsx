@@ -21,7 +21,11 @@ import {
   Sparkles,
   Target,
   Zap,
-  GraduationCap
+  GraduationCap,
+  Search,
+  RefreshCw,
+  MapPin,
+  AlertTriangle
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -560,66 +564,115 @@ export default function ReadingTheory() {
                         {sub.title}
                       </h3>
 
-                      {sub.content && <p className="text-slate-700 dark:text-slate-300">{sub.content}</p>}
-                      {sub.description && <p className="text-slate-700 dark:text-slate-300">{sub.description}</p>}
+                      {sub.content && <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-lg max-w-[800px]">{sub.content}</p>}
+                      {sub.description && <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-lg max-w-[800px]">{sub.description}</p>}
 
-                      {/* Analysis (List) */}
+                      {/* Analysis (List) - ENHANCED with Visual Anchors */}
                       {sub.analysis && Array.isArray(sub.analysis) && (
-                        <div className="bg-indigo-50 dark:bg-indigo-900/10 p-4 rounded-lg border border-indigo-100 dark:border-indigo-800">
-                          <h4 className="text-sm font-bold text-indigo-800 dark:text-indigo-200 uppercase mb-2">Analysis</h4>
-                          <ul className="list-disc ml-4 space-y-1 text-sm text-indigo-700 dark:text-indigo-300">
-                            {sub.analysis.map((point: string, i: number) => (
-                              <li key={i}>{point}</li>
-                            ))}
+                        <div className="bg-indigo-50 dark:bg-indigo-900/10 p-5 rounded-xl border border-indigo-100 dark:border-indigo-800/50">
+                          <h4 className="text-xs font-bold text-indigo-800 dark:text-indigo-200 uppercase tracking-widest mb-4 flex items-center gap-2">
+                            <Search className="w-4 h-4" /> Analysis
+                          </h4>
+                          <ul className="space-y-3">
+                            {sub.analysis.map((point: string, i: number) => {
+                              // Visual Anchors Logic
+                              let Icon = CheckCircle;
+                              let iconColor = "text-indigo-500";
+
+                              if (point.toLowerCase().includes("scanning")) { Icon = Search; iconColor = "text-blue-500"; }
+                              else if (point.toLowerCase().includes("paraphrase")) { Icon = RefreshCw; iconColor = "text-purple-500"; }
+                              else if (point.toLowerCase().includes("detail")) { Icon = MapPin; iconColor = "text-rose-500"; }
+
+                              return (
+                                <li key={i} className="flex items-start gap-3 text-base text-indigo-900 dark:text-indigo-100 leading-relaxed">
+                                  <div className={`mt-1 flex-shrink-0 ${iconColor}`}>
+                                    <Icon className="w-5 h-5" />
+                                  </div>
+                                  <span>{point}</span>
+                                </li>
+                              );
+                            })}
                           </ul>
                         </div>
                       )}
 
                       {sub.passage && (
-                        <div className="p-4 bg-slate-100 dark:bg-slate-800 rounded-lg border-l-4 border-slate-500 italic text-slate-700 dark:text-slate-300 leading-relaxed">
+                        <div className="p-6 bg-slate-100 dark:bg-slate-800 rounded-xl border-l-4 border-slate-500 italic text-slate-700 dark:text-slate-300 leading-relaxed text-lg font-serif">
                           "{sub.passage}"
                         </div>
                       )}
 
-                      {/* Table Renderer */}
-                      {sub.tables && sub.tables.length > 0 && (
-                        <div className="space-y-6 my-4">
-                          {sub.tables.map((table: any, tblIdx: number) => (
-                            <div key={tblIdx} className="overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm">
-                              <div className="overflow-x-auto">
-                                <table className="w-full text-sm text-left border-collapse">
-                                  <thead>
-                                    <tr className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
-                                      {table.headers.map((header: string, hIdx: number) => (
-                                        <th key={hIdx} className="p-3 border-b border-slate-200 dark:border-slate-700 font-bold whitespace-nowrap">
-                                          {header}
-                                        </th>
-                                      ))}
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    {table.rows.map((row: string[], rIdx: number) => (
-                                      <tr key={rIdx} className="border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50">
-                                        {row.map((cell: string, cIdx: number) => (
-                                          <td key={cIdx} className="p-3 border-r border-slate-100 dark:border-slate-800 last:border-r-0 text-slate-700 dark:text-slate-300">
-                                            {cell.includes('Gap') ? (
-                                              <span className="font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20 px-2 py-0.5 rounded">
-                                                {cell}
-                                              </span>
-                                            ) : cell.includes('**') ? (
-                                              <span dangerouslySetInnerHTML={{ __html: cell.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
-                                            ) : (
-                                              cell
-                                            )}
-                                          </td>
-                                        ))}
-                                      </tr>
-                                    ))}
-                                  </tbody>
-                                </table>
+                      {/* Generic Examples Renderer (Simple Lists) */}
+                      {sub.examples && !sub.passage && !sub.examples[0]?.stepByStep && Array.isArray(sub.examples) && (
+                        <div className="my-4 space-y-3">
+                          {sub.examples.map((ex: any, i: number) => (
+                            <div key={i} className="flex items-start gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-100 dark:border-slate-800">
+                              <div className="mt-1">
+                                <CheckCircle className="w-4 h-4 text-emerald-500" />
+                              </div>
+                              <div className="text-sm text-slate-700 dark:text-slate-300">
+                                {typeof ex === 'string' ? (
+                                  <span dangerouslySetInnerHTML={{ __html: ex.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+                                ) : (
+                                  <div>
+                                    {ex.statement && <div className="font-medium mb-1">{ex.statement}</div>}
+                                    {ex.demo && <div className="text-slate-500 dark:text-slate-400 text-xs mt-1">Example: {ex.demo}</div>}
+                                  </div>
+                                )}
                               </div>
                             </div>
                           ))}
+                        </div>
+                      )}
+
+                      {/* Table Renderer - REFINED */}
+                      {sub.tables && sub.tables.length > 0 && (
+                        <div className="space-y-8 my-6">
+                          {sub.tables.map((table: any, tblIdx: number) => {
+                            const isDifficult = table.headers && table.headers.some((h: string) => h.includes('Matching Information'));
+
+                            return (
+                              <div key={tblIdx} className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700 shadow-lg bg-white dark:bg-slate-900">
+                                <div className="overflow-x-auto">
+                                  <table className="w-full text-left border-collapse">
+                                    <thead>
+                                      <tr className="bg-slate-800 dark:bg-slate-950 text-white">
+                                        {table.headers.map((header: string, hIdx: number) => (
+                                          <th key={hIdx} className="p-5 font-bold uppercase tracking-wider text-xs border-r border-slate-700 last:border-r-0">
+                                            <div className="flex items-center gap-2">
+                                              {header}
+                                              {header.includes('Matching Information') && (
+                                                <Badge variant="destructive" className="ml-2 bg-rose-500 hover:bg-rose-600 border-0 text-[10px] px-2">
+                                                  Most Difficult
+                                                </Badge>
+                                              )}
+                                            </div>
+                                          </th>
+                                        ))}
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {table.rows.map((row: string[], rIdx: number) => (
+                                        <tr key={rIdx} className="border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors last:border-b-0">
+                                          {row.map((cell: string, cIdx: number) => (
+                                            <td key={cIdx} className="p-5 border-r border-slate-100 dark:border-slate-800 last:border-r-0 text-slate-700 dark:text-slate-300 text-base leading-relaxed align-top">
+                                              {cell.includes('Gap') || cell.includes('[') ? (
+                                                <span className="inline-block font-mono font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-1 rounded text-sm border border-indigo-100 dark:border-indigo-800">
+                                                  {cell}
+                                                </span>
+                                              ) : (
+                                                <span dangerouslySetInnerHTML={{ __html: cell.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+                                              )}
+                                            </td>
+                                          ))}
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            )
+                          })}
                         </div>
                       )}
 
@@ -672,68 +725,60 @@ export default function ReadingTheory() {
                         </ul>
                       )}
 
-                      {/* Rules (for Golden Rules, etc.) */}
+                      {/* Rules - ENHANCED */}
                       {sub.rules && Array.isArray(sub.rules) && (
-                        <div className="space-y-4">
+                        <div className="space-y-4 my-6">
+                          <div className="flex items-center gap-3 mb-2">
+                            <div className="p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg">
+                              <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-500" />
+                            </div>
+                            <h4 className="font-bold text-slate-700 dark:text-slate-200 uppercase tracking-widest text-sm">Critical Rules</h4>
+                          </div>
                           {sub.rules.map((ruleItem: any, i: number) => (
-                            <div key={i} className="p-4 bg-blue-50 dark:bg-blue-900/10 border-l-4 border-blue-500 rounded-lg">
-                              <h4 className="font-bold text-blue-900 dark:text-blue-100 mb-2">
-                                {ruleItem.rule || ruleItem.title}
-                              </h4>
-                              {ruleItem.description && (
-                                <p className="text-sm text-blue-800 dark:text-blue-200 mb-2">{ruleItem.description}</p>
-                              )}
-                              {ruleItem.examples && Array.isArray(ruleItem.examples) && (
-                                <ul className="list-disc ml-5 space-y-1 text-sm text-blue-700 dark:text-blue-300">
-                                  {ruleItem.examples.map((ex: string, j: number) => (
-                                    <li key={j}>{ex}</li>
-                                  ))}
-                                </ul>
-                              )}
-                              {ruleItem.example && typeof ruleItem.example === 'object' && (
-                                <div className="mt-3 p-3 bg-white dark:bg-slate-800 rounded border border-blue-200 dark:border-blue-700">
-                                  <div className="space-y-2 text-sm">
-                                    {ruleItem.example.passage && (
-                                      <div>
-                                        <span className="font-semibold text-slate-600 dark:text-slate-400">Passage:</span>{' '}
-                                        <span className="italic text-slate-700 dark:text-slate-300">"{ruleItem.example.passage}"</span>
+                            <div key={i} className="relative overflow-hidden p-0.5 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-500 shadow-sm hover:shadow-md transition-shadow">
+                              <div className="h-full bg-white dark:bg-slate-900 rounded-[10px] p-5">
+                                <h4 className="font-bold text-lg text-slate-800 dark:text-slate-100 mb-2 flex items-center gap-2">
+                                  {ruleItem.rule || ruleItem.title}
+                                </h4>
+                                {ruleItem.description && (
+                                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{ruleItem.description}</p>
+                                )}
+                                {ruleItem.examples && Array.isArray(ruleItem.examples) && (
+                                  <ul className="mt-3 space-y-2">
+                                    {ruleItem.examples.map((ex: string, j: number) => (
+                                      <li key={j} className="flex gap-2 text-sm text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/50 p-2 rounded">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 flex-shrink-0" />
+                                        <span dangerouslySetInnerHTML={{ __html: ex.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+                                      </li>
+                                    ))}
+                                  </ul>
+                                )}
+                                {ruleItem.example && typeof ruleItem.example === 'object' && (
+                                  <div className="mt-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-100 dark:border-slate-700">
+                                    <div className="space-y-3 text-sm">
+                                      {ruleItem.example.passage && (
+                                        <div className="pl-3 border-l-2 border-slate-300 dark:border-slate-600 italic text-slate-600 dark:text-slate-400">
+                                          "{ruleItem.example.passage}"
+                                        </div>
+                                      )}
+                                      <div className="space-y-2">
+                                        {Object.entries(ruleItem.example).map(([key, value]) => {
+                                          if (key === 'passage') return null;
+                                          if (Array.isArray(value)) return null;
+                                          return (
+                                            <div key={key} className="flex gap-2">
+                                              <span className="font-bold capitalize text-slate-500 dark:text-slate-500 select-none min-w-[80px] text-right">{key}:</span>
+                                              <span className={key === 'correct' ? 'text-emerald-600 font-medium' : key === 'wrong' ? 'text-rose-600' : 'text-slate-700 dark:text-slate-300'}>
+                                                {value as string}
+                                              </span>
+                                            </div>
+                                          )
+                                        })}
                                       </div>
-                                    )}
-                                    {ruleItem.example.question && (
-                                      <div>
-                                        <span className="font-semibold text-slate-600 dark:text-slate-400">Question:</span>{' '}
-                                        <span className="text-slate-700 dark:text-slate-300">{ruleItem.example.question}</span>
-                                      </div>
-                                    )}
-                                    {ruleItem.example.instruction && (
-                                      <div>
-                                        <span className="font-semibold text-slate-600 dark:text-slate-400">Instruction:</span>{' '}
-                                        <span className="text-slate-700 dark:text-slate-300">{ruleItem.example.instruction}</span>
-                                      </div>
-                                    )}
-                                    {ruleItem.example.correct && (
-                                      <div className="flex items-start gap-2">
-                                        <CheckCircle className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
-                                        <span className="text-emerald-700 dark:text-emerald-300">{ruleItem.example.correct}</span>
-                                      </div>
-                                    )}
-                                    {ruleItem.example.wrong && (
-                                      <div className="flex items-start gap-2">
-                                        <XCircle className="w-4 h-4 text-rose-500 mt-0.5 flex-shrink-0" />
-                                        {Array.isArray(ruleItem.example.wrong) ? (
-                                          <ul className="space-y-1">
-                                            {ruleItem.example.wrong.map((w: string, k: number) => (
-                                              <li key={k} className="text-rose-700 dark:text-rose-300">{w}</li>
-                                            ))}
-                                          </ul>
-                                        ) : (
-                                          <span className="text-rose-700 dark:text-rose-300">{ruleItem.example.wrong}</span>
-                                        )}
-                                      </div>
-                                    )}
+                                    </div>
                                   </div>
-                                </div>
-                              )}
+                                )}
+                              </div>
                             </div>
                           ))}
                         </div>
@@ -790,25 +835,46 @@ export default function ReadingTheory() {
                         </div>
                       )}
 
-                      {/* Steps (Strategy) */}
+                      {/* Steps (Strategy) - REFINED with Badges & Progress */}
                       {sub.steps && (
-                        <div className="space-y-4">
+                        <div className="relative space-y-12 pl-6 my-10 before:absolute before:left-[21px] before:top-4 before:bottom-4 before:w-0.5 before:bg-indigo-100 dark:before:bg-indigo-900/50">
                           {sub.steps.map((step: any, i: number) => (
-                            <div key={i} className="flex gap-3">
-                              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-700 dark:text-emerald-300 font-bold">
-                                {step.step}
+                            <div key={i} className="relative pl-8">
+                              {/* Connector & Badge */}
+                              <div className="absolute -left-[14px] top-0 flex items-center">
+                                <span className="relative flex items-center justify-center w-10 h-10 bg-indigo-600 text-white rounded-full shadow-lg ring-4 ring-white dark:ring-slate-950 z-10 font-bold text-lg">
+                                  {i + 1}
+                                </span>
                               </div>
-                              <div>
-                                <h4 className="font-bold text-slate-900 dark:text-slate-100">{step.title}</h4>
+
+                              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                                <div className="flex items-center gap-3 mb-4">
+                                  <Badge className="bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300 hover:bg-indigo-200 border-0 px-3 py-1">
+                                    STEP {step.step}
+                                  </Badge>
+                                  <h4 className="font-bold text-xl text-slate-900 dark:text-white">
+                                    {step.title}
+                                  </h4>
+                                </div>
+
                                 {step.actions && (
-                                  <ul className="list-disc ml-4 text-sm text-slate-600 dark:text-slate-400">
-                                    {step.actions.map((a: string, k: number) => <li key={k}>{a}</li>)}
+                                  <ul className="space-y-3">
+                                    {step.actions.map((a: string, k: number) => (
+                                      <li key={k} className="flex items-start gap-3 text-slate-700 dark:text-slate-300 text-lg leading-relaxed">
+                                        <div className="w-2 h-2 rounded-full bg-indigo-400 mt-2.5 flex-shrink-0" />
+                                        <span dangerouslySetInnerHTML={{ __html: a.replace(/\*\*(.*?)\*\*/g, '<strong class="text-indigo-900 dark:text-indigo-100 font-bold">$1</strong>') }} />
+                                      </li>
+                                    ))}
                                   </ul>
                                 )}
-                                {step.tests && (
-                                  <div className="mt-2 grid gap-1">
-                                    {step.tests.map((t: string, k: number) => (
-                                      <div key={k} className="text-sm font-medium text-indigo-600 dark:text-indigo-400">{t}</div>
+
+                                {step.list && (
+                                  <div className="mt-5 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl text-base text-slate-700 dark:text-slate-300 border border-slate-100 dark:border-slate-800">
+                                    {step.list.map((l: string, k: number) => (
+                                      <div key={k} className="flex gap-2 mb-2 last:mb-0">
+                                        <span className="text-indigo-400">•</span>
+                                        <span dangerouslySetInnerHTML={{ __html: l.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+                                      </div>
                                     ))}
                                   </div>
                                 )}
@@ -817,6 +883,7 @@ export default function ReadingTheory() {
                           ))}
                         </div>
                       )}
+
 
                       {/* Flowchart (Short Answer Strategy) */}
                       {sub.flowchart && Array.isArray(sub.flowchart) && sub.flowchart[0]?.title && (
@@ -1987,8 +2054,9 @@ export default function ReadingTheory() {
                 </CardContent>
               )}
             </Card>
-          ))}
-        </div>
+          ))
+          }
+        </div >
       )
       }
 
@@ -2572,28 +2640,30 @@ export default function ReadingTheory() {
       }
 
       {/* Take Quiz Button */}
-      {theoryContent.quiz && theoryContent.quiz.length > 0 && (
-        <div className="mt-12 pt-8 border-t-2 border-dashed border-indigo-200 dark:border-indigo-800">
-          <div className="text-center space-y-4">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-50 dark:bg-indigo-900/20 rounded-full text-indigo-700 dark:text-indigo-400 text-sm font-medium">
-              <GraduationCap className="w-4 h-4" />
-              {theoryContent.quiz.length} Questions
+      {
+        theoryContent.quiz && theoryContent.quiz.length > 0 && (
+          <div className="mt-12 pt-8 border-t-2 border-dashed border-indigo-200 dark:border-indigo-800">
+            <div className="text-center space-y-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-50 dark:bg-indigo-900/20 rounded-full text-indigo-700 dark:text-indigo-400 text-sm font-medium">
+                <GraduationCap className="w-4 h-4" />
+                {theoryContent.quiz.length} Questions
+              </div>
+              <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100">
+                Ready to Test Your Knowledge?
+              </h3>
+              <p className="text-slate-600 dark:text-slate-400 max-w-md mx-auto">
+                Take a quick quiz to reinforce what you've learned about {theoryContent.name}.
+              </p>
+              <button
+                onClick={startQuiz}
+                className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-bold text-lg rounded-xl shadow-lg hover:from-indigo-700 hover:to-blue-700 transition-all hover:scale-105"
+              >
+                🎯 Take Quiz
+              </button>
             </div>
-            <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100">
-              Ready to Test Your Knowledge?
-            </h3>
-            <p className="text-slate-600 dark:text-slate-400 max-w-md mx-auto">
-              Take a quick quiz to reinforce what you've learned about {theoryContent.name}.
-            </p>
-            <button
-              onClick={startQuiz}
-              className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-bold text-lg rounded-xl shadow-lg hover:from-indigo-700 hover:to-blue-700 transition-all hover:scale-105"
-            >
-              🎯 Take Quiz
-            </button>
           </div>
-        </div>
-      )}
+        )
+      }
     </div >
   );
 }

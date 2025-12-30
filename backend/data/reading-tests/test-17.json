@@ -1,0 +1,665 @@
+{
+  "testId": 17,
+  "testName": "Test 17",
+  "passages": [
+{
+  "id": 1,
+  "title": "Volcanic Ash and Aviation: Detection and Disruption",
+  "level": "intermediate",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "A",
+      "text": "Volcanic eruptions pose significant challenges to global aviation, primarily through the release of volcanic ash into the atmosphere. When aircraft encounter these microscopic particles of pulverized rock, mineral fragments, and volcanic glass, the consequences can be severe. Despite comprising less than 0.01 percent of the atmosphere following most eruptions, volcanic ash has the capacity to damage aircraft engines, abrade windshields, and contaminate fuel systems. Approximately 500 volcanoes worldwide are situated near major flight corridors, making the detection and avoidance of ash clouds essential for aviation safety. The International Civil Aviation Organization estimates that volcanic ash incidents cost the global airline industry over 2 billion euros annually in flight cancellations, diversions, and engine repairs."
+    },
+    {
+      "id": "B",
+      "text": "The threat posed by volcanic ash to aviation became dramatically apparent in April 2010, when an Icelandic volcano erupted and released enormous quantities of ash into European airspace. Over a six-day period, more than 100,000 flights were cancelled, affecting approximately 10 million passengers. This event prompted substantial investment in ash detection technology. However, recognition of the hazard dates back further. A 1982 study by the Global Volcanic Research Consortium documented four serious engine failures caused by ash encounters between 1976 and 1981. Following these incidents, the International Airways Volcano Watch was established in 1987 to coordinate ash monitoring across nine regional centres worldwide. By the early 2000s, satellite-based detection had become the primary method of tracking volcanic plumes, though ground-based observation remained important in remote regions."
+    },
+    {
+      "id": "C",
+      "text": "The destructive potential of volcanic ash stems from its unique physical and chemical properties. Dr. Helena Virtanen, a volcanologist at the Nordic Institute of Geosciences, has conducted extensive research on ash-engine interactions. According to Virtanen, volcanic ash particles, which can measure as small as 0.001 millimetres in diameter, are composed primarily of silicate minerals with melting points around 1,100 degrees Celsius. When these particles enter a jet engine, where temperatures typically exceed 1,400 degrees Celsius, they melt and fuse onto turbine blades and other internal components. This process, known as vitrification, can reduce engine efficiency by 15 to 20 percent within minutes. Furthermore, the abrasive nature of larger ash particles erodes compressor blades and damages protective coatings. Virtanen notes that even brief exposure to moderate ash concentrations can necessitate complete engine replacement, with costs exceeding 3 million euros per unit."
+    },
+    {
+      "id": "D",
+      "text": "Modern volcanic ash detection relies on a multi-layered monitoring approach developed through international collaboration. Dr. Kenji Matsumoto, an atmospheric scientist at Japan's Centre for Volcanic Hazard Assessment, has been instrumental in refining these detection methods. The process begins when satellites equipped with thermal imaging sensors identify the heat signature of an eruption. First, these orbital platforms detect temperature anomalies at the volcanic source. Subsequently, specialized instruments measure the spectral properties of the ash cloud to estimate particle concentration and altitude. Following this, sophisticated dispersion models use meteorological data to predict the plume's trajectory over the following 24 to 72 hours. Finally, volcanic ash advisory centres integrate all available information and issue alerts to aviation authorities within their designated regions. Matsumoto emphasizes that this coordinated system can track ash clouds across distances exceeding 10,000 kilometres from the original eruption site."
+    },
+    {
+      "id": "E",
+      "text": "Detection capabilities vary considerably between different technologies and geographic regions. Satellite-based monitoring offers broad coverage but struggles to identify ash clouds below approximately 3 kilometres in altitude or when obscured by weather systems. Conversely, ground-based lidar stations, which use laser pulses to measure atmospheric particles, provide highly accurate vertical profiles but cover limited geographic areas. A 2019 comparison conducted by the European Meteorological Institute found that satellite systems correctly identified 78 percent of significant ash events, while ground stations detected 94 percent of plumes within their 200-kilometre operational range. In regions such as Indonesia, where 127 active volcanoes are spread across thousands of islands, satellite coverage remains essential despite its limitations. Meanwhile, densely monitored areas like Japan and Iceland have achieved detection rates approaching 98 percent through integration of multiple observation methods."
+    },
+    {
+      "id": "F",
+      "text": "Advances in volcanic ash monitoring continue to reduce aviation risks, though significant challenges remain. Between 2015 and 2022, the accuracy of ash concentration forecasts improved by approximately 40 percent due to enhanced satellite sensors and computer modelling. Nevertheless, scientists acknowledge that predicting the precise behaviour of volcanic plumes remains difficult, particularly during large-scale eruptions. Future developments may include drone-based sampling systems capable of directly measuring ash properties within clouds. Overall, the combination of improved detection technology and international coordination has made volcanic ash encounters increasingly rare, transforming what was once an unpredictable threat into a manageable hazard for global aviation."
+    }
+      ],
+      "questions": [
+        {
+  "id": 1,
+  "type": "true-false-not-given",
+  "title": "Questions 1-5",
+  "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
+  "questions": [
+    {
+      "id": 1,
+      "questionText": "The eruption of an Icelandic volcano in 2010 resulted in the cancellation of more than 100,000 flights.",
+      "correctAnswer": "TRUE",
+      "justification": "Paragraph B explicitly states that during the 2010 Icelandic volcanic eruption, 'more than 100,000 flights were cancelled.' The statement paraphrases 'over 100,000' as 'more than 100,000' and restructures the sentence while maintaining the same factual content.",
+      "evidenceQuote": "\"Over a six-day period, more than 100,000 flights were cancelled\""
+    },
+    {
+      "id": 2,
+      "questionText": "Satellite-based monitoring became the main method of tracking volcanic plumes before the year 2000.",
+      "correctAnswer": "FALSE",
+      "justification": "The passage states that satellite detection became the primary method 'By the early 2000s,' which implies a timeframe entering the new millennium, not strictly before the year 2000. The statement applies a temporal shift distortion, placing the transition earlier than stated.",
+      "evidenceQuote": "\"By the early 2000s, satellite-based detection had become the primary method\""
+    },
+    {
+      "id": 3,
+      "questionText": "Within their operational range, ground-based lidar systems achieve a higher rate of ash cloud detection than satellite monitoring systems.",
+      "correctAnswer": "TRUE",
+      "justification": "Paragraph E provides specific detection rates from a 2019 comparison: satellites correctly identified 78 percent of significant ash events, while ground stations detected 94 percent within their 200-kilometre operational range. Since 94 percent is higher than 78 percent, the statement accurately reflects the data.",
+      "evidenceQuote": "\"satellite systems correctly identified 78 percent of significant ash events, while ground stations detected 94 percent\""
+    },
+    {
+      "id": 4,
+      "questionText": "Indonesia has achieved a 98 percent ash detection rate by combining multiple observation methods.",
+      "correctAnswer": "FALSE",
+      "justification": "The passage states that Japan and Iceland have achieved detection rates approaching 98 percent through integration of multiple methods. In contrast, Indonesia relies heavily on satellite coverage. The statement incorrectly attributes the 98 percent success rate to Indonesia.",
+      "evidenceQuote": "\"Japan and Iceland have achieved detection rates approaching 98 percent through integration of multiple observation methods\""
+    },
+    {
+      "id": 5,
+      "questionText": "The annual financial cost of volcanic ash incidents to the airline industry has been decreasing over the past decade.",
+      "correctAnswer": "NOT GIVEN",
+      "justification": "The passage mentions that the International Civil Aviation Organization estimates volcanic ash incidents cost over 2 billion euros annually. However, the passage provides no information about whether this figure has been increasing, decreasing, or remaining stable over time. The trend in costs is not addressed.",
+      "evidenceQuote": "\"The International Civil Aviation Organization estimates that volcanic ash incidents cost the global airline industry over 2 billion euros annually\""
+    }
+  ]
+},
+{
+  "id": 2,
+  "type": "summary-completion",
+  "completion_type": "summary",
+  "title": "Questions 6-10",
+  "word_limit": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+  "instructions": "Complete the summary below. Choose NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer. Write your answers in boxes 6-10 on your answer sheet.",
+  "structure": "<div class='completion-summary'><p>Volcanic eruptions release ash particles that pose significant risks to aircraft. When these microscopic fragments enter jet engines, temperatures exceeding 1,400 degrees Celsius cause them to melt and undergo a process called <strong>(6)_____</strong>, which reduces engine efficiency. The danger became especially apparent following the 2010 Icelandic eruption, which resulted in over 100,000 flight cancellations. Modern detection relies on a multi-stage approach. Initially, satellites identify <strong>(7)_____</strong> at volcanic sources. Instruments then measure ash cloud properties, and <strong>(8)_____</strong> use meteorological data to forecast plume movement. Different technologies have varying capabilities; ground-based lidar stations achieve higher detection rates than satellites within their <strong>(9)_____</strong>. Countries like Japan and Iceland have combined multiple observation methods to reach detection rates approaching <strong>(10)_____</strong>.</p></div>",
+  "questions": [
+    {
+      "id": 6,
+      "questionText": "Gap 27",
+      "correctAnswer": "vitrification",
+      "justification": "The passage explicitly names the process of ash melting and fusing onto engine components as 'vitrification.' The summary paraphrases 'melt and fuse onto turbine blades' as 'melt and undergo a process,' requiring students to identify the technical term.",
+      "evidenceQuote": "\"This process, known as vitrification, can reduce engine efficiency by 15 to 20 percent within minutes\""
+    },
+    {
+      "id": 7,
+      "questionText": "Gap 28",
+      "correctAnswer": "temperature anomalies",
+      "justification": "The passage describes the first step of detection as satellites detecting 'temperature anomalies at the volcanic source.' The summary paraphrases 'First' as 'Initially' and 'detect' as 'identify,' while 'volcanic source' becomes 'volcanic sources.'",
+      "evidenceQuote": "\"First, these orbital platforms detect temperature anomalies at the volcanic source\""
+    },
+    {
+      "id": 8,
+      "questionText": "Gap 29",
+      "correctAnswer": "dispersion models",
+      "justification": "The passage identifies 'dispersion models' as the tools that use meteorological data to predict ash cloud movement. The summary paraphrases 'predict the plume's trajectory' as 'forecast plume movement' and omits the modifier 'sophisticated.'",
+      "evidenceQuote": "\"sophisticated dispersion models use meteorological data to predict the plume's trajectory over the following 24 to 72 hours\""
+    },
+    {
+      "id": 9,
+      "questionText": "Gap 30",
+      "correctAnswer": "operational range",
+      "justification": "The passage states ground stations detected 94 percent of plumes 'within their 200-kilometre operational range,' compared to satellites' 78 percent. The summary paraphrases this comparison while requiring students to identify the key qualifying phrase.",
+      "evidenceQuote": "\"ground stations detected 94 percent of plumes within their 200-kilometre operational range\""
+    },
+    {
+      "id": 10,
+      "questionText": "Gap 31",
+      "correctAnswer": "98 percent",
+      "justification": "The passage explicitly states that Japan and Iceland 'have achieved detection rates approaching 98 percent.' The summary paraphrases 'integration of' as 'combined' and maintains the key statistic as the gap answer.",
+      "evidenceQuote": "\"Japan and Iceland have achieved detection rates approaching 98 percent through integration of multiple observation methods\""
+    }
+  ]
+},
+
+{
+  "id": 3,
+  "type": "short-answer",
+  "title": "Questions 11-13",
+  "instructions": "Answer the questions below. Choose NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer.",
+  "questions": [
+    {
+      "id": 11,
+      "questionText": "What is the name of the process by which melted ash particles fuse onto engine components?",
+      "correctAnswer": "vitrification",
+      "alternativeAnswers": ["vitrification"],
+      "justification": "Paragraph C explicitly defines vitrification as the process whereby ash particles 'melt and fuse onto turbine blades and other internal components.' The question paraphrases 'turbine blades and other internal components' as 'engine components'.",
+      "evidenceQuote": "\"This process, known as vitrification, can reduce engine efficiency by 15 to 20 percent within minutes\""
+    },
+    {
+      "id": 12,
+      "questionText": "In what year was the International Airways Volcano Watch established?",
+      "correctAnswer": "1987",
+      "alternativeAnswers": ["1987"],
+      "justification": "Paragraph B states that 'the International Airways Volcano Watch was established in 1987 to coordinate ash monitoring across nine regional centres worldwide.'",
+      "evidenceQuote": "\"the International Airways Volcano Watch was established in 1987 to coordinate ash monitoring\""
+    },
+    {
+      "id": 13,
+      "questionText": "What type of data do dispersion models use to forecast ash plume movement?",
+      "correctAnswer": "meteorological data",
+      "alternativeAnswers": ["meteorological data", "meteorological"],
+      "justification": "Paragraph D describes how 'sophisticated dispersion models use meteorological data to predict the plume's trajectory.' The question paraphrases 'predict the plume's trajectory' as 'forecast ash plume movement' while requiring the exact answer term from the passage.",
+      "evidenceQuote": "\"sophisticated dispersion models use meteorological data to predict the plume's trajectory over the following 24 to 72 hours\""
+    }
+  ]
+}
+      ]
+    },
+{
+  "id": 2,
+  "title": "Water Pricing Policies: Balancing Conservation Goals with Equity Concerns",
+  "level": "challenging",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "A",
+      "text": "Water scarcity affects approximately 2.3 billion people globally, prompting governments to explore pricing mechanisms as conservation tools. However, implementing such policies raises significant equity concerns, particularly for low-income households who may struggle to afford basic water needs. This tension between encouraging reduced consumption through price signals and ensuring universal access to an essential resource has become a central challenge in urban water management. Policymakers must navigate competing objectives: environmental sustainability demands that pricing reflects water's true scarcity value, while social justice principles require that affordability remains paramount. Finding the appropriate balance has proven to be one of the most contentious issues in contemporary resource governance."
+    },
+    {
+      "id": "B",
+      "text": "The debate surrounding water pricing has evolved considerably since the early 1990s. Prior to this period, water services in many countries operated under flat-rate systems, where households paid a fixed monthly fee regardless of consumption. A 1992 report by the Global Water Policy Institute first highlighted the environmental consequences of this approach, noting that flat rates provided no incentive for conservation. By the mid-2000s, volumetric pricing—charging based on actual usage—had become increasingly common across Europe, North America, and parts of Asia. Research conducted by the Urban Development Research Centre between 2008 and 2012 revealed that volumetric systems reduced average household consumption by 15 to 25 percent compared to flat-rate alternatives. Nevertheless, such systems sparked concerns about their distributional effects on vulnerable populations."
+    },
+    {
+      "id": "C",
+      "text": "Dr. Helena Vargas, a water economist at the University of São Paulo, has been instrumental in developing the theoretical framework for increasing block tariffs. This pricing structure, commonly abbreviated as IBT, charges progressively higher rates as consumption increases, with the first tier typically set at a subsidized rate to cover essential needs. According to a 2019 study published in the Journal of Environmental Economics, households under IBT systems tend to reduce their usage by an average of 18.4 percent compared to those paying uniform volumetric rates. Vargas argues that this approach simultaneously addresses conservation and equity objectives by protecting basic consumption while penalizing excessive use. Initially, households are allocated a low-cost allowance—typically between 50 and 100 litres per person daily. Subsequently, consumption beyond this threshold triggers higher pricing tiers. At the final stage, rates for luxury consumption may increase substantially, sometimes reaching three to four times the baseline price."
+    },
+    {
+      "id": "D",
+      "text": "Professor Kwame Mensah, Director of Social Policy Research at the University of Ghana, contends that tiered pricing alone cannot adequately address equity concerns. His research, presented in a 2021 World Resources Council report, suggests that low-income households in some contexts may actually consume more water per capita due to leaking infrastructure, shared dwellings, or home-based economic activities. Mensah advocates for direct subsidy mechanisms, sometimes called lifeline or social tariffs, which provide explicit price reductions to qualifying households regardless of consumption patterns. Under such systems, eligibility is typically determined through means-testing or connection to existing social welfare programmes. Following this identification phase, targeted rebates are applied directly to household bills. Ultimately, administrative targeting becomes crucial—without accurate identification of vulnerable households, subsidies may fail to reach intended beneficiaries or could potentially benefit those who do not require assistance."
+    },
+    {
+      "id": "E",
+      "text": "The divergent approaches adopted by South Africa and Australia illustrate the practical implications of different pricing philosophies. Following the 2015-2018 drought, Cape Town implemented aggressive tiered pricing that increased rates by up to 500 percent for households exceeding monthly allocations. While this approach reduced consumption by approximately 45 percent, a 2020 study found that low-income townships experienced water access difficulties, with 23 percent of surveyed households reducing consumption below recommended health thresholds of 50 litres per person daily. Conversely, Melbourne introduced a hybrid system combining moderate volumetric charges with means-tested rebates. Research indicates that this model achieved more modest conservation gains—roughly 28 percent reduction—but maintained greater equity outcomes. Notably, water debt among low-income households in Melbourne decreased by 37 percent following implementation. These contrasting cases demonstrate that policy design involves inherent trade-offs between environmental effectiveness and social protection."
+    },
+    {
+      "id": "F",
+      "text": "Despite theoretical advances in pricing design, Dr. Yuki Tanaka, an environmental policy analyst at the Tokyo Institute for Sustainability, argues that implementation challenges often undermine intended outcomes. According to Tanaka's 2022 comparative analysis of 48 cities across four continents, administrative capacity represents the primary barrier to effective social tariff systems. Many municipalities lack reliable data to accurately identify vulnerable households, resulting in significant targeting errors. Furthermore, Tanaka suggests that tiered systems may inadvertently penalize larger households regardless of income, as per-household rather than per-capita allocation fails to account for family size. Such limitations have prompted some researchers to question whether pricing mechanisms represent the most appropriate conservation tool, proposing instead that technological interventions—such as efficient fixtures and leak reduction programmes—might achieve similar outcomes without equivalent distributional concerns. These criticisms highlight the gap between policy theory and practical implementation."
+    },
+    {
+      "id": "G",
+      "text": "On balance, contemporary scholarship appears to be moving toward integrated approaches that combine pricing signals with targeted social protection measures. Most experts acknowledge that no single mechanism adequately addresses both conservation and equity objectives. Emerging research from Singapore and Brazil suggests that successful programmes typically feature multiple complementary components: moderate price incentives, explicit low-income support, infrastructure improvements, and public education campaigns. Ultimately, the optimal policy mix seems likely to vary according to local conditions, including water scarcity levels, administrative capacity, income inequality, and existing social welfare systems. These contextual factors continue to shape ongoing debates in the field."
+    }
+  ],
+  "questions": [
+
+{
+  "id": 4,
+  "type": "true-false-not-given",
+  "title": "Questions 14-18",
+  "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
+  "questions": [
+    {
+      "id": 14,
+      "questionText": "By the middle of the first decade of the 2000s, usage-based water pricing had become prevalent in several global regions including parts of Asia.",
+      "correctAnswer": "TRUE",
+      "justification": "Paragraph B states that volumetric pricing became 'increasingly common across Europe, North America, and parts of Asia' by the mid-2000s. The statement accurately paraphrases the timeframe and geographical spread described in the text.",
+      "evidenceQuote": "By the mid-2000s, volumetric pricing—charging based on actual usage—had become increasingly common across Europe, North America, and parts of Asia"
+    },
+    {
+      "id": 15,
+      "questionText": "According to Professor Mensah, poorer households generally consume less water than wealthier ones due to their limited financial resources.",
+      "correctAnswer": "FALSE",
+      "justification": "The passage states that low-income households 'may actually consume more water per capita' due to issues like leaking infrastructure or home-based activities. The statement contradicts the text by claiming they consume less.",
+      "evidenceQuote": "low-income households in some contexts may actually consume more water per capita due to leaking infrastructure, shared dwellings, or home-based economic activities"
+    },
+    {
+      "id": 16,
+      "questionText": "Tiered pricing systems require less administrative investment to implement than direct subsidy programmes.",
+      "correctAnswer": "NOT GIVEN",
+      "justification": "While paragraph F discusses administrative capacity as a barrier for social tariffs and mentions limitations of tiered systems, the passage does not make a direct comparison regarding the cost or level of administrative investment required for tiered pricing versus direct subsidies.",
+      "evidenceQuote": "administrative capacity represents the primary barrier to effective social tariff systems... Tanaka suggests that tiered systems may inadvertently penalize larger households"
+    },
+    {
+      "id": 17,
+      "questionText": "Dr. Tanaka's research examined water pricing practices in cities spread across more than one continent.",
+      "correctAnswer": "TRUE",
+      "justification": "Paragraph F explicitly states that Tanaka conducted a 'comparative analysis of 48 cities across four continents.' Since four continents is 'more than one,' the statement agrees with the information.",
+      "evidenceQuote": "According to Tanaka's 2022 comparative analysis of 48 cities across four continents"
+    },
+    {
+      "id": 18,
+      "questionText": "Melbourne's hybrid water pricing system resulted in a consumption decrease of approximately 37 percent.",
+      "correctAnswer": "FALSE",
+      "justification": "The passage states that Melbourne achieved a 'roughly 28 percent reduction' in consumption. The figure of 37 percent refers to the decrease in 'water debt among low-income households,' not the reduction in water consumption.",
+      "evidenceQuote": "this model achieved more modest conservation gains—roughly 28 percent reduction... water debt among low-income households in Melbourne decreased by 37 percent"
+    }
+  ]
+},
+{
+  "id": 5,
+  "type": "matching-features",
+  "title": "Questions 19-22",
+  "instructions": "Look at the following researchers and organisations (Questions 19-22) and the list of findings below. Match each finding with the correct researcher or organisation, A-G. Write the correct letter, A-G, in boxes 19-22 on your answer sheet. NB You may use any letter more than once.",
+  "features": [
+    {
+      "letter": "A",
+      "name": "Dr. Helena Vargas"
+    },
+    {
+      "letter": "B",
+      "name": "Professor Kwame Mensah"
+    },
+    {
+      "letter": "C",
+      "name": "Dr. Yuki Tanaka"
+    },
+    {
+      "letter": "D",
+      "name": "Global Water Policy Institute"
+    },
+    {
+      "letter": "E",
+      "name": "Urban Development Research Centre"
+    },
+    {
+      "letter": "F",
+      "name": "University of São Paulo"
+    },
+    {
+      "letter": "G",
+      "name": "University of Ghana"
+    }
+  ],
+  "questions": [
+    {
+      "id": 19,
+      "questionText": "was first to document the ecological impacts of uniform billing, noting that fixed charges failed to encourage reduced usage",
+      "correctAnswer": "D",
+      "justification": "Paragraph B explicitly states 'A 1992 report by the Global Water Policy Institute first highlighted the environmental consequences of this approach, noting that flat rates provided no incentive for conservation.' The statement paraphrases 'first highlighted' as 'first to document' and 'flat rates' as 'uniform billing.'",
+      "evidenceQuote": "A 1992 report by the Global Water Policy Institute first highlighted the environmental consequences of this approach, noting that flat rates provided no incentive for conservation"
+    },
+    {
+      "id": 20,
+      "questionText": "maintains that progressive pricing structures can simultaneously achieve environmental and social objectives by safeguarding essential usage while deterring overconsumption",
+      "correctAnswer": "A",
+      "justification": "Paragraph C states that 'Vargas argues that this approach simultaneously addresses conservation and equity objectives by protecting basic consumption while penalizing excessive use.' The statement paraphrases 'conservation and equity objectives' as 'environmental and social objectives.'",
+      "evidenceQuote": "Vargas argues that this approach simultaneously addresses conservation and equity objectives by protecting basic consumption while penalizing excessive use"
+    },
+    {
+      "id": 21,
+      "questionText": "research indicates that economically disadvantaged households may use greater amounts of water individually due to factors such as defective plumbing and shared residential arrangements",
+      "correctAnswer": "B",
+      "justification": "Paragraph D states that Mensah's research 'suggests that low-income households in some contexts may actually consume more water per capita due to leaking infrastructure, shared dwellings.' The statement paraphrases 'low-income' as 'economically disadvantaged' and 'leaking infrastructure' as 'defective plumbing.'",
+      "evidenceQuote": "His research... suggests that low-income households in some contexts may actually consume more water per capita due to leaking infrastructure, shared dwellings"
+    },
+    {
+      "id": 22,
+      "questionText": "identified governance capabilities at municipal level as the foremost obstacle to successful implementation of support programmes for vulnerable water users",
+      "correctAnswer": "C",
+      "justification": "Paragraph F states 'According to Tanaka... administrative capacity represents the primary barrier to effective social tariff systems.' The statement transforms 'administrative capacity' to 'governance capabilities at municipal level' and 'social tariff systems' to 'support programmes for vulnerable water users.'",
+      "evidenceQuote": "According to Tanaka's 2022 comparative analysis... administrative capacity represents the primary barrier to effective social tariff systems"
+    }
+  ]
+},
+{
+  "id": 6,
+  "type": "multiple-choice",
+  "title": "Questions 23-26",
+  "instructions": "Choose the correct letter, A, B, C or D.",
+  "questions": [
+    {
+      "id": 23,
+      "questionText": "According to the passage, how did the water policy outcomes in Cape Town and Melbourne differ?",
+      "options": [
+        "Cape Town achieved higher consumption reduction but Melbourne produced better outcomes for disadvantaged households",
+        "Melbourne achieved higher consumption reduction but Cape Town produced better outcomes for disadvantaged households",
+        "Both cities achieved comparable consumption reductions through fundamentally different pricing structures",
+        "Neither city managed to reduce consumption significantly despite implementing aggressive pricing measures"
+      ],
+      "correctAnswer": "Cape Town achieved higher consumption reduction but Melbourne produced better outcomes for disadvantaged households",
+      "justification": "Paragraph E explicitly states Cape Town achieved 'approximately 45 percent' reduction compared to Melbourne's 'roughly 28 percent reduction.' However, Melbourne maintained 'greater equity outcomes,' evidenced by a 37% decrease in water debt among low-income households, whereas Cape Town saw 23% of surveyed households reducing consumption below health thresholds.",
+      "evidenceQuote": "While this approach reduced consumption by approximately 45 percent... Conversely, Melbourne introduced a hybrid system... this model achieved more modest conservation gains—roughly 28 percent reduction—but maintained greater equity outcomes"
+    },
+    {
+      "id": 24,
+      "questionText": "What can be inferred from Professor Mensah's research about assumptions regarding water consumption patterns?",
+      "options": [
+        "Affluent households invariably consume greater quantities of water than economically disadvantaged ones",
+        "The presumption that poorer households necessarily use less water may be flawed in certain circumstances",
+        "Household size is the primary determinant of water usage rather than socioeconomic status",
+        "Low-income families intentionally limit their water use to minimize monthly expenses"
+      ],
+      "correctAnswer": "The presumption that poorer households necessarily use less water may be flawed in certain circumstances",
+      "justification": "Paragraph D states Mensah's research 'suggests that low-income households in some contexts may actually consume more water per capita due to leaking infrastructure, shared dwellings, or home-based economic activities.' This challenges the standard assumption that low income correlates with low consumption.",
+      "evidenceQuote": "His research... suggests that low-income households in some contexts may actually consume more water per capita due to leaking infrastructure, shared dwellings, or home-based economic activities"
+    },
+    {
+      "id": 25,
+      "questionText": "What is the central conclusion presented in the final paragraph of the passage?",
+      "options": [
+        "Progressive pricing structures have proven universally superior to direct financial assistance programmes",
+        "Locally adapted strategies incorporating multiple complementary mechanisms appear most promising",
+        "Technological improvements to water infrastructure represent the most viable long-term solution",
+        "The aggressive pricing approach implemented by Cape Town should serve as a model for other municipalities"
+      ],
+      "correctAnswer": "Locally adapted strategies incorporating multiple complementary mechanisms appear most promising",
+      "justification": "Paragraph G states that 'contemporary scholarship appears to be moving toward integrated approaches' and that successful programmes 'typically feature multiple complementary components.' It concludes that 'the optimal policy mix seems likely to vary according to local conditions.'",
+      "evidenceQuote": "successful programmes typically feature multiple complementary components: moderate price incentives, explicit low-income support, infrastructure improvements, and public education campaigns. Ultimately, the optimal policy mix seems likely to vary according to local conditions"
+    }
+  ]
+},
+{
+  "id": 7,
+  "type": "sentence-completion",
+  "title": "Questions 26-27",
+  "word_limit": "NO MORE THAN TWO WORDS",
+  "instructions": "Complete the sentences below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+  "questions": [
+    {
+      "id": 26,
+      "questionText": "Dr. Tanaka identified insufficient _____ as the main barrier preventing effective social tariff programmes.",
+      "correctAnswer": "administrative capacity",
+      "alternativeAnswers": [],
+      "evidenceQuote": "According to Tanaka's 2022 comparative analysis... administrative capacity represents the primary barrier to effective social tariff systems"
+    },
+    {
+      "id": 27,
+      "questionText": "Research suggests that effective water policy requires integrating pricing mechanisms with targeted _____.",
+      "correctAnswer": "social protection",
+      "alternativeAnswers": [
+        "protection measures"
+      ],
+      "evidenceQuote": "contemporary scholarship appears to be moving toward integrated approaches that combine pricing signals with targeted social protection measures"
+    }
+  ]
+}
+  ]
+},
+{
+  "id": 3,
+  "title": "Algorithmic Governance and the Contested Foundations of Epistemic Legitimacy",
+  "level": "challenging",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "A",
+      "text": "The integration of algorithmic decision-making systems into public governance has prompted fundamental questions about the nature of legitimate knowledge in policy contexts. While proponents argue that such systems enhance objectivity by reducing human cognitive biases, critics contend that they introduce new forms of epistemic opacity that undermine democratic accountability. This tension—between computational efficiency and interpretive transparency—has become increasingly consequential as governments worldwide adopt automated systems for resource allocation, risk assessment, and regulatory enforcement. The debate extends beyond technical considerations to interrogate the very foundations of what constitutes valid justification in public decision-making."
+    },
+    {
+      "id": "B",
+      "text": "The turn toward algorithmic governance emerged gradually over the preceding two decades, initially in domains where quantification seemed unproblematic: traffic optimization, fraud detection, and logistical planning. However, by 2015, these systems had expanded into more normatively contested areas, including criminal sentencing, welfare eligibility, and immigration processing. A 2019 OECD report documented that 67% of member states had implemented some form of algorithmic decision support in at least three policy domains, with this figure rising to 84% by 2023. This expansion occurred largely without systematic evaluation of how automated reasoning differs epistemologically from traditional bureaucratic judgment, creating what scholars have termed an \"accountability gap.\""
+    },
+    {
+      "id": "C",
+      "text": "Dr. Amara Okonkwo, a computational governance researcher at the Singapore Institute for Public Policy Studies, has argued that algorithmic systems can achieve what she terms \"structured epistemic accountability.\" In her 2021 analysis, Okonkwo proposed a framework for evaluating algorithmic legitimacy comprising five sequential stages: initial specification of decision criteria, systematic data validation, model interpretability testing, outcome tracking over defined intervals, and iterative refinement based on documented discrepancies. According to Okonkwo, this structured approach provides greater transparency than traditional bureaucratic discretion, which often relies on implicit knowledge that cannot be externally audited. \"The algorithm makes its premises explicit,\" Okonkwo contends, \"whereas human decision-makers frequently cannot articulate the basis for their judgments.\""
+    },
+    {
+      "id": "D",
+      "text": "Evidence supporting this position emerged from a longitudinal study conducted between 2018 and 2022 by researchers at the University of São Paulo, which examined welfare eligibility determinations in three Brazilian municipalities. The study found that algorithmic systems reduced inconsistency in benefit allocation by 43.7% compared to purely discretionary processes, while simultaneously generating comprehensive audit trails. Notably, when decisions were appealed, algorithmic determinations could be reconstructed and examined in 91% of cases, compared to only 34% for traditional methods. These findings, published in the Journal of Public Administration Research, suggested that computational approaches might actually enhance the conditions for meaningful accountability rather than diminish them."
+    },
+    {
+      "id": "E",
+      "text": "Nevertheless, Professor Henrik Lindqvist of the Stockholm Policy Research Institute has challenged this interpretation on methodological grounds. Lindqvist argues that the apparent transparency of algorithmic systems is largely illusory, constituting what he calls \"procedural visibility without substantive comprehensibility.\" While the inputs and outputs of such systems may be documented, Lindqvist maintains that the inferential processes connecting them remain opaque to the citizens affected. In a 2022 meta-analysis examining 127 studies of algorithmic governance, Lindqvist's team found that only 12% of implemented systems provided explanations that non-experts rated as \"genuinely informative.\" This distinction between formal transparency and practical interpretability, Lindqvist suggests, undermines claims about enhanced accountability."
+    },
+    {
+      "id": "F",
+      "text": "Lindqvist's critique draws further support from research conducted by the European Center for Digital Governance in Brussels, which surveyed 2,400 citizens across six countries regarding their comprehension of algorithmic decisions affecting them. Approximately 78% of respondents indicated they could not explain why a particular decision had been reached, even when provided with system-generated explanations. Moreover, the study revealed that 64% of participants felt less able to contest algorithmic determinations than human ones, despite the formal availability of appeal mechanisms. These findings point to a fundamental asymmetry: while algorithms may be technically auditable, this auditability does not translate into meaningful citizen understanding or empowerment."
+    },
+    {
+      "id": "G",
+      "text": "A more nuanced position has been advanced by Dr. Yuki Tanaka, director of the Digital Governance Initiative at Osaka University. Tanaka proposes that the debate between proponents and critics rests on divergent conceptions of accountability itself. While Okonkwo emphasizes \"retrospective traceability\"—the capacity to reconstruct decision paths after the fact—Lindqvist prioritizes \"prospective comprehensibility\"—the ability of affected parties to anticipate and understand decisions before they occur. Tanaka argues that both dimensions are necessary but insufficient alone, advocating for what she terms \"dialogical accountability,\" wherein algorithmic systems are designed to support ongoing interrogation rather than merely documentation. Under this conception, legitimacy derives not from transparency per se, but from the quality of interaction between system and subject."
+    },
+    {
+      "id": "H",
+      "text": "Despite these theoretical advances, significant methodological limitations constrain current understanding. Dr. Carlos Mendes, who led the Brazilian longitudinal study, has acknowledged that existing research predominantly examines systems in relatively structured domains with clear outcome criteria. Whether these findings generalize to policy areas involving contested values—educational placement, healthcare rationing, or asylum determination—remains uncertain. Furthermore, Mendes notes that most evaluations measure procedural consistency rather than substantive justice, leaving open the question of whether technically accountable systems produce outcomes that citizens perceive as fair. Such concerns suggest that the field may be measuring what is measurable rather than what matters."
+    },
+    {
+      "id": "I",
+      "text": "The trajectory of this debate carries implications extending beyond immediate governance challenges. As algorithmic systems become increasingly embedded in institutional decision-making, the standards by which their legitimacy is assessed will shape not merely policy outcomes but the broader relationship between citizens and the state. Whether computational governance ultimately enhances or erodes democratic accountability may depend less on the systems themselves than on how societies choose to define accountability in an age of automated reasoning—a fundamentally normative question that no algorithm can resolve."
+    }
+  ],
+    "questions": [
+{
+  "id": 8,
+  "type": "matching-headings",
+  "title": "Questions 28-34",
+  "instructions": "The reading passage has nine paragraphs, A-I. Choose the correct heading for paragraphs B-H from the list of headings below. Write the correct number, i-x, in boxes 28-34 on your answer sheet.",
+  "questions": [
+    {
+      "id": 28,
+      "questionText": "Paragraph B",
+      "options": [
+        "Bridging divergent positions through conceptual clarification",
+        "Evidence of citizen difficulties comprehending automated decisions",
+        "Technical specifications for building interpretable algorithms",
+        "Questioning whether formal documentation enables genuine understanding",
+        "The gradual expansion of automation without systematic evaluation",
+        "Framing opposing perspectives on algorithmic decision-making",
+        "A proposed framework arguing for enhanced systematic transparency",
+        "Successful deployment of interactive accountability mechanisms",
+        "Research demonstrating improved traceability in automated processes",
+        "Constraints limiting the applicability of existing findings"
+      ],
+      "correctAnswer": "The gradual expansion of automation without systematic evaluation",
+      "justification": "Paragraph B traces the historical emergence of algorithmic governance, emphasizing that systems spread from technical domains to contested policy areas 'without systematic evaluation.' The heading paraphrases the timeline ('emerged gradually') and the lack of assessment ('without systematic evaluation').",
+      "evidenceQuote": "\"This expansion occurred largely without systematic evaluation of how automated reasoning differs epistemologically from traditional bureaucratic judgment, creating what scholars have termed an 'accountability gap.'\""
+    },
+    {
+      "id": 29,
+      "questionText": "Paragraph C",
+      "options": [
+        "Bridging divergent positions through conceptual clarification",
+        "Evidence of citizen difficulties comprehending automated decisions",
+        "Technical specifications for building interpretable algorithms",
+        "Questioning whether formal documentation enables genuine understanding",
+        "The gradual expansion of automation without systematic evaluation",
+        "Framing opposing perspectives on algorithmic decision-making",
+        "A proposed framework arguing for enhanced systematic transparency",
+        "Successful deployment of interactive accountability mechanisms",
+        "Research demonstrating improved traceability in automated processes",
+        "Constraints limiting the applicability of existing findings"
+      ],
+      "correctAnswer": "A proposed framework arguing for enhanced systematic transparency",
+      "justification": "Paragraph C presents Okonkwo's theoretical position that algorithmic systems offer superior transparency through her structured five-stage framework. The heading paraphrases 'structured epistemic accountability' as 'systematic transparency' and reflects her argumentative stance.",
+      "evidenceQuote": "\"Dr. Amara Okonkwo... has argued that algorithmic systems can achieve what she terms 'structured epistemic accountability.'\""
+    },
+    {
+      "id": 30,
+      "questionText": "Paragraph D",
+      "options": [
+        "Bridging divergent positions through conceptual clarification",
+        "Evidence of citizen difficulties comprehending automated decisions",
+        "Technical specifications for building interpretable algorithms",
+        "Questioning whether formal documentation enables genuine understanding",
+        "The gradual expansion of automation without systematic evaluation",
+        "Framing opposing perspectives on algorithmic decision-making",
+        "A proposed framework arguing for enhanced systematic transparency",
+        "Successful deployment of interactive accountability mechanisms",
+        "Research demonstrating improved traceability in automated processes",
+        "Constraints limiting the applicability of existing findings"
+      ],
+      "correctAnswer": "Research demonstrating improved traceability in automated processes",
+      "justification": "Paragraph D presents empirical evidence from Brazil supporting the idea that algorithms allow for better reconstruction of decisions. The key finding—91% reconstructability for algorithmic vs. 34% for traditional decisions—directly demonstrates improved traceability.",
+      "evidenceQuote": "\"when decisions were appealed, algorithmic determinations could be reconstructed and examined in 91% of cases, compared to only 34% for traditional methods\""
+    },
+    {
+      "id": 31,
+      "questionText": "Paragraph E",
+      "options": [
+        "Bridging divergent positions through conceptual clarification",
+        "Evidence of citizen difficulties comprehending automated decisions",
+        "Technical specifications for building interpretable algorithms",
+        "Questioning whether formal documentation enables genuine understanding",
+        "The gradual expansion of automation without systematic evaluation",
+        "Framing opposing perspectives on algorithmic decision-making",
+        "A proposed framework arguing for enhanced systematic transparency",
+        "Successful deployment of interactive accountability mechanisms",
+        "Research demonstrating improved traceability in automated processes",
+        "Constraints limiting the applicability of existing findings"
+      ],
+      "correctAnswer": "Questioning whether formal documentation enables genuine understanding",
+      "justification": "Paragraph E presents Lindqvist's critique distinguishing formal transparency from meaningful comprehension. The heading captures the doubt ('Questioning') regarding whether 'procedural visibility' (formal documentation) leads to 'substantive comprehensibility' (genuine understanding).",
+      "evidenceQuote": "\"Lindqvist argues that the apparent transparency of algorithmic systems is largely illusory, constituting what he calls 'procedural visibility without substantive comprehensibility.'\""
+    },
+    {
+      "id": 32,
+      "questionText": "Paragraph F",
+      "options": [
+        "Bridging divergent positions through conceptual clarification",
+        "Evidence of citizen difficulties comprehending automated decisions",
+        "Technical specifications for building interpretable algorithms",
+        "Questioning whether formal documentation enables genuine understanding",
+        "The gradual expansion of automation without systematic evaluation",
+        "Framing opposing perspectives on algorithmic decision-making",
+        "A proposed framework arguing for enhanced systematic transparency",
+        "Successful deployment of interactive accountability mechanisms",
+        "Research demonstrating improved traceability in automated processes",
+        "Constraints limiting the applicability of existing findings"
+      ],
+      "correctAnswer": "Evidence of citizen difficulties comprehending automated decisions",
+      "justification": "Paragraph F provides empirical evidence supporting the critique that citizens cannot understand algorithmic decisions. The survey findings (78% incomprehension) demonstrate citizen-level difficulties, distinct from the theoretical questioning in paragraph E.",
+      "evidenceQuote": "\"Approximately 78% of respondents indicated they could not explain why a particular decision had been reached, even when provided with system-generated explanations.\""
+    },
+    {
+      "id": 33,
+      "questionText": "Paragraph G",
+      "options": [
+        "Bridging divergent positions through conceptual clarification",
+        "Evidence of citizen difficulties comprehending automated decisions",
+        "Technical specifications for building interpretable algorithms",
+        "Questioning whether formal documentation enables genuine understanding",
+        "The gradual expansion of automation without systematic evaluation",
+        "Framing opposing perspectives on algorithmic decision-making",
+        "A proposed framework arguing for enhanced systematic transparency",
+        "Successful deployment of interactive accountability mechanisms",
+        "Research demonstrating improved traceability in automated processes",
+        "Constraints limiting the applicability of existing findings"
+      ],
+      "correctAnswer": "Bridging divergent positions through conceptual clarification",
+      "justification": "Paragraph G presents Tanaka's synthesis, which reframes the disagreement as stemming from different accountability definitions ('conceptual clarification') and attempts to reconcile them ('bridging divergent positions').",
+      "evidenceQuote": "\"Tanaka proposes that the debate between proponents and critics rests on divergent conceptions of accountability itself.\""
+    },
+    {
+      "id": 34,
+      "questionText": "Paragraph H",
+      "options": [
+        "Bridging divergent positions through conceptual clarification",
+        "Evidence of citizen difficulties comprehending automated decisions",
+        "Technical specifications for building interpretable algorithms",
+        "Questioning whether formal documentation enables genuine understanding",
+        "The gradual expansion of automation without systematic evaluation",
+        "Framing opposing perspectives on algorithmic decision-making",
+        "A proposed framework arguing for enhanced systematic transparency",
+        "Successful deployment of interactive accountability mechanisms",
+        "Research demonstrating improved traceability in automated processes",
+        "Constraints limiting the applicability of existing findings"
+      ],
+      "correctAnswer": "Constraints limiting the applicability of existing findings",
+      "justification": "Paragraph H explicitly discusses methodological limitations that restrict how current research can be generalized. The heading paraphrases 'whether these findings generalize' as 'applicability' and notes the 'constraints' (methodological limitations).",
+      "evidenceQuote": "\"existing research predominantly examines systems in relatively structured domains with clear outcome criteria. Whether these findings generalize to policy areas involving contested values... remains uncertain.\""
+    }
+  ]
+},
+{
+  "id": 9,
+  "type": "matching-features",
+  "title": "Questions 35-38",
+  "instructions": "Look at the following statements (Questions 35-38) and the list of researchers below. Match each statement with the correct researcher, A-F. Write the correct letter, A-F, in boxes 35-38 on your answer sheet. NB You may use any letter more than once.",
+  "features": [
+    {
+      "letter": "A",
+      "name": "Dr. Amara Okonkwo"
+    },
+    {
+      "letter": "B",
+      "name": "Professor Henrik Lindqvist"
+    },
+    {
+      "letter": "C",
+      "name": "Dr. Yuki Tanaka"
+    },
+    {
+      "letter": "D",
+      "name": "Dr. Carlos Mendes"
+    },
+    {
+      "letter": "E",
+      "name": "The OECD"
+    },
+    {
+      "letter": "F",
+      "name": "The European Center for Digital Governance"
+    }
+  ],
+  "questions": [
+    {
+      "id": 35,
+      "questionText": "conducted a comprehensive review revealing that the vast majority of automated systems fail to provide meaningful explanations to non-specialists",
+      "correctAnswer": "B",
+      "justification": "Paragraph E explicitly attributes this finding to Lindqvist: 'In a 2022 meta-analysis examining 127 studies... Lindqvist's team found that only 12% of implemented systems provided explanations that non-experts rated as \"genuinely informative.\"' The statement paraphrases 'meta-analysis' as 'comprehensive review' and inverts the statistic.",
+      "evidenceQuote": "\"In a 2022 meta-analysis examining 127 studies of algorithmic governance, Lindqvist's team found that only 12% of implemented systems provided explanations that non-experts rated as 'genuinely informative.'\""
+    },
+    {
+      "id": 36,
+      "questionText": "proposed a conceptual approach emphasising that legitimacy derives from the quality of ongoing exchange between systems and those they affect",
+      "correctAnswer": "C",
+      "justification": "Paragraph G presents Tanaka's position: 'advocating for what she terms \"dialogical accountability,\" wherein algorithmic systems are designed to support ongoing interrogation... legitimacy derives not from transparency per se, but from the quality of interaction between system and subject.'",
+      "evidenceQuote": "\"Under this conception, legitimacy derives not from transparency per se, but from the quality of interaction between system and subject.\""
+    },
+    {
+      "id": 37,
+      "questionText": "led research demonstrating that automated determinations could be reconstructed in over nine out of ten contested cases",
+      "correctAnswer": "D",
+      "justification": "Paragraph D describes findings where 'algorithmic determinations could be reconstructed and examined in 91% of cases.' Paragraph H confirms Mendes led this study: 'Dr. Carlos Mendes, who led the Brazilian longitudinal study...'. The statement paraphrases '91%' as 'over nine out of ten.'",
+      "evidenceQuote": "\"when decisions were appealed, algorithmic determinations could be reconstructed and examined in 91% of cases\""
+    },
+    {
+      "id": 38,
+      "questionText": "contends that computational processes articulate their reasoning in ways that human administrators often cannot",
+      "correctAnswer": "A",
+      "justification": "Paragraph C quotes Okonkwo: '\"The algorithm makes its premises explicit,\" Okonkwo contends, \"whereas human decision-makers frequently cannot articulate the basis for their judgments.\"' The statement paraphrases 'makes its premises explicit' as 'articulate their reasoning.'",
+      "evidenceQuote": "\"'The algorithm makes its premises explicit,' Okonkwo contends, 'whereas human decision-makers frequently cannot articulate the basis for their judgments.'\""
+    }
+  ]
+},
+{
+  "id": 10,
+  "type": "multiple-choice",
+  "title": "Questions 39-40",
+  "instructions": "Choose the correct letter, A, B, C or D.",
+  "questions": [
+    {
+      "id": 39,
+      "questionText": "According to the passage, what did researchers at the University of São Paulo find regarding algorithmic welfare determinations?",
+      "options": [
+        "They eliminated nearly all inconsistencies in benefit allocation compared to human administrators",
+        "They could be examined and traced back in a far greater proportion of appealed cases than traditional decisions",
+        "They were considered more comprehensible by the citizens who received welfare benefits",
+        "They required substantially more time to process than conventional bureaucratic methods"
+      ],
+      "correctAnswer": "They could be examined and traced back in a far greater proportion of appealed cases than traditional decisions",
+      "justification": "Paragraph D states that in the Brazilian study, 'when decisions were appealed, algorithmic determinations could be reconstructed and examined in 91% of cases, compared to only 34% for traditional methods.' This demonstrates improved traceability.",
+      "evidenceQuote": "\"when decisions were appealed, algorithmic determinations could be reconstructed and examined in 91% of cases, compared to only 34% for traditional methods\""
+    },
+    {
+      "id": 40,
+      "questionText": "What can be inferred from Dr. Tanaka's analysis about the dispute between Okonkwo and Lindqvist?",
+      "options": [
+        "Their disagreement arises because they are evaluating fundamentally different types of algorithmic systems",
+        "Their apparent conflict results from emphasising distinct dimensions of what legitimate governance requires",
+        "Their conclusions are incompatible because they employ contradictory research methodologies",
+        "Their positions have been superseded by more comprehensive empirical investigations"
+      ],
+      "correctAnswer": "Their apparent conflict results from emphasising distinct dimensions of what legitimate governance requires",
+      "justification": "Paragraph G states that Tanaka 'proposes that the debate between proponents and critics rests on divergent conceptions of accountability itself.' She notes Okonkwo emphasizes 'retrospective traceability' while Lindqvist prioritizes 'prospective comprehensibility'—both valid dimensions of accountability.",
+      "evidenceQuote": "\"Tanaka proposes that the debate between proponents and critics rests on divergent conceptions of accountability itself. While Okonkwo emphasizes 'retrospective traceability'... Lindqvist prioritizes 'prospective comprehensibility'\""
+    }
+  ]
+}
+    ]
+}
+  ]
+}

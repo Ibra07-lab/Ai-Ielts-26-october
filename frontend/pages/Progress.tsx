@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { BookOpen, Mic, PenTool, Headphones, Info } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { BookOpen, Mic, PenTool, Headphones, Info, TrendingUp, Target, ArrowRight } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress as ProgressBar } from "@/components/ui/progress";
@@ -12,6 +13,7 @@ import SkillRadar from "../components/progress/SkillRadar";
 
 export default function Progress() {
   const { user } = useUser();
+  const navigate = useNavigate();
 
   const { data: progress } = useQuery({
     queryKey: ["progress", user?.id],
@@ -130,43 +132,72 @@ export default function Progress() {
           </p>
         </div>
 
+
         {/* Daily Activity Section */}
         <div className="w-full">
-          <DailyProgressChart data={dailyData} />
+          {dailyData.reduce((acc, curr) => acc + curr.total, 0) > 0 ? (
+            <DailyProgressChart data={dailyData} />
+          ) : (
+            <Card className="bg-[#1E293B] border-[#334155]">
+              <CardHeader>
+                <CardTitle className="text-white">Daily Activity</CardTitle>
+              </CardHeader>
+              <CardContent className="flex flex-col items-center justify-center py-12 text-center">
+                <div className="w-16 h-16 bg-[#334155]/50 rounded-full flex items-center justify-center mb-4">
+                  <TrendingUp className="w-8 h-8 text-slate-400" />
+                </div>
+                <h3 className="text-lg font-medium text-white mb-2">No activity recorded yet</h3>
+                <p className="text-slate-400 max-w-sm">
+                  Complete your first practice session to verify your daily progress charts.
+                </p>
+              </CardContent>
+            </Card>
+          )}
         </div>
 
         {/* Skill Radar Chart */}
-        <Card>
+        <Card className="bg-[#1E293B] border-[#334155]">
           <CardHeader>
-            <CardTitle>Skill Balance & Goals</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-white">Skill Balance & Goals</CardTitle>
+            <CardDescription className="text-slate-400">
               Visualizing your current performance against your target band of {user.targetBand}
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <SkillRadar
-              data={[
-                { subject: 'Speaking', A: getSkillProgress('speaking')?.estimatedBand || 0, B: user.targetBand || 7.0, fullMark: 9 },
-                { subject: 'Writing', A: getSkillProgress('writing')?.estimatedBand || 0, B: user.targetBand || 7.0, fullMark: 9 },
-                { subject: 'Reading', A: getSkillProgress('reading')?.estimatedBand || 0, B: user.targetBand || 7.0, fullMark: 9 },
-                { subject: 'Listening', A: getSkillProgress('listening')?.estimatedBand || 0, B: user.targetBand || 7.0, fullMark: 9 },
-              ]}
-            />
-            <div className="mt-6 bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg flex gap-3 items-start">
-              <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
-              <div className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                <p><strong>Note:</strong> If the chart is empty, ensure you have practice data for the skills.</p>
-                <p>If the "Target" line is missing, check if your profile has a target band set (default is usually 7.0).</p>
+            {/* Logic: Check if we have any non-zero skill scores */}
+            {[
+              getSkillProgress('speaking')?.estimatedBand,
+              getSkillProgress('writing')?.estimatedBand,
+              getSkillProgress('reading')?.estimatedBand,
+              getSkillProgress('listening')?.estimatedBand
+            ].some(score => score && score > 0) ? (
+              <SkillRadar
+                data={[
+                  { subject: 'Speaking', A: getSkillProgress('speaking')?.estimatedBand || 0, B: user.targetBand || 7.0, fullMark: 9 },
+                  { subject: 'Writing', A: getSkillProgress('writing')?.estimatedBand || 0, B: user.targetBand || 7.0, fullMark: 9 },
+                  { subject: 'Reading', A: getSkillProgress('reading')?.estimatedBand || 0, B: user.targetBand || 7.0, fullMark: 9 },
+                  { subject: 'Listening', A: getSkillProgress('listening')?.estimatedBand || 0, B: user.targetBand || 7.0, fullMark: 9 },
+                ]}
+              />
+            ) : (
+              <div className="flex flex-col items-center justify-center py-12 text-center">
+                <div className="w-16 h-16 bg-[#334155]/50 rounded-full flex items-center justify-center mb-4">
+                  <Target className="w-8 h-8 text-cyan-400" />
+                </div>
+                <h3 className="text-lg font-medium text-white mb-2">No skill data available</h3>
+                <p className="text-slate-400 max-w-sm mb-6">
+                  Complete a mock test or practice session to populate your skill radar and see your balance.
+                </p>
               </div>
-            </div>
+            )}
           </CardContent>
         </Card>
 
         {/* Skills Breakdown */}
-        <Card>
+        <Card className="bg-[#1E293B] border-[#334155]">
           <CardHeader>
-            <CardTitle>Skills Breakdown</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-white">Skills Breakdown</CardTitle>
+            <CardDescription className="text-slate-400">
               Your performance across all four IELTS skills
             </CardDescription>
           </CardHeader>
@@ -174,16 +205,41 @@ export default function Progress() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {Object.entries(skillIcons).map(([skill, Icon]) => {
                 const skillData = getSkillProgress(skill);
+                const hasScore = skillData?.estimatedBand && skillData.estimatedBand > 0;
+
                 return (
-                  <div key={skill} className="text-center p-4 border rounded-lg">
-                    <Icon className="h-8 w-8 mx-auto mb-2 text-gray-600" />
-                    <h3 className="font-semibold capitalize mb-1">{skill}</h3>
-                    <p className="text-2xl font-bold text-sky-600">
-                      {skillData?.estimatedBand || "N/A"}
-                    </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                  <div
+                    key={skill}
+                    className={`group relative text-center p-5 border rounded-xl transition-all duration-300 ${hasScore ? 'bg-[#334155]/20 border-[#334155] hover:border-blue-500/50' : 'bg-[#334155]/10 border-[#334155]/50 hover:bg-[#334155]/20'}`}
+                  >
+                    <Icon className={`h-8 w-8 mx-auto mb-3 transition-colors ${hasScore ? 'text-blue-400' : 'text-slate-500 group-hover:text-slate-400'}`} />
+                    <h3 className="font-semibold capitalize mb-1 text-slate-200">{skill}</h3>
+
+                    {hasScore ? (
+                      <p className="text-3xl font-bold text-cyan-400 mb-1">
+                        {skillData.estimatedBand}
+                      </p>
+                    ) : (
+                      <p className="text-3xl font-bold text-[#475569] mb-1">
+                        N/A
+                      </p>
+                    )}
+
+                    <p className="text-sm text-slate-500 mb-2">
                       {skillData?.practiceCount || 0} sessions
                     </p>
+
+                    {/* Action Button Hint */}
+                    {!hasScore && (
+                      <div
+                        className="absolute inset-0 flex items-center justify-center bg-[#1E293B]/90 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl backdrop-blur-sm cursor-pointer border border-blue-500/30"
+                        onClick={() => navigate('/' + skill)}
+                      >
+                        <span className="text-sm font-semibold text-blue-400 flex items-center gap-1">
+                          Start Practice <ArrowRight className="w-3 h-3" />
+                        </span>
+                      </div>
+                    )}
                   </div>
                 );
               })}
@@ -193,11 +249,11 @@ export default function Progress() {
 
         {/* Detailed Progress Tabs */}
         <Tabs defaultValue="speaking" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="speaking">Speaking</TabsTrigger>
-            <TabsTrigger value="writing">Writing</TabsTrigger>
-            <TabsTrigger value="reading">Reading</TabsTrigger>
-            <TabsTrigger value="listening">Listening</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-4 bg-[#0F172A] border border-[#334155] p-1 h-auto">
+            <TabsTrigger value="speaking" className="data-[state=active]:bg-[#334155] data-[state=active]:text-white text-slate-400 py-2">Speaking</TabsTrigger>
+            <TabsTrigger value="writing" className="data-[state=active]:bg-[#334155] data-[state=active]:text-white text-slate-400 py-2">Writing</TabsTrigger>
+            <TabsTrigger value="reading" className="data-[state=active]:bg-[#334155] data-[state=active]:text-white text-slate-400 py-2">Reading</TabsTrigger>
+            <TabsTrigger value="listening" className="data-[state=active]:bg-[#334155] data-[state=active]:text-white text-slate-400 py-2">Listening</TabsTrigger>
           </TabsList>
 
           <TabsContent value="speaking">

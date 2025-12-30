@@ -37,6 +37,7 @@ function AppInner() {
       <Layout>
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/speaking" element={<SpeakingPractice />} />
           <Route path="/writing" element={<WritingTask />} />
           <Route path="/reading" element={<ReadingPractice />} />
@@ -44,7 +45,7 @@ function AppInner() {
           <Route path="/reading/quiz-matching-headings" element={<MatchingHeadingsQuiz />} />
           <Route path="/reading/theory" element={<ReadingTheory />} />
           <Route path="/reading/tutor-chat" element={<ReadingTutor />} />
-					<Route path="/tutor" element={<ReadingTutor />} />
+          <Route path="/tutor" element={<ReadingTutor />} />
           <Route path="/listening" element={<ListeningPractice />} />
           <Route path="/vocabulary" element={<VocabularyBuilder />} />
           <Route path="/progress" element={<Progress />} />

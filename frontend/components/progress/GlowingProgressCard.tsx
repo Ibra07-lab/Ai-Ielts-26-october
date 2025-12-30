@@ -7,6 +7,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useUser } from "@/contexts/UserContext";
 import * as progressApi from "@/api/progress";
 import AddTaskModal from "@/components/progress/AddTaskModal";
+import { useTheme } from "@/contexts/ThemeContext";
 
 type PlanType = "daily" | "weekly" | "custom";
 
@@ -111,6 +112,7 @@ export default function GlowingProgressCard({
 }: GlowingProgressCardProps) {
   const clamped = clampPercent(percent);
   const { user } = useUser();
+  const { theme } = useTheme();
   const queryClient = useQueryClient();
 
   // Local persistent state when uncontrolled
@@ -187,8 +189,9 @@ export default function GlowingProgressCard({
     <div
       className={cn(
         "relative overflow-hidden rounded-3xl p-6 md:p-8 transition-all duration-300 group",
-        "bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950",
-        "border border-white/10 shadow-2xl shadow-indigo-500/10",
+        theme === "dark"
+          ? "bg-slate-900 border border-white/10 shadow-2xl shadow-indigo-500/10"
+          : "bg-white/40 backdrop-blur-xl border border-white/50 shadow-sm",
         className
       )}
       aria-expanded={isOpen}
@@ -205,20 +208,36 @@ export default function GlowingProgressCard({
             <Target className="h-5 w-5 text-white" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-white tracking-tight leading-none">
+            <h3 className={cn(
+              "text-lg font-semibold tracking-tight leading-none",
+              theme === "dark" ? "text-white" : "text-slate-900"
+            )}>
               {title}
             </h3>
-            <p className="text-xs text-slate-400 font-medium mt-1">Track your goals</p>
+            <p className={cn(
+              "text-xs font-medium mt-1",
+              theme === "dark" ? "text-slate-400" : "text-slate-500"
+            )}>
+              Track your goals
+            </p>
           </div>
         </div>
 
         {/* Plan Type Selector */}
         <div onClick={(e) => e.stopPropagation()}>
           <Select value={planType} onValueChange={(v) => handlePlanType(v as PlanType)}>
-            <SelectTrigger className="h-8 rounded-full bg-white/5 border-white/10 text-slate-200 px-3 text-xs font-medium hover:bg-white/10 hover:text-white transition-colors focus:ring-0 focus:ring-offset-0 w-[110px]">
+            <SelectTrigger className={cn(
+              "h-8 rounded-full px-3 text-xs font-medium hover:text-white transition-colors focus:ring-0 focus:ring-offset-0 w-[110px]",
+              theme === "dark"
+                ? "bg-white/5 border-white/10 text-slate-200 hover:bg-white/10"
+                : "bg-slate-900/5 border-slate-200 text-slate-600 hover:bg-slate-900/10 hover:text-slate-900"
+            )}>
               <SelectValue placeholder="Plan type" />
             </SelectTrigger>
-            <SelectContent className="bg-slate-900 border-slate-800 text-slate-200">
+            <SelectContent className={cn(
+              "border-slate-800",
+              theme === "dark" ? "bg-slate-900 text-slate-200" : "bg-white text-slate-900"
+            )}>
               <SelectItem value="daily">Daily plan</SelectItem>
               <SelectItem value="weekly">Weekly plan</SelectItem>
               <SelectItem value="custom">Custom</SelectItem>
@@ -231,14 +250,23 @@ export default function GlowingProgressCard({
       <div className="relative mt-8 z-10">
         <div className="flex items-end justify-between mb-4">
           <div className="flex items-baseline gap-1">
-            <span className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-indigo-200 tracking-tighter">
+            <span className={cn(
+              "text-6xl font-bold tracking-tighter",
+              theme === "dark" ? "text-white" : "text-slate-900"
+            )}>
               {derivedPercent}
             </span>
-            <span className="text-2xl font-medium text-indigo-200/60 mb-1">%</span>
+            <span className={cn(
+              "text-2xl font-medium mb-1",
+              theme === "dark" ? "text-indigo-200/60" : "text-slate-400"
+            )}>%</span>
           </div>
           <div className="text-right mb-2">
-            <div className="text-sm font-medium text-slate-300">
-              <span className="text-white font-bold">{doneTasks}</span>
+            <div className={cn(
+              "text-sm font-medium",
+              theme === "dark" ? "text-slate-300" : "text-slate-600"
+            )}>
+              <span className={cn("font-bold", theme === "dark" ? "text-white" : "text-slate-900")}>{doneTasks}</span>
               <span className="text-slate-500 mx-1">/</span>
               <span className="text-slate-400">{totalTasks} tasks</span>
             </div>
@@ -246,7 +274,7 @@ export default function GlowingProgressCard({
         </div>
 
         {/* Progress Bar */}
-        <div className="relative h-4 w-full rounded-full bg-slate-950/50 ring-1 ring-white/5 overflow-hidden">
+        <div className="relative h-4 w-full rounded-full bg-slate-200/50 ring-1 ring-black/5 overflow-hidden shadow-inner">
           <div
             className="absolute inset-0 rounded-full transition-all duration-700 ease-out"
             style={{ width: `${derivedPercent}%` }}
@@ -280,7 +308,12 @@ export default function GlowingProgressCard({
           <Button
             size="sm"
             onClick={() => setAddOpen(true)}
-            className="h-9 rounded-full bg-white text-slate-900 hover:bg-indigo-50 border-0 font-medium px-4 shadow-lg shadow-white/5 transition-all hover:scale-105 active:scale-95"
+            className={cn(
+              "h-9 rounded-full border-0 font-medium px-4 shadow-lg transition-all hover:scale-105 active:scale-95",
+              theme === "dark"
+                ? "bg-white text-slate-900 hover:bg-indigo-50 shadow-white/5"
+                : "bg-slate-900 text-white hover:bg-black shadow-black/5"
+            )}
           >
             <Plus className="h-3.5 w-3.5 mr-1.5" />
             Add Task
@@ -288,7 +321,12 @@ export default function GlowingProgressCard({
           <Button
             size="sm"
             onClick={() => onAiSuggest?.()}
-            className="h-9 rounded-full bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 border border-indigo-500/20 font-medium px-4 transition-all hover:text-indigo-200"
+            className={cn(
+              "h-9 rounded-full border font-medium px-4 transition-all",
+              theme === "dark"
+                ? "bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 border-indigo-500/20 hover:text-indigo-200"
+                : "bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-600 border-indigo-500/20 hover:text-indigo-700"
+            )}
           >
             <Wand2 className="h-3.5 w-3.5 mr-1.5" />
             AI Suggest
@@ -301,7 +339,10 @@ export default function GlowingProgressCard({
             <button
               type="button"
               onClick={() => setEditingDue(true)}
-              className="flex items-center gap-2 text-xs font-medium text-slate-400 hover:text-white transition-colors px-3 py-1.5 rounded-full hover:bg-white/5"
+              className={cn(
+                "flex items-center gap-2 text-xs font-medium transition-colors px-3 py-1.5 rounded-full hover:bg-black/5",
+                theme === "dark" ? "text-slate-400 hover:text-white" : "text-slate-500 hover:text-slate-900"
+              )}
             >
               <Calendar className="h-3.5 w-3.5" />
               {dueISO ? dueDisplay : "Set due date"}
@@ -310,7 +351,10 @@ export default function GlowingProgressCard({
             <input
               autoFocus
               type="date"
-              className="px-3 py-1.5 rounded-lg text-xs bg-slate-800 text-white border border-slate-700 outline-none focus:border-indigo-500 transition-colors"
+              className={cn(
+                "px-3 py-1.5 rounded-lg text-xs outline-none focus:border-indigo-500 transition-colors",
+                theme === "dark" ? "bg-slate-800 text-white border-slate-700" : "bg-white text-slate-900 border-slate-200"
+              )}
               value={toInputDate(dueISO)}
               onChange={handleDueInput}
               onBlur={() => setEditingDue(false)}
@@ -330,14 +374,20 @@ export default function GlowingProgressCard({
         )}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="rounded-2xl bg-slate-950/50 border border-white/5 p-1 backdrop-blur-md">
+        <div className={cn(
+          "rounded-2xl border p-1 backdrop-blur-md shadow-sm mt-4",
+          theme === "dark" ? "bg-slate-950/50 border-white/5" : "bg-white/60 border-white/40"
+        )}>
           {totalTasks === 0 ? (
             <div className="flex flex-col items-center justify-center py-8 text-center">
-              <div className="w-12 h-12 rounded-full bg-slate-900 flex items-center justify-center mb-3 border border-slate-800">
-                <Sparkles className="h-5 w-5 text-slate-500" />
+              <div className={cn(
+                "w-12 h-12 rounded-full flex items-center justify-center mb-3 border",
+                theme === "dark" ? "bg-slate-900 border-slate-800" : "bg-slate-50 border-slate-100"
+              )}>
+                <Sparkles className={cn("h-5 w-5", theme === "dark" ? "text-slate-500" : "text-slate-300")} />
               </div>
-              <p className="text-sm text-slate-400 font-medium">No tasks yet</p>
-              <p className="text-xs text-slate-500 mt-1">Add tasks to start tracking progress</p>
+              <p className={cn("text-sm font-medium", theme === "dark" ? "text-slate-400" : "text-slate-600")}>No tasks yet</p>
+              <p className={cn("text-xs mt-1", theme === "dark" ? "text-slate-500" : "text-slate-400")}>Add tasks to start tracking progress</p>
             </div>
           ) : (
             <ul className="space-y-1">
@@ -347,7 +397,10 @@ export default function GlowingProgressCard({
                 return (
                   <li
                     key={t.id}
-                    className="group relative overflow-hidden rounded-xl transition-all duration-200 hover:bg-white/5"
+                    className={cn(
+                      "group relative overflow-hidden rounded-xl transition-all duration-200",
+                      theme === "dark" ? "hover:bg-white/5" : "hover:bg-slate-900/5"
+                    )}
                   >
                     <div className="flex items-center gap-3 p-3">
                       <button
@@ -372,16 +425,18 @@ export default function GlowingProgressCard({
                         {isDone ? (
                           <CheckCircle className="h-5 w-5 text-emerald-500 fill-emerald-500/20" />
                         ) : isInProgress ? (
-                          <CircleDot className="h-5 w-5 text-indigo-400" />
+                          <CircleDot className="h-5 w-5 text-indigo-500" />
                         ) : (
-                          <Circle className="h-5 w-5 text-slate-600 group-hover:text-slate-400 transition-colors" />
+                          <Circle className="h-5 w-5 text-slate-300 group-hover:text-slate-500 transition-colors" />
                         )}
                       </button>
 
                       <div className="flex-1 min-w-0">
                         <div className={cn(
                           "text-sm font-medium transition-colors",
-                          isDone ? "text-slate-500 line-through decoration-slate-600" : "text-slate-200 group-hover:text-white"
+                          isDone
+                            ? (theme === "dark" ? "text-slate-500 line-through decoration-slate-600" : "text-slate-400 line-through decoration-slate-300")
+                            : (theme === "dark" ? "text-slate-200 group-hover:text-white" : "text-slate-700 group-hover:text-slate-900")
                         )}>
                           {t.name}
                         </div>
@@ -389,8 +444,8 @@ export default function GlowingProgressCard({
                           <span className={cn(
                             "text-[10px] px-1.5 py-0.5 rounded font-medium border",
                             isDone
-                              ? "bg-slate-900/50 border-slate-800 text-slate-600"
-                              : "bg-indigo-500/10 border-indigo-500/20 text-indigo-300"
+                              ? (theme === "dark" ? "bg-slate-900/50 border-slate-800 text-slate-600" : "bg-slate-100 border-slate-200 text-slate-400")
+                              : "bg-indigo-500/10 border-indigo-500/20 text-indigo-600"
                           )}>
                             {t.category}
                           </span>

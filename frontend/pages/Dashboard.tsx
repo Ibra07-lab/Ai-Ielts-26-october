@@ -235,7 +235,7 @@ export default function Dashboard() {
               return (
                 <div
                   key={area.title}
-                  className={`group relative flex flex-col rounded-2xl bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-white/5 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-2xl ${theme.border} ${theme.glow}`}
+                  className={`group relative flex flex-col rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-2xl ${theme.border} ${theme.glow}`}
                 >
                   {/* Hover Gradient Effect */}
                   <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br ${theme.gradient} via-transparent to-transparent rounded-2xl pointer-events-none`} />
