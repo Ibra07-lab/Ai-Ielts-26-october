@@ -1,0 +1,756 @@
+{
+    "testId": 19,
+    "testName": "Test 19",
+    "passages": [
+{
+  "id": 1,
+  "title": "Vertical Gardens: Transforming Urban Food Production",
+  "level": "intermediate",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "A",
+      "text": "Cities worldwide face mounting pressure to feed growing populations within limited space. By 2050, approximately 80 percent of the global population is projected to live in urban areas, creating unprecedented demand for locally produced food. Traditional agriculture requires extensive land, which is increasingly scarce in metropolitan environments. Vertical gardens—structures that grow plants in stacked layers on building walls or purpose-built frames—offer a promising solution to this challenge. These installations transform unused urban surfaces into productive growing spaces, allowing cities to cultivate fresh vegetables, herbs, and even fruits without expanding their physical footprint."
+    },
+    {
+      "id": "B",
+      "text": "The concept of vertical farming emerged in academic discussions during the early 2000s, but practical implementation began much later. The first large-scale vertical garden installation designed specifically for food production was established in Singapore in 2014, covering approximately 150 square metres of a residential tower. This pioneering project demonstrated that vertical systems could produce vegetables efficiently in tropical climates. Subsequently, similar initiatives appeared in South Korea, where Seoul launched a municipal programme to install vertical gardens on government buildings. A 2018 study by the Tokyo Institute of Sustainable Agriculture found that well-designed vertical gardens could yield up to 20 times more produce per square metre than conventional horizontal farming methods, sparking international interest in the technology."
+    },
+    {
+      "id": "C",
+      "text": "Dr. Amara Chen, an agricultural engineer at the International Urban Farming Alliance, has been instrumental in developing accessible hydroponic systems for vertical gardens. Hydroponics is a method of growing plants without soil, using nutrient-enriched water instead. Chen's modular system consists of lightweight, interlocking panels that can be attached to virtually any vertical surface. Each panel contains small pockets filled with growing medium—a porous material that supports plant roots while allowing water and air circulation. According to Chen, this design reduces installation costs by approximately 40 percent compared to earlier vertical farming technologies. Moreover, the modular approach allows communities to start small and expand gradually as they gain experience and resources."
+    },
+    {
+      "id": "D",
+      "text": "Setting up a vertical garden system involves several distinct stages. First, workers install a sturdy framework on the chosen wall or structure, ensuring it can support the weight of saturated growing medium and mature plants. Subsequently, they connect an irrigation system that delivers water and nutrients to each growing section through a network of tubes. Following this installation phase, technicians add the growing medium to individual pockets or containers and plant seeds or seedlings. Finally, operators establish a monitoring routine to check water levels, nutrient concentrations, and plant health. The entire process typically takes between two and four weeks for a standard residential installation. Meanwhile, automated systems can regulate water distribution, though many community projects prefer manual monitoring to encourage resident participation."
+    },
+    {
+      "id": "E",
+      "text": "The implementation of vertical gardens varies significantly between cities, as illustrated by contrasting approaches in Singapore and Detroit. Singapore's government-sponsored programme emphasizes high-technology solutions, utilizing sensor networks and automated climate control to maximize yield in the city-state's hot, humid environment. Research published in 2021 revealed that these installations reduced surrounding air temperatures by 3 to 5 degrees Celsius while producing consistent harvests year-round. Conversely, Detroit has embraced community-led initiatives, with residents transforming abandoned buildings into productive vertical farms. Professor Luis Ramirez, an urban planning specialist at the Detroit Institute for Community Development, has documented these grassroots projects extensively. His findings indicate that 65 percent of participants reported strengthened neighbourhood connections and improved access to fresh produce. However, Detroit's systems typically produce smaller quantities than Singapore's technology-intensive installations."
+    },
+    {
+      "id": "F",
+      "text": "Vertical gardens represent a significant innovation in urban food production, though challenges remain. Installation expenses can deter adoption in lower-income communities, despite decreasing costs. Additionally, vertical systems require consistent maintenance and technical knowledge that not all communities possess. Nevertheless, the environmental benefits are substantial: reduced transportation emissions from local food production, decreased water consumption through recycling systems, and improved urban air quality. As cities continue to expand and climate change intensifies, vertical gardens may become essential infrastructure rather than experimental projects. The technology's success will likely depend on developing affordable, user-friendly systems that diverse communities can implement and maintain independently."
+    }
+            ],
+            "questions": [
+                {
+  "id": 1,
+  "type": "matching-headings",
+  "title": "Questions 1-5",
+  "instructions": "The reading passage has six paragraphs, A-F. Choose the correct heading for each paragraph from the list of headings below. Write the correct number, i-ix, in boxes 1-5 on your answer sheet.",
+  "questions": [
+    {
+      "id": 1,
+      "questionText": "Paragraph B",
+      "options": [
+        "Developing affordable hydroponic systems",
+        "From academic theory to practical application",
+        "Future potential despite existing barriers",
+        "Urban food production challenges and innovative solutions",
+        "Step-by-step installation procedures",
+        "Maximizing crop yields through vertical methods",
+        "Contrasting city-based implementation approaches",
+        "The environmental benefits of local food production",
+        "Community participation in urban farming initiatives"
+      ],
+      "correctAnswer": "From academic theory to practical application",
+      "justification": "Paragraph B traces the evolution of vertical gardens from a theoretical concept ('emerged in academic discussions during the early 2000s') to real-world implementation ('first large-scale vertical garden installation... in Singapore in 2014'). The heading accurately captures this chronological transition from concept to practice.",
+      "evidenceQuote": "The concept of vertical farming emerged in academic discussions during the early 2000s, but practical implementation began much later"
+    },
+    {
+      "id": 2,
+      "questionText": "Paragraph C",
+      "options": [
+        "Developing affordable hydroponic systems",
+        "From academic theory to practical application",
+        "Future potential despite existing barriers",
+        "Urban food production challenges and innovative solutions",
+        "Step-by-step installation procedures",
+        "Maximizing crop yields through vertical methods",
+        "Contrasting city-based implementation approaches",
+        "The environmental benefits of local food production",
+        "Community participation in urban farming initiatives"
+      ],
+      "correctAnswer": "Developing affordable hydroponic systems",
+      "justification": "Paragraph C focuses on Dr. Chen's development of 'accessible hydroponic systems' with 'modular design' that 'reduces installation costs by approximately 40 percent.' The heading reflects the paragraph's theme of technological innovation for affordability.",
+      "evidenceQuote": "Dr. Amara Chen... has been instrumental in developing accessible hydroponic systems... This design reduces installation costs by approximately 40 percent"
+    },
+    {
+      "id": 3,
+      "questionText": "Paragraph D",
+      "options": [
+        "Developing affordable hydroponic systems",
+        "From academic theory to practical application",
+        "Future potential despite existing barriers",
+        "Urban food production challenges and innovative solutions",
+        "Step-by-step installation procedures",
+        "Maximizing crop yields through vertical methods",
+        "Contrasting city-based implementation approaches",
+        "The environmental benefits of local food production",
+        "Community participation in urban farming initiatives"
+      ],
+      "correctAnswer": "Step-by-step installation procedures",
+      "justification": "Paragraph D provides a sequential description of the installation process using markers like 'First,' 'Subsequently,' 'Following this,' and 'Finally.' The heading accurately summarizes the procedural nature of the paragraph.",
+      "evidenceQuote": "Setting up a vertical garden system involves several distinct stages. First, workers install... Subsequently, they connect... Following this, technicians add... Finally, operators establish..."
+    },
+    {
+      "id": 4,
+      "questionText": "Paragraph E",
+      "options": [
+        "Developing affordable hydroponic systems",
+        "From academic theory to practical application",
+        "Future potential despite existing barriers",
+        "Urban food production challenges and innovative solutions",
+        "Step-by-step installation procedures",
+        "Maximizing crop yields through vertical methods",
+        "Contrasting city-based implementation approaches",
+        "The environmental benefits of local food production",
+        "Community participation in urban farming initiatives"
+      ],
+      "correctAnswer": "Contrasting city-based implementation approaches",
+      "justification": "Paragraph E explicitly compares the different strategies of Singapore (high-tech, government-sponsored) and Detroit (community-led). The heading captures this comparative analysis of implementation in different cities.",
+      "evidenceQuote": "The implementation of vertical gardens varies significantly between cities, as illustrated by contrasting approaches in Singapore and Detroit"
+    },
+    {
+      "id": 5,
+      "questionText": "Paragraph F",
+      "options": [
+        "Developing affordable hydroponic systems",
+        "From academic theory to practical application",
+        "Future potential despite existing barriers",
+        "Urban food production challenges and innovative solutions",
+        "Step-by-step installation procedures",
+        "Maximizing crop yields through vertical methods",
+        "Contrasting city-based implementation approaches",
+        "The environmental benefits of local food production",
+        "Community participation in urban farming initiatives"
+      ],
+      "correctAnswer": "Future potential despite existing barriers",
+      "justification": "Paragraph F balances the 'significant innovation' and 'substantial' environmental benefits of vertical gardens against remaining 'challenges' like costs and maintenance. The heading reflects this balanced view of future possibilities and current obstacles.",
+      "evidenceQuote": "Vertical gardens represent a significant innovation... though challenges remain... Nevertheless, the environmental benefits are substantial"
+    }
+  ]
+},
+{
+  "id": 2,
+  "type": "flow-chart-completion",
+  "title": "Questions 6-10",
+  "instructions": "Complete the flow chart below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+  "word_limit": "NO MORE THAN TWO WORDS",
+  "flow_chart": {
+    "title": "The Installation Process for Vertical Garden Systems",
+    "orientation": "vertical",
+    "nodes": [
+      {
+        "id": "node1",
+        "type": "stage",
+        "content": "Installation begins with structural preparation of chosen wall",
+        "position": 1
+      },
+      {
+        "id": "gap6",
+        "type": "gap",
+        "content": "Workers install a __________ to support the weight",
+        "gapNumber": 6,
+        "correctAnswer": "sturdy framework",
+        "position": 2
+      },
+      {
+        "id": "node2",
+        "type": "stage",
+        "content": "Framework must bear load of saturated materials and mature vegetation",
+        "position": 3
+      },
+      {
+        "id": "gap7",
+        "type": "gap",
+        "content": "Next phase involves connecting an __________",
+        "gapNumber": 7,
+        "correctAnswer": "irrigation system",
+        "position": 4
+      },
+      {
+        "id": "gap8",
+        "type": "gap",
+        "content": "Technicians add __________ to individual pockets",
+        "gapNumber": 8,
+        "correctAnswer": "growing medium",
+        "position": 5
+      },
+      {
+        "id": "gap9",
+        "type": "gap",
+        "content": "__________ or seedlings are planted in the prepared pockets",
+        "gapNumber": 9,
+        "correctAnswer": "seeds",
+        "position": 6
+      },
+      {
+        "id": "gap10",
+        "type": "gap",
+        "content": "Final stage establishes a __________ for ongoing care",
+        "gapNumber": 10,
+        "correctAnswer": "monitoring routine",
+        "position": 7
+      }
+    ],
+    "connections": [
+      {
+        "from": "node1",
+        "to": "gap6",
+        "style": "solid"
+      },
+      {
+        "from": "gap6",
+        "to": "node2",
+        "style": "solid"
+      },
+      {
+        "from": "node2",
+        "to": "gap7",
+        "style": "solid"
+      },
+      {
+        "from": "gap7",
+        "to": "gap8",
+        "style": "solid"
+      },
+      {
+        "from": "gap8",
+        "to": "gap9",
+        "style": "solid"
+      },
+      {
+        "from": "gap9",
+        "to": "gap10",
+        "style": "solid"
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": 6,
+      "gap_number": 6,
+      "correctAnswer": "sturdy framework",
+      "alternativeAnswers": [],
+      "justification": "Paragraph D explicitly describes the first step: 'First, workers install a sturdy framework on the chosen wall or structure.' The answer represents the foundational structural component installed at the beginning of the process.",
+      "evidenceQuote": "First, workers install a sturdy framework on the chosen wall or structure, ensuring it can support the weight"
+    },
+    {
+      "id": 7,
+      "gap_number": 7,
+      "correctAnswer": "irrigation system",
+      "alternativeAnswers": [],
+      "justification": "The passage states 'Subsequently, they connect an irrigation system that delivers water and nutrients' as the second major step. This defines the water distribution infrastructure.",
+      "evidenceQuote": "Subsequently, they connect an irrigation system that delivers water and nutrients to each growing section through a network of tubes"
+    },
+    {
+      "id": 8,
+      "gap_number": 8,
+      "correctAnswer": "growing medium",
+      "alternativeAnswers": [],
+      "justification": "The passage describes 'Following this installation phase, technicians add the growing medium to individual pockets or containers.' This refers to the porous material supporting plant roots.",
+      "evidenceQuote": "Following this installation phase, technicians add the growing medium to individual pockets or containers"
+    },
+    {
+      "id": 9,
+      "gap_number": 9,
+      "correctAnswer": "seeds",
+      "alternativeAnswers": [
+        "seedlings"
+      ],
+      "justification": "The passage states technicians 'plant seeds or seedlings' after adding growing medium. Both options are valid based on the text.",
+      "evidenceQuote": "technicians add the growing medium to individual pockets or containers and plant seeds or seedlings"
+    },
+    {
+      "id": 10,
+      "gap_number": 10,
+      "correctAnswer": "monitoring routine",
+      "alternativeAnswers": [],
+      "justification": "The passage concludes the installation process with: 'Finally, operators establish a monitoring routine to check water levels, nutrient concentrations, and plant health.'",
+      "evidenceQuote": "Finally, operators establish a monitoring routine to check water levels, nutrient concentrations, and plant health"
+    }
+  ]
+},
+{
+  "id": 3,
+  "type": "matching-information",
+  "title": "Questions 11-14",
+  "instructions": "Which paragraph contains the following information? Write the correct letter, A–F, in boxes 11-14 on your answer sheet.",
+  "paragraphs_list": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F"
+  ],
+  "questions": [
+    {
+      "id": 11,
+      "questionText": "reference to research quantifying productivity advantages of vertical cultivation methods",
+      "correctAnswer": "B",
+      "justification": "Paragraph B mentions 'A 2018 study by the Tokyo Institute of Sustainable Agriculture found that well-designed vertical gardens could yield up to 20 times more produce per square metre than conventional horizontal farming methods.' This is the only reference to research specifically quantifying productivity comparisons.",
+      "evidenceQuote": "A 2018 study by the Tokyo Institute of Sustainable Agriculture found that well-designed vertical gardens could yield up to 20 times more produce per square metre than conventional horizontal farming methods"
+    },
+    {
+      "id": 12,
+      "questionText": "how a technological innovation reduces financial barriers to adoption",
+      "correctAnswer": "C",
+      "justification": "Paragraph C describes Dr. Chen's modular hydroponic system and explicitly states 'this design reduces installation costs by approximately 40 percent compared to earlier vertical farming technologies.' This explains how technology makes vertical gardens more affordable.",
+      "evidenceQuote": "Chen's modular system consists of lightweight, interlocking panels... this design reduces installation costs by approximately 40 percent compared to earlier vertical farming technologies"
+    },
+    {
+      "id": 13,
+      "questionText": "contrasting municipal and grassroots strategies for implementing food production infrastructure",
+      "correctAnswer": "E",
+      "justification": "Paragraph E explicitly compares 'contrasting approaches in Singapore and Detroit': Singapore's 'government-sponsored programme' with high-technology versus Detroit's 'community-led initiatives' with grassroots projects.",
+      "evidenceQuote": "contrasting approaches in Singapore and Detroit. Singapore's government-sponsored programme emphasizes high-technology solutions... Conversely, Detroit has embraced community-led initiatives"
+    },
+    {
+      "id": 14,
+      "questionText": "obstacles that discourage implementation in economically disadvantaged communities",
+      "correctAnswer": "F",
+      "justification": "Paragraph F identifies barriers: 'Installation expenses can deter adoption in lower-income communities, despite decreasing costs. Additionally, vertical systems require consistent maintenance and technical knowledge that not all communities possess.'",
+      "evidenceQuote": "Installation expenses can deter adoption in lower-income communities, despite decreasing costs. Additionally, vertical systems require consistent maintenance and technical knowledge"
+    }
+  ]
+}
+            ]
+        },
+{
+  "id": 2,
+  "title": "Digital Literacy Education: Navigating Information Credibility in the Digital Age",
+  "level": "moderate",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "A",
+      "text": "The proliferation of online misinformation has created an urgent need for enhanced digital literacy education. Research indicates that approximately 67 percent of adults struggle to distinguish between factual news content and deliberately misleading information on social media platforms. This challenge is particularly acute among younger internet users, who may possess strong technical navigation skills but lack critical evaluation capabilities. Educational institutions worldwide are consequently grappling with fundamental questions about how to equip students with the competencies needed to assess information credibility effectively. The stakes are considerable: inadequate digital literacy skills can undermine informed civic participation and decision-making across numerous domains, from health choices to political engagement."
+    },
+    {
+      "id": "B",
+      "text": "Digital literacy as a formal educational concern emerged in the late 1990s, initially focusing primarily on technical proficiency with computer hardware and software applications. By the mid-2000s, educators began recognizing that operational skills alone were insufficient. A 2007 report by the International Education Technology Consortium documented a significant shift toward incorporating information evaluation competencies into curriculum frameworks. Subsequently, the rise of social media platforms between 2010 and 2015 intensified concerns about students' vulnerability to misinformation. Research conducted at the Helsinki Institute for Educational Innovation between 2016 and 2019 revealed that students who received traditional computer literacy instruction performed no better than untrained peers when asked to evaluate the reliability of online sources. These findings prompted educational researchers to develop more sophisticated pedagogical approaches."
+    },
+    {
+      "id": "C",
+      "text": "Dr. Marina Volkov, a digital pedagogy specialist at the Toronto Institute for Media Studies, has championed what she terms the 'technical verification approach' to digital literacy education. This methodology emphasizes teaching students concrete, systematic procedures for assessing online content credibility. Initially, students learn to identify website domain types and examine URL structures for signs of potential bias or deception. Subsequently, they are trained to use reverse image search tools to detect manipulated or misattributed photographs. At the third stage, students practice cross-referencing claims against multiple established news sources and fact-checking organizations. Ultimately, learners apply lateral reading strategies—opening new browser tabs to investigate unfamiliar sources rather than remaining on a single page. According to a 2021 study published in Digital Education Quarterly, students who completed Volkov's eight-week training programme demonstrated a 43 percent improvement in identifying false information compared to control groups. Volkov argues that these transferable technical skills provide students with practical tools applicable across diverse online environments."
+    },
+    {
+      "id": "D",
+      "text": "Professor James Okafor, Director of Educational Research at the Singapore Centre for Learning Innovation, contends that technical verification methods, while useful, may prove insufficient without deeper critical thinking foundations. His inquiry-based approach prioritizes developing students' capacity to question underlying assumptions and recognize persuasive techniques. Rather than providing step-by-step verification procedures, Okafor's methodology encourages students to examine why particular information might be created and disseminated. Students analyze the rhetorical strategies employed in online content, considering elements such as emotional appeals, selective evidence presentation, and implicit biases. Furthermore, they explore the economic and political incentives that might motivate information producers. Research indicates that this approach tends to foster more sustained engagement with epistemological questions—how we know what we claim to know. However, critics suggest that such philosophical inquiry may overwhelm younger students or those lacking strong analytical backgrounds. Okafor acknowledges these concerns but maintains that critical thinking capabilities represent essential foundations for navigating increasingly complex information landscapes."
+    },
+    {
+      "id": "E",
+      "text": "Implementation experiences in Finland and Brazil illustrate how different educational contexts shape digital literacy outcomes. Finland integrated Volkov's technical verification approach into its national curriculum in 2018, training approximately 85,000 secondary students over three years. Standardized assessments conducted in 2021 showed that 78 percent of participating students could correctly identify misleading content in controlled testing scenarios, compared to 52 percent in comparable neighbouring countries. The Finnish model benefited from substantial technological infrastructure, with student-to-device ratios averaging 2.3:1 and reliable internet connectivity across urban and rural schools. Conversely, Brazil adopted elements of Okafor's inquiry-based approach in 2019, focusing on critical analysis rather than technology-dependent verification tools. While assessment methodologies differed, making direct comparison challenging, Brazilian educators reported notable improvements in students' willingness to question information sources and discuss media bias. However, implementation faced significant obstacles: inadequate teacher training meant only 34 percent of instructors felt confident delivering the curriculum, and limited classroom time constrained in-depth discussions. These contrasting cases demonstrate that pedagogical effectiveness cannot be separated from practical implementation constraints."
+    },
+    {
+      "id": "F",
+      "text": "Dr. Yuki Tanaka, a sociologist of education at the Melbourne Research Institute, argues that both technical and inquiry-based approaches suffer from a fundamental limitation: they frame digital literacy as an individual skill deficit rather than addressing broader systemic factors. According to Tanaka's 2022 analysis of digital literacy programmes across 28 countries, even well-designed interventions show diminishing effectiveness over time as misinformation tactics evolve to exploit new vulnerabilities. She suggests that educational responses alone cannot keep pace with the sophisticated methods employed by professional disinformation networks. Moreover, Tanaka contends that focusing exclusively on student skills may inadvertently shift responsibility away from technology platforms and content creators. Her research indicates that students who receive digital literacy training sometimes develop what she terms 'verification fatigue'—a sense that constant source-checking demands unrealistic cognitive effort. Tanaka advocates for complementary policy interventions targeting platform design and content moderation, arguing that educational initiatives, however well-conceived, cannot fully compensate for technological systems that prioritize engagement over accuracy."
+    },
+    {
+      "id": "G",
+      "text": "Contemporary educational practice appears to be moving toward integrated models that combine technical verification skills with critical thinking development, while acknowledging the systemic constraints Tanaka identifies. Emerging research from institutions in Canada and South Korea suggests that blended approaches—incorporating both Volkov's procedural strategies and Okafor's inquiry methods—may yield more robust outcomes than either framework alone. Nevertheless, significant challenges remain unresolved. Teachers require extensive professional development to deliver sophisticated digital literacy instruction effectively, yet many education systems lack resources for such training. Additionally, rapid technological change means curriculum content risks obsolescence; teaching students to identify specific types of fabricated content may prove less valuable than fostering adaptable critical dispositions. Ultimately, the effectiveness of digital literacy education will likely depend on sustained coordination among educators, policymakers, and technology platforms, rather than any single pedagogical innovation."
+    }
+  ],
+  "questions": [
+    {
+      "id": 4,
+      "type": "true-false-not-given",
+      "title": "Questions 15-18",
+      "instructions": "Do the following statements agree with the views of the writer in the Reading Passage? In boxes 15-18 on your answer sheet, write YES if the statement agrees with the views of the writer, NO if the statement contradicts the views of the writer, NOT GIVEN if it is impossible to say what the writer thinks about this.",
+      "questions": [
+        {
+          "id": 15,
+          "questionText": "The writer considers the widespread inability to evaluate online information credibility a serious challenge for society.",
+          "correctAnswer": "YES",
+          "justification": "The writer explicitly describes an 'urgent need' for digital literacy education and argues that inadequate skills 'can undermine informed civic participation and decision-making across numerous domains,' indicating a serious societal challenge.",
+          "evidenceQuote": "The stakes are considerable: inadequate digital literacy skills can undermine informed civic participation and decision-making across numerous domains"
+        },
+        {
+          "id": 16,
+          "questionText": "Professor Okafor argues that technical verification skills alone are insufficient without underlying critical thinking capabilities.",
+          "correctAnswer": "YES",
+      "justification": "The passage explicitly states that Okafor 'contends that technical verification methods, while useful, may prove insufficient without deeper critical thinking foundations.'",
+      "evidenceQuote": "contends that technical verification methods, while useful, may prove insufficient without deeper critical thinking foundations"
+    },
+    {
+      "id": 17,
+      "questionText": "In Dr. Volkov's view, digital literacy education should prioritize analyzing why information is created over teaching systematic verification procedures.",
+      "correctAnswer": "NO",
+      "justification": "The passage clearly states Volkov's approach 'emphasizes teaching students concrete, systematic procedures for assessing online content credibility,' contradicting the statement.",
+      "evidenceQuote": "This methodology emphasizes teaching students concrete, systematic procedures for assessing online content credibility"
+    },
+    {
+      "id": 18,
+      "questionText": "The writer believes that Dr. Volkov's technical verification programme is more cost-effective to implement than Professor Okafor's inquiry-based approach.",
+      "correctAnswer": "NOT GIVEN",
+      "justification": "The passage discusses implementation challenges for both approaches but does not make a comparative judgment about cost-effectiveness.",
+      "evidenceQuote": "The Finnish model benefited from substantial technological infrastructure... implementation faced significant obstacles: inadequate teacher training"
+    }
+  ]
+},
+{
+  "id": 5,
+  "type": "matching-features",
+  "title": "Questions 19-22",
+  "instructions": "Look at the following statements (Questions 19-22) and the list of researchers and organisations below. Match each statement with the correct researcher or organisation, A-F. Write the correct letter, A-F, in boxes 19-22 on your answer sheet. NB You may use any letter more than once.",
+  "features": [
+    {
+      "letter": "A",
+      "name": "Dr. Marina Volkov"
+    },
+    {
+      "letter": "B",
+      "name": "Professor James Okafor"
+    },
+    {
+      "letter": "C",
+      "name": "Dr. Yuki Tanaka"
+    },
+    {
+      "letter": "D",
+      "name": "Helsinki Institute for Educational Innovation"
+    },
+    {
+      "letter": "E",
+      "name": "International Education Technology Consortium"
+    },
+    {
+      "letter": "F",
+      "name": "Digital Education Quarterly"
+    }
+  ],
+  "questions": [
+    {
+      "id": 19,
+      "questionText": "developed a methodology that instructs learners to examine web addresses and employ image verification technology",
+      "correctAnswer": "A",
+      "justification": "Paragraph C describes Dr. Volkov's approach, stating that students learn to 'identify website domain types and examine URL structures' and 'are trained to use reverse image search tools.' This matches the description of examining web addresses and using image verification.",
+      "evidenceQuote": "Initially, students learn to identify website domain types and examine URL structures... they are trained to use reverse image search tools to detect manipulated or misattributed photographs"
+    },
+    {
+      "id": 20,
+      "questionText": "argues that procedural skills require underlying capabilities for questioning fundamental assumptions",
+      "correctAnswer": "B",
+      "justification": "Paragraph D states that Professor Okafor contends technical (procedural) methods are insufficient without 'deeper critical thinking foundations' and prioritizes the capacity to 'question underlying assumptions.'",
+      "evidenceQuote": "contends that technical verification methods, while useful, may prove insufficient without deeper critical thinking foundations. His inquiry-based approach prioritizes developing students' capacity to question underlying assumptions"
+    },
+    {
+      "id": 21,
+      "questionText": "discovered that educational programmes become less effective as deceptive online tactics develop new forms",
+      "correctAnswer": "C",
+      "justification": "Paragraph F references Dr. Tanaka's analysis which found that 'interventions show diminishing effectiveness over time as misinformation tactics evolve to exploit new vulnerabilities.' This paraphrases as programmes becoming less effective as deceptive tactics develop new forms.",
+      "evidenceQuote": "According to Tanaka's 2022 analysis... even well-designed interventions show diminishing effectiveness over time as misinformation tactics evolve to exploit new vulnerabilities"
+    },
+    {
+      "id": 22,
+      "questionText": "found that conventionally trained students showed no superiority in evaluating source credibility compared to those without instruction",
+      "correctAnswer": "D",
+      "justification": "Paragraph B cites research from the Helsinki Institute showing that students with 'traditional computer literacy instruction performed no better than untrained peers' in evaluating reliability. This corresponds to conventionally trained students showing no superiority.",
+      "evidenceQuote": "Research conducted at the Helsinki Institute for Educational Innovation... revealed that students who received traditional computer literacy instruction performed no better than untrained peers when asked to evaluate the reliability of online sources"
+    }
+  ]
+},
+{
+  "id": 6,
+  "type": "summary-completion",
+  "completion_type": "summary",
+  "title": "Questions 23-26",
+  "word_limit": "NO MORE THAN TWO WORDS",
+  "instructions": "Complete the summary below. Choose NO MORE THAN TWO WORDS from the passage for each answer. Write your answers in boxes 23-26 on your answer sheet.",
+  "structure": "<div class='completion-summary'><p>The challenge of evaluating online content has become increasingly urgent as research indicates a significant proportion of adults struggle to identify misleading information. Early digital literacy programmes focused primarily on computer operation, but studies demonstrated that such training failed to improve students' ability to assess source reliability. Two main pedagogical approaches have since emerged. Dr. Volkov developed a systematic methodology teaching students concrete verification procedures, including examining website addresses and employing <strong>(23)_____</strong> search techniques to identify altered images. In contrast, Professor Okafor's methodology prioritises developing <strong>(24)_____</strong> foundations by encouraging students to analyse rhetorical techniques and question information creators' motivations. Implementation experiences in Finland and Brazil revealed that practical outcomes depend significantly on contextual factors including technological resources and adequate <strong>(25)_____</strong>. However, Dr. Tanaka argues that educational interventions alone cannot address the problem, as misinformation tactics continuously evolve while students may develop <strong>(26)_____</strong> from the constant demands of source-checking.</p></div>",
+  "questions": [
+    {
+      "id": 23,
+      "questionText": "Gap 23",
+      "correctAnswer": "reverse image",
+      "justification": "Paragraph C describes Volkov's systematic approach, stating students 'are trained to use reverse image search tools to detect manipulated or misattributed photographs.' The summary paraphrases 'use...tools' as 'employing...techniques' and 'manipulated or misattributed photographs' as 'altered images.'",
+      "evidenceQuote": "Subsequently, they are trained to use reverse image search tools to detect manipulated or misattributed photographs"
+    },
+    {
+      "id": 24,
+      "questionText": "Gap 24",
+      "correctAnswer": "critical thinking",
+      "justification": "Paragraph D explicitly states Okafor believes technical methods 'may prove insufficient without deeper critical thinking foundations.' The summary paraphrases this as 'prioritises developing critical thinking foundations.'",
+      "evidenceQuote": "contends that technical verification methods, while useful, may prove insufficient without deeper critical thinking foundations"
+    },
+    {
+      "id": 25,
+      "questionText": "Gap 25",
+      "correctAnswer": "teacher training",
+      "justification": "Paragraph E discusses implementation challenges in Brazil, noting 'inadequate teacher training meant only 34 percent of instructors felt confident.' The summary refers to the need for 'adequate teacher training' as a contextual factor.",
+      "evidenceQuote": "implementation faced significant obstacles: inadequate teacher training meant only 34 percent of instructors felt confident delivering the curriculum"
+    },
+    {
+      "id": 26,
+      "questionText": "Gap 26",
+      "correctAnswer": "verification fatigue",
+      "justification": "Paragraph F introduces Tanaka's concept of 'verification fatigue,' defined as 'a sense that constant source-checking demands unrealistic cognitive effort.' The summary preserves this key technical term.",
+      "evidenceQuote": "students who receive digital literacy training sometimes develop what she terms 'verification fatigue'—a sense that constant source-checking demands unrealistic cognitive effort"
+    }
+  ]
+}
+  ]
+},
+{
+  "id": 3,
+  "title": "Biophilic Urbanism: Transformative Vision or Incremental Improvement?",
+  "level": "challenging",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "A",
+      "text": "The proliferation of concrete jungles has prompted architects, urban planners, and policymakers to reconsider the role of nature within metropolitan landscapes. Central to this reconsideration is biophilic urbanism—an approach predicated on the premise that human beings possess an innate affinity for natural environments, and that cities designed to accommodate this affinity may yield significant health, social, and environmental benefits. Yet beneath the apparent consensus that greener cities are desirable lies a more contentious debate: whether biophilic interventions represent genuine urban transformation or merely cosmetic adjustments to fundamentally unsustainable systems."
+    },
+    {
+      "id": "B",
+      "text": "The conceptual foundations of biophilic urbanism trace to the garden city movements of the late nineteenth century, though the contemporary framework crystallized in the 1980s when researchers began systematically documenting humanity's apparent psychological predisposition toward natural environments. The term 'biophilic city' gained currency in the early 2000s, primarily through municipal pilot programs in Northern Europe and East Asia. By 2020, approximately 35 municipalities worldwide had formally adopted biophilic city principles, with implementation strategies ranging from modest green roof mandates to comprehensive urban rewilding initiatives. This variation in approach, however, has complicated efforts to assess the movement's overall efficacy."
+    },
+    {
+      "id": "C",
+      "text": "Dr. Yuki Tanaka, an urban ecologist at the Pacific Institute for Sustainable Development, has championed what she terms 'connective green infrastructure'—nature corridors that link urban parks, waterways, and vegetation patches into coherent ecological networks. Her longitudinal research in three Asian megacities suggests that cities with integrated green networks experience measurable reductions in urban heat island effects, with surface temperatures in connected green zones averaging 2.4°C lower than in fragmented counterparts. Tanaka argues that piecemeal interventions—a park here, a green wall there—fail to generate the synergistic benefits that emerge from systematic ecological connectivity. Only comprehensive planning, she contends, can transform urban environments rather than merely decorating them."
+    },
+    {
+      "id": "D",
+      "text": "This interpretation has not gone unchallenged. Professor Kwame Asante, a behavioral psychologist at Okonkwo University, acknowledges the psychological benefits of urban nature—his own meta-analysis of 47 studies found that regular access to green spaces correlated with a 23% reduction in self-reported stress—but questions whose psychological wellbeing is being enhanced. Asante's research in rapidly developing African and Southeast Asian cities reveals that biophilic amenities are disproportionately concentrated in affluent neighborhoods, where they may actually accelerate property value increases that displace lower-income residents. 'We risk creating a paradox,' Asante observes, 'where the very interventions designed to humanize cities render them less accessible to the most vulnerable.'"
+    },
+    {
+      "id": "E",
+      "text": "The economic dimensions of biophilic urbanism present additional complexities. Dr. Elena Kowalski, an environmental economist, has documented what she terms the 'measurement problem' confronting advocates. While certain benefits—reduced air conditioning costs, decreased healthcare expenditures—can be quantified with reasonable precision, others resist easy monetization. How does one assign economic value to children's cognitive development improved by nature exposure, or to the community cohesion fostered by shared green spaces? Kowalski notes that current cost-benefit methodologies may systematically undervalue biophilic investments, but she cautions against abandoning rigorous assessment altogether. Policy decisions, she argues, require defensible evidence."
+    },
+    {
+      "id": "F",
+      "text": "These perspectives, though divergent in emphasis, share a common underlying concern: that enthusiasm for biophilic design may outpace the evidentiary foundation supporting specific interventions. Tanaka's insistence on systematic connectivity, Asante's equity concerns, and Kowalski's measurement critiques all point toward the need for more sophisticated evaluation frameworks. A 2022 comparative analysis of twelve biophilic city initiatives found that while all reported subjective improvements in resident satisfaction, only four had established baseline metrics sufficient for rigorous before-and-after assessment. The absence of standardized indicators, the study concluded, hampers both accountability and knowledge transfer between municipalities."
+    },
+    {
+      "id": "G",
+      "text": "Professor Raj Mehta, an urban planning theorist, raises a more fundamental objection. In his view, biophilic urbanism—however well-intentioned—risks treating symptoms while leaving underlying pathologies unaddressed. The stress that urban nature purportedly alleviates, Mehta suggests, stems largely from unsustainable work patterns, inadequate housing, and car-dependent infrastructure. 'Adding greenery to a city organized around automobile traffic is akin to placing flowers in a hospital ward,' he writes. 'It may improve the ambiance, but it does not cure the patient.' Mehta does not dismiss biophilic interventions entirely, but argues they must be embedded within broader transformations of urban governance and economic systems."
+    },
+    {
+      "id": "H",
+      "text": "Where, then, does the balance of evidence currently rest? Studies consistently demonstrate that exposure to urban nature produces measurable physiological and psychological benefits at the individual level. A 2023 randomized controlled trial in Melbourne found that participants who spent forty minutes daily in urban parks exhibited significantly lower cortisol levels than control groups. Yet scaling such findings to city-wide policy remains problematic. The mechanisms linking green infrastructure to aggregate urban outcomes—reduced crime, enhanced property values, improved social cohesion—involve multiple confounding variables that observational studies struggle to disentangle. Causation, in these contexts, remains largely inferential."
+    },
+    {
+      "id": "I",
+      "text": "Notwithstanding these uncertainties, biophilic urbanism continues to attract adherents among policymakers seeking viable responses to urban environmental degradation. The coming decade will likely witness both expanded implementation and more rigorous evaluation. Whether the movement ultimately fulfills its transformative aspirations or settles into a more modest role—one worthwhile intervention among many—may depend less on the intrinsic merits of biophilic design than on whether its proponents can address the structural and equity concerns that critics have raised. The greening of cities, it appears, is only the beginning of the conversation."
+    }
+  ],
+  "questions": [
+{
+  "id": 7,
+  "type": "matching-headings",
+  "title": "Questions 27-32",
+  "instructions": "The reading passage has nine paragraphs, A-I. Choose the correct heading for paragraphs B-G from the list of headings below. Write the correct number, i-x, in boxes 27-32 on your answer sheet.",
+  "questions": [
+    {
+      "id": 27,
+      "questionText": "Paragraph B",
+      "options": [
+        "Evolution from conceptual origins to diverse municipal strategies",
+        "The inadequacy of surface-level interventions without systemic reform",
+        "Gentrification and accessibility concerns in biophilic development",
+        "Competing visions of urban environmental transformation",
+        "Challenges in quantifying non-material environmental benefits",
+        "Shared concerns regarding inadequate evaluative frameworks",
+        "The necessity of comprehensive ecological connectivity",
+        "Temperature reduction benefits in integrated green networks",
+        "Barriers to sustainable metropolitan planning initiatives",
+        "Psychological wellbeing improvements from urban park access"
+      ],
+      "correctAnswer": "Evolution from conceptual origins to diverse municipal strategies",
+      "justification": "Paragraph B traces the historical trajectory of biophilic urbanism from 19th-century garden cities through 1980s research to contemporary municipal adoption, emphasizing implementation strategies ranging from mandates to rewilding. The heading paraphrases 'conceptual foundations' as 'conceptual origins' and 'variation in approach' as 'diverse municipal strategies'.",
+      "evidenceQuote": "The conceptual foundations of biophilic urbanism trace to the garden city movements... By 2020, approximately 35 municipalities worldwide had formally adopted biophilic city principles, with implementation strategies ranging from modest green roof mandates to comprehensive urban rewilding initiatives."
+    },
+    {
+      "id": 28,
+      "questionText": "Paragraph C",
+      "options": [
+        "Evolution from conceptual origins to diverse municipal strategies",
+        "The inadequacy of surface-level interventions without systemic reform",
+        "Gentrification and accessibility concerns in biophilic development",
+        "Competing visions of urban environmental transformation",
+        "Challenges in quantifying non-material environmental benefits",
+        "Shared concerns regarding inadequate evaluative frameworks",
+        "The necessity of comprehensive ecological connectivity",
+        "Temperature reduction benefits in integrated green networks",
+        "Barriers to sustainable metropolitan planning initiatives",
+        "Psychological wellbeing improvements from urban park access"
+      ],
+      "correctAnswer": "The necessity of comprehensive ecological connectivity",
+      "justification": "Paragraph C presents Tanaka's core argument that 'connective green infrastructure'—nature corridors forming 'coherent ecological networks'—is essential for genuine transformation. The heading captures Tanaka's insistence that 'only comprehensive planning...can transform urban environments'.",
+      "evidenceQuote": "Tanaka argues that piecemeal interventions...fail to generate the synergistic benefits that emerge from systematic ecological connectivity. Only comprehensive planning, she contends, can transform urban environments rather than merely decorating them."
+    },
+    {
+      "id": 29,
+      "questionText": "Paragraph D",
+      "options": [
+        "Evolution from conceptual origins to diverse municipal strategies",
+        "The inadequacy of surface-level interventions without systemic reform",
+        "Gentrification and accessibility concerns in biophilic development",
+        "Competing visions of urban environmental transformation",
+        "Challenges in quantifying non-material environmental benefits",
+        "Shared concerns regarding inadequate evaluative frameworks",
+        "The necessity of comprehensive ecological connectivity",
+        "Temperature reduction benefits in integrated green networks",
+        "Barriers to sustainable metropolitan planning initiatives",
+        "Psychological wellbeing improvements from urban park access"
+      ],
+      "correctAnswer": "Gentrification and accessibility concerns in biophilic development",
+      "justification": "Paragraph D presents Asante's critique focusing on inequitable distribution of biophilic amenities and potential displacement of lower-income residents. The heading paraphrases 'property value increases that displace' as 'gentrification' and 'render them less accessible' as 'accessibility concerns'.",
+      "evidenceQuote": "biophilic amenities are disproportionately concentrated in affluent neighborhoods, where they may actually accelerate property value increases that displace lower-income residents...render them less accessible to the most vulnerable"
+    },
+    {
+      "id": 30,
+      "questionText": "Paragraph E",
+      "options": [
+        "Evolution from conceptual origins to diverse municipal strategies",
+        "The inadequacy of surface-level interventions without systemic reform",
+        "Gentrification and accessibility concerns in biophilic development",
+        "Competing visions of urban environmental transformation",
+        "Challenges in quantifying non-material environmental benefits",
+        "Shared concerns regarding inadequate evaluative frameworks",
+        "The necessity of comprehensive ecological connectivity",
+        "Temperature reduction benefits in integrated green networks",
+        "Barriers to sustainable metropolitan planning initiatives",
+        "Psychological wellbeing improvements from urban park access"
+      ],
+      "correctAnswer": "Challenges in quantifying non-material environmental benefits",
+      "justification": "Paragraph E centers on Kowalski's 'measurement problem'—the difficulty of economic valuation for benefits like cognitive development and community cohesion. The heading captures the 'challenges in quantifying' these 'non-material' benefits.",
+      "evidenceQuote": "How does one assign economic value to children's cognitive development improved by nature exposure, or to the community cohesion fostered by shared green spaces? Kowalski notes that current cost-benefit methodologies may systematically undervalue biophilic investments"
+    },
+    {
+      "id": 31,
+      "questionText": "Paragraph F",
+      "options": [
+        "Evolution from conceptual origins to diverse municipal strategies",
+        "The inadequacy of surface-level interventions without systemic reform",
+        "Gentrification and accessibility concerns in biophilic development",
+        "Competing visions of urban environmental transformation",
+        "Challenges in quantifying non-material environmental benefits",
+        "Shared concerns regarding inadequate evaluative frameworks",
+        "The necessity of comprehensive ecological connectivity",
+        "Temperature reduction benefits in integrated green networks",
+        "Barriers to sustainable metropolitan planning initiatives",
+        "Psychological wellbeing improvements from urban park access"
+      ],
+      "correctAnswer": "Shared concerns regarding inadequate evaluative frameworks",
+      "justification": "Paragraph F synthesizes the experts' positions, stating they 'share a common underlying concern' that evidence is insufficient. The paragraph discusses the 'absence of standardized indicators' and 'need for more sophisticated evaluation frameworks'.",
+      "evidenceQuote": "These perspectives, though divergent in emphasis, share a common underlying concern: that enthusiasm for biophilic design may outpace the evidentiary foundation...point toward the need for more sophisticated evaluation frameworks"
+    },
+    {
+      "id": 32,
+      "questionText": "Paragraph G",
+      "options": [
+        "Evolution from conceptual origins to diverse municipal strategies",
+        "The inadequacy of surface-level interventions without systemic reform",
+        "Gentrification and accessibility concerns in biophilic development",
+        "Competing visions of urban environmental transformation",
+        "Challenges in quantifying non-material environmental benefits",
+        "Shared concerns regarding inadequate evaluative frameworks",
+        "The necessity of comprehensive ecological connectivity",
+        "Temperature reduction benefits in integrated green networks",
+        "Barriers to sustainable metropolitan planning initiatives",
+        "Psychological wellbeing improvements from urban park access"
+      ],
+      "correctAnswer": "The inadequacy of surface-level interventions without systemic reform",
+      "justification": "Paragraph G presents Mehta's critique that biophilic urbanism 'risks treating symptoms while leaving underlying pathologies unaddressed.' His hospital analogy emphasizes that adding greenery without addressing deeper issues is 'surface-level' and 'inadequate' without 'systemic reform'.",
+      "evidenceQuote": "Adding greenery to a city organized around automobile traffic is akin to placing flowers in a hospital ward...It may improve the ambiance, but it does not cure the patient...must be embedded within broader transformations"
+    }
+  ]
+},
+{
+  "id": 8,
+  "type": "true-false-not-given",
+  "title": "Questions 33-37",
+  "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
+  "questions": [
+    {
+      "id": 33,
+      "questionText": "By the year 2020, fewer than forty municipalities around the world had officially implemented biophilic city frameworks.",
+      "correctAnswer": "TRUE",
+      "justification": "Paragraph B states 'By 2020, approximately 35 municipalities worldwide had formally adopted biophilic city principles.' The statement accurately paraphrases '35' as 'fewer than forty,' 'worldwide' as 'around the world,' and 'formally adopted...principles' as 'officially implemented...frameworks.'",
+      "evidenceQuote": "\"By 2020, approximately 35 municipalities worldwide had formally adopted biophilic city principles\""
+    },
+    {
+      "id": 34,
+      "questionText": "Tanaka's longitudinal research revealed that integrated green networks demonstrated surface temperatures approximately 2.4 degrees Celsius cooler than disconnected green zones.",
+      "correctAnswer": "TRUE",
+      "justification": "Paragraph C states that Tanaka's research showed 'surface temperatures in connected green zones averaging 2.4°C lower than in fragmented counterparts.' The statement paraphrases 'connected' as 'integrated,' 'averaging...lower' as 'approximately...cooler,' and 'fragmented counterparts' as 'disconnected green zones.'",
+      "evidenceQuote": "\"surface temperatures in connected green zones averaging 2.4°C lower than in fragmented counterparts\""
+    },
+    {
+      "id": 35,
+      "questionText": "The majority of biophilic city initiatives examined in the 2022 comparative analysis had established adequate baseline metrics for rigorous evaluation.",
+      "correctAnswer": "FALSE",
+      "justification": "Passage states 'only four had established baseline metrics sufficient for rigorous before-and-after assessment' out of twelve initiatives studied. This represents 33% (a minority), not a majority.",
+      "evidenceQuote": "\"only four had established baseline metrics sufficient for rigorous before-and-after assessment\""
+    },
+    {
+      "id": 36,
+      "questionText": "Asante's research demonstrates that biophilic amenities are disproportionately concentrated in affluent neighborhoods across all cities globally.",
+      "correctAnswer": "FALSE",
+      "justification": "Passage specifies 'Asante's research in rapidly developing African and Southeast Asian cities reveals that biophilic amenities are disproportionately concentrated in affluent neighborhoods.' Statement incorrectly expands scope from specific regions to 'all cities globally.'",
+      "evidenceQuote": "\"Asante's research in rapidly developing African and Southeast Asian cities reveals that biophilic amenities are disproportionately concentrated in affluent neighborhoods\""
+    },
+    {
+      "id": 37,
+      "questionText": "The 2023 Melbourne trial produced greater reductions in cortisol levels than comparable randomized controlled trials conducted in other urban environments.",
+      "correctAnswer": "NOT GIVEN",
+      "justification": "Paragraph H describes the Melbourne study finding that 'participants who spent forty minutes daily in urban parks exhibited significantly lower cortisol levels than control groups,' but provides no comparison with other trials in different cities. The passage never compares the Melbourne results to studies conducted elsewhere.",
+      "evidenceQuote": "\"A 2023 randomized controlled trial in Melbourne found that participants who spent forty minutes daily in urban parks exhibited significantly lower cortisol levels than control groups\""
+    }
+  ]
+},
+{
+  "id": 9,
+  "type": "multiple-choice",
+  "title": "Questions 38-40",
+  "instructions": "Choose the correct letter, A, B, C or D.",
+  "questions": [
+    {
+      "id": 38,
+      "questionText": "What is Professor Mehta's central argument regarding biophilic urbanism as presented in paragraph G?",
+      "options": [
+        "Biophilic interventions should be completely abandoned in favor of economic reforms",
+        "Adding natural elements to cities addresses symptoms rather than fundamental causes of urban stress",
+        "Automobile-dependent infrastructure is the sole source of stress in modern cities",
+        "Urban governance systems have successfully integrated biophilic design principles"
+      ],
+      "correctAnswer": "Adding natural elements to cities addresses symptoms rather than fundamental causes of urban stress",
+      "justification": "Paragraph G presents Mehta's core critique that biophilic urbanism 'risks treating symptoms while leaving underlying pathologies unaddressed.' His hospital analogy emphasizes that such interventions improve ambiance without curing the patient, addressing surface manifestations rather than root causes.",
+      "evidenceQuote": "\"biophilic urbanism—however well-intentioned—risks treating symptoms while leaving underlying pathologies unaddressed\""
+    },
+    {
+      "id": 39,
+      "questionText": "According to paragraph H, what limitation affects research into the relationship between green infrastructure and broader urban outcomes?",
+      "options": [
+        "Insufficient funding for longitudinal research projects",
+        "The inability to definitively establish causal relationships from observational data",
+        "Resistance from municipal governments to participate in studies",
+        "A shortage of qualified researchers in urban ecology"
+      ],
+      "correctAnswer": "The inability to definitively establish causal relationships from observational data",
+      "justification": "Paragraph H explicitly states that observational studies struggle to disentangle confounding variables, meaning 'Causation, in these contexts, remains largely inferential.' This identifies the difficulty of establishing causation as the key limitation.",
+      "evidenceQuote": "\"involve multiple confounding variables that observational studies struggle to disentangle. Causation, in these contexts, remains largely inferential\""
+    },
+    {
+      "id": 40,
+      "questionText": "Based on the final paragraph, what can be inferred about the author's view on the future trajectory of biophilic urbanism?",
+      "options": [
+        "The movement will inevitably fail due to insurmountable methodological obstacles",
+        "Its ultimate impact depends on whether advocates can respond to critiques about equity and structure",
+        "It will certainly achieve its transformative goals within the next decade",
+        "Policymakers have already resolved the major concerns raised by critics"
+      ],
+      "correctAnswer": "Its ultimate impact depends on whether advocates can respond to critiques about equity and structure",
+      "justification": "Paragraph I concludes that the movement's success 'may depend less on the intrinsic merits of biophilic design than on whether its proponents can address the structural and equity concerns that critics have raised.' This implies success is contingent on responding to critiques.",
+      "evidenceQuote": "\"may depend less on the intrinsic merits of biophilic design than on whether its proponents can address the structural and equity concerns that critics have raised\""
+      }
+     ] 
+    }
+   ]
+  }
+ ]
+}

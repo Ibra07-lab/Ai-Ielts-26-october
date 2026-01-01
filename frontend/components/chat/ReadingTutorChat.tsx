@@ -275,59 +275,174 @@ export default function ReadingTutorChat({ droppedQuestionId, streamingEnabled =
       <div className="flex-1 overflow-y-auto p-4 sm:p-6 scroll-smooth custom-scrollbar bg-slate-50/50 dark:bg-slate-950/50">
         <div className="max-w-3xl mx-auto space-y-3">
           {messages.map((message) => (
-            <div
-              key={message.id}
-              className="flex gap-3 animate-in fade-in slide-in-from-bottom-4 duration-500"
-            >
-              {/* Avatar */}
-              {message.role === 'assistant' ? (
-                <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
-                  <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full p-1.5">
-                    <Bot className="h-3.5 w-3.5 text-white" />
-                  </div>
-                </div>
-              ) : (
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0 shadow-md shadow-blue-500/20 mt-1">
-                  <User className="h-3.5 w-3.5 text-white" />
-                </div>
-              )}
-
-              {/* Message Card */}
-              <div className="flex-1 min-w-0">
-                <Card className="py-0 gap-0 border shadow-sm bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
-                  <CardContent className="p-4 text-[15px] leading-snug">
-                    <div className="chat-content text-left text-slate-800 dark:text-slate-200">
-                      <ReactMarkdown
-                        components={{
-                          p: ({ children }) => <p className="mb-1 last:mb-0">{children}</p>,
-                          strong: ({ children }) => (
-                            <strong className="font-semibold text-indigo-600 dark:text-indigo-400">
-                              {children}
-                            </strong>
-                          ),
-                          ul: ({ children }) => <ul className="my-1 pl-4 list-disc space-y-0.5">{children}</ul>,
-                          ol: ({ children }) => <ol className="my-1 pl-4 list-decimal space-y-0.5">{children}</ol>,
-                          li: ({ children }) => <li className="pl-1">{children}</li>,
-                          code: ({ children }) => (
-                            <code className="px-1.5 py-0.5 rounded text-[14px] font-semibold bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-100 dark:border-emerald-800">
-                              {children}
-                            </code>
-                          ),
-                        }}
-                      >
-                        {message.role === 'assistant'
-                          ? formatAssistantContent(message.content)
-                          : message.content}
-                      </ReactMarkdown>
+            (message.content || message.role === 'user') ? (
+              <div
+                key={message.id}
+                className="flex gap-3 animate-in fade-in slide-in-from-bottom-4 duration-500"
+              >
+                {/* Avatar */}
+                {message.role === 'assistant' ? (
+                  <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
+                    <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full p-1.5">
+                      <Bot className="h-3.5 w-3.5 text-white" />
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                ) : (
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0 shadow-md shadow-blue-500/20 mt-1">
+                    <User className="h-3.5 w-3.5 text-white" />
+                  </div>
+                )}
+
+                {/* Message Card */}
+                <div className="flex-1 min-w-0">
+                  <Card className="py-0 gap-0 border shadow-sm bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
+                    <CardContent className="p-4 text-[15px] leading-snug">
+                      <div className="chat-content text-left text-slate-800 dark:text-slate-200">
+                        <ReactMarkdown
+                          components={{
+                            p: ({ children }) => {
+                              const text = typeof children === 'string' ? children : '';
+
+                              // Answer Badge Detection
+                              if (typeof children === 'string' || (Array.isArray(children) && children.every(c => typeof c === 'string'))) {
+                                const fullText = Array.isArray(children) ? children.join('') : children;
+                                const badgeMatch = fullText.match(/\[\s*(✅|❌|🔍)\s*(TRUE|FALSE|NOT GIVEN)\s*\]/i);
+
+                                if (badgeMatch) {
+                                  const icon = badgeMatch[1];
+                                  const label = badgeMatch[2].toUpperCase();
+                                  let badgeClass = "inline-flex items-center gap-2 px-4 py-2 rounded-full font-bold text-white shadow-md transform hover:scale-105 transition-all duration-200 mt-2 mb-4";
+
+                                  if (label === 'TRUE') badgeClass += " bg-emerald-500 shadow-emerald-500/20";
+                                  else if (label === 'FALSE') badgeClass += " bg-rose-500 shadow-rose-500/20";
+                                  else badgeClass += " bg-slate-500 shadow-slate-500/20";
+
+                                  return (
+                                    <div className={badgeClass}>
+                                      <span className="text-lg">{icon}</span>
+                                      <span className="tracking-wide">{label}</span>
+                                    </div>
+                                  );
+                                }
+                              }
+
+                              return <p className="mb-2 last:mb-0 leading-relaxed">{children}</p>;
+                            },
+                            em: ({ children }) => (
+                              <em className="not-italic font-medium text-blue-700 dark:text-blue-200 bg-blue-100/50 dark:bg-blue-900/40 px-1.5 py-0.5 rounded border border-blue-200/50 dark:border-blue-700/30 box-decoration-clone mx-0.5">
+                                {children}
+                              </em>
+                            ),
+                            del: ({ children }) => (
+                              <del className="no-underline font-bold text-rose-700 dark:text-rose-300 bg-rose-100/50 dark:bg-rose-900/40 px-1 py-0.5 rounded border border-rose-200/50 dark:border-rose-800/50 box-decoration-clone mx-0.5">
+                                {children}
+                              </del>
+                            ),
+                            strong: ({ children }) => (
+                              <strong className="font-bold text-slate-900 dark:text-slate-100 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded box-decoration-clone">
+                                {children}
+                              </strong>
+                            ),
+                            ul: ({ children }) => <ul className="my-3 pl-5 space-y-2.5">{children}</ul>,
+                            ol: ({ children }) => <ol className="my-3 pl-5 space-y-2.5 list-decimal">{children}</ol>,
+                            li: ({ children }) => (
+                              <li className="pl-1 text-slate-700 dark:text-slate-300">
+                                <span className="relative -left-2 top-0.5 inline-block w-4 text-center text-indigo-400 opacity-60">•</span>
+                                <span className="-ml-1">{children}</span>
+                              </li>
+                            ),
+                            code: ({ children }) => (
+                              <code className="px-1.5 py-0.5 rounded text-[13px] font-bold bg-amber-100/60 dark:bg-amber-900/30 text-amber-700 dark:text-amber-200 border border-amber-200 dark:border-amber-800/50 font-mono shadow-sm mx-0.5">
+                                {children}
+                              </code>
+                            ),
+                            blockquote: ({ children }) => {
+                              const getNodeText = (node: any): string => {
+                                if (!node) return '';
+                                if (typeof node === 'string') return node;
+                                if (Array.isArray(node)) return node.map(getNodeText).join(' ');
+                                if (node.props && node.props.children) return getNodeText(node.props.children);
+                                return '';
+                              };
+
+                              const firstLine = getNodeText(children);
+
+                              let cardStyle = "border-l-4 pl-4 py-3 my-4 rounded-r-2xl overflow-hidden shadow-sm transition-all duration-300 hover:shadow-md";
+                              let isExample = false;
+
+                              if (firstLine.includes('⚔️') || firstLine.includes('ATTACK PLAN')) {
+                                cardStyle = "border-l-4 border-blue-500 bg-blue-50/50 dark:bg-blue-950/20 my-4 rounded-r-2xl overflow-hidden shadow-sm";
+                              } else if (firstLine.includes('🪤') || firstLine.includes('TRICK YOU') || firstLine.includes('MISTAKE')) {
+                                cardStyle = "border-l-4 border-rose-500 bg-rose-50/50 dark:bg-rose-950/20 my-4 rounded-r-2xl overflow-hidden shadow-sm";
+                              } else if (firstLine.includes('🎬') || firstLine.includes('SEE IT IN ACTION')) {
+                                cardStyle = "border-l-4 border-purple-500 bg-purple-50/50 dark:bg-purple-950/20 my-4 rounded-r-2xl overflow-hidden shadow-sm";
+                                isExample = true;
+                              } else if (firstLine.includes('💡') || firstLine.includes('PRO TIP')) {
+                                cardStyle = "border-l-4 border-amber-400 bg-amber-50/50 dark:bg-amber-950/20 my-4 rounded-r-2xl overflow-hidden shadow-sm";
+                              } else if (firstLine.includes('⏱️') || firstLine.includes('TIME MANAGEMENT')) {
+                                cardStyle = "border-l-4 border-slate-500 bg-slate-100/50 dark:bg-slate-800/40 my-4 rounded-r-2xl overflow-hidden shadow-sm";
+                              } else if (firstLine.includes('✨') || firstLine.includes('SUMMARY')) {
+                                cardStyle = "border-l-4 border-indigo-500 bg-indigo-50/50 dark:bg-indigo-950/20 my-4 rounded-r-2xl overflow-hidden shadow-sm";
+                              }
+
+                              if (isExample && Array.isArray(children)) {
+                                const solutionIndex = children.findIndex((child: any) =>
+                                  getNodeText(child).includes('THE SOLUTION')
+                                );
+
+                                if (solutionIndex !== -1) {
+                                  const header = children.slice(0, 1);
+                                  const leftCol = children.slice(1, solutionIndex);
+                                  const rightCol = children.slice(solutionIndex);
+
+                                  return (
+                                    <div className={cardStyle}>
+                                      <div className="p-5">
+                                        <div className="mb-5 pb-3 border-b border-purple-200 dark:border-purple-800/50">
+                                          {header}
+                                        </div>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+                                          <div className="relative bg-white/60 dark:bg-slate-900/60 rounded-xl p-4 border border-purple-100 dark:border-purple-900/30 flex flex-col h-full">
+                                            <div className="absolute top-[-10px] left-3 px-2 py-0.5 bg-purple-100 dark:bg-purple-900 text-[10px] font-bold text-purple-600 dark:text-purple-400 rounded uppercase tracking-wider border border-purple-200 dark:border-purple-800">Passage</div>
+                                            {leftCol}
+                                          </div>
+                                          <div className="relative bg-purple-50/50 dark:bg-purple-900/20 rounded-xl p-4 border border-purple-200/50 dark:border-purple-800/30 flex flex-col h-full">
+                                            <div className="absolute top-[-10px] left-3 px-2 py-0.5 bg-purple-200 dark:bg-purple-800 text-[10px] font-bold text-purple-700 dark:text-purple-300 rounded uppercase tracking-wider border border-purple-300 dark:border-purple-700">Statement</div>
+                                            {rightCol}
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  );
+                                }
+                              }
+
+                              return (
+                                <div className={cardStyle}>
+                                  <div className="p-5">
+                                    <div className="text-slate-800 dark:text-slate-200">
+                                      {children}
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            }
+                          }}
+                        >
+                          {message.role === 'assistant'
+                            ? formatAssistantContent(message.content)
+                            : message.content}
+                        </ReactMarkdown>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
               </div>
-            </div>
+            ) : null
           ))}
 
           {/* Loading indicator */}
-          {isLoading && (
+          {isLoading && (messages.length === 0 || messages[messages.length - 1].role !== 'assistant' || !messages[messages.length - 1].content) && (
             <div className="flex gap-3 animate-in fade-in duration-300">
               <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
                 <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full p-1.5">
@@ -380,7 +495,7 @@ export default function ReadingTutorChat({ droppedQuestionId, streamingEnabled =
           AI can make mistakes. Please verify important information.
         </p>
       </div>
-    </div>
+    </div >
   );
 }
 

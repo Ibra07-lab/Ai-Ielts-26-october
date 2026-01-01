@@ -219,29 +219,46 @@ export default function ReadingTutor() {
 					<ScrollArea ref={listRef as any} className="flex-1 px-4 sm:px-6">
 						<div className="space-y-6 py-6 mx-auto w-full">
 							{messages.map((m) => (
-								<div key={m.id} className={cn("flex gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500", m.role === "user" ? "justify-end" : "justify-start")}>
-									{m.role === "assistant" && <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 border border-slate-200/50 dark:border-slate-700 flex items-center justify-center flex-shrink-0 shadow-sm mt-1 ring-1 ring-black/5"><div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full p-1.5"><Bot className="h-3.5 w-3.5 text-white" /></div></div>}
-									<div className={cn("flex flex-col max-w-[85%] sm:max-w-[85%]", m.role === "user" ? "items-end" : "items-start")}>
-										<div className={cn("px-5 py-4 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] text-[15px] leading-relaxed", m.role === "user" ? "bg-blue-600 text-white rounded-tr-sm shadow-blue-500/10" : "bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-gray-100 dark:border-slate-800 text-slate-800 dark:text-slate-200 rounded-tl-sm")}>
-											{(() => {
-												if (m.role === "assistant") {
-													const parsed = parseStructuredMatchingHeadings(m.content);
-													if (parsed) return <StructuredAiMessage data={parsed} />;
-												}
-												return (
-													<div className="chat-content whitespace-pre-wrap break-words">
-														<ReactMarkdown components={{ p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>, ul: ({ children }) => <ul className="list-disc pl-4 mb-3 space-y-1.5">{children}</ul>, ol: ({ children }) => <ol className="list-decimal pl-4 mb-3 space-y-1.5">{children}</ol>, li: ({ children }) => <li className="pl-1">{children}</li> }}>
-															{m.role === "assistant" ? formatAssistantContent(m.content) : m.content}
-														</ReactMarkdown>
-													</div>
-												);
-											})()}
+								(m.content || m.role === "user") ? (
+									<div key={m.id} className={cn("flex gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500", m.role === "user" ? "justify-end" : "justify-start")}>
+										{m.role === "assistant" && <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 border border-slate-200/50 dark:border-slate-700 flex items-center justify-center flex-shrink-0 shadow-sm mt-1 ring-1 ring-black/5"><div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full p-1.5"><Bot className="h-3.5 w-3.5 text-white" /></div></div>}
+										<div className={cn("flex flex-col max-w-[85%] sm:max-w-[85%]", m.role === "user" ? "items-end" : "items-start")}>
+											<div className={cn("px-5 py-4 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] text-[15px] leading-relaxed", m.role === "user" ? "bg-blue-600 text-white rounded-tr-sm shadow-blue-500/10" : "bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-gray-100 dark:border-slate-800 text-slate-800 dark:text-slate-200 rounded-tl-sm")}>
+												{(() => {
+													if (m.role === "assistant") {
+														const parsed = parseStructuredMatchingHeadings(m.content);
+														if (parsed) return <StructuredAiMessage data={parsed} />;
+													}
+													return (
+														<div className="chat-content whitespace-pre-wrap break-words">
+															<ReactMarkdown components={{ p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>, ul: ({ children }) => <ul className="list-disc pl-4 mb-3 space-y-1.5">{children}</ul>, ol: ({ children }) => <ol className="list-decimal pl-4 mb-3 space-y-1.5">{children}</ol>, li: ({ children }) => <li className="pl-1">{children}</li> }}>
+																{m.role === "assistant" ? formatAssistantContent(m.content) : m.content}
+															</ReactMarkdown>
+														</div>
+													);
+												})()}
+											</div>
+										</div>
+										{m.role === "user" && <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0 shadow-md mt-1 ring-2 ring-white"><UserIcon className="h-3.5 w-3.5 text-white" /></div>}
+									</div>
+								) : null
+							))}
+							{isLoading && (messages.length === 0 || messages[messages.length - 1].role !== "assistant" || !messages[messages.length - 1].content) && (
+								<div className="flex gap-4 justify-start animate-in fade-in duration-300">
+									<div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 border border-slate-200 flex items-center justify-center flex-shrink-0 shadow-sm">
+										<div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full p-1.5">
+											<Bot className="h-3.5 w-3.5 text-white" />
 										</div>
 									</div>
-									{m.role === "user" && <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0 shadow-md mt-1 ring-2 ring-white"><UserIcon className="h-3.5 w-3.5 text-white" /></div>}
+									<div className="bg-white dark:bg-slate-900 px-5 py-4 rounded-2xl rounded-tl-sm shadow-sm border border-slate-100">
+										<div className="flex space-x-1.5 items-center h-full">
+											<div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce"></div>
+											<div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce delay-75"></div>
+											<div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce delay-150"></div>
+										</div>
+									</div>
 								</div>
-							))}
-							{isLoading && <div className="flex gap-4 justify-start animate-in fade-in duration-300"><div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 border border-slate-200 flex items-center justify-center flex-shrink-0 shadow-sm"><div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full p-1.5"><Bot className="h-3.5 w-3.5 text-white" /></div></div><div className="bg-white dark:bg-slate-900 px-5 py-4 rounded-2xl rounded-tl-sm shadow-sm border border-slate-100"><div className="flex space-x-1.5 items-center h-full"><div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce"></div><div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce delay-75"></div><div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce delay-150"></div></div></div></div>}
+							)}
 							<div className="h-4" />
 						</div>
 					</ScrollArea>

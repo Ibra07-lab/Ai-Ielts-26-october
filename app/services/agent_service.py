@@ -1156,6 +1156,34 @@ RESPONSE FORMATTING RULES (CRITICAL):
 - Group related content tightly together
 - Only separate distinct topics with a single blank line
 
+ELITE UI/UX FORMATTING RULES (MANDATORY):
+1. **SCANNABILITY ICONS**: Use icons as visual anchors for lists:
+   - For Golden Rules: 👁️ (Read), 📍 (Locate), ⚖️ (Compare)
+   - For Mistakes: ⚠️ (Assuming), 🚫 (Ignoring)
+   - For Strategies: ⚔️ (Attack Plan), 🏹 (Action)
+
+2. **ANSWER BADGES**: Never say "Answer: TRUE". ALWAYS use the badge format:
+   - [ ✅ TRUE ]
+   - [ ❌ FALSE ]
+   - [ 🔍 NOT GIVEN ]
+
+3. **SEMANTIC HIGHLIGHTING**:
+   - Use *italics* for words taken directly FROM THE PASSAGE (renders as Blue Evidence).
+   - Use `backticks` for key words in the STATEMENT (renders as Amber Focus).
+   - Use ~~strikethrough~~ for clashing words that create a FALSE answer (renders as Red Warning).
+     Example: "The passage says it is *likely*, but the statement says it is ~~certain~~."
+
+4. **SIDE-BY-SIDE EXAMPLES**: To trigger the split-card UI, use this EXACT structure inside a blockquote:
+   > 🎬 **SEE IT IN ACTION**
+   >
+   > Passage Excerpt: "*passage text here*"
+   >
+   > Statement: "`statement text here`"
+   >
+   > **THE SOLUTION:**
+   > [ ❌ FALSE ]
+   > **Logic:** Your explanation here...
+
 GOOD spacing example:
 "**Key Qualifiers to Watch For:**
 
@@ -1188,16 +1216,87 @@ If a student asks for help with a specific question type or skill, refer to the 
 - Break down the reasoning step-by-step.
 - If the problem is VAGUE (e.g., "I'm struggling"), ask for clarification to identify if it's timing, vocabulary, or a specific question type.
 
-WHEN A STUDENT WANTS TO TALK ABOUT A QUESTION TYPE (NO CLEAR PROBLEM YET):
-- If a student says they want to "talk about", "discuss", or "learn about" a specific question type (e.g., "I'd like to talk about note completion", "Let's talk about matching headings") but does NOT describe a detailed problem:
-- First give a SHORT explanation (2–4 concise bullet points) of what this question type tests and the core approach.
-- Then provide ONE simple IELTS-style mini example (very short passage or notes + ONE question + correct answer + 1–2 sentence reasoning).
-- Finish by asking which part feels hardest for them (for example: timing, finding information, understanding the question, or something else).
-- Keep this kind of response compact (roughly 250–300 words maximum) and avoid long diagnostic bullet lists until they answer your follow-up question.
+WHEN A STUDENT ASKS ABOUT OR MENTIONS A QUESTION TYPE:
+- If a student mentions, asks about, or wants to learn a specific question type (e.g., "sentence completion", "true false not given", "tell me about matching headings"):
+- DO NOT give a short summary. Instead, provide a COMPREHENSIVE and CLEAR lesson including:
+  1. A detailed overview of what the question type tests.
+  2. The Golden Rules/Core Approach for this type.
+  3. Top 2-3 Common Mistakes (with clear Trap vs. Rule examples from the theory).
+  4. The Step-by-Step Strategy.
+  5. A full walkthrough of an example question (Passage + Question + Logic).
+- Ensure the tone is conversational but expert.
+- CRITICAL: End the explanation by checking for understanding (e.g., "Did that clear things up? Would you like to try a practice question together now?").
+- You are not restricted by word counts for these educational explanations; prioritize clarity and completeness.
 
-PRACTICE SESSION GENERATION:
-- If use wants a Practice Session or Exercise, ask for their level (Beginner/Intermediate/Advanced).
-- Once they provide a level, generate the practice immediately.
+PRACTICE PASSAGE GENERATION (MANDATORY CONVERSATION FLOW):
+When a student requests a practice passage (e.g., "give me a practice passage", "I want to practice", "create a passage for me"):
+
+1. **FIRST QUESTION - Ask for Level:**
+   "Great! I'd love to create a practice passage for you. 📚
+   
+   First, what's your current level?
+   - 🟢 **Beginner** (Simpler vocabulary, direct statements)
+   - 🟡 **Intermediate** (Academic vocabulary, some paraphrasing)
+   - 🔴 **Advanced** (Complex sentences, heavy paraphrasing, exam-level difficulty)"
+
+2. **SECOND QUESTION - Ask for Question Type (ONLY after they provide level):**
+   "Perfect! Now, which question type would you like to practice?
+   - True/False/Not Given
+   - Yes/No/Not Given
+   - Multiple Choice
+   - Matching Headings
+   - Sentence Completion
+   - Or would you like a **Mixed** passage with different question types?"
+
+3. **GENERATE - Only after BOTH answers are provided:**
+   Create the passage based on their level and question type preference.
+   
+**CRITICAL:** Do NOT generate a passage until you have BOTH the level AND the question type. If they only provide one, ask for the other.
+
+EXAMPLE GENERATION RULES (CRITICAL FOR STUDENT ENGAGEMENT):
+When a student asks for examples or practice statements (e.g., "give me examples", "give me 10 examples", "show me practice questions"):
+
+1. APPROPRIATE QUANTITY - Match passage length:
+   - Small passage (100-150 words): Generate 5-6 statements maximum
+   - Medium passage (200-300 words): Generate 7-8 statements
+   - Long passage (300+ words): Generate 10 statements
+   - If no passage context, generate 5-6 examples
+
+2. EDUCATIONAL FORMAT (MANDATORY):
+   For EACH statement, you MUST provide a side-by-side comparison using this blockquote structure:
+
+   > 🎬 **SEE IT IN ACTION**
+   >
+   > Passage Excerpt: "*quote the evidence here*"
+   > 
+   > Statement: "`the statement here`"
+   >
+   > **THE SOLUTION:**
+   > [ ✅ ANSWER BADGE HERE ]
+   > **Logic:** Explain the comparison using ~~strikethrough~~ for clashing words and `backticks` for key keywords. Ensure you quote EXACT words from the passage in *italics*.
+   
+   Example of ELITE format:
+   > 🎬 **SEE IT IN ACTION**
+   >
+   > Passage Excerpt: "*many scientists believe climate change is accelerating due to human activity*"
+   > 
+   > Statement: "`Climate change is solely caused by human activity`"
+   >
+   > **THE SOLUTION:**
+   > [ ❌ FALSE ]
+   > **Logic:** The passage says the change is *due to human activity*, but it does not say it is ~~solely~~ (only) caused by it. The key word here is `solely`. The passage evidence is *due to human activity*.
+
+3. PROGRESSIVE DIFFICULTY (Mandatory):
+   Order the statements from easiest to hardest:
+   - Statements 1-2: Direct word matches (exact wording from passage)
+   - Statements 3-4: Synonym paraphrasing (same concept, different words)
+   - Statements 5 onwards: Traps with qualifiers, negatives, or Not Given scenarios
+   
+4. ENGAGEMENT:
+   - After every 3-4 examples, add a brief teaching comment (e.g., "Notice how statement 3 uses a synonym?")
+   - End with: "Want to try answering some yourself before I reveal the answers?"
+
+DO NOT just list statements with bare answers like "TRUE" or "FALSE". Each example must teach the student HOW to think.
 
 Behavior rules:
 - Start responses with brief empathy/encouragement.
@@ -1278,10 +1377,12 @@ The student is currently working on THIS specific practice passage:
         theory_name = detected_type
         
         # Inject the appropriate theory
-        if theory_to_inject and "Guidance for" not in theory_to_inject:
+        if theory_to_inject:
             base_system_message += f"\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-            base_system_message += f"📚 EXPERT THEORY: {theory_name.upper()}\n"
-            base_system_message += f"Use the strategies and steps below to teach or explain this concept to the student:\n\n"
+            base_system_message += f"📚 EXPERT KNOWLEDGE BASE: {theory_name.upper()}\n"
+            base_system_message += f"MANDATORY INSTRUCTION: You use the theory provided below to answer the student.\n"
+            base_system_message += f"CRITICAL: You MUST preserve the Markdown formatting (blockquotes '>', emojis, bolding) EXACTLY as they appear in the theory. \n"
+            base_system_message += f"DO NOT paraphrase the 'Attack Plan', 'Quick Summary', or 'Traps' sections. Output them exactly as styled below so the UI renders them as cards.\n\n"
             base_system_message += f"{theory_to_inject}\n"
             base_system_message += f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
@@ -1476,35 +1577,213 @@ The student is currently working on THIS specific practice passage:
                       if qt["id"] == target_id or qt["name"].lower() == q_type_lower), None)
 
         if not theory:
-            return f"Guidance for {question_type}:\n- Follow passage order (if applicable)\n- Use exact words from passage\n- Watch the word limit."
+            return f"Guidance for {question_type}:\\n- Follow passage order (if applicable)\\n- Use exact words from passage\\n- Watch the word limit."
 
-        # Format the guidance string
-        sections = theory.get("detailedTheory", {}).get("sections", [])
-        
+        # ========== NEW: ACTIONABLE FORMAT ==========
         guidance_parts = [
-            f"GUIDANCE FOR {theory['name'].upper()}:",
-            f"Description: {theory.get('whatIsIt', {}).get('description', '')}",
-            "\nSTRATEGY STEPS:"
+            f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+            f"📚 {theory['name'].upper()}",
+            f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
         ]
-        
-        # Look for strategy section
-        strategy_section = next((s for s in sections if "STRATEGY" in s["title"].upper()), None)
-        if strategy_section:
-            for sub in strategy_section.get("subsections", []):
-                guidance_parts.append(f"- {sub['title']}:")
-                if "content" in sub:
-                    guidance_parts.append(f"  • {sub['content']}")
+
+        # Quick Summary (NEW) -> Blockquote ✨
+        if "quickSummary" in theory:
+            guidance_parts.append(f"\\n> ✨ **QUICK SUMMARY**")
+            guidance_parts.append(f"> {theory['quickSummary']}")
+
+        # Reading Strategy Tag (NEW) -> Blockquote 📌
+        if "readingStrategy" in theory:
+            strategy_map = {
+                "skim": "📖 SKIM (Read for main ideas)",
+                "scan": "🔍 SCAN (Hunt for specific keywords)",
+                "close-read": "🎯 CLOSE READ (Intense focus on details)"
+            }
+            strategy_text = strategy_map.get(theory["readingStrategy"], theory["readingStrategy"].upper())
+            guidance_parts.append(f"\\n> 📌 **READING STRATEGY**")
+            guidance_parts.append(f"> {strategy_text}")
+
+        # Time Management & Difficulty (NEW) -> Blockquote ⏱️
+        if "difficulty" in theory or "timePerQuestion" in theory:
+            guidance_parts.append("\\n> ⏱️ **TIME MANAGEMENT**")
+            if "difficulty" in theory:
+                stars = "⭐" * theory["difficulty"]
+                guidance_parts.append(f"> Difficulty: {stars} ({theory['difficulty']}/5)")
+            if "timePerQuestion" in theory:
+                guidance_parts.append(f"> Time Budget: {theory['timePerQuestion']} per question")
+            if "examPriority" in theory:
+                priority_map = {"high": "🔴 HIGH", "medium": "🟡 MEDIUM", "low": "🟢 LOW"}
+                guidance_parts.append(f"> Priority: {priority_map.get(theory['examPriority'], theory['examPriority'].upper())}")
+
+        # Description (Plain text)
+        guidance_parts.append(f"\\n📝 **WHAT IT TESTS**")
+        guidance_parts.append(theory.get('whatIsIt', {}).get('description', ''))
+        if "skillTested" in theory.get("whatIsIt", {}):
+            guidance_parts.append(f"Skills: {theory['whatIsIt']['skillTested']}")
+
+        # Recognition (Plain text list)
+        rec = theory.get("recognition", {})
+        if rec and "howToIdentify" in rec:
+            guidance_parts.append("\n👁️ **HOW TO RECOGNIZE THIS QUESTION TYPE**")
+            for item in rec["howToIdentify"]:
+                guidance_parts.append(f"- {item}")
+
+        # ========== THE 4-STEP ATTACK PLAN (NEW) -> Blockquote ⚔️ ==========
+        if "attackPlan" in theory:
+            plan = theory["attackPlan"]
+            guidance_parts.append(f"\n> ⚔️ **{plan.get('title', 'THE 4-STEP ATTACK PLAN').upper()}**")
+            guidance_parts.append(f">")
+            guidance_parts.append(f"> {plan.get('description', '')}")
+            guidance_parts.append(f">")
+            for step in plan.get("steps", []):
+                step_num = step.get("step", "")
+                title = step.get("title", "")
+                desc = step.get("description", "")
+                guidance_parts.append(f"> **{step_num}. {title}**")
+                guidance_parts.append(f"> {desc}")
+                if "example" in step:
+                    guidance_parts.append(f"> *💡 Example: {step['example']}*")
+                if "proTip" in step:
+                    guidance_parts.append(f"> *🎯 Pro Tip: {step['proTip']}*")
+                guidance_parts.append(f">") # Spacing
+
+        # ========== SEE IT IN ACTION (NEW) -> Blockquote 🎬 ==========
+        if "seeItInAction" in theory:
+            ex = theory["seeItInAction"]
+            guidance_parts.append(f"\n> 🎬 **SEE IT IN ACTION**")
+            guidance_parts.append(f">")
+            if "passage" in ex:
+                guidance_parts.append(f"> Passage Excerpt: \"{ex['passage']}\"")
+            if "question" in ex:
+                guidance_parts.append(f"> Statement: \"{ex['question']}\"")
+            
+            guidance_parts.append(f">")
+            guidance_parts.append(f"> **THE SOLUTION:**")
+            
+            if "correct" in ex:
+                ans = ex["correct"]
+                icon = "✅" if "TRUE" in ans.upper() or "YES" in ans.upper() else "❌" if "FALSE" in ans.upper() or "NO" in ans.upper() else "🔍"
+                guidance_parts.append(f"> [ {icon} {ans.upper()} ]")
+                
+            if "explanation" in ex:
+                guidance_parts.append(f"> **Logic:** {ex['explanation']}")
+            guidance_parts.append(f">")
+
+        # ========== HOW THEY WILL TRICK YOU (NEW) -> Blockquote 🪤 ==========
+        if "howTheyTrickYou" in theory:
+            tricks = theory["howTheyTrickYou"]
+            guidance_parts.append(f"\n> 🪤 **HOW THEY WILL TRICK YOU**")
+            guidance_parts.append(f">")
+            guidance_parts.append(f"> {tricks.get('description', '')}")
+            guidance_parts.append(f">")
+            for trap in tricks.get("traps", []):
+                trap_id = trap.get("id", "")
+                name = trap.get("name", "")
+                trick = trap.get("theTrick", "")
+                guidance_parts.append(f"> **🎯 TRAP #{trap_id}: {name}**")
+                guidance_parts.append(f"> The Trick: {trick}")
+                guidance_parts.append(f">")
+                if "example" in trap:
+                    ex = trap["example"]
+                    guidance_parts.append(f"> *Example Passage Excerpt:* \"{ex.get('passage', '')}\"")
+                    guidance_parts.append(f"> `Example Statement:` \"{ex.get('statement', '')}\"")
+                    if "wrongThinking" in ex:
+                        guidance_parts.append(f"> ❌ **Wrong Thinking:** {ex['wrongThinking']}")
+                    if "defense" in ex:
+                        guidance_parts.append(f"> 🛡️ **Defense (How to win):** {ex['defense']}")
+                guidance_parts.append(f">")
+
+        # ========== PRO TIPS (NEW) -> Blockquote 💡 ==========
+        if "proTips" in theory:
+            tips = theory["proTips"]
+            guidance_parts.append(f"\n> 💡 **PRO TIPS (EXAM HACKS)**")
+            guidance_parts.append(f">")
+            for tip_item in tips.get("tips", []):
+                tip_text = tip_item.get("tip", "")
+                explanation = tip_item.get("explanation", "")
+                guidance_parts.append(f"> **✨ {tip_text}**")
+                guidance_parts.append(f"> {explanation}")
+                guidance_parts.append(f">")
+
+        # Add top-level examples if available (like in table-completion)
+        if "examples" in theory and isinstance(theory["examples"], list):
+             guidance_parts.append("\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+             guidance_parts.append("📋 REPRESENTATIVE EXAMPLES:")
+             guidance_parts.append("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+             for ex in theory["examples"]:
+                 if "passage" in ex: guidance_parts.append(f"Passage: {ex['passage']}")
+                 for q in ex.get("questions", []):
+                     guidance_parts.append(f"Q: {q.get('text', '')}")
+                     guidance_parts.append(f"A: {q.get('correctAnswer', '')}")
+
+        # Iterate through detailed sections (LEGACY SUPPORT)
+        sections = theory.get("detailedTheory", {}).get("sections", [])
+        for section in sections:
+            title = section.get("title", "").upper()
+            guidance_parts.append(f"\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+            guidance_parts.append(f"SECTION: {title}")
+            
+            if "content" in section: guidance_parts.append(section["content"])
+            if "intro" in section: guidance_parts.append(section["intro"])
+
+            for sub in section.get("subsections", []):
+                sub_title = sub.get("title", "")
+                if sub_title:
+                    guidance_parts.append(f"\\n--- {sub_title} ---")
+                
+                if "content" in sub: guidance_parts.append(sub["content"])
+                if "description" in sub: guidance_parts.append(sub["description"])
+                
+                # Handle generic lists
                 if "list" in sub:
                     for item in sub["list"]:
-                        guidance_parts.append(f"  • {item}")
-        else:
-            guidance_parts.append("- Scan passage for keywords\n- Read carefully around the answer location\n- Check word limits")
+                        guidance_parts.append(f"• {item}")
+                
+                # Handle "rules" (common in Gap Fill)
+                if "rules" in sub:
+                    for rule in sub["rules"]:
+                        guidance_parts.append(f"\\nRule: {rule['title']}")
+                        guidance_parts.append(f"Description: {rule['description']}")
+                
+                # Handle "mistakes" (specifically for detailed mistake analysis)
+                if "mistakes" in sub:
+                    for m in sub["mistakes"]:
+                        guidance_parts.append(f"\\n[MISTAKE] {m.get('id', '')} {m['title']}")
+                        if "trap" in m: guidance_parts.append(f"   Trap: {m['trap']}")
+                        if "rule" in m: guidance_parts.append(f"   Rule: {m['rule']}")
+                        if "example" in m:
+                            ex = m["example"]
+                            guidance_parts.append(f"   Example:")
+                            if "passage" in ex: guidance_parts.append(f"     Passage Excerpt: \\\"{ex['passage']}\\\"")
+                            if "statement" in ex: guidance_parts.append(f"     Question/Statement: \\\"{ex['statement']}\\\"")
+                            elif "question" in ex: guidance_parts.append(f"     Question/Statement: \\\"{ex['question']}\\\"")
+                            if "wrong" in ex: guidance_parts.append(f"     ❌ Wrong Answer: {ex['wrong']}")
 
-        # Add common mistakes if available
-        mistakes_section = next((s for s in sections if "MISTAKE" in s["title"].upper()), None)
-        if mistakes_section:
-            guidance_parts.append("\nTOP COMMON MISTAKES:")
-            for sub in mistakes_section.get("subsections", []):
-                guidance_parts.append(f"- {sub['title']}")
-        
+                            if "correct" in ex: guidance_parts.append(f"     ✅ Correct Answer: {ex['correct']}")
+
+                # Handle "examples" (Walkthrough style)
+                if "examples" in sub:
+                    if "passage" in sub:
+                        guidance_parts.append(f"\"\"\"\n{sub['passage']}\n\"\"\"")
+                        
+                    for i, ex in enumerate(sub["examples"]):
+                        guidance_parts.append(f"\nEXERCISE {i+1}:")
+                        if "passage" in ex:
+                            guidance_parts.append(f"Context: {ex['passage']}")
+                        if "question" in ex:
+                            guidance_parts.append(f"Question: {ex['question']}")
+                        if "stepByStep" in ex:
+                            guidance_parts.append("Step-by-Step Logic:")
+                            for step in ex["stepByStep"]:
+                                guidance_parts.append(f"  → {step}")
+                        if "answer" in ex:
+                            guidance_parts.append(f"Correct Answer: {ex['answer']}")
+
+                # Handle "steps" (Strategy style)
+                if "steps" in sub:
+                    for step in sub["steps"]:
+                        guidance_parts.append(f"{step.get('step', '')}. {step['title']}")
+                        if "actions" in step:
+                            for action in step["actions"]:
+                                guidance_parts.append(f"   - {action}")
+
         return "\n".join(guidance_parts)

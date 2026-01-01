@@ -1,0 +1,37 @@
+{
+    "testId": 20,
+    "testName": "Test 20",
+    "passages": [
+{
+  "id": 1,
+  "title": "Vertical Gardens: Transforming Urban Food Production",
+  "level": "intermediate",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "A",
+      "text": "Cities worldwide face mounting pressure to feed growing populations within limited space. By 2050, approximately 80 percent of the global population is projected to live in urban areas, creating unprecedented demand for locally produced food. Traditional agriculture requires extensive land, which is increasingly scarce in metropolitan environments. Vertical gardens—structures that grow plants in stacked layers on building walls or purpose-built frames—offer a promising solution to this challenge. These installations transform unused urban surfaces into productive growing spaces, allowing cities to cultivate fresh vegetables, herbs, and even fruits without expanding their physical footprint."
+    },
+    {
+      "id": "B",
+      "text": "The concept of vertical farming emerged in academic discussions during the early 2000s, but practical implementation began much later. The first large-scale vertical garden installation designed specifically for food production was established in Singapore in 2014, covering approximately 150 square metres of a residential tower. This pioneering project demonstrated that vertical systems could produce vegetables efficiently in tropical climates. Subsequently, similar initiatives appeared in South Korea, where Seoul launched a municipal programme to install vertical gardens on government buildings. A 2018 study by the Tokyo Institute of Sustainable Agriculture found that well-designed vertical gardens could yield up to 20 times more produce per square metre than conventional horizontal farming methods, sparking international interest in the technology."
+    },
+    {
+      "id": "C",
+      "text": "Dr. Amara Chen, an agricultural engineer at the International Urban Farming Alliance, has been instrumental in developing accessible hydroponic systems for vertical gardens. Hydroponics is a method of growing plants without soil, using nutrient-enriched water instead. Chen's modular system consists of lightweight, interlocking panels that can be attached to virtually any vertical surface. Each panel contains small pockets filled with growing medium—a porous material that supports plant roots while allowing water and air circulation. According to Chen, this design reduces installation costs by approximately 40 percent compared to earlier vertical farming technologies. Moreover, the modular approach allows communities to start small and expand gradually as they gain experience and resources."
+    },
+    {
+      "id": "D",
+      "text": "Setting up a vertical garden system involves several distinct stages. First, workers install a sturdy framework on the chosen wall or structure, ensuring it can support the weight of saturated growing medium and mature plants. Subsequently, they connect an irrigation system that delivers water and nutrients to each growing section through a network of tubes. Following this installation phase, technicians add the growing medium to individual pockets or containers and plant seeds or seedlings. Finally, operators establish a monitoring routine to check water levels, nutrient concentrations, and plant health. The entire process typically takes between two and four weeks for a standard residential installation. Meanwhile, automated systems can regulate water distribution, though many community projects prefer manual monitoring to encourage resident participation."
+    },
+    {
+      "id": "E",
+      "text": "The implementation of vertical gardens varies significantly between cities, as illustrated by contrasting approaches in Singapore and Detroit. Singapore's government-sponsored programme emphasizes high-technology solutions, utilizing sensor networks and automated climate control to maximize yield in the city-state's hot, humid environment. Research published in 2021 revealed that these installations reduced surrounding air temperatures by 3 to 5 degrees Celsius while producing consistent harvests year-round. Conversely, Detroit has embraced community-led initiatives, with residents transforming abandoned buildings into productive vertical farms. Professor Luis Ramirez, an urban planning specialist at the Detroit Institute for Community Development, has documented these grassroots projects extensively. His findings indicate that 65 percent of participants reported strengthened neighbourhood connections and improved access to fresh produce. However, Detroit's systems typically produce smaller quantities than Singapore's technology-intensive installations."
+    },
+    {
+      "id": "F",
+      "text": "Vertical gardens represent a significant innovation in urban food production, though challenges remain. Installation expenses can deter adoption in lower-income communities, despite decreasing costs. Additionally, vertical systems require consistent maintenance and technical knowledge that not all communities possess. Nevertheless, the environmental benefits are substantial: reduced transportation emissions from local food production, decreased water consumption through recycling systems, and improved urban air quality. As cities continue to expand and climate change intensifies, vertical gardens may become essential infrastructure rather than experimental projects. The technology's success will likely depend on developing affordable, user-friendly systems that diverse communities can implement and maintain independently."
+    }
+            ],
+            "questions": []
+        }]}
