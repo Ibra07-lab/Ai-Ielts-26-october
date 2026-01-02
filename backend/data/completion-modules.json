@@ -1,0 +1,75 @@
+{
+  "category": "completion",
+  "modules": [
+    {
+      "moduleId": "M",
+      "moduleName": "Word-Limit Compliance (The Strict Rules)",
+      "targetQuestionTypes": ["gap-fill", "sentence-completion", "summary-completion", "note-completion", "table-completion", "short-answer"],
+      "triggerConditions": {
+        "mistakePatterns": ["word_limit_violation", "counting_error"],
+        "contextKeywords": ["word limit", "too many words", "how many"]
+      },
+      "content": {
+        "explanation": "**The Harshest IELTS Rule:**\n\nExceeding the word limit = **automatic wrong answer**, even if your meaning is correct.\n\n**IELTS Official:** \"Answers that exceed the word limit will be marked incorrect regardless of content.\"\n\n**Common Instructions:**\n- \"NO MORE THAN THREE WORDS\"\n- \"NO MORE THAN TWO WORDS AND/OR A NUMBER\"\n- \"ONE WORD ONLY\"\n\n**Word Counting Rules:**\n\n1. **Hyphenated words = ONE word**\n   - \"well-known\" = 1 word\n   - \"twenty-five\" = 1 word\n   - \"cost-effective\" = 1 word\n\n2. **Numbers + words count separately**\n   - \"25 students\" = 2 words\n   - \"25%\" or \"25 percent\" = 2 words\n   - \"$500\" = 1 word (symbol attached)\n\n3. **Contractions count as ONE word**\n   - \"don't\" = 1 word\n   - But IELTS rarely tests contractions\n\n4. **Articles count**\n   - \"the students\" = 2 words\n   - If limit is \"TWO WORDS,\" you can't include \"the\"\n\n**Reddit Pattern:** \"I wrote 'the economic crisis' (3 words) but the limit was TWO WORDS. Lost the mark even though 'economic crisis' was the answer.\"",
+        "visualExample": {
+          "passage": "The renewable energy sector has created approximately 11 million jobs worldwide, with solar power accounting for one-third of this employment.",
+          "statement": "Question: Complete the sentence using NO MORE THAN TWO WORDS from the passage.\n\nThe renewable energy sector has generated around _____ jobs globally.\n\nPassage phrase: \"approximately 11 million jobs\"",
+          "analysis": "**Word Counting:**\n\nOption 1: \"approximately 11 million\" = 3 words [ ❌ WRONG ] Exceeds limit!\n\nOption 2: \"11 million\" = 2 words [ ✅ CORRECT ]\n- \"11\" = number (counts as 1 word)\n- \"million\" = word (counts as 1 word)\n- Total = 2 words ✓\n\nOption 3: \"11 million jobs\" = 3 words [ ❌ WRONG ] Exceeds limit!\n\n**Why Remove \"approximately\"?**\nIt's a qualifier, not essential to the answer. The gap asks for the NUMBER of jobs. \"11 million\" captures that.\n\n**Why Remove \"jobs\"?**\nThe sentence already says \"_____ jobs,\" so adding \"jobs\" again would be:\n- Redundant: \"generated around 11 million jobs jobs\"\n- Over the word limit\n\n**Key Rule:** Only include the ESSENTIAL information that fits the grammatical gap."
+        },
+        "checkpointQuestions": [
+          "Did I count the words in my answer (including articles/numbers)?",
+          "Did I count hyphenated words as ONE word?",
+          "Does my answer exceed the stated limit?"
+        ]
+      },
+      "officialSource": "IELTS official word limit rules + British Council 'Completion Task Guidelines'"
+    },
+    {
+      "moduleId": "N",
+      "moduleName": "Order-Warning System (Which Types Follow Order?)",
+      "targetQuestionTypes": ["gap-fill", "sentence-completion", "summary-completion", "note-completion", "table-completion", "flow-chart-completion"],
+      "triggerConditions": {
+        "mistakePatterns": ["order_assumption", "sequential_error"],
+        "contextKeywords": ["order", "sequence", "can't find"]
+      },
+      "content": {
+        "explanation": "**The Order Rule Varies by Task Type:**\n\nSome completion tasks follow passage order, others DON'T. Knowing which is which saves time.\n\n**USUALLY FOLLOW PASSAGE ORDER:**\n1. **Sentence Completion** - Questions appear in same order as passage\n2. **Short Answer** - Usually sequential\n3. **Gap-fill (linear text)** - If completing a paragraph, usually in order\n\n**MAY NOT FOLLOW PASSAGE ORDER:**\n1. **Summary Completion** - Summary might reorganize information\n2. **Table Completion** - Answers scattered across passage\n3. **Note Completion** - Notes might group by topic, not passage sequence\n4. **Flow-chart Completion** - Answers may jump between paragraphs\n5. **Diagram Labels** - Spatial organization, not textual\n\n**IELTS Official:** \"For summary/note/table/flow-chart completion, answers may not come in the same order as information in the passage.\"\n\n**Why This Matters:**\n- If you assume order, you might skip the correct answer\n- For non-sequential tasks, check ENTIRE passage for each gap\n\n**Reddit Pattern:** \"I couldn't find question 23's answer, so I assumed it was after question 22's answer. It was actually 2 paragraphs earlier!\"",
+        "visualExample": {
+          "passage": "Paragraph A: Solar panels invented in 1950s\nParagraph B: Wind turbines developed in 1980s\nParagraph C: Solar costs dropped 80% since 2010\nParagraph D: Wind efficiency improved 40% recently",
+          "statement": "Task: Complete the TABLE (NO MORE THAN THREE WORDS)\n\n| Technology | Cost Change | Timeline |\n|------------|-------------|----------|\n| Solar | Gap 1 | Gap 2 |\n| Wind | Gap 3 | Gap 4 |\n\n**If You Assume Order:**\n\"Gap 1 must be in Para A, Gap 2 in Para B...\" [ ❌ WRONG ]",
+          "analysis": "**Correct Approach (Non-Sequential):**\n\nThe table is organized by TECHNOLOGY (rows), not passage order.\n\n**Gap 1 (Solar - Cost Change):**\n- Scan for \"solar\" AND \"cost\"\n- Found in Para C: \"dropped 80%\" [ ✅ ]\n\n**Gap 2 (Solar - Timeline):**\n- Scan for \"solar\" AND time\n- Found in Para A: \"1950s\" [ ✅ ]\n\n**Gap 3 (Wind - Cost Change):**\n- Scan for \"wind\" AND \"cost\"\n- Not clearly stated → might be \"Not Given\" or need inference\n\n**Gap 4 (Wind - Timeline):**\n- Scan for \"wind\" AND time\n- Found in Para B: \"1980s\" [ ✅ ]\n\n**The Key:** Answers jump around: Para C → Para A → Para B. NOT sequential.\n\n**If Task Were Sentence Completion:**\n\"Solar panels, invented in the _____ (Gap 1), have seen costs _____ (Gap 2).\"\n- These would likely be in order: Gap 1 from early passage, Gap 2 from later"
+        },
+        "checkpointQuestions": [
+          "What task type is this? (Sentence completion vs Summary/Table?)",
+          "If it's summary/table/flow-chart, am I checking the ENTIRE passage for each gap?",
+          "Am I assuming sequential order when I shouldn't?"
+        ]
+      },
+      "officialSource": "IELTS official task descriptions + British Council 'Understanding Question Order'"
+    },
+    {
+      "moduleId": "O",
+      "moduleName": "Grammar-Fit Without Paraphrasing (Match the Gap)",
+      "targetQuestionTypes": ["gap-fill", "sentence-completion", "summary-completion", "note-completion"],
+      "triggerConditions": {
+        "mistakePatterns": ["grammar_mismatch", "form_error"],
+        "contextKeywords": ["doesn't fit", "sounds wrong", "grammar"]
+      },
+      "content": {
+        "explanation": "**The Grammar Rule:**\n\nYour answer must fit grammatically into the gap, using EXACT words from the passage (no paraphrasing allowed).\n\n**IELTS Official:** \"The answer must be grammatically consistent with the surrounding text.\"\n\n**Common Grammar Issues:**\n\n1. **Noun/Verb Form**\n   - Gap needs noun: \"The _____ was significant\"\n   - Passage has verb: \"significantly improved\"\n   - Answer: Can't change \"improved\" to \"improvement\" - must use exact words\n   - Solution: Find where passage uses noun form OR adjust your search\n\n2. **Singular/Plural**\n   - Gap: \"One of the main _____ is...\"\n   - Needs plural noun\n   - If passage says \"benefit,\" can you write \"benefits\"? **NO!**\n   - Must find where passage uses plural form\n\n3. **Article Agreement**\n   - Gap: \"_____ economic crisis\" (no article before gap)\n   - You can write: \"The economic crisis\" (include \"the\")\n   - OR write: \"economic crisis\" (exclude \"the\")\n   - Check what fits grammatically\n\n4. **Preposition Requirements**\n   - Gap: \"relies _____ renewable energy\"\n   - Need: \"on renewable energy\"\n   - Must include \"on\" if it's in the passage phrase\n\n**Reddit Pattern:** Students often write grammatically incorrect answers because they grab words without checking if they fit the gap structure.",
+        "visualExample": {
+          "passage": "The study found that renewable energy sources, particularly solar and wind power, significantly reduced carbon emissions. The reduction in pollution was substantial.",
+          "statement": "Complete: The _____ in pollution was substantial.\n\nStudent thinks: \"The passage talks about reducing emissions and pollution...\"\n\nPassage words:\n- \"reduced\" (verb)\n- \"reduction\" (noun)",
+          "analysis": "**Grammar Analysis:**\n\nGap structure: \"The _____ in pollution\"\n- Needs a NOUN (comes after \"The\" and before \"in\")\n- Pattern: \"The [noun] in pollution\"\n\n**Option 1:** \"reduced\"\n- \"The reduced in pollution\" [ ❌ ] Grammatically wrong (verb doesn't fit)\n\n**Option 2:** \"reduction\"\n- \"The reduction in pollution\" [ ✅ ] Grammatically correct (noun fits)\n- Passage says: \"The reduction in pollution was substantial\"\n- Can copy exactly!\n\n**Key Point:** Even though \"reduced\" and \"reduction\" have similar meaning, only \"reduction\" fits grammatically. You must find the correct FORM in the passage.\n\n**What if passage only had \"reduced\"?**\nThen \"reduced\" is NOT the answer. You'd need to:\n1. Look for another passage phrase that fits\n2. Or recognize this gap needs a different word\n\nIELTS tests your ability to find grammatically compatible words, not to transform word forms."
+        },
+        "checkpointQuestions": [
+          "Did I read the words BEFORE and AFTER the gap?",
+          "Does my answer fit grammatically (noun/verb/plural/singular)?",
+          "Am I using EXACT words from passage without changing the form?"
+        ]
+      },
+      "officialSource": "IELTS official completion task guidelines + British Council 'Grammar Awareness in Completion Tasks'"
+    }
+  ]
+}
+

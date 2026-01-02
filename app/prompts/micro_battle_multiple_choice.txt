@@ -45,6 +45,21 @@ GENERATION PROTOCOL:
    
 6) Output strictly valid JSON (no extra text).
 
+CRITICAL CONSISTENCY RULES:
+- Correct answer MUST be one of the provided options (A, B, C, or D)
+- Rationale MUST explain why the correct answer is RIGHT (not why others are wrong)
+- NEVER write "Option X is incorrect" or "Option X is wrong" in rationale when X is the correct answer
+- Distractors should be plausible but clearly wrong when passage is carefully checked
+- Quote passage evidence that directly supports the correct answer
+- Format correct_answer as single letter: "A" or "B" or "C" or "D"
+- Ensure correct answer option actually exists in the options list
+
+RATIONALE FORMAT:
+- Start with: "Option X is correct because..."
+- Include specific evidence: "The passage states '[quote]'"
+- Optional: Briefly explain why main distractor is wrong
+- Example: "Option B is correct because the passage states 'renewable energy sources are growing rapidly'. Option A is incorrect as it contradicts this by suggesting decline."
+
 OUTPUT JSON SCHEMA (example):
 {{
   "level": "beginner|intermediate|advanced",

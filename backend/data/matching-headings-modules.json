@@ -1,0 +1,75 @@
+{
+  "category": "headings",
+  "modules": [
+    {
+      "moduleId": "E",
+      "moduleName": "Topic Sentence Hunting (Find the Paragraph Controller)",
+      "targetQuestionTypes": ["matching-headings"],
+      "triggerConditions": {
+        "mistakePatterns": ["detail_focus", "missing_main_idea"],
+        "contextKeywords": ["main idea", "topic", "paragraph about"]
+      },
+      "content": {
+        "explanation": "**The Core Strategy:**\n\nHeadings match the MAIN IDEA of a paragraph, not specific details. The main idea is usually in the **topic sentence** - the sentence that controls what the whole paragraph is about.\n\n**Where to Find Topic Sentences:**\n1. **First sentence** (70% of the time)\n2. **Second sentence** (if first is a transition/hook)\n3. **Last sentence** (for paragraphs building to a conclusion)\n\n**IELTS Official Guidance:** \"Focus on the main theme, not individual facts or examples.\"\n\n**The Reading Strategy:**\n- Read first 1-2 sentences carefully\n- Skim middle for supporting details (don't get distracted)\n- Check last sentence if unclear\n- Ask: \"What is this ENTIRE paragraph trying to tell me?\"\n\n**Reddit Pattern:** Students get stuck on interesting details in the middle and miss the main point. Details are SUPPORT, not the main idea.",
+        "visualExample": {
+          "passage": "The industrial revolution fundamentally transformed European society in the 18th and 19th centuries. Factory workers faced harsh conditions, with 12-hour workdays and dangerous machinery. Child labor was widespread, with children as young as six working in textile mills. Housing for workers was cramped and unsanitary. Despite these challenges, urbanization continued to accelerate.",
+          "statement": "Heading options: (i) Poor working conditions during industrialization (ii) The transformation of European society (iii) Child labor in factories (iv) Urbanization trends",
+          "analysis": "**Topic Sentence Analysis:**\n\n*First sentence:* \"The industrial revolution fundamentally transformed European society...\"\n- This is GENERAL - sets the topic\n\n*Middle sentences:* All about factory conditions, child labor, housing\n- These are DETAILS supporting the transformation theme\n\n*Last sentence:* \"Despite these challenges, urbanization continued\"\n- Wraps up with outcome\n\n**Answer:** [ ✅ (ii) The transformation of European society ]\n\n**Why NOT (i) Poor working conditions?** That's a detail, not the main idea.\n**Why NOT (iii) Child labor?** That's just one example.\n**Why NOT (iv) Urbanization?** Only mentioned at the end.\n\n**The main idea:** The paragraph is ABOUT transformation (topic sentence), and uses working conditions as EVIDENCE."
+        },
+        "checkpointQuestions": [
+          "Did I identify the topic sentence (usually first or second)?",
+          "Does my heading cover the WHOLE paragraph or just one detail?",
+          "Would this heading still work if I removed one middle sentence?"
+        ]
+      },
+      "officialSource": "IELTS official Matching Headings guidance + Cambridge test strategies"
+    },
+    {
+      "moduleId": "F",
+      "moduleName": "Write Your Own Heading First (Stop Distractor Pull)",
+      "targetQuestionTypes": ["matching-headings"],
+      "triggerConditions": {
+        "mistakePatterns": ["distractor_attraction", "keyword_matching"],
+        "contextKeywords": ["confused", "all seem right", "two options"]
+      },
+      "content": {
+        "explanation": "**The Anti-Distractor Technique:**\n\nBEFORE looking at the heading options, write your own 4-7 word heading for the paragraph. This prevents distractors from pulling you toward wrong answers.\n\n**The Process:**\n1. Read the paragraph\n2. Cover the heading options with your hand\n3. Ask: \"What is this paragraph mainly about?\"\n4. Write your own heading in 4-7 words\n5. THEN look at options and find the closest match\n\n**Why This Works:**\n- You form your own understanding before seeing distractors\n- You're less influenced by keyword matches\n- You focus on meaning, not vocabulary\n\n**IELTS Research:** Test takers who preview headings first are more likely to choose detail-based distractors because the keywords \"look right.\"\n\n**Reddit Success Pattern:** Multiple Band 8+ students report using this technique: \"I stopped looking at headings first and my accuracy improved dramatically.\"",
+        "visualExample": {
+          "passage": "Renewable energy sources have become increasingly cost-competitive with fossil fuels over the past decade. Solar panel prices have dropped by 80% since 2010, making them affordable for residential use. Wind turbine efficiency has improved significantly, generating more power per unit. Government subsidies and tax incentives have accelerated adoption rates.",
+          "statement": "Step 1: Read paragraph and write YOUR heading (before seeing options).\n\nYour heading: \"Falling costs of renewable energy\" or \"Renewables becoming more affordable\"\n\nStep 2: Now look at options:\n(i) Government support for green energy\n(ii) Technological advances in wind power\n(iii) Decreasing costs of renewable energy\n(iv) Solar panel manufacturing processes",
+          "analysis": "**Your heading:** \"Falling costs/affordability of renewables\"\n\n**Match with options:**\n- (i) Government support - mentioned, but NOT the main idea\n- (ii) Wind power advances - just one detail\n- (iii) **Decreasing costs** - MATCHES your heading! [ ✅ ]\n- (iv) Manufacturing - not discussed\n\n**The Power of This Method:**\nIf you looked at options FIRST, you might be tempted by (i) because \"subsidies\" and \"incentives\" are mentioned. But YOUR heading focused on \"costs becoming competitive,\" which correctly identified the main theme.\n\n**Key Point:** Your own words might differ from the heading (\"falling\" vs \"decreasing,\" \"affordable\" vs \"cost-competitive\"), but the MEANING matches."
+        },
+        "checkpointQuestions": [
+          "Did I form my OWN idea of the paragraph's main point before looking at options?",
+          "Does my heading summarize the WHOLE paragraph in 4-7 words?",
+          "Which option best matches MY heading (not which has the most keywords)?"
+        ]
+      },
+      "officialSource": "IELTS test-taking research + British Council strategy recommendations"
+    },
+    {
+      "moduleId": "G",
+      "moduleName": "Heading Trap Library (Know the 3 Distractor Types)",
+      "targetQuestionTypes": ["matching-headings"],
+      "triggerConditions": {
+        "mistakePatterns": ["detail_trap", "keyword_trap", "scope_trap"],
+        "contextKeywords": ["wrong answer", "seemed right", "why not"]
+      },
+      "content": {
+        "explanation": "**The 3 Distractor Types in Matching Headings:**\n\n**Trap 1: Detail Heading (mentions one example)**\n- Paragraph about \"Climate change impacts\" (main idea)\n- Distractor: \"Rising sea levels\" (just one example)\n- *How to spot:* Too specific; only covers part of the paragraph\n\n**Trap 2: Same-Topic Headings (two similar options)**\n- Both about \"education,\" but one is \"Benefits of online learning\" vs \"Challenges of online learning\"\n- *How to spot:* Read carefully - are they discussing benefits, challenges, causes, or effects? The words matter.\n\n**Trap 3: Overlapping Keywords (word match, wrong meaning)**\n- Paragraph mentions \"students\" 10 times but is about \"Teaching methods\"\n- Distractor: \"Student performance\" (wrong focus)\n- *How to spot:* Keywords present, but paragraph's purpose is different\n\n**IELTS Official Pattern:** Every heading task includes 5-7 extra headings as distractors. They're designed to look tempting.\n\n**Reddit Warning:** \"The most common mistakes are picking detail headings because they sound specific and therefore 'more correct.'\" Wrong! Specificity = detail, not main idea.",
+        "visualExample": {
+          "passage": "Traditional farming methods in developing countries are increasingly threatened by climate change. Unpredictable rainfall patterns have disrupted planting schedules, while extended droughts have reduced crop yields. Farmers in sub-Saharan Africa report losing up to 40% of their harvest in recent years. International aid organizations are now funding irrigation systems to help farmers adapt.",
+          "statement": "Heading options:\n(i) Climate impacts on traditional farming\n(ii) Drought conditions in sub-Saharan Africa\n(iii) International aid for irrigation projects\n(iv) Crop yield reduction in developing nations",
+          "analysis": "**Trap Analysis:**\n\n**Trap 1 - Detail Heading:**\n- (ii) Drought in sub-Saharan Africa - This is just ONE example of climate impacts\n- (iii) International aid for irrigation - Mentioned only in LAST sentence\n- (iv) Crop yield reduction - A consequence, not the main topic\n\n**Correct Answer:** [ ✅ (i) Climate impacts on traditional farming ]\n\nWhy? The paragraph is ABOUT how climate change threatens traditional farming (main idea stated in first sentence). Sub-Saharan Africa, droughts, and irrigation are all EXAMPLES/DETAILS supporting this main point.\n\n**Trap 2 - Same-Topic Headings:**\nIf options included both \"Climate threats to farming\" and \"Climate adaptation by farmers,\" you'd need to decide: Is the paragraph about PROBLEMS or SOLUTIONS? (Here it's mainly problems, with solutions only briefly mentioned.)\n\n**Trap 3 - Keyword Overlap:**\n\"Farmers\" appears 3 times, but a heading like \"Farmer income challenges\" would be wrong because income isn't discussed - climate impact is."
+        },
+        "checkpointQuestions": [
+          "Does this heading cover the WHOLE paragraph or just one detail?",
+          "If two headings seem similar, which aspect (benefits/challenges/causes) does the paragraph emphasize?",
+          "Am I choosing this because of keyword matches, or because it genuinely captures the main idea?"
+        ]
+      },
+      "officialSource": "IELTS official distractor patterns + British Council 'Common Mistakes in Matching Headings'"
+    }
+  ]
+}
+

@@ -1,0 +1,52 @@
+{
+  "category": "mcq",
+  "modules": [
+    {
+      "moduleId": "K",
+      "moduleName": "Distractor Anatomy (The 3 Trap Types)",
+      "targetQuestionTypes": ["multiple-choice"],
+      "triggerConditions": {
+        "mistakePatterns": ["distractor_confusion", "seemed_right"],
+        "contextKeywords": ["seemed right", "looked correct", "why wrong"]
+      },
+      "content": {
+        "explanation": "**What Are Distractors?**\n\nIELTS deliberately creates wrong answers that LOOK correct. These are called \"distractors\" and they follow predictable patterns.\n\n**IELTS Official:** \"Distractors may include words from the passage but express incorrect meanings.\"\n\n**The 3 Distractor Types:**\n\n**Type 1: Word Match Distractor**\n- Uses SAME words from passage but in wrong context\n- Example: Passage mentions \"scientists\" 10 times\n- Distractor: \"Scientists disagree about the findings\" (not actually stated)\n- Trap: You see \"scientists\" and think \"I saw that word!\"\n\n**Type 2: Half-True Distractor**\n- First part is correct, second part is wrong\n- Example: \"The study improved accuracy (✓) and reduced costs (✗)\"\n- Passage only mentions accuracy improvement, not costs\n- Trap: The true part makes the whole option seem right\n\n**Type 3: Extreme Language Distractor**\n- Uses absolute words: always, never, all, none, only, must\n- Passage says: \"often effective\"\n- Distractor says: \"always effective\"\n- Trap: Students miss the subtle difference in degree\n\n**Reddit Pattern:** \"I chose it because the words matched the passage!\" This is exactly what distractors do.",
+        "visualExample": {
+          "passage": "Recent research suggests that regular exercise may help reduce the risk of heart disease. Studies involving 5,000 participants showed that those who exercised three times per week had 30% fewer cardiac events. However, researchers noted that diet and genetics also play significant roles.",
+          "statement": "Question: According to the passage, what does recent research indicate?\n\nOptions:\nA) Exercise alone prevents heart disease\nB) Exercise may help reduce heart disease risk\nC) 5,000 participants exercised three times weekly\nD) Diet is more important than exercise for heart health",
+          "analysis": "**Distractor Analysis:**\n\n**Option A:** \"Exercise alone prevents heart disease\"\n- Type: **Extreme Language Distractor**\n- Passage says: *may help reduce* (qualified)\n- Option says: *alone prevents* (absolute)\n- The word *alone* and *prevents* are too strong [ ❌ ]\n\n**Option B:** \"Exercise may help reduce heart disease risk\"\n- Matches passage meaning exactly: *may help reduce*\n- Same qualification level [ ✅ CORRECT ]\n\n**Option C:** \"5,000 participants exercised three times weekly\"\n- Type: **Half-True Distractor**\n- TRUE: 5,000 participants\n- FALSE: Not all exercised three times weekly - only \"those who\" did\n- Subtle misrepresentation [ ❌ ]\n\n**Option D:** \"Diet is more important than exercise\"\n- Type: **Word Match Distractor**\n- Passage mentions \"diet\" but doesn't compare importance\n- Says diet \"also plays a role\" (not \"more important\") [ ❌ ]\n\n**Key Lesson:** The correct answer uses similar QUALIFIED language (*may help reduce*). Distractors use extreme words or twist the facts."
+        },
+        "checkpointQuestions": [
+          "Does this option use extreme words (always/never/only/all) not in the passage?",
+          "Is EVERY part of this option supported, or just some parts?",
+          "Am I choosing this because words match, or because the MEANING matches?"
+        ]
+      },
+      "officialSource": "IELTS official MCQ distractor guidance + British Council 'Common MCQ Mistakes'"
+    },
+    {
+      "moduleId": "L",
+      "moduleName": "Question-First Locating (Don't Read Options First)",
+      "targetQuestionTypes": ["multiple-choice"],
+      "triggerConditions": {
+        "mistakePatterns": ["option_confusion", "lost_in_passage"],
+        "contextKeywords": ["can't find", "confused", "where is it"]
+      },
+      "content": {
+        "explanation": "**The Common Mistake:**\n\nStudents read all 4 options first, then try to find each one in the passage. This creates confusion because distractors use passage words.\n\n**IELTS Recommended Strategy:**\n\n**Step 1: Read the QUESTION stem only** (not the options yet)\n- \"According to the passage, what caused...?\"\n- \"The author suggests that...?\"\n- \"The main purpose of the experiment was to...?\"\n\n**Step 2: Use QUESTION keywords to locate in passage**\n- Not option words - question words!\n- Find the relevant paragraph/section\n- Read that section carefully (2-3 sentences)\n\n**Step 3: Form your own answer** (like Module F)\n- Before looking at options, what does the passage say?\n- Write it in your own words\n\n**Step 4: NOW look at options and find the match**\n- Your understanding vs the 4 options\n- Which matches YOUR answer?\n\n**Why This Works:**\n- You locate using neutral question words (not biased by options)\n- You understand the passage FIRST, then evaluate options\n- You're less susceptible to distractors\n\n**Reddit Success:** \"I stopped reading options first and my MCQ score jumped. I was confusing myself by looking at 4 different ideas before understanding the passage.\"",
+        "visualExample": {
+          "passage": "The ancient Maya civilization developed a sophisticated writing system using hieroglyphics. Unlike alphabetic systems, Mayan script combined logographic and syllabic elements, allowing scribes to express complex ideas. Recent archaeological discoveries in Guatemala have revealed that literacy was more widespread than previously thought, with evidence of writing found in commoner households.",
+          "statement": "Question: \"What does the passage suggest about Mayan literacy?\"\n\n**WRONG approach:** Read all 4 options first, then search passage for each.\n\n**RIGHT approach (Question-First):**\n\nStep 1: Read question - asks about \"Mayan literacy\"\nStep 2: Locate using question keywords \"literacy\" → Found in last sentence\nStep 3: Read that section: \"literacy was more widespread than previously thought... found in commoner households\"\nStep 4: Your answer: \"Literacy was more common than historians believed\"\n\nNow look at options:\nA) Only elite scribes could write\nB) Literacy was more widespread than once believed\nC) The writing system was simple\nD) Hieroglyphics were recently invented",
+          "analysis": "**Using Question-First Method:**\n\nYour understanding: \"More widespread than previously thought\"\n\nMatch with options:\n- A) Only elite - **contradicts** passage (commoners had writing)\n- B) More widespread than believed - **MATCHES** your understanding [ ✅ ]\n- C) Simple system - **wrong** (passage says \"sophisticated\")\n- D) Recently invented - **not mentioned**\n\n**If You Read Options First:**\nYou might see \"scribes\" in option A and think \"The passage mentioned scribes!\" But that's a word-match distractor.\n\nBy forming YOUR understanding first (\"widespread in commoner households\"), you correctly identified option B.\n\n**Key Point:** The question word \"literacy\" led you straight to the relevant sentence. Option words (\"scribes,\" \"simple,\" \"invented\") would have sent you searching in wrong directions."
+        },
+        "checkpointQuestions": [
+          "Did I read the QUESTION first (not the options)?",
+          "Did I locate the answer using QUESTION keywords?",
+          "Did I understand what the passage says BEFORE looking at options?"
+        ]
+      },
+      "officialSource": "IELTS MCQ strategies + British Council 'Effective MCQ Approach'"
+    }
+  ]
+}
+

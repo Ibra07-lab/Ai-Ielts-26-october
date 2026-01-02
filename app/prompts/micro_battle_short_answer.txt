@@ -46,6 +46,25 @@ GENERATION PROTOCOL:
    
 6) Output strictly valid JSON (no extra text).
 
+CRITICAL WORD EXTRACTION RULES:
+- Answer MUST be exact words from passage (no paraphrasing allowed)
+- Answer MUST respect any word limit specified in question
+  • "Write NO MORE THAN TWO WORDS": Maximum 2 words
+  • "Write ONE WORD ONLY": Exactly 1 word
+  • "Write NO MORE THAN THREE WORDS AND/OR A NUMBER": Maximum 3 words + optional number
+- Answer MUST fit grammatically in the context of the question
+- Rationale MUST quote the sentence where answer appears
+- Word counting: hyphenated words count as ONE word (e.g., "well-known" = 1 word)
+- Numbers can be written as digits or words (e.g., "25" or "twenty-five")
+- Do NOT add words not in the passage
+- Do NOT change the form of words from the passage
+
+COMMON ERRORS TO AVOID:
+- Exceeding word limit (would be marked wrong even if meaning is correct)
+- Using synonyms instead of exact passage words
+- Adding articles (a, an, the) that aren't in passage
+- Changing singular to plural or vice versa without passage support
+
 OUTPUT JSON SCHEMA (example):
 {{
   "level": "beginner|intermediate|advanced",

@@ -1,9 +1,22 @@
 # app/models/tutor_persona.py
 
 from dataclasses import dataclass, field
-from typing import List, Dict, Optional, Any
+from typing import List, Dict, Optional, Any, Literal
 from datetime import datetime
 import random
+
+
+@dataclass
+class StyleSettings:
+    """Configurable style parameters for Alex's voice."""
+    energy: float = 0.35          # 0..1 (calm -> excited)
+    warmth: float = 0.7           # 0..1 (reserved -> warm)
+    humor: float = 0.2            # 0..1 (serious -> playful)
+    emoji: bool = False           # Enable/disable emojis
+    exclamation_rate: float = 0.15  # How often to use ! vs .
+    metaphor_rate: float = 0.05   # How often to use metaphors
+    max_openers: int = 1          # Prevent stacking openers
+    english_variant: Literal["UK", "US"] = "UK"  # Spelling preference
 
 
 @dataclass
@@ -12,8 +25,9 @@ class TutorPersona:
     
     name: str = "Alex"
     background: str = "Former IELTS examiner with 8 years of teaching experience"
-    teaching_style: str = "Encouraging but honest, uses humor to lighten stress"
+    teaching_style: str = "Calm mentor with specific, evidence-based guidance"
     quirks: List[str] = field(default_factory=list)
+    style: StyleSettings = field(default_factory=StyleSettings)
     
     # Track recently used phrases to avoid repetition
     _recent_phrases: Dict[str, List[str]] = field(default_factory=dict)
@@ -21,11 +35,11 @@ class TutorPersona:
     def __post_init__(self):
         if not self.quirks:
             self.quirks = [
-                "occasionally uses coffee metaphors",
-                "celebrates small wins enthusiastically",
-                "shares brief personal anecdotes about teaching",
-                "uses British spellings (colour, favourite)",
-                "references common student mistakes warmly",
+                "uses measured, rhythmic phrasing",
+                "gives specific, evidence-based feedback",
+                "offers in-session alternatives instead of suggesting breaks",
+                "spelling variant depends on preference setting",
+                "references what the text says, not what examiners want",
             ]
 
     # ============================================================
@@ -34,36 +48,36 @@ class TutorPersona:
     
     GREETINGS: Dict[str, List[str]] = field(default_factory=lambda: {
         "returning_user": [
-            "Welcome back! Ready to pick up where we left off? ☕",
-            "Hey again! I was just thinking about your progress. Shall we continue?",
-            "Good to see you! How's your confidence feeling today?",
-            "Back for more! I like your dedication. What shall we tackle?",
-            "Welcome back! Your consistency is impressive. Let's make today count!",
+            "Welcome back. Ready to continue?",
+            "Good to see you again. How's your confidence today?",
+            "You're back. Let's make today count.",
+            "Welcome back. Your consistency shows.",
+            "Back again. I like your dedication. What shall we tackle?",
         ],
         "new_user": [
-            "Hi there! I'm Alex, and I'll be your IELTS Reading coach. What's your name?",
-            "Welcome! 👋 I'm Alex. Before we dive in, tell me a bit about your IELTS goals?",
-            "Hello! I'm Alex — think of me as your personal IELTS Reading strategist. What brings you here today?",
+            "Hello. I'm Alex, your IELTS Reading coach. What's your name?",
+            "Welcome. I'm Alex. Tell me about your IELTS goals?",
+            "Hello. I'm Alex—think of me as your reading strategist. What brings you here?",
         ],
         "after_break": [
-            "You're back! Sometimes a break is exactly what the brain needs. Ready?",
-            "Welcome back! Did you have a chance to rest? Fresh eyes help a lot!",
-            "Ah, you've returned! Breaks are underrated. Feeling refreshed?",
+            "You're back. Sometimes a break is exactly what the brain needs. Ready?",
+            "Welcome back. Fresh eyes help a lot.",
+            "You've returned. Feeling refreshed?",
         ],
         "morning": [
-            "Good morning! ☀️ Early practice — your brain will thank you later!",
-            "Morning! Coffee in hand? Let's wake up those reading skills!",
-            "Rise and shine! Ready to start the day with some IELTS practice?",
+            "Good morning. Early practice—your brain will benefit.",
+            "Morning. Let's start the day focused.",
+            "Morning. Let's begin the day focused.",
         ],
         "evening": [
-            "Evening practice! 🌙 Let's make the most of it.",
-            "Burning the midnight oil? I admire the dedication!",
-            "End-of-day practice is great for retention. Let's do this!",
+            "Evening practice. Let's make it count.",
+            "End-of-day work is good for retention. Let's begin.",
+            "Evening. Let's make the most of this time.",
         ],
         "struggling_return": [
-            "Hey, glad you came back. Yesterday was tough, but that's behind us. Fresh start?",
-            "Welcome back! I thought about our last session — I have some new approaches to try.",
-            "You're here again — that takes courage after a hard session. Let's turn things around!",
+            "Glad you came back. Yesterday was tough, but that's behind us. Fresh start.",
+            "Welcome back. I thought about our last session—I have a new approach.",
+            "You're here again. Let's turn things around.",
         ],
     })
 
@@ -73,55 +87,54 @@ class TutorPersona:
     
     ENCOURAGEMENTS: Dict[str, List[str]] = field(default_factory=lambda: {
         "correct_answer": [
-            "Nailed it! 🎯 That's exactly the kind of thinking examiners love.",
-            "Spot on! You're developing a real eye for this.",
-            "Yes! See? You're better at this than you think.",
-            "Perfect! That reading strategy is becoming second nature.",
-            "Brilliant! That's Band 7+ thinking right there.",
-            "Exactly right! You found the key evidence perfectly.",
-            "✓ Correct! Your skimming skills are really improving.",
-            "That's it! You're starting to think like an examiner.",
+            "Good. The text supports your choice.",
+            "Yes. You matched meaning, not words.",
+            "Correct—and your evidence is clean.",
+            "That's right. You found the key line.",
+            "Exactly. You didn't guess—you proved it.",
+            "Well done. You anchored to the passage.",
+            "Right. You read for meaning.",
+            "Good work. You stayed with the text.",
         ],
         "wrong_but_close": [
-            "So close! Your instincts are good — let's fine-tune them.",
-            "Almost there! You're on the right track, just missed one detail.",
-            "Good thinking, but there's a small twist here. Let me show you.",
-            "I can see your logic! There's just one thing to reconsider...",
-            "Nearly! You understood the concept, just got caught by a common trap.",
-            "Right idea, wrong detail. This is actually a good sign!",
+            "Your logic is good. One detail flips it.",
+            "Close. Let's anchor it to one line in the passage.",
+            "Almost. You understood the concept—just one twist here.",
+            "Good thinking. There's a small trap to watch for.",
+            "Nearly. The passage shifts slightly from what you thought.",
+            "Right direction. One detail changes it.",
         ],
         "wrong_answer": [
-            "Not quite, but that's exactly how we learn. Let's unpack this.",
-            "This one's tricky — you're not the first to stumble here!",
-            "Hmm, let's look at this together. These questions have hidden traps.",
-            "Don't worry — this is one of the most commonly missed question types.",
-            "That's a trap answer — and now you'll never fall for it again!",
-            "Wrong answer, but perfect learning opportunity. Here's what happened...",
+            "Not this one. The passage points the other way.",
+            "This is a classic trap. I'll show you the exact trigger.",
+            "Let's look at what the text actually says here.",
+            "That's a distractor. Here's how to spot them.",
+            "The wording caught you—it catches many students.",
+            "Let's check what the passage says directly.",
         ],
         "improvement": [
-            "I've noticed you're getting faster! Your timing has improved by {percent}%.",
-            "Hey, remember when {question_type} confused you? Look at you now!",
-            "Your accuracy on {skill} has jumped! The practice is paying off.",
-            "You just did in 2 minutes what used to take you 5. That's real progress!",
-            "Three in a row! You're on fire! 🔥",
+            "I've noticed you're getting faster. Your timing has improved by {percent}%.",
+            "You're handling {question_type} more smoothly now.",
+            "Your accuracy on {skill} has increased. The practice shows.",
+            "You just did in 2 minutes what used to take you 5.",
+            "Three in a row. You're building consistency.",
         ],
         "struggling": [
-            "I can tell this is frustrating. Want to try a different approach?",
-            "These are genuinely hard — even native speakers find them tricky.",
-            "Let's slow down. Sometimes the best progress comes from patience.",
-            "You know what? Let's take a step back and build up to this.",
-            "This type trips up everyone at first. It's not you — it's the question!",
-            "I've seen Cambridge graduates struggle with these. You're in good company!",
+            "These are genuinely difficult. Even advanced students find them tricky.",
+            "Let's slow down. We'll build up to this.",
+            "This type takes practice. Let's break it into steps.",
+            "You're tackling something hard. That takes focus.",
+            "Let's try a different angle on this.",
         ],
         "persistence": [
-            "I love that you're not giving up. That mindset is half the battle.",
-            "Your persistence will pay off — I've seen it happen countless times.",
-            "Still here, still trying. That's exactly what separates success from giving up.",
+            "You're still here. That consistency matters.",
+            "Your persistence will show results. I've seen it many times.",
+            "Still working. That's exactly what builds skill.",
         ],
         "first_correct_after_struggle": [
-            "YES! There it is! That breakthrough feeling? Remember it!",
-            "Finally! 🎉 See? I knew you had it in you!",
-            "THAT'S what I'm talking about! The struggle made this click!",
+            "There it is. That's the breakthrough.",
+            "Good. The struggle made this click.",
+            "That's what we were working toward. Remember this moment.",
         ],
     })
 
@@ -130,14 +143,27 @@ class TutorPersona:
     # ============================================================
     
     TRANSITIONS: List[str] = field(default_factory=lambda: [
-        "Alright, let's shift gears.",
-        "Okay, moving on to something interesting...",
-        "Ready for the next challenge?",
+        "Let's move forward.",
+        "Next step.",
         "Let's try something different.",
-        "Here's where it gets fun...",
-        "Time for a change of pace.",
-        "Now, here's something I think you'll find useful...",
-        "Shall we move on? I have something good for you.",
+        "Here's what's next.",
+        "Moving on.",
+        "Let's shift focus.",
+        "Now we'll look at something else.",
+        "Let's continue.",
+    ])
+
+    # ============================================================
+    # Mentor Rhythm - Rhythmic wisdom phrases (used sparingly)
+    # ============================================================
+    
+    MENTOR_RHYTHM: List[str] = field(default_factory=lambda: [
+        "I stopped chasing words. I started chasing meaning.",
+        "One paragraph. One idea.",
+        "Slow is smooth. Smooth is fast.",
+        "Evidence first. Answer second.",
+        "The question shows the way. The passage holds the answer.",
+        "Don't rush to judge. Let the text speak.",
     ])
 
     # ============================================================
@@ -149,7 +175,7 @@ class TutorPersona:
         "Hmm, good question. Here's how I'd approach it:",
         "That's actually a really common challenge. Here's the thing:",
         "I've seen this confusion before. Let me break it down:",
-        "Interesting question! Here's my take on it:",
+        "Interesting question. Here's my take on it:",
         "You know, I had a student who asked the same thing. Here's what helped her:",
     ])
 
@@ -160,14 +186,14 @@ class TutorPersona:
     EMPATHY_RESPONSES: Dict[str, Dict[str, List[str]]] = field(default_factory=lambda: {
         "frustrated": {
             "high": [
-                "I hear you — this IS genuinely frustrating. Let's pause and try a completely different angle. 💪",
+                "I hear you — this IS genuinely frustrating. Let's pause and try a completely different angle.",
                 "Take a breath. Seriously. I've seen students go from exactly where you are to Band 7+. This bump is temporary.",
                 "You know what? Let's step back from this. It's not worth your sanity. We'll build up to it.",
             ],
             "medium": [
                 "I get it — these questions can be maddening. But here's the thing: frustration often comes right before a breakthrough.",
                 "This one's a tricky beast. Let me show you a technique that makes it click.",
-                "Frustrating, I know! But you're tackling something genuinely difficult. That takes guts.",
+                "Frustrating, I know. But you're tackling something genuinely difficult. That takes guts.",
             ],
             "low": [
                 "A bit challenging, isn't it? That's actually a good sign — you're pushing your limits.",
@@ -182,11 +208,11 @@ class TutorPersona:
             ],
             "medium": [
                 "Let me break this down step by step. We'll go slower.",
-                "Good that you said something — I'd rather you ask than stay confused!",
+                "Good that you said something — I'd rather you ask than stay confused.",
                 "Fair enough — let me try explaining that with an analogy.",
             ],
             "low": [
-                "Fair question! Here's another way to think about it...",
+                "Fair question. Here's another way to think about it...",
                 "Let me clarify that for you.",
             ]
         },
@@ -200,20 +226,20 @@ class TutorPersona:
                 "Remember: the exam tests skills, and skills can be trained. That's exactly what we're doing.",
             ],
             "low": [
-                "A little nervousness is actually good — it keeps you sharp. Let's use that energy!",
+                "A little nervousness is actually good — it keeps you sharp. Let's use that energy.",
             ]
         },
         "tired": {
             "high": [
-                "You sound exhausted. Honestly? Pushing through when you're this tired often does more harm than good. Can you take a 20-minute break?",
-                "Your brain needs rest to process what you've learned. Maybe we should pick this up tomorrow when you're fresh?",
+                "You sound exhausted. Let's switch to a lighter exercise for 2-3 minutes.",
+                "Your brain needs variety. Let's do one short question and finish cleanly.",
             ],
             "medium": [
-                "Feeling the fatigue? Let's do something lighter — maybe a quick vocabulary game instead of heavy passages?",
-                "How about we do one more short exercise and then call it for today? Quality over quantity.",
+                "Feeling the fatigue? Let's do something lighter—quick vocabulary instead of heavy passages.",
+                "How about one more short exercise and then we wrap up? Quality over quantity.",
             ],
             "low": [
-                "Getting a bit tired? That's normal after focused practice. Let's wrap up this section.",
+                "Getting a bit tired? Let's finish this section.",
             ]
         },
     })
@@ -224,41 +250,42 @@ class TutorPersona:
     
     TEACHING_INTROS: Dict[str, List[str]] = field(default_factory=lambda: {
         "true_false_ng": [
-            "Okay, True/False/Not Given — the question type everyone loves to hate! Here's the secret:",
-            "T/F/NG questions test one thing: whether you can resist adding your own knowledge. Let me show you:",
-            "These questions are about the text, not about reality. Important distinction!",
+            "This question type rewards one habit: don't add information.",
+            "We're not judging reality. We're checking what the text says.",
+            "These questions test whether you can stick to the passage.",
         ],
         "matching_headings": [
-            "Matching headings is like finding the perfect title for a story. Here's my approach:",
-            "Pro tip: the heading captures the MAIN idea, not just any idea mentioned. Here's how to spot the difference:",
-            "These questions test your ability to see the big picture. Let me show you a technique:",
+            "The heading captures the main idea, not just any detail.",
+            "We're looking for what the whole paragraph is about.",
+            "Main idea, not supporting examples. That's the key.",
         ],
         "multiple_choice": [
-            "Multiple choice looks easy, but those wrong options are carefully designed traps! Here's how to avoid them:",
-            "The trick with MCQ is elimination. Let me show you my 'traffic light' method:",
+            "Wrong options are carefully designed. Here's how to spot them.",
+            "The trick is elimination. Check each against the passage.",
+            "One answer has evidence. The others have problems.",
         ],
         "fill_blanks": [
-            "Gap fills test your attention to detail AND grammar. Here's my two-step approach:",
-            "These questions have strict rules — get the form wrong and it's marked incorrect. Let me explain:",
+            "These test attention to detail and grammar.",
+            "Get the form wrong and it's marked incorrect. Let me explain.",
+            "Exact words from passage. Correct grammar. Both required.",
         ],
         "general_strategy": [
-            "Here's something I tell all my students:",
-            "In my 8 years of examining, I've seen this pattern over and over:",
-            "Let me share a technique that helped my top students:",
+            "Here's the method:",
+            "This is what the test is checking:",
+            "Here's the safest way to decide:",
         ],
     })
 
     # ============================================================
-    # Coffee & Food Metaphors (Alex's quirk!)
+    # Metaphors - Occasional teaching metaphors (used sparingly)
     # ============================================================
     
-    COFFEE_METAPHORS: List[str] = field(default_factory=lambda: [
-        "Think of skimming like smelling coffee before you drink it — you get the essence without consuming everything.",
-        "Reading strategies are like coffee orders — you need to find what works for YOU.",
-        "Just like you can't rush a good espresso, some passages need time to extract meaning from.",
-        "Consider this the double-shot of IELTS tips — concentrated and effective!",
-        "This technique is like having coffee before an exam — gives you that extra edge!",
-        "Pacing yourself in the Reading test is like pacing your caffeine intake — too fast and you crash!",
+    METAPHORS: List[str] = field(default_factory=lambda: [
+        "Think of skimming like getting the shape of something before examining details.",
+        "Reading strategies are personal. You need to find what works for you.",
+        "Some passages need time to extract meaning from.",
+        "This technique gives you an edge.",
+        "Pacing yourself in the Reading test prevents rushing and mistakes.",
     ])
 
     # ============================================================
@@ -266,11 +293,11 @@ class TutorPersona:
     # ============================================================
     
     SESSION_CLOSERS: List[str] = field(default_factory=lambda: [
-        "Great session today! Remember: consistency beats intensity. See you soon! 💪",
-        "You've put in solid work today. Your future self will thank you. Take care!",
-        "That's a wrap! Get some rest — your brain needs time to process all this. See you next time!",
-        "Well done today! Each session brings you closer to your goal. Keep believing in yourself! 🎯",
-        "Fantastic effort! Remember, every Band 9 scorer started exactly where you are. See you soon!",
+        "That's enough for today. You worked with focus.",
+        "Good session. Keep it simple: meaning, evidence, decision.",
+        "Well done today. Consistent practice builds skill.",
+        "That's a wrap. You stayed focused throughout.",
+        "Good work. Each session moves you closer to your goal.",
     ])
 
     # ============================================================
@@ -308,12 +335,16 @@ class TutorPersona:
         greetings = self.GREETINGS.get(context, self.GREETINGS["new_user"])
         greeting = self._get_unique_phrase(f"greeting_{context}", greetings)
         
+        # Apply style filters
+        greeting = self.strip_emoji(greeting)
+        greeting = self.adjust_punctuation(greeting)
+        
         if student_name and "{name}" not in greeting:
             # Insert name naturally
             if greeting.startswith(("Hi", "Hey", "Hello", "Welcome")):
-                parts = greeting.split("!", 1)
+                parts = greeting.split(".", 1)  # Changed from ! to .
                 if len(parts) == 2:
-                    greeting = f"{parts[0]}, {student_name}!{parts[1]}"
+                    greeting = f"{parts[0]}, {student_name}.{parts[1]}"
         
         return greeting
     
@@ -326,6 +357,10 @@ class TutorPersona:
         encouragements = self.ENCOURAGEMENTS.get(result, self.ENCOURAGEMENTS["correct_answer"])
         template = self._get_unique_phrase(f"encouragement_{result}", encouragements)
         
+        # Apply style filters
+        template = self.strip_emoji(template)
+        template = self.adjust_punctuation(template)
+        
         try:
             return template.format(**kwargs) if kwargs else template
         except KeyError:
@@ -334,11 +369,13 @@ class TutorPersona:
     
     def get_transition(self) -> str:
         """Get a natural transition phrase."""
-        return self._get_unique_phrase("transition", self.TRANSITIONS)
+        phrase = self._get_unique_phrase("transition", self.TRANSITIONS)
+        return self.adjust_punctuation(self.strip_emoji(phrase))
     
     def get_thinking_phrase(self) -> str:
         """Get a 'thinking' phrase to humanize responses."""
-        return self._get_unique_phrase("thinking", self.THINKING_PHRASES)
+        phrase = self._get_unique_phrase("thinking", self.THINKING_PHRASES)
+        return self.adjust_punctuation(self.strip_emoji(phrase))
     
     def get_empathy_response(self, emotion: str, intensity: float = 0.5) -> str:
         """Get an emotionally appropriate response."""
@@ -355,7 +392,8 @@ class TutorPersona:
             level = "low"
         
         level_responses = responses.get(level, responses.get("medium", [""]))
-        return self._get_unique_phrase(f"empathy_{emotion}_{level}", level_responses)
+        phrase = self._get_unique_phrase(f"empathy_{emotion}_{level}", level_responses)
+        return self.adjust_punctuation(self.strip_emoji(phrase))
     
     def get_teaching_intro(self, question_type: str) -> str:
         """Get an introduction for teaching a concept."""
@@ -363,22 +401,57 @@ class TutorPersona:
             question_type, 
             self.TEACHING_INTROS["general_strategy"]
         )
-        return self._get_unique_phrase(f"teaching_{question_type}", intros)
+        phrase = self._get_unique_phrase(f"teaching_{question_type}", intros)
+        return self.adjust_punctuation(self.strip_emoji(phrase))
     
-    def get_coffee_metaphor(self) -> str:
-        """Get one of Alex's signature coffee metaphors."""
-        return self._get_unique_phrase("coffee", self.COFFEE_METAPHORS)
+    def get_metaphor(self) -> str:
+        """Get one of Alex's teaching metaphors."""
+        phrase = self._get_unique_phrase("metaphor", self.METAPHORS)
+        return self.adjust_punctuation(self.strip_emoji(phrase))
     
     def get_session_closer(self, student_name: Optional[str] = None) -> str:
         """Get a session-ending message."""
         closer = self._get_unique_phrase("closer", self.SESSION_CLOSERS)
+        closer = self.adjust_punctuation(self.strip_emoji(closer))
         if student_name:
-            closer = closer.replace("!", f", {student_name}!", 1)
+            closer = closer.replace(".", f", {student_name}.", 1)
         return closer
     
-    def should_use_coffee_metaphor(self) -> bool:
-        """Randomly decide whether to use a coffee metaphor (10% chance)."""
-        return random.random() < 0.10
+    def should_use_mentor_rhythm(self) -> bool:
+        """Randomly decide whether to use a mentor rhythm line (based on style settings)."""
+        return random.random() < self.style.metaphor_rate
+    
+    def get_mentor_rhythm(self) -> str:
+        """Get a mentor rhythm phrase."""
+        return self._get_unique_phrase("mentor_rhythm", self.MENTOR_RHYTHM)
+    
+    def strip_emoji(self, text: str) -> str:
+        """Remove emojis from text if emoji setting is disabled."""
+        if self.style.emoji:
+            return text
+        # Remove common emojis
+        import re
+        emoji_pattern = re.compile("["
+            u"\U0001F600-\U0001F64F"  # emoticons
+            u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+            u"\U0001F680-\U0001F6FF"  # transport & map
+            u"\U0001F1E0-\U0001F1FF"  # flags
+            u"\U00002702-\U000027B0"
+            u"\U000024C2-\U0001F251"
+            "]+", flags=re.UNICODE)
+        return emoji_pattern.sub('', text).strip()
+    
+    def adjust_punctuation(self, text: str) -> str:
+        """Adjust exclamation marks based on style settings."""
+        if self.style.exclamation_rate >= 0.5:
+            return text  # Keep as is
+        
+        # Reduce exclamation marks
+        if random.random() > self.style.exclamation_rate:
+            # Replace ! with . for this phrase
+            text = text.replace('!', '.')
+        
+        return text
     
     def format_with_personality(
         self,
@@ -390,7 +463,8 @@ class TutorPersona:
         question_type: Optional[str] = None,
     ) -> str:
         """
-        Wrap content with Alex's personality elements.
+        Wrap content with Alex's personality (calm mentor style).
+        Prevents stacking multiple openers based on style.max_openers setting.
         
         Args:
             content: The main response content
@@ -401,36 +475,40 @@ class TutorPersona:
             question_type: For adding teaching intros
         """
         parts = []
+        openers_used = 0
         
-        # Add empathy first if emotion detected
+        def add_opener(text: str):
+            nonlocal openers_used
+            if text and openers_used < self.style.max_openers:
+                parts.append(text)
+                parts.append("")
+                openers_used += 1
+        
+        # Priority order: emotion > teaching > transition
         if emotion and emotion in self.EMPATHY_RESPONSES:
             empathy = self.get_empathy_response(emotion, emotion_intensity)
-            if empathy:
-                parts.append(empathy)
-                parts.append("")
+            add_opener(empathy)
         
-        # Add encouragement
-        if add_encouragement:
-            parts.append(self.get_encouragement(add_encouragement))
-            parts.append("")
+        if question_type and openers_used < self.style.max_openers:
+            add_opener(self.get_teaching_intro(question_type))
         
-        # Add transition if appropriate
-        if add_transition and not parts:  # Only if we haven't added other openings
-            parts.append(self.get_transition())
-            parts.append("")
+        if add_transition and openers_used == 0:
+            add_opener(self.get_transition())
         
-        # Add teaching intro if relevant
-        if question_type:
-            parts.append(self.get_teaching_intro(question_type))
-            parts.append("")
-        
-        # Add main content
+        # Main content
         parts.append(content)
         
-        # Maybe add a coffee metaphor
-        if self.should_use_coffee_metaphor() and len(content) > 100:
+        # Encouragement at the end (more natural)
+        if add_encouragement:
             parts.append("")
-            parts.append(f"☕ *{self.get_coffee_metaphor()}*")
+            parts.append(self.get_encouragement(add_encouragement))
+        
+        # Maybe add a mentor rhythm line (rarely)
+        if self.should_use_mentor_rhythm() and len(content) > 100:
+            parts.append("")
+            rhythm = self.get_mentor_rhythm()
+            # Only add emoji if enabled
+            parts.append(f"*{rhythm}*")
         
         return "\n".join(parts)
 

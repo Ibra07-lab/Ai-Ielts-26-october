@@ -217,6 +217,25 @@ class ConversationMemory(BaseModel):
     waiting_for_reasoning: Optional[int] = None  # question_id we're waiting for student reasoning on
     student_reasoning: Dict[int, str] = Field(default_factory=dict)  # {question_id: reasoning_text}
     
+    # Recent explanation context for targeted practice
+    recent_explanation_topic: Optional[str] = None  # e.g., "true-false-not-given", "matching-headings"
+    recent_struggle_modules: List[str] = Field(default_factory=list)  # e.g., ["A", "B", "C", "D"]
+    recent_explanation_timestamp: Optional[datetime] = None
+    
+    # Performance tracking for current session
+    answer_history: List[Dict[str, Any]] = Field(default_factory=list)  
+    # Each entry: {question_id, student_answer, correct_answer, is_correct, mistake_pattern, module_tested}
+    
+    identified_weak_patterns: List[str] = Field(default_factory=list)  
+    # e.g., ["not_given_false_confusion", "qualifier_trap", "keyword_matching"]
+    
+    identified_strong_patterns: List[str] = Field(default_factory=list)
+    # e.g., ["direct_paraphrase", "simple_contradiction"]
+    
+    # Suggestion system state
+    suggested_practice_focus: Optional[str] = None
+    suggested_module_id: Optional[str] = None
+    
     def add_follow_up(self, item: str, trigger_after: int = 3) -> None:
         """Add something to follow up on after n exchanges."""
         self.follow_up_items.append({

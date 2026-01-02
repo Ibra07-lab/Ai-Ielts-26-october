@@ -119,7 +119,7 @@ OUTPUT JSON SCHEMA:
       "format": "true-false-not-given",
       "question_text": "Paraphrased statement about passage content",
       "correct_answer": "TRUE",
-      "rationale": "Explanation with exact evidence quote from passage"
+      "rationale": "The passage confirms/states/mentions that [exact evidence]. Quote: '[passage excerpt]'"
     }},
     {{
       "id": 2,
@@ -127,7 +127,7 @@ OUTPUT JSON SCHEMA:
       "format": "true-false-not-given",
       "question_text": "Statement that contradicts passage",
       "correct_answer": "FALSE",
-      "rationale": "Explanation of contradiction with passage quote"
+      "rationale": "The passage contradicts this by stating [opposite evidence]. Quote: '[passage excerpt]'"
     }},
     {{
       "id": 3,
@@ -135,10 +135,17 @@ OUTPUT JSON SCHEMA:
       "format": "true-false-not-given",
       "question_text": "Statement about absent information",
       "correct_answer": "NOT GIVEN",
-      "rationale": "Explanation why passage doesn't address this claim"
+      "rationale": "The passage does not mention/address/provide information about [specific aspect]. While [related info] is discussed, this specific claim is not covered."
     }}
   ]
 }}
+
+CRITICAL RATIONALE RULES:
+- TRUE rationale MUST use words like: "confirms", "states", "mentions", "supports", "agrees with"
+- FALSE rationale MUST use words like: "contradicts", "states the opposite", "says the reverse"
+- NOT GIVEN rationale MUST use words like: "does not mention", "doesn't address", "is not discussed", "is silent on"
+- NEVER use phrases like "is true" or "means the statement is true" in FALSE answers
+- NEVER use "contradicts" in NOT GIVEN or TRUE answers
 
 USER:
 Level: {level}

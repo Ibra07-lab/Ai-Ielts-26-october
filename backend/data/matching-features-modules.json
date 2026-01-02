@@ -1,0 +1,75 @@
+{
+  "category": "features",
+  "modules": [
+    {
+      "moduleId": "H",
+      "moduleName": "Paragraph Fingerprinting (3-Part Index System)",
+      "targetQuestionTypes": ["matching-information", "matching-features"],
+      "triggerConditions": {
+        "mistakePatterns": ["scanning_inefficiency", "multiple_reads"],
+        "contextKeywords": ["can't find", "searching", "which paragraph"]
+      },
+      "content": {
+        "explanation": "**The Problem:**\n\nMatching Information and Matching Features require scanning across multiple paragraphs. Students waste time re-reading the entire passage for each question.\n\n**The Solution: Paragraph Fingerprinting**\n\nCreate a 3-part \"fingerprint\" for EACH paragraph BEFORE answering questions:\n\n1. **Topic Label** (2-4 words): What is this paragraph about?\n   - Example: \"Climate impact,\" \"Economic benefits,\" \"Historical background\"\n\n2. **Function**: What does this paragraph DO?\n   - Define, Compare, Explain cause, Give example, Criticize, Propose solution\n\n3. **Named Entities**: Who/what/when?\n   - Names of people, places, dates, organizations, theories\n\n**The Process:**\n- Spend 2-3 minutes creating fingerprints for all paragraphs\n- Write brief notes in margin or scratch paper\n- Now answer questions using your index (much faster!)\n\n**Reddit Success Pattern:** \"I started mapping paragraphs first and stopped re-reading the whole passage 10 times. Cut my time in half.\"",
+        "visualExample": {
+          "passage": "Four-paragraph passage about renewable energy:\n\nPara A: Solar technology history, photovoltaic cells invented 1950s, Bell Labs\nPara B: Current solar efficiency rates, Germany leads with 40% adoption\nPara C: Wind power economics, costs dropped 60%, cheaper than coal\nPara D: Dr. Chen's 2020 study criticizes slow government response",
+          "statement": "Question: Which paragraph contains information about cost comparisons between energy sources?\n\nYour fingerprints:\n• Para A: [Solar history | Background | Bell Labs, 1950s]\n• Para B: [Solar adoption | Statistics | Germany, 40%]\n• Para C: [Wind economics | Cost comparison | 60% drop, coal] ← MATCH!\n• Para D: [Policy criticism | Expert opinion | Dr. Chen, 2020]",
+          "analysis": "**Using Fingerprints:**\n\nQuestion asks: \"cost comparisons between energy sources\"\n\nScan your fingerprints:\n- Para A: History - not about costs\n- Para B: Adoption rates - not about comparisons\n- Para C: **\"Cost comparison\"** in function + \"coal\" in entities → [ ✅ Answer: C ]\n- Para D: Policy criticism - not about costs\n\n**Time Saved:** Instead of re-reading 4 paragraphs (2-3 minutes), you scanned your fingerprints (10 seconds).\n\n**Key Point:** The fingerprint \"Wind economics | Cost comparison | coal\" immediately tells you this paragraph compares costs. You don't need to re-read it."
+        },
+        "checkpointQuestions": [
+          "Did I create fingerprints for ALL paragraphs before starting questions?",
+          "Do my fingerprints include: Topic + Function + Named entities?",
+          "Can I scan my fingerprints to quickly locate information?"
+        ]
+      },
+      "officialSource": "IELTS reading strategies + British Council 'Efficient Scanning Techniques'"
+    },
+    {
+      "moduleId": "I",
+      "moduleName": "Name-Tracking Map (Who Said What Index)",
+      "targetQuestionTypes": ["matching-features"],
+      "triggerConditions": {
+        "mistakePatterns": ["name_confusion", "opinion_mixing"],
+        "contextKeywords": ["who said", "researcher", "according to"]
+      },
+      "content": {
+        "explanation": "**The Challenge:**\n\nMatching Features often asks you to match statements to people/researchers/organizations. Passages mention 4-6 different names, and you need to remember who said what.\n\n**The Solution: Name-Tracking Map**\n\nAs you read, create a quick index mapping names to their key claims/opinions:\n\n**Format:**\n```\nName A → [keyword of their view]\nName B → [keyword of their view]\nName C → [keyword of their view]\n```\n\n**Example:**\n```\nDr. Smith → [supports AI regulation]\nProf. Lee → [opposes strict rules]\nWorld Bank → [economic impact data]\n```\n\n**Critical for Matching Features:** These questions ask you to match OPINIONS or THEORIES (not just facts). The passage might say:\n- Dr. X argues that...\n- According to Prof. Y...\n- Organization Z claims...\n\n**IELTS Official:** \"Matching Features tests your ability to recognize opinions, theories, and descriptions attributed to specific people or entities.\"\n\n**Reddit Pattern:** Students often remember the opinion but forget WHO said it, or mix up similar-sounding researchers.",
+        "visualExample": {
+          "passage": "Research on urban planning shows diverse views. Dr. Martinez argues that green spaces reduce city stress levels and improve mental health. Professor Chen criticizes this view, stating that economic development should take priority over parks. The Urban Institute's 2019 report found that cities with more greenery have 15% higher property values.",
+          "statement": "Create your Name-Tracking Map while reading:\n\n✓ Dr. Martinez → green spaces reduce stress, mental health\n✓ Prof. Chen → economic development priority (opposes parks focus)\n✓ Urban Institute → property values +15% (data, not opinion)\n\nQuestion: Match each statement to the correct person/organization:\nA. Green spaces benefit psychological wellbeing\nB. Financial growth is more important than parks\nC. Parks increase real estate prices",
+          "analysis": "**Using Your Map:**\n\nStatement A: \"psychological wellbeing\"\n- Scan map: Dr. Martinez → \"reduce stress, mental health\"\n- \"Psychological wellbeing\" = mental health\n- [ ✅ Answer: Dr. Martinez ]\n\nStatement B: \"Financial growth more important\"\n- Scan map: Prof. Chen → \"economic development priority\"\n- \"Financial growth\" = economic development\n- [ ✅ Answer: Prof. Chen ]\n\nStatement C: \"increase real estate prices\"\n- Scan map: Urban Institute → \"property values +15%\"\n- \"Real estate prices\" = property values\n- [ ✅ Answer: Urban Institute ]\n\n**Why This Works:** You don't have to re-read the passage. Your map has the keyword for each person's view, and you match based on MEANING (not exact words)."
+        },
+        "checkpointQuestions": [
+          "Did I create a name map as I read (not after)?",
+          "For each name, did I note their KEY CLAIM in 3-5 words?",
+          "Am I matching based on MEANING of the claim, not exact words?"
+        ]
+      },
+      "officialSource": "IELTS Matching Features official description + Cambridge strategies"
+    },
+    {
+      "moduleId": "J",
+      "moduleName": "Instruction Parser (Can I Use Answers Twice?)",
+      "targetQuestionTypes": ["matching-information", "matching-features"],
+      "triggerConditions": {
+        "mistakePatterns": ["instruction_misread", "repeat_confusion"],
+        "contextKeywords": ["instructions", "can I use", "more than once"]
+      },
+      "content": {
+        "explanation": "**The Critical Rule:**\n\nMatching questions have DIFFERENT rules about repeating answers. Reading the instructions wrong = losing multiple marks.\n\n**Two Key Instruction Types:**\n\n**Type 1: \"You may use any letter more than once\"**\n- One paragraph can contain answers for MULTIPLE questions\n- Don't skip a paragraph just because you already used it\n- Example: Para C might answer questions 3, 5, AND 7\n\n**Type 2: \"Each letter may be used once only\"**\n- Each paragraph matches ONE question only\n- Once you use it, cross it off\n- Helps eliminate options\n\n**IELTS Official Warning:** \"Read the instructions carefully - they tell you whether answers can be repeated.\"\n\n**Reddit Pattern:** Multiple posts about \"I got confused because I thought I couldn't use the same paragraph twice\" or \"I didn't realize I could repeat letters.\"\n\n**Secondary Instruction: Answer Order**\n- Matching Information: **Answers may NOT follow passage order**\n- Question 5's answer might be in Para A, Question 6 in Para D, Question 7 in Para B\n- Don't assume sequential order",
+        "visualExample": {
+          "passage": "Instructions: \"The reading passage has seven paragraphs, A-G. Which paragraph contains the following information? **You may use any letter more than once.**\"\n\nQuestions:\n27. An example of rapid population growth\n28. Reasons for urban migration\n29. Data on housing shortages\n30. Future predictions about city expansion",
+          "statement": "Student sees Para C discusses urban migration and population growth.\n\nStudent thinks: \"I used Para C for question 28 (migration), so I can't use it again.\"\n\n**WRONG!** The instructions said \"may use any letter more than once.\"",
+          "analysis": "**Correct Approach:**\n\nRead instructions: \"may use any letter **more than once**\" → Paragraphs CAN repeat!\n\n**Answers:**\n- Q27: Para C (population growth example) ← First use of C\n- Q28: Para C (urban migration reasons) ← Second use of C\n- Q29: Para E (housing shortage data)\n- Q30: Para G (future predictions)\n\n**Result:** Para C answered BOTH Q27 and Q28. This is ALLOWED because instructions said so.\n\n**If Instructions Said:** \"Each letter may be used once only\"\n- Then you'd have to choose: Does Para C better answer Q27 or Q28?\n- Pick the stronger match\n\n**Key Lesson:** Circle or highlight the repeat instruction BEFORE starting. Refer back if unsure."
+        },
+        "checkpointQuestions": [
+          "Did I read the instructions and note the repeat rule?",
+          "If \"may use more than once,\" am I checking ALL paragraphs for each question?",
+          "If \"once only,\" am I crossing off used paragraphs?"
+        ]
+      },
+      "officialSource": "IELTS official instructions + British Council 'Reading Instructions Carefully' guidance"
+    }
+  ]
+}
+

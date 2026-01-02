@@ -174,8 +174,12 @@ class AgentService:
         self.micro_battle_prompts = {
             "mixed": (prompts_dir / "micro_battle.txt").read_text(),
             "tfng": (prompts_dir / "micro_battle_tfng.txt").read_text(),
+            "tfng_targeted": (prompts_dir / "micro_battle_tfng_targeted.txt").read_text() if (prompts_dir / "micro_battle_tfng_targeted.txt").exists() else "",
             "multiple_choice": (prompts_dir / "micro_battle_multiple_choice.txt").read_text(),
-            "short_answer": (prompts_dir / "micro_battle_short_answer.txt").read_text()
+            "multiple_choice_targeted": (prompts_dir / "micro_battle_multiple_choice_targeted.txt").read_text() if (prompts_dir / "micro_battle_multiple_choice_targeted.txt").exists() else "",
+            "matching_headings_targeted": (prompts_dir / "micro_battle_matching_headings_targeted.txt").read_text() if (prompts_dir / "micro_battle_matching_headings_targeted.txt").exists() else "",
+            "short_answer": (prompts_dir / "micro_battle_short_answer.txt").read_text(),
+            "short_answer_targeted": (prompts_dir / "micro_battle_short_answer_targeted.txt").read_text() if (prompts_dir / "micro_battle_short_answer_targeted.txt").exists() else ""
         }
         self.micro_battle_prompt_template = self.micro_battle_prompts["mixed"]
 
@@ -189,17 +193,17 @@ class AgentService:
         self._load_theory_data()
 
         self.general_chat_prompt_template = ChatPromptTemplate.from_messages([
-            ("system", """System: You are Alex, an expert IELTS Reading tutor with a warm, encouraging personality. You're a former IELTS examiner with 8 years of teaching experience, specialized in the IELTS Academic Reading module.
+            ("system", """System: You are Alex, an IELTS Reading tutor. You're a former IELTS examiner with 8 years of teaching experience, specialized in the IELTS Academic Reading module.
 
-Your personality:
-- Encouraging but honest, using humour to lighten stress
-- Occasionally uses coffee metaphors to explain concepts
-- Celebrates small wins enthusiastically
+Your voice:
+- Calm, measured, and evidence-based
 - Uses British spellings (colour, favourite, analyse)
-- References common student mistakes warmly, without judgment
+- References what the text says, not what examiners want
 - Shows empathy when students are frustrated, confused, anxious, or tired
+- Minimal exclamation marks (use periods for most sentences)
+- No emojis except for structural UI markers (🎬, ⚔️, 🪤, 💡, ⏱️, ✨)
 
-Your mission: help students improve reading skills (timing, accuracy, vocabulary, inference) using scaffolded teaching, short practice tasks, and clear feedback. Always be student-centred, motivational, and concise.
+Your mission: help students improve reading skills (timing, accuracy, vocabulary, inference) using scaffolded teaching, short practice tasks, and clear feedback. Always be student-centered and concise.
 
 RESPONSE FORMATTING RULES (CRITICAL):
 - Use MINIMAL vertical spacing - only ONE blank line between major sections
@@ -603,7 +607,7 @@ End."""),
                         "question_statement": wrong_q['question_text'],
                         "student_answer": wrong_q['student_answer'],
                         "correct_answer": wrong_q['correct_answer'],
-                        "question_type_theory": "Review the passage carefully.",
+                        "question_type": wrong_q.get("format", "true-false-not-given"),
                         "is_correct": False
                     }
                     
@@ -669,7 +673,7 @@ End."""),
                             "question_statement": q_text,
                             "student_answer": student_ans_meaning,
                             "correct_answer": correct_ans,
-                            "question_type_theory": "Review the passage carefully.",
+                            "question_type": question.get("format", "true-false-not-given"),
                             "is_correct": is_correct  # Pass this info to help the LLM adjust tone
                         }
                         
@@ -706,7 +710,7 @@ End."""),
                                     f"### Q{q_id}: ✅ CORRECT\n"
                                     f"**Question:** *{q_text}*\n"
                                     f"**Your Answer:** {student_ans} ({student_ans_meaning})\n\n"
-                                    f"**Why it's correct:** The passage supports this answer. Great job!\n"
+                                    f"**Why it's correct:** The passage supports this answer. The evidence in the text matches your choice.\n"
                                 )
                             else:
                                 explanation_sections.append(
@@ -719,9 +723,9 @@ End."""),
                     
                     # Combine all explanations
                     response_content = (
-                        "# 📊 Complete Answer Breakdown\n\n" +
-                        "\n---\n\n".join(explanation_sections) +
-                        "\n\n💡 **Want to try another practice session?** Just let me know!"
+                        "## Complete answer breakdown\n\n"
+                        + "\n---\n\n".join(explanation_sections)
+                        + "\n\nIf you want another practice session, tell me the level and topic you'd like to work on next."
                     )
 
         elif router_decision.action == "GENERATE_HINT":
@@ -770,10 +774,73 @@ End."""),
                     "⚡ **Auto** (I'll choose) - Say 'Auto'"
                 )
             else:
+                # Check for recent explanation context OR accepted suggestion for targeted practice
+                use_targeted_practice = False
+                struggle_focus = ""
+                module_details = ""
+                question_type_override = None
+                
+                if session_id in self.active_sessions:
+                    memory = self.active_sessions[session_id]
+                    
+                    # Priority 1: Check if student accepted a practice suggestion (from performance summary)
+                    if memory.suggested_practice_focus and any(word in user_message.lower() for word in ['yes', 'ok', 'sure', 'practice']):
+                        use_targeted_practice = True
+                        primary_weakness = memory.suggested_practice_focus
+                        module_id = memory.suggested_module_id or self._pattern_to_module_id(primary_weakness)
+                        
+                        # Map pattern to question type
+                        pattern_to_qtype = {
+                            "not_given_false_confusion": "true-false-not-given",
+                            "not_given_true_confusion": "true-false-not-given",
+                            "qualifier_trap": "true-false-not-given",
+                            "specificity_mismatch": "true-false-not-given",
+                            "keyword_mismatch": "true-false-not-given",
+                            "detail_vs_main_idea": "matching-headings",
+                            "distractor_confusion": "multiple-choice",
+                            "word_limit_violation": "gap-fill",
+                            "completion_error": "short-answer"
+                        }
+                        question_type_override = pattern_to_qtype.get(primary_weakness, "true-false-not-given")
+                        
+                        struggle_focus, module_details = self._format_struggle_focus_for_practice([module_id])
+                        logger.info(f"[WEAKNESS_PRACTICE] Generating targeted practice for weakness: {primary_weakness}")
+                        
+                        # Clear suggestion after use
+                        memory.suggested_practice_focus = None
+                        memory.suggested_module_id = None
+                    
+                    # Priority 2: Use targeted practice if explanation was recent (within 10 minutes)
+                    elif memory.recent_explanation_topic and memory.recent_explanation_timestamp:
+                        time_since = datetime.now() - memory.recent_explanation_timestamp
+                        if time_since.total_seconds() < 600:  # 10 minutes
+                            use_targeted_practice = True
+                            question_type_override = memory.recent_explanation_topic
+                            
+                            if memory.recent_struggle_modules:
+                                struggle_focus, module_details = self._format_struggle_focus_for_practice(
+                                    memory.recent_struggle_modules
+                                )
+                                logger.info(f"[TARGETED_PRACTICE] Using targeted practice for {question_type_override} with modules {memory.recent_struggle_modules}")
+                
                 formatted_history_mb = "\n".join([f"{m.role}: {m.content}" for m in chat_history])
                 # Extract question_type from parameters, default to "mixed"
                 question_type = params.get("question_type", "mixed")
-                battle = await self.generate_micro_battle(mb_level, mb_topic, question_type, formatted_history_mb, session_id)
+                
+                # Override with recent explanation topic if targeted practice is enabled
+                if use_targeted_practice and question_type_override:
+                    question_type = question_type_override
+                
+                battle = await self.generate_micro_battle(
+                    mb_level, 
+                    mb_topic, 
+                    question_type, 
+                    formatted_history_mb, 
+                    session_id,
+                    use_targeted=use_targeted_practice,
+                    struggle_focus=struggle_focus,
+                    module_details=module_details
+                )
                 response_content = format_micro_battle_for_chat(battle)
         
         elif router_decision.action == "REQUEST_USER_TEXT":
@@ -805,7 +872,13 @@ End."""),
                         'C': 'NOT GIVEN'
                     }
                     
-                    # Build feedback for each submitted answer
+                    # Detect question type from first question
+                    question_type = 'true-false-not-given'  # default
+                    if memory.current_questions:
+                        first_q_format = memory.current_questions[0].get('format', 'true-false-not-given')
+                        question_type = first_q_format
+                    
+                    # Build feedback for each submitted answer with theory connections
                     feedback_lines = []
                     wrong_answers = []
                     
@@ -825,11 +898,44 @@ End."""),
                                 student_ans_meaning = student_ans_raw
                                 student_ans_display = student_ans_raw
                             
-                            # Compare using the mapped meaning
-                            if student_ans_meaning == correct_answer:
-                                feedback_lines.append(f"✅ **Q{q_id}:** Your answer **{student_ans_display}** is **correct**!")
+                            # Check if correct
+                            is_correct = (student_ans_meaning == correct_answer)
+                            
+                            # Identify mistake pattern and module
+                            mistake_pattern, module_id = self._identify_mistake_pattern(
+                                question_type,
+                                student_ans_meaning,
+                                correct_answer,
+                                correct_q
+                            )
+                            
+                            # Store in answer history for performance tracking
+                            memory.answer_history.append({
+                                "question_id": q_id,
+                                "student_answer": student_ans_meaning,
+                                "correct_answer": correct_answer,
+                                "is_correct": is_correct,
+                                "mistake_pattern": mistake_pattern,
+                                "module_id": module_id
+                            })
+                            
+                            # Generate theory-connected feedback
+                            if is_correct:
+                                theory_insight = self._get_theory_insight_for_correct(
+                                    question_type,
+                                    correct_answer,
+                                    correct_q,
+                                    module_id
+                                )
+                                feedback_lines.append(f"✅ **Q{q_id}:** Correct! {theory_insight}")
                             else:
-                                feedback_lines.append(f"❌ **Q{q_id}:** Your answer **{student_ans_display}** is incorrect.")
+                                theory_explanation = self._get_theory_explanation_for_mistake(
+                                    mistake_pattern,
+                                    module_id,
+                                    correct_q,
+                                    correct_answer
+                                )
+                                feedback_lines.append(f"❌ **Q{q_id}:** {theory_explanation}")
                                 # Store wrong answer for Socratic questioning
                                 wrong_answers.append({
                                     "id": q_id,
@@ -842,20 +948,47 @@ End."""),
                     if feedback_lines:
                         response_content = "**Your Results:**\n\n" + "\n".join(feedback_lines)
                         
-                        # If there are wrong answers, initiate Socratic questioning for the first one
-                        if wrong_answers:
-                            # Store all wrong answers in memory
-                            memory.pending_socratic_questions = {wa["id"]: wa for wa in wrong_answers}
+                        # Generate brief performance summary
+                        total_q = len(memory.student_answers)
+                        correct_q = len([h for h in memory.answer_history if h.get('is_correct', False)])
+                        accuracy = (correct_q / total_q * 100) if total_q > 0 else 0
+                        
+                        response_content += f"\n\n📊 You got **{correct_q}/{total_q} correct** ({accuracy:.0f}% accuracy)!"
+                        
+                        # Analyze performance and add comprehensive summary
+                        if len(memory.answer_history) >= 3:  # At least 3 questions for meaningful analysis
+                            analysis = self._analyze_performance(memory.answer_history, session_id)
                             
-                            # Ask about the first wrong answer
-                            first_wrong = wrong_answers[0]
-                            memory.waiting_for_reasoning = first_wrong["id"]
-                            
-                            response_content += f"\n\n**Let's understand Q{first_wrong['id']}:**\n\n"
-                            response_content += f"❓ **Why did you choose '{first_wrong['student_answer']}'?**\n\n"
-                            response_content += "What sentence or words in the passage made you think so?\n\n"
-                            response_content += "_(Or say 'skip' if you want me to explain directly)_"
-                        else:
+                            if analysis:
+                                summary = self._generate_performance_summary(
+                                    analysis,
+                                    memory.answer_history,
+                                    question_type
+                                )
+                                if summary:
+                                    response_content += f"\n\n{summary}"
+                                
+                                # Add targeted practice suggestion if weak patterns detected
+                                weak_patterns = analysis.get('weak_patterns', [])
+                                if weak_patterns:
+                                    primary_weakness = weak_patterns[0]
+                                    module_id = self._pattern_to_module_id(primary_weakness)
+                                    
+                                    response_content += f"**🎯 Targeted Practice Suggestion:**\n\n"
+                                    response_content += f"I noticed you struggled with {self._pattern_to_friendly_name(primary_weakness)}. "
+                                    response_content += f"Would you like me to generate another practice passage that specifically focuses on this? "
+                                    response_content += f"Say **'yes'** and I'll create targeted questions! 💪"
+                                    
+                                    # Store suggestion context in memory
+                                    memory.suggested_practice_focus = primary_weakness
+                                    memory.suggested_module_id = module_id
+                        
+                        # If there are wrong answers, optionally initiate Socratic questioning
+                        # (Keeping this for now but could be replaced with immediate explanations)
+                        if wrong_answers and len(wrong_answers) == 1:
+                            # For single wrong answer, already explained above with theory
+                            pass
+                        elif not wrong_answers:
                             # All correct!
                             response_content += "\n\n🎉 **Perfect score! Excellent work!**"
                     else:
@@ -1136,17 +1269,17 @@ Be warm and supportive. Focus on fixing the misconception, not blaming them for 
         This is shared between the normal and streaming paths.
         """
         # Build base system message
-        base_system_message = """System: You are Alex, an expert IELTS Reading tutor with a warm, encouraging personality. You're a former IELTS examiner with 8 years of teaching experience, specialized in the IELTS Academic Reading module.
+        base_system_message = """System: You are Alex, an IELTS Reading tutor. You're a former IELTS examiner with 8 years of teaching experience, specialized in the IELTS Academic Reading module.
 
-Your personality:
-- Encouraging but honest, using humour to lighten stress
-- Occasionally uses coffee metaphors to explain concepts
-- Celebrates small wins enthusiastically
+Your voice:
+- Calm, measured, and evidence-based
 - Uses British spellings (colour, favourite, analyse)
-- References common student mistakes warmly, without judgment
+- References what the text says, not what examiners want
 - Shows empathy when students are frustrated, confused, anxious, or tired
+- Minimal exclamation marks (use periods for most sentences)
+- No emojis except for structural UI markers
 
-Your mission: help students improve reading skills (timing, accuracy, vocabulary, inference) using scaffolded teaching, short practice tasks, and clear feedback. Always be student-centred, motivational, and concise.
+Your mission: help students improve reading skills (timing, accuracy, vocabulary, inference) using scaffolded teaching, short practice tasks, and clear feedback. Always be student-centered and concise.
 
 RESPONSE FORMATTING RULES (CRITICAL):
 - Use MINIMAL vertical spacing - only ONE blank line between major sections
@@ -1156,21 +1289,20 @@ RESPONSE FORMATTING RULES (CRITICAL):
 - Group related content tightly together
 - Only separate distinct topics with a single blank line
 
-ELITE UI/UX FORMATTING RULES (MANDATORY):
-1. **SCANNABILITY ICONS**: Use icons as visual anchors for lists:
-   - For Golden Rules: 👁️ (Read), 📍 (Locate), ⚖️ (Compare)
-   - For Mistakes: ⚠️ (Assuming), 🚫 (Ignoring)
-   - For Strategies: ⚔️ (Attack Plan), 🏹 (Action)
+UI FORMATTING RULES (MANDATORY):
+1. **STRUCTURAL ICONS**: Use these specific icons for UI rendering:
+   - For sections: 🎬 (SEE IT IN ACTION), ⚔️ (ATTACK PLAN), 🪤 (MISTAKES), 💡 (TIP), ⏱️ (TIME), ✨ (SUMMARY)
+   - For steps/bullets: 👁️ (Read), 📍 (Locate), ⚖️ (Compare), ⚠️ (Warning), 🚫 (Don't)
 
-2. **ANSWER BADGES**: Never say "Answer: TRUE". ALWAYS use the badge format:
+2. **ANSWER BADGES**: ALWAYS use the badge format:
    - [ ✅ TRUE ]
    - [ ❌ FALSE ]
    - [ 🔍 NOT GIVEN ]
 
-3. **SEMANTIC HIGHLIGHTING**:
-   - Use *italics* for words taken directly FROM THE PASSAGE (renders as Blue Evidence).
-   - Use `backticks` for key words in the STATEMENT (renders as Amber Focus).
-   - Use ~~strikethrough~~ for clashing words that create a FALSE answer (renders as Red Warning).
+3. **TEXT HIGHLIGHTING**:
+   - Use *italics* for words taken directly FROM THE PASSAGE.
+   - Use `backticks` for key words in the STATEMENT.
+   - Use ~~strikethrough~~ for clashing words that create a FALSE answer.
      Example: "The passage says it is *likely*, but the statement says it is ~~certain~~."
 
 4. **SIDE-BY-SIDE EXAMPLES**: To trigger the split-card UI, use this EXACT structure inside a blockquote:
@@ -1182,7 +1314,7 @@ ELITE UI/UX FORMATTING RULES (MANDATORY):
    >
    > **THE SOLUTION:**
    > [ ❌ FALSE ]
-   > **Logic:** Your explanation here...
+   > **Logic:** Your explanation here.
 
 GOOD spacing example:
 "**Key Qualifiers to Watch For:**
@@ -1217,44 +1349,41 @@ If a student asks for help with a specific question type or skill, refer to the 
 - If the problem is VAGUE (e.g., "I'm struggling"), ask for clarification to identify if it's timing, vocabulary, or a specific question type.
 
 WHEN A STUDENT ASKS ABOUT OR MENTIONS A QUESTION TYPE:
-- If a student mentions, asks about, or wants to learn a specific question type (e.g., "sentence completion", "true false not given", "tell me about matching headings"):
-- DO NOT give a short summary. Instead, provide a COMPREHENSIVE and CLEAR lesson including:
-  1. A detailed overview of what the question type tests.
-  2. The Golden Rules/Core Approach for this type.
-  3. Top 2-3 Common Mistakes (with clear Trap vs. Rule examples from the theory).
-  4. The Step-by-Step Strategy.
-  5. A full walkthrough of an example question (Passage + Question + Logic).
-- Ensure the tone is conversational but expert.
-- CRITICAL: End the explanation by checking for understanding (e.g., "Did that clear things up? Would you like to try a practice question together now?").
-- You are not restricted by word counts for these educational explanations; prioritize clarity and completeness.
+- If a student mentions, asks about, or wants to learn a specific question type:
+- Provide a clear lesson including:
+  1. What the question type tests.
+  2. The core approach for this type.
+  3. Top 2-3 common mistakes (with examples from the theory).
+  4. The step-by-step strategy.
+  5. A walkthrough of an example question.
+- Keep the tone calm and evidence-based.
+- End by checking for understanding: "Does this make sense? Would you like to try a practice question?"
+- Prioritize clarity and completeness.
 
-PRACTICE PASSAGE GENERATION (MANDATORY CONVERSATION FLOW):
-When a student requests a practice passage (e.g., "give me a practice passage", "I want to practice", "create a passage for me"):
+PRACTICE PASSAGE GENERATION:
+When a student requests a practice passage:
 
-1. **FIRST QUESTION - Ask for Level:**
-   "Great! I'd love to create a practice passage for you. 📚
-   
-   First, what's your current level?
+1. **Ask for Level:**
+   "I can create a practice passage for you. What's your current level?
    - 🟢 **Beginner** (Simpler vocabulary, direct statements)
    - 🟡 **Intermediate** (Academic vocabulary, some paraphrasing)
    - 🔴 **Advanced** (Complex sentences, heavy paraphrasing, exam-level difficulty)"
 
-2. **SECOND QUESTION - Ask for Question Type (ONLY after they provide level):**
-   "Perfect! Now, which question type would you like to practice?
+2. **Ask for Question Type (after they provide level):**
+   "Which question type would you like to practice?
    - True/False/Not Given
    - Yes/No/Not Given
    - Multiple Choice
    - Matching Headings
    - Sentence Completion
-   - Or would you like a **Mixed** passage with different question types?"
+   - Or a **Mixed** passage with different question types?"
 
-3. **GENERATE - Only after BOTH answers are provided:**
-   Create the passage based on their level and question type preference.
+3. **Generate the passage based on their level and question type preference.**
    
-**CRITICAL:** Do NOT generate a passage until you have BOTH the level AND the question type. If they only provide one, ask for the other.
+Do NOT generate a passage until you have BOTH the level AND the question type. If they only provide one, ask for the other.
 
-EXAMPLE GENERATION RULES (CRITICAL FOR STUDENT ENGAGEMENT):
-When a student asks for examples or practice statements (e.g., "give me examples", "give me 10 examples", "show me practice questions"):
+EXAMPLE GENERATION RULES:
+When a student asks for examples or practice statements:
 
 1. APPROPRIATE QUANTITY - Match passage length:
    - Small passage (100-150 words): Generate 5-6 statements maximum
@@ -1262,8 +1391,8 @@ When a student asks for examples or practice statements (e.g., "give me examples
    - Long passage (300+ words): Generate 10 statements
    - If no passage context, generate 5-6 examples
 
-2. EDUCATIONAL FORMAT (MANDATORY):
-   For EACH statement, you MUST provide a side-by-side comparison using this blockquote structure:
+2. EDUCATIONAL FORMAT:
+   For EACH statement, provide a side-by-side comparison using this blockquote structure:
 
    > 🎬 **SEE IT IN ACTION**
    >
@@ -1273,9 +1402,9 @@ When a student asks for examples or practice statements (e.g., "give me examples
    >
    > **THE SOLUTION:**
    > [ ✅ ANSWER BADGE HERE ]
-   > **Logic:** Explain the comparison using ~~strikethrough~~ for clashing words and `backticks` for key keywords. Ensure you quote EXACT words from the passage in *italics*.
+   > **Logic:** Explain the comparison using ~~strikethrough~~ for clashing words and `backticks` for key keywords. Quote EXACT words from the passage in *italics*.
    
-   Example of ELITE format:
+   Example format:
    > 🎬 **SEE IT IN ACTION**
    >
    > Passage Excerpt: "*many scientists believe climate change is accelerating due to human activity*"
@@ -1284,24 +1413,23 @@ When a student asks for examples or practice statements (e.g., "give me examples
    >
    > **THE SOLUTION:**
    > [ ❌ FALSE ]
-   > **Logic:** The passage says the change is *due to human activity*, but it does not say it is ~~solely~~ (only) caused by it. The key word here is `solely`. The passage evidence is *due to human activity*.
+   > **Logic:** The passage says the change is *due to human activity*, but it does not say it is ~~solely~~ caused by it. The key word here is `solely`. The passage evidence is *due to human activity*.
 
-3. PROGRESSIVE DIFFICULTY (Mandatory):
+3. PROGRESSIVE DIFFICULTY:
    Order the statements from easiest to hardest:
    - Statements 1-2: Direct word matches (exact wording from passage)
    - Statements 3-4: Synonym paraphrasing (same concept, different words)
    - Statements 5 onwards: Traps with qualifiers, negatives, or Not Given scenarios
    
 4. ENGAGEMENT:
-   - After every 3-4 examples, add a brief teaching comment (e.g., "Notice how statement 3 uses a synonym?")
+   - After every 3-4 examples, add a brief teaching comment.
    - End with: "Want to try answering some yourself before I reveal the answers?"
 
-DO NOT just list statements with bare answers like "TRUE" or "FALSE". Each example must teach the student HOW to think.
+Do NOT just list statements with bare answers. Each example must teach the student HOW to think.
 
 Behavior rules:
-- Start responses with brief empathy/encouragement.
-- Ask clarifying questions only when needed.
 - Keep replies under 400 words and focused.
+- Ask clarifying questions only when needed.
 - End every turn with a clear next step or question.
 """
 
@@ -1349,11 +1477,11 @@ The student is currently working on THIS specific practice passage:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
 
-        # Analyze last 5 user messages for topic detection
+        # Analyze last 5 user messages for topic detection (including current message)
         recent_user_messages = " ".join([
             msg.content.lower() 
             for msg in chat_history[-5:] if msg.role == "user"
-        ])
+        ] + [user_message.lower()])
         
         # Dynamic Question Type Analysis
         detected_type = "Reading Basics"
@@ -1372,9 +1500,46 @@ The student is currently working on THIS specific practice passage:
         elif any(k in recent_user_messages for k in ["match info", "information"]):
             detected_type = "Matching Information"
 
-        # Get the relevant theory dynamically
-        theory_to_inject = self._get_dynamic_theory(detected_type)
+        # Get the relevant theory dynamically WITH STRUGGLE MODULES
         theory_name = detected_type
+        
+        # Map detected type to theory ID for module lookup
+        type_mapping = {
+            "True/False/Not Given": "true-false-not-given",
+            "Yes/No/Not Given": "yes-no-not-given",
+            "Matching Headings": "matching-headings",
+            "Multiple Choice": "multiple-choice",
+            "Gap Fill": "gap-fill",
+            "Short Answer": "short-answer",
+            "Matching Information": "matching-information"
+        }
+        
+        theory_id = type_mapping.get(detected_type, detected_type.lower().replace(" ", "-"))
+        
+        # Find theory content in theory_data to get struggleModules
+        theory_content = None
+        if hasattr(self, 'theory_data'):
+            theory_content = next((qt for qt in self.theory_data.get("questionTypes", []) 
+                                  if qt.get("id") == theory_id or qt.get("name", "").lower() == detected_type.lower()), None)
+        
+        # Generate enhanced theory with struggle modules if available
+        if theory_content and theory_content.get('struggleModules'):
+            theory_to_inject = self._enhance_theory_with_struggle_modules(theory_content, theory_id)
+        else:
+            # Fall back to basic theory if no modules defined
+            theory_to_inject = self._get_dynamic_theory(detected_type)
+        
+        # Store explanation context for targeted practice generation
+        if session_id in self.active_sessions:
+            memory = self.active_sessions[session_id]
+            memory.recent_explanation_topic = theory_id
+            memory.recent_explanation_timestamp = datetime.now()
+            
+            # Extract struggle module IDs if available
+            if theory_content and theory_content.get('struggleModules'):
+                memory.recent_struggle_modules = theory_content['struggleModules']
+            else:
+                memory.recent_struggle_modules = []
         
         # Inject the appropriate theory
         if theory_to_inject:
@@ -1459,12 +1624,45 @@ The student is currently working on THIS specific practice passage:
             "question_type_theory": "For a statement to be 'TRUE', it must be directly confirmed by the passage. For it to be 'FALSE', it must be directly contradicted."
         }
 
-    async def generate_micro_battle(self, level: str, topic: Optional[str], question_type: str, chat_history: str, session_id: str) -> MicroBattle:
+    async def generate_micro_battle(
+        self, 
+        level: str, 
+        topic: Optional[str], 
+        question_type: str, 
+        chat_history: str, 
+        session_id: str,
+        use_targeted: bool = False,
+        struggle_focus: str = "",
+        module_details: str = ""
+    ) -> MicroBattle:
         """Generate a micro-battle practice session based on level, topic, and question type."""
         
-        # Select the appropriate prompt based on question_type
-        # Default to "mixed" if type is unknown or not provided
-        selected_prompt = self.micro_battle_prompts.get(question_type, self.micro_battle_prompts["mixed"])
+        # Select the appropriate prompt based on question_type and targeted practice
+        if use_targeted:
+            # Map theory IDs to practice types for targeted prompts
+            type_mapping = {
+                'true-false-not-given': 'tfng',
+                'yes-no-not-given': 'tfng',
+                'matching-headings': 'matching_headings',
+                'multiple-choice': 'multiple_choice',
+                'gap-fill': 'short_answer',
+                'sentence-completion': 'short_answer',
+                'short-answer': 'short_answer'
+            }
+            
+            practice_type = type_mapping.get(question_type, 'mixed')
+            targeted_prompt_key = f"{practice_type}_targeted"
+            
+            # Use targeted prompt if available, fall back to standard
+            if targeted_prompt_key in self.micro_battle_prompts and self.micro_battle_prompts[targeted_prompt_key]:
+                selected_prompt = self.micro_battle_prompts[targeted_prompt_key]
+                logger.info(f"[TARGETED_PRACTICE] Using targeted prompt: {targeted_prompt_key}")
+            else:
+                selected_prompt = self.micro_battle_prompts.get(practice_type, self.micro_battle_prompts["mixed"])
+                logger.info(f"[TARGETED_PRACTICE] Targeted prompt not found, using standard: {practice_type}")
+        else:
+            # Standard prompt selection
+            selected_prompt = self.micro_battle_prompts.get(question_type, self.micro_battle_prompts["mixed"])
         
         micro_battle_chain = (
             ChatPromptTemplate.from_template(selected_prompt)
@@ -1475,13 +1673,18 @@ The student is currently working on THIS specific practice passage:
         result = await micro_battle_chain.ainvoke({
             "level": level,
             "topic": topic or "",
-            "chat_history": chat_history
+            "chat_history": chat_history,
+            "struggle_focus": struggle_focus,
+            "module_details": module_details
         })
         
         # Convert dict to MicroBattle if needed
         battle = result
         if isinstance(result, dict):
             battle = MicroBattle(**result)
+        
+        # VALIDATION: Check for contradictions between correct_answer and rationale
+        self._validate_battle_consistency(battle)
             
         # Store in session memory
         if session_id not in self.active_sessions:
@@ -1520,6 +1723,43 @@ The student is currently working on THIS specific practice passage:
         question_type = context.get('question_type', 'true-false-not-given')
         context['theory_context'] = self._get_dynamic_theory(question_type)
         
+        # DETECT AND INJECT STRUGGLE MODULE for wrong answers
+        student_answer = context.get('student_answer', '')
+        correct_answer = context.get('correct_answer', '')
+        user_message = context.get('user_message', '')
+        
+        detected_module_id = self._detect_struggle_module(
+            question_type,
+            student_answer,
+            correct_answer,
+            user_message
+        )
+        
+        if detected_module_id:
+            module_content = self._get_module_content(detected_module_id)
+            if module_content:
+                # Inject module guidance into the feedback context
+                module_guidance = f"""
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 STRUGGLE-AWARE MODULE (AUTO-INJECTED): Module {detected_module_id}
+
+This student made a common mistake pattern. Use the guidance below to enhance your feedback:
+
+**{module_content.get('moduleName', '')}**
+
+{module_content.get('content', {}).get('explanation', '')}
+
+**Example Pattern:**
+Passage: "{module_content.get('content', {}).get('visualExample', {}).get('passage', '')}"
+Statement: "{module_content.get('content', {}).get('visualExample', {}).get('statement', '')}"
+Analysis: {module_content.get('content', {}).get('visualExample', {}).get('analysis', '')}
+
+**Apply this pattern to explain the student's mistake.**
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+"""
+                context['theory_context'] = context['theory_context'] + module_guidance
+        
         result = await deeper_feedback_chain.ainvoke(context)
         
         # Convert dict to DeeperFeedbackResponse if needed
@@ -1546,6 +1786,47 @@ The student is currently working on THIS specific practice passage:
         except Exception as e:
             logger.error(f"[THEORY] Error loading theory data: {e}")
             self.theory_data = {"questionTypes": []}
+        
+        # Load struggle modules
+        self._load_struggle_modules()
+
+    def _load_struggle_modules(self):
+        """Load all struggle module JSON files."""
+        try:
+            current_file = Path(__file__).resolve()
+            data_dir = current_file.parent.parent.parent / "backend" / "data"
+            
+            module_files = [
+                'tfng-struggle-modules.json',
+                'matching-headings-modules.json',
+                'matching-features-modules.json',
+                'mcq-modules.json',
+                'completion-modules.json',
+                'timing-modules.json'
+            ]
+            
+            self.struggle_modules = {}
+            
+            for file_name in module_files:
+                module_path = data_dir / file_name
+                if module_path.exists():
+                    try:
+                        with open(module_path, 'r', encoding='utf-8') as f:
+                            module_data = json.load(f)
+                            category = module_data.get('category', '')
+                            if category:
+                                self.struggle_modules[category] = module_data
+                                logger.info(f"[MODULES] Loaded {file_name} for category '{category}'")
+                    except Exception as e:
+                        logger.error(f"[MODULES] Error loading {file_name}: {e}")
+                else:
+                    logger.warning(f"[MODULES] Module file not found: {module_path}")
+                    
+            logger.info(f"[MODULES] Successfully loaded {len(self.struggle_modules)} module categories")
+        except Exception as e:
+            logger.error(f"[MODULES] Error loading struggle modules: {e}")
+            self.struggle_modules = {}
+
 
     def _get_dynamic_theory(self, question_type: str) -> str:
         """
@@ -1787,3 +2068,816 @@ The student is currently working on THIS specific practice passage:
                                 guidance_parts.append(f"   - {action}")
 
         return "\n".join(guidance_parts)
+
+    def _get_module_content(self, module_id: str) -> dict:
+        """
+        Get a specific struggle module by its ID (A, B, C, etc.).
+        Returns the module dict or None if not found.
+        """
+        if not hasattr(self, 'struggle_modules') or not self.struggle_modules:
+            logger.warning(f"[MODULES] Struggle modules not loaded")
+            return None
+        
+        # Search through all categories
+        for category, module_collection in self.struggle_modules.items():
+            modules = module_collection.get('modules', [])
+            for module in modules:
+                if module.get('moduleId') == module_id:
+                    return module
+        
+        logger.warning(f"[MODULES] Module {module_id} not found")
+        return None
+
+    def _format_struggle_focus_for_practice(
+        self,
+        module_ids: List[str]
+    ) -> tuple[str, str]:
+        """
+        Format struggle modules into practice generation instructions.
+        Returns: (struggle_focus_summary, module_details)
+        """
+        if not module_ids:
+            return ("", "")
+        
+        focus_lines = []
+        detail_lines = []
+        
+        for module_id in module_ids:
+            module = self._get_module_content(module_id)
+            if module:
+                # Summary for focus
+                focus_lines.append(f"- **Module {module_id}: {module['moduleName']}**")
+                
+                # Detailed instructions with examples
+                detail_lines.append(f"**Module {module_id}: {module['moduleName']}**")
+                detail_lines.append(module['content']['explanation'])
+                detail_lines.append("\nExample Pattern:")
+                detail_lines.append(f"Passage: {module['content']['visualExample']['passage']}")
+                detail_lines.append(f"Statement: {module['content']['visualExample']['statement']}")
+                detail_lines.append(f"Analysis: {module['content']['visualExample']['analysis']}")
+                detail_lines.append("")
+        
+        struggle_focus = "\n".join(focus_lines)
+        module_details = "\n\n".join(detail_lines)
+        
+        return (struggle_focus, module_details)
+
+    def _enhance_theory_with_struggle_modules(self, theory_content: dict, question_type: str) -> str:
+        """
+        When ALEX explains a question type, automatically inject relevant struggle modules.
+        """
+        # Get base theory formatting
+        base_theory = self._get_dynamic_theory(question_type)
+        
+        # Get struggle modules for this question type
+        struggle_module_ids = theory_content.get('struggleModules', [])
+        
+        if not struggle_module_ids:
+            return base_theory
+        
+        # Load module content
+        modules_content = []
+        for module_id in struggle_module_ids:
+            module = self._get_module_content(module_id)
+            if module:
+                # Format module in calm style
+                module_text = f"""
+
+**Key difficulty {module_id}: {module.get('moduleName', '')}**
+
+{module.get('content', {}).get('explanation', '')}
+
+> 🎬 **SEE IT IN ACTION**
+>
+> Passage Excerpt: "*{module.get('content', {}).get('visualExample', {}).get('passage', '')}*"
+>
+> Statement: "`{module.get('content', {}).get('visualExample', {}).get('statement', '')}`"
+>
+> **THE SOLUTION:**
+> {module.get('content', {}).get('visualExample', {}).get('analysis', '')}
+
+**Self-check questions:**
+"""
+                checkpoint_questions = module.get('content', {}).get('checkpointQuestions', [])
+                for question in checkpoint_questions:
+                    module_text += f"\n- {question}"
+                
+                modules_content.append(module_text)
+        
+        if modules_content:
+            # Inject after main theory
+            enhanced_theory = base_theory + "\n\n" + "━" * 50 + "\n\n## Common difficulties\n\n"
+            enhanced_theory += "\n\n".join(modules_content)
+            return enhanced_theory
+        
+        return base_theory
+
+    def _detect_struggle_module(
+        self,
+        question_type: str,
+        student_answer: str,
+        correct_answer: str,
+        user_message: str = ""
+    ) -> str:
+        """
+        Detect which struggle module to inject based on question type and mistake pattern.
+        Returns moduleId (e.g., "A", "B", "K") or None.
+        """
+        # Map question types to module categories
+        type_to_category = {
+            'true-false-not-given': 'tfng',
+            'yes-no-not-given': 'tfng',
+            'matching-headings': 'headings',
+            'matching-features': 'features',
+            'matching-information': 'features',
+            'multiple-choice': 'mcq',
+            'gap-fill': 'completion',
+            'sentence-completion': 'completion',
+            'summary-completion': 'completion',
+            'table-completion': 'completion',
+            'flow-chart-completion': 'completion',
+            'short-answer': 'completion'
+        }
+        
+        category = type_to_category.get(question_type)
+        if not category:
+            return None
+        
+        # T/F/NG specific logic
+        if category == 'tfng':
+            if correct_answer and 'NOT GIVEN' in correct_answer.upper():
+                if student_answer and 'FALSE' in student_answer.upper():
+                    return 'A'  # 3-way logic confusion
+                elif 'specific' in user_message.lower() or 'detail' in user_message.lower():
+                    return 'B'  # Specificity mismatch
+            elif 'keyword' in user_message.lower():
+                return 'D'  # Keyword ≠ proof
+            # Default to Module A for T/F/NG confusion
+            return 'A'
+        
+        # Matching headings logic
+        elif category == 'headings':
+            if 'detail' in user_message.lower() or 'example' in user_message.lower():
+                return 'G'  # Heading trap library
+            elif 'main idea' in user_message.lower():
+                return 'F'  # Write your own heading
+            return 'E'  # Topic sentence hunting (default)
+        
+        # MCQ logic
+        elif category == 'mcq':
+            if 'distractor' in user_message.lower() or 'seemed right' in user_message.lower():
+                return 'K'  # Distractor anatomy
+            return 'K'  # Default to distractor anatomy
+        
+        # Completion logic
+        elif category == 'completion':
+            if 'word limit' in user_message.lower() or 'too many words' in user_message.lower():
+                return 'M'  # Word-limit compliance
+            elif 'order' in user_message.lower():
+                return 'N'  # Order-warning system
+            return 'M'  # Default to word-limit compliance
+        
+        # Features logic
+        elif category == 'features':
+            if 'who said' in user_message.lower() or 'researcher' in user_message.lower():
+                return 'I'  # Name-tracking map
+            elif 'instruction' in user_message.lower() or 'more than once' in user_message.lower():
+                return 'J'  # Instruction parser
+            return 'H'  # Default to paragraph fingerprinting
+        
+        return None
+
+    def _identify_mistake_pattern(
+        self,
+        question_type: str,
+        student_answer: str,
+        correct_answer: str,
+        question_data: dict
+    ) -> tuple:
+        """
+        Identify the specific mistake pattern and related struggle module.
+        Returns: (mistake_pattern_name, module_id)
+        """
+        # Normalize answers
+        student_ans_upper = student_answer.upper() if student_answer else ""
+        correct_ans_upper = correct_answer.upper() if correct_answer else ""
+        question_text = question_data.get('question_text', '').lower() if question_data else ""
+        
+        # T/F/NG specific patterns
+        if question_type in ['true-false-not-given', 'yes-no-not-given']:
+            if 'NOT GIVEN' in correct_ans_upper:
+                if 'FALSE' in student_ans_upper or 'NO' in student_ans_upper:
+                    return ("not_given_false_confusion", "A")
+                elif 'TRUE' in student_ans_upper or 'YES' in student_ans_upper:
+                    return ("not_given_true_confusion", "A")
+            elif 'FALSE' in correct_ans_upper or 'NO' in correct_ans_upper:
+                # Check for qualifier issues
+                if any(word in question_text for word in ['all', 'always', 'never', 'every', 'none']):
+                    return ("qualifier_trap", "C")
+                # Check for specificity
+                if any(word in question_text for word in ['twice', 'three times', 'exactly', 'precisely']):
+                    return ("specificity_mismatch", "B")
+            elif 'TRUE' in correct_ans_upper or 'YES' in correct_ans_upper:
+                # Correct answer is TRUE but student got it wrong
+                if 'FALSE' in student_ans_upper or 'NO' in student_ans_upper:
+                    # Might be keyword matching issue
+                    return ("keyword_mismatch", "D")
+                elif 'NOT GIVEN' in student_ans_upper:
+                    return ("overly_cautious", "A")
+            
+            # Student got it correct - identify what they did well
+            if student_ans_upper in correct_ans_upper or correct_ans_upper in student_ans_upper:
+                if 'NOT GIVEN' in correct_ans_upper:
+                    return ("correct_not_given", "A")
+                elif 'FALSE' in correct_ans_upper or 'NO' in correct_ans_upper:
+                    return ("correct_false", "C")
+                elif 'TRUE' in correct_ans_upper or 'YES' in correct_ans_upper:
+                    return ("correct_true", "D")
+        
+        # Matching headings patterns
+        elif question_type == 'matching-headings':
+            if student_answer != correct_answer:
+                # Check if it's a detail vs main idea issue
+                return ("detail_vs_main_idea", "E")
+            else:
+                return ("correct_heading", "E")
+        
+        # Matching information/features patterns
+        elif question_type in ['matching-features', 'matching-information']:
+            if student_answer != correct_answer:
+                return ("features_mismatch", "H")
+            else:
+                return ("correct_features", "H")
+        
+        # MCQ patterns
+        elif question_type == 'multiple-choice':
+            if student_answer != correct_answer:
+                return ("distractor_confusion", "K")
+            else:
+                return ("correct_mcq", "K")
+        
+        # Completion patterns
+        elif question_type in ['gap-fill', 'sentence-completion', 'short-answer', 'summary-completion']:
+            if student_answer != correct_answer:
+                # Check for word limit or grammar issues
+                if question_text and ('no more than' in question_text or 'one word' in question_text):
+                    return ("word_limit_violation", "M")
+                return ("completion_error", "O")
+            else:
+                return ("correct_completion", "O")
+        
+        return ("general_mistake", None)
+
+    def _get_theory_insight_for_correct(
+        self,
+        question_type: str,
+        correct_answer: str,
+        question_data: dict,
+        module_id: str
+    ) -> str:
+        """Generate conversational theory insight for correct answers."""
+        
+        if question_type in ['true-false-not-given', 'yes-no-not-given']:
+            if 'NOT GIVEN' in correct_answer.upper():
+                return (
+                    "You correctly saw that the passage doesn't provide this information. "
+                    "NOT GIVEN means you can't find evidence to confirm or contradict the statement."
+                )
+            elif 'FALSE' in correct_answer.upper() or 'NO' in correct_answer.upper():
+                return (
+                    "Good. You found the contradiction in the passage. "
+                    "The key is always locating the exact words that clash with the statement."
+                )
+            elif 'TRUE' in correct_answer.upper() or 'YES' in correct_answer.upper():
+                return (
+                    "Good. You matched the meaning even though the words were different. "
+                    "That shows you're reading for meaning, not just matching keywords."
+                )
+        
+        elif question_type == 'matching-headings':
+            return (
+                "Good. You focused on the main idea instead of getting pulled toward details. "
+                "That's exactly what heading questions are testing."
+            )
+        
+        elif question_type in ['matching-features', 'matching-information']:
+            return (
+                "Good. You matched the statement to the correct person or section. "
+                "You looked for the unique idea in the passage instead of relying only on shared keywords."
+            )
+        
+        elif question_type == 'multiple-choice':
+            return (
+                "Good. You avoided the distractors and focused on what the passage actually says, "
+                "not just what sounded familiar."
+            )
+        
+        elif question_type in ['gap-fill', 'sentence-completion', 'short-answer']:
+            return (
+                "Good. You chose words that fit the gap and match the passage. "
+                "That's the discipline completion questions require."
+            )
+        
+        return "Nice work. Your answer lines up with what the passage says."
+
+    def _get_theory_explanation_for_mistake(
+        self,
+        mistake_pattern: str,
+        module_id: str,
+        question_data: dict,
+        correct_answer: str
+    ) -> str:
+        """Generate educational explanation connecting to theory."""
+        
+        question_text = question_data.get('question_text', '') if question_data else ""
+        
+        if mistake_pattern == "not_given_false_confusion":
+            return f"""You chose FALSE, but the answer is NOT GIVEN. Here's the distinction:
+        
+- **FALSE** needs a clear contradiction in the passage
+- **NOT GIVEN** means the information simply isn't there
+
+In this case, the passage doesn't address this claim at all. Remember: if you can't find evidence to confirm OR contradict, it's NOT GIVEN."""
+        
+        elif mistake_pattern == "not_given_true_confusion":
+            return f"""You chose TRUE, but the answer is NOT GIVEN. This type is easy to over-confidently mark TRUE.
+
+- **TRUE** needs clear confirmation in the passage
+- **NOT GIVEN** means you can't be certain from what's written
+
+The passage doesn't provide enough information to confirm this statement. When in doubt, ask: "Can I quote evidence for this?" """
+        
+        elif mistake_pattern == "qualifier_trap":
+            return f"""This is a qualifier trap. The statement uses an absolute word (like 'all' or 'always'), but the passage uses a qualifier (like 'some' or 'often'). 
+
+These small words completely change the meaning:
+- Passage: 'some students' (qualified)
+- Statement: 'all students' (absolute)
+
+This makes it FALSE, not TRUE. Watch for these qualifier shifts; they often flip the answer."""
+        
+        elif mistake_pattern == "specificity_mismatch":
+            return f"""This is a specificity trap. The statement adds extra details not in the passage.
+
+For example:
+- Passage: "daily treatment" (general)
+- Statement: "twice-daily treatment" (specific)
+
+When the statement adds details the passage doesn't mention, it's usually NOT GIVEN, not FALSE. The passage doesn't contradict it - it just doesn't specify."""
+        
+        elif mistake_pattern == "keyword_mismatch":
+            return f"""Be careful with keyword matching. Just because you see similar words doesn't mean the meaning matches.
+
+The correct answer is {correct_answer}. Look at what the passage actually SAYS, not just which words appear. Sometimes the same words are used with different meanings."""
+        
+        elif mistake_pattern == "features_mismatch":
+            return f"""This matching question is about linking each statement to the right source (person, section, or paragraph).
+
+The correct match is **{correct_answer}**. Focus on the unique idea or detail that belongs only to that source, not just shared keywords. Similar names or repeated topics are common traps here."""
+        
+        elif mistake_pattern == "detail_vs_main_idea":
+            return f"""This heading question tested whether you could find the MAIN IDEA vs getting distracted by details.
+
+The correct answer is **{correct_answer}**. This heading captures what the WHOLE paragraph is about, not just one example or detail mentioned in it."""
+        
+        elif mistake_pattern == "distractor_confusion":
+            return f"""You picked a distractor - a wrong answer designed to look right. The correct answer is **{correct_answer}**.
+
+Distractors often:
+- Use words from the passage but change the meaning
+- Get half the information right but add something wrong
+- Use extreme language (always/never) when the passage is qualified
+
+Read the question stem first, find the answer location, THEN look at options."""
+        
+        elif mistake_pattern == "word_limit_violation":
+            return f"""Watch the word limit. The correct answer is **{correct_answer}**.
+
+Remember:
+- Hyphenated words = 1 word
+- Numbers count as words
+- Articles (a, an, the) count
+- Exceeding the limit = automatic wrong, even if meaning is correct"""
+        
+        elif mistake_pattern == "completion_error":
+            return f"""The correct answer is **{correct_answer}**.
+
+For completion tasks, make sure:
+1. Your answer fits grammatically in the gap
+2. You use EXACT words from the passage (no paraphrasing)
+3. You respect the word limit"""
+        
+        return f"The correct answer is **{correct_answer}**. Let me explain why this is the right choice based on what the passage tells us."
+
+    def _analyze_performance(
+        self,
+        answer_history: List[Dict],
+        session_id: str
+    ) -> Dict[str, Any]:
+        """
+        Analyze student performance to identify patterns.
+        Returns summary with weak/strong areas.
+        """
+        if not answer_history:
+            return {}
+        
+        total = len(answer_history)
+        correct = sum(1 for a in answer_history if a.get('is_correct', False))
+        
+        # Group by mistake patterns
+        mistake_counts = {}
+        for answer in answer_history:
+            if not answer.get('is_correct', False):
+                pattern = answer.get('mistake_pattern', 'general_mistake')
+                mistake_counts[pattern] = mistake_counts.get(pattern, 0) + 1
+        
+        # Identify weak areas (2+ mistakes of same type)
+        weak_patterns = [p for p, count in mistake_counts.items() if count >= 2]
+        
+        # Identify strong areas (correct answers on challenging patterns)
+        strong_patterns = []
+        for answer in answer_history:
+            if answer.get('is_correct', False) and answer.get('module_id'):
+                pattern = answer.get('mistake_pattern', '')
+                if pattern and pattern.startswith('correct_'):
+                    strong_patterns.append(pattern)
+        
+        return {
+            "accuracy": (correct / total) * 100 if total > 0 else 0,
+            "total": total,
+            "correct": correct,
+            "incorrect": total - correct,
+            "weak_patterns": weak_patterns,
+            "strong_patterns": list(set(strong_patterns)),
+            "mistake_counts": mistake_counts
+        }
+
+    def _pattern_to_friendly_name(self, pattern: str) -> str:
+        """Convert technical pattern names to friendly descriptions."""
+        mapping = {
+            "not_given_false_confusion": "Distinguishing NOT GIVEN from FALSE",
+            "not_given_true_confusion": "Distinguishing NOT GIVEN from TRUE",
+            "qualifier_trap": "Spotting qualifier differences (some vs all)",
+            "specificity_mismatch": "Recognizing specificity mismatches",
+            "keyword_mismatch": "Avoiding keyword matching traps",
+            "detail_vs_main_idea": "Finding main ideas vs details",
+            "distractor_confusion": "Avoiding distractor traps",
+            "word_limit_violation": "Following word limits strictly",
+            "completion_error": "Grammar and exact word matching",
+            "features_mismatch": "Matching statements to the right person/section",
+            "correct_not_given": "Correctly identifying NOT GIVEN",
+            "correct_false": "Spotting contradictions (FALSE)",
+            "correct_true": "Understanding paraphrased information (TRUE)",
+            "correct_heading": "Identifying main ideas",
+            "correct_mcq": "Selecting correct MCQ options",
+            "correct_completion": "Accurate completion answers",
+            "correct_features": "Matching information to the right source"
+        }
+        return mapping.get(pattern, pattern.replace('_', ' ').title())
+
+    def _get_improvement_advice(self, pattern: str, question_type: str) -> str:
+        """Provide specific advice for improvement."""
+        
+        advice_map = {
+            "not_given_false_confusion": "Remember: FALSE needs a clear contradiction. If you can't find one, it's likely NOT GIVEN. Before choosing FALSE, ask yourself: 'Where exactly does the passage contradict this?'",
+            "not_given_true_confusion": "Remember: TRUE needs clear confirmation. NOT GIVEN means you can't be certain. Before choosing TRUE, ask: 'Can I quote specific evidence for this claim?'",
+            "qualifier_trap": "Watch out for small words: 'some' vs 'all', 'often' vs 'always'. Underline qualifiers in both the passage and statement.",
+            "specificity_mismatch": "When the statement adds extra details not in the passage (like 'twice daily' when the passage just says 'daily'), it's usually NOT GIVEN, not FALSE.",
+            "keyword_mismatch": "Don't just match keywords. Read for meaning. The same words can be used in different ways. Focus on what the passage actually says.",
+            "detail_vs_main_idea": "For heading questions, read the first and last sentences carefully. Ask: 'What is this whole paragraph about?' Details are supporting evidence, not the main point.",
+            "distractor_confusion": "Read the question first, not the options. Find the answer in the passage, then compare it with the options. This reduces the pull of distractors.",
+            "word_limit_violation": "Count words carefully. Hyphenated words count as one word and numbers count as words. Going over the limit makes the answer wrong, even if the meaning is right.",
+            "completion_error": "For completion: (1) Check grammar fit, (2) use exact passage words, and (3) respect the word limit. All three must be right.",
+            "features_mismatch": "For matching information, look for a unique detail or opinion that belongs only to one person or section. Shared keywords are not enough on their own."
+        }
+        
+        return advice_map.get(pattern, "Practice this pattern more to build confidence. Review the theory for this question type and apply one step at a time.")
+
+    def _pattern_to_module_id(self, pattern: str) -> str:
+        """Map mistake pattern to struggle module ID."""
+        mapping = {
+            "not_given_false_confusion": "A",
+            "not_given_true_confusion": "A",
+            "qualifier_trap": "C",
+            "specificity_mismatch": "B",
+            "keyword_mismatch": "D",
+            "detail_vs_main_idea": "E",
+            "distractor_confusion": "K",
+            "word_limit_violation": "M",
+            "completion_error": "O"
+        }
+        return mapping.get(pattern, "A")
+
+    def _validate_battle_consistency(self, battle: MicroBattle) -> None:
+        """
+        Validate that rationale explanations are consistent with correct answers.
+        Routes to specific validators based on question type.
+        """
+        logger.info(f"[VALIDATION] Validating {len(battle.questions)} questions")
+        
+        for q in battle.questions:
+            logger.info(f"[VALIDATION] Q{q.id} ({q.format}): {q.correct_answer}")
+            
+            if q.format == "true-false-not-given":
+                self._validate_tfng_question(q, battle.passage)
+            elif q.format == "multiple-choice":
+                self._validate_mcq_question(q, battle.passage)
+            elif q.format == "matching-headings":
+                self._validate_heading_question(q, battle.passage)
+            elif q.format in ["gap-fill", "sentence-completion", "summary-completion", "table-completion", "note-completion"]:
+                self._validate_completion_question(q, battle.passage)
+            elif q.format == "short-answer":
+                self._validate_short_answer_question(q, battle.passage)
+        
+        logger.info(f"[VALIDATION] ✅ All questions validated")
+
+    def _validate_tfng_question(self, q: MicroBattleQuestion, passage: List[str]) -> None:
+        """
+        Validate True/False/Not Given questions.
+        Checks for contradictions between correct_answer and rationale.
+        """
+        correct_ans = q.correct_answer.upper()
+        rationale = q.rationale.lower()
+        
+        # Check for contradictions
+        has_contradiction = False
+        contradiction_type = ""
+        
+        if "TRUE" in correct_ans:
+            # If answer is TRUE, rationale should say "agrees/confirms/supports"
+            # and should NOT say "does not" or "doesn't"
+            if any(phrase in rationale for phrase in ["does not", "doesn't", "do not", "don't", "are not", "is not", "isn't"]):
+                # Check if it's actually explaining NOT GIVEN or FALSE logic
+                if "not given" not in rationale and "passage doesn't" not in rationale:
+                    has_contradiction = True
+                    contradiction_type = "TRUE answer with negative rationale"
+        
+        elif "FALSE" in correct_ans:
+            # If answer is FALSE, rationale should say "contradicts" or show opposite
+            # It should NOT say "confirms" or "agrees"
+            if any(phrase in rationale for phrase in ["confirms", "agrees", "supports", "means the statement is true"]):
+                has_contradiction = True
+                contradiction_type = "FALSE answer with confirming rationale"
+        
+        elif "NOT GIVEN" in correct_ans:
+            # If answer is NOT GIVEN, rationale should say "doesn't mention/address/provide"
+            # It should NOT have clear contradiction or confirmation language
+            if "contradicts" in rationale or "opposite" in rationale:
+                has_contradiction = True
+                contradiction_type = "NOT GIVEN answer with contradiction rationale"
+            elif "confirms" in rationale or "means the statement is true" in rationale:
+                has_contradiction = True
+                contradiction_type = "NOT GIVEN answer with confirmation rationale"
+        
+        if has_contradiction:
+            logger.error(f"[VALIDATION] ❌ Contradiction detected in T/F/NG Q{q.id}")
+            logger.error(f"[VALIDATION] Correct Answer: {correct_ans}")
+            logger.error(f"[VALIDATION] Rationale: {q.rationale}")
+            logger.error(f"[VALIDATION] Type: {contradiction_type}")
+            
+            # Auto-fix the rationale
+            q.rationale = self._generate_consistent_rationale(
+                q.question_text,
+                correct_ans,
+                "\n\n".join(passage)
+            )
+            logger.warning(f"[VALIDATION] ✅ Fixed rationale: {q.rationale}")
+
+    def _validate_mcq_question(self, q: MicroBattleQuestion, passage: List[str]) -> None:
+        """
+        Validate Multiple Choice questions.
+        Checks:
+        - Correct answer option exists in options list
+        - Rationale explains why correct answer is right
+        - Rationale doesn't contradict the correct answer
+        """
+        passage_text = " ".join(passage).lower()
+        correct_ans = q.correct_answer.strip()
+        rationale = q.rationale.lower()
+        
+        # Check 1: Correct answer exists in options
+        if q.options and correct_ans not in q.options:
+            logger.error(f"[VALIDATION] ❌ MCQ Q{q.id}: Correct answer '{correct_ans}' not in options")
+            logger.error(f"[VALIDATION] Options: {q.options}")
+            # Fix: Set to first option as fallback
+            q.correct_answer = q.options[0]
+            q.rationale = f"Option '{q.correct_answer}' is correct based on the passage."
+            logger.warning(f"[VALIDATION] ✅ Fixed: Set correct answer to '{q.correct_answer}'")
+        
+        # Check 2: Rationale should reference the correct answer positively
+        # Bad: rationale says "Option A is wrong" when correct_answer is "A"
+        wrong_indicators = ["is wrong", "is incorrect", "does not match", "doesn't match", "is false"]
+        if any(indicator in rationale for indicator in wrong_indicators):
+            logger.error(f"[VALIDATION] ❌ MCQ Q{q.id}: Rationale has negative language")
+            logger.error(f"[VALIDATION] Rationale: {q.rationale}")
+            q.rationale = self._generate_mcq_rationale(q, passage_text)
+            logger.warning(f"[VALIDATION] ✅ Fixed rationale: {q.rationale}")
+        
+        # Check 3: Rationale should support the correct answer
+        # If correct_answer is mentioned in rationale, it should be positive
+        if correct_ans.lower() in rationale:
+            # Check if there's negative context around the answer
+            for indicator in wrong_indicators:
+                if correct_ans.lower() in rationale and indicator in rationale:
+                    # Extract context around correct answer
+                    idx = rationale.find(correct_ans.lower())
+                    context = rationale[max(0, idx-30):min(len(rationale), idx+30)]
+                    if any(ind in context for ind in wrong_indicators):
+                        logger.error(f"[VALIDATION] ❌ MCQ Q{q.id}: Negative context around correct answer")
+                        q.rationale = self._generate_mcq_rationale(q, passage_text)
+                        logger.warning(f"[VALIDATION] ✅ Fixed rationale")
+                        break
+
+    def _validate_heading_question(self, q: MicroBattleQuestion, passage: List[str]) -> None:
+        """
+        Validate Matching Headings questions.
+        Checks:
+        - Heading number/letter is valid
+        - Rationale explains the main idea
+        - Paragraph exists for the heading
+        """
+        correct_ans = q.correct_answer.upper()
+        rationale = q.rationale.lower()
+        
+        # Check 1: Rationale should mention "main idea" or "paragraph" or "topic"
+        main_idea_keywords = ["main idea", "paragraph", "topic", "whole paragraph", "overall", "primarily about"]
+        has_main_idea_ref = any(keyword in rationale for keyword in main_idea_keywords)
+        
+        if not has_main_idea_ref:
+            logger.warning(f"[VALIDATION] ⚠️ Heading Q{q.id}: Rationale doesn't explain main idea")
+            logger.warning(f"[VALIDATION] Rationale: {q.rationale}")
+            q.rationale = f"The correct answer is {correct_ans}. This heading captures the main idea of the paragraph, which is primarily about {q.question_text.lower()}."
+            logger.warning(f"[VALIDATION] ✅ Enhanced rationale with main idea explanation")
+        
+        # Check 2: Warn if rationale focuses on details/keywords rather than main idea
+        detail_indicators = ["mentions", "includes the word", "contains", "uses the term", "keyword"]
+        if any(indicator in rationale for indicator in detail_indicators):
+            logger.warning(f"[VALIDATION] ⚠️ Heading Q{q.id}: Rationale may be focused on details/keywords")
+            logger.info(f"[VALIDATION] Tip: Headings should match main ideas, not just keyword matching")
+
+    def _validate_completion_question(self, q: MicroBattleQuestion, passage: List[str]) -> None:
+        """
+        Validate Gap-fill/Completion questions.
+        Checks:
+        - Answer words exist in passage (exact match)
+        - Answer respects word limit
+        - Grammar fits the gap
+        """
+        passage_text = " ".join(passage).lower()
+        correct_ans = q.correct_answer.strip().lower()
+        
+        # Check 1: Answer exists in passage (exact match required for completion)
+        if correct_ans not in passage_text:
+            logger.error(f"[VALIDATION] ❌ Completion Q{q.id}: Answer '{correct_ans}' not found in passage")
+            logger.error(f"[VALIDATION] This is a CRITICAL error - completion answers must be verbatim from passage")
+            
+            # Try to find similar words (but don't auto-fix as this changes meaning)
+            words_in_answer = correct_ans.split()
+            found_words = [w for w in words_in_answer if w in passage_text]
+            
+            if found_words:
+                logger.info(f"[VALIDATION] Found these words from answer in passage: {found_words}")
+                logger.info(f"[VALIDATION] Missing words: {[w for w in words_in_answer if w not in found_words]}")
+            else:
+                logger.error(f"[VALIDATION] NO words from answer found in passage - complete mismatch")
+        
+        # Check 2: Check word count if mentioned in question
+        question_lower = q.question_text.lower()
+        word_count = len(correct_ans.split())
+        max_words = None
+        
+        if "one word" in question_lower:
+            max_words = 1
+        elif "two words" in question_lower:
+            max_words = 2
+        elif "three words" in question_lower:
+            max_words = 3
+        elif "no more than" in question_lower:
+            # Extract number from "no more than X words"
+            import re
+            match = re.search(r'no more than (\w+) word', question_lower)
+            if match:
+                num_word = match.group(1)
+                word_map = {"one": 1, "two": 2, "three": 3, "four": 4, "1": 1, "2": 2, "3": 3, "4": 4}
+                max_words = word_map.get(num_word)
+        
+        if max_words and word_count > max_words:
+            logger.error(f"[VALIDATION] ❌ Completion Q{q.id}: Answer has {word_count} words, limit is {max_words}")
+            logger.error(f"[VALIDATION] Answer: '{q.correct_answer}'")
+            logger.error(f"[VALIDATION] This violates word limit rules - answer would be marked wrong")
+        
+        # Check 3: Rationale should quote the source sentence
+        if "passage" not in q.rationale.lower() and "text" not in q.rationale.lower():
+            logger.info(f"[VALIDATION] ℹ️ Completion Q{q.id}: Rationale could be improved by quoting passage")
+
+    def _validate_short_answer_question(self, q: MicroBattleQuestion, passage: List[str]) -> None:
+        """
+        Validate Short Answer questions.
+        Checks:
+        - Answer is extractable from passage
+        - Answer fits the question grammatically
+        - Rationale shows where answer is found
+        """
+        passage_text = " ".join(passage).lower()
+        correct_ans = q.correct_answer.strip().lower()
+        rationale = q.rationale.lower()
+        
+        # Check 1: Answer exists in passage
+        if correct_ans not in passage_text:
+            logger.error(f"[VALIDATION] ❌ Short Answer Q{q.id}: Answer '{correct_ans}' not in passage")
+            logger.error(f"[VALIDATION] Short answers must be extractable from passage")
+            
+            # Check if individual words exist
+            words_in_answer = correct_ans.split()
+            found_words = [w for w in words_in_answer if w in passage_text]
+            
+            if found_words:
+                logger.info(f"[VALIDATION] Found partial match: {found_words}")
+            else:
+                logger.error(f"[VALIDATION] NO match found - answer may be fabricated")
+        
+        # Check 2: Rationale should quote passage or indicate location
+        location_indicators = ["passage", "text", "states", "mentions", "found in", "located in"]
+        has_location = any(indicator in rationale for indicator in location_indicators)
+        
+        if not has_location:
+            logger.info(f"[VALIDATION] ℹ️ Short Answer Q{q.id}: Rationale could show where answer is found")
+            q.rationale = f"The answer '{q.correct_answer}' is found in the passage."
+            logger.info(f"[VALIDATION] Enhanced rationale")
+
+    def _generate_mcq_rationale(self, q: MicroBattleQuestion, passage_text: str) -> str:
+        """Generate consistent rationale for Multiple Choice questions."""
+        return f"Option '{q.correct_answer}' is correct because the passage supports this. The other options either contradict the passage or aren't mentioned."
+
+    def _generate_completion_rationale(self, q: MicroBattleQuestion, passage_text: str) -> str:
+        """Generate consistent rationale for Completion questions."""
+        return f"The answer '{q.correct_answer}' is found in the passage and fits grammatically in the gap."
+
+    def _generate_consistent_rationale(
+        self,
+        question_text: str,
+        correct_answer: str,
+        passage: str
+    ) -> str:
+        """Generate a consistent rationale based on the correct answer."""
+        
+        if "TRUE" in correct_answer.upper():
+            return f"The passage confirms this statement. The information in the passage supports that {question_text.lower()}"
+        elif "FALSE" in correct_answer.upper():
+            return f"The passage contradicts this statement. The passage states the opposite of what is claimed in this question."
+        elif "NOT GIVEN" in correct_answer.upper():
+            return f"The passage does not provide information about this. While related topics may be discussed, this specific claim is not addressed."
+        
+        return "Review the passage to determine the answer."
+
+    def _generate_performance_summary(
+        self,
+        analysis: Dict,
+        answer_history: List[Dict],
+        question_type: str
+    ) -> str:
+        """Generate comprehensive performance summary."""
+        
+        accuracy = analysis.get('accuracy', 0)
+        correct = analysis.get('correct', 0)
+        total = analysis.get('total', 0)
+        
+        if total == 0:
+            return ""
+        
+        summary = f"## 📊 Performance Summary\n\n"
+        summary += f"You got **{correct}/{total} correct** ({accuracy:.0f}% accuracy). "
+        
+        if accuracy >= 80:
+            summary += "Excellent work! 🎉\n\n"
+        elif accuracy >= 60:
+            summary += "Good effort! 👍\n\n"
+        else:
+            summary += "Let's work on improving this together! 💪\n\n"
+        
+        # What went well
+        strong_patterns = analysis.get('strong_patterns', [])
+        if strong_patterns:
+            summary += "**🌟 What You're Strong At:**\n"
+            for pattern in strong_patterns:
+                summary += f"- {self._pattern_to_friendly_name(pattern)}\n"
+            summary += "\n"
+        
+        # What needs work
+        weak_patterns = analysis.get('weak_patterns', [])
+        mistake_counts = analysis.get('mistake_counts', {})
+        if weak_patterns:
+            summary += "**📈 Areas to Improve:**\n"
+            for pattern in weak_patterns:
+                count = mistake_counts.get(pattern, 0)
+                summary += f"- {self._pattern_to_friendly_name(pattern)} ({count} mistakes)\n"
+            summary += "\n"
+            
+            # Provide specific advice
+            summary += "**💡 How to Improve:**\n\n"
+            for pattern in weak_patterns:
+                advice = self._get_improvement_advice(pattern, question_type)
+                summary += f"{advice}\n\n"
+        
+        return summary
+

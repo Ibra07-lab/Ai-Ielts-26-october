@@ -4,6 +4,7 @@
       "id": "table-completion",
       "name": "Table Completion",
       "category": "basics",
+      "struggleModules": ["M", "N", "O"],
       "whatIsIt": {
         "description": "You must fill gaps in a table using exact words from the passage. The table organizes information into rows and columns (comparisons, features, processes, etc.).",
         "skillTested": "Scanning scattered information, understanding table structure, and recognizing relationships."
@@ -464,7 +465,7 @@
                       "Column 2 = solution",
                       "Column 3 = support",
                       "Column 4 = challenges",
-                      "Work Row by Row!"
+                      "Work row by row"
                     ]
                   },
                   {
@@ -599,6 +600,7 @@
       "id": "true-false-not-given",
       "name": "True/False/Not Given",
       "category": "factual-information",
+      "struggleModules": ["A", "B", "C", "D"],
       "readingStrategy": "scan",
       "difficulty": 4,
       "timePerQuestion": "60-90 seconds",
@@ -649,12 +651,12 @@
       ],
       "attackPlan": {
         "title": "The 4-Step Attack Plan",
-        "description": "Follow this rigid process for EVERY True/False/Not Given question. Memorize it.",
+        "description": "Follow this process for every True/False/Not Given question.",
         "steps": [
           {
             "step": 1,
             "title": "ANALYZE the Statement",
-            "description": "Underline the KEY CLAIM. Circle qualifiers like 'some,' 'all,' 'most,' 'never,' 'always.' Note numbers, dates, names.",
+            "description": "Underline the key claim. Circle qualifiers like 'some,' 'all,' 'most,' 'never,' 'always.' Note numbers, dates, names.",
             "example": "Statement: 'Most farmers now use organic methods.' → Key claim: MOST farmers, ORGANIC methods."
           },
           {
@@ -666,14 +668,14 @@
           {
             "step": 3,
             "title": "COMPARE Meaning (Not Words)",
-            "description": "Read the passage section carefully. Does it SAY THE SAME THING (TRUE), SAY THE OPPOSITE (FALSE), or NOT MENTION IT (NOT GIVEN)?",
+            "description": "Read the passage section carefully. Does it say the same thing (TRUE), say the opposite (FALSE), or not mention it (NOT GIVEN)?",
             "example": "Passage: 'the majority still rely heavily on chemical pesticides' → OPPOSITE of 'most use organic' → FALSE."
           },
           {
             "step": 4,
             "title": "ELIMINATE Doubt",
             "description": "For TRUE/FALSE: Can you quote the evidence? For NOT GIVEN: Are you 100% sure it's not mentioned anywhere? If unsure between FALSE and NOT GIVEN, it's usually NOT GIVEN.",
-            "proTip": "NOT GIVEN is the most common answer when you're uncertain. The passage will CLEARLY confirm or contradict TRUE/FALSE answers."
+            "proTip": "NOT GIVEN is the most common answer when you're uncertain. The passage will clearly confirm or contradict TRUE/FALSE answers."
           }
         ]
       },
@@ -681,7 +683,7 @@
         {
           "step": 1,
           "title": "Read the Statement Carefully",
-          "description": "Identify the KEY CLAIM being made. Note specific details: names, numbers, dates, qualifiers. Underline critical words."
+          "description": "Identify the key claim being made. Note specific details: names, numbers, dates, qualifiers. Underline critical words."
         },
         {
           "step": 2,
@@ -1558,6 +1560,7 @@
       "id": "matching-headings",
       "name": "Matching Headings",
       "category": "main-ideas",
+      "struggleModules": ["E", "F", "G"],
       "frequency": "High - appears in approximately 60-70% of IELTS Reading tests",
       "recognition": {
         "howToIdentify": [
@@ -1853,6 +1856,7 @@
       "id": "multiple-choice",
       "name": "Multiple Choice",
       "category": "various-skills",
+      "struggleModules": ["K", "L"],
       "frequency": "High - appears in almost every IELTS Reading test",
       "recognition": {
         "howToIdentify": [
@@ -2397,6 +2401,7 @@
       "id": "gap-fill",
       "name": "Sentence Completion / Gap Fill",
       "category": "detail-recognition",
+      "struggleModules": ["M", "N", "O"],
       "frequency": "High",
       "recognition": {
         "howToIdentify": [
@@ -3102,6 +3107,7 @@
       "id": "short-answer",
       "name": "Short Answer Questions",
       "category": "detail-recognition",
+      "struggleModules": ["M", "N", "O"],
       "frequency": "Medium - appears in approximately 30-40% of IELTS Reading tests",
       "detailedTheory": {
         "sections": [
@@ -4177,6 +4183,7 @@
       "id": "matching-information",
       "name": "Matching Information",
       "category": "factual-information",
+      "struggleModules": ["H", "I", "J"],
       "recognition": {
         "howToIdentify": [
           "A list of statements (factual info, examples, reasons)",
@@ -4890,6 +4897,7 @@
       "id": "summary-completion",
       "name": "Summary Completion",
       "category": "detail-recognition",
+      "struggleModules": ["M", "N", "O"],
       "recognition": {
         "howToIdentify": [
           "A paragraph with several gaps (labeled 1, 2, 3...)",
@@ -5614,6 +5622,7 @@
       "id": "flow-chart-completion",
       "name": "Flow-chart Completion",
       "category": "basics",
+      "struggleModules": ["M", "N", "O"],
       "whatIsIt": {
         "description": "Flow-chart Completion questions test your ability to understand how a process unfolds through sequential stages, logical relationships, and cause-effect connections. You must fill gaps in a flow chart using exact words from the passage.",
         "skillTested": "Understanding process comprehension, sequential thinking, cause-effect relationships, logical continuity, precise information extraction, and paraphrase recognition."
@@ -6411,6 +6420,7 @@
       "id": "matching-features",
       "name": "Matching Features",
       "category": "matching",
+      "struggleModules": ["H", "I", "J"],
       "whatIsIt": {
         "description": "Matching Features is an IELTS Reading question type where you must connect statements or claims to specific people, theories, dates, places, or organizations mentioned in the passage. Unlike simple matching tasks, this question type requires you to understand WHO said, believed, discovered, or did WHAT вЂ” not just recognize names.",
         "skillTested": "Understanding attribution (who said what), tracking opinions and claims across multiple paragraphs, paraphrase recognition, scanning for names and entities, distinguishing similar viewpoints, and attention to scope and attribution."
@@ -6552,7 +6562,7 @@
                   {
                     "type": "warning",
                     "title": "Options can be used MORE THAN ONCE",
-                    "content": "The instructions often state: \"You may use any letter more than once.\" This means one person/feature may be the answer to multiple statements. Look for 'NB' in instructions!"
+                    "content": "The instructions often state: \"You may use any letter more than once.\" This means one person/feature may be the answer to multiple statements. Look for 'NB' in instructions."
                   },
                   {
                     "type": "info",

@@ -1,0 +1,98 @@
+{
+  "category": "tfng",
+  "modules": [
+    {
+      "moduleId": "A",
+      "moduleName": "3-Way Logic with Proof Requirements",
+      "targetQuestionTypes": ["true-false-not-given", "yes-no-not-given"],
+      "triggerConditions": {
+        "mistakePatterns": ["not_given_false_confusion", "false_ng_confusion"],
+        "contextKeywords": ["not given", "contradiction", "unsure"]
+      },
+      "content": {
+        "explanation": "**The 3-Way Decision Tree:**\n\n1. **TRUE** = Passage clearly says the same meaning (you can quote proof)\n2. **FALSE** = Passage clearly says the opposite meaning (you can quote contradiction)\n3. **NOT GIVEN** = Passage doesn't answer that exact claim (no relevant info)\n\n**Critical Rule:** If you can't find a sentence that confirms OR contradicts, it's NOT GIVEN.\n\n**Reddit Pattern:** Students often mark NG as FALSE because \"it sounds wrong\" - but without a contradiction in the text, it's NG.\n\n**The Two-Question Test:**\n- Step 1: Does the passage discuss this topic/make a related claim?\n  - If NO → Answer is NOT GIVEN\n  - If YES → Go to Step 2\n- Step 2: Does the passage AGREE or CONTRADICT?\n  - If AGREES → Answer is TRUE\n  - If CONTRADICTS → Answer is FALSE",
+        "visualExample": {
+          "passage": "The clinic offers daily injections for diabetic patients.",
+          "statement": "Diabetic patients receive injections twice per day at the clinic.",
+          "analysis": "**Analysis:** Passage says *daily injections* (general). Statement adds *twice per day* (specific frequency). The passage does NOT confirm OR deny this frequency. [ 🔍 NOT GIVEN ]\n\n**Why NOT FALSE?** FALSE would require the passage to say something like \"once per day\" or \"injections are weekly\". Since frequency isn't specified, we have missing info = NG.\n\n**The Logic:** The passage discusses injections (topic is mentioned), but it doesn't tell us the exact frequency. We can't quote text that agrees OR contradicts \"twice per day\" → NOT GIVEN."
+        },
+        "checkpointQuestions": [
+          "Can I quote a sentence that confirms this statement?",
+          "Can I quote a sentence that contradicts this statement?",
+          "If neither, is there ANY mention of this topic in the passage?"
+        ]
+      },
+      "officialSource": "IELTS official T/F/NG definition + British Council 'Not Given vs False' guidance"
+    },
+    {
+      "moduleId": "B",
+      "moduleName": "Specificity Mismatch (The #1 NOT GIVEN Trap)",
+      "targetQuestionTypes": ["true-false-not-given", "yes-no-not-given"],
+      "triggerConditions": {
+        "mistakePatterns": ["specificity_confusion", "detail_assumption"],
+        "contextKeywords": ["specific", "detail", "exactly", "precise"]
+      },
+      "content": {
+        "explanation": "**The Specificity Rule:**\n\nWhen the passage says something **general** and the statement adds a **specific detail** that isn't mentioned, the answer is **NOT GIVEN** (not FALSE).\n\n**Common Pattern:**\n- Passage: \"The program improved literacy rates.\"\n- Statement: \"The program improved literacy rates by 15%.\"\n- Answer: NOT GIVEN (the 15% is a specific detail not mentioned)\n\n**Why This Traps Students (Reddit Pattern):**\nStudents think: \"The passage doesn't say 15%, so it must be FALSE!\" But FALSE requires a contradiction. If the passage said \"10%\" or \"no improvement,\" THAT would be FALSE. Missing information = NOT GIVEN.\n\n**The Mismatch Types:**\n1. **Quantity:** \"some\" → \"50%\" (NG)\n2. **Frequency:** \"regular\" → \"twice weekly\" (NG)\n3. **Degree:** \"effective\" → \"highly effective\" (NG)\n4. **Time:** \"recent\" → \"in 2020\" (NG)",
+        "visualExample": {
+          "passage": "The study involved participants from several European countries who completed questionnaires about their sleep habits.",
+          "statement": "The study involved 500 participants from several European countries.",
+          "analysis": "**Analysis:** Passage mentions *participants from several European countries* (general). Statement adds *500* (specific number). The passage does NOT mention any number. [ 🔍 NOT GIVEN ]\n\n**Why NOT FALSE?** For it to be FALSE, the passage would need to say something like \"300 participants\" or \"over 1,000 participants\" - an actual contradiction. Since no number is given, we simply lack that information.\n\n**Key Point:** The passage and statement AGREE on \"participants from several European countries.\" They only differ on the specific number - which makes this NG, not FALSE."
+        },
+        "checkpointQuestions": [
+          "Does the statement add a specific detail (number, date, percentage) not in the passage?",
+          "Does the passage contradict this detail, or just not mention it?",
+          "If just not mentioned → NOT GIVEN. If contradicted → FALSE."
+        ]
+      },
+      "officialSource": "British Council guidance on specificity in T/F/NG + Reddit r/IELTS common confusion threads"
+    },
+    {
+      "moduleId": "C",
+      "moduleName": "Stop-Loss Timing Rule (Don't Get Stuck on NOT GIVEN)",
+      "targetQuestionTypes": ["true-false-not-given", "yes-no-not-given"],
+      "triggerConditions": {
+        "mistakePatterns": ["time_wasting", "overthinking"],
+        "contextKeywords": ["stuck", "long time", "can't decide"]
+      },
+      "content": {
+        "explanation": "**The Time Trap:**\n\nNOT GIVEN questions are the biggest time-wasters in IELTS Reading. Students spend 2-3 minutes searching for information that doesn't exist.\n\n**British Council Warning:** \"Candidates waste too much time deciding between False and Not Given.\"\n\n**The Stop-Loss Rule:**\n\n1. **Locate Phase (30 seconds max):** Scan for keywords and locate the relevant section\n2. **Decision Phase (30 seconds max):** Can you find confirming OR contradicting evidence?\n3. **Stop-Loss (if no evidence after 60 seconds):** Mark NOT GIVEN provisionally and move on\n\n**The Mental Checklist:**\n- Found confirming evidence? → Mark TRUE → Move on\n- Found contradicting evidence? → Mark FALSE → Move on\n- Found NOTHING after 60 seconds? → Mark NOT GIVEN → Move on\n- Can always return if time permits\n\n**Reddit Pattern:** Students report spending 5+ minutes on a single NOT GIVEN, then running out of time for easier questions. Don't fall into this trap!",
+        "visualExample": {
+          "passage": "The ancient city of Petra was carved from rose-red sandstone cliffs by the Nabataeans over 2,000 years ago. The site features elaborate temples and tombs.",
+          "statement": "The construction of Petra required more than 500 workers.",
+          "analysis": "**Time-Based Analysis:**\n\n*After 20 seconds:* I've scanned the passage. Keywords: \"Petra\", \"carved\", \"Nabataeans\". Found the relevant section.\n\n*After 40 seconds:* Does it mention worker numbers? No. Does it contradict 500 workers? No. It simply doesn't discuss workforce size at all.\n\n*Decision at 60 seconds:* [ 🔍 NOT GIVEN ] → Move on.\n\n**Why stop here?** You could re-read the passage 5 times and still not find worker numbers because they're not there. Accept it and move forward."
+        },
+        "checkpointQuestions": [
+          "Have I been searching for more than 60 seconds?",
+          "Am I re-reading the same section hoping information will appear?",
+          "If yes to either → Mark NOT GIVEN provisionally and move to next question"
+        ]
+      },
+      "officialSource": "British Council time management guidance + IELTS official test-taking strategies"
+    },
+    {
+      "moduleId": "D",
+      "moduleName": "Keyword ≠ Proof (Don't Trust Word Matches)",
+      "targetQuestionTypes": ["true-false-not-given", "yes-no-not-given"],
+      "triggerConditions": {
+        "mistakePatterns": ["keyword_fixation", "missing_paraphrase"],
+        "contextKeywords": ["keyword", "same word", "found the word"]
+      },
+      "content": {
+        "explanation": "**The Keyword Trap:**\n\nFinding the same word in the passage does NOT mean TRUE. IELTS tests your understanding of MEANING, not word-matching.\n\n**British Council Warning:** \"Don't rely on keyword matching - IELTS uses extensive paraphrasing.\"\n\n**Two Critical Rules:**\n\n1. **Same word ≠ Same meaning**\n   - Statement might use the keyword in a DIFFERENT context\n   - Must check if the ENTIRE claim matches\n\n2. **Different words = Same meaning**\n   - IELTS loves synonyms and paraphrasing\n   - \"increased\" = \"rose\" = \"went up\" = \"grew\"\n   - Must recognize these equivalents\n\n**Reddit Pattern:** Students say: \"I found the exact word, so I marked TRUE!\" Then they're shocked it's FALSE or NG. The word was there, but the meaning was different.\n\n**Common Paraphrasing Patterns:**\n- Numbers: \"one in four\" = \"25%\" = \"a quarter\"\n- Change: \"declined\" = \"fell\" = \"decreased\" = \"dropped\"\n- Comparison: \"superior to\" = \"better than\" = \"outperforms\"\n- Negation: \"rarely\" ≠ \"never\" (qualified vs absolute)",
+        "visualExample": {
+          "passage": "The company's profits declined sharply in the third quarter due to increased competition from overseas manufacturers.",
+          "statement": "The company experienced profit growth in the third quarter.",
+          "analysis": "**Keyword Analysis:**\n\n**Keywords present:** ✓ company, ✓ profits, ✓ third quarter\n\n**BUT:** Passage says profits *~~declined sharply~~* (went down). Statement says *profit growth* (went up). These are OPPOSITE meanings. [ ❌ FALSE ]\n\n**The Trap:** All the keywords are there! A student scanning quickly might see \"company\", \"profits\", \"third quarter\" and think \"TRUE!\" But the MEANING is opposite.\n\n**Key Lesson:** Don't stop at finding keywords. Read the FULL sentence to understand the meaning. The words \"declined\" vs \"growth\" completely change the answer."
+        },
+        "checkpointQuestions": [
+          "Did I find the keywords? (Good first step)",
+          "Did I read the FULL sentence to understand the meaning? (Critical)",
+          "Does the passage meaning MATCH the statement meaning, even if words differ?"
+        ]
+      },
+      "officialSource": "IELTS official guidance on paraphrasing + British Council 'Beyond Keywords' strategies"
+    }
+  ]
+}
+

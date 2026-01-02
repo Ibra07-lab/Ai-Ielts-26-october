@@ -1,0 +1,52 @@
+{
+  "category": "timing",
+  "modules": [
+    {
+      "moduleId": "P",
+      "moduleName": "Pacing System (Budget Your 60 Minutes)",
+      "targetQuestionTypes": ["all"],
+      "triggerConditions": {
+        "mistakePatterns": ["time_shortage", "passage3_panic"],
+        "contextKeywords": ["running out of time", "didn't finish", "passage 3"]
+      },
+      "content": {
+        "explanation": "**The Time Reality:**\n\nIELTS Academic Reading = 60 minutes, 40 questions, 2150-2750 words. No extra transfer time.\n\n**The #1 Reddit Complaint:** \"Passage 3 kills me - I run out of time and have to guess.\"\n\n**Why Passage 3 Is Hardest:**\n- Deliberately most difficult (Band 7-9 level)\n- Longer and denser text\n- Complex question types\n- You're mentally exhausted by then\n\n**The Pacing Formula:**\n\n**Total: 60 minutes for 3 passages**\n- Passage 1: 17 minutes (easiest)\n- Passage 2: 19 minutes (medium)\n- Passage 3: 21 minutes (hardest)\n- Buffer: 3 minutes (transfer answers, check)\n\n**Per Question Budget:**\n- Easy questions (gap-fill, completion): 45-60 seconds\n- Medium (MCQ, matching): 90 seconds\n- Hard (T/F/NG, headings): 90-120 seconds\n\n**The Stop-Loss Rule (from Module C):**\n- If stuck on ANY question > 2 minutes → Mark provisionally → Move on\n- Return if time permits\n- Never sacrifice 3 easy questions for 1 hard question\n\n**British Council Guidance:** \"Manage your time carefully. Don't spend too long on difficult questions.\"",
+        "visualExample": {
+          "passage": "You're on Passage 2, Question 18 (True/False/Not Given). You've been working on it for 3 minutes and still can't decide between FALSE and NOT GIVEN.",
+          "statement": "Your watch shows:\n- Time elapsed: 38 minutes\n- Questions completed: 17/40\n- Questions remaining: 23\n- Time remaining: 22 minutes\n\n**Math Check:**\n23 questions ÷ 22 minutes = ~57 seconds per question\n\nYou've spent 3 minutes (180 seconds) on Q18 = time for 3 questions!\n\nPassage 3 (the hardest) is still ahead.",
+          "analysis": "**Decision Time:**\n\n**Option 1: Keep working on Q18**\n- Risk: Burn another 2 minutes\n- Cost: Even less time for Passage 3\n- Likely outcome: Still uncertain, then panic\n- [ ❌ Bad strategy ]\n\n**Option 2: Apply Stop-Loss (Module P)**\n- Mark your best guess (NOT GIVEN based on 3-minute analysis)\n- Circle the question number to return if time permits\n- Move to Q19 immediately\n- [ ✅ Good strategy ]\n\n**The Math:**\nIf you save 2 minutes by moving on:\n- Those 2 minutes = 2-3 easier questions in Passage 3\n- Better to have 2-3 extra attempts than perfect confidence on Q18\n\n**Key Point:** Even if Q18 is wrong, getting Q19-Q40 right scores better than perfect Q18 but missing Q38-Q40.\n\n**Reddit Success Pattern:** \"I started using strict time limits per passage. My score jumped because I actually finished all 40 questions instead of leaving 5 blank.\""
+        },
+        "checkpointQuestions": [
+          "Am I checking the time after each passage (not waiting until the end)?",
+          "Have I spent more than 2 minutes on any single question?",
+          "Am I sacrificing multiple easy questions for one hard question?"
+        ]
+      },
+      "officialSource": "IELTS official time management guidance + British Council 'Managing 60 Minutes Effectively'"
+    },
+    {
+      "moduleId": "Q",
+      "moduleName": "Transfer-Time Habit (No Extra Time = Practice Now)",
+      "targetQuestionTypes": ["all"],
+      "triggerConditions": {
+        "mistakePatterns": ["transfer_error", "last_minute_rush"],
+        "contextKeywords": ["transfer", "answer sheet", "copying"]
+      },
+      "content": {
+        "explanation": "**The Critical Difference:**\n\n**Listening:** 10 minutes extra transfer time (after the recording ends)\n**Reading:** NO extra transfer time (includes in the 60 minutes)\n\n**Reddit Trap:** \"I thought I'd have extra time like Listening. I didn't. Lost 5 marks because I ran out of time transferring.\"\n\n**The Two Transfer Strategies:**\n\n**Strategy 1: Transfer After Each Passage (Recommended)**\n- Finish Passage 1 → Spend 1 minute transferring answers → Move to Passage 2\n- Finish Passage 2 → Spend 1 minute transferring → Move to Passage 3\n- Finish Passage 3 → Spend 1 minute transferring → Check if time left\n- Total: 3 minutes spread across test (included in pacing)\n\n**Benefits:**\n- Answers are fresh in mind\n- Less panic at the end\n- If you run out of time, at least 2 passages are transferred\n\n**Strategy 2: Transfer All at End**\n- Risk: Need 3-5 minutes at end\n- Risk: If time runs short, might leave answers blank\n- Only use if you're a fast, confident reader\n\n**Transfer Rules:**\n1. **Spelling must be correct** - \"enviroment\" = wrong\n2. **Grammar must match** - \"childs\" = wrong (should be \"children\")\n3. **Use CAPITAL or lowercase** - both accepted\n4. **Write clearly** - ambiguous handwriting = marked wrong\n\n**IELTS Official:** \"Transfer your answers carefully. Marks will be lost for incorrect spelling or grammar on the answer sheet.\"",
+        "visualExample": {
+          "passage": "You've finished all 40 questions with 2 minutes remaining. Time to transfer from question booklet to answer sheet.",
+          "statement": "Your answers in booklet:\nQ1: \"enviroment\"\nQ2: \"25 %\" (with space)\nQ3: \"Childs\"\nQ4: \"SOLAR PANELS\"\n\nTransferring to answer sheet:",
+          "analysis": "**Transfer Quality Check:**\n\n**Q1: \"enviroment\"**\n- Spelling error: should be \"environment\" (missing 'n')\n- Mark: [ ❌ WRONG ] even if the concept is correct\n- **Lesson:** Double-check spelling when transferring\n\n**Q2: \"25 %\" (with space)**\n- Acceptable variations: \"25%\", \"25 percent\", \"25 per cent\"\n- Space after number is fine\n- Mark: [ ✅ CORRECT ]\n\n**Q3: \"Childs\"**\n- Grammar error: plural of \"child\" is \"children\" (not \"childs\")\n- Mark: [ ❌ WRONG ] grammatically incorrect\n- **Lesson:** If passage said \"children,\" you must write \"children\" exactly\n\n**Q4: \"SOLAR PANELS\"**\n- Can be: \"SOLAR PANELS\", \"Solar Panels\", \"solar panels\"\n- All accepted (capitalization doesn't matter)\n- Mark: [ ✅ CORRECT ]\n\n**Time Management:**\n- 40 questions × 3 seconds each = 2 minutes (minimum)\n- Add 1 minute buffer for checking = 3 minutes total\n- Must reserve this time!\n\n**Practice Habit:** When doing practice tests, ALWAYS transfer to an answer sheet under time pressure. Simulate real conditions."
+        },
+        "checkpointQuestions": [
+          "Am I practicing with an answer sheet (not just marking in the booklet)?",
+          "Am I transferring after each passage or saving 3-5 minutes at the end?",
+          "Am I double-checking spelling and grammar during transfer?"
+        ]
+      },
+      "officialSource": "IELTS official test format + British Council 'Answer Sheet Requirements'"
+    }
+  ]
+}
+

@@ -25,6 +25,33 @@ export interface DeeperFeedbackResponse {
   personalizedAdvice: string;
 }
 
+// Struggle Module Interfaces
+export interface StruggleModule {
+  moduleId: string;
+  moduleName: string;
+  targetQuestionTypes: string[];
+  triggerConditions: {
+    mistakePatterns: string[];
+    contextKeywords: string[];
+  };
+  content: {
+    explanation: string;
+    visualExample: {
+      passage: string;
+      statement: string;
+      analysis: string;
+    };
+    checkpointQuestions: string[];
+  };
+  officialSource: string;
+}
+
+export interface ModuleCollection {
+  category: string;
+  modules: StruggleModule[];
+}
+
+
 // Get deeper AI feedback for a specific question
 export const getReadingDeeperFeedback = api<
   { userId: number; testId: number; passageId: number; questionId: number },
@@ -459,6 +486,34 @@ function loadTheoryData(): TheoryData {
   }
 }
 
+function loadStruggleModules(): Record<string, ModuleCollection> {
+  const moduleFiles = [
+    'tfng-struggle-modules.json',
+    'matching-headings-modules.json',
+    'matching-features-modules.json',
+    'mcq-modules.json',
+    'completion-modules.json',
+    'timing-modules.json'
+  ];
+  
+  const modules: Record<string, ModuleCollection> = {};
+  
+  for (const file of moduleFiles) {
+    const filePath = path.resolve(process.cwd(), "backend", "data", file);
+    if (fs.existsSync(filePath)) {
+      try {
+        const raw = fs.readFileSync(filePath, "utf8");
+        const data = JSON.parse(raw) as ModuleCollection;
+        modules[data.category] = data;
+      } catch (error) {
+        console.error(`Error loading module file ${file}:`, error);
+      }
+    }
+  }
+  
+  return modules;
+}
+
 function loadAllTests(): Array<{ testId: number; testName: string; passages: ReadingPassage[] }> {
   const dir = getReadingTestsDir();
   if (!fs.existsSync(dir)) return [];
@@ -535,6 +590,15 @@ export const getReadingTheoryById = api<{ questionType: string }, TheoryContent>
       throw new Error("Theory content not found for this question type");
     }
     return theory;
+  }
+);
+
+// NEW: Get all struggle modules
+export const getStruggleModules = api<void, { modules: Record<string, ModuleCollection> }>(
+  { expose: true, method: "GET", path: "/reading/struggle-modules" },
+  async () => {
+    const modules = loadStruggleModules();
+    return { modules };
   }
 );
 
