@@ -1267,7 +1267,7 @@ export default function ReadingPractice() {
     switch (question.type) {
       case "matching-headings":
         return (
-          <div key={question.id} className="space-y-3">
+          <div key={question.id} className="space-y-3 border-b border-gray-100 dark:border-gray-800 pb-6 mb-4 last:border-0">
             <TextHighlighter
               content={String(question.questionText || "")}
               passageTitle={`${passage?.title || "Reading"} - Question`}
@@ -1275,23 +1275,39 @@ export default function ReadingPractice() {
               onHighlightsChange={setQHighlightsFor(question.id)}
               showLabels={false}
             />
-            <RadioGroup
+            <Select
               value={answers[question.id] || ""}
               onValueChange={(value) => handleAnswerChange(question.id, value)}
             >
-              {question.options?.map((option: any, index: number) => {
-                const optionValue = typeof option === 'object' ? option.letter : option;
-                const optionText = typeof option === 'object' ? option.text : option;
-                return (
-                  <div key={index} className="flex items-center space-x-2">
-                    <RadioGroupItem value={optionValue} id={`q${question.id}-${index}`} />
-                    <Label htmlFor={`q${question.id}-${index}`} className="text-sm">
-                      {String.fromCharCode(105 + index)}. {optionText}
-                    </Label>
-                  </div>
-                );
-              })}
-            </RadioGroup>
+              <div className="relative">
+                <SelectTrigger className="w-full h-auto py-3 pl-4 pr-10 text-left bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500 transition-colors">
+                  <SelectValue placeholder="Select Heading..." />
+                </SelectTrigger>
+              </div>
+              <SelectContent className="max-h-[300px]">
+                {question.options?.map((option: any, index: number) => {
+                  const optionValue = typeof option === 'object' ? option.letter : option;
+                  const optionText = typeof option === 'object' ? option.text : option;
+                  const roman = toRomanNumeral(index + 1);
+                  return (
+                    <SelectItem
+                      key={index}
+                      value={optionValue}
+                      className="py-3 px-2 border-b border-slate-100 dark:border-slate-800 last:border-0 cursor-pointer focus:bg-blue-50 dark:focus:bg-blue-900/20"
+                    >
+                      <div className="flex items-start gap-3">
+                        <span className="flex-shrink-0 font-bold text-blue-600 dark:text-blue-400 min-w-[24px] text-right">
+                          {roman}.
+                        </span>
+                        <span className="text-slate-700 dark:text-slate-300 leading-snug">
+                          {optionText}
+                        </span>
+                      </div>
+                    </SelectItem>
+                  );
+                })}
+              </SelectContent>
+            </Select>
           </div>
         );
 

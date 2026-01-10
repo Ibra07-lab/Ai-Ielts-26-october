@@ -20,6 +20,7 @@ import Register from "./pages/Register";
 import ReadingTFNGQuiz from "./pages/ReadingTFNGQuiz";
 import MatchingHeadingsQuiz from "./pages/MatchingHeadingsQuiz";
 import ReadingTutor from "./pages/ReadingTutor";
+import FeedbackSummaryDemo from "./pages/FeedbackSummaryDemo";
 import ErrorBoundary from "./components/ErrorBoundary";
 
 const queryClient = new QueryClient({
@@ -40,6 +41,9 @@ function AppInner() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/speaking" element={<SpeakingPractice />} />
           <Route path="/writing" element={<WritingTask />} />
+          <Route path="/writing/task-1" element={<WritingTask defaultTab="task-1" />} />
+          <Route path="/writing/task-2" element={<WritingTask defaultTab="task-2" />} />
+          <Route path="/writing/feedback-demo" element={<FeedbackSummaryDemo />} />
           <Route path="/reading" element={<ReadingPractice />} />
           <Route path="/reading/quiz-tfng" element={<ReadingTFNGQuiz />} />
           <Route path="/reading/quiz-matching-headings" element={<MatchingHeadingsQuiz />} />

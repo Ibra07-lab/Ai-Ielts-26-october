@@ -1,0 +1,1634 @@
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 49, in evaluate
+    coaching = await self.tutor.coach(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\tutor.py", line 75, in coach
+    return TutorFeedback(**result)
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\pydantic\main.py", line 214, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 9 validation errors for TutorFeedback
+rewrites
+  Field required [type=missing, input_value={'action_plan': ['Incorpo..., 'specific_gaps': []}]}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.10/v/missing
+micro_tasks.0.title
+  Field required [type=missing, input_value={'task': 'Write a paragra...between 1918 and 2011.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.10/v/missing
+micro_tasks.0.duration_minutes
+  Field required [type=missing, input_value={'task': 'Write a paragra...between 1918 and 2011.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.10/v/missing
+micro_tasks.0.instruction
+  Field required [type=missing, input_value={'task': 'Write a paragra...between 1918 and 2011.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.10/v/missing
+micro_tasks.0.targets_criterion
+  Field required [type=missing, input_value={'task': 'Write a paragra...between 1918 and 2011.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.10/v/missing
+micro_tasks.1.title
+  Field required [type=missing, input_value={'task': "Practice writin...ast', and 'similarly'."}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.10/v/missing
+micro_tasks.1.duration_minutes
+  Field required [type=missing, input_value={'task': "Practice writin...ast', and 'similarly'."}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.10/v/missing
+micro_tasks.1.instruction
+  Field required [type=missing, input_value={'task': "Practice writin...ast', and 'similarly'."}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.10/v/missing
+micro_tasks.1.targets_criterion
+  Field required [type=missing, input_value={'task': "Practice writin...ast', and 'similarly'."}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.10/v/missing
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    response = await self.llm.ainvoke(messages)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.AuthenticationError: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}, 'request_id': 'req_011CWqyTB6HaG6o7qLpQbThk'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    response = await self.llm.ainvoke(messages)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.AuthenticationError: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}, 'request_id': 'req_011CWqyTfUbSLSfYzaDvd7vN'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    response = await self.llm.ainvoke(messages)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.AuthenticationError: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}, 'request_id': 'req_011CWqymcprJRAcyFtNs31cr'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    response = await self.llm.ainvoke(messages)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.AuthenticationError: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}, 'request_id': 'req_011CWqynwtbttnNrNQZCdGTp'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    response = await self.llm.ainvoke(messages)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.AuthenticationError: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}, 'request_id': 'req_011CWqyxhLGhdzeKnF6bn9Rm'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    response = await self.llm.ainvoke(messages)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.AuthenticationError: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}, 'request_id': 'req_011CWqyyFSKMYHSQiEyn5A8V'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    response = await self.llm.ainvoke(messages)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.AuthenticationError: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}, 'request_id': 'req_011CWqzuVDJG9e8i2nmseMGL'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    response = await self.llm.ainvoke(messages)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.NotFoundError: Error code: 404 - {'type': 'error', 'error': {'type': 'not_found_error', 'message': 'model: claude-4-5-sonnet-latest'}, 'request_id': 'req_011CWqzyShMLkQFqKmURh1MK'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    response = await self.llm.ainvoke(messages)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.NotFoundError: Error code: 404 - {'type': 'error', 'error': {'type': 'not_found_error', 'message': 'model: claude-3-5-sonnet-20241022'}, 'request_id': 'req_011CWr2VU3AakoM92nmszLS7'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    response = await self.llm.ainvoke(messages)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.NotFoundError: Error code: 404 - {'type': 'error', 'error': {'type': 'not_found_error', 'message': 'model: claude-3-5-sonnet-20240620'}, 'request_id': 'req_011CWr2v67VrAbZf2kwF3np6'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    response = await self.llm.ainvoke(messages)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.NotFoundError: Error code: 404 - {'type': 'error', 'error': {'type': 'not_found_error', 'message': 'model: claude-3-5-sonnet-20240620'}, 'request_id': 'req_011CWr3A3b5dVpz1GqnyChYn'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    response = await self.llm.ainvoke(messages)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.NotFoundError: Error code: 404 - {'type': 'error', 'error': {'type': 'not_found_error', 'message': 'model: claude-3-5-sonnet-20240620'}, 'request_id': 'req_011CWr3GmE2YiynR85ZiuhnK'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    response = await self.llm.ainvoke(messages)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.NotFoundError: Error code: 404 - {'type': 'error', 'error': {'type': 'not_found_error', 'message': 'model: claude-3-5-sonnet-20240620'}, 'request_id': 'req_011CWr3Gr4jnp8VRTbBfYY5Z'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    response = await self.llm.ainvoke(messages)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.NotFoundError: Error code: 404 - {'type': 'error', 'error': {'type': 'not_found_error', 'message': 'model: claude-3-5-sonnet-20240620'}, 'request_id': 'req_011CWr3WYSDy3XaT6nkpweRm'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    response = await self.llm.ainvoke(messages)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.NotFoundError: Error code: 404 - {'type': 'error', 'error': {'type': 'not_found_error', 'message': 'model: claude-3-5-sonnet-20240620'}, 'request_id': 'req_011CWr3jFQA39StKrbFvFuSG'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    response = await self.llm.ainvoke(messages)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.NotFoundError: Error code: 404 - {'type': 'error', 'error': {'type': 'not_found_error', 'message': 'model: claude-3-5-sonnet-20240620'}, 'request_id': 'req_011CWr3khZo5qc7ectZLJQuo'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    response = await self.llm.ainvoke(messages)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.NotFoundError: Error code: 404 - {'type': 'error', 'error': {'type': 'not_found_error', 'message': 'model: claude-3-5-sonnet-20240620'}, 'request_id': 'req_011CWr3knf8VULhUAGk6REyY'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    messages = [
+               ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.NotFoundError: Error code: 404 - {'type': 'error', 'error': {'type': 'not_found_error', 'message': 'model: claude-3-5-sonnet-20240620'}, 'request_id': 'req_011CWr44JnLeh8z73XYRCT2X'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    messages = [
+               ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.NotFoundError: Error code: 404 - {'type': 'error', 'error': {'type': 'not_found_error', 'message': 'model: claude-3-5-sonnet-20240620'}, 'request_id': 'req_011CWr462sBVLwZNjjcEHfct'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    messages = [
+               ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.NotFoundError: Error code: 404 - {'type': 'error', 'error': {'type': 'not_found_error', 'message': 'model: claude-3-5-sonnet-20240620'}, 'request_id': 'req_011CWr4676vbcWiQaW6VWcfJ'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    messages = [
+               ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.NotFoundError: Error code: 404 - {'type': 'error', 'error': {'type': 'not_found_error', 'message': 'model: claude-3-5-sonnet-20240620'}, 'request_id': 'req_011CWr46PwSz2AcDdGmRp23H'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    messages = [
+               ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.NotFoundError: Error code: 404 - {'type': 'error', 'error': {'type': 'not_found_error', 'message': 'model: claude-3-5-sonnet-20240620'}, 'request_id': 'req_011CWr481GVn6Qb6q3Gzsgqy'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    messages = [
+               ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.NotFoundError: Error code: 404 - {'type': 'error', 'error': {'type': 'not_found_error', 'message': 'model: claude-3-5-sonnet-20240620'}, 'request_id': 'req_011CWr48Tnw1eGKTnYvdk5nk'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    messages = [
+               ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.NotFoundError: Error code: 404 - {'type': 'error', 'error': {'type': 'not_found_error', 'message': 'model: claude-3-5-sonnet-20240620'}, 'request_id': 'req_011CWr48c8Ecj4ru1C93gMsR'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    messages = [
+               ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.NotFoundError: Error code: 404 - {'type': 'error', 'error': {'type': 'not_found_error', 'message': 'model: claude-3-5-sonnet-20240620'}, 'request_id': 'req_011CWr4cKTQeX5JHkhrAQ8nU'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 50, in evaluate
+    messages = [
+               ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.NotFoundError: Error code: 404 - {'type': 'error', 'error': {'type': 'not_found_error', 'message': 'model: claude-3-5-sonnet-20240620'}, 'request_id': 'req_011CWr4dARDUg3WWtLSz7TeQ'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 55, in evaluate
+    response = await self.llm.ainvoke(messages)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.NotFoundError: Error code: 404 - {'type': 'error', 'error': {'type': 'not_found_error', 'message': 'model: claude-sonnet-4-5-20250514'}, 'request_id': 'req_011CWr5sRqvFAdFwGn7WUCCY'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 55, in evaluate
+    response = await self.llm.ainvoke(messages)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1036, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+        prompt_messages, stop=stop, callbacks=callbacks, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 994, in agenerate
+    raise exceptions[0]
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_core\language_models\chat_models.py", line 1164, in _agenerate_with_cache
+    result = await self._agenerate(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        messages, stop=stop, run_manager=run_manager, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1786, in _agenerate
+    data = await self._acreate(payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\langchain_anthropic\chat_models.py", line 1628, in _acreate
+    return await self._async_client.messages.create(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\resources\messages\messages.py", line 2114, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<28 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1902, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\anthropic\_base_client.py", line 1702, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.NotFoundError: Error code: 404 - {'type': 'error', 'error': {'type': 'not_found_error', 'message': 'model: claude-sonnet-4-5-20250514'}, 'request_id': 'req_011CWr5szVT9Bo7qh4tqXFrr'}
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 96, in evaluate
+    return ExaminerEvaluation(**result)
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\pydantic\main.py", line 214, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for ExaminerEvaluation
+criterion_scores.0.criterion
+  Input should be 'task_response', 'coherence_cohesion', 'lexical_resource' or 'grammatical_range_accuracy' [type=enum, input_value='task_achievement', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.10/v/enum
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 42, in evaluate
+    evaluation = await self.examiner.evaluate(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\examiner.py", line 96, in evaluate
+    return ExaminerEvaluation(**result)
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\pydantic\main.py", line 214, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for ExaminerEvaluation
+criterion_scores.0.criterion
+  Input should be 'task_response', 'coherence_cohesion', 'lexical_resource' or 'grammatical_range_accuracy' [type=enum, input_value='task_achievement', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.10/v/enum
+
+--- PIPELINE ERROR ---Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\tutor.py", line 81, in coach
+    result = json.loads(content)
+  File "C:\Python313\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Python313\Lib\json\decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\json\decoder.py", line 361, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ~~~~~~~~~~~~~~^^^^^^^^
+json.decoder.JSONDecodeError: Expecting ',' delimiter: line 103 column 6 (char 7710)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\pipeline.py", line 49, in evaluate
+    coaching = await self.tutor.coach(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Ai-Ielts-26-october-13\backend\ielts_writing\agents\tutor.py", line 83, in coach
+    raise ValueError(f"Failed to parse JSON response: {response.content}")
+ValueError: Failed to parse JSON response: ```json
+{
+  "action_plan": [
+    "Focus on perfecting article usage (a/an/the) - this is your main grammar weakness holding you back from Band 8. Practice identifying countable vs uncountable nouns and when articles are needed.",
+    "Expand your range of complex sentence structures by incorporating more conditional sentences, passive constructions, and participle clauses to push Grammar from 7.0 to 7.5+.",
+    "Continue your excellent work on Task Achievement and vocabulary - you're already exceeding your target band in these areas, so maintain this quality while focusing on grammar refinement."
+  ],
+  "strengths": [
+    "Excellent overview paragraph that clearly identifies the main trends (declining consumption in most cities, City C's increase)",
+    "Precise and natural vocabulary choices throughout, including strong collocations like 'modest increase', 'downward trends', and 'notable decrease'",
+    "Highly effective data selection and comparison - you've reported all key figures accurately while making meaningful comparisons between cities and years",
+    "Strong logical organization with clear paragraphing that guides the reader smoothly through the data"
+  ],
+  "weaknesses": [
+    "Minor article usage issues that prevent Grammar from reaching Band 7.5+ (though these don't affect meaning)",
+    "Could incorporate more varied complex structures like conditionals or participle clauses to demonstrate fuller grammatical range",
+    "Slightly limited variety in sentence openings - most paragraphs start with subject-verb patterns"
+  ],
+  "grammar_errors": [
+    {
+      "original": "measured in litres per day",
+      "corrected": "measured in litres per day (correct as is, but could be enhanced)",
+      "explanation": "While grammatically correct, this is a simple past participle phrase. The examiner noted you could show more variety in complex structures.",
+      "tip": "Try incorporating different complex structures: 'which was measured in litres per day' (relative clause) or 'with measurements in litres per day' (prepositional phrase) to show range."
+    },
+    {
+      "original": "residents of City D consumed the most water",
+      "corrected": "the residents of City D consumed the most water",
+      "explanation": "When referring to a specific group (residents of a particular city), use 'the'. This is the type of minor article issue the examiner identified.",
+      "tip": "Rule: Use 'the' before plural nouns when referring to a specific, identifiable group. Generic groups don't need 'the' (e.g., 'residents generally prefer...')."
+    },
+    {
+      "original": "City A used a comparatively lower amount",
+      "corrected": "City A used a comparatively lower amount (correct, but note the pattern)",
+      "explanation": "This is correct, but watch for consistency. Earlier you wrote 'consumed the most water' without an article before 'most water', which is correct for superlatives with uncountable nouns.",
+      "tip": "With uncountable nouns (water, consumption), no article needed: 'the most water' ✓, 'a water' ✗. With countable amounts: 'a lower amount' ✓."
+    }
+  ],
+  "vocabulary_suggestions": [
+    {
+      "original": "water usage declined",
+      "better_options": [
+        "water consumption decreased",
+        "water usage fell",
+        "daily water intake diminished",
+        "per capita water consumption contracted"
+      ],
+      "context": "You already use 'declined' effectively, but having these alternatives ready helps avoid repetition and shows lexical flexibility. You used 'fallen' and 'dropped' later, which is excellent variety."
+    },
+    {
+      "original": "In 2010, residents of City D consumed",
+      "better_options": [
+        "In 2010, City D residents consumed",
+        "City D's inhabitants used",
+        "People in City D utilized",
+        "The population of City D consumed"
+      ],
+      "context": "Minor variation in how you introduce data points. Your current phrasing is perfectly fine, but these alternatives can add subtle variety to prevent monotony in longer reports."
+    }
+  ],
+  "coherence_issues": [
+    {
+      "text": "In 2010, residents of City D consumed the most water, at 240 litres per person per day, followed by City B and City E with 210 and 200 litres respectively.",
+      "suggestion": "In 2010, residents of City D consumed the most water at 240 litres per person per day, followed by City B (210 litres) and City E (200 litres).",
+      "reason": "Slightly more concise punctuation. Using parentheses for data can improve readability when listing multiple figures, though your original is also clear."
+    },
+    {
+      "text": "By 2020, water usage had fallen in four out of the five cities. City D remained the highest consumer despite a notable decrease to 205 litres.",
+      "suggestion": "By 2020, water usage had fallen in four out of the five cities, with City D remaining the highest consumer despite a notable decrease to 205 litres.",
+      "reason": "Connecting these two related ideas with a comma and 'with' creates smoother flow and shows the relationship more explicitly. However, your version with two sentences is also perfectly acceptable."
+    }
+  ],
+  "band_gap_analysis": {
+    "task_achievement": {
+      "current_band": 8.0,
+      "target_band": 7.0,
+      "gap": "You're EXCEEDING your target by a full band! You've fully addressed all requirements with a clear overview and accurate data reporting. To maintain this level: continue identifying 2-3 key trends in your overview and support them with precise data.",
+      "what_is_missing": "Nothing - you're performing above target. Keep doing what you're doing: clear overview, selective data reporting, effective comparisons."
+    },
+    "coherence_cohesion": {
+      "current_band": 7.5,
+      "target_band": 7.0,
+      "gap": "You're exceeding your target by 0.5 bands. Your organization is skillful with natural cohesive devices. To maintain this: continue using varied linking words and clear paragraph structure.",
+      "what_is_missing": "Nothing to reach your target. You're already using cohesive devices naturally ('Overall', 'In contrast', 'By 2020') and have logical progression throughout."
+    },
+    "lexical_resource": {
+      "current_band": 7.5,
+      "target_band": 7.0,
+      "gap": "You're exceeding your target by 0.5 bands with precise vocabulary and natural collocations. Your word choice is sophisticated without being forced.",
+      "what_is_missing": "Nothing for your target band. You demonstrate wide range ('modest increase', 'downward trends', 'notable decrease') with no noticeable errors."
+    },
+    "grammatical_range_accuracy": {
+      "current_band": 7.0,
+      "target_band": 7.0,
+      "gap": "You've ACHIEVED your target band exactly! You use a variety of complex structures accurately. To push to 7.5+: eliminate minor article errors and incorporate more varied complex structures (conditionals, participle clauses).",
+      "what_is_missing": "For Band 7.5+: more consistent article usage with specific nouns, and greater variety in complex structures beyond relative clauses and compound sentences."
+    }
+  },
+  "sentence_rewrites": [
+    {
+      "original": "The bar chart illustrates the average daily water consumption per person in five cities in 2010 and 2020, measured in litres per day.",
+      "improved": "The bar chart illustrates the average daily water consumption per person in five cities in 2010 and 2020, with all measurements expressed in litres per day.",
+      "reason": "Using 'with all measurements expressed' adds a more sophisticated complex structure (absolute phrase) while maintaining clarity. This shows greater grammatical range."
+    },
+    {
+      "original": "In 2010, residents of City D consumed the most water, at 240 litres per person per day, followed by City B and City E with 210 and 200 litres respectively.",
+      "improved": "In 2010, the residents of City D consumed the most water at 240 litres per person per day, followed by City B and City E with 210 and 200 litres respectively.",
+      "reason": "Adding 'the' before 'residents' corrects the minor article issue. When referring to a specific group (residents of a particular city

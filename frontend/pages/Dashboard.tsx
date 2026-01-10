@@ -12,6 +12,10 @@ import AddTaskModal from "@/components/progress/AddTaskModal";
 import AISuggestDrawer from "@/components/progress/AISuggestDrawer";
 import TaskCard from "@/components/progress/TaskCard";
 import GlowingProgressCard from "@/components/progress/GlowingProgressCard";
+import ReadingPracticeCard from "@/components/ReadingPracticeCard";
+import SpeakingPracticeCard from "@/components/SpeakingPracticeCard";
+import WritingPracticeCard from "@/components/WritingPracticeCard";
+import ListeningPracticeCard from "@/components/ListeningPracticeCard";
 
 export default function Dashboard() {
   const { user } = useUser();
@@ -231,6 +235,39 @@ export default function Dashboard() {
               };
 
               const theme = colorStyles[area.color] || colorStyles["bg-blue-500"];
+
+
+              if (isReadingPractice) {
+                return (
+                  <div key={area.title} className="h-full">
+                    <ReadingPracticeCard />
+                  </div>
+                );
+              }
+
+              if (area.title === "Speaking Practice") {
+                return (
+                  <div key={area.title} className="h-full">
+                    <SpeakingPracticeCard />
+                  </div>
+                );
+              }
+
+              if (area.title === "Writing Tasks") {
+                return (
+                  <div key={area.title} className="h-full">
+                    <WritingPracticeCard />
+                  </div>
+                );
+              }
+
+              if (area.title === "Listening Practice") {
+                return (
+                  <div key={area.title} className="h-full">
+                    <ListeningPracticeCard />
+                  </div>
+                );
+              }
 
               return (
                 <div

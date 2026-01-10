@@ -1,0 +1,361 @@
+// ============================================================================
+// FEEDBACK TRANSFORMATION UTILITIES
+// ============================================================================
+// This module provides utilities to transform backend feedback responses
+// into frontend-ready highlights by finding text positions in the essay.
+
+import type {
+    Highlight,
+    HighlightType,
+    CoachingResult,
+    TextPosition,
+    HighlightSource,
+} from "@/types/writing-feedback";
+
+// ----------------------------------------------------------------------------
+// Text Position Finding
+// ----------------------------------------------------------------------------
+
+/**
+ * Finds the position of a text snippet within an essay
+ * @param essay - The full essay text
+ * @param searchText - The text to find
+ * @param startOffset - Optional offset to start searching from
+ * @returns TextPosition object or null if not found
+ */
+export function findTextPosition(
+    essay: string,
+    searchText: string,
+    startOffset: number = 0
+): TextPosition | null {
+    // 1. Try exact match first (fastest)
+    const exactIndex = essay.indexOf(searchText, startOffset);
+    if (exactIndex !== -1) {
+        return {
+            start: exactIndex,
+            end: exactIndex + searchText.length,
+            text: essay.substring(exactIndex, exactIndex + searchText.length),
+        };
+    }
+
+    // 2. Try flexible whitespace match (handles newlines/multiple spaces)
+    // Escape regex special characters in searchText
+    const escapedSearch = searchText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // Replace whitespace sequences with \s+ pattern to match any whitespace (space, tab, newline)
+    const pattern = escapedSearch.replace(/\s+/g, '\\s+');
+    const regex = new RegExp(pattern, 'g');
+
+    regex.lastIndex = startOffset;
+    const match = regex.exec(essay);
+
+    if (match) {
+        return {
+            start: match.index,
+            end: match.index + match[0].length,
+            text: match[0],
+        };
+    }
+
+    // 3. Fallback to fuzzy matching if simple whitespace flexibility isn't enough
+    return findFuzzyPosition(essay, searchText, startOffset);
+}
+
+/**
+ * Fuzzy text matching for cases where exact match fails
+ * This handles minor variations in whitespace or punctuation
+ */
+function findFuzzyPosition(
+    essay: string,
+    searchText: string,
+    startOffset: number = 0
+): TextPosition | null {
+    // Remove all punctuation and normalize
+    const cleanEssay = essay.toLowerCase().replace(/[^\w\s]/g, "");
+    const cleanSearch = searchText.toLowerCase().replace(/[^\w\s]/g, "");
+
+    const index = cleanEssay.indexOf(cleanSearch, startOffset);
+
+    if (index === -1) {
+        return null;
+    }
+
+    // Map back to original essay position
+    let charCount = 0;
+    let originalIndex = 0;
+
+    for (let i = 0; i < essay.length; i++) {
+        const char = essay[i].toLowerCase();
+        if (/[\w\s]/.test(char)) {
+            if (charCount === index) {
+                originalIndex = i;
+                break;
+            }
+            charCount++;
+        }
+    }
+
+    return {
+        start: originalIndex,
+        end: originalIndex + searchText.length,
+        text: essay.substring(originalIndex, originalIndex + searchText.length),
+    };
+}
+
+// ----------------------------------------------------------------------------
+// Highlight ID Generation
+// ----------------------------------------------------------------------------
+
+/**
+ * Generates a unique ID for a highlight
+ */
+export function generateHighlightId(type: HighlightType, index: number): string {
+    return `${type}-${index}-${Date.now()}`;
+}
+
+// ----------------------------------------------------------------------------
+// Highlight Transformation
+// ----------------------------------------------------------------------------
+
+/**
+ * Transforms grammar errors into highlights
+ */
+function transformGrammarErrors(
+    essay: string,
+    grammarErrors: CoachingResult["grammar_errors"]
+): Highlight[] {
+    const highlights: Highlight[] = [];
+    let searchOffset = 0;
+
+    grammarErrors.forEach((error, index) => {
+        const position = findTextPosition(essay, error.original, searchOffset);
+
+        if (position) {
+            highlights.push({
+                id: generateHighlightId("grammar", index),
+                start: position.start,
+                end: position.end,
+                type: "grammar",
+                original: error.original,
+                corrected: error.corrected,
+                reason: error.explanation,
+                tip: error.tip,
+                justification: error.explanation, // Map explanation to justification
+                improvement_tip: error.tip || "Review grammar rules for this error type.", // Map tip or default
+            });
+
+            // Update offset to avoid duplicate matches
+            searchOffset = position.end;
+        } else {
+            console.warn(`Could not find grammar error in essay: "${error.original}"`);
+        }
+    });
+
+    return highlights;
+}
+
+/**
+ * Transforms vocabulary suggestions into highlights
+ */
+function transformVocabularySuggestions(
+    essay: string,
+    vocabSuggestions: CoachingResult["vocabulary_suggestions"]
+): Highlight[] {
+    const highlights: Highlight[] = [];
+    let searchOffset = 0;
+
+    vocabSuggestions.forEach((suggestion, index) => {
+        const position = findTextPosition(essay, suggestion.original, searchOffset);
+
+        if (position) {
+            highlights.push({
+                id: generateHighlightId("vocabulary", index),
+                start: position.start,
+                end: position.end,
+                type: "vocabulary",
+                original: suggestion.original,
+                corrected: suggestion.better_options.join(" / "),
+                reason: suggestion.context,
+                tip: `Consider using: ${suggestion.better_options.slice(0, 2).join(" or ")}`,
+                justification: suggestion.context, // Map context to justification
+                improvement_tip: `Try using more precise vocabulary like "${suggestion.better_options[0]}" to enhance meaning.`,
+            });
+
+            searchOffset = position.end;
+        } else {
+            console.warn(`Could not find vocabulary in essay: "${suggestion.original}"`);
+        }
+    });
+
+    return highlights;
+}
+
+/**
+ * Transforms coherence issues into highlights
+ */
+function transformCoherenceIssues(
+    essay: string,
+    coherenceIssues: CoachingResult["coherence_issues"]
+): Highlight[] {
+    const highlights: Highlight[] = [];
+    let searchOffset = 0;
+
+    coherenceIssues.forEach((issue, index) => {
+        const position = findTextPosition(essay, issue.text, searchOffset);
+
+        if (position) {
+            highlights.push({
+                id: generateHighlightId("coherence", index),
+                start: position.start,
+                end: position.end,
+                type: "coherence",
+                original: issue.text,
+                corrected: issue.suggestion,
+                reason: issue.reason,
+                tip: "Improve flow and connection",
+                justification: issue.reason, // Map reason to justification
+                improvement_tip: "Use appropriate linking words or reference words to connect ideas more smoothly.",
+            });
+
+            searchOffset = position.end;
+        } else {
+            console.warn(`Could not find coherence issue in essay: "${issue.text}"`);
+        }
+    });
+
+    return highlights;
+}
+
+/**
+ * Transforms strengths into highlights
+ */
+function transformStrengths(
+    essay: string,
+    strengths: string[]
+): Highlight[] {
+    const highlights: Highlight[] = [];
+
+    // For strengths, we'll try to identify key phrases from the strength descriptions
+    // This is more heuristic since strengths are general comments
+    strengths.forEach((strength, index) => {
+        // Extract potential phrases from strength description
+        // Look for quoted text or specific examples
+        const quotedMatch = strength.match(/"([^"]+)"/);
+        const exampleMatch = strength.match(/such as "([^"]+)"/);
+        const phraseMatch = quotedMatch || exampleMatch;
+
+        if (phraseMatch && phraseMatch[1]) {
+            const position = findTextPosition(essay, phraseMatch[1]);
+
+            if (position) {
+                highlights.push({
+                    id: generateHighlightId("strength", index),
+                    start: position.start,
+                    end: position.end,
+                    type: "strength",
+                    original: phraseMatch[1],
+                    // No corrected field for strengths
+                    reason: strength,
+                    tip: "Keep doing this!",
+                    justification: strength, // Map strength description to justification
+                    improvement_tip: "This is a strong element of your writing. Maintain this quality in future essays.",
+                });
+            }
+        }
+    });
+
+    return highlights;
+}
+
+// ----------------------------------------------------------------------------
+// Main Transformation Function
+// ----------------------------------------------------------------------------
+
+/**
+ * Transforms backend coaching result into an array of highlights
+ * @param essay - The original essay text
+ * @param coaching - The coaching result from backend
+ * @returns Array of highlights for essay markup
+ */
+export function transformToHighlights(
+    essay: string,
+    coaching: CoachingResult
+): Highlight[] {
+    const highlights: Highlight[] = [];
+
+    // Transform each type of feedback
+    highlights.push(...transformGrammarErrors(essay, coaching.grammar_errors));
+    highlights.push(...transformVocabularySuggestions(essay, coaching.vocabulary_suggestions));
+    highlights.push(...transformCoherenceIssues(essay, coaching.coherence_issues));
+    highlights.push(...transformStrengths(essay, coaching.strengths));
+
+    // Sort highlights by position for easier rendering
+    highlights.sort((a, b) => a.start - b.start);
+
+    return highlights;
+}
+
+// ----------------------------------------------------------------------------
+// Highlight Utilities
+// ----------------------------------------------------------------------------
+
+/**
+ * Checks if two highlights overlap
+ */
+export function highlightsOverlap(h1: Highlight, h2: Highlight): boolean {
+    return !(h1.end <= h2.start || h2.end <= h1.start);
+}
+
+/**
+ * Merges overlapping highlights (prioritizes by type)
+ */
+export function mergeOverlappingHighlights(highlights: Highlight[]): Highlight[] {
+    if (highlights.length === 0) return [];
+
+    const sorted = [...highlights].sort((a, b) => a.start - b.start);
+    const merged: Highlight[] = [sorted[0]];
+
+    for (let i = 1; i < sorted.length; i++) {
+        const current = sorted[i];
+        const last = merged[merged.length - 1];
+
+        if (highlightsOverlap(current, last)) {
+            // Priority: grammar > vocabulary > coherence > strength
+            const priority = { grammar: 4, vocabulary: 3, coherence: 2, strength: 1 };
+            if (priority[current.type] > priority[last.type]) {
+                merged[merged.length - 1] = current;
+            }
+        } else {
+            merged.push(current);
+        }
+    }
+
+    return merged;
+}
+
+/**
+ * Groups highlights by type
+ */
+export function groupHighlightsByType(highlights: Highlight[]): Record<HighlightType, Highlight[]> {
+    return highlights.reduce((acc, highlight) => {
+        if (!acc[highlight.type]) {
+            acc[highlight.type] = [];
+        }
+        acc[highlight.type].push(highlight);
+        return acc;
+    }, {} as Record<HighlightType, Highlight[]>);
+}
+
+/**
+ * Gets highlight statistics
+ */
+export function getHighlightStats(highlights: Highlight[]) {
+    const grouped = groupHighlightsByType(highlights);
+
+    return {
+        total: highlights.length,
+        grammar: grouped.grammar?.length || 0,
+        vocabulary: grouped.vocabulary?.length || 0,
+        coherence: grouped.coherence?.length || 0,
+        strength: grouped.strength?.length || 0,
+    };
+}

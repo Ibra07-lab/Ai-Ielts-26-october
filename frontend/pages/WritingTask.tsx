@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { PenTool, RotateCcw, Send, Clock, TrendingUp, Star, Target, Sparkles, BookOpen, GraduationCap, ArrowLeft } from "lucide-react";
+import { PenTool, RotateCcw, Send, Clock, TrendingUp, Star, Target, Sparkles, BookOpen, GraduationCap, ArrowLeft, CheckCircle, Timer as TimerIcon, Maximize2, X, Save } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,26 +9,49 @@ import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "../contexts/UserContext";
 import backend from "~backend/client";
+import { FeedbackSummaryView } from "@/components/writing/FeedbackSummaryView";
+import { FeedbackContainer } from "@/components/writing/FeedbackContainer";
+import type { EvaluationResult } from "@/types/writing-feedback";
+import { TaskTypeIcon } from "@/components/writing/TaskTypeIcon";
+import TradeConferenceMap from "@/components/writing/TradeConferenceMap";
+import TownEvolutionMap from "@/components/writing/TownEvolutionMap";
+
+
 
 // Mock Data for Writing Tests
 const writingTests = [
-  { id: 1, title: "Test 1", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1 },
-  { id: 2, title: "Test 2", subtitle: "Academic Task 2", type: "Task 2", difficulty: "Hard", questions: 1, time: 40, taskType: 2 },
-  { id: 3, title: "Test 3", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Easy", questions: 1, time: 20, taskType: 1 },
-  { id: 4, title: "Test 4", subtitle: "Academic Task 2", type: "Task 2", difficulty: "Hard", questions: 1, time: 40, taskType: 2 },
-  { id: 5, title: "Test 5", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1 },
-  { id: 6, title: "Test 6", subtitle: "Academic Task 2", type: "Task 2", difficulty: "Medium", questions: 1, time: 40, taskType: 2 },
-  { id: 7, title: "Test 7", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Hard", questions: 1, time: 20, taskType: 1 },
-  { id: 8, title: "Test 8", subtitle: "Academic Task 2", type: "Task 2", difficulty: "Easy", questions: 1, time: 40, taskType: 2 },
+  { id: 1, title: "Test 1", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/line_graph_internet.png", chartType: "Line Graph" },
+  { id: 2, title: "Test 1", subtitle: "Academic Task 2", type: "Task 2", difficulty: "Hard", questions: 1, time: 40, taskType: 2, chartType: "Essay" },
+  { id: 3, title: "Test 2", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Easy", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/bar_chart_teenagers.png", chartType: "Bar Chart" },
+  { id: 4, title: "Test 2", subtitle: "Academic Task 2", type: "Task 2", difficulty: "Hard", questions: 1, time: 40, taskType: 2, chartType: "Essay" },
+  { id: 5, title: "Test 3", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/task1_bar_water_use_2010_2020.png", chartType: "Bar Chart" },
+  { id: 6, title: "Test 3", subtitle: "Academic Task 2", type: "Task 2", difficulty: "Medium", questions: 1, time: 40, taskType: 2, chartType: "Essay" },
+  { id: 7, title: "Test 4", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Hard", questions: 1, time: 20, taskType: 1, chartType: "Map" },
+  { id: 8, title: "Test 4", subtitle: "Academic Task 2", type: "Task 2", difficulty: "Easy", questions: 1, time: 40, taskType: 2, chartType: "Essay" },
+  { id: 9, title: "Test 5", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, chartType: "Map", component: "TradeConferenceMap" },
+  { id: 10, title: "Test 6", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, chartType: "Map", component: "TownEvolutionMap" },
 ];
 
-export default function WritingTask() {
+
+
+interface WritingTaskProps {
+  defaultTab?: "task-1" | "task-2";
+}
+
+export default function WritingTask({ defaultTab }: WritingTaskProps) {
   const [selectedTestId, setSelectedTestId] = useState<number | null>(null);
   const [isTestStarted, setIsTestStarted] = useState(false);
   const [content, setContent] = useState("");
   const [feedback, setFeedback] = useState<any>(null);
   const [aiAnalysis, setAiAnalysis] = useState<any>(null);
   const [analysisMode, setAnalysisMode] = useState<"basic" | "ai">("basic");
+  // New State
+  const [timeLeft, setTimeLeft] = useState(0); // in seconds
+  const [isImageZoomed, setIsImageZoomed] = useState(false);
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const [viewMode, setViewMode] = useState<"editor" | "feedback">("editor");
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const { user } = useUser();
   const { toast } = useToast();
@@ -38,8 +61,11 @@ export default function WritingTask() {
   const taskType = selectedTest?.taskType || 1;
 
   const { data: prompt, refetch: getNewPrompt } = useQuery({
-    queryKey: ["writingPrompt", taskType],
-    queryFn: () => backend.ielts.getWritingPrompt(taskType),
+    queryKey: ["writingPrompt", taskType, selectedTest?.id],
+    queryFn: () => {
+      // @ts-ignore: Adding test_id to supported extended backend
+      return backend.ielts.getWritingPrompt({ taskType, test_id: selectedTest?.id });
+    },
     enabled: !!selectedTest,
   });
 
@@ -63,15 +89,35 @@ export default function WritingTask() {
     },
   });
 
-  // AI Essay Analysis Mutation
+  // AI Essay Analysis Mutation - Using new enhanced endpoint
   const aiAnalysisMutation = useMutation({
-    mutationFn: backend.ielts.analyzeEssay,
+    mutationFn: async (params: { essay: string; taskType: number; userId: number }) => {
+      // Call the new enhanced writing evaluation endpoint
+      const response = await fetch("http://localhost:8001/ielts_writing/evaluate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          task_type: params.taskType === 1 ? "task1" : "task2",
+          question: prompt?.prompt || "",
+          essay: params.essay,
+          target_band: 7.0,
+          user_id: params.userId.toString(),
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to analyze essay: ${response.statusText}`);
+      }
+
+      return await response.json();
+    },
     onSuccess: (data) => {
       setAiAnalysis(data);
+      setViewMode("feedback");
       queryClient.invalidateQueries({ queryKey: ["progress"] });
       toast({
         title: "AI Analysis Complete!",
-        description: `Overall score: ${data.overallScore}`,
+        description: `Overall score: ${data.evaluation.overall_band}`,
       });
     },
     onError: (error) => {
@@ -132,9 +178,49 @@ export default function WritingTask() {
     setContent("");
     setFeedback(null);
     setAiAnalysis(null);
+    // Reset timer
+    if (selectedTest) {
+      setTimeLeft(selectedTest.time * 60);
+    }
+  };
+
+  // Timer Logic
+  useEffect(() => {
+    if (isTestStarted && timeLeft > 0 && !feedback && !aiAnalysis) {
+      timerRef.current = setTimeout(() => {
+        setTimeLeft((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [isTestStarted, timeLeft, feedback, aiAnalysis]);
+
+  // Autosave Simulation
+  useEffect(() => {
+    if (content) {
+      if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+      saveTimeoutRef.current = setTimeout(() => {
+        setLastSaved(new Date());
+      }, 1000);
+    }
+    return () => {
+      if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+    };
+  }, [content]);
+
+  // Format Time
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
   const wordCount = content.trim().split(/\s+/).filter(word => word.length > 0).length;
+  // Dynamic color for word count
+  const wordCountColor = wordCount >= (taskType === 1 ? 150 : 250)
+    ? "text-emerald-600 bg-emerald-50 border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800"
+    : "text-rose-600 bg-rose-50 border-rose-200 dark:bg-rose-900/20 dark:text-rose-400 dark:border-rose-800";
   const minWords = taskType === 1 ? 150 : 250;
 
   const getTaskDescription = (task: number) => {
@@ -148,12 +234,21 @@ export default function WritingTask() {
     }
   };
 
-  const handleStartTest = () => {
+  const handleStartTest = (testId?: number) => {
     setIsTestStarted(true);
     setContent("");
     setFeedback(null);
     setAiAnalysis(null);
     getNewPrompt();
+
+    // Determine which test to start (passed ID or currently selected)
+    const targetTestId = testId || selectedTestId;
+    const testToStart = writingTests.find(t => t.id === targetTestId);
+
+    // Start Timer
+    if (testToStart) {
+      setTimeLeft(testToStart.time * 60);
+    }
   };
 
   const handleBackToMenu = () => {
@@ -162,7 +257,7 @@ export default function WritingTask() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8 pb-32">
+    <div className="max-w-[95vw] mx-auto space-y-8 pb-32">
       {/* Hero Section - Only show when not in a test */}
       {!isTestStarted && (
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 to-indigo-700 dark:from-blue-900 dark:to-indigo-900 text-white shadow-xl">
@@ -222,283 +317,317 @@ export default function WritingTask() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {writingTests.map((test) => {
-              const isSelected = selectedTestId === test.id;
-              const difficultyColor = test.difficulty === "Hard" ? "text-rose-600 bg-rose-50 border-rose-200" : test.difficulty === "Medium" ? "text-amber-600 bg-amber-50 border-amber-200" : "text-emerald-600 bg-emerald-50 border-emerald-200";
+            {writingTests
+              .filter(test => {
+                if (defaultTab === "task-1") return test.taskType === 1;
+                if (defaultTab === "task-2") return test.taskType === 2;
+                return true;
+              })
+              .map((test) => {
+                const isSelected = selectedTestId === test.id;
+                // @ts-ignore
+                const chartType = test.chartType || (test.taskType === 1 ? "Generic" : "Essay");
 
-              return (
-                <Card
-                  key={test.id}
-                  onClick={() => setSelectedTestId(test.id)}
-                  className={`cursor-pointer group relative overflow-hidden transition-all duration-300 border-2
-                  ${isSelected
-                      ? "border-blue-500 shadow-lg ring-2 ring-blue-200 dark:ring-blue-900"
-                      : "border-transparent hover:border-blue-200 hover:shadow-md dark:bg-slate-800 dark:hover:border-slate-600"
-                    }`}
-                >
-                  <CardHeader className="pb-3">
-                    <div className="flex justify-between items-start mb-2">
-                      <div className={`p-2 rounded-lg ${isSelected ? 'bg-blue-100 text-blue-600' : 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300'}`}>
-                        <PenTool className="w-6 h-6" />
-                      </div>
-                      <span className={`text-xs font-bold px-2 py-1 rounded-full border ${difficultyColor} dark:bg-opacity-10`}>
-                        {test.difficulty}
-                      </span>
-                    </div>
-                    <CardTitle className="text-lg font-bold text-slate-800 dark:text-slate-100 group-hover:text-blue-600 transition-colors">
-                      {test.title}
-                    </CardTitle>
-                    <CardDescription className="flex flex-col gap-1 mt-1">
-                      <span className="font-medium text-slate-700 dark:text-slate-300">{test.subtitle}</span>
-                      <div className="flex items-center gap-2 text-xs">
-                        <Clock className="w-3.5 h-3.5" />
-                        {test.time} mins
-                        <span>•</span>
-                        {test.questions} Question
-                      </div>
-                    </CardDescription>
-                  </CardHeader>
+                // Dynamic accents based on difficulty/type
+                const accentColor = test.difficulty === "Hard" ? "ring-rose-500/50" : test.difficulty === "Medium" ? "ring-amber-500/50" : "ring-emerald-500/50";
 
-                  <CardContent>
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between text-sm text-slate-600 dark:text-slate-400">
-                        <span>Completion Rate</span>
-                        <span className="font-medium">0%</span>
-                      </div>
-                      <div className="h-2 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
-                        <div className="h-full bg-blue-500 w-0 rounded-full"></div>
+                return (
+
+                  <div
+                    key={test.id}
+                    onClick={() => {
+                      setSelectedTestId(test.id);
+                      handleStartTest(test.id);
+                    }}
+                    className={`group relative h-[360px] rounded-2xl transition-all duration-300 cursor-pointer overflow-hidden border
+                      ${isSelected
+                        ? "border-blue-500 bg-[#1e293b] shadow-xl shadow-blue-500/10 ring-1 ring-blue-500/20"
+                        : "border-slate-700 bg-[#1e293b] hover:border-slate-600 hover:shadow-lg hover:shadow-blue-900/5"
+                      }
+                    `}
+                  >
+                    {/* Content Container */}
+                    <div className="relative h-full p-6 flex flex-col z-10">
+
+                      {/* Header: Type Label */}
+                      <div className="flex justify-between items-start mb-6">
+                        <span className="text-[10px] font-bold tracking-[0.2em] text-slate-400 uppercase font-mono">
+                          {chartType}
+                        </span>
+                        <Badge
+                          variant="outline"
+                          className={`border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide rounded-md
+                              ${test.difficulty === "Hard" ? "border-rose-200/20 text-rose-300 bg-rose-500/5" :
+                              test.difficulty === "Medium" ? "border-amber-200/20 text-amber-300 bg-amber-500/5" :
+                                "border-emerald-200/20 text-emerald-300 bg-emerald-500/5"}
+                            `}
+                        >
+                          {test.difficulty}
+                        </Badge>
                       </div>
 
-                      {isSelected && (
-                        <div className="pt-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                          <Button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleStartTest();
-                            }}
-                            className="w-full bg-blue-600 hover:bg-blue-700 text-white shadow-md group-hover:shadow-lg transition-all"
-                          >
-                            Start Test Now
-                          </Button>
+                      {/* Hero Visual - Centered */}
+                      <div className="flex-1 flex items-center justify-center p-2">
+                        <div className={`w-full h-full transition-all duration-500 transform ${isSelected ? "scale-105" : "grayscale-[10%] group-hover:grayscale-0 group-hover:scale-105"}`}>
+                          <TaskTypeIcon type={chartType} />
                         </div>
-                      )}
+                      </div>
+
+                      {/* Footer: Title & Layout */}
+                      <div className="mt-6 pt-6 border-t border-slate-700/50">
+                        <div className="flex justify-between items-end">
+                          <div>
+                            <h3 className="text-xl font-bold text-white mb-1.5 tracking-tight group-hover:text-blue-100 transition-colors">
+                              {test.title}
+                            </h3>
+                            <p className="text-xs text-slate-400 font-medium line-clamp-1">
+                              {test.subtitle}
+                            </p>
+                          </div>
+
+                          {/* Action Button - Minimal Arrow */}
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300
+                                ${isSelected ? "bg-blue-600 text-white shadow-lg shadow-blue-500/40" : "bg-slate-700 text-slate-400 group-hover:bg-slate-600 group-hover:text-white"}`}
+                          >
+                            <ArrowLeft className="w-4 h-4 rotate-180" />
+                          </div>
+                        </div>
+
+                        {/* Metadata Row */}
+                        <div className="flex items-center gap-4 text-[10px] font-semibold text-slate-500 uppercase tracking-wider mt-4">
+                          <div className="flex items-center gap-1.5">
+                            <Clock className="w-3 h-3 text-slate-400" />
+                            <span>{test.time} MIN</span>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <Target className="w-3 h-3 text-slate-400" />
+                            <span>{test.questions} Ques</span>
+                          </div>
+                        </div>
+
+                        {/* Interactive Overlay for Start */}
+                        {isSelected && (
+                          <div className="absolute inset-0 z-20 cursor-pointer" onClick={(e) => { e.stopPropagation(); handleStartTest(); }}></div>
+                        )}
+                      </div>
                     </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
+                  </div>
+                );
+              })}
           </div>
         </div>
       )}
 
       {/* Writing Interface - Show when test is started */}
       {isTestStarted && selectedTest && (
-        <div className="space-y-6 animate-in fade-in duration-500">
-          <div className="flex items-center gap-4 mb-6">
-            <Button variant="ghost" onClick={handleBackToMenu} className="gap-2 pl-0 hover:pl-2 transition-all">
-              <ArrowLeft className="w-4 h-4" />
-              Back to Tests
-            </Button>
-            <div className="h-6 w-px bg-slate-200 dark:bg-slate-700"></div>
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white">
-              {selectedTest.title}: {selectedTest.subtitle}
-            </h2>
+        <div className="h-[calc(100vh-140px)] min-h-[600px] max-w-[1600px] mx-auto animate-in fade-in duration-500 flex flex-col">
+
+          {/* Top Bar Navigation (Minimal) */}
+          <div className="flex items-center justify-between mb-4 flex-none px-1">
+            <div className="flex items-center gap-4">
+              <Button variant="ghost" onClick={handleBackToMenu} className="gap-2 pl-0 hover:pl-2 transition-all text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">
+                <ArrowLeft className="w-4 h-4" />
+                Back to Tests
+              </Button>
+              <div className="h-4 w-px bg-slate-200 dark:bg-slate-700"></div>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white truncate max-w-[300px] lg:max-w-none">
+                {selectedTest.title}: {selectedTest.subtitle}
+              </h2>
+            </div>
+
+            {/* Stats (Timer & Word Count) - Always Visible */}
+            <div className="flex items-center gap-4">
+              {/* Word Count Pill */}
+              <div className={`flex items-center gap-2 px-4 py-2 rounded-full border shadow-sm transition-colors ${wordCountColor}`}>
+                <span className="text-xs font-bold uppercase tracking-wider">Words</span>
+                <span className="text-base font-mono font-bold leading-none">{wordCount}</span>
+                <span className="text-[10px] opacity-60 font-semibold">/ {minWords}</span>
+              </div>
+
+              {/* Timer Pill */}
+              <div className={`flex items-center gap-3 px-4 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm ${timeLeft < 300 ? "animate-pulse border-rose-200 dark:border-rose-900" : ""}`}>
+                <TimerIcon className={`w-4 h-4 ${timeLeft < 300 ? "text-rose-500" : "text-slate-400"}`} />
+                <span className={`text-base font-mono font-bold leading-none ${timeLeft < 300 ? "text-rose-600 dark:text-rose-400" : "text-slate-700 dark:text-slate-200"}`}>
+                  {formatTime(timeLeft)}
+                </span>
+              </div>
+            </div>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-6">
-            {/* Left Column: Prompt */}
-            <Card className="h-fit">
-              <CardHeader>
-                <CardTitle>Task Prompt</CardTitle>
-                <CardDescription>{getTaskDescription(taskType)}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                {prompt ? (
-                  <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-100 dark:border-blue-800">
-                    <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-3 flex items-center gap-2">
-                      <BookOpen className="w-4 h-4" />
-                      Question
-                    </h3>
-                    <p className="text-blue-800 dark:text-blue-200 whitespace-pre-wrap leading-relaxed text-lg">
-                      {prompt.prompt}
-                    </p>
-                  </div>
-                ) : (
-                  <div className="text-center py-12 text-slate-500">
-                    Loading prompt...
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+          {viewMode === "feedback" && aiAnalysis && aiAnalysis.evaluation ? (
+            <div className="h-full overflow-y-auto pr-2">
+              <div className="flex items-center justify-between mb-6">
+                <Button variant="ghost" onClick={() => setViewMode("editor")} className="gap-2">
+                  <ArrowLeft className="w-4 h-4" />
+                  Back to Editor
+                </Button>
+                <div className="flex items-center gap-2 px-4 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-full border border-slate-200 dark:border-slate-700">
+                  <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                    Analysis Complete: {aiAnalysis.evaluation.overall_band} Band
+                  </span>
+                </div>
+              </div>
+              <div className="rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800">
+                <FeedbackContainer
+                  evaluation={aiAnalysis.evaluation as EvaluationResult}
+                  coaching={aiAnalysis.coaching}
+                  essay={content.trim()}
+                  taskType={taskType === 1 ? "task1" : "task2"}
+                />
+              </div>
+            </div>
+          ) : (
+            /* Main Split Layout */
+            <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-8 h-full overflow-hidden pb-6">
 
-            {/* Right Column: Writing Area */}
-            <div className="space-y-6">
-              <Card className="h-full flex flex-col">
-                <CardHeader className="pb-3">
-                  <div className="flex justify-between items-center">
-                    <CardTitle>Your Response</CardTitle>
-                    <div className="flex items-center gap-2">
-                      <Badge variant={wordCount >= minWords ? "default" : "secondary"}>
-                        {wordCount} words
-                      </Badge>
-                      <span className="text-xs text-slate-500">Min: {minWords}</span>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="flex-1 flex flex-col gap-4">
-                  <Textarea
-                    placeholder={`Start writing your response for ${selectedTest.subtitle}...`}
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    className="flex-1 min-h-[400px] resize-none text-lg leading-relaxed p-4"
-                  />
-
-                  <div className="flex justify-between items-center pt-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={getNewQuestion}
-                    >
-                      <RotateCcw className="h-4 w-4 mr-2" />
-                      New Prompt
-                    </Button>
-
-                    <div className="flex gap-2">
-                      <Button
-                        onClick={handleSubmit}
-                        disabled={!content.trim() || submitWritingMutation.isPending}
-                        variant="outline"
-                      >
-                        <Send className="h-4 w-4 mr-2" />
-                        {submitWritingMutation.isPending ? "Submitting..." : "Basic Feedback"}
-                      </Button>
-                      <Button
-                        onClick={handleAIAnalysis}
-                        disabled={!content.trim() || aiAnalysisMutation.isPending}
-                        className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white border-0"
-                      >
-                        <TrendingUp className="h-4 w-4 mr-2" />
-                        {aiAnalysisMutation.isPending ? "Analyzing..." : "AI Analysis"}
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Feedback Section */}
-              {feedback && (
-                <Card className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 animate-in slide-in-from-bottom-4 duration-500">
-                  <CardHeader>
-                    <CardTitle className="text-green-800 dark:text-green-200 flex items-center gap-2">
-                      <CheckCircle className="w-5 h-5" />
-                      Basic Feedback
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-6">
-                    <div className="text-center p-4 bg-white dark:bg-green-900/40 rounded-xl border border-green-100 dark:border-green-800/50">
-                      <p className="text-sm font-medium text-green-600 dark:text-green-300 uppercase tracking-wider mb-1">Estimated Band Score</p>
-                      <p className="text-4xl font-bold text-green-700 dark:text-green-200">
-                        {feedback.bandScore}
+              {/* Left Column: Prompt & Chart (Scrollable, Sticky behavior via internal scroll) */}
+              <div className="lg:w-[45%] h-full overflow-y-auto pr-1 scrollbar-hide space-y-6">
+                <Card className="border-0 shadow-none bg-transparent">
+                  <div className="space-y-6">
+                    {/* Collapsible Prompt Info */}
+                    <details className="group bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 open:pb-4 transition-all">
+                      <summary className="p-4 cursor-pointer flex items-center justify-between list-none text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+                        <span>Task Instructions</span>
+                        <span className="group-open:rotate-180 transition-transform duration-200">
+                          <ArrowLeft className="w-4 h-4 -rotate-90" />
+                        </span>
+                      </summary>
+                      <p className="px-4 text-sm text-slate-700 dark:text-slate-300 leading-relaxed animate-in fade-in slide-in-from-top-1 duration-200">
+                        {getTaskDescription(taskType)}
                       </p>
-                    </div>
+                    </details>
 
-                    <div className="grid gap-4">
-                      <div className="p-4 bg-white dark:bg-green-900/30 rounded-lg border border-green-100 dark:border-green-800/30">
-                        <h4 className="font-semibold mb-2 text-green-800 dark:text-green-200">Grammar & Accuracy</h4>
-                        <p className="text-slate-700 dark:text-slate-300">{feedback.grammarFeedback}</p>
-                      </div>
-                      <div className="p-4 bg-white dark:bg-green-900/30 rounded-lg border border-green-100 dark:border-green-800/30">
-                        <h4 className="font-semibold mb-2 text-green-800 dark:text-green-200">Vocabulary</h4>
-                        <p className="text-slate-700 dark:text-slate-300">{feedback.vocabularyFeedback}</p>
-                      </div>
-                      <div className="p-4 bg-white dark:bg-green-900/30 rounded-lg border border-green-100 dark:border-green-800/30">
-                        <h4 className="font-semibold mb-2 text-green-800 dark:text-green-200">Structure</h4>
-                        <p className="text-slate-700 dark:text-slate-300">{feedback.structureFeedback}</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
+                    {prompt ? (
+                      <div className="space-y-6">
+                        {/* Task Image - Enhanced Visuals */}
+                        {
+                          // @ts-ignore
+                          selectedTest.imageUrl && (
+                            <div
+                              className="group relative rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-white dark:bg-black/40 shadow-sm transition-all duration-300 hover:shadow-md"
+                              onClick={() => setIsImageZoomed(true)}
+                            >
+                              <div className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <Badge variant="secondary" className="cursor-pointer shadow-sm"><Maximize2 className="w-3 h-3 mr-1" /> Zoom</Badge>
+                              </div>
+                              <img
+                                // @ts-ignore
+                                src={selectedTest.imageUrl}
+                                alt="Task Chart"
+                                className="w-full h-auto object-contain max-h-[500px] opacity-90 group-hover:opacity-100 transition-opacity"
+                              />
+                              {/* Inner Shadow Overlay for depth */}
+                              <div className="absolute inset-0 ring-1 ring-inset ring-black/5 rounded-xl pointer-events-none"></div>
+                            </div>
+                          )
+                        }
 
-              {aiAnalysis && (
-                <Card className="bg-indigo-50 dark:bg-indigo-900/20 border-indigo-200 dark:border-indigo-800 animate-in slide-in-from-bottom-4 duration-500">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-indigo-800 dark:text-indigo-200">
-                      <Sparkles className="h-5 w-5" />
-                      Advanced AI Analysis
-                    </CardTitle>
-                    <CardDescription className="text-indigo-700 dark:text-indigo-300">
-                      Detailed IELTS scoring based on official criteria
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-6">
-                    <div className="text-center p-6 bg-white dark:bg-indigo-900/40 rounded-xl border border-indigo-100 dark:border-indigo-800/50 shadow-sm">
-                      <p className="text-sm font-medium text-indigo-600 dark:text-indigo-300 uppercase tracking-wider mb-1">Overall Band Score</p>
-                      <p className="text-5xl font-bold text-indigo-700 dark:text-indigo-200">
-                        {aiAnalysis.overallScore}
-                      </p>
-                    </div>
+                        {/* Custom Component Mapping */}
+                        {
+                          // @ts-ignore
+                          selectedTest.component === "TradeConferenceMap" && (
+                            <div className="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-white dark:bg-black/40 shadow-sm transition-all duration-300">
+                              <TradeConferenceMap />
+                            </div>
+                          )
+                        }
 
-                    <div className="grid grid-cols-2 gap-4">
-                      {[
-                        { label: "Task Response", score: aiAnalysis.taskResponse },
-                        { label: "Coherence", score: aiAnalysis.coherenceCohesion },
-                        { label: "Lexical Resource", score: aiAnalysis.lexicalResource },
-                        { label: "Grammar", score: aiAnalysis.grammaticalRange }
-                      ].map((item, idx) => (
-                        <div key={idx} className="space-y-2 p-3 bg-white dark:bg-indigo-900/30 rounded-lg border border-indigo-100 dark:border-indigo-800/30">
-                          <div className="flex justify-between items-center">
-                            <span className="text-sm font-medium text-slate-700 dark:text-slate-300">{item.label}</span>
-                            <Badge variant="outline" className="bg-indigo-50 text-indigo-700 border-indigo-200">{item.score}</Badge>
-                          </div>
-                          <Progress
-                            value={(item.score / 9) * 100}
-                            className="h-1.5 bg-indigo-100 dark:bg-indigo-900"
-                          // indicatorClassName="bg-indigo-600 dark:bg-indigo-400"
-                          />
-                        </div>
-                      ))}
-                    </div>
+                        {
+                          // @ts-ignore
+                          selectedTest.component === "TownEvolutionMap" && (
+                            <div className="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-white dark:bg-black/40 shadow-sm transition-all duration-300">
+                              <TownEvolutionMap />
+                            </div>
+                          )
+                        }
 
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="font-semibold mb-3 text-indigo-800 dark:text-indigo-200 flex items-center gap-2">
-                          <Target className="h-4 w-4" />
-                          Detailed Feedback
-                        </h4>
-                        <div className="bg-white dark:bg-gray-800 p-5 rounded-xl border border-indigo-100 dark:border-gray-700 shadow-sm">
-                          <p className="text-slate-700 dark:text-slate-300 whitespace-pre-wrap leading-relaxed">
-                            {aiAnalysis.feedback}
+
+
+                        {/* Question Box */}
+                        <div className="bg-blue-50/50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-100 dark:border-blue-800/40 shadow-sm">
+                          <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-3 flex items-center gap-2">
+                            <BookOpen className="w-4 h-4" />
+                            Question
+                          </h3>
+                          <p className="text-slate-800 dark:text-slate-200 whitespace-pre-wrap leading-relaxed text-base font-serif">
+                            {prompt.prompt}
                           </p>
                         </div>
                       </div>
-
-                      {aiAnalysis.suggestions && aiAnalysis.suggestions.length > 0 && (
-                        <div>
-                          <h4 className="font-semibold mb-3 text-indigo-800 dark:text-indigo-200 flex items-center gap-2">
-                            <Star className="h-4 w-4" />
-                            Key Improvements
-                          </h4>
-                          <div className="grid gap-3">
-                            {aiAnalysis.suggestions.map((suggestion: string, index: number) => (
-                              <div key={index} className="flex items-start gap-3 p-4 bg-white dark:bg-gray-800 rounded-xl border border-indigo-100 dark:border-gray-700 shadow-sm transition-transform hover:scale-[1.01]">
-                                <Badge variant="secondary" className="mt-0.5 h-6 w-6 flex items-center justify-center rounded-full p-0 shrink-0 bg-indigo-100 text-indigo-700">
-                                  {index + 1}
-                                </Badge>
-                                <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                                  {suggestion}
-                                </p>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </CardContent>
+                    ) : (
+                      <div className="text-center py-12 text-slate-500">
+                        Loading prompt...
+                      </div>
+                    )}
+                  </div>
                 </Card>
-              )}
+              </div>
+
+              {/* Right Column: Editor Area (Wide & Clean) */}
+              <div className="lg:w-[55%] h-full flex flex-col min-h-0">
+
+                {/* Editor Container (Centered & Constrained) */}
+                <Card className="flex-1 flex flex-col h-full border border-slate-300 dark:border-slate-700 shadow-sm overflow-hidden bg-white dark:bg-slate-900 rounded-xl">
+                  <div className="flex-1 relative overflow-hidden flex flex-col">
+                    <Textarea
+                      placeholder="Start writing your response here..."
+                      value={content}
+                      onChange={(e) => setContent(e.target.value)}
+                      className="flex-1 w-full mx-auto resize-none border-0 focus-visible:ring-0 p-8 text-lg leading-loose font-mono text-slate-800 dark:text-slate-200 placeholder:text-slate-300 dark:placeholder:text-slate-700 bg-transparent custom-scrollbar"
+                      spellCheck={false}
+                    />
+                    {/* Floating Gradient Bottom Overlay */}
+                    <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white dark:from-slate-900 to-transparent pointer-events-none"></div>
+                  </div>
+
+                  {/* Editor Footer Action Bar - Redesigned */}
+                  <div className="p-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/80 backdrop-blur-sm flex items-center justify-between">
+                    <div className="text-xs text-slate-400 flex items-center gap-2 font-medium">
+                      {lastSaved && <span className="flex items-center gap-1.5"><Save className="w-3.5 h-3.5 text-emerald-500" /> Saved {lastSaved.toLocaleTimeString()}</span>}
+                    </div>
+                    <div className="flex gap-4">
+                      {aiAnalysis && (
+                        <Button
+                          variant="ghost"
+                          onClick={() => setViewMode("feedback")}
+                          className="h-10 text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-800"
+                        >
+                          View Previous Feedback
+                        </Button>
+                      )}
+                      <Button
+                        onClick={handleAIAnalysis}
+                        disabled={!content.trim() || aiAnalysisMutation.isPending}
+                        className="h-10 px-8 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white text-sm font-bold uppercase tracking-wide shadow-lg shadow-purple-500/20 rounded-lg transition-all transform hover:scale-[1.02]"
+                      >
+                        {aiAnalysisMutation.isPending ? (
+                          <span className="flex items-center gap-2">
+                            <Sparkles className="w-4 h-4 animate-spin" /> Analyzing...
+                          </span>
+                        ) : (
+                          <span className="flex items-center gap-2">
+                            <Sparkles className="w-4 h-4" /> Analyze Essay
+                          </span>
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+
+              </div>
             </div>
-          </div>
+          )}
+
+          {/* Zoom Modal Re-implementation for Full Screen */}
+          {isImageZoomed && selectedTest.imageUrl && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 animate-in fade-in duration-200" onClick={() => setIsImageZoomed(false)}>
+              <button className="absolute top-6 right-6 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors">
+                <X className="w-8 h-8" />
+              </button>
+              {/* @ts-ignore */}
+              <img src={selectedTest.imageUrl} alt="Zoomed Chart" className="max-w-full max-h-[95vh] object-contain rounded-lg shadow-2xl" onClick={(e) => e.stopPropagation()} />
+            </div>
+          )}
         </div>
       )}
     </div>

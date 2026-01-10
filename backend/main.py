@@ -7,7 +7,7 @@ on IELTS Reading answers using LangChain and OpenAI GPT-4 Turbo.
 
 # Load environment variables FIRST, before any other imports
 from dotenv import load_dotenv
-load_dotenv()
+load_dotenv(override=True)
 from pathlib import Path
 load_dotenv(dotenv_path=Path(__file__).resolve().parent / ".pip")
 
@@ -76,6 +76,8 @@ app = FastAPI(
     lifespan=lifespan
 )
 
+from ielts_writing.service import router as writing_router
+
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
@@ -84,6 +86,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Include Routers
+app.include_router(writing_router)
 
 
 # Health check models

@@ -64,10 +64,19 @@ export default function ReadingTutorChat({ droppedQuestionId, streamingEnabled =
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  // Sanitize AI response: trim and collapse excessive newlines
+  const sanitizeContent = (raw: string): string => {
+    // Trim leading/trailing whitespace
+    let processed = raw.trim();
+    // Collapse 3+ consecutive newlines to max 2
+    processed = processed.replace(/\n{3,}/g, '\n\n');
+    return processed;
+  };
+
   // Format assistant messages: collapse excessive blank lines and auto-number "Statements:" blocks
   const formatAssistantContent = (raw: string): string => {
-    // Collapse 3+ blank lines to just 2 (keep one blank line between sections)
-    let processed = raw.replace(/\n{3,}/g, '\n\n');
+    // First sanitize the content
+    let processed = sanitizeContent(raw);
 
     // Fix loose lists: "1. \n Text" -> "1. Text"
     processed = processed.replace(/^(\d+\.|[-*])\s+\n\s*/gm, '$1 ');
@@ -275,7 +284,7 @@ export default function ReadingTutorChat({ droppedQuestionId, streamingEnabled =
       <div className="flex-1 overflow-y-auto p-4 sm:p-6 scroll-smooth custom-scrollbar bg-slate-50/50 dark:bg-slate-950/50">
         <div className="max-w-3xl mx-auto space-y-3">
           {messages.map((message) => (
-            (message.content || message.role === 'user') ? (
+            (message.role === 'user' || (message.role === 'assistant' && message.content.trim())) ? (
               <div
                 key={message.id}
                 className="flex gap-3 animate-in fade-in slide-in-from-bottom-4 duration-500"
@@ -326,7 +335,43 @@ export default function ReadingTutorChat({ droppedQuestionId, streamingEnabled =
                                 }
                               }
 
-                              return <p className="mb-2 last:mb-0 leading-relaxed">{children}</p>;
+                              // Passage Excerpt & Statement Styling
+                              const childArray = Array.isArray(children) ? children : [children];
+                              const firstChild = childArray[0];
+
+                              if (typeof firstChild === 'string') {
+                                if (firstChild.startsWith('Passage Excerpt:')) {
+                                  // Remove prefix from first child
+                                  const newFirstChild = firstChild.replace('Passage Excerpt:', '').trim();
+                                  const newChildren = [newFirstChild, ...childArray.slice(1)];
+
+                                  return (
+                                    <div className="my-3 p-3.5 bg-blue-50/50 dark:bg-blue-900/10 border-l-[3px] border-blue-500 rounded-r-lg shadow-sm">
+                                      <span className="block text-[11px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-1.5 opacity-90">Passage Excerpt</span>
+                                      <div className="italic text-slate-700 dark:text-slate-300 leading-relaxed text-[15px]">
+                                        {newChildren}
+                                      </div>
+                                    </div>
+                                  );
+                                }
+
+                                if (firstChild.startsWith('Statement:')) {
+                                  // Remove prefix from first child
+                                  const newFirstChild = firstChild.replace('Statement:', '').trim();
+                                  const newChildren = [newFirstChild, ...childArray.slice(1)];
+
+                                  return (
+                                    <div className="my-3 p-3.5 bg-purple-50/50 dark:bg-purple-900/10 border-l-[3px] border-purple-500 rounded-r-lg shadow-sm">
+                                      <span className="block text-[11px] font-bold text-purple-600 dark:text-purple-400 uppercase tracking-widest mb-1.5 opacity-90">Statement</span>
+                                      <div className="font-medium text-slate-800 dark:text-slate-200 leading-relaxed text-[15px]">
+                                        {newChildren}
+                                      </div>
+                                    </div>
+                                  );
+                                }
+                              }
+
+                              return <p className="mb-1.5 last:mb-0 leading-relaxed">{children}</p>;
                             },
                             em: ({ children }) => (
                               <em className="not-italic font-medium text-blue-700 dark:text-blue-200 bg-blue-100/50 dark:bg-blue-900/40 px-1.5 py-0.5 rounded border border-blue-200/50 dark:border-blue-700/30 box-decoration-clone mx-0.5">
@@ -343,14 +388,18 @@ export default function ReadingTutorChat({ droppedQuestionId, streamingEnabled =
                                 {children}
                               </strong>
                             ),
-                            ul: ({ children }) => <ul className="my-3 pl-5 space-y-2.5">{children}</ul>,
-                            ol: ({ children }) => <ol className="my-3 pl-5 space-y-2.5 list-decimal">{children}</ol>,
+                            ul: ({ children }) => <ul className="my-1.5 pl-5 space-y-1">{children}</ul>,
+                            ol: ({ children }) => <ol className="my-1.5 pl-5 space-y-1 list-decimal">{children}</ol>,
                             li: ({ children }) => (
                               <li className="pl-1 text-slate-700 dark:text-slate-300">
                                 <span className="relative -left-2 top-0.5 inline-block w-4 text-center text-indigo-400 opacity-60">•</span>
                                 <span className="-ml-1">{children}</span>
                               </li>
                             ),
+                            h1: ({ children }) => <h1 className="text-lg font-bold mt-3 mb-1.5 text-slate-900 dark:text-slate-100">{children}</h1>,
+                            h2: ({ children }) => <h2 className="text-base font-bold mt-3 mb-1.5 text-slate-900 dark:text-slate-100">{children}</h2>,
+                            h3: ({ children }) => <h3 className="text-sm font-bold mt-2 mb-1 text-slate-900 dark:text-slate-100 uppercase tracking-wide opacity-90">{children}</h3>,
+                            h4: ({ children }) => <h4 className="text-sm font-bold mt-2 mb-1 text-slate-900 dark:text-slate-100">{children}</h4>,
                             code: ({ children }) => (
                               <code className="px-1.5 py-0.5 rounded text-[13px] font-bold bg-amber-100/60 dark:bg-amber-900/30 text-amber-700 dark:text-amber-200 border border-amber-200 dark:border-amber-800/50 font-mono shadow-sm mx-0.5">
                                 {children}
@@ -441,8 +490,8 @@ export default function ReadingTutorChat({ droppedQuestionId, streamingEnabled =
             ) : null
           ))}
 
-          {/* Loading indicator */}
-          {isLoading && (messages.length === 0 || messages[messages.length - 1].role !== 'assistant' || !messages[messages.length - 1].content) && (
+          {/* Loading indicator - only show when no assistant message is streaming */}
+          {isLoading && !messages.some(m => m.role === 'assistant' && m.content.trim() === '' && m.id === messages[messages.length - 1]?.id) && (messages.length === 0 || messages[messages.length - 1].role !== 'assistant' || !messages[messages.length - 1].content.trim()) && (
             <div className="flex gap-3 animate-in fade-in duration-300">
               <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
                 <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full p-1.5">

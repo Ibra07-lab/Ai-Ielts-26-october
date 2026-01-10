@@ -376,6 +376,11 @@
   .skeuo-glow {
     filter: drop-shadow(0 0 8px #a5f3fc) drop-shadow(0 0 12px #22d3ee);
   }
+
+  /* Hover Scale Utilities */
+  .hover\:scale-102:hover {
+    transform: scale(1.02);
+  }
 }
 @layer components {
   /* Authentic IELTS Note Completion Design */
@@ -520,5 +525,67 @@
 
   .dark .completion-notes input:focus {
     border-bottom-color: #3b82f6 !important;
+  }
+
+  /* Chat Content - Compact Spacing for AI Messages */
+  .chat-content {
+    line-height: 1.6;
+  }
+
+  .chat-content p,
+  .chat-content h1,
+  .chat-content h2,
+  .chat-content h3,
+  .chat-content h4,
+  .chat-content h5,
+  .chat-content h6 {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .chat-content p:first-child,
+  .chat-content h1:first-child,
+  .chat-content h2:first-child,
+  .chat-content h3:first-child,
+  .chat-content h4:first-child,
+  .chat-content h5:first-child,
+  .chat-content h6:first-child {
+    margin-top: 0;
+  }
+
+  .chat-content p:last-child,
+  .chat-content h1:last-child,
+  .chat-content h2:last-child,
+  .chat-content h3:last-child,
+  .chat-content h4:last-child,
+  .chat-content h5:last-child,
+  .chat-content h6:last-child {
+    margin-bottom: 0;
+  }
+
+  .chat-content ul,
+  .chat-content ol {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding-left: 1.25rem;
+  }
+
+  .chat-content li {
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    line-height: 1.5;
+  }
+
+  .chat-content li:first-child {
+    margin-top: 0;
+  }
+
+  .chat-content li:last-child {
+    margin-bottom: 0;
+  }
+
+  .chat-content blockquote {
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
   }
 }

@@ -48,10 +48,43 @@ const writingPrompts: Record<number, string[]> = {
   ],
 };
 
+const testSpecificPrompts: Record<number, WritingPrompt> = {
+  5: {
+    taskType: 1,
+    prompt: "The bar chart compares the average daily water consumption per person in five cities in 2010 and 2020.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.",
+  }
+};
+
 // Retrieves a random writing prompt for a specific task type.
-export const getWritingPrompt = api<{ taskType: number }, WritingPrompt>(
+export const getWritingPrompt = api<{ taskType: number; test_id?: number }, WritingPrompt>(
   { expose: true, method: "GET", path: "/writing/prompt/:taskType" },
-  async ({ taskType }) => {
+  async ({ taskType, test_id }) => {
+    // If a specific test ID is provided and we have a prompt for it, return that
+    const id = test_id ? Number(test_id) : null;
+
+    // Test 1: Internet Access Line Graph
+    if (id === 1) {
+      return {
+        taskType: 1,
+        prompt: "The line graph shows the percentage of households with internet access in Norland, Eastaria and Veridia between 2000 and 2020.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant."
+      };
+    }
+
+    // Test 2: Teenagers Bar Chart
+    if (id === 3) {
+      return {
+        taskType: 1,
+        prompt: "The bar chart compares the average daily time spent on four activities by teenagers in 2010 and 2020, measured in minutes per day.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant."
+      };
+    }
+
+    if (id === 5) {
+      return {
+        taskType: 1,
+        prompt: "The bar chart shows the average daily water consumption per person in five cities in 2010 and 2020, measured in litres per person per day.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant."
+      };
+    }
+
     const prompts = writingPrompts[taskType] || [];
     const randomIndex = Math.floor(Math.random() * prompts.length);
     const prompt = prompts[randomIndex];
@@ -71,7 +104,7 @@ export const submitWriting = api<WritingSubmission, WritingFeedback>(
     const wordCount = req.content.split(/\s+/).length;
     const bandScore = Math.round((Math.random() * 3 + 5) * 10) / 10; // 5.0-8.0 range
 
-    const grammarFeedback = bandScore >= 7 
+    const grammarFeedback = bandScore >= 7
       ? "Good grammar usage with minor errors. Consider reviewing complex sentence structures."
       : "Focus on improving grammar accuracy. Pay attention to verb tenses and subject-verb agreement.";
 

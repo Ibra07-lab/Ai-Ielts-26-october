@@ -4,34 +4,734 @@
     "passages": [
 {
   "id": 1,
-  "title": "Vertical Gardens: Transforming Urban Food Production",
-  "level": "intermediate",
+  "title": "Biochar: Ancient Soil Technology for Modern Farming",
+  "level": "moderate",
   "estimatedTime": 20,
   "paragraphs": [
     {
       "id": "A",
-      "text": "Cities worldwide face mounting pressure to feed growing populations within limited space. By 2050, approximately 80 percent of the global population is projected to live in urban areas, creating unprecedented demand for locally produced food. Traditional agriculture requires extensive land, which is increasingly scarce in metropolitan environments. Vertical gardens—structures that grow plants in stacked layers on building walls or purpose-built frames—offer a promising solution to this challenge. These installations transform unused urban surfaces into productive growing spaces, allowing cities to cultivate fresh vegetables, herbs, and even fruits without expanding their physical footprint."
+      "text": "Biochar is a form of charcoal produced by heating organic materials in conditions with limited oxygen, a process called pyrolysis. This dark, porous substance has attracted considerable attention in recent years as a potential solution to multiple environmental challenges. Unlike regular charcoal, which is typically burned for fuel, biochar is added to soil to improve its fertility and structure. Agricultural scientists now recognise that this seemingly simple material can enhance crop production, reduce the need for chemical fertilizers, and help remove carbon dioxide from the atmosphere. The growing interest in sustainable farming practices has prompted researchers worldwide to investigate how ancient soil management techniques might address contemporary agricultural problems."
     },
     {
       "id": "B",
-      "text": "The concept of vertical farming emerged in academic discussions during the early 2000s, but practical implementation began much later. The first large-scale vertical garden installation designed specifically for food production was established in Singapore in 2014, covering approximately 150 square metres of a residential tower. This pioneering project demonstrated that vertical systems could produce vegetables efficiently in tropical climates. Subsequently, similar initiatives appeared in South Korea, where Seoul launched a municipal programme to install vertical gardens on government buildings. A 2018 study by the Tokyo Institute of Sustainable Agriculture found that well-designed vertical gardens could yield up to 20 times more produce per square metre than conventional horizontal farming methods, sparking international interest in the technology."
+      "text": "The origins of biochar can be traced back approximately 2,500 years to the Amazon basin in Brazil. There, ancient civilizations created patches of remarkably fertile soil known locally as terra preta, meaning 'dark earth' in Portuguese. European scientists first documented these unusual soils in the 1870s, noting their exceptional productivity compared to surrounding land. However, serious scientific investigation of the phenomenon did not begin until 2007, when researchers from the International Biochar Research Network published a comprehensive study in the Journal of Soil Sciences. This research demonstrated that terra preta contained high concentrations of charcoal particles, which had remained stable in the soil for millennia. The discovery suggested that deliberately adding charcoal to agricultural land could recreate these highly productive conditions."
     },
     {
       "id": "C",
-      "text": "Dr. Amara Chen, an agricultural engineer at the International Urban Farming Alliance, has been instrumental in developing accessible hydroponic systems for vertical gardens. Hydroponics is a method of growing plants without soil, using nutrient-enriched water instead. Chen's modular system consists of lightweight, interlocking panels that can be attached to virtually any vertical surface. Each panel contains small pockets filled with growing medium—a porous material that supports plant roots while allowing water and air circulation. According to Chen, this design reduces installation costs by approximately 40 percent compared to earlier vertical farming technologies. Moreover, the modular approach allows communities to start small and expand gradually as they gain experience and resources."
+      "text": "Dr. Yuki Tanaka, a soil scientist at the Institute for Tropical Agriculture in São Paulo, has researched the mechanisms behind biochar's effectiveness for over a decade. According to Tanaka, the key lies in the material's unique physical structure. During pyrolysis, which occurs at temperatures between 450 and 550 degrees Celsius, organic matter transforms into a highly porous substance. A single gram of biochar can possess a surface area equivalent to a tennis court. This structure provides habitat for beneficial soil microorganisms and improves the soil's capacity to retain both water and nutrients. Furthermore, biochar functions as a form of carbon sequestration, locking carbon into the soil for between 1,000 and 1,500 years. A 2019 study by Tanaka's team demonstrated that biochar-amended soils showed a 50% reduction in nutrient leaching."
     },
     {
       "id": "D",
-      "text": "Setting up a vertical garden system involves several distinct stages. First, workers install a sturdy framework on the chosen wall or structure, ensuring it can support the weight of saturated growing medium and mature plants. Subsequently, they connect an irrigation system that delivers water and nutrients to each growing section through a network of tubes. Following this installation phase, technicians add the growing medium to individual pockets or containers and plant seeds or seedlings. Finally, operators establish a monitoring routine to check water levels, nutrient concentrations, and plant health. The entire process typically takes between two and four weeks for a standard residential installation. Meanwhile, automated systems can regulate water distribution, though many community projects prefer manual monitoring to encourage resident participation."
+      "text": "Professor Amara Diallo, an environmental engineer at the University of Nairobi, focuses on developing practical biochar production methods for small-scale farmers. Diallo explains that the production process involves four main stages. First, suitable organic materials such as agricultural waste, wood chips, or crop residues are collected and dried. Subsequently, these materials are placed in a specialised kiln or retort where they undergo pyrolysis at controlled temperatures for several hours. Following this heating phase, the resulting char must cool completely before handling. Finally, the biochar is often mixed with compost or manure before being applied to fields at rates of between 20 and 40 tonnes per hectare. Diallo emphasises that proper production techniques are essential, as the pyrolysis temperature significantly affects the final product's properties. Research published in the African Journal of Agricultural Research in 2021 confirmed that biochar produced at lower temperatures retains more nutrients beneficial for plant growth."
     },
     {
       "id": "E",
-      "text": "The implementation of vertical gardens varies significantly between cities, as illustrated by contrasting approaches in Singapore and Detroit. Singapore's government-sponsored programme emphasizes high-technology solutions, utilizing sensor networks and automated climate control to maximize yield in the city-state's hot, humid environment. Research published in 2021 revealed that these installations reduced surrounding air temperatures by 3 to 5 degrees Celsius while producing consistent harvests year-round. Conversely, Detroit has embraced community-led initiatives, with residents transforming abandoned buildings into productive vertical farms. Professor Luis Ramirez, an urban planning specialist at the Detroit Institute for Community Development, has documented these grassroots projects extensively. His findings indicate that 65 percent of participants reported strengthened neighbourhood connections and improved access to fresh produce. However, Detroit's systems typically produce smaller quantities than Singapore's technology-intensive installations."
+      "text": "The application of biochar varies considerably across different regions. In Australia, large commercial operations have invested in industrial pyrolysis facilities capable of processing thousands of tonnes of agricultural waste annually. These operations primarily target broad-acre grain farming, where biochar is applied using conventional spreading equipment. By contrast, projects in Kenya and other parts of East Africa have focused on small-scale approaches using locally made kilns constructed from recycled metal drums. Despite these differences in scale, both approaches have demonstrated measurable benefits. A three-year trial in Western Australia reported crop yield increases of up to 300% in sandy soils with poor water retention. Meanwhile, similar trials in Kenya showed that maize yields improved by between 60 and 85% when biochar was combined with organic fertilizers. These results suggest that the technology can be adapted to suit diverse agricultural contexts."
     },
     {
       "id": "F",
-      "text": "Vertical gardens represent a significant innovation in urban food production, though challenges remain. Installation expenses can deter adoption in lower-income communities, despite decreasing costs. Additionally, vertical systems require consistent maintenance and technical knowledge that not all communities possess. Nevertheless, the environmental benefits are substantial: reduced transportation emissions from local food production, decreased water consumption through recycling systems, and improved urban air quality. As cities continue to expand and climate change intensifies, vertical gardens may become essential infrastructure rather than experimental projects. The technology's success will likely depend on developing affordable, user-friendly systems that diverse communities can implement and maintain independently."
+      "text": "Despite its promise, biochar technology faces several obstacles to widespread adoption. The initial cost of production equipment represents a significant barrier for farmers in developing regions, while the long-term effects of biochar application on different soil types require further study. Nevertheless, as global food systems face mounting pressure from climate change and soil degradation, interest in this ancient technology continues to grow. Some researchers estimate that widespread biochar use could offset approximately 12% of global greenhouse gas emissions while simultaneously improving agricultural productivity. The challenge now lies in making this knowledge accessible to the farmers who could benefit most."
     }
             ],
-            "questions": []
-        }]}
+            "questions": [{
+  "id": 1,
+  "type": "true-false-not-given",
+  "title": "Questions 1-5",
+  "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
+  "questions": [
+    {
+      "id": 1,
+      "questionText": "Terra preta soils were first recorded by European scientists during the nineteenth century.",
+      "correctAnswer": "TRUE",
+      "justification": "Paragraph B states that 'European scientists first documented these unusual soils in the 1870s.' Since the 1870s falls within the nineteenth century, the statement accurately paraphrases the historical timeline presented in the passage.",
+      "evidenceQuote": "\"European scientists first documented these unusual soils in the 1870s\""
+    },
+    {
+      "id": 2,
+      "questionText": "Comprehensive scientific investigation of terra preta began shortly after European scientists discovered the soils.",
+      "correctAnswer": "FALSE",
+      "justification": "The passage states that while discovery occurred in the 1870s, 'serious scientific investigation of the phenomenon did not begin until 2007.' This represents a gap of over a century, contradicting the claim that it began 'shortly after' discovery.",
+      "evidenceQuote": "\"serious scientific investigation of the phenomenon did not begin until 2007\""
+    },
+    {
+      "id": 3,
+      "questionText": "Biochar has the capacity to retain carbon in soil for more than a thousand years.",
+      "correctAnswer": "TRUE",
+      "justification": "Paragraph C explicitly states that biochar functions as carbon sequestration, 'locking carbon into the soil for between 1,000 and 1,500 years.' The statement accurately paraphrases 'locking carbon' as 'retain carbon' and correctly identifies the minimum duration.",
+      "evidenceQuote": "\"locking carbon into the soil for between 1,000 and 1,500 years\""
+    },
+    {
+      "id": 4,
+      "questionText": "Producing biochar is less expensive than purchasing chemical fertilizers.",
+      "correctAnswer": "NOT GIVEN",
+      "justification": "While paragraph F mentions that 'the initial cost of production equipment represents a significant barrier,' the passage never provides information about the specific cost of chemical fertilizers or compares the expense of biochar production against purchasing fertilizers.",
+      "evidenceQuote": "\"The initial cost of production equipment represents a significant barrier for farmers in developing regions\""
+    },
+    {
+      "id": 5,
+      "questionText": "Biochar projects in Kenya rely primarily on industrial pyrolysis facilities for production.",
+      "correctAnswer": "FALSE",
+      "justification": "The passage states that 'projects in Kenya and other parts of East Africa have focused on small-scale approaches using locally made kilns.' It is Australia that uses 'industrial pyrolysis facilities,' not Kenya, making the statement false.",
+      "evidenceQuote": "\"projects in Kenya and other parts of East Africa have focused on small-scale approaches using locally made kilns constructed from recycled metal drums\""
+    }
+  ]
+},
+{
+  "id": 2,
+  "type": "sentence-completion",
+  "title": "Questions 6-10",
+  "word_limit": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+  "instructions": "Complete the sentences below. Choose NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer.",
+  "questions": [
+    {
+      "id": 6,
+      "questionText": "The Portuguese term 'terra preta' translates as _____ in English.",
+      "correctAnswer": "dark earth",
+      "alternativeAnswers": [
+        "dark earth"
+      ],
+      "justification": "The passage explicitly states that terra preta means 'dark earth' in Portuguese. The sentence paraphrases 'meaning' as 'translates as' while retaining the exact answer phrase from the passage.",
+      "evidenceQuote": "\"patches of remarkably fertile soil known locally as terra preta, meaning 'dark earth' in Portuguese\""
+    },
+    {
+      "id": 7,
+      "questionText": "Research conducted by Dr. Tanaka's team demonstrated that adding biochar to soil reduced _____ by fifty percent.",
+      "correctAnswer": "nutrient leaching",
+      "alternativeAnswers": [
+        "nutrient leaching"
+      ],
+      "justification": "Paragraph C states that Tanaka's 2019 study showed '50% reduction in nutrient leaching.' The sentence paraphrases 'biochar-amended soils showed a 50% reduction in' as 'adding biochar to soil reduced...by fifty percent,' restructuring the passive finding into an active result.",
+      "evidenceQuote": "\"A 2019 study by Tanaka's team demonstrated that biochar-amended soils showed a 50% reduction in nutrient leaching\""
+    },
+    {
+      "id": 8,
+      "questionText": "According to Professor Diallo, biochar should be applied to agricultural land at rates of between 20 and _____ tonnes per hectare.",
+      "correctAnswer": "40",
+      "alternativeAnswers": [
+        "40"
+      ],
+      "justification": "Paragraph D describes application rates as 'between 20 and 40 tonnes per hectare.' The sentence paraphrases 'fields' as 'agricultural land' while testing the upper limit of the application rate range.",
+      "evidenceQuote": "\"the biochar is often mixed with compost or manure before being applied to fields at rates of between 20 and 40 tonnes per hectare\""
+    },
+    {
+      "id": 9,
+      "questionText": "Unlike Australia's industrial pyrolysis facilities, Kenyan projects manufacture kilns from recycled _____.",
+      "correctAnswer": "metal drums",
+      "alternativeAnswers": [
+        "metal drums"
+      ],
+      "justification": "Paragraph E contrasts Australian industrial operations with Kenyan 'small-scale approaches using locally made kilns constructed from recycled metal drums.' The sentence paraphrases 'constructed from' as 'manufacture...from' and explicitly frames the comparison between regions.",
+      "evidenceQuote": "\"projects in Kenya and other parts of East Africa have focused on small-scale approaches using locally made kilns constructed from recycled metal drums\""
+    },
+    {
+      "id": 10,
+      "questionText": "Some researchers believe that widespread adoption of biochar could reduce global greenhouse gas emissions by approximately _____.",
+      "correctAnswer": "12%",
+      "alternativeAnswers": [
+        "12%",
+        "12 percent"
+      ],
+      "justification": "Paragraph F states that 'widespread biochar use could offset approximately 12% of global greenhouse gas emissions.' The sentence paraphrases 'estimate' as 'believe,' 'use' as 'adoption,' and 'offset' as 'reduce' while retaining the exact percentage figure.",
+      "evidenceQuote": "\"Some researchers estimate that widespread biochar use could offset approximately 12% of global greenhouse gas emissions\""
+    }
+  ]
+},
+{
+  "id": 3,
+  "type": "flow-chart-completion",
+  "title": "Questions 11-14",
+  "instructions": "Complete the flow chart below. Choose NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer.",
+  "word_limit": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+  "flow_chart": {
+    "title": "The Biochar Production Process",
+    "orientation": "vertical",
+    "nodes": [
+      {
+        "id": "node1",
+        "type": "stage",
+        "content": "Suitable organic materials such as agricultural waste or crop residues are gathered",
+        "position": 1
+      },
+      {
+        "id": "gap11",
+        "type": "gap",
+        "content": "Materials are collected and __________",
+        "gapNumber": 11,
+        "correctAnswer": "dried",
+        "position": 2
+      },
+      {
+        "id": "node2",
+        "type": "stage",
+        "content": "Prepared materials are placed in a specialized kiln or retort",
+        "position": 3
+      },
+      {
+        "id": "gap12",
+        "type": "gap",
+        "content": "Materials undergo __________ at controlled temperatures for several hours",
+        "gapNumber": 12,
+        "correctAnswer": "pyrolysis",
+        "position": 4
+      },
+      {
+        "id": "node3",
+        "type": "stage",
+        "content": "After the heating phase is complete",
+        "position": 5
+      },
+      {
+        "id": "gap13",
+        "type": "gap",
+        "content": "The resulting char must __________ before handling",
+        "gapNumber": 13,
+        "correctAnswer": "cool completely",
+        "position": 6
+      },
+      {
+        "id": "node4",
+        "type": "stage",
+        "content": "Biochar is combined with compost or manure",
+        "position": 7
+      },
+      {
+        "id": "gap14",
+        "type": "gap",
+        "content": "Applied to fields at rates of between 20 and __________ tonnes per hectare",
+        "gapNumber": 14,
+        "correctAnswer": "40",
+        "position": 8
+      },
+      {
+        "id": "node5",
+        "type": "stage",
+        "content": "Biochar is incorporated into agricultural soil",
+        "position": 9
+      }
+    ],
+    "connections": [
+      {
+        "from": "node1",
+        "to": "gap11",
+        "style": "solid"
+      },
+      {
+        "from": "gap11",
+        "to": "node2",
+        "style": "solid"
+      },
+      {
+        "from": "node2",
+        "to": "gap12",
+        "style": "solid"
+      },
+      {
+        "from": "gap12",
+        "to": "node3",
+        "style": "solid"
+      },
+      {
+        "from": "node3",
+        "to": "gap13",
+        "style": "solid"
+      },
+      {
+        "from": "gap13",
+        "to": "node4",
+        "style": "solid"
+      },
+      {
+        "from": "node4",
+        "to": "gap14",
+        "style": "solid"
+      },
+      {
+        "from": "gap14",
+        "to": "node5",
+        "style": "solid"
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": 11,
+      "gap_number": 11,
+      "correctAnswer": "dried",
+      "alternativeAnswers": [
+        "dried"
+      ],
+      "justification": "The passage explicitly states that after collection, materials are 'dried' as part of the initial preparation stage.",
+      "evidenceQuote": "\"First, suitable organic materials such as agricultural waste, wood chips, or crop residues are collected and dried\""
+    },
+    {
+      "id": 12,
+      "gap_number": 12,
+      "correctAnswer": "pyrolysis",
+      "alternativeAnswers": [
+        "pyrolysis"
+      ],
+      "justification": "The passage states that materials 'undergo pyrolysis at controlled temperatures.' This is the technical term for the heating process.",
+      "evidenceQuote": "\"these materials are placed in a specialised kiln or retort where they undergo pyrolysis at controlled temperatures for several hours\""
+    },
+    {
+      "id": 13,
+      "gap_number": 13,
+      "correctAnswer": "cool completely",
+      "alternativeAnswers": [
+        "cool completely"
+      ],
+      "justification": "The passage explicitly states that 'the resulting char must cool completely before handling.' This phrase describes the essential safety step between heating and application.",
+      "evidenceQuote": "\"Following this heating phase, the resulting char must cool completely before handling\""
+    },
+    {
+      "id": 14,
+      "gap_number": 14,
+      "correctAnswer": "40",
+      "alternativeAnswers": [
+        "40"
+      ],
+      "justification": "The passage specifies the application rate as 'between 20 and 40 tonnes per hectare.' The gap tests the upper limit of this range.",
+      "evidenceQuote": "\"before being applied to fields at rates of between 20 and 40 tonnes per hectare\""
+    }
+  ]
+}
+]
+},
+{
+  "id": 2,
+  "title": "Antimicrobial Stewardship: Optimising Hospital Antibiotic Use Amid Persistent Barriers",
+  "level": "moderate",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "A",
+      "text": "Antibiotic resistance represents one of the most pressing challenges facing modern healthcare systems. Each year, hospitals worldwide contend with infections caused by bacteria that no longer respond to conventional treatments, leading to prolonged patient stays, increased mortality rates, and substantially higher medical costs. According to a 2022 report by the World Health Alliance for Antimicrobial Stewardship, resistant infections contribute to approximately 1.27 million deaths globally per annum, with hospital-acquired infections accounting for nearly 37% of these cases. The development of antimicrobial stewardship programmes—coordinated interventions designed to optimise antibiotic prescribing—has emerged as a primary response to this crisis. However, the implementation of such programmes varies considerably across healthcare settings, and numerous barriers continue to impede their effectiveness."
+    },
+    {
+      "id": "B",
+      "text": "The concept of antimicrobial stewardship first gained formal recognition in the late 1990s, when escalating resistance patterns prompted healthcare institutions to reconsider their prescribing practices. Initially, efforts focused primarily on restricting access to broad-spectrum antibiotics through formulary controls and requiring specialist approval before certain medications could be dispensed. By 2007, the Infectious Diseases Society of America had published comprehensive guidelines advocating for a structured approach that combined restrictive measures with educational initiatives and continuous feedback mechanisms. A decade later, regulatory bodies in several countries began mandating stewardship programmes as a condition of hospital accreditation. Research conducted by the European Centre for Hospital Infection Control between 2015 and 2019 revealed that hospitals with established programmes achieved, on average, a 22% reduction in inappropriate prescribing compared to those without formal interventions."
+    },
+    {
+      "id": "C",
+      "text": "Dr. Helena Västra, a senior researcher at the Karolinska Institute in Stockholm, has identified several core components that appear to distinguish successful stewardship programmes from less effective ones. According to Västra's analysis, published in the Journal of Antimicrobial Therapy in 2021, effective programmes typically follow a structured implementation process. Initially, hospitals must conduct a comprehensive audit of current prescribing practices to establish baseline data. Subsequently, multidisciplinary teams—comprising pharmacists, microbiologists, and clinical staff—develop institution-specific guidelines tailored to local resistance patterns. Following this, prospective audit and feedback systems are introduced, whereby specialists review antibiotic prescriptions within 48 to 72 hours of initiation and provide real-time recommendations to prescribing clinicians. At this stage, educational interventions reinforce appropriate practices. Ultimately, continuous surveillance monitors outcomes and identifies areas requiring further attention. Västra suggests that adherence to this sequence may significantly enhance programme effectiveness."
+    },
+    {
+      "id": "D",
+      "text": "Building on this framework, Professor Samuel Okonkwo of the Global Health Research Institute has emphasised the importance of adapting implementation strategies to institutional contexts. Okonkwo's research, drawing on data from 84 hospitals across twelve countries, indicates that resource availability fundamentally shapes which stewardship approaches prove most viable. In well-resourced settings, technology-driven interventions—such as computerised decision support systems and automated prescription alerts—tend to yield substantial improvements in prescribing accuracy. Conversely, in hospitals with limited technological infrastructure, simpler interventions focused on point-of-care training and printed guidelines may achieve comparable outcomes at considerably lower cost. Okonkwo has argued that the effectiveness of any given strategy depends less on its theoretical sophistication than on its alignment with existing workflows and staff capabilities. This perspective challenges the assumption that high-technology solutions are inherently superior, suggesting instead that contextual appropriateness should guide programme design."
+    },
+    {
+      "id": "E",
+      "text": "A comparative study examining stewardship outcomes in Sweden and Brazil illustrates the significance of contextual factors. Swedish hospitals, with their established digital infrastructure and lower patient-to-staff ratios, achieved a 34% reduction in carbapenem prescriptions following implementation of automated monitoring systems. Brazilian hospitals participating in the same study, however, faced markedly different conditions: higher patient volumes, more limited access to diagnostic laboratories, and greater variability in staff training. Nevertheless, facilities in São Paulo that adopted simplified protocols—focusing on five critical decision points rather than comprehensive algorithms—reported a 28% reduction in unnecessary broad-spectrum antibiotic use within eighteen months. In both contexts, the presence of dedicated stewardship personnel appeared to correlate with better outcomes. Hospitals employing at least one full-time stewardship coordinator demonstrated, on average, 15% greater improvement compared to those relying solely on part-time or rotational staffing arrangements."
+    },
+    {
+      "id": "F",
+      "text": "Despite these documented successes, significant barriers continue to impede widespread adoption of stewardship practices. Dr. Mei-Lin Chen, a behavioural scientist at the University of Melbourne, has investigated the psychological and organisational obstacles that undermine stewardship efforts. Chen's research, conducted between 2019 and 2022, suggests that prescriber autonomy represents a particularly challenging factor. Many physicians perceive stewardship interventions as intrusions upon their clinical judgement, potentially fostering resistance to recommendations even when evidence supports them. Furthermore, time pressures in acute care settings often lead clinicians to favour familiar prescribing patterns over engaging with guideline recommendations. Notably, her studies found that resistance to stewardship was highest among senior physicians, who may be less receptive to feedback from pharmacists or junior colleagues. These behavioural barriers, Chen argues, require solutions that address professional culture rather than merely providing additional clinical information."
+    },
+    {
+      "id": "G",
+      "text": "On balance, the evidence suggests that effective antimicrobial stewardship requires a multifaceted approach combining structural interventions with cultural change. While standardised frameworks provide essential guidance, their implementation must account for institutional resources, local resistance patterns, and the complex dynamics of clinical decision-making. Future developments in this field will likely focus on integrating stewardship principles into medical education and addressing the behavioural dimensions that current programmes often overlook. The challenge of antibiotic resistance may not be fully resolved through any single intervention, but coordinated stewardship efforts remain among the most promising strategies available to healthcare systems worldwide."
+    }
+  ],
+  "questions": [
+{
+  "id": 4,
+  "type": "matching-headings",
+  "title": "Questions 15-19",
+  "instructions": "The reading passage has seven paragraphs, A-G. Choose the correct heading for each paragraph from the list of headings below. Write the correct number, i-ix, in boxes 15-19 on your answer sheet.",
+  "questions": [
+    {
+      "id": 15,
+      "questionText": "Paragraph B",
+      "options": [
+        "Adapting programmes to local healthcare conditions",
+        "A sequential approach to effective implementation",
+        "The historical development of antibiotic oversight",
+        "The global threat and the stewardship response",
+        "Why prescriber autonomy hinders programme acceptance",
+        "Evidence from comparative international research",
+        "The economic burden of hospital-acquired resistance",
+        "Designing staff training curricula for clinical environments",
+        "Pharmaceutical research into developing new antibiotic classes"
+      ],
+      "correctAnswer": "The historical development of antibiotic oversight",
+      "justification": "Paragraph B traces the chronological evolution of stewardship from informal beginnings in the late 1990s through to regulatory mandates, describing how approaches developed from simple restrictions to comprehensive structured programmes.",
+      "evidenceQuote": "\"The concept of antimicrobial stewardship first gained formal recognition in the late 1990s... By 2007... A decade later...\""
+    },
+    {
+      "id": 16,
+      "questionText": "Paragraph C",
+      "options": [
+        "Adapting programmes to local healthcare conditions",
+        "A sequential approach to effective implementation",
+        "The historical development of antibiotic oversight",
+        "The global threat and the stewardship response",
+        "Why prescriber autonomy hinders programme acceptance",
+        "Evidence from comparative international research",
+        "The economic burden of hospital-acquired resistance",
+        "Designing staff training curricula for clinical environments",
+        "Pharmaceutical research into developing new antibiotic classes"
+      ],
+      "correctAnswer": "A sequential approach to effective implementation",
+      "justification": "Paragraph C presents Västra's research identifying a five-step sequential process (audit → guidelines → feedback → education → surveillance) using explicit sequence markers.",
+      "evidenceQuote": "\"According to Västra's analysis... effective programmes typically follow a structured implementation process. Initially... Subsequently... Following this...\""
+    },
+    {
+      "id": 17,
+      "questionText": "Paragraph D",
+      "options": [
+        "Adapting programmes to local healthcare conditions",
+        "A sequential approach to effective implementation",
+        "The historical development of antibiotic oversight",
+        "The global threat and the stewardship response",
+        "Why prescriber autonomy hinders programme acceptance",
+        "Evidence from comparative international research",
+        "The economic burden of hospital-acquired resistance",
+        "Designing staff training curricula for clinical environments",
+        "Pharmaceutical research into developing new antibiotic classes"
+      ],
+      "correctAnswer": "Adapting programmes to local healthcare conditions",
+      "justification": "Paragraph D centres on research demonstrating that stewardship approaches must be tailored to local resources and conditions, challenging universal high-tech solutions.",
+      "evidenceQuote": "\"Okonkwo has argued that the effectiveness of any given strategy depends less on its theoretical sophistication than on its alignment with existing workflows and staff capabilities.\""
+    },
+    {
+      "id": 18,
+      "questionText": "Paragraph E",
+      "options": [
+        "Adapting programmes to local healthcare conditions",
+        "A sequential approach to effective implementation",
+        "The historical development of antibiotic oversight",
+        "The global threat and the stewardship response",
+        "Why prescriber autonomy hinders programme acceptance",
+        "Evidence from comparative international research",
+        "The economic burden of hospital-acquired resistance",
+        "Designing staff training curricula for clinical environments",
+        "Pharmaceutical research into developing new antibiotic classes"
+      ],
+      "correctAnswer": "Evidence from comparative international research",
+      "justification": "Paragraph E presents research directly comparing stewardship implementation and outcomes in two countries (Sweden and Brazil) with contrasting conditions.",
+      "evidenceQuote": "\"A comparative study examining stewardship outcomes in Sweden and Brazil illustrates the significance of contextual factors.\""
+    },
+    {
+      "id": 19,
+      "questionText": "Paragraph F",
+      "options": [
+        "Adapting programmes to local healthcare conditions",
+        "A sequential approach to effective implementation",
+        "The historical development of antibiotic oversight",
+        "The global threat and the stewardship response",
+        "Why prescriber autonomy hinders programme acceptance",
+        "Evidence from comparative international research",
+        "The economic burden of hospital-acquired resistance",
+        "Designing staff training curricula for clinical environments",
+        "Pharmaceutical research into developing new antibiotic classes"
+      ],
+      "correctAnswer": "Why prescriber autonomy hinders programme acceptance",
+      "justification": "Paragraph F focuses on research identifying behavioural barriers, specifically noting that physicians often view interventions as threats to their independence.",
+      "evidenceQuote": "\"Many physicians perceive stewardship interventions as intrusions upon their clinical judgement... prescriber autonomy represents a particularly challenging factor.\""
+    }
+  ]
+},
+{
+  "id": 5,
+  "type": "true-false-not-given",
+  "title": "Questions 20-24",
+  "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
+  "questions": [
+    {
+      "id": 20,
+      "questionText": "More than one-third of global deaths from drug-resistant infections are linked to infections contracted in hospital settings.",
+      "correctAnswer": "TRUE",
+      "justification": "Paragraph A states that hospital-acquired infections account for 'nearly 37%' of deaths. Since 37% is greater than one-third (approx. 33%), the statement accurately reflects the statistics provided.",
+      "evidenceQuote": "\"hospital-acquired infections accounting for nearly 37% of these cases\""
+    },
+    {
+      "id": 21,
+      "questionText": "Antimicrobial stewardship programmes were first formally recognised in the early 2000s.",
+      "correctAnswer": "FALSE",
+      "justification": "The passage explicitly states that the concept gained formal recognition in the 'late 1990s', which contradicts the 'early 2000s' claim in the statement.",
+      "evidenceQuote": "\"The concept of antimicrobial stewardship first gained formal recognition in the late 1990s\""
+    },
+    {
+      "id": 22,
+      "questionText": "Okonkwo contends that a strategy's compatibility with current work practices is a more important factor than its theoretical complexity.",
+      "correctAnswer": "TRUE",
+      "justification": "Paragraph D states that effectiveness depends 'less on its theoretical sophistication' and more on 'alignment with existing workflows', which supports the statement's comparison.",
+      "evidenceQuote": "\"the effectiveness of any given strategy depends less on its theoretical sophistication than on its alignment with existing workflows and staff capabilities\""
+    }
+  ]
+},
+{
+  "id": 6,
+  "type": "matching-information",
+  "title": "Questions 23-27",
+  "instructions": "Which paragraph contains the following information? Write the correct letter, A–F, in boxes 21-25 on your answer sheet.",
+  "paragraphs_list": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F"
+  ],
+  "questions": [
+    {
+      "id": 23,
+      "questionText": "quantitative findings demonstrating decreased rates of unsuitable medication prescription in institutions with formal oversight systems",
+      "correctAnswer": "B",
+      "justification": "Paragraph B presents research showing a '22% reduction in inappropriate prescribing' in hospitals with established stewardship programmes, directly matching the request for quantitative findings on decreased unsuitable medication prescription.",
+      "evidenceQuote": "\"hospitals with established programmes achieved, on average, a 22% reduction in inappropriate prescribing compared to those without formal interventions\""
+    },
+    {
+      "id": 24,
+      "questionText": "a study investigating dozens of medical facilities across multiple nations to examine contextual variation",
+      "correctAnswer": "D",
+      "justification": "Paragraph D explicitly describes Professor Okonkwo's research which drew on data from '84 hospitals across twelve countries', fitting the description of a study involving dozens of facilities across multiple nations.",
+      "evidenceQuote": "\"Okonkwo's research, drawing on data from 84 hospitals across twelve countries, indicates that resource availability fundamentally shapes which stewardship approaches prove most viable\""
+    },
+    {
+      "id": 25,
+      "questionText": "how clinicians' desire to preserve independent judgement creates obstacles for intervention acceptance",
+      "correctAnswer": "F",
+      "justification": "Paragraph F identifies 'prescriber autonomy' as a major barrier, explaining that physicians often view interventions as intrusions on their clinical judgement, leading to resistance.",
+      "evidenceQuote": "\"prescriber autonomy represents a particularly challenging factor. Many physicians perceive stewardship interventions as intrusions upon their clinical judgement\""
+    }
+  ]
+}
+]
+},
+{
+  "id": 3,
+  "title": "Expertise Under Scrutiny: Rethinking How We Identify and Deploy Specialist Knowledge",
+  "level": "challenging",
+  "estimatedTime": 20,
+  "paragraphs": [
+    {
+      "id": "A",
+      "text": "The question of what constitutes genuine expertise has acquired renewed urgency in an era marked by contentious policy debates over climate action, pandemic response, and technological governance. While societies have always relied upon specialists to navigate complexity, the criteria by which expertise is identified, the mechanisms through which it is validated, and the conditions under which it fails have become subjects of sustained scholarly investigation. The stakes are considerable: decisions affecting millions increasingly depend on judgments about whose knowledge should be trusted, and on what basis. Yet as researchers have probed more deeply into the foundations of expert performance, the concept itself has proved remarkably resistant to straightforward definition."
+    },
+    {
+      "id": "B",
+      "text": "For much of the twentieth century, expertise was understood primarily through the lens of formal credentials and institutional affiliation. Physicians, engineers, and scientists possessed expertise by virtue of their training and professional standing. This conception began to shift in the 1970s following influential work demonstrating that skilled performance across diverse domains—from chess to medical diagnosis—rested upon the accumulation of domain-specific knowledge organized in qualitatively different ways than novice understanding. By the 1990s, research on deliberate practice had established that approximately 10,000 hours of structured training typically preceded elite performance in cognitively demanding fields. This framework, while subsequently refined, anchored expertise in measurable cognitive processes rather than mere institutional status. However, a parallel body of research was simultaneously documenting systematic failures among credentialed experts, suggesting the phenomenon was more complex than any single model could capture."
+    },
+    {
+      "id": "C",
+      "text": "Dr. Amara Osei, a cognitive scientist at the Global Institute for Decision Research, has argued that these apparent contradictions dissolve when expertise is understood as fundamentally domain-dependent. In her framework, expert performance emerges from the interaction between structured knowledge and environmental regularities that permit learning from feedback. Domains characterized by stable patterns, clear feedback signals, and opportunities for repetitive practice—such as chess, weather forecasting, and certain medical specializations—reliably produce experts whose intuitions substantially outperform algorithmic alternatives. Osei terms these 'high-validity environments' and contends that within them, traditional markers of expertise remain robust predictors of performance. Her longitudinal studies of forecasters across multiple domains found that experience correlated strongly with accuracy in high-validity contexts, with practitioners showing measurable improvement over approximately fifteen years of sustained engagement."
+    },
+    {
+      "id": "D",
+      "text": "Yet Osei's framework explicitly acknowledges that many consequential decisions occur in what she calls 'low-validity environments'—contexts where feedback is delayed, confounded, or absent entirely. Strategic planning, political forecasting, and psychiatric assessment exemplify such domains. A meta-analysis conducted by the Behavioural Prediction Consortium in 2019, synthesizing findings from 147 studies spanning three decades, found that in low-validity environments, expert judgment showed no statistically significant advantage over informed non-specialists using simple heuristics. More troubling, the analysis revealed that credentials and expressed confidence bore essentially no relationship to predictive accuracy in these contexts. Expertise, it appeared, could be reliably identified and cultivated—but only where the environment itself permitted genuine learning."
+    },
+    {
+      "id": "E",
+      "text": "This conditional account has itself attracted scrutiny. Professor Kenji Yamamoto, a philosopher of science at the University of Osaka, contends that Osei's high-validity/low-validity distinction obscures more than it illuminates. The categorization, he argues, often can only be made retrospectively: we identify an environment as high-validity precisely because experts perform well within it, rendering the framework potentially circular. Yamamoto points instead to the sociology of expertise, emphasizing how expert communities construct and police the boundaries of legitimate knowledge. In his view, what distinguishes successful experts is frequently their capacity to frame problems in ways amenable to their tools, rather than superior insight into the problems themselves. The 2008 financial crisis, he notes, revealed not merely individual failures but systematic blind spots shared across an entire expert community whose models excluded the very dynamics that precipitated collapse."
+    },
+    {
+      "id": "F",
+      "text": "Dr. Ingrid Sundström, whose research at the Nordic Centre for Complex Systems spans organizational behavior and institutional design, has sought to move beyond this impasse. Sundström's approach distinguishes between 'substantive expertise'—genuine domain knowledge—and 'meta-expertise,' the second-order capacity to evaluate claims beyond one's own competence. Modern governance challenges, she suggests, demand both. Her empirical work examining advisory panels in Scandinavian healthcare systems found that decision quality improved substantially when panels included members selected explicitly for their ability to synthesize across specialist perspectives, even when those members lacked deep domain knowledge themselves. This finding suggests that the relevant question may not be how to identify experts, but how to design institutional structures that leverage expertise effectively while mitigating its characteristic failures."
+    },
+    {
+      "id": "G",
+      "text": "These perspectives converge, albeit incompletely, on a view that expertise is simultaneously genuine and contextually fragile. Osei's high-validity environments do appear to produce reliable expert performance; Yamamoto's concerns about expert community insularity are empirically substantiated in domains from finance to intelligence analysis; and Sundström's institutional emphasis offers pragmatic pathways even amid conceptual ambiguity. What remains contested is whether these insights can be synthesized into actionable guidelines. A 2022 policy review conducted for the European Research Coordination Agency attempted precisely this, proposing a typology classifying policy questions by their amenability to expert input. Under this schema, approximately 35 percent of surveyed policy domains exhibited characteristics associated with reliable expert judgment, while the remainder required hybrid approaches combining specialist input with structured disagreement protocols."
+    },
+    {
+      "id": "H",
+      "text": "The limitations of current understanding should not be understated. Existing research has predominantly examined expertise in Western institutional contexts, and whether findings generalize across different educational systems and epistemic traditions remains uncertain. Furthermore, most studies have focused on prediction accuracy as the primary metric of expert performance, yet many policy contexts require not prediction but interpretation—assessing what evidence means, rather than what will occur. Whether the same individuals excel at both tasks, and whether the environmental factors that support predictive expertise similarly enable interpretive judgment, are questions the literature has only begun to address. It is also notable that research on expertise has itself been conducted largely by academic researchers—a community with obvious interests in how expertise is conceptualized and valued."
+    },
+    {
+      "id": "I",
+      "text": "The debate thus remains genuinely open. We possess increasingly sophisticated understanding of the conditions that produce reliable expert performance, alongside mounting evidence that these conditions frequently fail to obtain in precisely the contexts where expertise is most urgently sought. Institutions continue to rely upon specialists while simultaneously facing pressure to democratize knowledge and distrust elite judgment. If any consensus has emerged, it is perhaps that expertise functions best when it is most modest: specialists who acknowledge the boundaries of their competence, embedded in structures designed to surface disagreement, addressing questions whose features genuinely permit learning from outcomes. Whether such ideal conditions can be approximated in practice, and at what cost, remain questions for which we do not yet have expert answers."
+    }
+  ],
+  "questions": [
+    {
+  "id": 7,
+  "type": "matching-features",
+  "title": "Questions 26-30",
+  "instructions": "Look at the following statements (Questions 26-30) and the list of researchers/entities below. Match each statement with the correct researcher or entity, A-G. Write the correct letter, A-G, in boxes 26-30 on your answer sheet. NB You may use any letter more than once.",
+  "features": [
+    {
+      "letter": "A",
+      "name": "Dr. Amara Osei"
+    },
+    {
+      "letter": "B",
+      "name": "Professor Kenji Yamamoto"
+    },
+    {
+      "letter": "C",
+      "name": "Dr. Ingrid Sundström"
+    },
+    {
+      "letter": "D",
+      "name": "Behavioural Prediction Consortium"
+    },
+    {
+      "letter": "E",
+      "name": "European Research Coordination Agency"
+    },
+    {
+      "letter": "F",
+      "name": "Global Institute for Decision Research"
+    },
+    {
+      "letter": "G",
+      "name": "Scandinavian healthcare systems"
+    }
+  ],
+  "questions": [
+    {
+      "id": 26,
+      "questionText": "compiled evidence from nearly 150 investigations revealing that specialists demonstrated no measurable superiority in unpredictable contexts",
+      "correctAnswer": "D",
+      "justification": "Paragraph D states that the Behavioural Prediction Consortium conducted a meta-analysis of '147 studies' (nearly 150) which found that in 'low-validity environments' (unpredictable contexts), expert judgment showed 'no statistically significant advantage'.",
+      "evidenceQuote": "\"A meta-analysis conducted by the Behavioural Prediction Consortium in 2019, synthesizing findings from 147 studies... found that in low-validity environments, expert judgment showed no statistically significant advantage\""
+    },
+    {
+      "id": 27,
+      "questionText": "discovered that professional experience showed significant correlation with forecasting precision in settings with stable characteristics",
+      "correctAnswer": "A",
+      "justification": "Paragraph C describes Osei's studies which found that experience 'correlated strongly with accuracy' in 'high-validity contexts' (defined earlier as domains with stable patterns).",
+      "evidenceQuote": "\"Her longitudinal studies of forecasters across multiple domains found that experience correlated strongly with accuracy in high-validity contexts\""
+    },
+    {
+      "id": 28,
+      "questionText": "argued that successful practitioners often restructure challenges to correspond with their available analytical instruments",
+      "correctAnswer": "B",
+      "justification": "Paragraph E cites Yamamoto's argument that successful experts are distinguished by their capacity to 'frame problems' (restructure challenges) in ways 'amenable to their tools' (analytical instruments).",
+      "evidenceQuote": "\"what distinguishes successful experts is frequently their capacity to frame problems in ways amenable to their tools, rather than superior insight\""
+    },
+    {
+      "id": 29,
+      "questionText": "observed improved decision-making quality when deliberative bodies incorporated individuals capable of integrating across specialized domains",
+      "correctAnswer": "C",
+      "justification": "Paragraph F details Sundström's work observing that 'decision quality improved' when panels included members selected for their ability to 'synthesize across specialist perspectives'.",
+      "evidenceQuote": "\"Her empirical work... found that decision quality improved substantially when panels included members selected explicitly for their ability to synthesize across specialist perspectives\""
+    },
+    {
+      "id": 30,
+      "questionText": "proposed that proficient performance develops from combining systematic understanding with conditions that facilitate response-based learning",
+      "correctAnswer": "A",
+      "justification": "Paragraph C outlines Osei's theory that expert performance emerges from the interaction between 'structured knowledge' (systematic understanding) and environmental regularities that 'permit learning from feedback' (response-based learning).",
+      "evidenceQuote": "\"expert performance emerges from the interaction between structured knowledge and environmental regularities that permit learning from feedback\""
+    }
+  ]
+},
+{
+  "id": 8,
+  "type": "true-false-not-given",
+  "title": "Questions 31-34",
+  "instructions": "Do the following statements agree with the views of the writer in the Reading Passage? Write YES if the statement agrees with the views of the writer, NO if the statement contradicts the views of the writer, NOT GIVEN if it is impossible to say what the writer thinks about this.",
+  "questions": [
+    {
+      "id": 31,
+      "questionText": "The writer suggests that establishing a universally accepted, clear-cut definition of expertise has proven problematic.",
+      "correctAnswer": "YES",
+      "justification": "Paragraph A explicitly states that despite scholarly investigation, the concept of expertise has been 'remarkably resistant to straightforward definition,' supporting the view that defining it is problematic.",
+      "evidenceQuote": "\"the concept itself has proved remarkably resistant to straightforward definition\""
+    },
+    {
+      "id": 32,
+      "questionText": "According to the writer, current research provides comprehensive understanding of how expertise operates across different cultural and educational systems worldwide.",
+      "correctAnswer": "NO",
+      "justification": "Paragraph H directly contradicts this, stating that research has 'predominantly examined expertise in Western institutional contexts' and that it remains 'uncertain' whether findings generalize to other systems.",
+      "evidenceQuote": "\"Existing research has predominantly examined expertise in Western institutional contexts, and whether findings generalize across different educational systems and epistemic traditions remains uncertain\""
+    },
+    {
+      "id": 33,
+      "questionText": "The writer believes that expert judgment in strategic planning and political forecasting provides significant advantages over approaches used by informed non-specialists.",
+      "correctAnswer": "NO",
+      "justification": "Paragraph D states that in these domains (identified as low-validity environments), expert judgment showed 'no statistically significant advantage' over non-specialists, contradicting the claim of significant advantage.",
+      "evidenceQuote": "\"in low-validity environments, expert judgment showed no statistically significant advantage over informed non-specialists using simple heuristics\""
+    },
+    {
+      "id": 34,
+      "questionText": "In the writer's view, Yamamoto's critique successfully demonstrates that Osei's high-validity and low-validity framework is fundamentally flawed.",
+      "correctAnswer": "NOT GIVEN",
+      "justification": "While Paragraph E outlines Yamamoto's critique that the framework is 'potentially circular,' the writer does not express an opinion on whether this critique 'successfully demonstrates' the framework is flawed. Paragraph G later suggests Osei's environment concept still produces reliable performance, implying the writer may not view the critique as definitively invalidating the framework.",
+      "evidenceQuote": "\"Professor Kenji Yamamoto... contends that Osei's high-validity/low-validity distinction obscures more than it illuminates\""
+    }
+  ]
+},
+{
+  "id": 9,
+  "type": "multiple-choice",
+  "title": "Questions 35-37",
+  "instructions": "Choose the correct letter, A, B, C or D.",
+  "questions": [
+    {
+      "id": 35,
+      "questionText": "According to the passage, what did the 2019 meta-analysis conducted by the Behavioural Prediction Consortium reveal about expert performance in low-validity environments?",
+      "options": [
+        "Specialists demonstrated no measurable superiority over knowledgeable non-specialists employing basic strategies",
+        "Credentials and confidence levels were the strongest predictors of forecasting accuracy",
+        "Experts consistently outperformed non-specialists across all decision-making domains studied",
+        "Approximately thirty-five percent of expert predictions proved more accurate than those of laypeople"
+      ],
+      "correctAnswer": "Specialists demonstrated no measurable superiority over knowledgeable non-specialists employing basic strategies",
+      "justification": "Paragraph D explicitly states that the meta-analysis 'found that in low-validity environments, expert judgment showed no statistically significant advantage over informed non-specialists using simple heuristics.' The correct option accurately paraphrases 'no statistically significant advantage' as 'no measurable superiority' and 'informed non-specialists using simple heuristics' as 'knowledgeable non-specialists employing basic strategies.'",
+      "evidenceQuote": "\"in low-validity environments, expert judgment showed no statistically significant advantage over informed non-specialists using simple heuristics\""
+    },
+    {
+      "id": 36,
+      "questionText": "Based on the passage, what can be inferred about the relationship between formal credentials and decision-making quality in complex policy contexts?",
+      "options": [
+        "Professional qualifications consistently ensure superior judgment across all policy domains",
+        "Credentials may have limited predictive value in policy areas characterized by delayed or ambiguous feedback",
+        "Policy decisions should eliminate credentialed specialists in favor of generalist administrators",
+        "Advanced degrees reliably correlate with improved forecasting accuracy in strategic planning"
+      ],
+      "correctAnswer": "Credentials may have limited predictive value in policy areas characterized by delayed or ambiguous feedback",
+      "justification": "Paragraph D states that credentials 'bore essentially no relationship to predictive accuracy' in low-validity contexts, which are defined as having delayed or absent feedback. Paragraph G implies that a significant portion of policy questions fall into this category. Therefore, credentials have limited predictive value in such areas.",
+      "evidenceQuote": "\"credentials and expressed confidence bore essentially no relationship to predictive accuracy in these contexts\""
+    },
+    {
+      "id": 37,
+      "questionText": "Which of the following best describes the passage's overall conclusion about the nature of expertise?",
+      "options": [
+        "Contemporary research has definitively discredited traditional conceptions of specialized knowledge",
+        "Genuine expert performance exists but functions reliably only under specific conditions and requires appropriate institutional frameworks",
+        "Credential-based professional systems remain the most scientifically valid method for identifying expertise",
+        "All intellectual domains eventually develop environmental characteristics that enable systematic expert development"
+      ],
+      "correctAnswer": "Genuine expert performance exists but functions reliably only under specific conditions and requires appropriate institutional frameworks",
+      "justification": "The passage synthesizes the views in Paragraph G ('expertise is simultaneously genuine and contextually fragile') and concludes in Paragraph I that expertise functions best when specialists acknowledge competence boundaries and are 'embedded in structures designed to surface disagreement'. This supports the view that expertise is real but conditional and reliant on frameworks.",
+      "evidenceQuote": "\"expertise is simultaneously genuine and contextually fragile... expertise functions best when it is most modest: specialists who acknowledge the boundaries of their competence, embedded in structures designed to surface disagreement\""
+    }
+  ]
+},
+{
+  "id": 10,
+  "type": "summary-completion",
+  "completion_type": "summary",
+  "title": "Questions 38-40",
+  "word_limit": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+  "instructions": "Complete the summary below. Choose NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer. Write your answers in boxes 27-29 on your answer sheet.",
+  "structure": "<div class='completion-summary'><p>The debate over how to properly identify and utilize specialist knowledge has intensified as societies confront complex policy challenges. Traditional twentieth-century approaches emphasized formal qualifications and institutional affiliations, but research in the 1990s established that elite performance typically required approximately <strong>(38)_____</strong> of structured practice. Dr. Amara Osei argues that genuine expert judgment emerges reliably only in what she terms <strong>(39)_____</strong> environments, characterized by stable patterns and clear feedback mechanisms. However, a comprehensive 2019 meta-analysis found that in unpredictable contexts, specialist judgment showed no measurable superiority over informed non-specialists. Dr. Ingrid Sundström proposes focusing on <strong>(40)_____</strong>, the capacity to evaluate claims beyond one's narrow specialization, and designing institutions that leverage diverse perspectives. Researchers acknowledge limitations in current understanding, particularly regarding whether findings from Western institutional contexts generalize across different cultural and educational systems.</p></div>",
+  "questions": [
+    {
+      "id": 38,
+      "questionText": "Gap 38",
+      "correctAnswer": "10,000 hours",
+      "justification": "Paragraph B explicitly states that research established that 'approximately 10,000 hours of structured training typically preceded elite performance.' The summary paraphrases 'training' as 'practice' and 'preceded' as 'required'.",
+      "evidenceQuote": "\"approximately 10,000 hours of structured training typically preceded elite performance in cognitively demanding fields\""
+    },
+    {
+      "id": 39,
+      "questionText": "Gap 39",
+      "correctAnswer": "high-validity",
+      "justification": "Paragraph C states that Osei terms domains with stable patterns and clear feedback as 'high-validity environments.' The summary uses the phrase 'what she terms' followed by the gap, directly linking to this specific terminology.",
+      "evidenceQuote": "\"Osei terms these 'high-validity environments' and contends that within them, traditional markers of expertise remain robust predictors of performance\""
+    },
+    {
+      "id": 40,
+      "questionText": "Gap 40",
+      "correctAnswer": "meta-expertise",
+      "justification": "Paragraph F introduces Sundström's concept of 'meta-expertise,' defined as 'the second-order capacity to evaluate claims beyond one's own competence.' The summary includes this definition immediately after the gap.",
+      "evidenceQuote": "\"Sundström's approach distinguishes between... 'meta-expertise,' the second-order capacity to evaluate claims beyond one's own competence\""
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

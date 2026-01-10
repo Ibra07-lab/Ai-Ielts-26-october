@@ -93,8 +93,26 @@ export default function ReadingTutor() {
 		return { context, title, paragraphs, headings: headingLines, cta };
 	};
 
+	// Sanitize AI response: trim and collapse excessive newlines
+	const sanitizeContent = (raw: string): string => {
+		let processed = raw.trim();
+		processed = processed.replace(/\n{3,}/g, '\n\n');
+		return processed;
+	};
+
 	const formatAssistantContent = (raw: string): string => {
-		const collapsed = raw.replace(/\n{3,}/g, '\n\n');
+		// First sanitize the content
+		let collapsed = sanitizeContent(raw);
+
+		// Fix loose lists: "1. \n Text" -> "1. Text"
+		collapsed = collapsed.replace(/^(\d+\.|[-*])\s+\n\s*/gm, '$1 ');
+
+		// Remove blank lines BEFORE list items to keep lists compact
+		collapsed = collapsed.replace(/\n\s*\n(?=\s*(?:\d+\.|[-*]|•)\s)/g, '\n');
+
+		// Remove blank lines BETWEEN consecutive list items
+		collapsed = collapsed.replace(/(\n\s*(?:\d+\.|[-*]|•)\s[^\n]+)\n\s*\n(?=\s*(?:\d+\.|[-*]|•)\s)/g, '$1\n');
+
 		return collapsed.replace(/(Statements?|Questions?|True\/False\/Not Given|T\/F\/NG):\s*\n([\s\S]+)/i, (_, header, rest) => {
 			const lines = rest.split('\n');
 			let end = lines.findIndex((l: string) => !l.trim());
@@ -219,7 +237,7 @@ export default function ReadingTutor() {
 					<ScrollArea ref={listRef as any} className="flex-1 px-4 sm:px-6">
 						<div className="space-y-6 py-6 mx-auto w-full">
 							{messages.map((m) => (
-								(m.content || m.role === "user") ? (
+								(m.role === "user" || (m.role === "assistant" && m.content.trim())) ? (
 									<div key={m.id} className={cn("flex gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500", m.role === "user" ? "justify-end" : "justify-start")}>
 										{m.role === "assistant" && <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 border border-slate-200/50 dark:border-slate-700 flex items-center justify-center flex-shrink-0 shadow-sm mt-1 ring-1 ring-black/5"><div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full p-1.5"><Bot className="h-3.5 w-3.5 text-white" /></div></div>}
 										<div className={cn("flex flex-col max-w-[85%] sm:max-w-[85%]", m.role === "user" ? "items-end" : "items-start")}>
@@ -243,7 +261,7 @@ export default function ReadingTutor() {
 									</div>
 								) : null
 							))}
-							{isLoading && (messages.length === 0 || messages[messages.length - 1].role !== "assistant" || !messages[messages.length - 1].content) && (
+							{isLoading && (messages.length === 0 || messages[messages.length - 1].role !== "assistant" || !messages[messages.length - 1].content.trim()) && (
 								<div className="flex gap-4 justify-start animate-in fade-in duration-300">
 									<div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 border border-slate-200 flex items-center justify-center flex-shrink-0 shadow-sm">
 										<div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full p-1.5">

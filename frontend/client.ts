@@ -193,7 +193,7 @@ export namespace ielts {
          */
         public async addToVocabulary(params: RequestType<typeof api_ielts_reading_addToVocabulary>): Promise<ResponseType<typeof api_ielts_reading_addToVocabulary>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/add-to-vocabulary`, {method: "POST", body: JSON.stringify(params)})
+            const resp = await this.baseClient.callTypedAPI(`/reading/add-to-vocabulary`, { method: "POST", body: JSON.stringify(params) })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_addToVocabulary>
         }
 
@@ -202,7 +202,7 @@ export namespace ielts {
          */
         public async analyzeEssay(params: RequestType<typeof api_ielts_ai_analyzeEssay>): Promise<ResponseType<typeof api_ielts_ai_analyzeEssay>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/ai/analyze-essay`, {method: "POST", body: JSON.stringify(params)})
+            const resp = await this.baseClient.callTypedAPI(`/ai/analyze-essay`, { method: "POST", body: JSON.stringify(params) })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_ai_analyzeEssay>
         }
 
@@ -211,7 +211,7 @@ export namespace ielts {
          */
         public async analyzeSpeaking(params: RequestType<typeof api_ielts_ai_analyzeSpeaking>): Promise<ResponseType<typeof api_ielts_ai_analyzeSpeaking>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/ai/analyze-speaking`, {method: "POST", body: JSON.stringify(params)})
+            const resp = await this.baseClient.callTypedAPI(`/ai/analyze-speaking`, { method: "POST", body: JSON.stringify(params) })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_ai_analyzeSpeaking>
         }
 
@@ -222,7 +222,7 @@ export namespace ielts {
          */
         public async chatWithCoach(params: RequestType<typeof api_ielts_ai_chatWithCoach>): Promise<ResponseType<typeof api_ielts_ai_chatWithCoach>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/ai/chat`, {method: "POST", body: JSON.stringify(params)})
+            const resp = await this.baseClient.callTypedAPI(`/ai/chat`, { method: "POST", body: JSON.stringify(params) })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_ai_chatWithCoach>
         }
 
@@ -231,7 +231,7 @@ export namespace ielts {
          */
         public async chatWithCoachMemory(params: RequestType<typeof api_ielts_ai_chatWithCoachMemory>): Promise<ResponseType<typeof api_ielts_ai_chatWithCoachMemory>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/ai/chat-memory`, {method: "POST", body: JSON.stringify(params)})
+            const resp = await this.baseClient.callTypedAPI(`/ai/chat-memory`, { method: "POST", body: JSON.stringify(params) })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_ai_chatWithCoachMemory>
         }
 
@@ -240,7 +240,7 @@ export namespace ielts {
          */
         public async createHighlight(params: RequestType<typeof api_ielts_reading_createHighlight>): Promise<ResponseType<typeof api_ielts_reading_createHighlight>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/highlights`, {method: "POST", body: JSON.stringify(params)})
+            const resp = await this.baseClient.callTypedAPI(`/reading/highlights`, { method: "POST", body: JSON.stringify(params) })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_createHighlight>
         }
 
@@ -249,7 +249,7 @@ export namespace ielts {
          */
         public async createReadingPassage(params: RequestType<typeof api_ielts_reading_createReadingPassage>): Promise<ResponseType<typeof api_ielts_reading_createReadingPassage>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/passages`, {method: "POST", body: JSON.stringify(params)})
+            const resp = await this.baseClient.callTypedAPI(`/reading/passages`, { method: "POST", body: JSON.stringify(params) })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_createReadingPassage>
         }
 
@@ -258,7 +258,7 @@ export namespace ielts {
          */
         public async createUser(params: RequestType<typeof api_ielts_user_createUser>): Promise<ResponseType<typeof api_ielts_user_createUser>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users`, {method: "POST", body: JSON.stringify(params)})
+            const resp = await this.baseClient.callTypedAPI(`/users`, { method: "POST", body: JSON.stringify(params) })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_user_createUser>
         }
 
@@ -266,7 +266,7 @@ export namespace ielts {
          * Deletes a highlight.
          */
         public async deleteHighlight(params: { userId: number, highlightId: number }): Promise<void> {
-            await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/reading/highlights/delete/${encodeURIComponent(params.highlightId)}`, {method: "DELETE", body: undefined})
+            await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/reading/highlights/delete/${encodeURIComponent(params.highlightId)}`, { method: "DELETE", body: undefined })
         }
 
         /**
@@ -274,7 +274,7 @@ export namespace ielts {
          */
         public async getDailyGoal(params: { userId: number }): Promise<ResponseType<typeof api_ielts_progress_getDailyGoal>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/daily-goal`, {method: "GET", body: undefined})
+            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/daily-goal`, { method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_progress_getDailyGoal>
         }
 
@@ -283,7 +283,7 @@ export namespace ielts {
          */
         public async getHighlights(params: { userId: number, passageTitle: string }): Promise<ResponseType<typeof api_ielts_reading_getHighlights>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/reading/highlights/${encodeURIComponent(params.passageTitle)}`, {method: "GET", body: undefined})
+            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/reading/highlights/${encodeURIComponent(params.passageTitle)}`, { method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_getHighlights>
         }
 
@@ -292,7 +292,7 @@ export namespace ielts {
          */
         public async getListeningAudio(): Promise<ResponseType<typeof api_ielts_listening_getListeningAudio>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/listening/audio`, {method: "GET", body: undefined})
+            const resp = await this.baseClient.callTypedAPI(`/listening/audio`, { method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_listening_getListeningAudio>
         }
 
@@ -301,7 +301,7 @@ export namespace ielts {
          */
         public async getListeningSessions(params: { userId: number }): Promise<ResponseType<typeof api_ielts_listening_getListeningSessions>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/listening/sessions`, {method: "GET", body: undefined})
+            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/listening/sessions`, { method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_listening_getListeningSessions>
         }
 
@@ -310,7 +310,7 @@ export namespace ielts {
          */
         public async getProgress(params: { userId: number }): Promise<ResponseType<typeof api_ielts_progress_getProgress>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/progress`, {method: "GET", body: undefined})
+            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/progress`, { method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_progress_getProgress>
         }
 
@@ -319,7 +319,7 @@ export namespace ielts {
          */
         public async getReadingPassage(): Promise<ResponseType<typeof api_ielts_reading_getReadingPassage>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/passage`, {method: "GET", body: undefined})
+            const resp = await this.baseClient.callTypedAPI(`/reading/passage`, { method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_getReadingPassage>
         }
 
@@ -328,7 +328,7 @@ export namespace ielts {
          */
         public async getReadingPassageById(params: { id: number }): Promise<ResponseType<typeof api_ielts_reading_getReadingPassageById>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/passages/${encodeURIComponent(params.id)}`, {method: "GET", body: undefined})
+            const resp = await this.baseClient.callTypedAPI(`/reading/passages/${encodeURIComponent(params.id)}`, { method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_getReadingPassageById>
         }
 
@@ -337,7 +337,7 @@ export namespace ielts {
          */
         public async getReadingPassages(): Promise<ResponseType<typeof api_ielts_reading_getReadingPassages>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/passages`, {method: "GET", body: undefined})
+            const resp = await this.baseClient.callTypedAPI(`/reading/passages`, { method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_getReadingPassages>
         }
 
@@ -346,7 +346,7 @@ export namespace ielts {
          */
         public async getReadingSessions(params: { userId: number }): Promise<ResponseType<typeof api_ielts_reading_getReadingSessions>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/reading/sessions`, {method: "GET", body: undefined})
+            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/reading/sessions`, { method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_getReadingSessions>
         }
 
@@ -355,7 +355,7 @@ export namespace ielts {
          */
         public async getReadingTheoryList(): Promise<ResponseType<typeof api_ielts_reading_getReadingTheoryList>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/theory`, {method: "GET", body: undefined})
+            const resp = await this.baseClient.callTypedAPI(`/reading/theory`, { method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_getReadingTheoryList>
         }
 
@@ -364,7 +364,7 @@ export namespace ielts {
          */
         public async getReadingTheoryById(params: { questionType: string }): Promise<ResponseType<typeof api_ielts_reading_getReadingTheoryById>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/theory/${encodeURIComponent(params.questionType)}`, {method: "GET", body: undefined})
+            const resp = await this.baseClient.callTypedAPI(`/reading/theory/${encodeURIComponent(params.questionType)}`, { method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_getReadingTheoryById>
         }
 
@@ -373,7 +373,7 @@ export namespace ielts {
          */
         public async getReadingTestById(params: { testId: number }): Promise<ResponseType<typeof api_ielts_reading_getReadingTestById>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/tests/${encodeURIComponent(params.testId)}`, {method: "GET", body: undefined})
+            const resp = await this.baseClient.callTypedAPI(`/reading/tests/${encodeURIComponent(params.testId)}`, { method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_getReadingTestById>
         }
 
@@ -382,7 +382,7 @@ export namespace ielts {
          */
         public async getReadingTests(): Promise<ResponseType<typeof api_ielts_reading_getReadingTests>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/tests`, {method: "GET", body: undefined})
+            const resp = await this.baseClient.callTypedAPI(`/reading/tests`, { method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_getReadingTests>
         }
 
@@ -391,7 +391,7 @@ export namespace ielts {
          */
         public async getSpeakingQuestion(params: { part: number }): Promise<ResponseType<typeof api_ielts_speaking_getSpeakingQuestion>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/speaking/question/${encodeURIComponent(params.part)}`, {method: "GET", body: undefined})
+            const resp = await this.baseClient.callTypedAPI(`/speaking/question/${encodeURIComponent(params.part)}`, { method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_speaking_getSpeakingQuestion>
         }
 
@@ -400,7 +400,7 @@ export namespace ielts {
          */
         public async getSpeakingSessions(params: { userId: number }): Promise<ResponseType<typeof api_ielts_speaking_getSpeakingSessions>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/speaking/sessions`, {method: "GET", body: undefined})
+            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/speaking/sessions`, { method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_speaking_getSpeakingSessions>
         }
 
@@ -409,7 +409,7 @@ export namespace ielts {
          */
         public async getUser(params: { id: number }): Promise<ResponseType<typeof api_ielts_user_getUser>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.id)}`, {method: "GET", body: undefined})
+            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.id)}`, { method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_user_getUser>
         }
 
@@ -418,7 +418,7 @@ export namespace ielts {
          */
         public async getVocabularyEnhancement(params: { word: string }): Promise<ResponseType<typeof api_ielts_ai_getVocabularyEnhancement>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/ai/vocabulary/${encodeURIComponent(params.word)}/enhance`, {method: "GET", body: undefined})
+            const resp = await this.baseClient.callTypedAPI(`/ai/vocabulary/${encodeURIComponent(params.word)}/enhance`, { method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_ai_getVocabularyEnhancement>
         }
 
@@ -427,7 +427,7 @@ export namespace ielts {
          */
         public async getVocabularyProgress(params: { userId: number }): Promise<ResponseType<typeof api_ielts_vocabulary_getVocabularyProgress>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/vocabulary/progress`, {method: "GET", body: undefined})
+            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/vocabulary/progress`, { method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_vocabulary_getVocabularyProgress>
         }
 
@@ -436,7 +436,7 @@ export namespace ielts {
          */
         public async getVocabularyTopics(): Promise<ResponseType<typeof api_ielts_vocabulary_getVocabularyTopics>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/vocabulary/topics`, {method: "GET", body: undefined})
+            const resp = await this.baseClient.callTypedAPI(`/vocabulary/topics`, { method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_vocabulary_getVocabularyTopics>
         }
 
@@ -451,16 +451,21 @@ export namespace ielts {
             })
 
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/vocabulary`, {query, method: "GET", body: undefined})
+            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/vocabulary`, { query, method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_vocabulary_getVocabularyWords>
         }
 
         /**
          * Retrieves a random writing prompt for a specific task type.
          */
-        public async getWritingPrompt(params: { taskType: number }): Promise<ResponseType<typeof api_ielts_writing_getWritingPrompt>> {
+        public async getWritingPrompt(params: { taskType: number, test_id?: number }): Promise<ResponseType<typeof api_ielts_writing_getWritingPrompt>> {
+            // Convert params to query string for test_id
+            const query = makeRecord<string, string | string[]>({
+                test_id: params.test_id === undefined ? undefined : String(params.test_id),
+            })
+
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/writing/prompt/${encodeURIComponent(params.taskType)}`, {method: "GET", body: undefined})
+            const resp = await this.baseClient.callTypedAPI(`/writing/prompt/${encodeURIComponent(params.taskType)}`, { query, method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_writing_getWritingPrompt>
         }
 
@@ -469,7 +474,7 @@ export namespace ielts {
          */
         public async getWritingSessions(params: { userId: number }): Promise<ResponseType<typeof api_ielts_writing_getWritingSessions>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/writing/sessions`, {method: "GET", body: undefined})
+            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/writing/sessions`, { method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_writing_getWritingSessions>
         }
 
@@ -478,7 +483,7 @@ export namespace ielts {
          */
         public async submitListening(params: RequestType<typeof api_ielts_listening_submitListening>): Promise<ResponseType<typeof api_ielts_listening_submitListening>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/listening/submit`, {method: "POST", body: JSON.stringify(params)})
+            const resp = await this.baseClient.callTypedAPI(`/listening/submit`, { method: "POST", body: JSON.stringify(params) })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_listening_submitListening>
         }
 
@@ -487,7 +492,7 @@ export namespace ielts {
          */
         public async submitReading(params: RequestType<typeof api_ielts_reading_submitReading>): Promise<ResponseType<typeof api_ielts_reading_submitReading>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/submit`, {method: "POST", body: JSON.stringify(params)})
+            const resp = await this.baseClient.callTypedAPI(`/reading/submit`, { method: "POST", body: JSON.stringify(params) })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_submitReading>
         }
 
@@ -496,7 +501,7 @@ export namespace ielts {
          */
         public async submitSpeaking(params: RequestType<typeof api_ielts_speaking_submitSpeaking>): Promise<ResponseType<typeof api_ielts_speaking_submitSpeaking>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/speaking/submit`, {method: "POST", body: JSON.stringify(params)})
+            const resp = await this.baseClient.callTypedAPI(`/speaking/submit`, { method: "POST", body: JSON.stringify(params) })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_speaking_submitSpeaking>
         }
 
@@ -505,7 +510,7 @@ export namespace ielts {
          */
         public async submitWriting(params: RequestType<typeof api_ielts_writing_submitWriting>): Promise<ResponseType<typeof api_ielts_writing_submitWriting>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/writing/submit`, {method: "POST", body: JSON.stringify(params)})
+            const resp = await this.baseClient.callTypedAPI(`/writing/submit`, { method: "POST", body: JSON.stringify(params) })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_writing_submitWriting>
         }
 
@@ -514,7 +519,7 @@ export namespace ielts {
          */
         public async translateText(params: RequestType<typeof api_ielts_reading_translateText>): Promise<ResponseType<typeof api_ielts_reading_translateText>> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/translate`, {method: "POST", body: JSON.stringify(params)})
+            const resp = await this.baseClient.callTypedAPI(`/reading/translate`, { method: "POST", body: JSON.stringify(params) })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_translateText>
         }
 
@@ -525,10 +530,10 @@ export namespace ielts {
             // Construct the body with only the fields which we want encoded within the body (excluding query string or header fields)
             const body: Record<string, any> = {
                 activitiesCompleted: params.activitiesCompleted,
-                minutesCompleted:    params.minutesCompleted,
+                minutesCompleted: params.minutesCompleted,
             }
 
-            await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/daily-goal/update`, {method: "POST", body: JSON.stringify(body)})
+            await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/daily-goal/update`, { method: "POST", body: JSON.stringify(body) })
         }
 
         /**
@@ -540,7 +545,7 @@ export namespace ielts {
                 estimatedBand: params.estimatedBand,
             }
 
-            await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/progress/${encodeURIComponent(params.skill)}`, {method: "POST", body: JSON.stringify(body)})
+            await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/progress/${encodeURIComponent(params.skill)}`, { method: "POST", body: JSON.stringify(body) })
         }
 
         /**
@@ -549,15 +554,15 @@ export namespace ielts {
         public async updateUser(params: RequestType<typeof api_ielts_user_updateUser>): Promise<ResponseType<typeof api_ielts_user_updateUser>> {
             // Construct the body with only the fields which we want encoded within the body (excluding query string or header fields)
             const body: Record<string, any> = {
-                examDate:   params.examDate,
-                language:   params.language,
-                name:       params.name,
+                examDate: params.examDate,
+                language: params.language,
+                name: params.name,
                 targetBand: params.targetBand,
-                theme:      params.theme,
+                theme: params.theme,
             }
 
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.id)}`, {method: "PUT", body: JSON.stringify(body)})
+            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.id)}`, { method: "PUT", body: JSON.stringify(body) })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_user_updateUser>
         }
 
@@ -570,7 +575,7 @@ export namespace ielts {
                 status: params.status,
             }
 
-            await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/vocabulary/${encodeURIComponent(params.wordId)}/status`, {method: "POST", body: JSON.stringify(body)})
+            await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/vocabulary/${encodeURIComponent(params.wordId)}/status`, { method: "POST", body: JSON.stringify(body) })
         }
     }
 }
@@ -580,36 +585,36 @@ type PickMethods<Type> = Omit<CallParameters, "method"> & { method?: Type };
 
 // Helper type to omit all fields that are cookies.
 type OmitCookie<T> = {
-  [K in keyof T as T[K] extends CookieWithOptions<any> ? never : K]: T[K];
+    [K in keyof T as T[K] extends CookieWithOptions<any> ? never : K]: T[K];
 };
 
 type RequestType<Type extends (...args: any[]) => any> =
-  Parameters<Type> extends [infer H, ...any[]]
+    Parameters<Type> extends [infer H, ...any[]]
     ? OmitCookie<H>
     : void;
 
 type ResponseType<Type extends (...args: any[]) => any> = OmitCookie<Awaited<ReturnType<Type>>>;
 
 function dateReviver(key: string, value: any): any {
-  if (
-    typeof value === "string" &&
-    value.length >= 10 &&
-    value.charCodeAt(0) >= 48 && // '0'
-    value.charCodeAt(0) <= 57 // '9'
-  ) {
-    const parsedDate = new Date(value);
-    if (!isNaN(parsedDate.getTime())) {
-      return parsedDate;
+    if (
+        typeof value === "string" &&
+        value.length >= 10 &&
+        value.charCodeAt(0) >= 48 && // '0'
+        value.charCodeAt(0) <= 57 // '9'
+    ) {
+        const parsedDate = new Date(value);
+        if (!isNaN(parsedDate.getTime())) {
+            return parsedDate;
+        }
     }
-  }
-  return value;
+    return value;
 }
 
 
 function encodeQuery(parts: Record<string, string | string[]>): string {
     const pairs: string[] = []
     for (const key in parts) {
-        const val = (Array.isArray(parts[key]) ?  parts[key] : [parts[key]]) as string[]
+        const val = (Array.isArray(parts[key]) ? parts[key] : [parts[key]]) as string[]
         for (const v of val) {
             pairs.push(`${key}=${encodeURIComponent(v)}`)
         }
@@ -630,32 +635,32 @@ function makeRecord<K extends string | number | symbol, V>(record: Record<K, V |
 }
 
 import {
-  StreamInOutHandlerFn,
-  StreamInHandlerFn,
-  StreamOutHandlerFn,
+    StreamInOutHandlerFn,
+    StreamInHandlerFn,
+    StreamOutHandlerFn,
 } from "encore.dev/api";
 
 type StreamRequest<Type> = Type extends
-  | StreamInOutHandlerFn<any, infer Req, any>
-  | StreamInHandlerFn<any, infer Req, any>
-  | StreamOutHandlerFn<any, any>
-  ? Req
-  : never;
+    | StreamInOutHandlerFn<any, infer Req, any>
+    | StreamInHandlerFn<any, infer Req, any>
+    | StreamOutHandlerFn<any, any>
+    ? Req
+    : never;
 
 type StreamResponse<Type> = Type extends
-  | StreamInOutHandlerFn<any, any, infer Resp>
-  | StreamInHandlerFn<any, any, infer Resp>
-  | StreamOutHandlerFn<any, infer Resp>
-  ? Resp
-  : never;
+    | StreamInOutHandlerFn<any, any, infer Resp>
+    | StreamInHandlerFn<any, any, infer Resp>
+    | StreamOutHandlerFn<any, infer Resp>
+    ? Resp
+    : never;
 
 
 function encodeWebSocketHeaders(headers: Record<string, string>) {
     // url safe, no pad
     const base64encoded = btoa(JSON.stringify(headers))
-      .replaceAll("=", "")
-      .replaceAll("+", "-")
-      .replaceAll("/", "_");
+        .replaceAll("=", "")
+        .replaceAll("+", "-")
+        .replaceAll("/", "_");
     return "encore.dev.headers." + base64encoded;
 }
 
@@ -875,10 +880,10 @@ class BaseClient {
         // If we now have authentication data, add it to the request
         if (authData) {
             if (authData.query) {
-                query = {...query, ...authData.query};
+                query = { ...query, ...authData.query };
             }
             if (authData.headers) {
-                headers = {...headers, ...authData.headers};
+                headers = { ...headers, ...authData.headers };
             }
         }
 
@@ -896,10 +901,10 @@ class BaseClient {
         // If we now have authentication data, add it to the request
         if (authData) {
             if (authData.query) {
-                query = {...query, ...authData.query};
+                query = { ...query, ...authData.query };
             }
             if (authData.headers) {
-                headers = {...headers, ...authData.headers};
+                headers = { ...headers, ...authData.headers };
             }
         }
 
@@ -917,10 +922,10 @@ class BaseClient {
         // If we now have authentication data, add it to the request
         if (authData) {
             if (authData.query) {
-                query = {...query, ...authData.query};
+                query = { ...query, ...authData.query };
             }
             if (authData.headers) {
-                headers = {...headers, ...authData.headers};
+                headers = { ...headers, ...authData.headers };
             }
         }
 
@@ -945,7 +950,7 @@ class BaseClient {
         }
 
         // Merge our headers with any predefined headers
-        init.headers = {...this.headers, ...init.headers, ...headers}
+        init.headers = { ...this.headers, ...init.headers, ...headers }
 
         // Fetch auth data if there is any
         const authData = await this.getAuthData();
@@ -953,16 +958,16 @@ class BaseClient {
         // If we now have authentication data, add it to the request
         if (authData) {
             if (authData.query) {
-                query = {...query, ...authData.query};
+                query = { ...query, ...authData.query };
             }
             if (authData.headers) {
-                init.headers = {...init.headers, ...authData.headers};
+                init.headers = { ...init.headers, ...authData.headers };
             }
         }
 
         // Make the actual request
         const queryString = query ? '?' + encodeQuery(query) : ''
-        const response = await this.fetcher(this.baseURL+path+queryString, init)
+        const response = await this.fetcher(this.baseURL + path + queryString, init)
 
         // handle any error responses
         if (!response.ok) {
@@ -1008,8 +1013,8 @@ function isAPIErrorResponse(err: any): err is APIErrorResponse {
     return (
         err !== undefined && err !== null &&
         isErrCode(err.code) &&
-        typeof(err.message) === "string" &&
-        (err.details === undefined || err.details === null || typeof(err.details) === "object")
+        typeof (err.message) === "string" &&
+        (err.details === undefined || err.details === null || typeof (err.details) === "object")
     )
 }
 
@@ -1043,8 +1048,8 @@ export class APIError extends Error {
         // set error name as constructor name, make it not enumerable to keep native Error behavior
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new.target#new.target_in_constructors
         Object.defineProperty(this, 'name', {
-            value:        'APIError',
-            enumerable:   false,
+            value: 'APIError',
+            enumerable: false,
             configurable: true,
         })
 

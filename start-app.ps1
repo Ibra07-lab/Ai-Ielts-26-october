@@ -7,6 +7,10 @@ Write-Host "Starting AI IELTS App..." -ForegroundColor Green
 Write-Host "Starting Backend (Encore)..." -ForegroundColor Yellow
 Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd backend; encore run"
 
+# Start Backend (FastAPI Python)
+Write-Host "Starting Backend (FastAPI Python)..." -ForegroundColor Yellow
+Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd backend; python -m uvicorn main:app --reload --port 8001"
+
 # Wait a moment for backend to start
 Start-Sleep -Seconds 3
 

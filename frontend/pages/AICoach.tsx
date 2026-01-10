@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { useUser } from "../contexts/UserContext";
 import backend from "~backend/client";
+import ReactMarkdown from 'react-markdown';
 
 interface Message {
   id: string;
@@ -17,7 +18,7 @@ interface Message {
 export default function AICoach() {
   const { user } = useUser();
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  
+
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -40,10 +41,33 @@ What would you like to focus on?`,
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  // Sanitize AI response: trim and collapse excessive newlines
+  const sanitizeContent = (raw: string): string => {
+    let processed = raw.trim();
+    processed = processed.replace(/\n{3,}/g, '\n\n');
+    return processed;
+  };
+
+  const formatAssistantContent = (raw: string): string => {
+    // First sanitize the content
+    let collapsed = sanitizeContent(raw);
+
+    // Fix loose lists: "1. \n Text" -> "1. Text"
+    collapsed = collapsed.replace(/^(\d+\.|[-*])\s+\n\s*/gm, '$1 ');
+
+    // Remove blank lines BEFORE list items to keep lists compact
+    collapsed = collapsed.replace(/\n\s*\n(?=\s*(?:\d+\.|[-*]|•)\s)/g, '\n');
+
+    // Remove blank lines BETWEEN consecutive list items
+    collapsed = collapsed.replace(/(\n\s*(?:\d+\.|[-*]|•)\s[^\n]+)\n\s*\n(?=\s*(?:\d+\.|[-*]|•)\s)/g, '$1\n');
+
+    return collapsed;
+  };
+
   // Auto-scroll to bottom when new messages are added
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ 
+      messagesEndRef.current.scrollIntoView({
         behavior: "smooth",
         block: "end",
         inline: "nearest"
@@ -60,9 +84,9 @@ What would you like to focus on?`,
     const today = new Date();
     const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
-    
+
     const messageDate = new Date(date);
-    
+
     if (messageDate.toDateString() === today.toDateString()) {
       return "Today";
     } else if (messageDate.toDateString() === yesterday.toDateString()) {
@@ -75,10 +99,10 @@ What would you like to focus on?`,
   // Check if we need a date divider between messages
   const needsDateDivider = (currentMsg: Message, prevMsg?: Message): boolean => {
     if (!prevMsg) return true;
-    
+
     const currentDate = new Date(currentMsg.timestamp).toDateString();
     const prevDate = new Date(prevMsg.timestamp).toDateString();
-    
+
     return currentDate !== prevDate;
   };
 
@@ -165,72 +189,81 @@ What would you like to focus on?`,
                   Ask questions about IELTS preparation, get feedback, and receive personalized tips.
                 </CardDescription>
               </CardHeader>
-              
+
               {/* Messages */}
               <CardContent className="flex-1 overflow-y-auto min-h-0 p-0">
                 <div className="p-4 space-y-4">
                   {messages.map((message, index) => (
-                    <div key={message.id}>
-                      {/* Date Divider */}
-                      {needsDateDivider(message, messages[index - 1]) && (
-                        <div className="flex justify-center my-4">
-                          <div className="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full text-xs text-gray-500 dark:text-gray-400">
-                            {formatDateDivider(message.timestamp)}
+                    (message.type === "user" || (message.type === "ai" && message.content.trim())) ? (
+                      <div key={message.id}>
+                        {/* Date Divider */}
+                        {needsDateDivider(message, messages[index - 1]) && (
+                          <div className="flex justify-center my-4">
+                            <div className="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full text-xs text-gray-500 dark:text-gray-400">
+                              {formatDateDivider(message.timestamp)}
+                            </div>
                           </div>
-                        </div>
-                      )}
-                      
-                      {/* Message */}
-                      <div
-                        className={`flex gap-3 ${
-                          message.type === "user" ? "justify-end" : "justify-start"
-                        }`}
-                      >
+                        )}
+
+                        {/* Message */}
                         <div
-                          className={`flex gap-3 max-w-[85%] ${
-                            message.type === "user" ? "flex-row-reverse" : "flex-row"
-                          }`}
+                          className={`flex gap-3 ${message.type === "user" ? "justify-end" : "justify-start"
+                            }`}
                         >
                           <div
-                            className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                              message.type === "user"
-                                ? "bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-md"
-                                : "bg-gradient-to-br from-green-400 to-green-500 text-white shadow-md"
-                            }`}
-                          >
-                            {message.type === "user" ? (
-                              <User className="h-4 w-4" />
-                            ) : (
-                              <Bot className="h-4 w-4" />
-                            )}
-                          </div>
-                          <div
-                            className={`p-4 rounded-2xl ${
-                              message.type === "user"
-                                ? "bg-blue-500 text-white shadow-md"
-                                : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm border border-gray-200 dark:border-gray-600"
-                            }`}
-                          >
-                            <p className="text-sm whitespace-pre-wrap leading-relaxed">{message.content}</p>
-                            <p
-                              className={`text-xs mt-2 ${
-                                message.type === "user"
-                                  ? "text-blue-100"
-                                  : "text-gray-500 dark:text-gray-400"
+                            className={`flex gap-3 max-w-[85%] ${message.type === "user" ? "flex-row-reverse" : "flex-row"
                               }`}
+                          >
+                            <div
+                              className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${message.type === "user"
+                                  ? "bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-md"
+                                  : "bg-gradient-to-br from-green-400 to-green-500 text-white shadow-md"
+                                }`}
                             >
-                              {message.timestamp.toLocaleTimeString([], {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                              })}
-                            </p>
+                              {message.type === "user" ? (
+                                <User className="h-4 w-4" />
+                              ) : (
+                                <Bot className="h-4 w-4" />
+                              )}
+                            </div>
+                            <div
+                              className={`p-4 rounded-2xl ${message.type === "user"
+                                  ? "bg-blue-500 text-white shadow-md"
+                                  : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm border border-gray-200 dark:border-gray-600"
+                                }`}
+                            >
+                              <div className={`chat-content text-sm leading-relaxed ${message.type === "user" ? "text-white" : "text-gray-900 dark:text-white"}`}>
+                                <ReactMarkdown
+                                  components={{
+                                    p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                                    ul: ({ children }) => <ul className="list-disc pl-4 mb-3 space-y-1.5">{children}</ul>,
+                                    ol: ({ children }) => <ol className="list-decimal pl-4 mb-3 space-y-1.5">{children}</ol>,
+                                    li: ({ children }) => <li className="pl-1">{children}</li>,
+                                    strong: ({ children }) => <strong className="font-semibold">{children}</strong>
+                                  }}
+                                >
+                                  {message.type === "ai" ? formatAssistantContent(message.content) : message.content}
+                                </ReactMarkdown>
+                              </div>
+                              <p
+                                className={`text-xs mt-2 ${message.type === "user"
+                                    ? "text-blue-100"
+                                    : "text-gray-500 dark:text-gray-400"
+                                  }`}
+                              >
+                                {message.timestamp.toLocaleTimeString([], {
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                })}
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    ) : null
                   ))}
-                  
-                  {isLoading && (
+
+                  {isLoading && (messages.length === 0 || messages[messages.length - 1].type !== "ai" || !messages[messages.length - 1].content.trim()) && (
                     <div className="flex gap-3 justify-start">
                       <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-400 to-green-500 text-white shadow-md flex items-center justify-center">
                         <Bot className="h-4 w-4" />
@@ -244,7 +277,7 @@ What would you like to focus on?`,
                       </div>
                     </div>
                   )}
-                  
+
                   {/* Auto-scroll anchor */}
                   <div ref={messagesEndRef} />
                 </div>
@@ -342,7 +375,7 @@ What would you like to focus on?`,
 
 
       </div>
-      
+
     </>
   );
 }
