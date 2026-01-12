@@ -15,13 +15,13 @@ class TutorAgent:
     """Coaching agent — provides actionable improvement steps."""
     
     def __init__(self, model: str = None):
-        # Default to environment variable or fallback to gpt-4o
-        model_name = model or os.getenv("IELTS_WRITING_MODEL", "gpt-4o")
+        # Default to environment variable or fallback to Claude Sonnet 4.5
+        model_name = model or os.getenv("IELTS_WRITING_MODEL", "claude-sonnet-4-5-20250929")
         
         self.llm = get_chat_model(
             model_name=model_name,
             temperature=0.4,  # Slightly higher for creative coaching
-            max_tokens=4096
+            max_tokens=8192  # Increased to prevent truncation
         )
     
     async def coach(
@@ -80,13 +80,28 @@ class TutorAgent:
                 
             result = json.loads(content)
         except (json.JSONDecodeError, IndexError) as e:
-             # Log the raw content for debugging
-             with open("tutor_debug.log", "a", encoding="utf-8") as f:
-                 f.write(f"\n--- FAILED JSON PARSE at {datetime.now()} ---\n")
-                 f.write(f"Error: {str(e)}\n")
-                 f.write(f"Content: {response.content}\n")
-                 f.write("-" * 30 + "\n")
-             raise ValueError(f"Failed to parse JSON response. Check tutor_debug.log for details.")
+            # Enhanced logging for debugging
+            with open("tutor_debug.log", "a", encoding="utf-8") as f:
+                f.write(f"\n{'='*50}\n")
+                f.write(f"FAILED JSON PARSE at {datetime.now()}\n")
+                f.write(f"{'='*50}\n")
+                f.write(f"Error: {str(e)}\n")
+                f.write(f"Content length: {len(response.content)} chars\n")
+                f.write(f"Content preview (first 500 chars):\n{response.content[:500]}\n")
+                f.write(f"Content end (last 500 chars):\n{response.content[-500:]}\n")
+                
+                # Detect truncation
+                if "Expecting" in str(e) and len(response.content) > 5000:
+                    f.write("\n⚠️  LIKELY TRUNCATION - Response seems incomplete\n")
+                    f.write("   → Solution: Increase max_tokens in tutor.py\n")
+                f.write(f"{'='*50}\n\n")
+            
+            raise ValueError(
+                f"Failed to parse JSON response. "
+                f"Error: {str(e)}. "
+                f"Content length: {len(response.content)}. "
+                f"Check tutor_debug.log for full details."
+            )
         
         # Ensure band gaps are calculated correctly
         result["target_band"] = target_band
@@ -94,6 +109,36 @@ class TutorAgent:
             result["band_gaps"] = self._calculate_band_gaps(
                 evaluation, target_band
             )
+        
+        # Ensure all required list fields exist (safety net)
+        list_fields = [
+            "action_plan", "strengths", "weaknesses", 
+            "grammar_errors", "vocabulary_suggestions", "coherence_issues",
+            "band_gaps", "rewrites", "micro_tasks"
+        ]
+        for field in list_fields:
+            if field not in result:
+                result[field] = []
+        
+        # Fix micro_tasks that use 'task' instead of 'instruction'
+        import re
+        for mt in result.get("micro_tasks", []):
+            # Handle 'task' field as fallback for 'instruction'
+            if "task" in mt and not mt.get("instruction"):
+                mt["instruction"] = mt.pop("task")
+            
+            # Handle duration strings like "10-15 minutes"
+            if "duration" in mt and "duration_minutes" not in mt:
+                duration_str = mt.pop("duration")
+                # Extract first number from "10-15 minutes" or "15 minutes"
+                numbers = re.findall(r'\d+', str(duration_str))
+                mt["duration_minutes"] = int(numbers[0]) if numbers else 15
+            
+            # Ensure required fields have defaults
+            mt.setdefault("title", "Practice Task")
+            mt.setdefault("duration_minutes", 15)
+            mt.setdefault("instruction", "")
+            mt.setdefault("example", "")
         
         return TutorFeedback(**result)
     

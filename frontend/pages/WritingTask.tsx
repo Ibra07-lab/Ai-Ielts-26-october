@@ -42,9 +42,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
   const [selectedTestId, setSelectedTestId] = useState<number | null>(null);
   const [isTestStarted, setIsTestStarted] = useState(false);
   const [content, setContent] = useState("");
-  const [feedback, setFeedback] = useState<any>(null);
   const [aiAnalysis, setAiAnalysis] = useState<any>(null);
-  const [analysisMode, setAnalysisMode] = useState<"basic" | "ai">("basic");
   // New State
   const [timeLeft, setTimeLeft] = useState(0); // in seconds
   const [isImageZoomed, setIsImageZoomed] = useState(false);
@@ -69,47 +67,83 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
     enabled: !!selectedTest,
   });
 
-  const submitWritingMutation = useMutation({
-    mutationFn: backend.ielts.submitWriting,
-    onSuccess: (data) => {
-      setFeedback(data);
-      queryClient.invalidateQueries({ queryKey: ["progress"] });
-      toast({
-        title: "Writing submitted successfully!",
-        description: `Your estimated band score: ${data.bandScore}`,
-      });
-    },
-    onError: (error) => {
-      console.error("Failed to submit writing:", error);
-      toast({
-        title: "Error",
-        description: "Failed to submit your writing. Please try again.",
-        variant: "destructive",
-      });
-    },
-  });
-
-  // AI Essay Analysis Mutation - Using new enhanced endpoint
+  // AI Essay Analysis Mutation - Using enhanced endpoint
   const aiAnalysisMutation = useMutation({
     mutationFn: async (params: { essay: string; taskType: number; userId: number }) => {
-      // Call the new enhanced writing evaluation endpoint
-      const response = await fetch("http://localhost:8001/ielts_writing/evaluate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          task_type: params.taskType === 1 ? "task1" : "task2",
-          question: prompt?.prompt || "",
-          essay: params.essay,
-          target_band: 7.0,
-          user_id: params.userId.toString(),
-        }),
-      });
+      // Use new Task 1 endpoint for Task 1, old endpoint for Task 2
+      const isTask1 = params.taskType === 1;
+      const endpoint = isTask1 
+        ? "http://localhost:8002/task1/evaluate"
+        : "http://localhost:8001/ielts_writing/evaluate";
+      
+      const requestBody = isTask1 
+        ? {
+            // New Task 1 endpoint format
+            essay: params.essay,
+            question: prompt?.prompt || "",
+            student_name: "Student",
+            chart_type: selectedTest?.chartType || null,
+            image_url: selectedTest?.imageUrl || null,
+            include_teacher_feedback: true, // Re-enabled with optimized prompts (30s target)
+            include_markdown: true,
+          }
+        : {
+            // Old endpoint format for Task 2
+            task_type: "task2",
+            question: prompt?.prompt || "",
+            essay: params.essay,
+            target_band: 7.0,
+            user_id: params.userId.toString(),
+          };
 
-      if (!response.ok) {
-        throw new Error(`Failed to analyze essay: ${response.statusText}`);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 120000); // 2 minutes timeout for LLM processing
+
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(requestBody),
+          signal: controller.signal,
+        });
+
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+          throw new Error(`Failed to analyze essay: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        
+        // Transform Task 1 response to match expected format
+        if (isTask1 && data.success) {
+          const teacherFeedback = data.teacher_feedback || {};
+          
+          return {
+            evaluation: data.examiner_result,
+            coaching: {
+              // Map teacher feedback fields to coaching structure
+              grammar_errors: teacherFeedback.grammar_errors || [],
+              vocabulary_suggestions: teacherFeedback.vocabulary_suggestions || [],
+              coherence_issues: teacherFeedback.coherence_issues || [],
+              strengths: teacherFeedback.strengths || [],
+              overall_message: teacherFeedback.overall_message || `Band ${data.examiner_result?.overall_band || 'N/A'}: ${data.examiner_result?.examiner_notes || 'Analysis complete'}`,
+              next_steps: teacherFeedback.next_steps || [],
+              band_gap_analysis: data.examiner_result?.band_gap_analysis || {}
+            },
+            recurring_errors: [],
+            personalizedTip: teacherFeedback.personalized_tip || null,
+          };
+        }
+
+        return data;
+      } catch (error) {
+        clearTimeout(timeoutId);
+        if (error.name === 'AbortError') {
+          throw new Error('Essay analysis timed out after 2 minutes. Please try again.');
+        }
+        throw error;
       }
-
-      return await response.json();
     },
     onSuccess: (data) => {
       setAiAnalysis(data);
@@ -140,20 +174,12 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
       return;
     }
 
-    if (analysisMode === "ai") {
-      aiAnalysisMutation.mutate({
-        essay: content.trim(),
-        taskType: taskType,
-        userId: user.id,
-      });
-    } else {
-      submitWritingMutation.mutate({
-        userId: user.id,
-        taskType: taskType,
-        prompt: prompt.prompt,
-        content: content.trim(),
-      });
-    }
+    // Always use AI evaluation
+    aiAnalysisMutation.mutate({
+      essay: content.trim(),
+      taskType: taskType,
+      userId: user.id,
+    });
   };
 
   const handleAIAnalysis = () => {
@@ -176,7 +202,6 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
   const getNewQuestion = () => {
     getNewPrompt();
     setContent("");
-    setFeedback(null);
     setAiAnalysis(null);
     // Reset timer
     if (selectedTest) {
@@ -186,7 +211,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
 
   // Timer Logic
   useEffect(() => {
-    if (isTestStarted && timeLeft > 0 && !feedback && !aiAnalysis) {
+    if (isTestStarted && timeLeft > 0 && !aiAnalysis) {
       timerRef.current = setTimeout(() => {
         setTimeLeft((prev) => prev - 1);
       }, 1000);
@@ -194,7 +219,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
-  }, [isTestStarted, timeLeft, feedback, aiAnalysis]);
+  }, [isTestStarted, timeLeft, aiAnalysis]);
 
   // Autosave Simulation
   useEffect(() => {
@@ -237,7 +262,6 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
   const handleStartTest = (testId?: number) => {
     setIsTestStarted(true);
     setContent("");
-    setFeedback(null);
     setAiAnalysis(null);
     getNewPrompt();
 
@@ -602,7 +626,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                       >
                         {aiAnalysisMutation.isPending ? (
                           <span className="flex items-center gap-2">
-                            <Sparkles className="w-4 h-4 animate-spin" /> Analyzing...
+                            <Sparkles className="w-4 h-4 animate-spin" /> Analyzing... (~30s)
                           </span>
                         ) : (
                           <span className="flex items-center gap-2">

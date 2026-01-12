@@ -70,9 +70,21 @@ Your response MUST be a single JSON object matching this structure:
 - Prioritize HIGH-IMPACT fixes: Task Response > Coherence > Lexical > Grammar
 - Keep tasks ACTIONABLE: 10-15 minute exercises with clear instructions
 
-## Important
-- Keep your explanations and reasons concise
-- DO NOT include any text before or after the JSON block."""
+## Important - READ CAREFULLY
+- ALL fields in the JSON schema above are REQUIRED - never omit any field
+- For array fields, return empty arrays [] if no items (NOT null, NOT omitted)
+  - No grammar errors? Return "grammar_errors": []
+  - No rewrites? Return "rewrites": []
+  - No vocabulary issues? Return "vocabulary_suggestions": []
+- For micro_tasks, ensure EVERY task has:
+  - "title": string (name of the exercise)
+  - "duration_minutes": integer (10-20 minutes each)
+  - "instruction": string (detailed steps to complete the task)
+  - "example": string (what success looks like)
+  - "targets_criterion": one of: "task_achievement", "task_response", "coherence_cohesion", "lexical_resource", "grammatical_range_accuracy"
+- Keep explanations concise but specific
+- DO NOT include any text before or after the JSON block
+- Return ONLY valid JSON - no markdown formatting, no code blocks"""
 
 
 def build_tutor_prompt(

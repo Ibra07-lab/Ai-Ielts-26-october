@@ -4,13 +4,16 @@ from ..models import (
     WritingFeedbackWithTeacherReport,
     ExaminerEvaluation,
     TutorFeedback,
-    ErrorPattern
+    ErrorPattern,
+    TaskType,
+    Criterion
 )
 from ..teacher_report_models import TeacherFeedbackReport
 from .examiner import ExaminerAgent
 from .tutor import TutorAgent
 from .teacher_report_agent import TeacherReportAgent
 from ..memory.error_patterns import ErrorPatternMemory
+from ..utils.plagiarism import check_introduction_copying
 
 
 class WritingPipeline:
@@ -28,6 +31,11 @@ class WritingPipeline:
     ) -> WritingFeedbackResponse:
         """Run the full evaluation pipeline."""
         try:
+            # Step 0: Check for introduction copying (Task 1 especially)
+            copying_check = None
+            if request.task_type == TaskType.TASK1:
+                copying_check = check_introduction_copying(request.question, request.essay)
+            
             # Step 1: Get error history if user is known
             error_history = None
             recurring_errors = []
@@ -42,8 +50,33 @@ class WritingPipeline:
             evaluation = await self.examiner.evaluate(
                 task_type=request.task_type,
                 question=request.question,
-                essay=request.essay
+                essay=request.essay,
+                image_url=request.image_url,
+                chart_type=request.chart_type
             )
+            
+            # Step 2.5: Apply copying penalty if detected
+            if copying_check and copying_check["penalty_recommended"]:
+                # Reduce Task Achievement and Lexical Resource by 0.5-1.0 bands
+                for score in evaluation.criterion_scores:
+                    if score.criterion in [Criterion.TASK_ACHIEVEMENT, Criterion.LEXICAL_RESOURCE]:
+                        original_band = score.band
+                        penalty = 1.0 if copying_check["is_copied"] else 0.5
+                        score.band = max(5.0, score.band - penalty)
+                        score.justification += f" [Penalty: Introduction copied from question (-{penalty} band)]"
+                
+                # Recalculate overall band
+                scores = [s.band for s in evaluation.criterion_scores]
+                evaluation.overall_band = round(sum(scores) / len(scores) * 2) / 2
+                
+                # Update band_range
+                evaluation.band_range = {
+                    "low": max(0.0, evaluation.overall_band - 0.5),
+                    "high": min(9.0, evaluation.overall_band + 0.5)
+                }
+                
+                # Store copying detection in evaluation
+                evaluation.copying_detected = copying_check
             
             # Step 3: Tutor provides coaching (based on immutable evaluation)
             coaching = await self.tutor.coach(

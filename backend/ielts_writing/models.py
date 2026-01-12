@@ -40,6 +40,7 @@ class ExaminerEvaluation(BaseModel):
     word_count_ok: bool  # NEW: True if meets minimum (150 for Task 1, 250 for Task 2)
     word_count_penalty: bool  # DEPRECATED: Use word_count_ok instead
     off_topic: Optional[bool] = False
+    copying_detected: Optional[dict] = None  # Plagiarism check results
     timestamp: datetime = Field(default_factory=datetime.utcnow)
 
 
@@ -73,11 +74,11 @@ class CoherenceIssue(BaseModel):
 
 
 class MicroTask(BaseModel):
-    title: Optional[str] = "Practice Task"
-    duration_minutes: Optional[int] = 15
-    instruction: Optional[str] = None
+    title: str = "Practice Task"
+    duration_minutes: int = 15
+    instruction: str = ""
     task: Optional[str] = None # Fallback for when LLM uses 'task' instead of 'instruction'
-    example: Optional[str] = None
+    example: str = ""
     targets_criterion: Optional[Criterion] = None
 
 
@@ -168,6 +169,8 @@ class EvaluateRequest(BaseModel):
     target_band: float = 7.0
     user_id: Optional[str] = None  # For error memory
     student_name: Optional[str] = None  # For personalized teacher reports
+    image_url: Optional[str] = None  # Path or URL to chart/graph for Task 1
+    chart_type: Optional[str] = None  # "Bar Chart", "Line Graph", "Pie Chart", "Map", etc.
 
 
 # Rebuild models to resolve forward references

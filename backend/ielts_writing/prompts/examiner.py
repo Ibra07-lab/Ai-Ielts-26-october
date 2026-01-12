@@ -42,35 +42,63 @@ EXAMINER_SYSTEM_PROMPT = """You are a certified IELTS examiner. Your ONLY job is
 - 5.0: Limited range of structures. Frequent errors. Complex sentences attempted but often faulty.
 
 ## Output Format
-Return JSON only:
+Return JSON only (no markdown, no explanations):
 {
   "task_type": "task1" or "task2",
   "overall_band": <average of 4 criteria, rounded to nearest 0.5>,
+  "band_range": {"low": X.X, "high": X.X},
   "criterion_scores": [
-    {"criterion": "task_response", "band": X.X, "justification": "..."},
+    {"criterion": "task_achievement", "band": X.X, "justification": "..."}, // For Task 1 ONLY
+    {"criterion": "task_response", "band": X.X, "justification": "..."},    // For Task 2 ONLY
     {"criterion": "coherence_cohesion", "band": X.X, "justification": "..."},
     {"criterion": "lexical_resource", "band": X.X, "justification": "..."},
     {"criterion": "grammatical_range_accuracy", "band": X.X, "justification": "..."}
   ],
   "word_count": <integer>,
-  "word_count_penalty": <true if under minimum>,
-  "off_topic": <true if essay doesn't address the question>
+  "word_count_ok": <true if ≥150 for Task1 or ≥250 for Task2>,
+  "word_count_penalty": false,
+  "off_topic": false
 }
+
+CRITICAL: 
+- Use "task_achievement" for Task 1 (describing graphs/charts/processes)
+- Use "task_response" for Task 2 (opinion essays/discussions)
+- Include EXACTLY 4 criterion_scores (one per criterion)
 """
 
 
 def build_examiner_prompt(
     task_type: str,
     question: str,
-    essay: str
+    essay: str,
+    image_url: str = None,
+    chart_type: str = None
 ) -> str:
     word_count = len(essay.split())
     min_words = 150 if task_type == "task1" else 250
     
-    return f"""## Task Type
+    prompt = f"""## Task Type
 {task_type.upper()}
+"""
+    
+    # Add chart analysis section for Task 1 with image
+    if task_type == "task1" and image_url:
+        prompt += f"""
+## Visual Data
+Chart Type: {chart_type or "Chart/Graph"}
+The chart/graph is provided as an image. You can see the visual data.
 
-## Question
+⚠️ CRITICAL FOR TASK 1 EVALUATION:
+1. Compare the essay's data with the actual chart data you can see
+2. Verify all numbers and trends mentioned are accurate
+3. Check if key features are identified correctly
+4. Assess if comparisons match the visual data
+5. Penalize factual inaccuracies heavily in Task Achievement score
+6. Check if the introduction paraphrases the task (not copied)
+
+"""
+    
+    prompt += f"""## Question
 {question}
 
 ## Student Essay
@@ -80,4 +108,11 @@ def build_examiner_prompt(
 {word_count} words (minimum: {min_words})
 
 ## Instructions
-Score this essay strictly. Return JSON only. No advice."""
+Score this essay strictly. """
+    
+    if task_type == "task1" and image_url:
+        prompt += """Pay special attention to data accuracy - verify all figures against the chart. """
+    
+    prompt += "Return JSON only. No advice."
+    
+    return prompt

@@ -77,6 +77,7 @@ app = FastAPI(
 )
 
 from ielts_writing.service import router as writing_router
+from ielts_writing.routes.task1 import router as task1_router
 
 # Configure CORS
 app.add_middleware(
@@ -89,6 +90,7 @@ app.add_middleware(
 
 # Include Routers
 app.include_router(writing_router)
+app.include_router(task1_router)
 
 
 # Health check models
