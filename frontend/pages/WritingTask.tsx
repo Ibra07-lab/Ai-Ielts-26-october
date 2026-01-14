@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { PenTool, RotateCcw, Send, Clock, TrendingUp, Star, Target, Sparkles, BookOpen, GraduationCap, ArrowLeft, CheckCircle, Timer as TimerIcon, Maximize2, X, Save } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +11,7 @@ import { useUser } from "../contexts/UserContext";
 import backend from "~backend/client";
 import { FeedbackSummaryView } from "@/components/writing/FeedbackSummaryView";
 import { FeedbackContainer } from "@/components/writing/FeedbackContainer";
+import { WritingFeedback } from "@/components/writing/WritingFeedback";
 import type { EvaluationResult } from "@/types/writing-feedback";
 import { TaskTypeIcon } from "@/components/writing/TaskTypeIcon";
 import TradeConferenceMap from "@/components/writing/TradeConferenceMap";
@@ -67,122 +68,12 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
     enabled: !!selectedTest,
   });
 
-  // AI Essay Analysis Mutation - Using enhanced endpoint
-  const aiAnalysisMutation = useMutation({
-    mutationFn: async (params: { essay: string; taskType: number; userId: number }) => {
-      // Use new Task 1 endpoint for Task 1, old endpoint for Task 2
-      const isTask1 = params.taskType === 1;
-      const endpoint = isTask1 
-        ? "http://localhost:8002/task1/evaluate"
-        : "http://localhost:8001/ielts_writing/evaluate";
-      
-      const requestBody = isTask1 
-        ? {
-            // New Task 1 endpoint format
-            essay: params.essay,
-            question: prompt?.prompt || "",
-            student_name: "Student",
-            chart_type: selectedTest?.chartType || null,
-            image_url: selectedTest?.imageUrl || null,
-            include_teacher_feedback: true, // Re-enabled with optimized prompts (30s target)
-            include_markdown: true,
-          }
-        : {
-            // Old endpoint format for Task 2
-            task_type: "task2",
-            question: prompt?.prompt || "",
-            essay: params.essay,
-            target_band: 7.0,
-            user_id: params.userId.toString(),
-          };
+  // New: Split Feedback Flow State
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isGeneratingFeedback, setIsGeneratingFeedback] = useState(false);
 
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 120000); // 2 minutes timeout for LLM processing
-
-      try {
-        const response = await fetch(endpoint, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(requestBody),
-          signal: controller.signal,
-        });
-
-        clearTimeout(timeoutId);
-
-        if (!response.ok) {
-          throw new Error(`Failed to analyze essay: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        
-        // Transform Task 1 response to match expected format
-        if (isTask1 && data.success) {
-          const teacherFeedback = data.teacher_feedback || {};
-          
-          return {
-            evaluation: data.examiner_result,
-            coaching: {
-              // Map teacher feedback fields to coaching structure
-              grammar_errors: teacherFeedback.grammar_errors || [],
-              vocabulary_suggestions: teacherFeedback.vocabulary_suggestions || [],
-              coherence_issues: teacherFeedback.coherence_issues || [],
-              strengths: teacherFeedback.strengths || [],
-              overall_message: teacherFeedback.overall_message || `Band ${data.examiner_result?.overall_band || 'N/A'}: ${data.examiner_result?.examiner_notes || 'Analysis complete'}`,
-              next_steps: teacherFeedback.next_steps || [],
-              band_gap_analysis: data.examiner_result?.band_gap_analysis || {}
-            },
-            recurring_errors: [],
-            personalizedTip: teacherFeedback.personalized_tip || null,
-          };
-        }
-
-        return data;
-      } catch (error) {
-        clearTimeout(timeoutId);
-        if (error.name === 'AbortError') {
-          throw new Error('Essay analysis timed out after 2 minutes. Please try again.');
-        }
-        throw error;
-      }
-    },
-    onSuccess: (data) => {
-      setAiAnalysis(data);
-      setViewMode("feedback");
-      queryClient.invalidateQueries({ queryKey: ["progress"] });
-      toast({
-        title: "AI Analysis Complete!",
-        description: `Overall score: ${data.evaluation.overall_band}`,
-      });
-    },
-    onError: (error) => {
-      console.error("Failed to analyze essay:", error);
-      toast({
-        title: "Error",
-        description: "Failed to analyze your essay. Please try again.",
-        variant: "destructive",
-      });
-    },
-  });
-
-  const handleSubmit = () => {
-    if (!user || !prompt || !content.trim()) {
-      toast({
-        title: "Error",
-        description: "Please write your response before submitting.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // Always use AI evaluation
-    aiAnalysisMutation.mutate({
-      essay: content.trim(),
-      taskType: taskType,
-      userId: user.id,
-    });
-  };
-
-  const handleAIAnalysis = () => {
+  // 1. QUICK SCORE (Examiner Only)
+  const handleQuickAnalysis = async () => {
     if (!user || !content.trim()) {
       toast({
         title: "Error",
@@ -192,11 +83,149 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
       return;
     }
 
-    aiAnalysisMutation.mutate({
-      essay: content.trim(),
-      taskType: taskType,
-      userId: user.id,
-    });
+    setIsAnalyzing(true);
+    setAiAnalysis(null);
+
+    try {
+      // Use evaluate endpoint for Task 1, legacy for Task 2
+      const isTask1 = taskType === 1;
+      const endpoint = isTask1
+        ? "http://localhost:8002/task1/evaluate"
+        : "http://localhost:8001/ielts_writing/evaluate"; // Legacy fallback
+
+      const requestBody = isTask1
+        ? {
+          essay: content.trim(),
+          question: prompt?.prompt || "",
+          student_name: user?.name || "Student",
+          chart_type: selectedTest?.chartType || null,
+          image_url: selectedTest?.imageUrl || null,
+          previous_errors: null,
+          attempt_number: 1,
+          include_teacher_feedback: true,
+          include_markdown: true
+        }
+        : {
+          // Task 2 legacy body
+          task_type: "task2",
+          question: prompt?.prompt || "",
+          essay: content.trim(),
+          target_band: 7.0,
+          user_id: user.id.toString(),
+        };
+
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) throw new Error("Analysis failed");
+
+      const data = await response.json();
+
+      // Normalize Result
+      let result: any = {};
+      if (isTask1) {
+        // Full evaluation response includes scores + teacher feedback
+        result = {
+          evaluation: {
+            ...data.scores,
+            word_count: content.split(/\s+/).length,
+            word_count_ok: true,
+            teacher_feedback_status: data.teacher_feedback_status, // Don't override! Backend sends correct status
+            feedback_markdown: data.feedback_markdown || null,
+            teacher_feedback: data.teacher_feedback || null,
+            timing: data.timing || { examiner: 15.0, teacher: 30.0 }
+          },
+        };
+      } else {
+        // Legacy Task 2 (already full result)
+        result = {
+          evaluation: data.examiner_result,
+          coaching: data.teacher_feedback, // Map if needed
+          teacher_feedback_status: 'complete'
+        };
+      }
+
+      setAiAnalysis(result);
+      setViewMode("feedback");
+      toast({ title: "Score Ready!", description: `Band ${result.evaluation?.overall_band}` });
+      queryClient.invalidateQueries({ queryKey: ["progress"] });
+
+    } catch (error) {
+      console.error(error);
+      toast({ title: "Error", description: "Analysis failed. Please try again.", variant: "destructive" });
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
+  // 2. DETAILED FEEDBACK (Teacher Agent)
+  const handleGetDetailedFeedback = async () => {
+    if (!aiAnalysis || !aiAnalysis.evaluation) return;
+
+    setIsGeneratingFeedback(true);
+
+    // Optimistic update
+    setAiAnalysis((prev: any) => ({
+      ...prev,
+      evaluation: {
+        ...prev.evaluation,
+        teacher_feedback_status: 'loading'
+      }
+    }));
+
+    try {
+      const endpoint = "http://localhost:8002/task1/evaluate";
+      const requestBody = {
+        essay: content.trim(),
+        question: prompt?.prompt || "",
+        student_name: "Student",
+        chart_type: selectedTest?.chartType || null,
+        image_url: selectedTest?.imageUrl || null,
+        include_teacher_feedback: true,
+        include_markdown: true
+      };
+
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) throw new Error("Feedback generation failed");
+
+      const data = await response.json();
+
+      if (data.success) {
+        setAiAnalysis((prev: any) => ({
+          ...prev,
+          evaluation: {
+            ...prev.evaluation,
+            teacher_feedback: data.teacher_feedback,
+            feedback_markdown: data.feedback_markdown,
+            teacher_feedback_status: 'complete'
+          }
+        }));
+      } else {
+        throw new Error(data.error || "Unknown error");
+      }
+
+    } catch (error) {
+      console.error(error);
+      setAiAnalysis((prev: any) => ({
+        ...prev,
+        evaluation: {
+          ...prev.evaluation,
+          teacher_feedback_status: 'error',
+          teacher_feedback_message: error instanceof Error ? error.message : "Failed to generate feedback"
+        }
+      }));
+      toast({ title: "Error", description: "Could not generate detailed feedback.", variant: "destructive" });
+    } finally {
+      setIsGeneratingFeedback(false);
+    }
   };
 
   const getNewQuestion = () => {
@@ -213,7 +242,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
   useEffect(() => {
     if (isTestStarted && timeLeft > 0 && !aiAnalysis) {
       timerRef.current = setTimeout(() => {
-        setTimeLeft((prev) => prev - 1);
+        setTimeLeft((prev: number) => prev - 1);
       }, 1000);
     }
     return () => {
@@ -241,7 +270,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
-  const wordCount = content.trim().split(/\s+/).filter(word => word.length > 0).length;
+  const wordCount = content.trim().split(/\s+/).filter((word: string) => word.length > 0).length;
   // Dynamic color for word count
   const wordCountColor = wordCount >= (taskType === 1 ? 150 : 250)
     ? "text-emerald-600 bg-emerald-50 border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800"
@@ -431,7 +460,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
 
                         {/* Interactive Overlay for Start */}
                         {isSelected && (
-                          <div className="absolute inset-0 z-20 cursor-pointer" onClick={(e) => { e.stopPropagation(); handleStartTest(); }}></div>
+                          <div className="absolute inset-0 z-20 cursor-pointer" onClick={(e: React.MouseEvent) => { e.stopPropagation(); handleStartTest(); }}></div>
                         )}
                       </div>
                     </div>
@@ -492,12 +521,20 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                 </div>
               </div>
               <div className="rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800">
-                <FeedbackContainer
-                  evaluation={aiAnalysis.evaluation as EvaluationResult}
-                  coaching={aiAnalysis.coaching}
-                  essay={content.trim()}
-                  taskType={taskType === 1 ? "task1" : "task2"}
-                />
+                {taskType === 1 ? (
+                  <WritingFeedback
+                    result={aiAnalysis.evaluation as EvaluationResult}
+                    onRetryFeedback={handleGetDetailedFeedback}
+                    isLoadingFeedback={isGeneratingFeedback}
+                  />
+                ) : (
+                  <FeedbackContainer
+                    evaluation={aiAnalysis.evaluation as EvaluationResult}
+                    coaching={aiAnalysis.coaching}
+                    essay={content.trim()}
+                    taskType="task2"
+                  />
+                )}
               </div>
             </div>
           ) : (
@@ -596,7 +633,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                     <Textarea
                       placeholder="Start writing your response here..."
                       value={content}
-                      onChange={(e) => setContent(e.target.value)}
+                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value)}
                       className="flex-1 w-full mx-auto resize-none border-0 focus-visible:ring-0 p-8 text-lg leading-loose font-mono text-slate-800 dark:text-slate-200 placeholder:text-slate-300 dark:placeholder:text-slate-700 bg-transparent custom-scrollbar"
                       spellCheck={false}
                     />
@@ -620,13 +657,13 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                         </Button>
                       )}
                       <Button
-                        onClick={handleAIAnalysis}
-                        disabled={!content.trim() || aiAnalysisMutation.isPending}
+                        onClick={handleQuickAnalysis}
+                        disabled={!content.trim() || isAnalyzing}
                         className="h-10 px-8 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white text-sm font-bold uppercase tracking-wide shadow-lg shadow-purple-500/20 rounded-lg transition-all transform hover:scale-[1.02]"
                       >
-                        {aiAnalysisMutation.isPending ? (
+                        {isAnalyzing ? (
                           <span className="flex items-center gap-2">
-                            <Sparkles className="w-4 h-4 animate-spin" /> Analyzing... (~30s)
+                            <Sparkles className="w-4 h-4 animate-spin" /> Analyzing... (~30-45s)
                           </span>
                         ) : (
                           <span className="flex items-center gap-2">
@@ -645,7 +682,10 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
           {/* Zoom Modal Re-implementation for Full Screen */}
           {isImageZoomed && selectedTest.imageUrl && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 animate-in fade-in duration-200" onClick={() => setIsImageZoomed(false)}>
-              <button className="absolute top-6 right-6 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors">
+              <button
+                className="absolute top-6 right-6 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
+                aria-label="Close zoomed image"
+              >
                 <X className="w-8 h-8" />
               </button>
               {/* @ts-ignore */}

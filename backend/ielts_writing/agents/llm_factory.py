@@ -1,4 +1,11 @@
 import os
+from pathlib import Path
+
+# Load .env file from backend directory
+from dotenv import load_dotenv
+backend_dir = Path(__file__).resolve().parent.parent.parent  # Go up from agents/llm_factory.py to backend/
+load_dotenv(dotenv_path=backend_dir / ".env", override=True)
+
 from langchain_openai import ChatOpenAI
 try:
     from langchain_anthropic import ChatAnthropic

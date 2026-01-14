@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { FeedbackSummaryView } from "./FeedbackSummaryView";
 import { FeedbackDeepDiveView } from "./FeedbackDeepDiveView";
 import { EvaluationResult, CoachingResult, Criterion } from "@/types/writing-feedback";

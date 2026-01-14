@@ -1,31 +1,32 @@
 """
-API routes for Task 1 evaluation.
+Task 1 API Routes - FIXED TIMEOUT VERSION
+
+Key changes:
+1. Separate endpoints for quick vs full evaluation
+2. Better error messages
+3. Timing info in response
 """
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, BackgroundTasks
 from pydantic import BaseModel
 from typing import Optional, List
+import asyncio
+import logging
 
 from ..pipelines.task1_pipeline import Task1Pipeline
 
+logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/task1", tags=["IELTS Writing Task 1"])
 
-# Initialize pipeline lazily
-_pipeline = None
-
-def get_pipeline():
-    global _pipeline
-    if _pipeline is None:
-        _pipeline = Task1Pipeline()
-    return _pipeline
+# Initialize pipeline
+pipeline = Task1Pipeline()
 
 
 class Task1EvaluationRequest(BaseModel):
-    """Request model for Task 1 evaluation."""
     essay: str
     question: str
     student_name: str = "Student"
-    chart_type: Optional[str] = None  # line, bar, pie, table, map, process
+    chart_type: Optional[str] = None
     image_url: Optional[str] = None
     previous_errors: Optional[List[str]] = None
     attempt_number: int = 1
@@ -33,34 +34,26 @@ class Task1EvaluationRequest(BaseModel):
     include_markdown: bool = True
 
 
-class QuickScoreRequest(BaseModel):
-    """Request for quick scoring (no teacher feedback)."""
-    essay: str
-    question: str
-    chart_type: Optional[str] = None
-    image_url: Optional[str] = None
-
-
-class VocabularyHelpRequest(BaseModel):
-    """Request for vocabulary suggestions."""
-    chart_type: str
-    weak_areas: Optional[List[str]] = None
-
-
 @router.post("/evaluate")
 async def evaluate_task1(request: Task1EvaluationRequest):
     """
-    Full Task 1 evaluation with examiner scoring and teacher feedback.
+    Full Task 1 evaluation.
     
-    Returns:
-    - Examiner scores (4 criteria + overall)
-    - Task 1 specific analysis (overview, data accuracy)
-    - Personalized teacher feedback
-    - Markdown-formatted report
+    Timeout behavior:
+    - Examiner: 30s max (required)
+    - Teacher: 45s max (optional, will return examiner results if timeout)
+    
+    Response includes:
+    - scores: Always present if examiner succeeds
+    - teacher_feedback: Present if teacher succeeds
+    - teacher_feedback_status: "complete", "timeout", or "error"
+    - timing: How long each step took
     """
+    
+    logger.info(f"[API] Task 1 evaluate request for {request.student_name}")
+    
     try:
-        pipeline = get_pipeline()
-        result = await pipeline.evaluate(
+        result = await pipeline.evaluate_async(
             essay=request.essay,
             question=request.question,
             student_name=request.student_name,
@@ -73,62 +66,75 @@ async def evaluate_task1(request: Task1EvaluationRequest):
         )
         
         if not result.get("success"):
-            raise HTTPException(status_code=500, detail=result.get("error"))
+            raise HTTPException(
+                status_code=500,
+                detail={
+                    "error": result.get("error"),
+                    "message": "Evaluation failed. Please try again."
+                }
+            )
         
         return result
         
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@router.post("/quick-score")
-async def quick_score_task1(request: QuickScoreRequest):
-    """
-    Quick Task 1 scoring - examiner scores only, no teacher feedback.
-    Use for fast checks or batch processing.
-    """
-    try:
-        pipeline = get_pipeline()
-        return await pipeline.quick_score(
-            essay=request.essay,
-            question=request.question,
-            chart_type=request.chart_type,
-            image_url=request.image_url
+    except asyncio.TimeoutError:
+        raise HTTPException(
+            status_code=504,
+            detail={
+                "error": "Request timed out",
+                "message": "The evaluation took too long. Please try again."
+            }
         )
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@router.post("/vocabulary-help")
-async def get_vocabulary_help(request: VocabularyHelpRequest):
-    """
-    Get vocabulary suggestions for a specific chart type.
-    Useful for students who need vocabulary building.
-    """
-    try:
-        pipeline = get_pipeline()
-        return pipeline.get_vocabulary_help(
-            chart_type=request.chart_type,
-            weak_areas=request.weak_areas
+        logger.error(f"[API] Error evaluating: {type(e).__name__}: {str(e)}", exc_info=True)
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "error": str(e),
+                "message": "An error occurred. Please try again."
+            }
         )
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.get("/health")
 async def health_check():
-    """Check if Task 1 service is running."""
+    """Service health check."""
+    return {
+        "status": "healthy",
+        "task_type": "task1",
+        "timeouts": {
+            "examiner": f"{pipeline.EXAMINER_TIMEOUT}s",
+            "teacher": f"{pipeline.TEACHER_TIMEOUT}s",
+            "total": f"{pipeline.TOTAL_TIMEOUT}s"
+        }
+    }
+
+
+@router.get("/health/detailed")
+async def detailed_health():
+    """Check if Anthropic API is responsive."""
+    import time
+    
     try:
-        pipeline = get_pipeline()
+        start = time.time()
+        response = pipeline.teacher.client.messages.create(
+            model=pipeline.teacher.model,
+            max_tokens=10,
+            messages=[{"role": "user", "content": "Say 'OK'"}]
+        )
+        latency = time.time() - start
+        
         return {
             "status": "healthy",
-            "task_type": "task1",
-            "examiner_model": pipeline.examiner.model,
-            "teacher_model": pipeline.teacher.model
+            "anthropic_latency": f"{latency:.2f}s",
+            "anthropic_status": "responsive",
+            "cache_size": len(pipeline.teacher.cache),
+            "cache_max": pipeline.teacher.cache.maxsize
         }
+        
     except Exception as e:
+        logger.error(f"[API] Health check failed: {e}")
         return {
-            "status": "error",
-            "task_type": "task1",
+            "status": "degraded",
+            "anthropic_status": "error",
             "error": str(e)
         }

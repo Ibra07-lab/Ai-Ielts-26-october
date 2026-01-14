@@ -27,6 +27,7 @@ const ALL_HIGHLIGHT_TYPES: HighlightType[] = ["grammar", "vocabulary", "coherenc
 
 const CRITERION_TO_HIGHLIGHT_TYPE: Record<Criterion, HighlightType[]> = {
     task_response: ["strength"], // Mostly strengths or specific task issues
+    task_achievement: ["strength"], // For Task 1
     coherence_cohesion: ["coherence", "strength"],
     lexical_resource: ["vocabulary", "strength"],
     grammatical_range_accuracy: ["grammar", "strength"],

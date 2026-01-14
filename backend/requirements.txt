@@ -23,3 +23,7 @@ python-dotenv>=1.0.0
 
 # Optional (for production)
 gunicorn>=21.2.0
+
+# Reliability features
+tenacity>=8.0.0
+cachetools>=5.0.0

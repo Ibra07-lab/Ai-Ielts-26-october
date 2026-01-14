@@ -300,12 +300,14 @@ export default function ReadingTheory() {
               <button
                 onClick={() => startQuiz()}
                 className="px-6 py-3 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 transition-colors"
+                aria-label="Retry quiz"
               >
                 Retry Quiz
               </button>
               <button
                 onClick={exitQuiz}
                 className="px-6 py-3 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold rounded-xl hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors"
+                aria-label="Back to theory"
               >
                 Back to Theory
               </button>
@@ -323,6 +325,7 @@ export default function ReadingTheory() {
           <button
             onClick={exitQuiz}
             className="text-sm text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors"
+            aria-label="Exit quiz"
           >
             ← Exit Quiz
           </button>
@@ -441,6 +444,7 @@ export default function ReadingTheory() {
               <button
                 onClick={() => toggleQuizExplanation(quizId)}
                 className="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-700"
+                aria-label="Show answer and explanation"
               >
                 Show Answer
               </button>
@@ -454,12 +458,14 @@ export default function ReadingTheory() {
             onClick={prevQuestion}
             disabled={currentQuestionIndex === 0}
             className="px-6 py-3 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            aria-label="Previous question"
           >
             ← Previous
           </button>
           <button
             onClick={() => nextQuestion(totalQuestions)}
             className="px-6 py-3 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 transition-colors"
+            aria-label={currentQuestionIndex === totalQuestions - 1 ? 'Finish quiz' : 'Next question'}
           >
             {currentQuestionIndex === totalQuestions - 1 ? 'Finish Quiz' : 'Next →'}
           </button>
@@ -474,6 +480,7 @@ export default function ReadingTheory() {
       <button
         onClick={() => setSelectedTheory(null)}
         className="text-sm text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors"
+        aria-label="Back to theory list"
       >
         ← Back to Theory List
       </button>

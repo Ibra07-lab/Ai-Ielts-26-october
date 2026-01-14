@@ -79,13 +79,16 @@ app = FastAPI(
 from ielts_writing.service import router as writing_router
 from ielts_writing.routes.task1 import router as task1_router
 
-# Configure CORS
+# Configure CORS - allow all origins for development
+# Using "*" ensures no CORS issues between frontend (5173) and backend (8002)
+# Note: Cannot use allow_credentials=True with allow_origins=["*"]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=os.getenv("CORS_ORIGINS", "*").split(","),
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=["*"],  # Allow all origins for development
+    allow_credentials=False,  # Must be False when using wildcard origins
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all headers
+    expose_headers=["*"],  # Expose all headers to the browser
 )
 
 # Include Routers

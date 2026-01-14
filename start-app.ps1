@@ -16,10 +16,10 @@ function Stop-ProcessOnPort {
     if ($connections) {
         $connections | ForEach-Object {
             if ($_ -match '\s+(\d+)\s*$') {
-                $pid = $matches[1]
+                $processId = $matches[1]
                 try {
-                    Stop-Process -Id $pid -Force -ErrorAction SilentlyContinue
-                    Write-Host "  Killed process $pid on port $Port" -ForegroundColor Gray
+                    Stop-Process -Id $processId -Force -ErrorAction SilentlyContinue
+                    Write-Host "  Killed process $processId on port $Port" -ForegroundColor Gray
                 } catch {
                     # Silently continue if process can't be killed
                 }

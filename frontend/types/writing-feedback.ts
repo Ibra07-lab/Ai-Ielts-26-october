@@ -40,6 +40,15 @@ export interface EvaluationResult {
     criterion_scores: CriterionScore[];
     word_count: number;
     word_count_ok: boolean;
+    // New fields for split feedback flow
+    teacher_feedback_status?: 'complete' | 'timeout' | 'error' | 'loading' | 'not_requested';
+    teacher_feedback_message?: string;
+    teacher_feedback?: any;
+    feedback_markdown?: string;
+    timing?: {
+        examiner?: number;
+        teacher?: number;
+    };
 }
 
 // ----------------------------------------------------------------------------
