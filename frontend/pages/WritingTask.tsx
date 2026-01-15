@@ -120,7 +120,17 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
         body: JSON.stringify(requestBody),
       });
 
-      if (!response.ok) throw new Error("Analysis failed");
+      if (!response.ok) {
+        // Try to surface backend error details instead of a generic message
+        let message = "Analysis failed";
+        try {
+          const err = await response.json();
+          message = err?.detail?.message || err?.detail?.error || err?.message || message;
+        } catch {
+          // ignore parse errors
+        }
+        throw new Error(message);
+      }
 
       const data = await response.json();
 
@@ -155,7 +165,11 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
 
     } catch (error) {
       console.error(error);
-      toast({ title: "Error", description: "Analysis failed. Please try again.", variant: "destructive" });
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Analysis failed. Please try again.",
+        variant: "destructive"
+      });
     } finally {
       setIsAnalyzing(false);
     }
@@ -181,7 +195,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
       const requestBody = {
         essay: content.trim(),
         question: prompt?.prompt || "",
-        student_name: "Student",
+        student_name: user?.name || "Student",
         chart_type: selectedTest?.chartType || null,
         image_url: selectedTest?.imageUrl || null,
         include_teacher_feedback: true,
@@ -194,22 +208,33 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
         body: JSON.stringify(requestBody),
       });
 
-      if (!response.ok) throw new Error("Feedback generation failed");
+      if (!response.ok) {
+        let message = "Feedback generation failed";
+        try {
+          const err = await response.json();
+          message = err?.detail?.message || err?.detail?.error || err?.message || message;
+        } catch {
+          // ignore parse errors
+        }
+        throw new Error(message);
+      }
 
       const data = await response.json();
 
-      if (data.success) {
+      if (data?.success) {
+        const status = data.teacher_feedback_status || (data.feedback_markdown ? "complete" : "error");
         setAiAnalysis((prev: any) => ({
           ...prev,
           evaluation: {
             ...prev.evaluation,
             teacher_feedback: data.teacher_feedback,
             feedback_markdown: data.feedback_markdown,
-            teacher_feedback_status: 'complete'
+            teacher_feedback_status: status,
+            teacher_feedback_message: data.teacher_feedback_message || prev.evaluation?.teacher_feedback_message
           }
         }));
       } else {
-        throw new Error(data.error || "Unknown error");
+        throw new Error(data?.error || "Unknown error");
       }
 
     } catch (error) {

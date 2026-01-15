@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { EvaluationResult } from '@/types/writing-feedback';
+import { EvaluationResult, ScoreExplanation } from '@/types/writing-feedback';
 import { ChevronDown, ChevronUp, Clock, AlertCircle, CheckCircle, Loader2, Scale, Link2, Zap, LayoutList } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -42,14 +42,30 @@ export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
 
             {/* 2. EXAMINER CRITERIA GRID */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {result.criterion_scores.map((score, idx) => (
-                    <ScoreCard
-                        key={idx}
-                        criterion={score.criterion}
-                        band={score.band}
-                        justification={score.justification}
-                    />
-                ))}
+                {result.criterion_scores.map((score, idx) => {
+                    // Map examiner criterion name to teacher feedback key
+                    // Examiner uses "grammatical_range_accuracy", teacher uses "grammatical_range"
+                    const getTeacherFeedbackKey = (criterion: string): keyof NonNullable<typeof result.teacher_feedback> | null => {
+                        if (criterion === "task_achievement") return "task_achievement";
+                        if (criterion === "coherence_cohesion") return "coherence_cohesion";
+                        if (criterion === "lexical_resource") return "lexical_resource";
+                        if (criterion === "grammatical_range_accuracy") return "grammatical_range";
+                        return null;
+                    };
+                    
+                    const teacherKey = getTeacherFeedbackKey(score.criterion);
+                    const teacherExplanation = teacherKey && result.teacher_feedback?.[teacherKey]?.score_explanation;
+                    
+                    return (
+                        <ScoreCard
+                            key={idx}
+                            criterion={score.criterion}
+                            band={score.band}
+                            justification={score.justification}
+                            explanation={teacherExplanation}
+                        />
+                    );
+                })}
             </div>
 
             {/* 3. DETAILED FEEDBACK SECTION */}
@@ -57,9 +73,9 @@ export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
 
                 {/* State: COMPLETE */}
                 {status === 'complete' && result.feedback_markdown && (
-                    <Card className="overflow-hidden border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+                    <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col">
                         <div
-                            className="p-4 bg-slate-50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors"
+                            className="p-4 bg-slate-50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors flex-shrink-0"
                             onClick={() => setShowFullFeedback(!showFullFeedback)}
                         >
                             <div className="flex items-center gap-3">
@@ -77,8 +93,10 @@ export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
                         </div>
 
                         {showFullFeedback && (
-                            <div className="p-8 prose prose-slate dark:prose-invert max-w-none animate-in slide-in-from-top-2 duration-300">
-                                <ReactMarkdown>{result.feedback_markdown}</ReactMarkdown>
+                            <div className="flex-1 overflow-y-auto max-h-[600px] animate-in slide-in-from-top-2 duration-300">
+                                <div className="p-8 prose prose-slate dark:prose-invert max-w-none">
+                                    <ReactMarkdown>{result.feedback_markdown}</ReactMarkdown>
+                                </div>
                             </div>
                         )}
                     </Card>
@@ -135,7 +153,7 @@ export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
                             <p className="text-sm text-slate-500">
                                 Get a comprehensive review including grammar corrections, vocabulary suggestions, and an improved version of your essay.
                             </p>
-                            // Button here is optional if we assume analysis happens automatically
+                            {/* Button here is optional if we assume analysis happens automatically */}
                         </div>
                     </Card>
                 )}
@@ -195,7 +213,8 @@ const ScoreCard: React.FC<{
     criterion: string;
     band: number;
     justification: string;
-}> = ({ criterion, band, justification }) => {
+    explanation?: ScoreExplanation;
+}> = ({ criterion, band, justification, explanation }) => {
     // Icon mapping
     const getIcon = (c: string) => {
         const lower = c.toLowerCase();
@@ -233,10 +252,28 @@ const ScoreCard: React.FC<{
                 />
             </div>
 
-            {/* Text */}
+            {/* Examiner Justification */}
             <p className="text-xs text-slate-400 leading-relaxed">
                 {justification}
             </p>
+
+            {/* Score Explanations (from Teacher) */}
+            {explanation && (
+                <div className="mt-4 space-y-3 pt-3 border-t border-slate-700/50">
+                    <div>
+                        <h4 className="text-xs font-bold text-slate-300 mb-1">Why This Score?</h4>
+                        <p className="text-xs text-slate-400 leading-relaxed">{explanation.why_this_score}</p>
+                    </div>
+                    <div>
+                        <h4 className="text-xs font-bold text-slate-300 mb-1">Band Descriptor Match</h4>
+                        <p className="text-xs text-slate-400 leading-relaxed">{explanation.band_descriptor_evidence}</p>
+                    </div>
+                    <div>
+                        <h4 className="text-xs font-bold text-emerald-400 mb-1">Path to Next Band</h4>
+                        <p className="text-xs text-emerald-300/80 leading-relaxed">{explanation.path_to_improvement}</p>
+                    </div>
+                </div>
+            )}
         </Card>
     );
 };

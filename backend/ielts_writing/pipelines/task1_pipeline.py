@@ -143,11 +143,35 @@ class Task1Pipeline:
                     result["timing"]["teacher"] = round(teacher_time, 2)
                     logger.info(f"[Task1Pipeline] Teacher complete in {teacher_time:.1f}s")
                     
-                    result["teacher_feedback"] = teacher_feedback.model_dump()
-                    result["teacher_feedback_status"] = "complete"
+                    # Check if this is a fallback response (contains error messages)
+                    feedback_dict = teacher_feedback.model_dump()
+                    is_fallback = False
+                    error_message = None
                     
-                    if return_markdown:
-                        result["feedback_markdown"] = self.teacher.format_as_markdown(teacher_feedback)
+                    # Check if any criterion has the fallback error messages
+                    for criterion_key in ["task_achievement", "coherence_cohesion", "lexical_resource", "grammatical_range"]:
+                        criterion = feedback_dict.get(criterion_key, {})
+                        score_explanation = criterion.get("score_explanation", {})
+                        if score_explanation.get("why_this_score") == "Unable to generate feedback due to system error.":
+                            is_fallback = True
+                            # Extract error from action_plan if available
+                            action_plan = feedback_dict.get("action_plan", {})
+                            priority_reason = action_plan.get("priority_reason", "")
+                            if "Feedback generation failed:" in priority_reason:
+                                error_message = priority_reason.split("Feedback generation failed:")[-1].strip()
+                            break
+                    
+                    if is_fallback:
+                        logger.warning(f"[Task1Pipeline] Teacher returned fallback response: {error_message}")
+                        result["teacher_feedback"] = None
+                        result["teacher_feedback_status"] = "error"
+                        result["teacher_feedback_message"] = error_message or "Feedback generation failed. Please check your OpenRouter API key and try again."
+                    else:
+                        result["teacher_feedback"] = feedback_dict
+                        result["teacher_feedback_status"] = "complete"
+                        
+                        if return_markdown:
+                            result["feedback_markdown"] = self.teacher.format_as_markdown(teacher_feedback)
                     
                 except asyncio.TimeoutError:
                     teacher_time = asyncio.get_event_loop().time() - teacher_start

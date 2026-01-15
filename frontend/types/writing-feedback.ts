@@ -20,6 +20,16 @@ export type Criterion =
 export type HighlightType = "grammar" | "vocabulary" | "coherence" | "strength";
 
 // ----------------------------------------------------------------------------
+// Score Explanation (Teacher Output)
+// ----------------------------------------------------------------------------
+
+export interface ScoreExplanation {
+    why_this_score: string;
+    band_descriptor_evidence: string;
+    path_to_improvement: string;
+}
+
+// ----------------------------------------------------------------------------
 // Evaluation Result (Examiner Output)
 // ----------------------------------------------------------------------------
 
@@ -43,7 +53,13 @@ export interface EvaluationResult {
     // New fields for split feedback flow
     teacher_feedback_status?: 'complete' | 'timeout' | 'error' | 'loading' | 'not_requested';
     teacher_feedback_message?: string;
-    teacher_feedback?: any;
+    teacher_feedback?: {
+        task_achievement?: { score_explanation?: ScoreExplanation; [key: string]: any };
+        coherence_cohesion?: { score_explanation?: ScoreExplanation; [key: string]: any };
+        lexical_resource?: { score_explanation?: ScoreExplanation; [key: string]: any };
+        grammatical_range?: { score_explanation?: ScoreExplanation; [key: string]: any };
+        [key: string]: any;
+    };
     feedback_markdown?: string;
     timing?: {
         examiner?: number;

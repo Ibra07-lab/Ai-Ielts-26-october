@@ -11,11 +11,10 @@ import os
 import json
 import logging
 import asyncio
+import time
 from typing import Optional, Dict, Any, AsyncGenerator
 
 import httpx
-from anthropic import Anthropic, APITimeoutError, APIConnectionError
-from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 from cachetools import TTLCache
 
 from ..prompts.task1_teacher_prompt_lite import (
@@ -42,10 +41,12 @@ class Task1Teacher:
     
     def __init__(self, model: str = None):
         self.model = model or os.getenv(
-            "IELTS_WRITING_MODEL",
-            "claude-sonnet-4-5-20250929"
+            "TEACHER_MODEL",
+            "openai/gpt-4.1"
         )
-        self.api_key = os.getenv("ANTHROPIC_API_KEY")
+        self.api_key = os.getenv("OPENROUTER_API_KEY")
+        self.site_url = os.getenv("OPENROUTER_SITE_URL", "http://localhost:5173")
+        self.app_name = os.getenv("OPENROUTER_APP_NAME", "IELTS-AI")
         self.temperature = 0.3  # Slightly lower for faster, more focused output
         self.max_tokens = 2000  # Reduced for faster, focused feedback (was 8192)
         
@@ -53,7 +54,7 @@ class Task1Teacher:
         self.connect_timeout = 10.0  # Max time to establish connection
         self.read_timeout = 30.0     # Reduced to match shorter response (was 60s)
         
-        # Create httpx client with explicit timeouts
+        # Create httpx client for OpenRouter with explicit timeouts
         self.http_client = httpx.Client(
             timeout=httpx.Timeout(
                 connect=self.connect_timeout,
@@ -63,30 +64,44 @@ class Task1Teacher:
             )
         )
         
-        # Also keep Anthropic client for streaming
-        self.client = Anthropic(
-            api_key=self.api_key,
-            timeout=httpx.Timeout(
-                connect=self.connect_timeout,
-                read=self.read_timeout,
-                write=30.0,
-                pool=10.0
-            )
-        )
+        # OpenRouter API endpoint
+        self.openrouter_url = "https://openrouter.ai/api/v1/chat/completions"
         
         # Cache config: 100 responses, 1 hour TTL
         self.cache = TTLCache(maxsize=100, ttl=3600)
     
     # @retry removed to prevent double timeout (fallback is the retry)
-    def _call_anthropic(self, system: str, user: str, max_tokens: int):
-        """Call Anthropic API with retry on timeout/connection errors."""
-        return self.client.messages.create(
-            model=self.model,
-            max_tokens=max_tokens,
-            temperature=self.temperature,
-            system=system,
-            messages=[{"role": "user", "content": user}]
+    def _call_openrouter(self, system: str, user: str, max_tokens: int) -> str:
+        """Call OpenRouter API with timeout protection."""
+        if not self.api_key:
+            raise ValueError("OPENROUTER_API_KEY environment variable is not set. Please set it in backend/.env file.")
+        
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json",
+            "HTTP-Referer": self.site_url,
+            "X-Title": self.app_name
+        }
+        
+        payload = {
+            "model": self.model,
+            "max_tokens": max_tokens,
+            "temperature": self.temperature,
+            "messages": [
+                {"role": "system", "content": system},
+                {"role": "user", "content": user}
+            ]
+        }
+        
+        response = self.http_client.post(
+            self.openrouter_url,
+            headers=headers,
+            json=payload
         )
+        response.raise_for_status()
+        
+        data = response.json()
+        return data["choices"][0]["message"]["content"]
     
     def generate_feedback(
         self,
@@ -111,20 +126,27 @@ class Task1Teacher:
             # Try full feedback first
             feedback = self._generate_full_feedback(request)
             self.cache[cache_key] = feedback  # Store in cache
+            logger.info(f"[Task1Teacher] Full feedback complete in {time.time() - start_time:.2f}s")
             return feedback
             
         except httpx.TimeoutException as e:
             logger.warning(f"[Task1Teacher] Full feedback timed out: {e}")
             logger.info("[Task1Teacher] Falling back to quick feedback...")
-            return self._generate_quick_feedback(request)
+            feedback = self._generate_quick_feedback(request)
+            logger.info(f"[Task1Teacher] Quick feedback complete in {time.time() - start_time:.2f}s")
+            return feedback
             
-        except APITimeoutError as e:
-            logger.warning(f"[Task1Teacher] Anthropic timeout: {e}")
-            return self._generate_quick_feedback(request)
+        except httpx.HTTPStatusError as e:
+            logger.warning(f"[Task1Teacher] OpenRouter API error: {e}")
+            feedback = self._generate_quick_feedback(request)
+            logger.info(f"[Task1Teacher] Quick feedback complete in {time.time() - start_time:.2f}s")
+            return feedback
             
         except Exception as e:
             logger.error(f"[Task1Teacher] Error: {e}")
-            return self._generate_fallback_feedback(request, str(e))
+            feedback = self._generate_fallback_feedback(request, str(e))
+            logger.info(f"[Task1Teacher] Fallback feedback complete in {time.time() - start_time:.2f}s")
+            return feedback
     
     def _generate_full_feedback(
         self,
@@ -140,9 +162,9 @@ class Task1Teacher:
             chart_type=request.chart_type
         )
         
-        logger.info(f"[Task1Teacher] Calling Anthropic (timeout: {self.read_timeout}s)")
+        logger.info(f"[Task1Teacher] Calling OpenRouter GPT-4.1 (timeout: {self.read_timeout}s)")
         
-        response = self._call_anthropic(
+        content = self._call_openrouter(
             system=TASK1_TEACHER_SYSTEM_PROMPT_LITE,
             user=user_prompt,
             max_tokens=self.max_tokens
@@ -150,7 +172,6 @@ class Task1Teacher:
         
         logger.info("[Task1Teacher] Response received")
         
-        content = response.content[0].text
         feedback_data = self._parse_json_response(content)
         
         # Convert lite format to full Pydantic schema
@@ -169,17 +190,12 @@ class Task1Teacher:
         
         quick_prompt = self._build_quick_prompt(request)
         
-        response = self.client.messages.create(
-            model=self.model,
-            max_tokens=800,  # Much smaller
-            temperature=0.2,
+        content = self._call_openrouter(
             system="You are an IELTS tutor. Give brief, helpful feedback. Return JSON only.",
-            messages=[
-                {"role": "user", "content": quick_prompt}
-            ]
+            user=quick_prompt,
+            max_tokens=800  # Much smaller
         )
         
-        content = response.content[0].text
         quick_data = self._parse_json_response(content)
         
         # Convert quick format to full format
@@ -266,6 +282,12 @@ Give quick feedback as JSON:
                 "closing_message": f"Keep practicing, {request.student_name}!"
             },
             
+            # New sections default to None for quick feedback
+            vocabulary_grammar_upgrade=None,
+            band_improvement_path=None,
+            band7_model_upgrade=None,
+            teachers_final_comment=None,
+            
             improvement_notes="Quick feedback generated due to timeout. Submit again for detailed analysis."
         )
     
@@ -278,6 +300,11 @@ Give quick feedback as JSON:
         return {
             "band": band,
             "status": "strong" if band >= 7 else "developing" if band >= 6 else "needs_work",
+            "score_explanation": {
+                "why_this_score": justification or "Score based on examiner evaluation.",
+                "band_descriptor_evidence": "See examiner feedback above for detailed justification.",
+                "path_to_improvement": "Review the examiner's notes for specific improvement areas."
+            },
             "overview_quality": "basic" if name == "Task Achievement" else None,
             "overview_feedback": justification if name == "Task Achievement" else None,
             "data_accuracy": "accurate" if name == "Task Achievement" else None,
@@ -346,6 +373,12 @@ Give quick feedback as JSON:
                 "closing_message": "Please try again. If the issue persists, contact support."
             },
             
+            # New sections default to None for fallback
+            vocabulary_grammar_upgrade=None,
+            band_improvement_path=None,
+            band7_model_upgrade=None,
+            teachers_final_comment=None,
+            
             improvement_notes=f"Error: {error}"
         )
     
@@ -354,6 +387,11 @@ Give quick feedback as JSON:
         base = {
             "band": 0,
             "status": "needs_work",
+            "score_explanation": {
+                "why_this_score": "Unable to generate feedback due to system error.",
+                "band_descriptor_evidence": "Feedback generation failed. Please try again.",
+                "path_to_improvement": "Resubmit your essay for detailed feedback."
+            },
             "what_it_measures": ["Unable to analyze"],
             "strengths": [],
             "weakness_patterns": [],
@@ -429,6 +467,13 @@ Give quick feedback as JSON:
             lite_crit = lite_data.get(key, {})
             band = lite_crit.get("band", 6.0)
             
+            # Extract score explanation fields
+            score_explanation = {
+                "why_this_score": lite_crit.get("why_this_score", "Score based on overall performance."),
+                "band_descriptor_evidence": lite_crit.get("band_descriptor_evidence", "See detailed feedback for band descriptor match."),
+                "path_to_improvement": lite_crit.get("path_to_improvement", "Focus on addressing identified weaknesses.")
+            }
+            
             # Map simplified lists to complex objects
             strengths_raw = lite_crit.get("strengths", [])
             if isinstance(strengths_raw, str): strengths_raw = [strengths_raw]
@@ -454,6 +499,7 @@ Give quick feedback as JSON:
             return {
                 "band": band,
                 "status": "strong" if band >= 7 else "developing" if band >= 6 else "needs_work",
+                "score_explanation": score_explanation,
                 # Task Achievement specific
                 "overview_quality": "good" if band >= 6 else "basic",
                 "overview_feedback": "See feedback",
@@ -482,10 +528,77 @@ Give quick feedback as JSON:
             }
         
         # Build score list from request if available
+        # Ensure each score has a 'status' field (required by schema)
         scores = []
         if request.examiner_scores and "criterion_scores" in request.examiner_scores:
-            scores = request.examiner_scores["criterion_scores"]
+            for score in request.examiner_scores["criterion_scores"]:
+                band = score.get("band", 6.0)
+                # Calculate status based on band (same logic as quick feedback)
+                if "status" not in score:
+                    if band >= 7:
+                        status = "strong"
+                    elif band >= 6:
+                        status = "developing"
+                    else:
+                        status = "needs_work"
+                    score = {**score, "status": status}
+                scores.append(score)
 
+        # Extract new sections from lite_data
+        vocab_grammar = lite_data.get("vocabulary_grammar_upgrade", {})
+        band_path = lite_data.get("band_improvement_path", {})
+        model_upgrade = lite_data.get("band7_model_upgrade", {})
+        final_comment = lite_data.get("teachers_final_comment", "")
+        
+        # Convert vocabulary_grammar_upgrade
+        vocab_grammar_upgrade = None
+        if vocab_grammar and vocab_grammar.get("word_phrase_upgrades"):
+            from ...schemas.task1_teacher import (
+                VocabularyGrammarUpgrade, WordPhraseUpgrade, SentenceStructureUpgrade,
+                BandImprovementPath, PrioritizedAction, Band7ModelUpgrade
+            )
+            vocab_grammar_upgrade = VocabularyGrammarUpgrade(
+                word_phrase_upgrades=[
+                    WordPhraseUpgrade(basic=w.get("basic", ""), improved=w.get("improved", ""))
+                    for w in vocab_grammar.get("word_phrase_upgrades", [])
+                ],
+                sentence_structure_upgrades=[
+                    SentenceStructureUpgrade(
+                        original=s.get("original", ""),
+                        improved=s.get("improved", ""),
+                        explanation=s.get("explanation")
+                    )
+                    for s in vocab_grammar.get("sentence_structure_upgrades", [])
+                ]
+            )
+        
+        # Convert band_improvement_path
+        band_improvement_path = None
+        if band_path and band_path.get("prioritized_actions"):
+            from ...schemas.task1_teacher import BandImprovementPath, PrioritizedAction
+            band_improvement_path = BandImprovementPath(
+                current_band=band_path.get("current_band", 6.0),
+                target_band=band_path.get("target_band", 6.5),
+                prioritized_actions=[
+                    PrioritizedAction(
+                        action=a.get("action", ""),
+                        why=a.get("why", ""),
+                        location=a.get("location", "")
+                    )
+                    for a in band_path.get("prioritized_actions", [])
+                ]
+            )
+        
+        # Convert band7_model_upgrade
+        band7_model_upgrade = None
+        if model_upgrade and model_upgrade.get("original_paragraph"):
+            from ...schemas.task1_teacher import Band7ModelUpgrade
+            band7_model_upgrade = Band7ModelUpgrade(
+                original_paragraph=model_upgrade.get("original_paragraph", ""),
+                improved_paragraph=model_upgrade.get("improved_paragraph", ""),
+                explanation=model_upgrade.get("explanation", "")
+            )
+        
         return Task1TeacherFeedbackResponse(
             student_name=request.student_name,
             task_type="task1",
@@ -505,7 +618,11 @@ Give quick feedback as JSON:
             coherence_cohesion=build_criterion("Coherence & Cohesion", "coherence_cohesion"),
             lexical_resource=build_criterion("Lexical Resource", "lexical_resource"),
             grammatical_range=build_criterion("Grammatical Range", "grammatical_range"),
-            action_plan=full_action_plan
+            action_plan=full_action_plan,
+            vocabulary_grammar_upgrade=vocab_grammar_upgrade,
+            band_improvement_path=band_improvement_path,
+            band7_model_upgrade=band7_model_upgrade,
+            teachers_final_comment=final_comment if final_comment else None
         )
     
     def _parse_json_response(self, content: str) -> Dict:
@@ -581,6 +698,82 @@ Give quick feedback as JSON:
 
 {action_plan.get('closing_message', 'Keep practicing!')}
 """
+            
+            # Vocabulary & Grammar Upgrade
+            if hasattr(feedback, 'vocabulary_grammar_upgrade') and feedback.vocabulary_grammar_upgrade:
+                vg = feedback.vocabulary_grammar_upgrade if not isinstance(feedback.vocabulary_grammar_upgrade, dict) else type('obj', (object,), feedback.vocabulary_grammar_upgrade)
+                if isinstance(feedback.vocabulary_grammar_upgrade, dict):
+                    vg_dict = feedback.vocabulary_grammar_upgrade
+                    md += "\n---\n\n## 4️⃣ Vocabulary & Grammar Upgrade\n\n"
+                    md += "### Word & Phrase Upgrades\n"
+                    for upgrade in vg_dict.get('word_phrase_upgrades', []):
+                        md += f"- **{upgrade.get('basic', '')}** → **{upgrade.get('improved', '')}**\n"
+                    md += "\n### Sentence Structure Upgrades\n"
+                    for upgrade in vg_dict.get('sentence_structure_upgrades', []):
+                        md += f"- **Your version:** {upgrade.get('original', '')}\n"
+                        md += f"- **Improved:** {upgrade.get('improved', '')}\n"
+                        if upgrade.get('explanation'):
+                            md += f"  *{upgrade.get('explanation')}*\n"
+                        md += "\n"
+                else:
+                    md += "\n---\n\n## 4️⃣ Vocabulary & Grammar Upgrade\n\n"
+                    md += "### Word & Phrase Upgrades\n"
+                    for upgrade in vg.word_phrase_upgrades:
+                        md += f"- **{upgrade.basic}** → **{upgrade.improved}**\n"
+                    md += "\n### Sentence Structure Upgrades\n"
+                    for upgrade in vg.sentence_structure_upgrades:
+                        md += f"- **Your version:** {upgrade.original}\n"
+                        md += f"- **Improved:** {upgrade.improved}\n"
+                        if upgrade.explanation:
+                            md += f"  *{upgrade.explanation}*\n"
+                        md += "\n"
+            
+            # Band Improvement Path
+            if hasattr(feedback, 'band_improvement_path') and feedback.band_improvement_path:
+                bip = feedback.band_improvement_path if not isinstance(feedback.band_improvement_path, dict) else type('obj', (object,), feedback.band_improvement_path)
+                if isinstance(feedback.band_improvement_path, dict):
+                    bip_dict = feedback.band_improvement_path
+                    md += "\n---\n\n## 5️⃣ Band Improvement Path (VERY IMPORTANT)\n\n"
+                    md += f"**If you fix ONLY these 3 things, you can move from Band {bip_dict.get('current_band', 6.0)} → Band {bip_dict.get('target_band', 6.5)}**\n\n"
+                    for i, action in enumerate(bip_dict.get('prioritized_actions', []), 1):
+                        md += f"{i}. **{action.get('action', '')}**\n"
+                        md += f"   - *Why it matters:* {action.get('why', '')}\n"
+                        md += f"   - *Where:* {action.get('location', '')}\n\n"
+                else:
+                    md += "\n---\n\n## 5️⃣ Band Improvement Path (VERY IMPORTANT)\n\n"
+                    md += f"**If you fix ONLY these 3 things, you can move from Band {bip.current_band} → Band {bip.target_band}**\n\n"
+                    for i, action in enumerate(bip.prioritized_actions, 1):
+                        md += f"{i}. **{action.action}**\n"
+                        md += f"   - *Why it matters:* {action.why}\n"
+                        md += f"   - *Where:* {action.location}\n\n"
+            
+            # Band 7 Model Upgrade
+            if hasattr(feedback, 'band7_model_upgrade') and feedback.band7_model_upgrade:
+                b7 = feedback.band7_model_upgrade if not isinstance(feedback.band7_model_upgrade, dict) else type('obj', (object,), feedback.band7_model_upgrade)
+                if isinstance(feedback.band7_model_upgrade, dict):
+                    b7_dict = feedback.band7_model_upgrade
+                    md += "\n---\n\n## 6️⃣ Band 7 Model Upgrade (Mini Example)\n\n"
+                    md += "**Your version:**\n"
+                    md += f"> {b7_dict.get('original_paragraph', '')}\n\n"
+                    md += "**Improved Band 7 version:**\n"
+                    md += f"> {b7_dict.get('improved_paragraph', '')}\n\n"
+                    if b7_dict.get('explanation'):
+                        md += f"*{b7_dict.get('explanation')}*\n"
+                else:
+                    md += "\n---\n\n## 6️⃣ Band 7 Model Upgrade (Mini Example)\n\n"
+                    md += "**Your version:**\n"
+                    md += f"> {b7.original_paragraph}\n\n"
+                    md += "**Improved Band 7 version:**\n"
+                    md += f"> {b7.improved_paragraph}\n\n"
+                    if b7.explanation:
+                        md += f"*{b7.explanation}*\n"
+            
+            # Teacher's Final Comment
+            if hasattr(feedback, 'teachers_final_comment') and feedback.teachers_final_comment:
+                final_comment = feedback.teachers_final_comment if isinstance(feedback.teachers_final_comment, str) else feedback.teachers_final_comment
+                md += "\n---\n\n## 7️⃣ Teacher's Final Comment\n\n"
+                md += f"{final_comment}\n"
+            
             return md
             
         except Exception as e:

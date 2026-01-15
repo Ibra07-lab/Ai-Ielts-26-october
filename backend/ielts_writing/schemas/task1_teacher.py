@@ -9,6 +9,48 @@ from typing import List, Optional, Literal
 from enum import Enum
 
 
+# ============== New Educational Sections ==============
+
+class WordPhraseUpgrade(BaseModel):
+    """A vocabulary upgrade example."""
+    basic: str  # Student's original phrase
+    improved: str  # Academic upgrade
+
+
+class SentenceStructureUpgrade(BaseModel):
+    """A sentence structure upgrade example."""
+    original: str  # Student's original sentence
+    improved: str  # Improved with complex grammar
+    explanation: Optional[str] = None  # Why it's better
+
+
+class VocabularyGrammarUpgrade(BaseModel):
+    """Vocabulary and grammar upgrade section."""
+    word_phrase_upgrades: List[WordPhraseUpgrade] = Field(min_length=4, max_length=6)
+    sentence_structure_upgrades: List[SentenceStructureUpgrade] = Field(min_length=1, max_length=2)
+
+
+class PrioritizedAction(BaseModel):
+    """One prioritized action for band improvement."""
+    action: str  # What to fix (command form)
+    why: str  # Why it matters
+    location: str  # Where it appears in their essay
+
+
+class BandImprovementPath(BaseModel):
+    """Band improvement path section."""
+    current_band: float = Field(ge=0, le=9)
+    target_band: float = Field(ge=0, le=9)
+    prioritized_actions: List[PrioritizedAction] = Field(min_length=3, max_length=3)
+
+
+class Band7ModelUpgrade(BaseModel):
+    """Band 7 model upgrade section."""
+    original_paragraph: str  # Student's original paragraph (3-4 sentences)
+    improved_paragraph: str  # Band 7 version
+    explanation: str  # Why it's better
+
+
 class StatusLevel(str, Enum):
     """Performance status for each criterion."""
     STRONG = "strong"
@@ -79,6 +121,26 @@ class Tip(BaseModel):
     priority: Literal["high", "medium", "low"] = "medium"
 
 
+class ScoreExplanation(BaseModel):
+    """Detailed explanation for a criterion score."""
+    
+    why_this_score: str = Field(
+        ..., 
+        description="2-3 sentences explaining why student received this band",
+        max_length=300
+    )
+    band_descriptor_evidence: str = Field(
+        ...,
+        description="How their work matches official IELTS band descriptors",
+        max_length=200
+    )
+    path_to_improvement: str = Field(
+        ...,
+        description="Specific advice to reach next band (max 2 sentences)",
+        max_length=150
+    )
+
+
 # ============== Criterion Feedback Schemas ==============
 
 class TaskAchievementFeedback(BaseModel):
@@ -86,6 +148,9 @@ class TaskAchievementFeedback(BaseModel):
     
     band: float = Field(ge=0, le=9)
     status: StatusLevel
+    
+    # Score explanation
+    score_explanation: ScoreExplanation
     
     # Task 1 specific assessments
     overview_quality: OverviewQuality
@@ -111,6 +176,9 @@ class CoherenceCohesionFeedback(BaseModel):
     band: float = Field(ge=0, le=9)
     status: StatusLevel
     
+    # Score explanation
+    score_explanation: ScoreExplanation
+    
     # Task 1 specific assessments
     paragraph_structure_ok: bool  # Overview → Details organization
     logical_data_grouping: bool   # Did they group data logically?
@@ -130,6 +198,9 @@ class LexicalResourceFeedback(BaseModel):
     
     band: float = Field(ge=0, le=9)
     status: StatusLevel
+    
+    # Score explanation
+    score_explanation: ScoreExplanation
     
     # Task 1 specific assessments
     trend_vocabulary_range: Literal["excellent", "good", "adequate", "limited"]
@@ -152,6 +223,9 @@ class GrammaticalRangeFeedback(BaseModel):
     
     band: float = Field(ge=0, le=9)
     status: StatusLevel
+    
+    # Score explanation
+    score_explanation: ScoreExplanation
     
     # Task 1 specific assessments
     tense_consistency: bool      # Appropriate tense usage
@@ -230,6 +304,12 @@ class Task1TeacherFeedbackResponse(BaseModel):
     
     # Action plan
     action_plan: ActionPlan
+    
+    # New educational sections
+    vocabulary_grammar_upgrade: Optional[VocabularyGrammarUpgrade] = None
+    band_improvement_path: Optional[BandImprovementPath] = None
+    band7_model_upgrade: Optional[Band7ModelUpgrade] = None
+    teachers_final_comment: Optional[str] = None
     
     # Optional: Track improvement over time
     improvement_notes: Optional[str] = None  # Compared to previous attempts
