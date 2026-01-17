@@ -1,0 +1,417 @@
+{
+  "success": true,
+  "task_type": "task1",
+  "student_name": "Test Student",
+  "chart_type": "Line Graph",
+  "word_count": 123,
+  "timing": {
+    "examiner": 12.82,
+    "teacher": 19.01
+  },
+  "examiner_result": {
+    "task_type": "task1",
+    "chart_type": "line_graph",
+    "overall_band": 5.0,
+    "band_range": {
+      "low": 5.0,
+      "high": 6.0
+    },
+    "criterion_scores": [
+      {
+        "criterion": "task_achievement",
+        "band": 5.0,
+        "justification": "Word count under 150 (123 words) caps TA at Band 5.0. Overview present but minimal ('all countries increased'). Key features covered but inadequately developed."
+      },
+      {
+        "criterion": "coherence_cohesion",
+        "band": 6.0,
+        "justification": "Clear paragraphing with logical progression. Uses basic cohesive devices ('However', 'In conclusion'). Organization coherent but mechanical. Conclusion unnecessary for Task 1."
+      },
+      {
+        "criterion": "lexical_resource",
+        "band": 5.0,
+        "justification": "Limited vocabulary range: 'increased/rose' repeated. Basic descriptors only ('steadily', 'gradually', 'rapid'). Adequate for task but minimal. No less common lexical items attempted."
+      },
+      {
+        "criterion": "grammatical_range_accuracy",
+        "band": 6.0,
+        "justification": "Mix of simple and complex sentences. Mostly error-free. Uses past tense accurately throughout. Limited range of structures but generally accurate control."
+      }
+    ],
+    "word_count": 123,
+    "word_count_ok": false,
+    "word_count_penalty": true,
+    "word_count_penalty_amount": 1.0,
+    "overview_present": true,
+    "overview_quality": "unclear",
+    "overview_location": "introduction",
+    "data_accuracy": "accurate",
+    "data_errors": [],
+    "key_features_covered": true,
+    "key_features_count": 3,
+    "comparisons_made": true,
+    "off_topic": false,
+    "memorized_content_detected": false,
+    "question_copied": false,
+    "red_flags": [
+      "Word count under 150 (123 words) - caps TA at Band 5.0",
+      "Overview too brief and vague ('all countries increased')",
+      "Limited lexical range - repetitive vocabulary",
+      "Unnecessary conclusion paragraph for Task 1",
+      "Minimal development of key features"
+    ]
+  },
+  "scores": {
+    "overall_band": 5.0,
+    "band_range": {
+      "low": 5.0,
+      "high": 6.0
+    },
+    "criterion_scores": [
+      {
+        "criterion": "task_achievement",
+        "band": 5.0,
+        "justification": "Word count under 150 (123 words) caps TA at Band 5.0. Overview present but minimal ('all countries increased'). Key features covered but inadequately developed."
+      },
+      {
+        "criterion": "coherence_cohesion",
+        "band": 6.0,
+        "justification": "Clear paragraphing with logical progression. Uses basic cohesive devices ('However', 'In conclusion'). Organization coherent but mechanical. Conclusion unnecessary for Task 1."
+      },
+      {
+        "criterion": "lexical_resource",
+        "band": 5.0,
+        "justification": "Limited vocabulary range: 'increased/rose' repeated. Basic descriptors only ('steadily', 'gradually', 'rapid'). Adequate for task but minimal. No less common lexical items attempted."
+      },
+      {
+        "criterion": "grammatical_range_accuracy",
+        "band": 6.0,
+        "justification": "Mix of simple and complex sentences. Mostly error-free. Uses past tense accurately throughout. Limited range of structures but generally accurate control."
+      }
+    ]
+  },
+  "analysis": {
+    "word_count_ok": false,
+    "overview_present": true,
+    "overview_quality": "unclear",
+    "data_accuracy": "accurate",
+    "red_flags": [
+      "Word count under 150 (123 words) - caps TA at Band 5.0",
+      "Overview too brief and vague ('all countries increased')",
+      "Limited lexical range - repetitive vocabulary",
+      "Unnecessary conclusion paragraph for Task 1",
+      "Minimal development of key features"
+    ]
+  },
+  "teacher_feedback": {
+    "student_name": "Test Student",
+    "task_type": "task1",
+    "chart_type": "Line Graph",
+    "word_count": 123,
+    "attempt_number": 1,
+    "overall_summary": {
+      "personal_note": "Test Student, your essay is concise and covers main trends. To improve, focus on overview and data detail.",
+      "scores": [
+        {
+          "criterion": "task_achievement",
+          "band": 5.0,
+          "status": "needs_work"
+        },
+        {
+          "criterion": "coherence_cohesion",
+          "band": 6.0,
+          "status": "developing"
+        },
+        {
+          "criterion": "lexical_resource",
+          "band": 5.0,
+          "status": "needs_work"
+        },
+        {
+          "criterion": "grammatical_range_accuracy",
+          "band": 6.0,
+          "status": "developing"
+        }
+      ],
+      "estimated_overall": 5.5,
+      "superpower": "Clear structure and logical sequencing",
+      "superpower_example": "",
+      "priority": "Add a clear overview and precise data",
+      "priority_quick_win": "Write a 2-sentence overview"
+    },
+    "task_achievement": {
+      "band": 5.0,
+      "status": "needs_work",
+      "score_explanation": {
+        "why_this_score": "You mention main trends but miss a clear overview. Data selection is basic and lacks detail, e.g., 'all countries increased.'",
+        "band_descriptor_evidence": "Band 5: 'recounts detail mechanically; may miss key features.' No clear overview present.",
+        "path_to_improvement": "Add a clear overview summarizing key trends and make more precise comparisons."
+      },
+      "overview_quality": "basic",
+      "overview_feedback": "See feedback",
+      "data_accuracy": "accurate",
+      "key_features_covered": true,
+      "comparisons_made": true,
+      "what_it_measures": [
+        "See examiner notes"
+      ],
+      "strengths": [
+        {
+          "category": "General",
+          "quote": "'The USA had the most users throughout.'",
+          "explanation": "Good usage"
+        }
+      ],
+      "weakness_patterns": [
+        {
+          "pattern_name": "Identified Issue",
+          "description": "'Overall, all countries increased.' (Too general—add specific trends)",
+          "examples": [],
+          "frequency": 1,
+          "impact": "high",
+          "is_recurring": false
+        }
+      ],
+      "tips": [
+        {
+          "tip": "Always include a clear overview.",
+          "priority": "high"
+        }
+      ],
+      "micro_task": {
+        "task_type": "Review",
+        "instruction": "Check feedback",
+        "examples": null,
+        "time_minutes": 5
+      },
+      "improved_overview_example": null
+    },
+    "coherence_cohesion": {
+      "band": 6.0,
+      "status": "developing",
+      "score_explanation": {
+        "why_this_score": "Paragraphing is logical and ideas are sequenced. However, cohesion is basic with repeated structures.",
+        "band_descriptor_evidence": "Band 6: 'arranges information coherently; uses cohesive devices effectively, but cohesion may be mechanical.'",
+        "path_to_improvement": "Use more varied linking words and complex sentences for smoother flow."
+      },
+      "paragraph_structure_ok": true,
+      "logical_data_grouping": true,
+      "what_it_measures": [
+        "See examiner notes"
+      ],
+      "strengths": [
+        {
+          "category": "General",
+          "quote": "'In 1999, the USA had about 20% internet users. This rose steadily...'",
+          "explanation": "Good usage"
+        }
+      ],
+      "weakness_patterns": [
+        {
+          "pattern_name": "Identified Issue",
+          "description": "'FRESH TEST RUN.' (Irrelevant—remove for coherence)",
+          "examples": [],
+          "frequency": 1,
+          "impact": "high",
+          "is_recurring": false
+        }
+      ],
+      "tips": [
+        {
+          "tip": "Vary linking words and sentence types.",
+          "priority": "high"
+        }
+      ],
+      "micro_task": {
+        "task_type": "Review",
+        "instruction": "Check feedback",
+        "examples": null,
+        "time_minutes": 5
+      },
+      "suggested_linkers": null
+    },
+    "lexical_resource": {
+      "band": 5.0,
+      "status": "needs_work",
+      "score_explanation": {
+        "why_this_score": "Vocabulary is basic and repetitive, e.g., 'increased,' 'rose.' Some imprecise expressions like 'about 100%.'",
+        "band_descriptor_evidence": "Band 5: 'limited range; errors in word choice; may cause some difficulty.'",
+        "path_to_improvement": "Use more precise and varied vocabulary for trends and comparisons."
+      },
+      "trend_vocabulary_range": "adequate",
+      "comparison_vocabulary_range": "adequate",
+      "collocations_accurate": true,
+      "spelling_issues": [],
+      "what_it_measures": [
+        "See examiner notes"
+      ],
+      "strengths": [
+        {
+          "category": "General",
+          "quote": "'experienced rapid growth'",
+          "explanation": "Good usage"
+        }
+      ],
+      "weakness_patterns": [
+        {
+          "pattern_name": "Identified Issue",
+          "description": "'increased gradually to about 100%' (imprecise—use 'almost 100%')",
+          "examples": [],
+          "frequency": 1,
+          "impact": "high",
+          "is_recurring": false
+        }
+      ],
+      "tips": [
+        {
+          "tip": "Use varied, precise trend vocabulary.",
+          "priority": "high"
+        }
+      ],
+      "micro_task": {
+        "task_type": "Review",
+        "instruction": "Check feedback",
+        "examples": null,
+        "time_minutes": 5
+      },
+      "vocabulary_upgrades": null
+    },
+    "grammatical_range": {
+      "band": 6.0,
+      "status": "developing",
+      "score_explanation": {
+        "why_this_score": "Grammar is generally accurate with some complex structures. Occasional errors and repetitive sentence forms.",
+        "band_descriptor_evidence": "Band 6: 'uses a mix of simple and complex structures; some errors persist.'",
+        "path_to_improvement": "Increase variety of sentence structures and use more complex forms."
+      },
+      "tense_consistency": true,
+      "passive_voice_usage": true,
+      "article_accuracy": true,
+      "sentence_variety": "adequate",
+      "what_it_measures": [
+        "See examiner notes"
+      ],
+      "strengths": [
+        {
+          "category": "General",
+          "quote": "'However, from 2005 to 2009, Mexico experienced rapid growth...'",
+          "explanation": "Good usage"
+        }
+      ],
+      "weakness_patterns": [
+        {
+          "pattern_name": "Identified Issue",
+          "description": "'The figure remained low until 2005, when it was still only about 25%.' (Could be more concise)",
+          "examples": [],
+          "frequency": 1,
+          "impact": "high",
+          "is_recurring": false
+        }
+      ],
+      "tips": [
+        {
+          "tip": "Use more complex sentences.",
+          "priority": "high"
+        }
+      ],
+      "micro_task": {
+        "task_type": "Review",
+        "instruction": "Check feedback",
+        "examples": null,
+        "time_minutes": 5
+      },
+      "grammar_focus_areas": null
+    },
+    "action_plan": {
+      "priority_focus": "Task Achievement",
+      "priority_reason": "Add a clear overview and precise data",
+      "practice_schedule": [
+        {
+          "day": 1,
+          "focus": "Review",
+          "task": "Review this feedback",
+          "time_minutes": 5
+        },
+        {
+          "day": 2,
+          "focus": "Quick Win",
+          "task": "Write a 2-sentence overview",
+          "time_minutes": 10
+        },
+        {
+          "day": 3,
+          "focus": "Practice",
+          "task": "Write a new essay",
+          "time_minutes": 15
+        }
+      ],
+      "pre_writing_checklist": [
+        "Write a 2-sentence overview",
+        "Replace basic verbs with precise ones",
+        "Add one comparison per country"
+      ],
+      "closing_message": "Focus on overview and precise data for fast improvement."
+    },
+    "vocabulary_grammar_upgrade": {
+      "word_phrase_upgrades": [
+        {
+          "basic": "increased",
+          "improved": "rose steadily"
+        },
+        {
+          "basic": "about 100%",
+          "improved": "almost 100%"
+        },
+        {
+          "basic": "remained low",
+          "improved": "remained relatively low"
+        },
+        {
+          "basic": "rapid growth",
+          "improved": "a sharp increase"
+        },
+        {
+          "basic": "the most users",
+          "improved": "the highest proportion of users"
+        }
+      ],
+      "sentence_structure_upgrades": [
+        {
+          "original": "Canada started at approximately 10% in 1999. It increased gradually to about 100% in 2009.",
+          "improved": "Starting at approximately 10% in 1999, Canada’s internet usage rose steadily, reaching almost 100% by 2009.",
+          "explanation": "Combined sentences, used varied vocabulary, added complex structure"
+        }
+      ]
+    },
+    "band_improvement_path": {
+      "current_band": 5.5,
+      "target_band": 6.0,
+      "prioritized_actions": [
+        {
+          "action": "Add a clear overview paragraph",
+          "why": "Band 6+ requires overview",
+          "location": "After introduction"
+        },
+        {
+          "action": "Use precise trend vocabulary",
+          "why": "Improves Lexical Resource",
+          "location": "Body paragraphs"
+        },
+        {
+          "action": "Make explicit comparisons",
+          "why": "Key features and comparisons needed",
+          "location": "Body paragraphs"
+        }
+      ]
+    },
+    "band7_model_upgrade": {
+      "original_paragraph": "In 1999, the USA had about 20% internet users. This rose steadily to around 80% by 2009. Canada started at approximately 10% in 1999. It increased gradually to about 100% in 2009.",
+      "improved_paragraph": "In 1999, the proportion of internet users in the USA was about 20%, rising steadily to nearly 80% by 2009. Canada began lower, at around 10%, but saw a dramatic increase, reaching almost full penetration by the end of the period.",
+      "explanation": "Added precise data, varied vocabulary, complex structures, and clear comparisons."
+    },
+    "teachers_final_comment": "You organize ideas well. Focus on adding a clear overview and more precise vocabulary to reach Band 6+.",
+    "improvement_notes": null
+  },
+  "teacher_feedback_status": "complete",
+  "feedback_markdown": "# IELTS Writing Feedback for Test Student\n\n## Overall Summary\nTest Student, your essay is concise and covers main trends. To improve, focus on overview and data detail.\n\n**Estimated Band:** 5.5\n\n### Your Superpower 💪\nClear structure and logical sequencing\n\n### Priority Focus 🎯\nAdd a clear overview and precise data\n\n**Quick Win:** Write a 2-sentence overview\n\n---\n\n## Action Plan\n\n**Focus Area:** Task Achievement\n\nAdd a clear overview and precise data\n\n### Practice Schedule\n- **Day 1:** Review this feedback (5 min)\n- **Day 2:** Write a 2-sentence overview (10 min)\n- **Day 3:** Write a new essay (15 min)\n\n### Pre-Writing Checklist\n- [ ] Write a 2-sentence overview\n- [ ] Replace basic verbs with precise ones\n- [ ] Add one comparison per country\n\n---\n\nFocus on overview and precise data for fast improvement.\n\n---\n\n## 4️⃣ Vocabulary & Grammar Upgrade\n\n### Word & Phrase Upgrades\n- **increased** → **rose steadily**\n- **about 100%** → **almost 100%**\n- **remained low** → **remained relatively low**\n- **rapid growth** → **a sharp increase**\n- **the most users** → **the highest proportion of users**\n\n### Sentence Structure Upgrades\n- **Your version:** Canada started at approximately 10% in 1999. It increased gradually to about 100% in 2009.\n- **Improved:** Starting at approximately 10% in 1999, Canada’s internet usage rose steadily, reaching almost 100% by 2009.\n  *Combined sentences, used varied vocabulary, added complex structure*\n\n\n---\n\n## 5️⃣ Band Improvement Path (VERY IMPORTANT)\n\n**If you fix ONLY these 3 things, you can move from Band 5.5 → Band 6.0**\n\n1. **Add a clear overview paragraph**\n   - *Why it matters:* Band 6+ requires overview\n   - *Where:* After introduction\n\n2. **Use precise trend vocabulary**\n   - *Why it matters:* Improves Lexical Resource\n   - *Where:* Body paragraphs\n\n3. **Make explicit comparisons**\n   - *Why it matters:* Key features and comparisons needed\n   - *Where:* Body paragraphs\n\n\n---\n\n## 6️⃣ Band 7 Model Upgrade (Mini Example)\n\n**Your version:**\n> In 1999, the USA had about 20% internet users. This rose steadily to around 80% by 2009. Canada started at approximately 10% in 1999. It increased gradually to about 100% in 2009.\n\n**Improved Band 7 version:**\n> In 1999, the proportion of internet users in the USA was about 20%, rising steadily to nearly 80% by 2009. Canada began lower, at around 10%, but saw a dramatic increase, reaching almost full penetration by the end of the period.\n\n*Added precise data, varied vocabulary, complex structures, and clear comparisons.*\n\n---\n\n## 7️⃣ Teacher's Final Comment\n\nYou organize ideas well. Focus on adding a clear overview and more precise vocabulary to reach Band 6+.\n"
+}

@@ -9,6 +9,7 @@ import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "../contexts/UserContext";
 import backend from "~backend/client";
+import { cn } from "@/lib/utils";
 import { FeedbackSummaryView } from "@/components/writing/FeedbackSummaryView";
 import { FeedbackContainer } from "@/components/writing/FeedbackContainer";
 import { WritingFeedback } from "@/components/writing/WritingFeedback";
@@ -498,7 +499,10 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
 
       {/* Writing Interface - Show when test is started */}
       {isTestStarted && selectedTest && (
-        <div className="h-[calc(100vh-140px)] min-h-[600px] max-w-[1600px] mx-auto animate-in fade-in duration-500 flex flex-col">
+        <div className={cn(
+          "h-[calc(100vh-140px)] min-h-[600px] mx-auto animate-in fade-in duration-500 flex flex-col transition-all duration-300",
+          viewMode === "feedback" ? "w-full max-w-[98vw]" : "max-w-[1600px]"
+        )}>
 
           {/* Top Bar Navigation (Minimal) */}
           <div className="flex items-center justify-between mb-4 flex-none px-1">
@@ -533,8 +537,8 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
           </div>
 
           {viewMode === "feedback" && aiAnalysis && aiAnalysis.evaluation ? (
-            <div className="h-full overflow-y-auto pr-2">
-              <div className="flex items-center justify-between mb-6">
+            <div className="h-full pr-2 flex flex-col min-h-0">
+              <div className="flex items-center justify-between mb-4 shrink-0">
                 <Button variant="ghost" onClick={() => setViewMode("editor")} className="gap-2">
                   <ArrowLeft className="w-4 h-4" />
                   Back to Editor
@@ -545,10 +549,11 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                   </span>
                 </div>
               </div>
-              <div className="rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800">
+              <div className="flex-1 rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 min-h-0">
                 {taskType === 1 ? (
                   <WritingFeedback
                     result={aiAnalysis.evaluation as EvaluationResult}
+                    essayText={content}
                     onRetryFeedback={handleGetDetailedFeedback}
                     isLoadingFeedback={isGeneratingFeedback}
                   />

@@ -45,39 +45,43 @@ Return ONLY valid JSON:
   },
   "task_achievement": {
     "band": 0.0,
-    "why_this_score": "2-3 sentences MAX 50 words explaining the band",
-    "band_descriptor_evidence": "1-2 sentences MAX 30 words matching official IELTS descriptor for this band",
-    "path_to_improvement": "1-2 sentences MAX 25 words for reaching the next band",
-    "strengths": ["Quote from essay showing strength"],
-    "weaknesses": ["Quote showing issue + brief fix"],
-    "top_tip": "Most important tip MAX 10 words"
+    "why_this_score": "...",
+    "band_descriptor_evidence": "...",
+    "path_to_improvement": "...",
+    "strengths": [
+      {"name": "DESCRIPTIVE_NAME", "quote": "EXACT_ESSAY_QUOTE", "explanation": "BRIEF_WHY"}
+    ],
+    "weakness_patterns": [
+      {"name": "SPECIFIC_PATTERN_NAME", "problem": "BRIEF_ISSUE", "fix": "CORRECTION", "examples": ["QUOTE1", "QUOTE2"]}
+    ],
+    "top_tip": "..."
   },
   "coherence_cohesion": {
     "band": 0.0,
-    "why_this_score": "2-3 sentences MAX 50 words explaining the band",
-    "band_descriptor_evidence": "1-2 sentences MAX 30 words matching official descriptor for this band",
-    "path_to_improvement": "1-2 sentences MAX 25 words for the next band",
-    "strengths": ["Quote from essay"],
-    "weaknesses": ["Quote + fix"],
-    "top_tip": "MAX 10 words"
+    "why_this_score": "...",
+    "band_descriptor_evidence": "...",
+    "path_to_improvement": "...",
+    "strengths": [{"name": "...", "quote": "...", "explanation": "..."}],
+    "weakness_patterns": [{"name": "...", "problem": "...", "fix": "...", "examples": ["..."]}],
+    "top_tip": "..."
   },
   "lexical_resource": {
     "band": 0.0,
-    "why_this_score": "2-3 sentences MAX 50 words explaining the band",
-    "band_descriptor_evidence": "1-2 sentences MAX 30 words matching official descriptor for this band",
-    "path_to_improvement": "1-2 sentences MAX 25 words for the next band",
-    "strengths": ["Quote"],
-    "weaknesses": ["Quote + fix"],
-    "top_tip": "MAX 10 words"
+    "why_this_score": "...",
+    "band_descriptor_evidence": "...",
+    "path_to_improvement": "...",
+    "strengths": [{"name": "...", "quote": "...", "explanation": "..."}],
+    "weakness_patterns": [{"name": "...", "problem": "...", "fix": "...", "examples": ["..."]}],
+    "top_tip": "..."
   },
   "grammatical_range": {
     "band": 0.0,
-    "why_this_score": "2-3 sentences MAX 50 words explaining the band",
-    "band_descriptor_evidence": "1-2 sentences MAX 30 words matching official descriptor for this band",
-    "path_to_improvement": "1-2 sentences MAX 25 words for the next band",
-    "strengths": ["Quote"],
-    "weaknesses": ["Quote + fix"],
-    "top_tip": "MAX 10 words"
+    "why_this_score": "...",
+    "band_descriptor_evidence": "...",
+    "path_to_improvement": "...",
+    "strengths": [{"name": "...", "quote": "...", "explanation": "..."}],
+    "weakness_patterns": [{"name": "...", "problem": "...", "fix": "...", "examples": ["..."]}],
+    "top_tip": "..."
   },
   "action_plan": {
     "priority_focus": "Grammar/Vocabulary/Coherence",

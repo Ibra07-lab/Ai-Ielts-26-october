@@ -1,5 +1,5 @@
-from pydantic import BaseModel, Field
-from typing import List, Optional
+from pydantic import BaseModel, Field, field_validator
+from typing import List, Optional, Union
 from .models import Criterion
 
 
@@ -12,9 +12,17 @@ class Strength(BaseModel):
 class WeaknessPattern(BaseModel):
     """A pattern of errors holding the student back."""
     pattern_name: str  # e.g., "Incomplete Overview", "Overusing Simple Linkers"
-    example: str  # Quote from essay showing the error
+    examples: List[str]  # List of direct quotes highlighting the error
     problem: str  # Explanation of why this loses marks
     fix: str  # Corrected version or specific solution
+    frequency: int = 1 # How many times this pattern occurred
+
+    @field_validator('examples', mode='before')
+    @classmethod
+    def wrap_string_in_list(cls, v):
+        if isinstance(v, str):
+            return [v]
+        return v
 
 
 class ImprovementTip(BaseModel):

@@ -194,9 +194,11 @@ export function FeedbackDeepDiveView({
                             </div>
 
                             <HighlightedEssay
-                                text={essay}
-                                highlights={highlights}
-                                activeCriterion={activeCriterion}
+                                essayText={essay}
+                                highlights={highlights.map(h => ({
+                                    text: h.original,
+                                    type: h.type === 'strength' ? 'strength' : 'weakness'
+                                }))}
                             />
                         </div>
                     </ScrollArea>

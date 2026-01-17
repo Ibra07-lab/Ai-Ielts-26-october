@@ -477,20 +477,43 @@ Give quick feedback as JSON:
             # Map simplified lists to complex objects
             strengths_raw = lite_crit.get("strengths", [])
             if isinstance(strengths_raw, str): strengths_raw = [strengths_raw]
-            strengths = [{"category": "General", "quote": s, "explanation": "Good usage"} for s in strengths_raw]
+            
+            strengths = []
+            for s in strengths_raw:
+                if isinstance(s, dict):
+                    strengths.append({
+                        "category": s.get("name", "Strength"),
+                        "quote": s.get("quote", ""),
+                        "explanation": s.get("explanation", "Good usage")
+                    })
+                else:
+                    strengths.append({"category": "Strength", "quote": s, "explanation": "Good usage"})
 
             weaknesses = []
-            weaknesses_raw = lite_crit.get("weaknesses", [])
+            weaknesses_raw = lite_crit.get("weakness_patterns", []) or lite_crit.get("weaknesses", [])
             if isinstance(weaknesses_raw, str): weaknesses_raw = [weaknesses_raw]
+            
             for w in weaknesses_raw:
-                weaknesses.append({
-                    "pattern_name": "Identified Issue",
-                    "description": w,
-                    "examples": [],
-                    "frequency": 1,
-                    "impact": "high",
-                    "is_recurring": False
-                })
+                if isinstance(w, dict):
+                    weaknesses.append({
+                        "pattern_name": w.get("name") or w.get("pattern_name") or "Identified Issue",
+                        "description": w.get("problem") or w.get("description") or "",
+                        "examples": w.get("examples") or ([w.get("quote")] if w.get("quote") else []),
+                        "frequency": w.get("frequency", 1),
+                        "impact": "high",
+                        "is_recurring": False,
+                        "fix": w.get("fix", "")
+                    })
+                else:
+                    weaknesses.append({
+                        "pattern_name": "Identified Issue",
+                        "description": str(w),
+                        "examples": [],
+                        "frequency": 1,
+                        "impact": "high",
+                        "is_recurring": False,
+                        "fix": ""
+                    })
             
             top_tip = lite_crit.get("top_tip", "Review this section")
             tips = [{"tip": top_tip, "priority": "high"}]

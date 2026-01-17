@@ -4,7 +4,7 @@ Pydantic schemas for Task 1 Teacher feedback responses.
 These schemas are specific to Task 1 (Academic) — describing visual data.
 """
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from typing import List, Optional, Literal
 from enum import Enum
 
@@ -101,10 +101,18 @@ class WeaknessPattern(BaseModel):
     """A recurring error pattern."""
     pattern_name: str  # e.g., "Missing Articles with Data"
     description: str   # Brief explanation of the pattern
-    examples: List[ErrorExample]
+    examples: List[str]
     frequency: int = Field(ge=1, description="How many times this error occurred")
     impact: str  # How this affects band score
     is_recurring: bool = False  # True if this was flagged in previous essays
+    fix: Optional[str] = None
+
+    @field_validator('examples', mode='before')
+    @classmethod
+    def wrap_string_in_list(cls, v):
+        if isinstance(v, str):
+            return [v]
+        return v
 
 
 class MicroTask(BaseModel):

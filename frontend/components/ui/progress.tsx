@@ -5,11 +5,13 @@ import { cn } from "@/lib/utils"
 
 function Progress({
   className,
+  indicatorClassName,
   value,
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   ...props
 }: React.ComponentProps<typeof ProgressPrimitive.Root> & {
+  indicatorClassName?: string;
   "aria-label"?: string;
   "aria-labelledby"?: string;
 }) {
@@ -18,11 +20,11 @@ function Progress({
     if (!ariaLabel && !ariaLabelledBy) {
       console.warn('Progress component should have an aria-label or aria-labelledby for accessibility');
     }
-    
+
     return {
-      "aria-label": ariaLabel || (value !== undefined ? `Progress ${Math.round(value)}%` : "Progress"),
+      "aria-label": ariaLabel || (value != null ? `Progress ${Math.round(value)}%` : "Progress"),
       "aria-labelledby": ariaLabelledBy,
-      "aria-valuetext": value !== undefined ? `${Math.round(value)} percent` : undefined,
+      "aria-valuetext": value != null ? `${Math.round(value)} percent` : undefined,
     };
   }, [ariaLabel, ariaLabelledBy, value]);
 
@@ -38,7 +40,7 @@ function Progress({
     >
       <ProgressPrimitive.Indicator
         data-slot="progress-indicator"
-        className="bg-primary h-full w-full flex-1 transition-all"
+        className={cn("bg-primary h-full w-full flex-1 transition-all", indicatorClassName)}
         style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
       />
     </ProgressPrimitive.Root>

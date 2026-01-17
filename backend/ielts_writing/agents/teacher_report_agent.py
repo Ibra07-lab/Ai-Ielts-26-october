@@ -22,8 +22,8 @@ class TeacherReportAgent:
     """
     
     def __init__(self, model: str = None):
-        # Use same model as examiner for consistency
-        model_name = model or os.getenv("IELTS_WRITING_MODEL", "gpt-4o")
+        # Use Claude 3.5 Sonnet for best JSON adherence and reasoning
+        model_name = model or os.getenv("IELTS_WRITING_MODEL", "claude-3-5-sonnet-latest")
         
         self.llm = get_chat_model(
             model_name=model_name,

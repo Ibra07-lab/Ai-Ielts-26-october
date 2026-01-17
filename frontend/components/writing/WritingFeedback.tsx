@@ -1,279 +1,269 @@
 import React, { useState } from 'react';
-import ReactMarkdown from 'react-markdown';
-import { EvaluationResult, ScoreExplanation } from '@/types/writing-feedback';
-import { ChevronDown, ChevronUp, Clock, AlertCircle, CheckCircle, Loader2, Scale, Link2, Zap, LayoutList } from 'lucide-react';
-import { Button } from "@/components/ui/button";
+import { EvaluationResult } from '@/types/writing-feedback';
+import { ArrowLeft, CheckCircle, LayoutList, BookOpen, Scale, Sparkles, AlertCircle } from 'lucide-react';
 import { Card } from "@/components/ui/card";
+import { cn } from '@/lib/utils';
+import { CriterionContent } from './CriterionContent';
+import { HighlightedEssay, HighlightRange } from './HighlightedEssay';
+import ReactMarkdown from 'react-markdown';
 
 interface WritingFeedbackProps {
     result: EvaluationResult;
+    essayText?: string;
     onRetryFeedback?: () => void;
     isLoadingFeedback?: boolean;
 }
 
 export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
     result,
+    essayText = "",
     onRetryFeedback,
     isLoadingFeedback = false
 }) => {
-    const [showFullFeedback, setShowFullFeedback] = useState(false);
-    const status = result.teacher_feedback_status || 'not_requested';
+    // Default to 'task_achievement' or the first criterion
+    const [selectedCriterion, setSelectedCriterion] = useState<string>('task_achievement');
 
-    // Calculate band range
-    const low = Math.max(0, result.overall_band - 0.5);
-    const high = Math.min(9, result.overall_band + 0.5);
+    // Helper to find specific criterion score
+    const getScore = (criteria: string) => {
+        return result.criterion_scores.find(s => s.criterion === criteria)?.band || 0;
+    };
+
+    const taskAchievement = getScore('task_achievement') || getScore('task_response');
+    const coherence = getScore('coherence_cohesion');
+    const lexical = getScore('lexical_resource');
+    const grammar = getScore('grammatical_range_accuracy') || getScore('grammatical_range');
+
+    // Get current criterion data 
+    const getCriterionData = (criterion: string) => {
+        if (!result.teacher_feedback) return {};
+        // Handle name mismatch for grammar
+        if (criterion === 'grammatical_range_accuracy') {
+            // @ts-ignore
+            return result.teacher_feedback['grammatical_range'] || result.teacher_feedback['grammatical_range_accuracy'] || {};
+        }
+        // @ts-ignore
+        return result.teacher_feedback[criterion] || {};
+    };
+
+    const criteriaList = [
+        {
+            id: 'task_achievement',
+            label: 'Task Achievement',
+            score: taskAchievement,
+            desc: "How well you achieved the task requirements.",
+            color: 'blue' as const,
+            icon: <CheckCircle className="w-4 h-4" />
+        },
+        {
+            id: 'coherence_cohesion',
+            label: 'Coherence',
+            score: coherence,
+            desc: "The flow of your essay and connection of ideas.",
+            color: 'indigo' as const,
+            icon: <LayoutList className="w-4 h-4" />
+
+        },
+        {
+            id: 'lexical_resource',
+            label: 'Vocabulary',
+            score: lexical,
+            desc: "The range and accuracy of vocabulary used.",
+            color: 'amber' as const,
+            icon: <BookOpen className="w-4 h-4" />
+        },
+        {
+            id: 'grammatical_range_accuracy',
+            label: 'Grammar',
+            score: grammar,
+            desc: "Variety of sentence structures and accuracy.",
+            color: 'emerald' as const,
+            icon: <Scale className="w-4 h-4" />
+        },
+    ];
+
+    // Determine Logic
+    const showFullFeedback = selectedCriterion === 'full_feedback';
+    const currentData = !showFullFeedback ? getCriterionData(selectedCriterion) : null;
+    const currentCriterionDef = criteriaList.find(c => c.id === selectedCriterion) || criteriaList[0];
+
+    // Extract Highlights
+    const getHighlights = (): HighlightRange[] => {
+        if (showFullFeedback || !currentData) return [];
+
+        const highlights: HighlightRange[] = [];
+
+        // Strengths (Green)
+        if (currentData.strengths && Array.isArray(currentData.strengths)) {
+            currentData.strengths.forEach((s: any) => {
+                // The 'quote' field often contains the exact text to highlight
+                if (s.quote) highlights.push({ text: s.quote, type: 'strength' });
+                else if (s.text) highlights.push({ text: s.text, type: 'strength' });
+            });
+        }
+
+        // Weaknesses (Amber)
+        if (currentData.weakness_patterns && Array.isArray(currentData.weakness_patterns)) {
+            currentData.weakness_patterns.forEach((w: any) => {
+                if (w.identified_issue) {
+                    highlights.push({ text: w.identified_issue, type: 'weakness' });
+                }
+            });
+        }
+
+        return highlights;
+    };
+
+    const highlights = getHighlights();
 
     return (
-        <div className="space-y-8 animate-in fade-in duration-500">
+        <Card className="w-full bg-slate-950 border-slate-900 shadow-2xl overflow-hidden flex flex-col h-full border-0 rounded-none md:rounded-2xl">
 
-            {/* 1. TOP SECTION: Circular Band Score */}
-            <div className="flex flex-col items-center justify-center space-y-4">
-                <CircularBandScore score={result.overall_band} />
-
-                <div className="text-center">
-                    <p className="text-slate-400 font-medium">Estimated Range: <span className="text-white font-bold">{low} - {high}</span></p>
-                    {result.timing?.examiner && (
-                        <p className="text-xs text-slate-500 mt-1 flex items-center justify-center gap-1">
-                            <Clock className="w-3 h-3" /> Scored in {result.timing.examiner}s
-                        </p>
-                    )}
-                </div>
-            </div>
-
-            {/* 2. EXAMINER CRITERIA GRID */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {result.criterion_scores.map((score, idx) => {
-                    // Map examiner criterion name to teacher feedback key
-                    // Examiner uses "grammatical_range_accuracy", teacher uses "grammatical_range"
-                    const getTeacherFeedbackKey = (criterion: string): keyof NonNullable<typeof result.teacher_feedback> | null => {
-                        if (criterion === "task_achievement") return "task_achievement";
-                        if (criterion === "coherence_cohesion") return "coherence_cohesion";
-                        if (criterion === "lexical_resource") return "lexical_resource";
-                        if (criterion === "grammatical_range_accuracy") return "grammatical_range";
-                        return null;
-                    };
-                    
-                    const teacherKey = getTeacherFeedbackKey(score.criterion);
-                    const teacherExplanation = teacherKey && result.teacher_feedback?.[teacherKey]?.score_explanation;
-                    
-                    return (
-                        <ScoreCard
-                            key={idx}
-                            criterion={score.criterion}
-                            band={score.band}
-                            justification={score.justification}
-                            explanation={teacherExplanation}
-                        />
-                    );
-                })}
-            </div>
-
-            {/* 3. DETAILED FEEDBACK SECTION */}
-            <div className="space-y-4">
-
-                {/* State: COMPLETE */}
-                {status === 'complete' && result.feedback_markdown && (
-                    <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col">
-                        <div
-                            className="p-4 bg-slate-50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors flex-shrink-0"
-                            onClick={() => setShowFullFeedback(!showFullFeedback)}
-                        >
-                            <div className="flex items-center gap-3">
-                                <div className="p-2 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400">
-                                    <CheckCircle className="w-5 h-5" />
-                                </div>
-                                <div>
-                                    <h3 className="font-semibold text-slate-900 dark:text-white">Detailed Feedback Ready</h3>
-                                    <p className="text-xs text-slate-500 font-medium">Click to expand analysis</p>
-                                </div>
-                            </div>
-                            <Button variant="ghost" size="sm">
-                                {showFullFeedback ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                            </Button>
+            <div className="flex-1 flex overflow-hidden">
+                {/* 1. LEFT SIDEBAR */}
+                <div className="w-[280px] bg-slate-950 border-r border-slate-900/80 flex flex-col shrink-0 z-10">
+                    {/* Sidebar Header */}
+                    <div className="p-4 border-b border-slate-900/80">
+                        <button className="flex items-center text-slate-500 hover:text-white mb-4 text-[10px] font-black uppercase tracking-[0.2em] transition-all">
+                            <ArrowLeft className="w-2.5 h-2.5 mr-2" />
+                            Back
+                        </button>
+                        <h2 className="text-sm font-black text-white/90 uppercase tracking-wider mb-2">Essay Analysis</h2>
+                        <div className="flex items-center gap-2">
+                            <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-black tracking-wider border border-emerald-500/20">
+                                BAND {result.overall_band}
+                            </span>
+                            <span className="text-slate-600 text-[10px] font-bold uppercase tracking-widest">{result.word_count} Words</span>
                         </div>
+                    </div>
 
-                        {showFullFeedback && (
-                            <div className="flex-1 overflow-y-auto max-h-[600px] animate-in slide-in-from-top-2 duration-300">
-                                <div className="p-8 prose prose-slate dark:prose-invert max-w-none">
-                                    <ReactMarkdown>{result.feedback_markdown}</ReactMarkdown>
+                    {/* Criteria List */}
+                    <div className="flex-1 overflow-y-auto p-2 space-y-1 custom-scrollbar">
+                        {criteriaList.map((item) => (
+                            <div
+                                key={item.id}
+                                onClick={() => setSelectedCriterion(item.id)}
+                                className={cn(
+                                    "cursor-pointer px-4 py-3 rounded-xl transition-all duration-300 group relative overflow-hidden",
+                                    selectedCriterion === item.id
+                                        ? "bg-slate-900 text-white"
+                                        : "bg-transparent hover:bg-slate-900/50 text-slate-500 hover:text-slate-300"
+                                )}
+                            >
+                                {/* Active Indicator Line */}
+                                {selectedCriterion === item.id && (
+                                    <div className={cn("absolute left-0 top-3 bottom-3 w-0.5 rounded-r-full",
+                                        item.color === 'blue' ? "bg-blue-500" :
+                                            item.color === 'indigo' ? "bg-indigo-500" :
+                                                item.color === 'amber' ? "bg-amber-500" : "bg-emerald-500"
+                                    )} />
+                                )}
+
+                                <div className="flex justify-between items-center mb-0.5">
+                                    <h4 className="font-bold text-xs flex items-center gap-2 tracking-tight">
+                                        {item.label}
+                                    </h4>
+                                    <span className={cn(
+                                        "font-black text-[10px] px-1.5 py-0.5 rounded-md",
+                                        item.score >= 7 ? "text-emerald-400 bg-emerald-950/40" :
+                                            item.score >= 6 ? "text-blue-400 bg-blue-950/40" : "text-amber-400 bg-amber-950/40"
+                                    )}>{item.score}</span>
                                 </div>
+                                <p className="text-[10px] text-slate-600 group-hover:text-slate-500 font-medium leading-tight">
+                                    {item.desc}
+                                </p>
                             </div>
-                        )}
-                    </Card>
-                )}
+                        ))}
 
-                {/* State: TIMEOUT / ERROR */}
-                {(status === 'timeout' || status === 'error') && (
-                    <Card className="p-4 border-rose-200 dark:border-rose-900/30 bg-rose-50 dark:bg-rose-900/10">
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                                <AlertCircle className="w-5 h-5 text-rose-500" />
+                        <div className="h-px bg-slate-900/50 mx-4 my-3" />
+
+                        {/* Full Analysis Item */}
+                        <div
+                            onClick={() => setSelectedCriterion('full_feedback')}
+                            className={cn(
+                                "cursor-pointer mx-1 px-4 py-3 rounded-xl border transition-all duration-300 group relative overflow-hidden",
+                                selectedCriterion === 'full_feedback'
+                                    ? "bg-slate-900 border-purple-500/30 text-white"
+                                    : "bg-transparent border-transparent hover:bg-slate-900/50 hover:border-slate-800 text-slate-500"
+                            )}
+                        >
+                            <div className="flex items-center gap-2.5">
+                                <div className={cn("p-1.5 rounded-lg shrink-0", selectedCriterion === 'full_feedback' ? "bg-purple-500/20 text-purple-400" : "bg-slate-800/50 text-slate-500 group-hover:text-slate-400")}>
+                                    <Sparkles className="w-3.5 h-3.5" />
+                                </div>
                                 <div>
-                                    <p className="font-medium text-rose-700 dark:text-rose-300">Detailed feedback unavailable</p>
-                                    <p className="text-xs text-rose-600/80 dark:text-rose-400/80">
-                                        {result.teacher_feedback_message || "An error occurred during verification."}
-                                    </p>
+                                    <h4 className={cn("font-bold text-xs tracking-tight", selectedCriterion === 'full_feedback' ? "text-white" : "group-hover:text-slate-300")}>
+                                        Holistic Report
+                                    </h4>
                                 </div>
                             </div>
-                            {onRetryFeedback && (
-                                <Button
-                                    onClick={onRetryFeedback}
-                                    variant="outline"
-                                    size="sm"
-                                    disabled={isLoadingFeedback}
-                                    className="border-rose-200 hover:bg-rose-100 hover:text-rose-700 dark:border-rose-800 dark:hover:bg-rose-900/40"
-                                >
-                                    {isLoadingFeedback ? (
-                                        <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                                    ) : "Retry"}
-                                </Button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* 2. MIDDLE - ESSAY CONTENT */}
+                {!showFullFeedback && (
+                    <div className="flex-1 bg-slate-900/50 border-r border-slate-800/50 min-w-[500px] flex flex-col relative w-full">
+                        <div className="p-4 border-b border-slate-800/50 bg-slate-950/50 backdrop-blur top-0 sticky z-10 flex justify-between items-center">
+                            <h3 className="font-bold text-slate-300 text-sm uppercase tracking-wider">Your Essay</h3>
+                            {highlights.length > 0 && (
+                                <div className="flex gap-3 text-[10px] font-bold uppercase tracking-wider">
+                                    <span className="flex items-center gap-1.5 text-emerald-400">
+                                        <span className="w-2 h-2 rounded-full bg-emerald-500" /> Strength
+                                    </span>
+                                    <span className="flex items-center gap-1.5 text-amber-400">
+                                        <span className="w-2 h-2 rounded-full bg-amber-500" /> Improvement
+                                    </span>
+                                </div>
                             )}
                         </div>
-                    </Card>
-                )}
-
-                {/* State: LOADING */}
-                {(status === 'loading' || isLoadingFeedback) && (
-                    <Card className="p-8 border-dashed border-slate-300 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/20 flex flex-col items-center justify-center text-center space-y-4">
-                        <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
-                        <div className="space-y-1">
-                            <h3 className="font-semibold text-slate-700 dark:text-slate-300">Analyzing your writing...</h3>
-                            <p className="text-sm text-slate-500 max-w-md">
-                                Our AI teacher is reviewing your essay for grammar, vocabulary, and coherence. This usually takes about 30 seconds.
-                            </p>
+                        <div className="p-6 overflow-y-auto custom-scrollbar flex-1 bg-slate-950/30">
+                            {essayText ? (
+                                <HighlightedEssay essayText={essayText} highlights={highlights} />
+                            ) : (
+                                <div className="flex items-center justify-center h-full text-slate-500">
+                                    No essay text available.
+                                </div>
+                            )}
                         </div>
-                    </Card>
+                    </div>
                 )}
 
-                {/* State: NOT REQUESTED */}
-                {status === 'not_requested' && !isLoadingFeedback && (
-                    <Card className="p-6 border-dashed border-slate-300 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/20 flex flex-col items-center justify-center text-center">
-                        <div className="max-w-md space-y-4">
-                            <h3 className="font-semibold text-slate-800 dark:text-slate-200">Want detailed feedback?</h3>
-                            <p className="text-sm text-slate-500">
-                                Get a comprehensive review including grammar corrections, vocabulary suggestions, and an improved version of your essay.
-                            </p>
-                            {/* Button here is optional if we assume analysis happens automatically */}
+                {/* 3. RIGHT - CRITERION DETAILS */}
+                <div className={cn(
+                    "bg-slate-950 overflow-hidden flex flex-col relative transition-all duration-300",
+                    showFullFeedback ? "flex-1 w-full" : "w-[450px] shrink-0 border-l border-slate-800/50"
+                )}>
+                    {/* Scrollable Content */}
+                    <div className={cn(
+                        "flex-1 overflow-y-auto custom-scrollbar",
+                        showFullFeedback ? "px-8 py-8" : "px-6 py-6"
+                    )}>
+                        <div className={cn("mx-auto", showFullFeedback ? "max-w-4xl" : "")}>
+                            {showFullFeedback ? (
+                                <div className="space-y-6 animate-in fade-in duration-500">
+                                    <div className="border-b border-slate-800 pb-6 mb-6">
+                                        <h2 className="text-3xl font-bold text-white mb-2">Teacher's Report</h2>
+                                        <p className="text-slate-400">Comprehensive holistic feedback and line-by-line corrections.</p>
+                                    </div>
+                                    <div className="prose prose-invert max-w-none prose-headings:text-slate-200 prose-p:text-slate-400 prose-strong:text-slate-200 prose-li:text-slate-400">
+                                        <ReactMarkdown>{result.feedback_markdown || "No detailed feedback available."}</ReactMarkdown>
+                                    </div>
+                                </div>
+                            ) : (
+                                <CriterionContent
+                                    score={currentCriterionDef.score}
+                                    title={currentCriterionDef.label}
+                                    data={currentData}
+                                    color={currentCriterionDef.color}
+                                />
+                            )}
                         </div>
-                    </Card>
-                )}
-            </div>
-        </div>
-    );
-};
+                    </div>
 
-// --- Sub-components ---
-
-const CircularBandScore: React.FC<{ score: number }> = ({ score }) => {
-    const size = 120;
-    const strokeWidth = 8;
-    const radius = (size - strokeWidth) / 2;
-    const circumference = 2 * Math.PI * radius;
-    const offset = circumference - (score / 9) * circumference;
-
-    return (
-        <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
-            {/* SVG Circle */}
-            <svg width={size} height={size} className="transform -rotate-90">
-                {/* Background Circle */}
-                <circle
-                    cx={size / 2}
-                    cy={size / 2}
-                    r={radius}
-                    stroke="currentColor"
-                    strokeWidth={strokeWidth}
-                    fill="transparent"
-                    className="text-slate-800"
-                />
-                {/* Progress Circle */}
-                <circle
-                    cx={size / 2}
-                    cy={size / 2}
-                    r={radius}
-                    stroke="currentColor"
-                    strokeWidth={strokeWidth}
-                    fill="transparent"
-                    strokeDasharray={circumference}
-                    strokeDashoffset={offset}
-                    strokeLinecap="round"
-                    className="text-indigo-500 transition-all duration-1000 ease-out"
-                />
-            </svg>
-
-            {/* Center Text */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Overall</span>
-                <span className="text-4xl font-bold text-white">{score}</span>
-            </div>
-        </div>
-    );
-};
-
-const ScoreCard: React.FC<{
-    criterion: string;
-    band: number;
-    justification: string;
-    explanation?: ScoreExplanation;
-}> = ({ criterion, band, justification, explanation }) => {
-    // Icon mapping
-    const getIcon = (c: string) => {
-        const lower = c.toLowerCase();
-        if (lower.includes('task') || lower.includes('achievement')) return <Scale className="w-5 h-5" />;
-        if (lower.includes('coherence')) return <Link2 className="w-5 h-5" />;
-        if (lower.includes('lexical')) return <Zap className="w-5 h-5" />; // Zap or Book
-        if (lower.includes('grammatical')) return <CheckCircle className="w-5 h-5" />;
-        return <LayoutList className="w-5 h-5" />;
-    };
-
-    const formatCriterion = (c: string) => {
-        return c.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase());
-    };
-
-    // Progress bar width
-    const percentage = (band / 9) * 100;
-
-    return (
-        <Card className="p-5 bg-slate-900 border border-slate-800 shadow-lg hover:border-slate-700 transition-colors">
-
-            {/* Header: Icon + Title + Score */}
-            <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-3 text-slate-200">
-                    {getIcon(criterion)}
-                    <h3 className="font-semibold text-sm">{formatCriterion(criterion)}</h3>
+                    {/* Bottom fading gradient to indicate scroll */}
+                    <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-950 to-transparent pointer-events-none" />
                 </div>
-                <span className="text-xl font-bold text-emerald-400">{band}</span>
             </div>
-
-            {/* Progress Bar */}
-            <div className="h-1.5 w-full bg-slate-800 rounded-full mb-4 overflow-hidden">
-                <div
-                    className="h-full bg-emerald-500 rounded-full transition-all duration-1000"
-                    style={{ width: `${percentage}%` }}
-                />
-            </div>
-
-            {/* Examiner Justification */}
-            <p className="text-xs text-slate-400 leading-relaxed">
-                {justification}
-            </p>
-
-            {/* Score Explanations (from Teacher) */}
-            {explanation && (
-                <div className="mt-4 space-y-3 pt-3 border-t border-slate-700/50">
-                    <div>
-                        <h4 className="text-xs font-bold text-slate-300 mb-1">Why This Score?</h4>
-                        <p className="text-xs text-slate-400 leading-relaxed">{explanation.why_this_score}</p>
-                    </div>
-                    <div>
-                        <h4 className="text-xs font-bold text-slate-300 mb-1">Band Descriptor Match</h4>
-                        <p className="text-xs text-slate-400 leading-relaxed">{explanation.band_descriptor_evidence}</p>
-                    </div>
-                    <div>
-                        <h4 className="text-xs font-bold text-emerald-400 mb-1">Path to Next Band</h4>
-                        <p className="text-xs text-emerald-300/80 leading-relaxed">{explanation.path_to_improvement}</p>
-                    </div>
-                </div>
-            )}
         </Card>
     );
 };
