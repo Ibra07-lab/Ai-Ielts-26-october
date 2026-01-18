@@ -41,20 +41,43 @@ def add_cache_tag(message: BaseMessage) -> BaseMessage:
                 break
     return message
 
+def _is_openrouter_key(api_key: str) -> bool:
+    """Check if an API key is an OpenRouter key."""
+    if not api_key:
+        return False
+    # OpenRouter keys typically start with "sk-or-v1-" or "sk-or-"
+    return api_key.startswith("sk-or-") or api_key.startswith("sk-or-v1-")
+
+
 def get_chat_model(model_name: str = "gpt-4o", temperature: float = 0.0, max_tokens: int = 1024) -> BaseChatModel:
     """
     Factory to get the appropriate Chat Model based on the model name.
-    Supports OpenAI (gpt-*) and Anthropic (claude-*).
+    Supports OpenAI (gpt-*), Anthropic (claude-*), and OpenRouter (for Claude models).
+    
+    If ANTHROPIC_API_KEY is detected as an OpenRouter key, routes Claude models
+    through OpenRouter gateway instead of direct Anthropic API.
     """
     
-    # Check if we should use Anthropic
+    # Check if we should use Anthropic or OpenRouter for Claude models
     if model_name.lower().startswith("claude"):
-        if not ANTHROPIC_AVAILABLE:
-            raise ImportError("langchain_anthropic is not installed. Install it with: pip install langchain-anthropic")
-            
         api_key = os.getenv("ANTHROPIC_API_KEY")
         if not api_key:
             raise ValueError("ANTHROPIC_API_KEY environment variable is not set but a Claude model was requested.")
+        
+        # Check if the key is actually an OpenRouter key
+        if _is_openrouter_key(api_key):
+            # Route through OpenRouter using ChatOpenAI with OpenRouter base URL
+            return ChatOpenAI(
+                model=model_name,
+                temperature=temperature,
+                max_tokens=max_tokens,
+                api_key=api_key,
+                base_url="https://openrouter.ai/api/v1"
+            )
+        
+        # Use direct Anthropic API
+        if not ANTHROPIC_AVAILABLE:
+            raise ImportError("langchain_anthropic is not installed. Install it with: pip install langchain-anthropic")
             
         return ChatAnthropic(
             model=model_name,
