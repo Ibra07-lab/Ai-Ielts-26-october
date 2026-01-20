@@ -1,27 +1,31 @@
 import React, { useState } from 'react';
 import { EvaluationResult } from '@/types/writing-feedback';
-import { ArrowLeft, CheckCircle, LayoutList, BookOpen, Scale, Sparkles, AlertCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle, LayoutList, BookOpen, Scale, Sparkles, BarChart2 } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { cn } from '@/lib/utils';
 import { CriterionContent } from './CriterionContent';
 import { HighlightedEssay, HighlightRange } from './HighlightedEssay';
+import { OverallSummary } from './OverallSummary';
 import ReactMarkdown from 'react-markdown';
+import { Button } from "@/components/ui/button";
 
 interface WritingFeedbackProps {
     result: EvaluationResult;
     essayText?: string;
     onRetryFeedback?: () => void;
     isLoadingFeedback?: boolean;
+    onBack?: () => void;
 }
 
 export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
     result,
     essayText = "",
     onRetryFeedback,
-    isLoadingFeedback = false
+    isLoadingFeedback = false,
+    onBack
 }) => {
-    // Default to 'task_achievement' or the first criterion
-    const [selectedCriterion, setSelectedCriterion] = useState<string>('task_achievement');
+    // Default to 'overall_summary' to show the dashboard first
+    const [selectedCriterion, setSelectedCriterion] = useState<string>('overall_summary');
 
     // Helper to find specific criterion score
     const getScore = (criteria: string) => {
@@ -81,14 +85,17 @@ export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
         },
     ];
 
-    // Determine Logic
-    const showFullFeedback = selectedCriterion === 'full_feedback';
-    const currentData = !showFullFeedback ? getCriterionData(selectedCriterion) : null;
-    const currentCriterionDef = criteriaList.find(c => c.id === selectedCriterion) || criteriaList[0];
+    // Determine View Logic
+    const isOverall = selectedCriterion === 'overall_summary';
+    const isHolistic = selectedCriterion === 'holistic_report';
+    const isCriterion = !isOverall && !isHolistic;
+
+    const currentData = isCriterion ? getCriterionData(selectedCriterion) : null;
+    const currentCriterionDef = criteriaList.find(c => c.id === selectedCriterion);
 
     // Extract Highlights
     const getHighlights = (): HighlightRange[] => {
-        if (showFullFeedback || !currentData) return [];
+        if (!isCriterion || !currentData) return [];
 
         const highlights: HighlightRange[] = [];
 
@@ -116,109 +123,148 @@ export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
     const highlights = getHighlights();
 
     return (
-        <Card className="w-full bg-slate-950 border-slate-900 shadow-2xl overflow-hidden flex flex-col h-full border-0 rounded-none md:rounded-2xl">
+        <div className="h-screen bg-[#121212] flex flex-col overflow-hidden">
+            {/* Top Navigation Bar - Full Width */}
+            <header className="flex justify-between items-center px-6 py-4 border-b border-slate-800/40">
+                <div className="flex items-center gap-4">
+                    <button
+                        onClick={onBack}
+                        className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm"
+                    >
+                        <ArrowLeft className="w-4 h-4" />
+                        Back to Tests
+                    </button>
+                    <h1 className="text-xl font-bold text-white">Test 3: Academic Task 1</h1>
+                </div>
 
-            <div className="flex-1 flex overflow-hidden">
-                {/* 1. LEFT SIDEBAR */}
-                <div className="w-[280px] bg-slate-950 border-r border-slate-900/80 flex flex-col shrink-0 z-10">
+                <div className="flex items-center gap-6">
+                    {/* Word Count */}
+                    <div className="flex items-center gap-2">
+                        <span className="text-teal-400 font-bold text-lg">{result.word_count}</span>
+                        <span className="text-slate-500 text-sm">/ 150</span>
+                    </div>
+
+                    {/* Timer */}
+                    <div className="flex items-center gap-2 text-slate-400 text-sm">
+                        <span>⏱</span>
+                        <span>19:36</span>
+                    </div>
+
+                    {/* Analysis Status */}
+                    <div className="px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-400 text-sm font-medium">
+                        Analysis Complete: {result.overall_band} Band
+                    </div>
+                </div>
+            </header>
+
+            {/* 3-Column Grid Layout - Full Width, Full Height */}
+            <div className="grid grid-cols-[260px_1fr_350px] gap-0 flex-1 overflow-hidden">
+
+                {/* 1. LEFT SIDEBAR - Minimal styling */}
+                <div className="bg-slate-950/50 border-r border-slate-800/40 flex flex-col overflow-hidden">
                     {/* Sidebar Header */}
-                    <div className="p-4 border-b border-slate-900/80">
-                        <button className="flex items-center text-slate-500 hover:text-white mb-4 text-[10px] font-black uppercase tracking-[0.2em] transition-all">
-                            <ArrowLeft className="w-2.5 h-2.5 mr-2" />
-                            Back
-                        </button>
-                        <h2 className="text-sm font-black text-white/90 uppercase tracking-wider mb-2">Essay Analysis</h2>
-                        <div className="flex items-center gap-2">
-                            <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-black tracking-wider border border-emerald-500/20">
-                                BAND {result.overall_band}
+                    <div className="p-5 pb-4 border-b border-slate-800/40">
+                        <h2 className="text-base font-bold text-white mb-2">Essay Analysis</h2>
+                        <div className="flex items-center gap-3">
+                            <span className={cn(
+                                "px-2 py-0.5 rounded-md text-[10px] font-bold tracking-wide border",
+                                result.overall_band >= 7 ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" :
+                                    result.overall_band >= 6 ? "bg-teal-500/10 text-teal-400 border-teal-500/20" :
+                                        "bg-amber-500/10 text-amber-400 border-amber-500/20"
+                            )}>
+                                Band {result.overall_band}
                             </span>
-                            <span className="text-slate-600 text-[10px] font-bold uppercase tracking-widest">{result.word_count} Words</span>
+                            <span className="text-slate-500 text-[10px] font-medium tracking-wide">
+                                {result.word_count} Words
+                            </span>
                         </div>
                     </div>
 
                     {/* Criteria List */}
-                    <div className="flex-1 overflow-y-auto p-2 space-y-1 custom-scrollbar">
+                    <div className="flex-1 p-3 space-y-2 overflow-y-auto custom-scrollbar">
                         {criteriaList.map((item) => (
                             <div
                                 key={item.id}
                                 onClick={() => setSelectedCriterion(item.id)}
                                 className={cn(
-                                    "cursor-pointer px-4 py-3 rounded-xl transition-all duration-300 group relative overflow-hidden",
+                                    "p-3 rounded-lg border-2 transition-all cursor-pointer",
                                     selectedCriterion === item.id
-                                        ? "bg-slate-900 text-white"
-                                        : "bg-transparent hover:bg-slate-900/50 text-slate-500 hover:text-slate-300"
+                                        ? "bg-slate-800/50 border-teal-500 text-teal-400"
+                                        : "bg-transparent border-transparent text-slate-400 hover:bg-slate-800/30 hover:border-slate-700"
                                 )}
                             >
-                                {/* Active Indicator Line */}
-                                {selectedCriterion === item.id && (
-                                    <div className={cn("absolute left-0 top-3 bottom-3 w-0.5 rounded-r-full",
-                                        item.color === 'blue' ? "bg-blue-500" :
-                                            item.color === 'indigo' ? "bg-indigo-500" :
-                                                item.color === 'amber' ? "bg-amber-500" : "bg-emerald-500"
-                                    )} />
-                                )}
-
-                                <div className="flex justify-between items-center mb-0.5">
-                                    <h4 className="font-bold text-xs flex items-center gap-2 tracking-tight">
-                                        {item.label}
-                                    </h4>
+                                <div className="flex justify-between items-center">
+                                    <div className="space-y-0.5">
+                                        <h4 className={cn(
+                                            "text-[13px] font-semibold transition-colors",
+                                            selectedCriterion === item.id ? "text-teal-400" : "text-slate-300"
+                                        )}>
+                                            {item.label}
+                                        </h4>
+                                        <p className="text-[10px] text-slate-600 line-clamp-1 font-medium">
+                                            {item.desc}
+                                        </p>
+                                    </div>
                                     <span className={cn(
-                                        "font-black text-[10px] px-1.5 py-0.5 rounded-md",
-                                        item.score >= 7 ? "text-emerald-400 bg-emerald-950/40" :
-                                            item.score >= 6 ? "text-blue-400 bg-blue-950/40" : "text-amber-400 bg-amber-950/40"
+                                        "font-bold text-sm",
+                                        item.score >= 7 ? "text-emerald-400" :
+                                            item.score >= 6 ? "text-teal-400" : "text-amber-400"
                                     )}>{item.score}</span>
                                 </div>
-                                <p className="text-[10px] text-slate-600 group-hover:text-slate-500 font-medium leading-tight">
-                                    {item.desc}
-                                </p>
                             </div>
                         ))}
+                    </div>
 
-                        <div className="h-px bg-slate-900/50 mx-4 my-3" />
-
-                        {/* Full Analysis Item */}
-                        <div
-                            onClick={() => setSelectedCriterion('full_feedback')}
+                    {/* Bottom Buttons */}
+                    <div className="p-3 space-y-2 border-t border-slate-800/40">
+                        <button
+                            onClick={() => setSelectedCriterion('overall_summary')}
                             className={cn(
-                                "cursor-pointer mx-1 px-4 py-3 rounded-xl border transition-all duration-300 group relative overflow-hidden",
-                                selectedCriterion === 'full_feedback'
-                                    ? "bg-slate-900 border-purple-500/30 text-white"
-                                    : "bg-transparent border-transparent hover:bg-slate-900/50 hover:border-slate-800 text-slate-500"
+                                "w-full flex items-center justify-center gap-3 px-4 py-2.5 rounded-full transition-all text-sm font-medium",
+                                selectedCriterion === 'overall_summary'
+                                    ? "bg-teal-500/20 text-teal-400 border border-teal-500/30"
+                                    : "bg-transparent text-slate-400 hover:bg-slate-800/50 hover:text-slate-300"
                             )}
                         >
-                            <div className="flex items-center gap-2.5">
-                                <div className={cn("p-1.5 rounded-lg shrink-0", selectedCriterion === 'full_feedback' ? "bg-purple-500/20 text-purple-400" : "bg-slate-800/50 text-slate-500 group-hover:text-slate-400")}>
-                                    <Sparkles className="w-3.5 h-3.5" />
-                                </div>
-                                <div>
-                                    <h4 className={cn("font-bold text-xs tracking-tight", selectedCriterion === 'full_feedback' ? "text-white" : "group-hover:text-slate-300")}>
-                                        Holistic Report
-                                    </h4>
-                                </div>
-                            </div>
-                        </div>
+                            <BarChart2 className="w-4 h-4" />
+                            Overall Summary
+                        </button>
+                        <button
+                            onClick={() => setSelectedCriterion('holistic_report')}
+                            className={cn(
+                                "w-full flex items-center justify-center gap-3 px-4 py-2.5 rounded-full transition-all text-sm font-medium",
+                                selectedCriterion === 'holistic_report'
+                                    ? "bg-purple-500/20 text-purple-400 border border-purple-500/30"
+                                    : "bg-transparent text-slate-400 hover:bg-slate-800/50 hover:text-slate-300"
+                            )}
+                        >
+                            <Sparkles className="w-4 h-4" />
+                            Holistic Report
+                        </button>
                     </div>
                 </div>
 
-                {/* 2. MIDDLE - ESSAY CONTENT */}
-                {!showFullFeedback && (
-                    <div className="flex-1 bg-slate-900/50 border-r border-slate-800/50 min-w-[500px] flex flex-col relative w-full">
-                        <div className="p-4 border-b border-slate-800/50 bg-slate-950/50 backdrop-blur top-0 sticky z-10 flex justify-between items-center">
-                            <h3 className="font-bold text-slate-300 text-sm uppercase tracking-wider">Your Essay</h3>
-                            {highlights.length > 0 && (
-                                <div className="flex gap-3 text-[10px] font-bold uppercase tracking-wider">
-                                    <span className="flex items-center gap-1.5 text-emerald-400">
-                                        <span className="w-2 h-2 rounded-full bg-emerald-500" /> Strength
-                                    </span>
-                                    <span className="flex items-center gap-1.5 text-amber-400">
-                                        <span className="w-2 h-2 rounded-full bg-amber-500" /> Improvement
-                                    </span>
-                                </div>
-                            )}
+                {/* 2. CENTER - ESSAY (Editor-style, no card) */}
+                <div className="bg-[#0D0D0D] flex flex-col overflow-hidden">
+                    <div className="px-6 py-4 border-b border-slate-800/40 flex justify-between items-center">
+                        <h3 className="font-semibold text-white text-sm">Your Essay</h3>
+                        <div className="flex gap-4 text-[9px] font-bold uppercase tracking-wider">
+                            <span className="flex items-center gap-1.5 text-emerald-400">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.5)]" /> Strength
+                            </span>
+                            <span className="flex items-center gap-1.5 text-amber-400">
+                                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shadow-[0_0_6px_rgba(245,158,11,0.5)]" /> Improvement
+                            </span>
                         </div>
-                        <div className="p-6 overflow-y-auto custom-scrollbar flex-1 bg-slate-950/30">
+                    </div>
+
+                    <div className="flex-1 overflow-y-auto custom-scrollbar">
+                        {/* Centered text content with max-width for readability */}
+                        <div className="max-w-[750px] mx-auto px-12 py-10">
                             {essayText ? (
-                                <HighlightedEssay essayText={essayText} highlights={highlights} />
+                                <div className="text-[18px] leading-[1.8] text-slate-200">
+                                    <HighlightedEssay essayText={essayText} highlights={highlights} />
+                                </div>
                             ) : (
                                 <div className="flex items-center justify-center h-full text-slate-500">
                                     No essay text available.
@@ -226,44 +272,38 @@ export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
                             )}
                         </div>
                     </div>
-                )}
+                </div>
 
-                {/* 3. RIGHT - CRITERION DETAILS */}
-                <div className={cn(
-                    "bg-slate-950 overflow-hidden flex flex-col relative transition-all duration-300",
-                    showFullFeedback ? "flex-1 w-full" : "w-[450px] shrink-0 border-l border-slate-800/50"
-                )}>
-                    {/* Scrollable Content */}
-                    <div className={cn(
-                        "flex-1 overflow-y-auto custom-scrollbar",
-                        showFullFeedback ? "px-8 py-8" : "px-6 py-6"
-                    )}>
-                        <div className={cn("mx-auto", showFullFeedback ? "max-w-4xl" : "")}>
-                            {showFullFeedback ? (
-                                <div className="space-y-6 animate-in fade-in duration-500">
-                                    <div className="border-b border-slate-800 pb-6 mb-6">
-                                        <h2 className="text-3xl font-bold text-white mb-2">Teacher's Report</h2>
-                                        <p className="text-slate-400">Comprehensive holistic feedback and line-by-line corrections.</p>
-                                    </div>
-                                    <div className="prose prose-invert max-w-none prose-headings:text-slate-200 prose-p:text-slate-400 prose-strong:text-slate-200 prose-li:text-slate-400">
-                                        <ReactMarkdown>{result.feedback_markdown || "No detailed feedback available."}</ReactMarkdown>
-                                    </div>
+                {/* 3. RIGHT - FEEDBACK */}
+                <div className="bg-slate-950/50 border-l border-slate-800/40 flex flex-col overflow-hidden">
+                    <div className="flex-1 overflow-y-auto custom-scrollbar p-5">
+                        {isOverall && (
+                            <OverallSummary result={result} />
+                        )}
+
+                        {isHolistic && (
+                            <div className="space-y-6 animate-in fade-in duration-500">
+                                <div className="border-b border-slate-800 pb-6 mb-2">
+                                    <h2 className="text-2xl font-bold text-white mb-2">Teacher's Report</h2>
+                                    <p className="text-slate-400 text-sm">Comprehensive holistic feedback and corrections.</p>
                                 </div>
-                            ) : (
-                                <CriterionContent
-                                    score={currentCriterionDef.score}
-                                    title={currentCriterionDef.label}
-                                    data={currentData}
-                                    color={currentCriterionDef.color}
-                                />
-                            )}
-                        </div>
-                    </div>
+                                <div className="prose prose-invert prose-sm max-w-none prose-headings:text-slate-200 prose-p:text-slate-400 prose-strong:text-emerald-400 prose-li:text-slate-400">
+                                    <ReactMarkdown>{result.feedback_markdown || "No detailed feedback available."}</ReactMarkdown>
+                                </div>
+                            </div>
+                        )}
 
-                    {/* Bottom fading gradient to indicate scroll */}
-                    <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-950 to-transparent pointer-events-none" />
+                        {isCriterion && currentCriterionDef && (
+                            <CriterionContent
+                                score={currentCriterionDef.score}
+                                title={currentCriterionDef.label}
+                                data={currentData}
+                                color={currentCriterionDef.color}
+                            />
+                        )}
+                    </div>
                 </div>
             </div>
-        </Card>
+        </div>
     );
 };

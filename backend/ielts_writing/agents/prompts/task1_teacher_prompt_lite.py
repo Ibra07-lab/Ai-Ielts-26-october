@@ -52,7 +52,21 @@ Return ONLY valid JSON:
       {"name": "DESCRIPTIVE_NAME", "quote": "EXACT_ESSAY_QUOTE", "explanation": "BRIEF_WHY"}
     ],
     "weakness_patterns": [
-      {"name": "SPECIFIC_PATTERN_NAME", "problem": "BRIEF_ISSUE", "fix": "CORRECTION", "examples": ["QUOTE1", "QUOTE2"]}
+      {
+        "name": "SPECIFIC_PATTERN_NAME", 
+        "problem": "BRIEF_ISSUE", 
+        "fix": "CORRECTION", 
+        "examples": ["QUOTE1", "QUOTE2"],
+        "score_impact": "high|medium|low",
+        "concrete_example": "For example, your overview mentions cities, but does not clearly summarize both overall trends and exceptions in one sentence.",
+        "band_upgrade": {
+          "current_band": "6",
+          "target_band": "7",
+          "original": "City C use the lowest water in 2010.",
+          "improved": "City C recorded the lowest level of water consumption in 2010.",
+          "what_changed": "Fixed verb tense, added precise vocabulary, used formal tone"
+        }
+      }
     ],
     "top_tip": "..."
   },
@@ -62,7 +76,7 @@ Return ONLY valid JSON:
     "band_descriptor_evidence": "...",
     "path_to_improvement": "...",
     "strengths": [{"name": "...", "quote": "...", "explanation": "..."}],
-    "weakness_patterns": [{"name": "...", "problem": "...", "fix": "...", "examples": ["..."]}],
+    "weakness_patterns": [{"name": "...", "problem": "...", "fix": "...", "examples": ["..."], "score_impact": "high|medium|low", "concrete_example": "For example, ...", "band_upgrade": {"current_band": "6", "target_band": "7", "original": "...", "improved": "...", "what_changed": "..."}}],
     "top_tip": "..."
   },
   "lexical_resource": {
@@ -71,7 +85,7 @@ Return ONLY valid JSON:
     "band_descriptor_evidence": "...",
     "path_to_improvement": "...",
     "strengths": [{"name": "...", "quote": "...", "explanation": "..."}],
-    "weakness_patterns": [{"name": "...", "problem": "...", "fix": "...", "examples": ["..."]}],
+    "weakness_patterns": [{"name": "...", "problem": "...", "fix": "...", "examples": ["..."], "score_impact": "high|medium|low", "concrete_example": "For example, ...", "band_upgrade": {"current_band": "6", "target_band": "7", "original": "...", "improved": "...", "what_changed": "..."}}],
     "top_tip": "..."
   },
   "grammatical_range": {
@@ -80,7 +94,7 @@ Return ONLY valid JSON:
     "band_descriptor_evidence": "...",
     "path_to_improvement": "...",
     "strengths": [{"name": "...", "quote": "...", "explanation": "..."}],
-    "weakness_patterns": [{"name": "...", "problem": "...", "fix": "...", "examples": ["..."]}],
+    "weakness_patterns": [{"name": "...", "problem": "...", "fix": "...", "examples": ["..."], "score_impact": "high|medium|low", "concrete_example": "For example, ...", "band_upgrade": {"current_band": "6", "target_band": "7", "original": "...", "improved": "...", "what_changed": "..."}}],
     "top_tip": "..."
   },
   "action_plan": {
@@ -120,6 +134,47 @@ Return ONLY valid JSON:
   "teachers_final_comment": "You've demonstrated good data selection skills. Focus on adding an overview and varying your vocabulary to reach Band 7. Keep practicing!"
 }
 ```
+
+## Premium Feedback Requirements (CRITICAL)
+
+For EACH weakness pattern, you MUST provide:
+
+### 1. score_impact (REQUIRED)
+Classify as:
+- **"high"**: This issue prevents Band 7+ (e.g., incomplete overview, missing key features, major grammar errors)
+- **"medium"**: This issue affects score by 0.5 bands (e.g., limited vocabulary range, repetitive linkers)
+- **"low"**: Minor issue, doesn't significantly impact score (e.g., single verb tense error, minor spelling)
+
+### 2. concrete_example (REQUIRED for high/medium impact)
+Add ONE specific clarification sentence starting with "For example," that shows:
+- What exactly is wrong
+- Why it matters  
+- What the student should have done instead
+
+Example: "For example, your overview mentions cities, but does not clearly summarize both overall trends and exceptions in one sentence."
+
+### 3. band_upgrade (REQUIRED for high/medium impact)
+Provide a before/after example showing Band 6 vs Band 7:
+- **original**: The student's actual sentence (quote from essay)
+- **improved**: A Band 7 version of the same sentence
+- **what_changed**: Brief explanation (vocabulary/grammar/tone)
+
+Example:
+```json
+{
+  "current_band": "6",
+  "target_band": "7",
+  "original": "City C use the lowest water in 2010.",
+  "improved": "City C recorded the lowest level of water consumption in 2010.",
+  "what_changed": "Fixed verb tense, added precise vocabulary, used formal tone"
+}
+```
+
+**IMPORTANT**: 
+- Sort weakness_patterns by score_impact (high → medium → low)
+- High-impact issues MUST have concrete_example AND band_upgrade
+- Medium-impact issues SHOULD have concrete_example AND band_upgrade
+- Low-impact issues MAY omit band_upgrade
 
 ## Critical Rules
 1. NO GENERIC PRAISE - Quote actual essay text

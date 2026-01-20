@@ -538,17 +538,19 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
 
           {viewMode === "feedback" && aiAnalysis && aiAnalysis.evaluation ? (
             <div className="h-full pr-2 flex flex-col min-h-0">
-              <div className="flex items-center justify-between mb-4 shrink-0">
-                <Button variant="ghost" onClick={() => setViewMode("editor")} className="gap-2">
-                  <ArrowLeft className="w-4 h-4" />
-                  Back to Editor
-                </Button>
-                <div className="flex items-center gap-2 px-4 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-full border border-slate-200 dark:border-slate-700">
-                  <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
-                    Analysis Complete: {aiAnalysis.evaluation.overall_band} Band
-                  </span>
+              {taskType !== 1 && (
+                <div className="flex items-center justify-between mb-4 shrink-0">
+                  <Button variant="ghost" onClick={() => setViewMode("editor")} className="gap-2">
+                    <ArrowLeft className="w-4 h-4" />
+                    Back to Editor
+                  </Button>
+                  <div className="flex items-center gap-2 px-4 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-full border border-slate-200 dark:border-slate-700">
+                    <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                      Analysis Complete: {aiAnalysis.evaluation.overall_band} Band
+                    </span>
+                  </div>
                 </div>
-              </div>
+              )}
               <div className="flex-1 rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 min-h-0">
                 {taskType === 1 ? (
                   <WritingFeedback
@@ -556,6 +558,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                     essayText={content}
                     onRetryFeedback={handleGetDetailedFeedback}
                     isLoadingFeedback={isGeneratingFeedback}
+                    onBack={() => setViewMode("editor")}
                   />
                 ) : (
                   <FeedbackContainer

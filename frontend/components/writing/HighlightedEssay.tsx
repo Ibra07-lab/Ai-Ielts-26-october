@@ -54,10 +54,10 @@ export const HighlightedEssay: React.FC<HighlightedEssayProps> = ({ essayText, h
                         <mark
                             key={index}
                             className={cn(
-                                "px-1 rounded mx-0.5 transition-colors duration-300",
+                                "px-0.5 mx-0 transition-colors duration-300 font-medium",
                                 matchedHighlight.type === 'strength'
-                                    ? "bg-emerald-100 text-emerald-900 dark:bg-emerald-900/40 dark:text-emerald-100 border-b-2 border-emerald-400"
-                                    : "bg-amber-100 text-amber-900 dark:bg-amber-900/40 dark:text-amber-100 border-b-2 border-amber-400"
+                                    ? "bg-transparent text-emerald-400 border-b-2 border-emerald-500/50 hover:bg-emerald-500/10"
+                                    : "bg-transparent text-amber-400 border-b-2 border-amber-500/50 hover:bg-amber-500/10"
                             )}
                             title={matchedHighlight.type === 'strength' ? "Effective usage" : "Area for improvement"}
                         >

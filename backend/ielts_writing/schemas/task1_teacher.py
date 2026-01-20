@@ -97,6 +97,15 @@ class ErrorExample(BaseModel):
     explanation: Optional[str] = None
 
 
+class BandUpgrade(BaseModel):
+    """Shows what a better version looks like."""
+    current_band: str  # e.g., "6"
+    target_band: str  # e.g., "7"
+    original: str  # Student's actual sentence
+    improved: str  # Band 7 version
+    what_changed: str  # Brief explanation (vocabulary/grammar/tone)
+
+
 class WeaknessPattern(BaseModel):
     """A recurring error pattern."""
     pattern_name: str  # e.g., "Missing Articles with Data"
@@ -106,6 +115,20 @@ class WeaknessPattern(BaseModel):
     impact: str  # How this affects band score
     is_recurring: bool = False  # True if this was flagged in previous essays
     fix: Optional[str] = None
+    
+    # NEW: Premium feedback enhancements
+    score_impact: Literal["high", "medium", "low"] = Field(
+        default="medium",
+        description="Impact on band score: high (limits Band 7), medium (affects 0.5), low (minor)"
+    )
+    concrete_example: Optional[str] = Field(
+        None,
+        description="Specific, actionable clarification starting with 'For example,'"
+    )
+    band_upgrade: Optional[BandUpgrade] = Field(
+        None,
+        description="Shows Band 6 vs Band 7 version for high/medium impact issues"
+    )
 
     @field_validator('examples', mode='before')
     @classmethod

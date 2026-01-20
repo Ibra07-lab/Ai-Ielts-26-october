@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field, field_validator
-from typing import List, Optional, Union
+from typing import List, Optional, Union, Literal
 from .models import Criterion
 
 
@@ -9,6 +9,15 @@ class Strength(BaseModel):
     quote: str  # Direct quote from essay demonstrating this strength
 
 
+class BandUpgrade(BaseModel):
+    """Shows what a better version looks like."""
+    current_band: str  # e.g., "6"
+    target_band: str  # e.g., "7"
+    original: str  # Student's actual sentence
+    improved: str  # Band 7 version
+    what_changed: str  # Brief explanation (vocabulary/grammar/tone)
+
+
 class WeaknessPattern(BaseModel):
     """A pattern of errors holding the student back."""
     pattern_name: str  # e.g., "Incomplete Overview", "Overusing Simple Linkers"
@@ -16,6 +25,20 @@ class WeaknessPattern(BaseModel):
     problem: str  # Explanation of why this loses marks
     fix: str  # Corrected version or specific solution
     frequency: int = 1 # How many times this pattern occurred
+    
+    # NEW: Premium feedback enhancements
+    score_impact: Literal["high", "medium", "low"] = Field(
+        default="medium",
+        description="Impact on band score: high (limits Band 7), medium (affects 0.5), low (minor)"
+    )
+    concrete_example: Optional[str] = Field(
+        None,
+        description="Specific, actionable clarification starting with 'For example,'"
+    )
+    band_upgrade: Optional[BandUpgrade] = Field(
+        None,
+        description="Shows Band 6 vs Band 7 version for high/medium impact issues"
+    )
 
     @field_validator('examples', mode='before')
     @classmethod

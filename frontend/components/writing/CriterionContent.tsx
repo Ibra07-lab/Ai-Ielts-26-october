@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Trophy, MessageCircle, ArrowRight, Lightbulb, Target, Sparkles, ChevronDown, BookOpen, CheckCircle } from 'lucide-react';
+import { Trophy, MessageCircle, ArrowRight, Lightbulb, Target, Sparkles, ChevronDown, BookOpen, CheckCircle, AlertTriangle } from 'lucide-react';
 import { QuoteHighlight } from './QuoteHighlight';
 import { UpgradeExample } from './UpgradeExample';
 import { SeverityBadge } from './FeedbackIcons';
+import { ScoreImpactBadge } from './ScoreImpactBadge';
 import { DetailedExplanationModal } from './DetailedExplanationModal';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
@@ -48,21 +49,15 @@ export function CriterionContent({ score, title, data, color }: CriterionContent
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
                 {/* Header Section */}
                 <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800/60">
-                    <div className="space-y-1">
-                        <h2 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">{title}</h2>
-                        <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest font-bold text-slate-400">
+                    <div className="space-y-0.5">
+                        <h2 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">{title}</h2>
+                        <div className="flex items-center gap-2 text-[9px] uppercase tracking-widest font-bold text-slate-500">
                             Criterion Analysis
                         </div>
                     </div>
-                    <div className={cn(
-                        "flex flex-col items-center justify-center min-w-[64px] h-[64px] rounded-2xl border-2 shadow-sm",
-                        color === 'blue' ? "bg-blue-50 border-blue-100 text-blue-600" :
-                            color === 'indigo' ? "bg-indigo-50 border-indigo-100 text-indigo-600" :
-                                color === 'amber' ? "bg-amber-50 border-amber-100 text-amber-600" :
-                                    "bg-emerald-50 border-emerald-100 text-emerald-600"
-                    )}>
-                        <span className="text-[10px] font-black uppercase leading-none opacity-60">Band</span>
-                        <span className="text-2xl font-black leading-none mt-0.5">{score}</span>
+                    <div className="flex flex-col items-center justify-center w-16 h-16 rounded-xl bg-teal-500/10 border-2 border-teal-500">
+                        <span className="text-[10px] font-bold text-teal-400 uppercase">Band</span>
+                        <span className="text-2xl font-black text-teal-400">{score}</span>
                     </div>
                 </div>
 
@@ -94,9 +89,9 @@ export function CriterionContent({ score, title, data, color }: CriterionContent
                             </CollapsibleTrigger>
                             <CollapsibleContent className="space-y-4 pt-1">
                                 {data.strengths.map((strength: any, idx: number) => (
-                                    <div key={idx} className="bg-white dark:bg-slate-900/40 p-4 rounded-xl border border-slate-100 dark:border-slate-800/80 shadow-sm hover:shadow-md hover:border-emerald-100 dark:hover:border-emerald-900/30 transition-all duration-300">
+                                    <div key={idx} className="bg-transparent p-4 border-b border-slate-100 dark:border-slate-800/80 last:border-0 hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors duration-200">
                                         <div className="flex gap-4 items-start">
-                                            <div className="mt-1 p-1.5 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg shrink-0 border border-emerald-100/50 dark:border-emerald-800/30">
+                                            <div className="mt-1 p-1 shrink-0">
                                                 <Sparkles className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                                             </div>
                                             <div className="flex-1 space-y-2">
@@ -105,11 +100,11 @@ export function CriterionContent({ score, title, data, color }: CriterionContent
                                                         {strength.label}
                                                     </h4>
                                                 )}
-                                                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed italic">
+                                                <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed italic">
                                                     <QuoteHighlight text={strength.explanation} />
                                                 </p>
                                                 <div className="bg-slate-50 dark:bg-slate-800/50 px-3 py-2 rounded-lg border-l-2 border-emerald-500/50">
-                                                    <p className="text-sm font-medium text-slate-800 dark:text-slate-200">
+                                                    <p className="text-[11px] font-medium text-slate-800 dark:text-slate-200 italic">
                                                         "{strength.quote || strength.text || ""}"
                                                     </p>
                                                 </div>
@@ -136,67 +131,96 @@ export function CriterionContent({ score, title, data, color }: CriterionContent
                                 )} />
                             </CollapsibleTrigger>
                             <CollapsibleContent className="space-y-4 pt-1">
-                                {data.weakness_patterns.map((weakness: any, idx: number) => (
-                                    <div key={idx} className="bg-white dark:bg-slate-900/40 p-5 rounded-2xl border border-slate-100 dark:border-slate-800/80 shadow-sm hover:shadow-lg transition-all duration-300 relative overflow-hidden group">
-                                        {/* Status Accent */}
-                                        <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 blur-[40px] rounded-full -mr-16 -mt-16 pointer-events-none" />
+                                {/* Sort by score_impact: high -> medium -> low */}
+                                {[...data.weakness_patterns]
+                                    .sort((a, b) => {
+                                        const order: Record<string, number> = { high: 0, medium: 1, low: 2 };
+                                        return (order[a.score_impact as string] || 1) - (order[b.score_impact as string] || 1);
+                                    })
+                                    .map((weakness: any, idx: number) => {
+                                        // Determine the "Original" text
+                                        const originalText = weakness.identified_issue || weakness.example || (weakness.examples && weakness.examples[0]);
+                                        const correction = weakness.fix;
 
-                                        <div className="relative">
-                                            {/* Top Row: Name and Frequency */}
-                                            <div className="flex justify-between items-start mb-4">
-                                                <div className="flex items-center gap-2">
-                                                    <div className="w-2 h-2 rounded-full bg-amber-500" />
-                                                    <h4 className="text-sm font-black text-slate-900 dark:text-white tracking-tight">
-                                                        {weakness.pattern_name}
-                                                    </h4>
-                                                </div>
-                                                <SeverityBadge frequency={weakness.frequency} />
-                                            </div>
+                                        return (
+                                            <div key={idx} className="bg-transparent p-5 border-b border-slate-100 dark:border-slate-800/80 last:border-0 hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors duration-200 group">
 
-                                            {/* Description Card */}
-                                            <p className="text-[13px] text-slate-600 dark:text-slate-400 leading-snug mb-4">
-                                                <QuoteHighlight text={weakness.problem || weakness.description || ""} />
-                                            </p>
-
-                                            {/* The Error Quotes */}
-                                            {weakness.examples && Array.isArray(weakness.examples) && weakness.examples.length > 0 ? (
-                                                <div className="space-y-2 mb-4">
-                                                    {weakness.examples.map((ex: string, eIdx: number) => (
-                                                        <div key={eIdx} className="bg-amber-50/50 dark:bg-amber-900/10 p-3 rounded-xl border border-amber-100/50 dark:border-amber-900/20 font-mono text-[11px] text-amber-900 dark:text-amber-200">
-                                                            "{ex}"
+                                                <div className="relative">
+                                                    {/* Top Row: Pattern Name and Score Impact */}
+                                                    <div className="flex justify-between items-start mb-3">
+                                                        <div className="flex items-center gap-2">
+                                                            <AlertTriangle className="w-3.5 h-3.5 text-amber-500/80" />
+                                                            <h4 className="text-[13px] font-bold text-slate-900 dark:text-white tracking-tight">
+                                                                {weakness.pattern_name || "Identified Issue"}
+                                                            </h4>
                                                         </div>
-                                                    ))}
-                                                </div>
-                                            ) : (weakness.example || weakness.identified_issue) && (
-                                                <div className="mb-4 bg-amber-50/50 dark:bg-amber-900/10 p-3 rounded-xl border border-amber-100/50 dark:border-amber-900/20 font-mono text-[11px] text-amber-900 dark:text-amber-200">
-                                                    "{weakness.example || weakness.identified_issue}"
-                                                </div>
-                                            )}
-
-                                            {/* Actionable Fix */}
-                                            <div className="flex items-center justify-between pt-4 border-t border-slate-50 dark:border-slate-800/50 gap-4">
-                                                {weakness.fix && (
-                                                    <div className="flex items-center gap-2.5 flex-1 min-w-0">
-                                                        <div className="w-6 h-6 rounded-full bg-emerald-500/10 dark:bg-emerald-500/20 flex items-center justify-center shrink-0">
-                                                            <CheckCircle size={12} className="text-emerald-600 dark:text-emerald-400" />
-                                                        </div>
-                                                        <span className="text-[13px] font-bold text-slate-800 dark:text-slate-200 truncate">
-                                                            {weakness.fix}
-                                                        </span>
+                                                        <ScoreImpactBadge impact={weakness.score_impact || "medium"} />
                                                     </div>
-                                                )}
 
-                                                <button
-                                                    onClick={() => openModal(weakness)}
-                                                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-black uppercase tracking-widest text-blue-600 bg-blue-50 hover:bg-blue-100 dark:text-blue-400 dark:bg-blue-900/30 dark:hover:bg-blue-800/40 transition-all"
-                                                >
-                                                    Analysis
-                                                    <ArrowRight size={10} />
-                                                </button>
+                                                    {/* Diff View (Original -> Correction) */}
+                                                    {originalText && correction ? (
+                                                        <div className="flex items-center gap-2 mb-3 flex-wrap">
+                                                            <div className="px-3 py-1.5 rounded-full bg-red-500/20 border border-red-500/30 text-red-400 text-sm font-medium">
+                                                                {originalText}
+                                                            </div>
+                                                            <ArrowRight className="w-4 h-4 text-slate-600" />
+                                                            <div className="px-3 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-sm font-medium">
+                                                                {correction}
+                                                            </div>
+                                                        </div>
+                                                    ) : (
+                                                        /* Fallback if no correction pair */
+                                                        <div className="mb-3 bg-amber-50/5 dark:bg-amber-900/10 p-2.5 rounded-lg border border-amber-500/10 text-[11px] text-amber-200/90 italic leading-relaxed">
+                                                            "{originalText || weakness.problem || weakness.description}"
+                                                        </div>
+                                                    )}
+
+
+                                                    {/* Concrete Example (NEW) */}
+                                                    {weakness.concrete_example && (
+                                                        <div className="mb-3 p-3 rounded-lg bg-blue-500/5 border border-blue-500/20">
+                                                            <p className="text-[11px] text-blue-400 leading-relaxed italic">
+                                                                💡 {weakness.concrete_example}
+                                                            </p>
+                                                        </div>
+                                                    )}
+
+                                                    {/* Band Upgrade Example (NEW) */}
+                                                    {weakness.band_upgrade && (
+                                                        <div className="mb-3 p-3 rounded-lg bg-slate-800/50 border border-slate-700">
+                                                            <div className="text-[9px] uppercase tracking-widest font-bold text-slate-500 mb-2">
+                                                                📈 Band {weakness.band_upgrade.current_band} → Band {weakness.band_upgrade.target_band}
+                                                            </div>
+                                                            <div className="space-y-2">
+                                                                <div>
+                                                                    <div className="text-[9px] uppercase text-slate-600 mb-1">Your version:</div>
+                                                                    <div className="text-[11px] text-rose-400 font-mono">"{weakness.band_upgrade.original}"</div>
+                                                                </div>
+                                                                <div>
+                                                                    <div className="text-[9px] uppercase text-slate-600 mb-1">Band 7 version:</div>
+                                                                    <div className="text-[11px] text-emerald-400 font-mono">"{weakness.band_upgrade.improved}"</div>
+                                                                </div>
+                                                                <div className="text-[10px] text-slate-400 italic pt-1 border-t border-slate-700">
+                                                                    ✨ {weakness.band_upgrade.what_changed}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {/* Action / Analysis Link */}
+                                                    <div className="flex justify-start">
+                                                        <button
+                                                            onClick={() => openModal(weakness)}
+                                                            className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-emerald-500 hover:text-emerald-400 transition-colors group/btn opacity-80 hover:opacity-100"
+                                                        >
+                                                            Analysis
+                                                            <ArrowRight size={10} className="group-hover/btn:translate-x-0.5 transition-transform" />
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                ))}
+                                        );
+                                    })}
                             </CollapsibleContent>
                         </Collapsible>
                     )}
