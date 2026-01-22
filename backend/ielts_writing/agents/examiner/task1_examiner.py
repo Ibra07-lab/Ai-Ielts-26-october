@@ -8,12 +8,10 @@ from __future__ import annotations
 
 import json
 import os
-from langchain_core.messages import SystemMessage, HumanMessage
-
 from ...models import TaskType, ExaminerEvaluation
 from .base import ExaminerAgent
 from ..prompts.task1_prompt import get_task1_examiner_system_prompt
-from ..llm_factory import get_chat_model, add_cache_tag
+from agents.direct_llm_client import DirectLLMClient
 
 
 def build_task1_examiner_user_prompt(
@@ -58,17 +56,17 @@ def build_task1_examiner_user_prompt(
 """
     
     # Add image/chart information if provided
-    if image_url:
-        prompt += f"""### Visual Data
+    prompt += f"""### Visual Data
 Chart Type: {chart_type or "Not specified"}
 Image: Visual data is provided
 
 ⚠️ DATA VERIFICATION REQUIRED:
 When evaluating Task Achievement:
-1. Check ALL numbers mentioned in the essay against the chart
-2. Verify trends described match the visual data
-3. Note any made-up or incorrect figures as red flags
-4. Check if key features are accurately identified
+1. GENERATE A DETAILED VISUAL DESCRIPTION: Start your JSON output with a 'visual_description' field. Describe the chart type, axes, units, main trends, and key data points. This description will be used by other agents.
+2. Check ALL numbers mentioned in the essay against the chart
+3. Verify trends described match the visual data
+4. Note any made-up or incorrect figures as red flags
+5. Check if key features are accurately identified
 
 """
     
@@ -100,20 +98,12 @@ class Task1Examiner(ExaminerAgent):
     """Task 1 examiner with calibration reminder for strict IELTS scoring."""
 
     def __init__(self, model: str | None = None):
-        # Initialize with same logic as base class
-        model_name = model or os.getenv(
+        # Default to environment variable or fallback to Claude Sonnet 4.5
+        self.model = model or os.getenv(
             "IELTS_WRITING_MODEL",
             "claude-sonnet-4-5-20250929",
         )
-
-        self.llm = get_chat_model(
-            model_name=model_name,
-            temperature=0.1,  # Low temp for consistent scoring
-            max_tokens=2048,
-        )
-        
-        # Expose model name for health check
-        self.model = getattr(self.llm, "model", None) or getattr(self.llm, "model_name", None) or model_name
+        self.client = DirectLLMClient()
 
     async def evaluate(
         self,
@@ -138,30 +128,32 @@ class Task1Examiner(ExaminerAgent):
             chart_type=chart_type,
         )
 
-        system_msg = SystemMessage(content=system_prompt)
-
-        # Apply caching for Claude (skip 4.5 beta to avoid 404)
-        model_name = str(getattr(self.llm, "model", getattr(self.llm, "model_name", ""))).lower()
-        if "claude" in model_name and "4-5" not in model_name:
-            system_msg = add_cache_tag(system_msg)
-
-        messages = [system_msg]
-
-        # Handle image content for vision models
+        image_data = None
         if image_url:
             image_data = self._prepare_image(image_url)
-            messages.append(HumanMessage(content=[
-                {"type": "image_url", "image_url": {"url": image_data}},
-                {"type": "text", "text": user_prompt},
-            ]))
-        else:
-            messages.append(HumanMessage(content=user_prompt))
 
-        response = await self.llm.ainvoke(messages)
+        # Call direct client
+        if "claude" in self.model.lower():
+            response_text = self.client.call_anthropic(
+                model=self.model,
+                system_prompt=system_prompt,
+                user_prompt=user_prompt,
+                temperature=0.1,
+                max_tokens=2048,
+                image_data=image_data
+            )
+        else:
+            response_text = self.client.call_openai(
+                model=self.model,
+                system_prompt=system_prompt,
+                user_prompt=user_prompt,
+                temperature=0.1,
+                max_tokens=2048
+            )
 
         # Parse JSON response
         try:
-            content = response.content.strip()
+            content = response_text.strip()
             if "```json" in content:
                 content = content.split("```json")[1].split("```")[0].strip()
             elif "```" in content:
@@ -174,7 +166,7 @@ class Task1Examiner(ExaminerAgent):
 
             result = json.loads(content)
         except (json.JSONDecodeError, IndexError):
-            raise ValueError(f"Failed to parse JSON response: {response.content}")
+            raise ValueError(f"Failed to parse JSON response: {response_text}")
 
         # Calculate overall band if not present
         if "overall_band" not in result and "criterion_scores" in result:
@@ -226,6 +218,7 @@ class Task1Examiner(ExaminerAgent):
         """
         Prepare image for vision model.
         Converts local file paths to base64 data URLs.
+        Detects MIME type from content to handle mismatched extensions.
         """
         import base64
 
@@ -234,7 +227,6 @@ class Task1Examiner(ExaminerAgent):
             return image_url
 
         # Handle local file path
-        # Remove leading slash if present
         clean_path = image_url.lstrip("/")
 
         # Try multiple potential locations
@@ -261,18 +253,32 @@ class Task1Examiner(ExaminerAgent):
         for full_path in possible_paths:
             if os.path.exists(full_path):
                 with open(full_path, "rb") as f:
+                    header = f.read(12)
+                    f.seek(0)
                     image_data = base64.b64encode(f.read()).decode("utf-8")
-                    # Detect image type from extension
-                    ext = os.path.splitext(full_path)[1].lower().lstrip(".")
-                    # Map extensions to MIME types
-                    mime_map = {
-                        "jpg": "image/jpeg",
-                        "jpeg": "image/jpeg",
-                        "png": "image/png",
-                        "gif": "image/gif",
-                        "webp": "image/webp",
-                    }
-                    mime_type = mime_map.get(ext, "image/png")
+                    
+                    # Detect MIME type from magic bytes
+                    mime_type = "image/png" # Default
+                    if header.startswith(b'\xff\xd8\xff'):
+                        mime_type = "image/jpeg"
+                    elif header.startswith(b'\x89PNG\r\n\x1a\n'):
+                        mime_type = "image/png"
+                    elif header.startswith(b'GIF87a') or header.startswith(b'GIF89a'):
+                        mime_type = "image/gif"
+                    elif header.startswith(b'RIFF') and header[8:12] == b'WEBP':
+                        mime_type = "image/webp"
+                    else:
+                        # Fallback to extension if signature unknown
+                        ext = os.path.splitext(full_path)[1].lower().lstrip(".")
+                        mime_map = {
+                            "jpg": "image/jpeg",
+                            "jpeg": "image/jpeg",
+                            "png": "image/png",
+                            "gif": "image/gif",
+                            "webp": "image/webp",
+                        }
+                        mime_type = mime_map.get(ext, "image/png")
+                        
                     return f"data:{mime_type};base64,{image_data}"
 
         # If file not found, log warning and return original

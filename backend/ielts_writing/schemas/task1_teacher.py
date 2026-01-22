@@ -170,6 +170,11 @@ class ScoreExplanation(BaseModel):
         description="Specific advice to reach next band (max 2 sentences)",
         max_length=150
     )
+    why_not_higher: Optional[str] = Field(
+        None,
+        description="1 sentence explaining why not the next band up",
+        max_length=200
+    )
 
 
 # ============== Criterion Feedback Schemas ==============

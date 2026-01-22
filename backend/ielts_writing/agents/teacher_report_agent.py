@@ -1,7 +1,6 @@
 import json
 import os
-from langchain_openai import ChatOpenAI
-from langchain_core.messages import SystemMessage, HumanMessage
+from typing import Any, Optional
 
 from ..models import ExaminerEvaluation, TaskType
 from ..teacher_report_models import TeacherFeedbackReport
@@ -9,10 +8,7 @@ from ..prompts.teacher_report import (
     TEACHER_REPORT_SYSTEM_PROMPT, 
     build_teacher_report_prompt
 )
-
-from typing import Any
-
-from .llm_factory import get_chat_model, add_cache_tag
+from agents.direct_llm_client import DirectLLMClient
 
 
 class TeacherReportAgent:
@@ -23,13 +19,8 @@ class TeacherReportAgent:
     
     def __init__(self, model: str = None):
         # Use Claude 3.5 Sonnet for best JSON adherence and reasoning
-        model_name = model or os.getenv("IELTS_WRITING_MODEL", "claude-3-5-sonnet-latest")
-        
-        self.llm = get_chat_model(
-            model_name=model_name,
-            temperature=0.3,  # Balance between consistency and creativity
-            max_tokens=4096  # Larger for comprehensive reports
-        )
+        self.model = model or os.getenv("IELTS_WRITING_MODEL", "claude-sonnet-4-5-20250929")
+        self.client = DirectLLMClient()
     
     async def generate_report(
         self,
@@ -56,25 +47,28 @@ class TeacherReportAgent:
             tutor_feedback=tutor_dict
         )
         
-        system_msg = SystemMessage(content=TEACHER_REPORT_SYSTEM_PROMPT)
-        
-        # Apply prompt caching for Claude models
-        if hasattr(self.llm, 'model') and 'claude' in str(self.llm.model).lower():
-            system_msg = add_cache_tag(system_msg)
-        elif hasattr(self.llm, 'model_name') and 'claude' in str(self.llm.model_name).lower():
-            system_msg = add_cache_tag(system_msg)
-            
-        messages = [
-            system_msg,
-            HumanMessage(content=user_prompt)
-        ]
-        
-        response = await self.llm.ainvoke(messages)
+        # Call Direct API
+        if "claude" in self.model.lower():
+            response_text = self.client.call_anthropic(
+                model=self.model,
+                system_prompt=TEACHER_REPORT_SYSTEM_PROMPT,
+                user_prompt=user_prompt,
+                temperature=0.3,
+                max_tokens=4096
+            )
+        else:
+            response_text = self.client.call_openai(
+                model=self.model,
+                system_prompt=TEACHER_REPORT_SYSTEM_PROMPT,
+                user_prompt=user_prompt,
+                temperature=0.3,
+                max_tokens=4096
+            )
         
         # Parse response
         try:
             # Handle potential markdown fencing or extra text
-            content = response.content.strip()
+            content = response_text.strip()
             if "```json" in content:
                 content = content.split("```json")[1].split("```")[0].strip()
             elif "```" in content:
@@ -88,7 +82,7 @@ class TeacherReportAgent:
                 
             result = json.loads(content)
         except (json.JSONDecodeError, IndexError) as e:
-            raise ValueError(f"Failed to parse teacher report JSON: {e}\n{response.content}")
+            raise ValueError(f"Failed to parse teacher report JSON: {e}\n{response_text}")
         
         # Validate and return
         return TeacherFeedbackReport(**result)

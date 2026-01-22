@@ -5,13 +5,51 @@ encore.gen.cue
 node_modules
 /encore.gen
 
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
 # Env files (never commit secrets)
 .env
 .env.local
 .env.*.local
 backend/.env
 frontend/.env
-# GitHub push protection: exclude secret files
 **/.pip
 app/.pip
 backend/.pip
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary/Test Results
+*result.json
+*output.json
+*.log
+api_test_response.json
+terminal_task1_result.json
+test_explanation_output.json
+debug_minimal.txt
+explanation_error_raw.txt

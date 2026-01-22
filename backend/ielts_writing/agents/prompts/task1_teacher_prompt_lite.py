@@ -45,18 +45,30 @@ Return ONLY valid JSON:
   },
   "task_achievement": {
     "band": 0.0,
+    "why_not_higher": "REQUIRED: 1 sentence explaining exactly why not Band X+1",
     "why_this_score": "...",
     "band_descriptor_evidence": "...",
     "path_to_improvement": "...",
     "strengths": [
-      {"name": "DESCRIPTIVE_NAME", "quote": "EXACT_ESSAY_QUOTE", "explanation": "BRIEF_WHY"}
+      {"name": "...", "quote": "EXACT_ESSAY_QUOTE_ONLY", "explanation": "..."}
     ],
     "weakness_patterns": [
       {
         "name": "SPECIFIC_PATTERN_NAME", 
-        "problem": "BRIEF_ISSUE", 
-        "fix": "CORRECTION", 
-        "examples": ["QUOTE1", "QUOTE2"],
+        "problem": "Description of error WITHOUT quotes (e.g. 'Subject-verb agreement error')", 
+        "examples": ["EXACT_QUOTE_FROM_ESSAY_1", "EXACT_QUOTE_FROM_ESSAY_2"],
+        "fix": "Correction", 
+        "score_impact": "high|medium|low",
+        "concrete_example": "For example, ...",
+        "band_upgrade": {
+          "current_band": "6",
+          "target_band": "7",
+          "original": "...",
+          "improved": "...",
+          "what_changed": "..."
+        }
+      }
+    ],
         "score_impact": "high|medium|low",
         "concrete_example": "For example, your overview mentions cities, but does not clearly summarize both overall trends and exceptions in one sentence.",
         "band_upgrade": {
@@ -73,6 +85,7 @@ Return ONLY valid JSON:
   "coherence_cohesion": {
     "band": 0.0,
     "why_this_score": "...",
+    "why_not_higher": "...",
     "band_descriptor_evidence": "...",
     "path_to_improvement": "...",
     "strengths": [{"name": "...", "quote": "...", "explanation": "..."}],
@@ -82,6 +95,7 @@ Return ONLY valid JSON:
   "lexical_resource": {
     "band": 0.0,
     "why_this_score": "...",
+    "why_not_higher": "...",
     "band_descriptor_evidence": "...",
     "path_to_improvement": "...",
     "strengths": [{"name": "...", "quote": "...", "explanation": "..."}],
@@ -91,6 +105,7 @@ Return ONLY valid JSON:
   "grammatical_range": {
     "band": 0.0,
     "why_this_score": "...",
+    "why_not_higher": "...",
     "band_descriptor_evidence": "...",
     "path_to_improvement": "...",
     "strengths": [{"name": "...", "quote": "...", "explanation": "..."}],
@@ -200,6 +215,7 @@ Example:
 - priority: MAX 15 words
 - priority_quick_win: MAX 10 words
 - why_this_score: MAX 50 words (2-3 sentences)
+- why_not_higher: MAX 40 words (1-2 sentences - REQUIRED)
 - band_descriptor_evidence: MAX 30 words (1-2 sentences)
 - path_to_improvement: MAX 25 words (1-2 sentences)
 - Each explanation: MAX 15 words
@@ -210,9 +226,14 @@ Example:
 
 ## Score Explanation Guidelines
 For each criterion, provide educational explanations:
-1. **why_this_score**: Explain what specific aspects of their writing placed them at this band (e.g., "Band 6 because overview present but data selection incomplete")
-2. **band_descriptor_evidence**: Reference official IELTS band descriptors (e.g., "Band 6 descriptor: 'addresses requirements but may omit key features'")
-3. **path_to_improvement**: Give concrete steps to reach the next band (e.g., "To reach Band 7: include all significant trends and make more precise comparisons")
+1. **why_this_score**: Explain what specific aspects of their writing placed them at this band.
+2. **why_not_higher**: Crucial - Explain EXACTLY what prevented the next band score usage (e.g. "To get Band 8, you needed more varied linkers").
+3. **band_descriptor_evidence**: Reference official IELTS band descriptors.
+4. **path_to_improvement**: Give concrete steps to reach the next band.
+
+## Weakness Pattern Rules
+- **problem**: Describe the issue (e.g., "Subject-verb agreement error")
+- **examples**: MUST be a list of EXACT quotes from the essay containing the error (e.g., ["she go to school", "they plays tennis"])
 """
 
 
@@ -235,6 +256,13 @@ def build_task1_teacher_prompt_lite(
         band = score.get("band", "N/A")
         scores_text += f"- {criterion}: {band}\n"
     
+    # Sanitize visual description
+    visual_desc = examiner_scores.get('visual_description', 'Not available')
+    if not visual_desc:
+        visual_desc = "Not available"
+    if isinstance(visual_desc, str):
+        visual_desc = visual_desc.replace('"""', "'''").replace('JSON', 'text').strip()
+
     prompt = f"""## Student: {student_name}
 Chart Type: {chart_type or "Not specified"}
 Overall Band: {overall_band}
@@ -242,6 +270,11 @@ Word Count: {len(essay.split())} words
 
 ## Examiner Scores
 {scores_text}
+
+## Visual Description (Examiner Verified)
+\"\"\"
+{visual_desc}
+\"\"\"
 
 ## Question
 {question}

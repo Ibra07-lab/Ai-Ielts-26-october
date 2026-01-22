@@ -1,28 +1,20 @@
 import json
 import os
+import re
 from datetime import datetime
 from typing import List, Optional
-from langchain_openai import ChatOpenAI
-from langchain_core.messages import SystemMessage, HumanMessage
 
 from ..models import TutorFeedback, ExaminerEvaluation, BandGap, Criterion
 from ..prompts.tutor import TUTOR_SYSTEM_PROMPT, build_tutor_prompt
-
-
-from .llm_factory import get_chat_model, add_cache_tag
+from agents.direct_llm_client import DirectLLMClient
 
 class TutorAgent:
     """Coaching agent — provides actionable improvement steps."""
     
     def __init__(self, model: str = None):
         # Default to environment variable or fallback to Claude Sonnet 4.5
-        model_name = model or os.getenv("IELTS_WRITING_MODEL", "claude-sonnet-4-5-20250929")
-        
-        self.llm = get_chat_model(
-            model_name=model_name,
-            temperature=0.4,  # Slightly higher for creative coaching
-            max_tokens=8192  # Increased to prevent truncation
-        )
+        self.model = model or os.getenv("IELTS_WRITING_MODEL", "claude-sonnet-4-5-20250929")
+        self.client = DirectLLMClient()
     
     async def coach(
         self,
@@ -45,26 +37,25 @@ class TutorAgent:
             error_history=error_history
         )
         
-        system_msg = SystemMessage(content=TUTOR_SYSTEM_PROMPT)
+        # Call Direct API
+        if "claude" in self.model.lower():
+            response_text = self.client.call_anthropic(
+                model=self.model,
+                system_prompt=TUTOR_SYSTEM_PROMPT,
+                user_prompt=user_prompt,
+                temperature=0.4,
+                max_tokens=8192
+            )
+        else:
+            response_text = self.client.call_openai(
+                model=self.model,
+                system_prompt=TUTOR_SYSTEM_PROMPT,
+                user_prompt=user_prompt,
+                temperature=0.4,
+                max_tokens=8192
+            )
         
-        # Apply prompt caching for Claude models (SKIP for 4.5 beta as it causes 404)
-        if hasattr(self.llm, 'model'):
-            model_name = str(self.llm.model).lower()
-            if 'claude' in model_name and '4-5' not in model_name:
-                system_msg = add_cache_tag(system_msg)
-        elif hasattr(self.llm, 'model_name'):
-             model_name = str(self.llm.model_name).lower()
-             if 'claude' in model_name and '4-5' not in model_name:
-                system_msg = add_cache_tag(system_msg)
-            
-        messages = [
-            system_msg,
-            HumanMessage(content=user_prompt)
-        ]
-        
-        response = await self.llm.ainvoke(messages)
-        
-        content = response.content.strip()
+        content = response_text.strip()
         try:
             # Handle potential markdown fencing or extra text
             if "```json" in content:
@@ -86,12 +77,12 @@ class TutorAgent:
                 f.write(f"FAILED JSON PARSE at {datetime.now()}\n")
                 f.write(f"{'='*50}\n")
                 f.write(f"Error: {str(e)}\n")
-                f.write(f"Content length: {len(response.content)} chars\n")
-                f.write(f"Content preview (first 500 chars):\n{response.content[:500]}\n")
-                f.write(f"Content end (last 500 chars):\n{response.content[-500:]}\n")
+                f.write(f"Content length: {len(response_text)} chars\n")
+                f.write(f"Content preview (first 500 chars):\n{response_text[:500]}\n")
+                f.write(f"Content end (last 500 chars):\n{response_text[-500:]}\n")
                 
                 # Detect truncation
-                if "Expecting" in str(e) and len(response.content) > 5000:
+                if "Expecting" in str(e) and len(response_text) > 5000:
                     f.write("\n⚠️  LIKELY TRUNCATION - Response seems incomplete\n")
                     f.write("   → Solution: Increase max_tokens in tutor.py\n")
                 f.write(f"{'='*50}\n\n")
@@ -99,7 +90,7 @@ class TutorAgent:
             raise ValueError(
                 f"Failed to parse JSON response. "
                 f"Error: {str(e)}. "
-                f"Content length: {len(response.content)}. "
+                f"Content length: {len(response_text)}. "
                 f"Check tutor_debug.log for full details."
             )
         

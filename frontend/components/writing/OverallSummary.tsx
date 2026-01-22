@@ -40,109 +40,106 @@ export const OverallSummary: React.FC<OverallSummaryProps> = ({ result }) => {
     const weakest = sortedScores[sortedScores.length - 1];
 
     return (
-        <div className="space-y-6 animate-in fade-in duration-500 h-full flex flex-col">
-            
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-700 h-full flex flex-col">
+
             {/* Header */}
-            <div>
-                 <div className="flex items-center justify-between mb-2">
-                    <h2 className="text-xl font-bold text-white">Overall Summary</h2>
-                    <div className="flex flex-col items-end">
-                         <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Performance</span>
-                         <div className="w-12 h-14 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex flex-col items-center justify-center">
-                            <span className="text-[8px] font-bold text-emerald-400 uppercase">BAND</span>
-                            <span className="text-xl font-black text-emerald-400 leading-none">{result.overall_band}</span>
-                         </div>
+            <div className="relative">
+                <div className="flex items-center justify-between mb-1">
+                    <div className="space-y-1">
+                        <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-black text-teal-500/80">
+                            Performance Overview
+                        </div>
+                        <h2 className="text-3xl font-black text-white tracking-tight">Overall Summary</h2>
                     </div>
                 </div>
-                <p className="text-slate-400 text-sm -mt-8">PERFORMANCE OVERVIEW</p>
             </div>
 
 
-            {/* Radar Chart */}
-            <div className="h-[280px] w-full relative">
-                <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart cx="50%" cy="50%" outerRadius="70%" data={chartData}>
-                        <PolarGrid stroke="#334155" strokeDasharray="3 3" />
-                         <PolarAngleAxis 
-                            dataKey="subject" 
-                            tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 600 }} 
-                         />
-                         <PolarRadiusAxis angle={30} domain={[0, 9]} tick={false} axisLine={false} />
-                        <Radar
-                            name="Score"
-                            dataKey="A"
-                            stroke="#10b981"
-                            strokeWidth={2}
-                            fill="#10b981"
-                            fillOpacity={0.2}
-                        />
-                    </RadarChart>
-                </ResponsiveContainer>
-                {/* Center Score Overlay */}
-                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                     <span className="text-2xl font-black text-white/10">{result.overall_band}</span>
-                 </div>
+            {/* Radar Chart Section */}
+            <div className="relative group">
+                <div className="absolute -inset-4 bg-teal-500/5 blur-3xl rounded-full opacity-50 group-hover:opacity-70 transition-opacity pointer-events-none" />
+                <div className="h-[280px] w-full relative z-10 bg-white/[0.02] rounded-3xl border border-white/5 p-4 shadow-inner overflow-hidden">
+                    <ResponsiveContainer width="100%" height="100%">
+                        <RadarChart cx="50%" cy="50%" outerRadius="75%" data={chartData}>
+                            <PolarGrid stroke="#ffffff10" strokeDasharray="4 4" />
+                            <PolarAngleAxis
+                                dataKey="subject"
+                                tick={{ fill: '#94a3b8', fontSize: 11, fontWeight: 700, letterSpacing: '0.05em' }}
+                            />
+                            <PolarRadiusAxis angle={30} domain={[0, 9]} tick={false} axisLine={false} />
+                            <Radar
+                                name="Score"
+                                dataKey="A"
+                                stroke="#2dd4bf"
+                                strokeWidth={3}
+                                fill="url(#radarGradient)"
+                                fillOpacity={0.4}
+                            />
+                            <defs>
+                                <linearGradient id="radarGradient" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor="#2dd4bf" stopOpacity={0.8} />
+                                    <stop offset="100%" stopColor="#10b981" stopOpacity={0.2} />
+                                </linearGradient>
+                            </defs>
+                        </RadarChart>
+                    </ResponsiveContainer>
+                    {/* Center Score Overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <span className="text-4xl font-black text-white/5 tracking-tighter">{result.overall_band}</span>
+                    </div>
+                </div>
             </div>
 
             {/* Insight Cards */}
             <div className="grid grid-cols-2 gap-4">
                 {/* Strongest */}
-                <Card className="bg-slate-900/50 border-slate-800 p-4 relative overflow-hidden group">
-                     <div className="absolute top-0 right-0 p-2 opacity-50"><TrendingUp className="w-4 h-4 text-emerald-500"/></div>
-                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 flex items-center gap-1">
-                        <TrendingUp className="w-3 h-3" /> Strongest
+                <div className="bg-white/[0.02] border border-white/5 p-5 rounded-2xl relative overflow-hidden group hover:bg-white/[0.04] transition-all">
+                    <div className="absolute top-0 right-0 p-3 opacity-20"><TrendingUp className="w-5 h-5 text-emerald-400" /></div>
+                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
+                        <TrendingUp className="w-3.5 h-3.5 text-emerald-500" /> Strongest
                     </p>
-                    <h4 className="text-sm font-bold text-white mb-1">{strongest.label}</h4>
-                    <span className="text-2xl font-black text-emerald-400">{strongest.score}</span>
-                </Card>
+                    <h4 className="text-[13px] font-bold text-slate-300 mb-1 leading-tight">{strongest.label}</h4>
+                    <span className="text-3xl font-black text-emerald-400 drop-shadow-[0_0_10px_rgba(16,185,129,0.3)]">{strongest.score}</span>
+                </div>
 
-                 {/* Focus Area */}
-                 <Card className="bg-slate-900/50 border-slate-800 p-4 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-2 opacity-50"><Target className="w-4 h-4 text-amber-500"/></div>
-                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 flex items-center gap-1">
-                        <Zap className="w-3 h-3" /> Focus Area
+                {/* Focus Area */}
+                <div className="bg-white/[0.02] border border-white/5 p-5 rounded-2xl relative overflow-hidden group hover:bg-white/[0.04] transition-all">
+                    <div className="absolute top-0 right-0 p-3 opacity-20"><Target className="w-5 h-5 text-amber-400" /></div>
+                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
+                        <Zap className="w-3.5 h-3.5 text-amber-500" /> Focus Area
                     </p>
-                    <h4 className="text-sm font-bold text-white mb-1">{weakest.label}</h4>
-                     <span className="text-2xl font-black text-amber-400">{weakest.score}</span>
-                </Card>
+                    <h4 className="text-[13px] font-bold text-slate-300 mb-1 leading-tight">{weakest.label}</h4>
+                    <span className="text-3xl font-black text-amber-400 drop-shadow-[0_0_10px_rgba(245,158,11,0.3)]">{weakest.score}</span>
+                </div>
             </div>
 
-            {/* Stats */}
-             <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-slate-900/30 rounded-xl p-4 flex flex-col justify-between">
-                       <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider"><Target className="w-3 h-3 inline mr-1"/> Average</span>
-                       <span className="text-xl font-bold text-white">6.0</span>
-                  </div>
-                   <div className="bg-slate-900/30 rounded-xl p-4 flex flex-col justify-between">
-                       <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider"><Award className="w-3 h-3 inline mr-1"/> Band Score</span>
-                       <span className="text-xl font-bold text-cyan-400">{result.overall_band}</span>
-                  </div>
-             </div>
-
-             {/* Score Breakdown Bars (Mini) */}
-              <div className="pt-2">
-                 <h4 className="text-xs font-bold text-slate-400 mb-3">Score Breakdown</h4>
-                 <div className="space-y-3">
-                     {sortedScores.map((s) => (
-                         <div key={s.id} className="space-y-1">
-                             <div className="flex justify-between text-[10px] uppercase font-bold text-slate-500">
-                                 <span>{s.label}</span>
-                                 <span className={cn(
-                                     s.score >= 7 ? "text-emerald-400" : s.score >= 6 ? "text-blue-400" : "text-amber-400"
-                                 )}>{s.score}</span>
-                             </div>
-                             <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
-                                 <div 
-                                    className={cn("h-full rounded-full",
-                                         s.score >= 7 ? "bg-emerald-500" : s.score >= 6 ? "bg-blue-500" : "bg-amber-500"
+            {/* Score Breakdown Bars */}
+            <div className="bg-white/[0.01] rounded-2xl p-6 border border-white/5 space-y-5">
+                <h4 className="text-[10px] uppercase font-black text-slate-500 tracking-[0.2em]">Detailed Breakdown</h4>
+                <div className="space-y-4">
+                    {sortedScores.map((s) => (
+                        <div key={s.id} className="space-y-2">
+                            <div className="flex justify-between items-end text-[11px] font-bold uppercase tracking-wider">
+                                <span className="text-slate-400">{s.label}</span>
+                                <span className={cn(
+                                    "text-sm font-black",
+                                    s.score >= 7 ? "text-emerald-400" : s.score >= 6 ? "text-teal-400" : "text-amber-400"
+                                )}>{s.score}</span>
+                            </div>
+                            <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden shadow-inner">
+                                <div
+                                    className={cn("h-full rounded-full transition-all duration-1000",
+                                        s.score >= 7 ? "bg-gradient-to-r from-emerald-500 to-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.4)]" :
+                                            s.score >= 6 ? "bg-gradient-to-r from-teal-500 to-teal-400 shadow-[0_0_10px_rgba(45,212,191,0.4)]" :
+                                                "bg-gradient-to-r from-amber-500 to-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.4)]"
                                     )}
                                     style={{ width: `${(s.score / 9) * 100}%` }}
-                                 />
-                             </div>
-                         </div>
-                     ))}
-                 </div>
-              </div>
+                                />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
 
 
         </div>

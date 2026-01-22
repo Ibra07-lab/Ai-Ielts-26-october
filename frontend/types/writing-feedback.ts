@@ -30,6 +30,46 @@ export interface ScoreExplanation {
 }
 
 // ----------------------------------------------------------------------------
+// Criterion Explanations (from Explanation Agent)
+// ----------------------------------------------------------------------------
+
+export interface ExplanationItem {
+    label: string;
+    quote: string;
+    comment: string;
+}
+
+export interface MainIssue {
+    label: string;
+    why_it_matters: string;
+    frequency: string;
+    examples: string[];
+    fix: string;
+}
+
+export interface ImprovementStep {
+    description: string;
+    improved_example: string;
+}
+
+export interface CriterionExplanation {
+    criterion: string;
+    band: number;
+    summary: string;
+    what_you_did_well: ExplanationItem[];
+    main_issues: MainIssue[];
+    why_not_higher: string;
+    improvement_step: ImprovementStep;
+}
+
+export interface WritingExplanations {
+    task_achievement: CriterionExplanation;
+    coherence_cohesion: CriterionExplanation;
+    lexical_resource: CriterionExplanation;
+    grammatical_range_accuracy: CriterionExplanation;
+}
+
+// ----------------------------------------------------------------------------
 // Evaluation Result (Examiner Output)
 // ----------------------------------------------------------------------------
 
@@ -54,16 +94,21 @@ export interface EvaluationResult {
     teacher_feedback_status?: 'complete' | 'timeout' | 'error' | 'loading' | 'not_requested';
     teacher_feedback_message?: string;
     teacher_feedback?: {
-        task_achievement?: { score_explanation?: ScoreExplanation; [key: string]: any };
-        coherence_cohesion?: { score_explanation?: ScoreExplanation; [key: string]: any };
-        lexical_resource?: { score_explanation?: ScoreExplanation; [key: string]: any };
-        grammatical_range?: { score_explanation?: ScoreExplanation; [key: string]: any };
+        task_achievement?: { score_explanation?: ScoreExplanation;[key: string]: any };
+        coherence_cohesion?: { score_explanation?: ScoreExplanation;[key: string]: any };
+        lexical_resource?: { score_explanation?: ScoreExplanation;[key: string]: any };
+        grammatical_range?: { score_explanation?: ScoreExplanation;[key: string]: any };
         [key: string]: any;
     };
     feedback_markdown?: string;
+    // Criterion explanations (concise, actionable feedback)
+    explanations?: WritingExplanations;
+    explanations_status?: 'complete' | 'timeout' | 'error' | 'not_requested';
+    explanations_message?: string;
     timing?: {
         examiner?: number;
         teacher?: number;
+        explanations?: number;
     };
 }
 

@@ -1,11 +1,9 @@
 import json
 import os
-from langchain_openai import ChatOpenAI  # Kept for backwards-compat; model comes from llm_factory
-from langchain_core.messages import SystemMessage, HumanMessage
-
+import httpx
 from ...models import ExaminerEvaluation, TaskType
 from ...prompts.examiner import EXAMINER_SYSTEM_PROMPT, build_examiner_prompt
-from ..llm_factory import get_chat_model, add_cache_tag
+from agents.direct_llm_client import DirectLLMClient
 
 
 class ExaminerAgent:
@@ -18,16 +16,11 @@ class ExaminerAgent:
 
     def __init__(self, model: str | None = None):
         # Default to environment variable or fallback to Claude Sonnet 4.5
-        model_name = model or os.getenv(
+        self.model = model or os.getenv(
             "IELTS_WRITING_MODEL",
             "claude-sonnet-4-5-20250929",
         )
-
-        self.llm = get_chat_model(
-            model_name=model_name,
-            temperature=0.1,  # Low temp for consistent scoring
-            max_tokens=2048,
-        )
+        self.client = DirectLLMClient()
 
     async def evaluate(
         self,
@@ -47,44 +40,34 @@ class ExaminerAgent:
             chart_type=chart_type,
         )
 
-        system_msg = SystemMessage(content=EXAMINER_SYSTEM_PROMPT)
-
-        # Apply prompt caching for Claude models (SKIP for 4.5 beta as it causes 404)
-        if hasattr(self.llm, "model"):
-            model_name = str(self.llm.model).lower()
-            if "claude" in model_name and "4-5" not in model_name:
-                system_msg = add_cache_tag(system_msg)
-        elif hasattr(self.llm, "model_name"):
-            model_name = str(self.llm.model_name).lower()
-            if "claude" in model_name and "4-5" not in model_name:
-                system_msg = add_cache_tag(system_msg)
-
-        # Build messages array
-        messages = [system_msg]
-
-        # For Task 1 with image, add vision content
+        # Vision handling
+        image_data = None
         if task_type == TaskType.TASK1 and image_url:
-            # Prepare image data
             image_data = self._prepare_image(image_url)
 
-            # Claude requires specific format for images
-            messages.append(
-                HumanMessage(
-                    content=[
-                        {"type": "image_url", "image_url": {"url": image_data}},
-                        {"type": "text", "text": user_prompt},
-                    ]
-                )
+        # Call direct client
+        if "claude" in self.model.lower():
+            response_text = self.client.call_anthropic(
+                model=self.model,
+                system_prompt=EXAMINER_SYSTEM_PROMPT,
+                user_prompt=user_prompt,
+                temperature=0.1,
+                max_tokens=2048,
+                image_data=image_data
             )
         else:
-            messages.append(HumanMessage(content=user_prompt))
-
-        response = await self.llm.ainvoke(messages)
+            response_text = self.client.call_openai(
+                model=self.model,
+                system_prompt=EXAMINER_SYSTEM_PROMPT,
+                user_prompt=user_prompt,
+                temperature=0.1,
+                max_tokens=2048
+            )
 
         # Parse response
         try:
             # Handle potential markdown fencing or extra text
-            content = response.content.strip()
+            content = response_text.strip()
             if "```json" in content:
                 content = content.split("```json")[1].split("```")[0].strip()
             elif "```" in content:
@@ -98,7 +81,7 @@ class ExaminerAgent:
 
             result = json.loads(content)
         except (json.JSONDecodeError, IndexError):
-            raise ValueError(f"Failed to parse JSON response: {response.content}")
+            raise ValueError(f"Failed to parse JSON response: {response_text}")
 
         # Calculate overall band (average, rounded to 0.5)
         scores = [s["band"] for s in result["criterion_scores"]]

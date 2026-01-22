@@ -41,6 +41,7 @@ class ExaminerEvaluation(BaseModel):
     word_count_penalty: bool  # DEPRECATED: Use word_count_ok instead
     off_topic: Optional[bool] = False
     copying_detected: Optional[dict] = None  # Plagiarism check results
+    visual_description: Optional[str] = None  # Description of the chart/image (if provided)
     timestamp: datetime = Field(default_factory=datetime.utcnow)
 
 

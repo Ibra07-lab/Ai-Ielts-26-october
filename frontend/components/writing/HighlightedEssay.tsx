@@ -32,7 +32,7 @@ export const HighlightedEssay: React.FC<HighlightedEssayProps> = ({ essayText, h
 
     if (validHighlights.length === 0) {
         return (
-            <div className="prose prose-slate dark:prose-invert max-w-none leading-relaxed whitespace-pre-wrap font-serif text-lg p-6 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div className="bg-white dark:bg-neutral-900/90 p-10 rounded-3xl border border-slate-200 dark:border-white/5 shadow-2xl min-h-full font-serif text-[20px] leading-[1.8] text-slate-800 dark:text-slate-100/90 tracking-wide selection:bg-teal-500/30">
                 {essayText}
             </div>
         );
@@ -44,29 +44,34 @@ export const HighlightedEssay: React.FC<HighlightedEssayProps> = ({ essayText, h
     const parts = essayText.split(regex);
 
     return (
-        <div className="prose prose-slate dark:prose-invert max-w-none leading-relaxed whitespace-pre-wrap font-serif text-lg p-8 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm h-full overflow-y-auto custom-scrollbar">
-            {parts.map((part, index) => {
-                // Check if this part matches any highlight (case insensitive)
-                const matchedHighlight = validHighlights.find(h => h.text.toLowerCase() === part.toLowerCase());
+        <div className="bg-white dark:bg-neutral-900/90 p-10 rounded-3xl border border-slate-200 dark:border-white/5 shadow-2xl min-h-full font-serif text-[20px] leading-[1.8] text-slate-800 dark:text-slate-100/90 tracking-wide selection:bg-teal-500/30 overflow-y-auto custom-scrollbar relative">
+            {/* Subtle Paper Texture for Light Mode */}
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')] dark:hidden" />
 
-                if (matchedHighlight) {
-                    return (
-                        <mark
-                            key={index}
-                            className={cn(
-                                "px-0.5 mx-0 transition-colors duration-300 font-medium",
-                                matchedHighlight.type === 'strength'
-                                    ? "bg-transparent text-emerald-400 border-b-2 border-emerald-500/50 hover:bg-emerald-500/10"
-                                    : "bg-transparent text-amber-400 border-b-2 border-amber-500/50 hover:bg-amber-500/10"
-                            )}
-                            title={matchedHighlight.type === 'strength' ? "Effective usage" : "Area for improvement"}
-                        >
-                            {part}
-                        </mark>
-                    );
-                }
-                return <span key={index}>{part}</span>;
-            })}
+            <div className="relative z-10">
+                {parts.map((part, index) => {
+                    // Check if this part matches any highlight (case insensitive)
+                    const matchedHighlight = validHighlights.find(h => h.text.toLowerCase() === part.toLowerCase());
+
+                    if (matchedHighlight) {
+                        return (
+                            <mark
+                                key={index}
+                                className={cn(
+                                    "px-1 mx-0.5 rounded-sm transition-all duration-300 font-medium cursor-help",
+                                    matchedHighlight.type === 'strength'
+                                        ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-500/10 dark:text-emerald-400 border-b-2 border-emerald-500/30 hover:bg-emerald-200 dark:hover:bg-emerald-500/20 shadow-[0_4px_12px_rgba(16,185,129,0.05)]"
+                                        : "bg-amber-100 text-amber-800 dark:bg-amber-500/10 dark:text-amber-400 border-b-2 border-amber-500/30 hover:bg-amber-200 dark:hover:bg-amber-500/20 shadow-[0_4px_12px_rgba(245,158,11,0.05)]"
+                                )}
+                                title={matchedHighlight.type === 'strength' ? "Effective usage" : "Area for improvement"}
+                            >
+                                {part}
+                            </mark>
+                        );
+                    }
+                    return <span key={index}>{part}</span>;
+                })}
+            </div>
         </div>
     );
 };

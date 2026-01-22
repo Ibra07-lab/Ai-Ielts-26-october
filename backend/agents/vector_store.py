@@ -5,46 +5,59 @@ Vector Store для хранения и поиска релевантных ча
 
 import os
 import logging
-import pickle
-from typing import List, Dict, Any
+import json
+import math
+import numpy as np
+from typing import List, Dict, Any, Optional
+from openai import OpenAI
 from dotenv import load_dotenv
-
-from langchain_openai import OpenAIEmbeddings
-from langchain_community.vectorstores import FAISS  # Вместо Chroma!
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.schema import Document
 
 load_dotenv()
 logger = logging.getLogger(__name__)
 
+class SimpleTextSplitter:
+    """A simple replacement for RecursiveCharacterTextSplitter."""
+    def __init__(self, chunk_size: int = 300, chunk_overlap: int = 50):
+        self.chunk_size = chunk_size
+        self.chunk_overlap = chunk_overlap
+
+    def split_text(self, text: str) -> List[str]:
+        if not text:
+            return []
+        
+        chunks = []
+        start = 0
+        while start < len(text):
+            end = start + self.chunk_size
+            chunk = text[start:end]
+            chunks.append(chunk)
+            if end >= len(text):
+                break
+            start += (self.chunk_size - self.chunk_overlap)
+        return chunks
+
 
 class PassageVectorStore:
     """
-    Хранилище для passage с векторным поиском (FAISS)
+    Хранилище для passage с векторным поиском (Simple Embedding + Cosine Similarity)
     """
     
     def __init__(self, persist_directory: str = "./data/faiss_db"):
         """
         Инициализация векторного хранилища
-        
-        Args:
-            persist_directory: Путь для сохранения векторной БД
         """
-        self.embeddings = OpenAIEmbeddings(
-            model="text-embedding-3-small",
-            api_key=os.getenv("OPENAI_API_KEY")
-        )
+        self.api_key = os.getenv("OPENAI_API_KEY")
+        self.client = OpenAI(api_key=self.api_key)
         self.persist_directory = persist_directory
-        self.text_splitter = RecursiveCharacterTextSplitter(
+        self.text_splitter = SimpleTextSplitter(
             chunk_size=300,
-            chunk_overlap=50,
-            separators=["\n\n", "\n", ". ", " ", ""]
+            chunk_overlap=50
         )
         
         # Создаем директорию если не существует
         os.makedirs(persist_directory, exist_ok=True)
         
-        logger.info(f"PassageVectorStore initialized with FAISS at: {persist_directory}")
+        logger.info(f"PassageVectorStore initialized at: {persist_directory} (Direct API Mode)")
     
     def add_passage(
         self,
@@ -54,46 +67,42 @@ class PassageVectorStore:
     ) -> None:
         """
         Добавить passage в векторную БД
-        
-        Args:
-            passage_id: Уникальный ID passage
-            passage_text: Полный текст passage
-            metadata: Дополнительные метаданные
         """
         try:
             # Разбиваем текст на чанки
             chunks = self.text_splitter.split_text(passage_text)
             
-            # Создаем документы с метаданными
-            documents = []
-            for i, chunk in enumerate(chunks):
-                doc_metadata = {
-                    "passage_id": passage_id,
-                    "chunk_index": i,
-                    "total_chunks": len(chunks)
+            # Получаем эмбеддинги для всех чанков
+            response = self.client.embeddings.create(
+                input=chunks,
+                model="text-embedding-3-small"
+            )
+            embeddings = [data.embedding for data in response.data]
+            
+            # Сохраняем в JSON-файл (просто и надежно для небольших данных)
+            data_to_store = []
+            for i, (chunk, embedding) in enumerate(zip(chunks, embeddings)):
+                item = {
+                    "content": chunk,
+                    "embedding": embedding,
+                    "metadata": {
+                        "passage_id": passage_id,
+                        "chunk_index": i,
+                        "total_chunks": len(chunks)
+                    }
                 }
                 if metadata:
-                    doc_metadata.update(metadata)
-                
-                documents.append(Document(
-                    page_content=chunk,
-                    metadata=doc_metadata
-                ))
+                    item["metadata"].update(metadata)
+                data_to_store.append(item)
             
-            # Создаём FAISS index
-            vectorstore = FAISS.from_documents(
-                documents=documents,
-                embedding=self.embeddings
-            )
+            save_path = os.path.join(self.persist_directory, f"{passage_id}.json")
+            with open(save_path, "w", encoding="utf-8") as f:
+                json.dump(data_to_store, f, ensure_ascii=False, indent=2)
             
-            # Сохраняем на диск
-            save_path = os.path.join(self.persist_directory, passage_id)
-            vectorstore.save_local(save_path)
-            
-            logger.info(f"Added passage '{passage_id}' with {len(chunks)} chunks to FAISS")
+            logger.info(f"Added passage '{passage_id}' with {len(chunks)} chunks to direct store")
             
         except Exception as e:
-            logger.error(f"Error adding passage to FAISS: {str(e)}")
+            logger.error(f"Error adding passage to store: {str(e)}")
             raise
     
     def search_relevant_context(
@@ -104,48 +113,44 @@ class PassageVectorStore:
     ) -> List[str]:
         """
         Найти релевантные куски passage для вопроса
-        
-        Args:
-            passage_id: ID passage
-            query: Вопрос или текст для поиска
-            k: Количество релевантных чанков
-            
-        Returns:
-            Список релевантных текстовых фрагментов
         """
         try:
-            save_path = os.path.join(self.persist_directory, passage_id)
+            save_path = os.path.join(self.persist_directory, f"{passage_id}.json")
+            if not os.path.exists(save_path):
+                logger.warning(f"Store for passage '{passage_id}' not found")
+                return []
+                
+            with open(save_path, "r", encoding="utf-8") as f:
+                passage_data = json.load(f)
             
-            # Загружаем FAISS index
-            vectorstore = FAISS.load_local(
-                save_path,
-                embeddings=self.embeddings,
-                allow_dangerous_deserialization=True  # Нужно для FAISS
+            # Получаем эмбеддинг для запроса
+            response = self.client.embeddings.create(
+                input=[query],
+                model="text-embedding-3-small"
             )
+            query_embedding = np.array(response.data[0].embedding)
             
-            # Поиск похожих документов
-            docs = vectorstore.similarity_search(query, k=k)
+            # Считаем косинусное сходство
+            similarities = []
+            for item in passage_data:
+                chunk_embedding = np.array(item["embedding"])
+                similarity = np.dot(query_embedding, chunk_embedding) / (
+                    np.linalg.norm(query_embedding) * np.linalg.norm(chunk_embedding)
+                )
+                similarities.append((similarity, item["content"]))
             
-            # Извлекаем только текст
-            contexts = [doc.page_content for doc in docs]
+            # Сортируем и берем топ-k
+            similarities.sort(key=lambda x: x[0], reverse=True)
+            contexts = [content for score, content in similarities[:k]]
             
             logger.info(f"Found {len(contexts)} relevant chunks in passage '{passage_id}'")
-            
             return contexts
             
         except Exception as e:
-            logger.error(f"Error searching FAISS: {str(e)}")
+            logger.error(f"Error searching store: {str(e)}")
             return []
     
     def passage_exists(self, passage_id: str) -> bool:
-        """
-        Проверить существует ли passage в БД
-        
-        Args:
-            passage_id: ID passage
-            
-        Returns:
-            True если существует
-        """
-        save_path = os.path.join(self.persist_directory, passage_id)
+        """Проверить существует ли passage в БД"""
+        save_path = os.path.join(self.persist_directory, f"{passage_id}.json")
         return os.path.exists(save_path)

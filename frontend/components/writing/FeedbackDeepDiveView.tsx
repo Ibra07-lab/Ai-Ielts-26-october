@@ -1,4 +1,4 @@
-
+import { useState, useMemo } from 'react';
 import { motion } from "framer-motion";
 import { ArrowLeft, ChevronRight } from "lucide-react";
 
@@ -24,7 +24,6 @@ import { Button } from "@/components/ui/button";
 import { HighlightedEssay } from "./HighlightedEssay";
 import { EvaluationResult, CoachingResult, Criterion, Highlight } from "@/types/writing-feedback";
 import { transformToHighlights } from "@/utils/feedback-transform";
-import { useMemo } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 
@@ -36,6 +35,8 @@ interface FeedbackDeepDiveViewProps {
     onBack: () => void;
     onCriterionChange: (criterion: Criterion) => void;
 }
+
+type ViewMode = 'essay' | 'feedback';
 
 const CRITERIA_ORDER: Criterion[] = [
     "task_response",
@@ -69,6 +70,7 @@ export function FeedbackDeepDiveView({
     onBack,
     onCriterionChange
 }: FeedbackDeepDiveViewProps) {
+    const [viewMode, setViewMode] = useState<ViewMode>('feedback');
 
     // Transform coaching data into linear highlights
     const highlights = useMemo(() => {
@@ -97,29 +99,57 @@ export function FeedbackDeepDiveView({
     return (
         <div className="h-full flex flex-col bg-slate-50 dark:bg-slate-900/50">
             {/* Header Navigation */}
-            <div className="flex items-center gap-4 px-6 py-4 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shrink-0 sticky top-0 z-10">
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={onBack}
-                    className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
-                >
-                    <ArrowLeft className="w-4 h-4 mr-2" />
-                    Back to Summary
-                </Button>
+            <div className="flex items-center justify-between px-6 py-4 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shrink-0 sticky top-0 z-10">
+                <div className="flex items-center gap-4">
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={onBack}
+                        className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
+                    >
+                        <ArrowLeft className="w-4 h-4 mr-2" />
+                        Back to Summary
+                    </Button>
 
-                <div className="h-4 w-px bg-slate-200 dark:bg-slate-800" />
+                    <div className="h-4 w-px bg-slate-200 dark:bg-slate-800" />
 
-                <div className="flex items-center gap-2 text-sm text-slate-500">
-                    <span>Detailed Analysis</span>
-                    {activeCriterion && (
-                        <>
-                            <ChevronRight className="w-4 h-4" />
-                            <span className="font-semibold text-slate-900 dark:text-slate-100">
-                                {CRITERION_LABELS[activeCriterion]}
-                            </span>
-                        </>
-                    )}
+                    <div className="flex items-center gap-2 text-sm text-slate-500">
+                        <span>Detailed Analysis</span>
+                        {activeCriterion && (
+                            <>
+                                <ChevronRight className="w-4 h-4" />
+                                <span className="font-semibold text-slate-900 dark:text-slate-100">
+                                    {CRITERION_LABELS[activeCriterion]}
+                                </span>
+                            </>
+                        )}
+                    </div>
+                </div>
+
+                {/* View Switcher Toggle */}
+                <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
+                    <button
+                        onClick={() => setViewMode('feedback')}
+                        className={cn(
+                            "px-4 py-1.5 text-xs font-bold rounded-lg transition-all",
+                            viewMode === 'feedback'
+                                ? "bg-white dark:bg-slate-700 text-teal-600 dark:text-teal-400 shadow-sm"
+                                : "text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
+                        )}
+                    >
+                        Detailed Feedback
+                    </button>
+                    <button
+                        onClick={() => setViewMode('essay')}
+                        className={cn(
+                            "px-4 py-1.5 text-xs font-bold rounded-lg transition-all",
+                            viewMode === 'essay'
+                                ? "bg-white dark:bg-slate-700 text-teal-600 dark:text-teal-400 shadow-sm"
+                                : "text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
+                        )}
+                    >
+                        Essay Only
+                    </button>
                 </div>
             </div>
 
@@ -141,14 +171,14 @@ export function FeedbackDeepDiveView({
                                     className={cn(
                                         "w-full text-left p-3 rounded-lg transition-all duration-200 group relative overflow-hidden",
                                         isActive
-                                            ? "bg-indigo-50 dark:bg-indigo-900/20 ring-1 ring-indigo-500/20"
+                                            ? "bg-indigo-50 dark:bg-indigo-900/20 ring-1 ring-indigo-500/10 dark:ring-indigo-500/20"
                                             : "hover:bg-slate-50 dark:hover:bg-slate-800"
                                     )}
                                 >
                                     <div className="flex items-center justify-between mb-1">
                                         <span className={cn(
                                             "font-medium text-sm",
-                                            isActive ? "text-indigo-700 dark:text-indigo-300" : "text-slate-700 dark:text-slate-300"
+                                            isActive ? "text-indigo-600 dark:text-indigo-300" : "text-slate-600 dark:text-slate-300"
                                         )}>
                                             {CRITERION_LABELS[criterion]}
                                         </span>
@@ -177,29 +207,61 @@ export function FeedbackDeepDiveView({
                     </div>
                 </div>
 
-                {/* Main Content - Essay with Highlights */}
+                {/* Main Content - Toggle between Essay and Feedback */}
                 <div className="flex-1 overflow-hidden flex flex-col">
                     <ScrollArea className="flex-1 p-6 md:p-10">
                         <div className="max-w-3xl mx-auto space-y-6">
-                            <div className="space-y-2 mb-8">
-                                <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
-                                    {activeCriterion ? CRITERION_LABELS[activeCriterion] : "Full Essay Analysis"}
-                                </h1>
-                                <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
-                                    {activeCriterion
-                                        ? evaluation.criterion_scores.find(s => s.criterion === activeCriterion)?.justification
-                                        : "Review your essay with detailed feedback highlights below."
-                                    }
-                                </p>
-                            </div>
+                            {viewMode === 'feedback' ? (
+                                <motion.div
+                                    key="feedback-view"
+                                    initial={{ opacity: 0, x: 20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    className="space-y-6"
+                                >
+                                    <div className="space-y-2 mb-8">
+                                        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+                                            {activeCriterion ? CRITERION_LABELS[activeCriterion] : "Full Essay Analysis"}
+                                        </h1>
+                                        <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+                                            {activeCriterion
+                                                ? evaluation.criterion_scores.find(s => s.criterion === activeCriterion)?.justification
+                                                : "Review your essay with detailed feedback highlights below."
+                                            }
+                                        </p>
+                                    </div>
 
-                            <HighlightedEssay
-                                essayText={essay}
-                                highlights={highlights.map(h => ({
-                                    text: h.original,
-                                    type: h.type === 'strength' ? 'strength' : 'weakness'
-                                }))}
-                            />
+                                    <HighlightedEssay
+                                        essayText={essay}
+                                        highlights={highlights.map(h => ({
+                                            text: h.original,
+                                            type: h.type === 'strength' ? 'strength' : 'weakness'
+                                        }))}
+                                    />
+                                </motion.div>
+                            ) : (
+                                <motion.div
+                                    key="essay-view"
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    className="space-y-6"
+                                >
+                                    <div className="space-y-2 mb-8">
+                                        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+                                            Essay Only
+                                        </h1>
+                                        <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+                                            Focus on the text without distractions.
+                                        </p>
+                                    </div>
+                                    <div className="p-10 rounded-3xl bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-white/5 shadow-2xl relative overflow-hidden">
+                                        {/* Subtle Paper Texture for Light Mode */}
+                                        <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')] dark:hidden" />
+                                        <p className="relative z-10 text-xl leading-loose font-serif text-slate-800 dark:text-slate-200 whitespace-pre-wrap">
+                                            {essay}
+                                        </p>
+                                    </div>
+                                </motion.div>
+                            )}
                         </div>
                     </ScrollArea>
                 </div>

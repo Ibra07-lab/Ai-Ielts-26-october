@@ -12,7 +12,13 @@ import json
 import logging
 import asyncio
 import time
+from pathlib import Path
 from typing import Optional, Dict, Any, AsyncGenerator
+
+# Load .env file from backend/ielts_writing directory
+from dotenv import load_dotenv
+backend_dir = Path(__file__).resolve().parent.parent.parent  # Go up from agents/teacher/task1_teacher.py to backend/ielts_writing/
+load_dotenv(dotenv_path=backend_dir / ".env", override=True)
 
 import httpx
 from cachetools import TTLCache
@@ -42,7 +48,7 @@ class Task1Teacher:
     def __init__(self, model: str = None):
         self.model = model or os.getenv(
             "TEACHER_MODEL",
-            "openai/gpt-4.1"
+            "openai/gpt-4o"
         )
         self.api_key = os.getenv("OPENROUTER_API_KEY")
         self.site_url = os.getenv("OPENROUTER_SITE_URL", "http://localhost:5173")
@@ -52,7 +58,7 @@ class Task1Teacher:
         
         # Timeout configuration
         self.connect_timeout = 10.0  # Max time to establish connection
-        self.read_timeout = 30.0     # Reduced to match shorter response (was 60s)
+        self.read_timeout = 55.0     # Increased for multimodal requests
         
         # Create httpx client for OpenRouter with explicit timeouts
         self.http_client = httpx.Client(
@@ -102,6 +108,8 @@ class Task1Teacher:
         
         data = response.json()
         return data["choices"][0]["message"]["content"]
+    
+
     
     def generate_feedback(
         self,
@@ -471,7 +479,8 @@ Give quick feedback as JSON:
             score_explanation = {
                 "why_this_score": lite_crit.get("why_this_score", "Score based on overall performance."),
                 "band_descriptor_evidence": lite_crit.get("band_descriptor_evidence", "See detailed feedback for band descriptor match."),
-                "path_to_improvement": lite_crit.get("path_to_improvement", "Focus on addressing identified weaknesses.")
+                "path_to_improvement": lite_crit.get("path_to_improvement", "Focus on addressing identified weaknesses."),
+                "why_not_higher": lite_crit.get("why_not_higher")  # Optional field
             }
             
             # Map simplified lists to complex objects
@@ -517,6 +526,13 @@ Give quick feedback as JSON:
             
             top_tip = lite_crit.get("top_tip", "Review this section")
             tips = [{"tip": top_tip, "priority": "high"}]
+            
+            # Improvement Step (MicroTask)
+            micro_task = {
+                "task_type": "Review",
+                "instruction": top_tip,
+                "time_minutes": 5
+            }
 
             # Defaults for strict enums
             return {
@@ -547,7 +563,7 @@ Give quick feedback as JSON:
                 "strengths": strengths,
                 "weakness_patterns": weaknesses,
                 "tips": tips,
-                "micro_task": {"task_type": "Review", "instruction": "Check feedback", "time_minutes": 5}
+                "micro_task": micro_task
             }
         
         # Build score list from request if available
@@ -647,20 +663,36 @@ Give quick feedback as JSON:
             band7_model_upgrade=band7_model_upgrade,
             teachers_final_comment=final_comment if final_comment else None
         )
+        
+
     
     def _parse_json_response(self, content: str) -> Dict:
-        """Parse JSON from LLM response."""
+        """Parse JSON from LLM response with robustness against formatting issues."""
+        import re
         
-        if "```json" in content:
-            content = content.split("```json")[1].split("```")[0]
-        elif "```" in content:
-            content = content.split("```")[1].split("```")[0]
+        # 1. Try to extract JSON from markdown code blocks
+        json_pattern = r'```json\s*(.*?)\s*```'
+        match = re.search(json_pattern, content, re.DOTALL)
+        if match:
+            json_str = match.group(1).strip()
+        else:
+            # Try plain code blocks
+            match = re.search(r'```\s*(.*?)\s*```', content, re.DOTALL)
+            if match:
+                json_str = match.group(1).strip()
+            else:
+                # Fallback: Find anything starting with { and ending with }
+                match = re.search(r'(\{.*\})', content, re.DOTALL)
+                json_str = match.group(1).strip() if match else content.strip()
+        
+        # 2. Basic cleanup for common LLM errors (like trailing commas)
+        json_str = re.sub(r',\s*([\}\]])', r'\1', json_str)
         
         try:
-            return json.loads(content.strip())
+            return json.loads(json_str)
         except json.JSONDecodeError as e:
             logger.error(f"[Task1Teacher] JSON Decode Error: {e}")
-            logger.error(f"[Task1Teacher] Failed Content Preview: {content[:500]}...")
+            logger.error(f"[Task1Teacher] Failed Content Preview: {json_str[:500]}...")
             raise e
     
     def format_as_markdown(self, feedback: Any) -> str:

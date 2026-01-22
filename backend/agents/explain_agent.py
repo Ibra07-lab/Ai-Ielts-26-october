@@ -9,9 +9,7 @@ import logging
 from typing import Dict, Any
 from dotenv import load_dotenv
 
-from langchain_openai import ChatOpenAI
-from langchain.prompts import ChatPromptTemplate
-from langchain.schema.output_parser import StrOutputParser
+from .direct_llm_client import DirectLLMClient
 
 from .explain_prompts import EXPLAIN_SYSTEM_PROMPT, EXPLAIN_USER_TEMPLATE
 
@@ -34,36 +32,14 @@ class ExplainAgent:
         temperature: float = 0.3,
         max_tokens: int = 500
     ):
-        """
-        Инициализация агента
-        
-        Args:
-            model: Название модели OpenAI (по умолчанию gpt-4o-mini)
-            temperature: Температура генерации
-            max_tokens: Максимальное количество токенов
-        """
         self.model = model or os.getenv("EXPLAIN_MODEL", "gpt-4o-mini")
         self.temperature = temperature
         self.max_tokens = max_tokens
         
-        # Инициализация LLM
-        self.llm = ChatOpenAI(
-            model=self.model,
-            temperature=self.temperature,
-            max_tokens=self.max_tokens,
-            api_key=os.getenv("OPENAI_API_KEY")
-        )
+        # Инициализация Direct Client
+        self.client = DirectLLMClient()
         
-        # Создание промпта
-        self.prompt = ChatPromptTemplate.from_messages([
-            ("system", EXPLAIN_SYSTEM_PROMPT),
-            ("human", EXPLAIN_USER_TEMPLATE)
-        ])
-        
-        # Создание цепочки
-        self.chain = self.prompt | self.llm | StrOutputParser()
-        
-        logger.info(f"ExplainAgent initialized with model: {self.model}")
+        logger.info(f"ExplainAgent initialized with model: {self.model} (Direct API Mode)")
     
     def explain_text(
         self,
@@ -72,13 +48,6 @@ class ExplainAgent:
     ) -> Dict[str, Any]:
         """
         Объяснить выбранный текст из пассажа
-        
-        Args:
-            passage: Полный текст пассажа
-            selected_text: Выбранное слово или фраза для объяснения
-            
-        Returns:
-            Словарь с полями: word, definition, context_meaning, example_sentence
         """
         try:
             # Валидация входных данных
@@ -87,14 +56,23 @@ class ExplainAgent:
             
             logger.info(f"Explaining text: '{selected_text}'")
             
-            # Вызов цепочки
-            response = self.chain.invoke({
-                "passage": passage,
-                "selected_text": selected_text
-            })
+            # Prepare prompt
+            user_prompt = EXPLAIN_USER_TEMPLATE.format(
+                passage=passage,
+                selected_text=selected_text
+            )
+
+            # Call Direct API
+            response_text = self.client.call_openai(
+                model=self.model,
+                system_prompt=EXPLAIN_SYSTEM_PROMPT,
+                user_prompt=user_prompt,
+                temperature=self.temperature,
+                max_tokens=self.max_tokens
+            )
             
             # Парсинг JSON ответа
-            explanation = self._parse_response(response)
+            explanation = self._parse_json_response(response_text)
             
             logger.info(f"Explanation generated successfully for: '{selected_text}'")
             
@@ -110,34 +88,31 @@ class ExplainAgent:
                 "error": str(e)
             }
     
-    def _parse_response(self, response: str) -> Dict[str, Any]:
-        """
-        Парсинг ответа от LLM в JSON
+    def _parse_json_response(self, response: str) -> Dict[str, Any]:
+        """Parse JSON response with robustness."""
+        import re
+        json_pattern = r'```json\s*(.*?)\s*```'
+        match = re.search(json_pattern, response, re.DOTALL)
+        if match:
+            content = match.group(1).strip()
+        else:
+            match = re.search(r'```\s*(.*?)\s*```', response, re.DOTALL)
+            if match:
+                content = match.group(1).strip()
+            else:
+                match = re.search(r'(\{.*\})', response, re.DOTALL)
+                content = match.group(1).strip() if match else response.strip()
         
-        Args:
-            response: Строковый ответ от модели
-            
-        Returns:
-            Распарсенный словарь
-        """
+        content = re.sub(r',\s*([\}\]])', r'\1', content)
+        
         try:
-            # Попытка распарсить как JSON
-            # Иногда модель возвращает JSON в markdown блоке
-            if "```json" in response:
-                response = response.split("```json")[1].split("```")[0].strip()
-            elif "```" in response:
-                response = response.split("```")[1].split("```")[0].strip()
-            
-            data = json.loads(response)
-            
+            data = json.loads(content)
             # Проверка наличия обязательных полей
             required_fields = ["word", "definition", "context_meaning", "example_sentence"]
             for field in required_fields:
                 if field not in data:
                     data[field] = ""
-            
             return data
-            
         except json.JSONDecodeError:
             logger.warning("Response is not valid JSON, returning as plain text")
             return {

@@ -49,6 +49,22 @@ export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
         return result.teacher_feedback[criterion] || {};
     };
 
+    // Get current criterion explanation
+    const getCriterionExplanation = (criterion: string) => {
+        if (!result.explanations) return null;
+        // Handle name mismatch for grammar
+        if (criterion === 'grammatical_range_accuracy') {
+            return result.explanations.grammatical_range_accuracy;
+        }
+        // @ts-ignore
+        return result.explanations[criterion] || null;
+    };
+
+    // Check if explanations failed to load
+    const hasExplanationError = result.explanations_status === 'timeout' || result.explanations_status === 'error';
+    const explanationErrorMessage = result.explanations_message ||
+        (result.explanations_status === 'timeout' ? 'Quick feedback timed out' : 'Quick feedback unavailable');
+
     const criteriaList = [
         {
             id: 'task_achievement',
@@ -123,9 +139,9 @@ export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
     const highlights = getHighlights();
 
     return (
-        <div className="h-screen bg-[#121212] flex flex-col overflow-hidden">
-            {/* Top Navigation Bar - Full Width */}
-            <header className="flex justify-between items-center px-6 py-4 border-b border-slate-800/40">
+        <div className="h-screen bg-premium-dark text-slate-100 flex flex-col overflow-hidden">
+            {/* Top Navigation Bar - Full Width with Glassmorphism */}
+            <header className="flex justify-between items-center px-6 py-4 border-b border-white/5 backdrop-blur-md bg-white/[0.02] sticky top-0 z-50">
                 <div className="flex items-center gap-4">
                     <button
                         onClick={onBack}
@@ -140,8 +156,8 @@ export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
                 <div className="flex items-center gap-6">
                     {/* Word Count */}
                     <div className="flex items-center gap-2">
-                        <span className="text-teal-400 font-bold text-lg">{result.word_count}</span>
-                        <span className="text-slate-500 text-sm">/ 150</span>
+                        <span className="text-teal-400 font-bold text-lg drop-shadow-[0_0_8px_rgba(45,212,191,0.3)]">{result.word_count}</span>
+                        <span className="text-slate-500 text-sm font-medium">/ 150</span>
                     </div>
 
                     {/* Timer */}
@@ -151,8 +167,8 @@ export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
                     </div>
 
                     {/* Analysis Status */}
-                    <div className="px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-400 text-sm font-medium">
-                        Analysis Complete: {result.overall_band} Band
+                    <div className="px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-400 text-sm font-bold tracking-tight shadow-[0_0_15px_rgba(45,212,191,0.1)]">
+                        Analysis Complete: <span className="text-emerald-400 font-black ml-1">{result.overall_band} Band</span>
                     </div>
                 </div>
             </header>
@@ -187,12 +203,15 @@ export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
                                 key={item.id}
                                 onClick={() => setSelectedCriterion(item.id)}
                                 className={cn(
-                                    "p-3 rounded-lg border-2 transition-all cursor-pointer",
+                                    "p-3.5 rounded-xl border transition-all duration-300 cursor-pointer group relative overflow-hidden",
                                     selectedCriterion === item.id
-                                        ? "bg-slate-800/50 border-teal-500 text-teal-400"
-                                        : "bg-transparent border-transparent text-slate-400 hover:bg-slate-800/30 hover:border-slate-700"
+                                        ? "bg-teal-500/[0.07] border-teal-500/50 shadow-[0_0_20px_rgba(45,212,191,0.05)]"
+                                        : "bg-white/[0.03] border-white/[0.05] text-slate-400 hover:bg-white/[0.08] hover:border-white/20"
                                 )}
                             >
+                                {selectedCriterion === item.id && (
+                                    <div className="absolute inset-0 bg-gradient-to-r from-teal-500/10 to-transparent pointer-events-none" />
+                                )}
                                 <div className="flex justify-between items-center">
                                     <div className="space-y-0.5">
                                         <h4 className={cn(
@@ -245,8 +264,11 @@ export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
                 </div>
 
                 {/* 2. CENTER - ESSAY (Editor-style, no card) */}
-                <div className="bg-[#0D0D0D] flex flex-col overflow-hidden">
-                    <div className="px-6 py-4 border-b border-slate-800/40 flex justify-between items-center">
+                <div className="bg-premium-dark/50 flex flex-col overflow-hidden relative">
+                    {/* Subtle gradient background for the essay area */}
+                    <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-teal-500/5 to-transparent pointer-events-none" />
+
+                    <div className="px-6 py-4 border-b border-white/5 flex justify-between items-center relative z-10">
                         <h3 className="font-semibold text-white text-sm">Your Essay</h3>
                         <div className="flex gap-4 text-[9px] font-bold uppercase tracking-wider">
                             <span className="flex items-center gap-1.5 text-emerald-400">
@@ -275,8 +297,8 @@ export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
                 </div>
 
                 {/* 3. RIGHT - FEEDBACK */}
-                <div className="bg-slate-950/50 border-l border-slate-800/40 flex flex-col overflow-hidden">
-                    <div className="flex-1 overflow-y-auto custom-scrollbar p-5">
+                <div className="bg-premium-dark border-l border-white/5 flex flex-col overflow-hidden shadow-[-10px_0_30px_rgba(0,0,0,0.2)]">
+                    <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-8">
                         {isOverall && (
                             <OverallSummary result={result} />
                         )}
@@ -298,6 +320,9 @@ export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
                                 score={currentCriterionDef.score}
                                 title={currentCriterionDef.label}
                                 data={currentData}
+                                explanation={getCriterionExplanation(selectedCriterion)}
+                                hasError={hasExplanationError}
+                                errorMessage={explanationErrorMessage}
                                 color={currentCriterionDef.color}
                             />
                         )}

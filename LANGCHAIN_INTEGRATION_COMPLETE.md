@@ -115,7 +115,7 @@ Display in QuestionResult Component
 
 ### .env Settings
 ```ini
-OPENAI_API_KEY=sk-proj-Qh2q...wgEA
+OPENAI_API_KEY=your_openai_key_here
 OPENAI_MODEL=gpt-4o-mini      # ✅ Working model
 EXPLAIN_MODEL=gpt-4o-mini
 TEMPERATURE=0.2

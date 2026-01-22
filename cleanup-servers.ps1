@@ -15,36 +15,43 @@ function Stop-ProcessOnPort {
     
     Write-Host "Checking port $Port ($ServiceName)..." -ForegroundColor Yellow
     
-    $connections = netstat -ano | Select-String ":$Port.*LISTENING"
-    $killedCount = 0
-    
-    if ($connections) {
-        $connections | ForEach-Object {
-            if ($_ -match '\s+(\d+)\s*$') {
-                $pid = $matches[1]
-                try {
-                    $process = Get-Process -Id $pid -ErrorAction SilentlyContinue
-                    if ($process) {
-                        $processName = $process.ProcessName
-                        Stop-Process -Id $pid -Force -ErrorAction Stop
-                        Write-Host "  ✓ Killed $processName (PID: $pid)" -ForegroundColor Green
-                        $killedCount++
+    try {
+        $connections = netstat -ano | Select-String ":$Port.*LISTENING"
+        $killedCount = 0
+        
+        if ($connections) {
+            foreach ($line in $connections) {
+                if ($line -match '\s+(\d+)\s*$') {
+                    $procIdValue = $matches[1]
+                    try {
+                        $proc = Get-Process -Id $procIdValue -ErrorAction SilentlyContinue
+                        if ($proc) {
+                            $name = $proc.ProcessName
+                            Stop-Process -Id $procIdValue -Force -ErrorAction Stop
+                            Write-Host "  ✓ Killed $name (PID: $procIdValue)" -ForegroundColor Green
+                            $killedCount++
+                        }
                     }
-                } catch {
-                    Write-Host "  ✗ Could not kill PID $pid (may be protected)" -ForegroundColor Red
+                    catch {
+                        Write-Host "  ✗ Could not kill PID $procIdValue" -ForegroundColor Red
+                    }
                 }
             }
+            
+            if ($killedCount -eq 0) {
+                Write-Host "  ⚠ Processes found but none could be killed." -ForegroundColor Yellow
+            }
         }
-        
-        if ($killedCount -eq 0) {
-            Write-Host "  ⚠ Found processes but couldn't kill them (protected)" -ForegroundColor Yellow
+        else {
+            Write-Host "  ✓ No processes found on port $Port" -ForegroundColor Gray
         }
-    } else {
-        Write-Host "  ✓ No processes found on port $Port" -ForegroundColor Gray
+    }
+    catch {
+        Write-Host "  ✗ Error checking port $Port" -ForegroundColor Red
     }
 }
 
-# Kill servers on all common ports
+# Kill servers on common ports
 Stop-ProcessOnPort -Port 4000 -ServiceName "Encore Backend"
 Stop-ProcessOnPort -Port 8001 -ServiceName "FastAPI (old)"
 Stop-ProcessOnPort -Port 8002 -ServiceName "FastAPI (new)"
@@ -58,4 +65,11 @@ Write-Host ""
 Write-Host "You can now run ./start-app.ps1 to start fresh servers." -ForegroundColor Gray
 Write-Host ""
 Write-Host "Press any key to exit..." -ForegroundColor Gray
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+
+# ReadKey can fail in non-interactive sessions, so we wrapped it
+try {
+    if ($null -ne $Host.UI.RawUI) {
+        $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+    }
+}
+catch {}

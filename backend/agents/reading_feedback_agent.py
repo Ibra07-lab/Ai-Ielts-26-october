@@ -9,13 +9,11 @@ the provided passage content.
 import os
 import json
 import logging
+import re
 from pathlib import Path
 from typing import Dict, Any, Optional
 from pydantic import BaseModel, Field, validator
-from langchain_openai import ChatOpenAI
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import JsonOutputParser
-from langchain_core.runnables import RunnablePassthrough
+from .direct_llm_client import DirectLLMClient
 
 from .prompts import (
     SYSTEM_PROMPT,
@@ -104,18 +102,12 @@ class ReadingFeedbackAgent:
     def __init__(
         self,
         api_key: Optional[str] = None,
-        model_name: str = "gpt-40-mini",
+        model_name: str = "gpt-4o-mini",
         temperature: float = 0.2,
         max_tokens: int = 1000
     ):
         """
         Initialize the Reading Feedback Agent.
-        
-        Args:
-            api_key: OpenAI API key (defaults to OPENAI_API_KEY env var)
-            model_name: OpenAI model to use
-            temperature: Sampling temperature (lower = more deterministic)
-            max_tokens: Maximum tokens in response
         """
         self.api_key = api_key or os.getenv("OPENAI_API_KEY")
         if not self.api_key:
@@ -127,79 +119,52 @@ class ReadingFeedbackAgent:
         self.temperature = temperature
         self.max_tokens = max_tokens
         
-        # Initialize LLM with strict parameters to minimize hallucinations
-        self.llm = ChatOpenAI(
-            model=model_name,
-            temperature=temperature,
-            max_tokens=max_tokens,
-            api_key=self.api_key,
-            model_kwargs={
-                "top_p": 0.1,  # Nucleus sampling for more focused responses
-                "frequency_penalty": 0.0,
-                "presence_penalty": 0.0
-            }
-        )
-        
-        # Initialize output parser
-        self.output_parser = JsonOutputParser(pydantic_object=FeedbackOutput)
+        # Initialize Direct Client
+        self.client = DirectLLMClient()
         
         # Load theory data
         self.theory_data = self._load_theory_data()
         
-        # Build the prompt template
-        self.prompt = ChatPromptTemplate.from_messages([
-            ("system", SYSTEM_PROMPT),
-            ("human", FEEDBACK_TEMPLATE)
-        ])
-        
-        # Create the chain using LCEL (LangChain Expression Language)
-        self.chain = (
-            RunnablePassthrough.assign(
-                format_instructions=lambda _: self.output_parser.get_format_instructions(),
-                question_type_guidance=lambda x: self._get_dynamic_theory(x["question_type"])
-            )
-            | self.prompt
-            | self.llm
-            | self.output_parser
-        )
-        
         logger.info(
             f"ReadingFeedbackAgent initialized with model={model_name}, "
-            f"temperature={temperature}"
+            f"temperature={temperature} (Direct API Mode)"
         )
     
     async def generate_feedback(
         self,
         feedback_input: FeedbackInput
     ) -> FeedbackOutput:
-        """
-        Generate detailed feedback for a student's answer.
-        
-        Args:
-            feedback_input: Validated input containing passage, question, and answers
-            
-        Returns:
-            FeedbackOutput with detailed analysis and educational feedback
-            
-        Raises:
-            Exception: If LLM invocation fails or output parsing fails
-        """
+        """Generate detailed feedback for a student's answer."""
         try:
             logger.info(
                 f"Generating feedback for question_type={feedback_input.question_type}"
             )
             
-            # Prepare input for the chain
-            chain_input = {
-                "passage": feedback_input.passage,
-                "question": feedback_input.question,
-                "question_type": feedback_input.question_type,
-                "correct_answer": feedback_input.correct_answer,
-                "student_answer": feedback_input.student_answer
-            }
+            # Prepare prompts
+            format_instructions = "Return the response as a valid JSON object with the fields: is_correct (boolean), feedback (string), reasoning (string), strategy_tip (string), passage_reference (string), and confidence (string)."
+            question_type_guidance = self._get_dynamic_theory(feedback_input.question_type)
             
-            # Invoke the chain
-            result = await self.chain.ainvoke(chain_input)
+            user_prompt = FEEDBACK_TEMPLATE.format(
+                passage=feedback_input.passage,
+                question=feedback_input.question,
+                question_type=feedback_input.question_type,
+                correct_answer=feedback_input.correct_answer,
+                student_answer=feedback_input.student_answer,
+                format_instructions=format_instructions,
+                question_type_guidance=question_type_guidance
+            )
+            
+            # Call Direct API
+            response_text = self.client.call_openai(
+                model=self.model_name,
+                system_prompt=SYSTEM_PROMPT,
+                user_prompt=user_prompt,
+                temperature=self.temperature,
+                max_tokens=self.max_tokens
+            )
+            
+            # Parse JSON
+            result = self._parse_json_response(response_text)
             
             # Validate output
             feedback_output = FeedbackOutput(**result)
@@ -213,49 +178,31 @@ class ReadingFeedbackAgent:
         except Exception as e:
             logger.error(f"Error generating feedback: {str(e)}", exc_info=True)
             raise Exception(f"Failed to generate feedback: {str(e)}")
+
+    def _parse_json_response(self, response: str) -> Dict[str, Any]:
+        """Parse JSON from LLM response with robustness."""
+        json_pattern = r'```json\s*(.*?)\s*```'
+        match = re.search(json_pattern, response, re.DOTALL)
+        if match:
+            content = match.group(1).strip()
+        else:
+            match = re.search(r'```\s*(.*?)\s*```', response, re.DOTALL)
+            if match:
+                content = match.group(1).strip()
+            else:
+                match = re.search(r'(\{.*\})', response, re.DOTALL)
+                content = match.group(1).strip() if match else response.strip()
+        
+        content = re.sub(r',\s*([\}\]])', r'\1', content)
+        return json.loads(content)
     
     def generate_feedback_sync(
         self,
         feedback_input: FeedbackInput
     ) -> FeedbackOutput:
-        """
-        Synchronous version of generate_feedback.
-        
-        Args:
-            feedback_input: Validated input containing passage, question, and answers
-            
-        Returns:
-            FeedbackOutput with detailed analysis and educational feedback
-        """
-        try:
-            logger.info(
-                f"Generating feedback (sync) for question_type={feedback_input.question_type}"
-            )
-            
-            # Prepare input for the chain
-            chain_input = {
-                "passage": feedback_input.passage,
-                "question": feedback_input.question,
-                "question_type": feedback_input.question_type,
-                "correct_answer": feedback_input.correct_answer,
-                "student_answer": feedback_input.student_answer
-            }
-            
-            # Invoke the chain synchronously
-            result = self.chain.invoke(chain_input)
-            
-            # Validate output
-            feedback_output = FeedbackOutput(**result)
-            
-            logger.info(
-                f"Feedback generated successfully: is_correct={feedback_output.is_correct}"
-            )
-            
-            return feedback_output
-            
-        except Exception as e:
-            logger.error(f"Error generating feedback: {str(e)}", exc_info=True)
-            raise Exception(f"Failed to generate feedback: {str(e)}")
+        """Synchronous version of generate_feedback."""
+        import asyncio
+        return asyncio.run(self.generate_feedback(feedback_input))
 
     def _load_theory_data(self) -> Dict[str, Any]:
         """Load reading theory data from JSON file."""
@@ -340,17 +287,11 @@ class ReadingFeedbackAgent:
         return "\n".join(guidance_parts)
     
     def update_temperature(self, temperature: float) -> None:
-        """
-        Update the temperature parameter for the LLM.
-        
-        Args:
-            temperature: New temperature value (0.0 to 2.0)
-        """
+        """Update the temperature parameter."""
         if not 0.0 <= temperature <= 2.0:
             raise ValueError("Temperature must be between 0.0 and 2.0")
         
         self.temperature = temperature
-        self.llm.temperature = temperature
         logger.info(f"Temperature updated to {temperature}")
 
 

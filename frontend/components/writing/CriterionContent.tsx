@@ -5,17 +5,22 @@ import { UpgradeExample } from './UpgradeExample';
 import { SeverityBadge } from './FeedbackIcons';
 import { ScoreImpactBadge } from './ScoreImpactBadge';
 import { DetailedExplanationModal } from './DetailedExplanationModal';
+import { ExplanationDisplay } from './ExplanationDisplay';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
+import type { CriterionExplanation } from '@/types/writing-feedback';
 
 interface CriterionContentProps {
     score: number;
     title: string;
     data: any; // The criterion data object from teacher_feedback
+    explanation?: CriterionExplanation | null; // Explanation from explanation agent
+    hasError?: boolean;
+    errorMessage?: string;
     color: 'blue' | 'indigo' | 'amber' | 'emerald';
 }
 
-export function CriterionContent({ score, title, data, color }: CriterionContentProps) {
+export function CriterionContent({ score, title, data, explanation, hasError, errorMessage, color }: CriterionContentProps) {
     // Modal state
     const [selectedWeakness, setSelectedWeakness] = useState<any | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -48,24 +53,37 @@ export function CriterionContent({ score, title, data, color }: CriterionContent
         <>
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
                 {/* Header Section */}
-                <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800/60">
-                    <div className="space-y-0.5">
-                        <h2 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">{title}</h2>
-                        <div className="flex items-center gap-2 text-[9px] uppercase tracking-widest font-bold text-slate-500">
+                <div className="flex items-center justify-between pb-6 border-b border-white/5 relative">
+                    <div className="space-y-1 relative z-10">
+                        <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-black text-teal-500/80 mb-1">
                             Criterion Analysis
                         </div>
+                        <h2 className="text-2xl font-black text-white tracking-tight leading-none">{title}</h2>
                     </div>
-                    <div className="flex flex-col items-center justify-center w-16 h-16 rounded-xl bg-teal-500/10 border-2 border-teal-500">
-                        <span className="text-[10px] font-bold text-teal-400 uppercase">Band</span>
-                        <span className="text-2xl font-black text-teal-400">{score}</span>
+                    <div className="flex flex-col items-center justify-center w-20 h-20 rounded-2xl skeuo-glass border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group hover:scale-105 transition-transform duration-500">
+                        <span className="text-[10px] font-black text-teal-500/60 uppercase tracking-widest mb-0.5">Band</span>
+                        <span className="text-3xl font-black text-teal-400 drop-shadow-[0_0_12px_rgba(45,212,191,0.4)] leading-none">{score}</span>
                     </div>
                 </div>
 
+                {/* Quick Feedback (Explanations) */}
+                {explanation ? (
+                    <ExplanationDisplay explanation={explanation} />
+                ) : hasError ? (
+                    <div className="mb-8 p-4 rounded-xl bg-amber-500/[0.05] border border-amber-500/20 flex items-start gap-3">
+                        <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+                        <div>
+                            <h4 className="text-[12px] font-bold text-amber-400 mb-1">Quick Feedback Unavailable</h4>
+                            <p className="text-[11px] text-slate-400">{errorMessage || "Unable to load quick feedback."}</p>
+                        </div>
+                    </div>
+                ) : null}
+
                 {/* Examiner's Statement */}
                 {data.score_explanation?.why_this_score && (
-                    <div className="relative group">
-                        <div className="absolute -left-1 top-0 bottom-0 w-1 bg-slate-200 dark:bg-slate-700/50 rounded-full group-hover:bg-slate-300 dark:group-hover:bg-slate-600 transition-colors" />
-                        <p className="pl-5 text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed font-medium italic">
+                    <div className="relative p-6 rounded-2xl bg-white/[0.02] border border-white/5 group overflow-hidden">
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-teal-500 to-transparent opacity-50" />
+                        <p className="text-[15px] text-slate-300 leading-relaxed font-medium italic relative z-10">
                             "{data.score_explanation.why_this_score}"
                         </p>
                     </div>
@@ -89,22 +107,23 @@ export function CriterionContent({ score, title, data, color }: CriterionContent
                             </CollapsibleTrigger>
                             <CollapsibleContent className="space-y-4 pt-1">
                                 {data.strengths.map((strength: any, idx: number) => (
-                                    <div key={idx} className="bg-transparent p-4 border-b border-slate-100 dark:border-slate-800/80 last:border-0 hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors duration-200">
+                                    <div key={idx} className="bg-white/[0.02] p-5 rounded-2xl border border-white/5 hover:bg-white/[0.04] hover:border-white/10 transition-all duration-300 shadow-sm group">
                                         <div className="flex gap-4 items-start">
-                                            <div className="mt-1 p-1 shrink-0">
-                                                <Sparkles className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                                            <div className="mt-1 p-2 rounded-lg bg-emerald-500/10 shrink-0">
+                                                <Sparkles className="w-4 h-4 text-emerald-400" />
                                             </div>
-                                            <div className="flex-1 space-y-2">
+                                            <div className="flex-1 space-y-3">
                                                 {strength.label && (
-                                                    <h4 className="text-[13px] font-bold text-slate-900 dark:text-white">
+                                                    <h4 className="text-[14px] font-bold text-white tracking-tight">
                                                         {strength.label}
                                                     </h4>
                                                 )}
-                                                <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed italic">
+                                                <p className="text-[12px] text-slate-400 leading-relaxed italic">
                                                     <QuoteHighlight text={strength.explanation} />
                                                 </p>
-                                                <div className="bg-slate-50 dark:bg-slate-800/50 px-3 py-2 rounded-lg border-l-2 border-emerald-500/50">
-                                                    <p className="text-[11px] font-medium text-slate-800 dark:text-slate-200 italic">
+                                                <div className="bg-emerald-500/5 px-4 py-3 rounded-xl border border-emerald-500/10 relative overflow-hidden">
+                                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500/30" />
+                                                    <p className="text-[12px] font-semibold text-emerald-100/90 italic">
                                                         "{strength.quote || strength.text || ""}"
                                                     </p>
                                                 </div>
@@ -143,14 +162,17 @@ export function CriterionContent({ score, title, data, color }: CriterionContent
                                         const correction = weakness.fix;
 
                                         return (
-                                            <div key={idx} className="bg-transparent p-5 border-b border-slate-100 dark:border-slate-800/80 last:border-0 hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors duration-200 group">
+                                            <div key={idx} className="bg-white/[0.02] p-6 rounded-2xl border border-white/5 hover:bg-white/[0.04] hover:border-white/10 transition-all duration-300 group relative overflow-hidden">
+                                                <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500/30 group-hover:bg-amber-500/50 transition-colors" />
 
                                                 <div className="relative">
                                                     {/* Top Row: Pattern Name and Score Impact */}
-                                                    <div className="flex justify-between items-start mb-3">
-                                                        <div className="flex items-center gap-2">
-                                                            <AlertTriangle className="w-3.5 h-3.5 text-amber-500/80" />
-                                                            <h4 className="text-[13px] font-bold text-slate-900 dark:text-white tracking-tight">
+                                                    <div className="flex justify-between items-start mb-4">
+                                                        <div className="flex items-center gap-2.5">
+                                                            <div className="p-1.5 rounded-lg bg-amber-500/10">
+                                                                <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
+                                                            </div>
+                                                            <h4 className="text-[14px] font-bold text-white tracking-tight">
                                                                 {weakness.pattern_name || "Identified Issue"}
                                                             </h4>
                                                         </div>
@@ -159,62 +181,67 @@ export function CriterionContent({ score, title, data, color }: CriterionContent
 
                                                     {/* Diff View (Original -> Correction) */}
                                                     {originalText && correction ? (
-                                                        <div className="flex items-center gap-2 mb-3 flex-wrap">
-                                                            <div className="px-3 py-1.5 rounded-full bg-red-500/20 border border-red-500/30 text-red-400 text-sm font-medium">
-                                                                {originalText}
-                                                            </div>
-                                                            <ArrowRight className="w-4 h-4 text-slate-600" />
-                                                            <div className="px-3 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-sm font-medium">
-                                                                {correction}
+                                                        <div className="flex flex-col gap-3 mb-4">
+                                                            <div className="flex items-center gap-3">
+                                                                <div className="px-3 py-1.5 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 text-[12px] font-medium flex-1 italic">
+                                                                    {originalText}
+                                                                </div>
+                                                                <ArrowRight className="w-4 h-4 text-slate-600 shrink-0" />
+                                                                <div className="px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[12px] font-bold flex-1 italic">
+                                                                    {correction}
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     ) : (
                                                         /* Fallback if no correction pair */
-                                                        <div className="mb-3 bg-amber-50/5 dark:bg-amber-900/10 p-2.5 rounded-lg border border-amber-500/10 text-[11px] text-amber-200/90 italic leading-relaxed">
+                                                        <div className="mb-4 bg-amber-500/[0.03] p-3.5 rounded-xl border border-amber-500/10 text-[12px] text-amber-200/80 italic leading-relaxed">
                                                             "{originalText || weakness.problem || weakness.description}"
                                                         </div>
                                                     )}
 
 
-                                                    {/* Concrete Example (NEW) */}
+                                                    {/* Concrete Example */}
                                                     {weakness.concrete_example && (
-                                                        <div className="mb-3 p-3 rounded-lg bg-blue-500/5 border border-blue-500/20">
-                                                            <p className="text-[11px] text-blue-400 leading-relaxed italic">
-                                                                💡 {weakness.concrete_example}
+                                                        <div className="mb-4 p-4 rounded-xl bg-teal-500/[0.03] border border-teal-500/10">
+                                                            <p className="text-[12px] text-teal-300 leading-relaxed italic">
+                                                                <span className="text-teal-500 font-bold mr-2">💡 EXPLANATION:</span>
+                                                                {weakness.concrete_example}
                                                             </p>
                                                         </div>
                                                     )}
 
-                                                    {/* Band Upgrade Example (NEW) */}
+                                                    {/* Band Upgrade Example */}
                                                     {weakness.band_upgrade && (
-                                                        <div className="mb-3 p-3 rounded-lg bg-slate-800/50 border border-slate-700">
-                                                            <div className="text-[9px] uppercase tracking-widest font-bold text-slate-500 mb-2">
-                                                                📈 Band {weakness.band_upgrade.current_band} → Band {weakness.band_upgrade.target_band}
+                                                        <div className="mb-4 p-4 rounded-xl bg-white/[0.03] border border-white/10 shadow-inner">
+                                                            <div className="text-[10px] uppercase font-black text-slate-500 mb-3 tracking-widest flex items-center justify-between">
+                                                                <span>Level Up Example</span>
+                                                                <span className="text-emerald-500">Band {weakness.band_upgrade.current_band} → {weakness.band_upgrade.target_band}</span>
                                                             </div>
-                                                            <div className="space-y-2">
-                                                                <div>
-                                                                    <div className="text-[9px] uppercase text-slate-600 mb-1">Your version:</div>
-                                                                    <div className="text-[11px] text-rose-400 font-mono">"{weakness.band_upgrade.original}"</div>
+                                                            <div className="space-y-3">
+                                                                <div className="grid grid-cols-[80px_1fr] gap-3">
+                                                                    <div className="text-[10px] uppercase text-slate-600 font-bold self-center">Original:</div>
+                                                                    <div className="text-[12px] text-rose-400/90 font-mono bg-rose-500/5 p-2 rounded-lg leading-snug break-words">"{weakness.band_upgrade.original}"</div>
                                                                 </div>
-                                                                <div>
-                                                                    <div className="text-[9px] uppercase text-slate-600 mb-1">Band 7 version:</div>
-                                                                    <div className="text-[11px] text-emerald-400 font-mono">"{weakness.band_upgrade.improved}"</div>
+                                                                <div className="grid grid-cols-[80px_1fr] gap-3">
+                                                                    <div className="text-[10px] uppercase text-emerald-600 font-black self-center tracking-tighter">Premium:</div>
+                                                                    <div className="text-[12px] text-emerald-400 font-mono bg-emerald-500/10 p-2 rounded-lg leading-snug border border-emerald-500/10 shadow-[0_0_15px_rgba(16,185,129,0.05)] break-words">"{weakness.band_upgrade.improved}"</div>
                                                                 </div>
-                                                                <div className="text-[10px] text-slate-400 italic pt-1 border-t border-slate-700">
-                                                                    ✨ {weakness.band_upgrade.what_changed}
+                                                                <div className="text-[11px] text-slate-400 italic pt-3 border-t border-white/5 flex items-start gap-2">
+                                                                    <Sparkles size={12} className="text-teal-500 shrink-0 mt-0.5" />
+                                                                    <span>{weakness.band_upgrade.what_changed}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     )}
 
                                                     {/* Action / Analysis Link */}
-                                                    <div className="flex justify-start">
+                                                    <div className="flex justify-end pt-2">
                                                         <button
                                                             onClick={() => openModal(weakness)}
-                                                            className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-emerald-500 hover:text-emerald-400 transition-colors group/btn opacity-80 hover:opacity-100"
+                                                            className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/5 text-[11px] font-black uppercase tracking-widest text-emerald-400 hover:bg-emerald-500/10 hover:border-emerald-500/20 transition-all group/btn shadow-sm"
                                                         >
-                                                            Analysis
-                                                            <ArrowRight size={10} className="group-hover/btn:translate-x-0.5 transition-transform" />
+                                                            Detailed Analysis
+                                                            <ArrowRight size={12} className="group-hover/btn:translate-x-1 transition-transform" />
                                                         </button>
                                                     </div>
                                                 </div>

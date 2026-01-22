@@ -62,10 +62,10 @@ Make sure your `backend/.env` file includes:
 
 ```bash
 # Required - Get from https://console.anthropic.com/
-ANTHROPIC_API_KEY=sk-ant-api03-...
+ANTHROPIC_API_KEY=your_anthropic_key_here
 
 # Optional - can keep for fallback or remove
-OPENAI_API_KEY=sk-...
+OPENAI_API_KEY=your_openai_key_here
 ```
 
 ---

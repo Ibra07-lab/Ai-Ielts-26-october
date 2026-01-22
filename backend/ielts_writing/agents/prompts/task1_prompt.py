@@ -317,6 +317,8 @@ Return valid JSON only. No markdown formatting. No explanatory text.
     "high": <float: highest criterion score>
   },
   
+  "visual_description": "<string: Detailed description of the visual data. Include chart type, axes, units, main trends, and key data points. Required if image is provided.>",
+  
   "criterion_scores": [
     {
       "criterion": "task_achievement",

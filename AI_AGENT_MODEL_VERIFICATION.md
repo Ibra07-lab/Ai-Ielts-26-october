@@ -256,10 +256,10 @@ Make sure you have set:
 
 ```bash
 # Required
-ANTHROPIC_API_KEY=sk-ant-api03-...
+ANTHROPIC_API_KEY=your_anthropic_key_here
 
 # Optional (can remove if not using)
-OPENAI_API_KEY=sk-...
+OPENAI_API_KEY=your_openai_key_here
 ```
 
 ---
@@ -318,10 +318,10 @@ To verify your agents are working:
 
 ```bash
 # Required for Claude (your current setup)
-ANTHROPIC_API_KEY=sk-ant-api03-...       # For Claude models
+ANTHROPIC_API_KEY=your_anthropic_key_here       # For Claude models
 
 # Optional - only if using OpenAI models
-OPENAI_API_KEY=sk-...                    # For OpenAI models
+OPENAI_API_KEY=your_openai_key_here                    # For OpenAI models
 
 # Optional - model override
 IELTS_WRITING_MODEL=claude-sonnet-4-5-20250514  # Current default

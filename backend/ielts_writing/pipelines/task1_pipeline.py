@@ -14,6 +14,7 @@ from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeou
 
 from ..agents.examiner.task1_examiner import Task1Examiner
 from ..agents.teacher.task1_teacher import Task1Teacher
+from ..agents.explanation_agent import Task1ExplanationAgent
 from ..schemas.task1_teacher import Task1TeacherFeedbackRequest
 
 logger = logging.getLogger(__name__)
@@ -33,12 +34,14 @@ class Task1Pipeline:
     """
     
     # Timeout configuration
-    EXAMINER_TIMEOUT = 30.0   # 30 seconds for examiner
-    TEACHER_TIMEOUT = 35.0    # 35s for shorter, focused feedback
-    TOTAL_TIMEOUT = 100.0     # 100s total safety net
+    EXAMINER_TIMEOUT = 30.0      # 30 seconds for examiner
+    EXPLANATION_TIMEOUT = 90.0   # 90s for all 4 criterion explanations
+    TEACHER_TIMEOUT = 60.0       # 60s for multimodal teacher feedback
+    TOTAL_TIMEOUT = 160.0        # Increased safety net
     
     def __init__(self, model: str = None):
         self.examiner = Task1Examiner(model=model)
+        self.explanation_agent = Task1ExplanationAgent()
         self.teacher = Task1Teacher(model=model)
         self.model = model
     
@@ -114,7 +117,48 @@ class Task1Pipeline:
                 "red_flags": examiner_result.get("red_flags", [])
             }
             
-            # ============== STEP 2: TEACHER (optional, with timeout) ==============
+            # ============== STEP 2: EXPLANATIONS (concise criterion feedback) ==============
+            logger.info("[Task1Pipeline] Generating criterion explanations...")
+            explanation_start = asyncio.get_event_loop().time()
+            
+            try:
+                explanations = await asyncio.wait_for(
+                    asyncio.get_event_loop().run_in_executor(
+                        executor,
+                        lambda: self.explanation_agent.generate_explanations(
+                            essay=essay,
+                            question=question,
+                            examiner_scores=examiner_result,
+                            visual_description=examiner_result.get("visual_description")
+                        )
+                    ),
+                    timeout=self.EXPLANATION_TIMEOUT
+                )
+                
+                explanation_time = asyncio.get_event_loop().time() - explanation_start
+                result["timing"]["explanations"] = round(explanation_time, 2)
+                logger.info(f"[Task1Pipeline] Explanations complete in {explanation_time:.1f}s")
+                
+                # Store explanations
+                result["explanations"] = explanations.model_dump()
+                result["explanations_status"] = "complete"
+                
+            except asyncio.TimeoutError:
+                explanation_time = asyncio.get_event_loop().time() - explanation_start
+                logger.warning(f"[Task1Pipeline] Explanations timed out after {explanation_time:.1f}s")
+                
+                result["explanations"] = None
+                result["explanations_status"] = "timeout"
+                result["timing"]["explanations"] = round(explanation_time, 2)
+                
+            except Exception as e:
+                logger.error(f"[Task1Pipeline] Explanation error: {e}")
+                
+                result["explanations"] = None
+                result["explanations_status"] = "error"
+                result["explanations_message"] = str(e)
+            
+            # ============== STEP 3: TEACHER (optional, with timeout) ==============
             if include_teacher_feedback:
                 logger.info("[Task1Pipeline] Running teacher...")
                 teacher_start = asyncio.get_event_loop().time()
