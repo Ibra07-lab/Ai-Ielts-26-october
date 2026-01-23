@@ -24,6 +24,12 @@ export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
     isLoadingFeedback = false,
     onBack
 }) => {
+    // Debug logging
+    console.log('🔍 WritingFeedback received result:', result);
+    console.log('   - Has teacher_feedback:', !!result.teacher_feedback);
+    console.log('   - teacher_feedback_status:', result.teacher_feedback_status);
+    console.log('   - Overall band:', result.overall_band);
+    
     // Default to 'overall_summary' to show the dashboard first
     const [selectedCriterion, setSelectedCriterion] = useState<string>('overall_summary');
 
@@ -39,14 +45,24 @@ export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
 
     // Get current criterion data 
     const getCriterionData = (criterion: string) => {
-        if (!result.teacher_feedback) return {};
+        if (!result.teacher_feedback) {
+            console.log('❌ NO teacher_feedback in result:', result);
+            return {};
+        }
         // Handle name mismatch for grammar
         if (criterion === 'grammatical_range_accuracy') {
             // @ts-ignore
-            return result.teacher_feedback['grammatical_range'] || result.teacher_feedback['grammatical_range_accuracy'] || {};
+            const data = result.teacher_feedback['grammatical_range'] || result.teacher_feedback['grammatical_range_accuracy'] || {};
+            console.log(`📊 Grammar data:`, data);
+            return data;
         }
         // @ts-ignore
-        return result.teacher_feedback[criterion] || {};
+        const data = result.teacher_feedback[criterion] || {};
+        console.log(`📊 ${criterion} data:`, data);
+        console.log(`   - Has score_explanation:`, !!data.score_explanation);
+        console.log(`   - Has strengths:`, !!data.strengths, `(${data.strengths?.length || 0})`);
+        console.log(`   - Has weakness_patterns:`, !!data.weakness_patterns, `(${data.weakness_patterns?.length || 0})`);
+        return data;
     };
 
     // Get current criterion explanation
@@ -64,6 +80,11 @@ export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
     const hasExplanationError = result.explanations_status === 'timeout' || result.explanations_status === 'error';
     const explanationErrorMessage = result.explanations_message ||
         (result.explanations_status === 'timeout' ? 'Quick feedback timed out' : 'Quick feedback unavailable');
+    
+    // Check if teacher feedback failed
+    const hasTeacherError = result.teacher_feedback_status === 'error' || result.teacher_feedback_status === 'timeout';
+    const teacherErrorMessage = result.teacher_feedback_message || 
+        (result.teacher_feedback_status === 'timeout' ? 'Teacher feedback timed out' : 'Teacher feedback generation failed');
 
     const criteriaList = [
         {
@@ -196,8 +217,37 @@ export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
                         </div>
                     </div>
 
-                    {/* Criteria List */}
-                    <div className="flex-1 p-3 space-y-2 overflow-y-auto custom-scrollbar">
+                    {/* Top Navigation Buttons - Moved to top for visibility */}
+                    <div className="p-3 space-y-2 border-b border-slate-800/40 bg-slate-950/30">
+                        <button
+                            onClick={() => setSelectedCriterion('overall_summary')}
+                            className={cn(
+                                "w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-semibold shadow-lg",
+                                selectedCriterion === 'overall_summary'
+                                    ? "bg-gradient-to-r from-teal-500 to-emerald-500 text-white shadow-teal-500/30"
+                                    : "bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 hover:text-white border border-slate-700/50"
+                            )}
+                        >
+                            <BarChart2 className="w-4 h-4" />
+                            Overall Summary
+                        </button>
+                        <button
+                            onClick={() => setSelectedCriterion('holistic_report')}
+                            className={cn(
+                                "w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-semibold shadow-lg",
+                                selectedCriterion === 'holistic_report'
+                                    ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-purple-500/30"
+                                    : "bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 hover:text-white border border-slate-700/50"
+                            )}
+                        >
+                            <Sparkles className="w-4 h-4" />
+                            Holistic Report
+                        </button>
+                    </div>
+
+                    {/* Criteria List - Scrollable */}
+                    <div className="flex-1 p-3 space-y-2 overflow-y-auto custom-scrollbar"
+                         style={{ maxHeight: 'calc(100vh - 420px)' }}>
                         {criteriaList.map((item) => (
                             <div
                                 key={item.id}
@@ -298,7 +348,16 @@ export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
 
                 {/* 3. RIGHT - FEEDBACK */}
                 <div className="bg-premium-dark border-l border-white/5 flex flex-col overflow-hidden shadow-[-10px_0_30px_rgba(0,0,0,0.2)]">
-                    <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-8">
+                    {/* Header to show what section is active */}
+                    <div className="px-6 py-3 border-b border-white/5 bg-slate-950/30">
+                        <h3 className="text-sm font-semibold text-white">
+                            {selectedCriterion === 'overall_summary' && 'Performance Overview'}
+                            {selectedCriterion === 'holistic_report' && 'Teacher\'s Report'}
+                            {isCriterion && currentCriterionDef?.label}
+                        </h3>
+                        <p className="text-xs text-slate-500 mt-0.5">Scroll down for more details</p>
+                    </div>
+                    <div className="flex-1 overflow-y-auto custom-scrollbar px-6 pt-6 pb-24 space-y-8">
                         {isOverall && (
                             <OverallSummary result={result} />
                         )}
@@ -324,6 +383,8 @@ export const WritingFeedback: React.FC<WritingFeedbackProps> = ({
                                 hasError={hasExplanationError}
                                 errorMessage={explanationErrorMessage}
                                 color={currentCriterionDef.color}
+                                hasTeacherError={hasTeacherError}
+                                teacherErrorMessage={teacherErrorMessage}
                             />
                         )}
                     </div>

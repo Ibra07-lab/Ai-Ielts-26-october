@@ -242,7 +242,8 @@ def build_task1_teacher_prompt_lite(
     essay: str,
     question: str,
     examiner_scores: dict,
-    chart_type: str = None
+    chart_type: str = None,
+    feature_coverage = None
 ) -> str:
     """Build a concise user prompt for fast teacher response."""
     
@@ -263,6 +264,48 @@ def build_task1_teacher_prompt_lite(
     if isinstance(visual_desc, str):
         visual_desc = visual_desc.replace('"""', "'''").replace('JSON', 'text').strip()
 
+    # Build feature coverage section if available
+    feature_coverage_text = ""
+    if feature_coverage:
+        feature_coverage_text = f"""
+## Feature Coverage Analysis (CRITICAL FOR TASK ACHIEVEMENT)
+
+The student covered **{feature_coverage.coverage_percentage:.1f}%** of key visual features.
+
+"""
+        if feature_coverage.features_mentioned:
+            feature_coverage_text += "✅ **Mentioned Features:**\n"
+            for feature in feature_coverage.features_mentioned[:5]:  # Limit to 5
+                feature_coverage_text += f"- {feature.description}\n"
+            feature_coverage_text += "\n"
+        
+        if feature_coverage.features_missed:
+            feature_coverage_text += "❌ **Missed Features (IMPORTANT):**\n"
+            for feature in feature_coverage.features_missed[:5]:  # Limit to 5
+                priority_label = "🔴 CRITICAL" if feature.priority == "critical" else "⚠️ Important" if feature.priority == "important" else "💡 Mention"
+                feature_coverage_text += f"- {priority_label}: {feature.description}\n"
+                feature_coverage_text += f"  → Student should use: \"{feature.expected_mention}\"\n"
+            feature_coverage_text += "\n"
+        
+        if feature_coverage.data_accuracy_issues:
+            feature_coverage_text += "⚠️ **Data Accuracy Issues:**\n"
+            for issue in feature_coverage.data_accuracy_issues[:3]:  # Limit to 3
+                severity_emoji = "🔴" if issue.severity == "major" else "⚠️"
+                feature_coverage_text += f"- {severity_emoji} {issue.location}: Student wrote \"{issue.claimed}\" but chart shows \"{issue.actual}\"\n"
+            feature_coverage_text += "\n"
+        
+        if feature_coverage.specific_gaps:
+            feature_coverage_text += "📋 **Specific Gaps to Address:**\n"
+            for gap in feature_coverage.specific_gaps[:3]:  # Limit to 3
+                feature_coverage_text += f"- {gap}\n"
+            feature_coverage_text += "\n"
+        
+        # Add guidance
+        feature_coverage_text += "**Use this analysis to:**\n"
+        feature_coverage_text += "- Explain EXACTLY which features they missed in Task Achievement feedback\n"
+        feature_coverage_text += "- Reference specific data accuracy issues with corrections\n"
+        feature_coverage_text += "- Provide actionable tips using the 'expected_mention' phrases\n"
+
     prompt = f"""## Student: {student_name}
 Chart Type: {chart_type or "Not specified"}
 Overall Band: {overall_band}
@@ -275,6 +318,8 @@ Word Count: {len(essay.split())} words
 \"\"\"
 {visual_desc}
 \"\"\"
+
+{feature_coverage_text}
 
 ## Question
 {question}

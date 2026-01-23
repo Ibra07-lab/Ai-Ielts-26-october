@@ -160,25 +160,57 @@
     mask-repeat: repeat;
   }
 
-  /* Custom Scrollbar */
+  /* Custom Scrollbar - More visible */
   .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-track {
-    background: rgba(15, 23, 42, 0.5); /* slate-900/50 */
+    background: rgba(15, 23, 42, 0.8); /* slate-900/80 - more visible */
     border-radius: 4px;
+    margin: 4px 0;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(51, 65, 85, 0.5); /* slate-700/50 */
+    background: rgba(45, 212, 191, 0.4); /* teal-400/40 - branded color */
     border-radius: 4px;
     transition: background 0.2s;
+    border: 1px solid rgba(45, 212, 191, 0.2);
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(71, 85, 105, 0.8); /* slate-600 */
+    background: rgba(45, 212, 191, 0.6); /* teal-400/60 - brighter on hover */
+    border-color: rgba(45, 212, 191, 0.4);
+  }
+  
+  /* Firefox scrollbar styling */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(45, 212, 191, 0.4) rgba(15, 23, 42, 0.8);
+  }
+  
+  /* Scroll fade indicator - shows there's more content below */
+  .scroll-fade-bottom {
+    position: relative;
+  }
+  
+  .scroll-fade-bottom::after {
+    content: '';
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.95), transparent);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 10;
+  }
+  
+  .scroll-fade-bottom:not(.at-bottom)::after {
+    opacity: 1;
   }
   
   /* Fix field-sizing compatibility for Firefox and Safari */

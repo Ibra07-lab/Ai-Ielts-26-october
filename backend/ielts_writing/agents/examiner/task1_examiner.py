@@ -62,7 +62,16 @@ Image: Visual data is provided
 
 ⚠️ DATA VERIFICATION REQUIRED:
 When evaluating Task Achievement:
-1. GENERATE A DETAILED VISUAL DESCRIPTION: Start your JSON output with a 'visual_description' field. Describe the chart type, axes, units, main trends, and key data points. This description will be used by other agents.
+1. GENERATE A STRUCTURED VISUAL DESCRIPTION: Create a detailed 'visual_description' object with:
+   - chart_type, axes, units, time_period
+   - data_points: Extract ALL key numbers from the chart with labels
+   - key_features: Identify 3-5 important features students should mention
+     * Mark CRITICAL features (e.g., highest/lowest values, overall trend)
+     * Mark IMPORTANT features (e.g., significant changes, comparisons)
+     * Include expected_mention keywords for each feature
+   - text_summary: Plain text description for backward compatibility
+   - expected_elements: Checklist of what should be covered
+   This structured description will be used by downstream agents to validate student essays.
 2. Check ALL numbers mentioned in the essay against the chart
 3. Verify trends described match the visual data
 4. Note any made-up or incorrect figures as red flags

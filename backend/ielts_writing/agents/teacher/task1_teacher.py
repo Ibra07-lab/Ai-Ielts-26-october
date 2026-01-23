@@ -78,9 +78,13 @@ class Task1Teacher:
     
     # @retry removed to prevent double timeout (fallback is the retry)
     def _call_openrouter(self, system: str, user: str, max_tokens: int) -> str:
-        """Call OpenRouter API with timeout protection."""
+        """Call OpenRouter API with timeout protection and improved error messages."""
         if not self.api_key:
-            raise ValueError("OPENROUTER_API_KEY environment variable is not set. Please set it in backend/.env file.")
+            raise ValueError(
+                "OPENROUTER_API_KEY environment variable is not set.\n"
+                "Please set it in backend/.env file.\n"
+                "Get your key from: https://openrouter.ai/keys"
+            )
         
         headers = {
             "Authorization": f"Bearer {self.api_key}",
@@ -99,15 +103,64 @@ class Task1Teacher:
             ]
         }
         
-        response = self.http_client.post(
-            self.openrouter_url,
-            headers=headers,
-            json=payload
-        )
-        response.raise_for_status()
-        
-        data = response.json()
-        return data["choices"][0]["message"]["content"]
+        try:
+            response = self.http_client.post(
+                self.openrouter_url,
+                headers=headers,
+                json=payload
+            )
+            response.raise_for_status()
+            
+            data = response.json()
+            return data["choices"][0]["message"]["content"]
+            
+        except httpx.HTTPStatusError as e:
+            # Enhanced error handling for common issues
+            status_code = e.response.status_code
+            error_detail = ""
+            
+            try:
+                error_data = e.response.json()
+                error_detail = error_data.get("error", {})
+                if isinstance(error_detail, dict):
+                    error_detail = error_detail.get("message", str(error_detail))
+            except:
+                error_detail = e.response.text
+            
+            # Check for model-related errors
+            if status_code == 400 and any(keyword in str(error_detail).lower() 
+                                         for keyword in ["model", "not found", "invalid"]):
+                raise ValueError(
+                    f"Invalid model configuration: '{self.model}'\n"
+                    f"Error from OpenRouter: {error_detail}\n\n"
+                    "Valid models include:\n"
+                    "  - openai/gpt-4o (recommended)\n"
+                    "  - openai/gpt-4o-mini\n"
+                    "  - openai/gpt-4-turbo\n\n"
+                    "Update TEACHER_MODEL in backend/.env file"
+                )
+            
+            # Check for API key errors
+            if status_code == 401:
+                raise ValueError(
+                    "OpenRouter API key is invalid or expired.\n"
+                    f"Error: {error_detail}\n\n"
+                    "Please update OPENROUTER_API_KEY in backend/.env file.\n"
+                    "Get your key from: https://openrouter.ai/keys"
+                )
+            
+            # Check for rate limiting
+            if status_code == 429:
+                raise ValueError(
+                    "OpenRouter rate limit exceeded.\n"
+                    f"Error: {error_detail}\n\n"
+                    "Please wait a moment and try again, or upgrade your OpenRouter plan."
+                )
+            
+            # Generic error
+            raise ValueError(
+                f"OpenRouter API error (HTTP {status_code}):\n{error_detail}"
+            )
     
 
     
@@ -162,12 +215,40 @@ class Task1Teacher:
     ) -> Task1TeacherFeedbackResponse:
         """Generate full detailed feedback."""
         
+        # Run feature coverage validator if structured visual description is available
+        feature_coverage = None
+        if request.visual_description:
+            try:
+                # Import here to avoid circular imports
+                from ...validators.feature_coverage import FeatureCoverageValidator
+                from ...schemas.visual_description import StructuredVisualDescription, convert_legacy_description
+                
+                # Convert to StructuredVisualDescription if needed
+                if isinstance(request.visual_description, dict):
+                    visual_desc = StructuredVisualDescription(**request.visual_description)
+                elif isinstance(request.visual_description, str):
+                    # Legacy format - convert
+                    visual_desc = convert_legacy_description(request.visual_description)
+                else:
+                    visual_desc = request.visual_description
+                
+                # Run validator
+                validator = FeatureCoverageValidator()
+                feature_coverage = validator.validate(
+                    essay=request.essay,
+                    visual_desc=visual_desc
+                )
+                logger.info(f"[Task1Teacher] Feature coverage: {feature_coverage.coverage_percentage:.1f}%")
+            except Exception as e:
+                logger.warning(f"[Task1Teacher] Failed to run feature coverage validator: {e}")
+        
         user_prompt = build_task1_teacher_prompt_lite(
             student_name=request.student_name,
             essay=request.essay,
             question=request.question,
             examiner_scores=request.examiner_scores or {},
-            chart_type=request.chart_type
+            chart_type=request.chart_type,
+            feature_coverage=feature_coverage
         )
         
         logger.info(f"[Task1Teacher] Calling OpenRouter GPT-4.1 (timeout: {self.read_timeout}s)")

@@ -5,7 +5,7 @@ These schemas are specific to Task 1 (Academic) — describing visual data.
 """
 
 from pydantic import BaseModel, Field, field_validator
-from typing import List, Optional, Literal
+from typing import List, Optional, Literal, Any
 from enum import Enum
 
 
@@ -347,6 +347,20 @@ class Task1TeacherFeedbackResponse(BaseModel):
     band7_model_upgrade: Optional[Band7ModelUpgrade] = None
     teachers_final_comment: Optional[str] = None
     
+    # Feature coverage feedback (for Task 1 visual analysis)
+    feature_coverage_summary: Optional[str] = Field(
+        default=None,
+        description="Summary of visual features covered (e.g., 'You covered 7/10 key features')"
+    )
+    missed_critical_features: Optional[List[str]] = Field(
+        default=None,
+        description="List of critical features student missed"
+    )
+    data_accuracy_feedback: Optional[List[str]] = Field(
+        default=None,
+        description="Specific data accuracy corrections"
+    )
+    
     # Optional: Track improvement over time
     improvement_notes: Optional[str] = None  # Compared to previous attempts
 
@@ -361,6 +375,7 @@ class Task1TeacherFeedbackRequest(BaseModel):
     # Optional context
     chart_type: Optional[str] = None  # line, bar, pie, table, map, process
     image_url: Optional[str] = None
+    visual_description: Optional[Any] = None  # StructuredVisualDescription or legacy string
     
     # For pattern tracking
     previous_errors: Optional[List[str]] = None

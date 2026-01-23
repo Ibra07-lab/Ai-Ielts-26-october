@@ -18,9 +18,11 @@ interface CriterionContentProps {
     hasError?: boolean;
     errorMessage?: string;
     color: 'blue' | 'indigo' | 'amber' | 'emerald';
+    hasTeacherError?: boolean;
+    teacherErrorMessage?: string;
 }
 
-export function CriterionContent({ score, title, data, explanation, hasError, errorMessage, color }: CriterionContentProps) {
+export function CriterionContent({ score, title, data, explanation, hasError, errorMessage, color, hasTeacherError, teacherErrorMessage }: CriterionContentProps) {
     // Modal state
     const [selectedWeakness, setSelectedWeakness] = useState<any | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -49,6 +51,20 @@ export function CriterionContent({ score, title, data, explanation, hasError, er
 
     if (!data) return <div className="p-8 text-center text-slate-400">No data available for this criterion.</div>;
 
+    // Debug logging
+    console.log(`🎨 CriterionContent rendering for ${title}:`, {
+        hasData: !!data,
+        hasScoreExplanation: !!data?.score_explanation,
+        hasStrengths: !!data?.strengths,
+        strengthsCount: data?.strengths?.length || 0,
+        hasWeaknesses: !!data?.weakness_patterns,
+        weaknessesCount: data?.weakness_patterns?.length || 0,
+        hasTips: !!data?.tips,
+        tipsCount: data?.tips?.length || 0,
+        dataKeys: data ? Object.keys(data) : [],
+        fullData: data
+    });
+
     return (
         <>
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
@@ -66,6 +82,25 @@ export function CriterionContent({ score, title, data, explanation, hasError, er
                     </div>
                 </div>
 
+                {/* Teacher Feedback Error - Show First */}
+                {hasTeacherError && (
+                    <div className="mb-6 p-5 rounded-xl bg-rose-500/[0.08] border border-rose-500/30 flex items-start gap-3 shadow-sm">
+                        <AlertTriangle className="w-6 h-6 text-rose-400 shrink-0 mt-0.5" />
+                        <div className="flex-1">
+                            <h4 className="text-sm font-bold text-rose-400 mb-2">Teacher Feedback Generation Failed</h4>
+                            <p className="text-xs text-slate-300 leading-relaxed mb-3">{teacherErrorMessage}</p>
+                            <div className="text-[10px] text-slate-500 bg-slate-900/50 p-3 rounded-lg border border-slate-800">
+                                <strong className="text-slate-400">Common causes:</strong>
+                                <ul className="mt-1 ml-4 list-disc space-y-0.5">
+                                    <li>API key expired or invalid</li>
+                                    <li>Rate limit reached</li>
+                                    <li>Backend service timeout</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                )}
+                
                 {/* Quick Feedback (Explanations) */}
                 {explanation ? (
                     <ExplanationDisplay explanation={explanation} />
@@ -81,16 +116,72 @@ export function CriterionContent({ score, title, data, explanation, hasError, er
 
                 {/* Examiner's Statement */}
                 {data.score_explanation?.why_this_score && (
-                    <div className="relative p-6 rounded-2xl bg-white/[0.02] border border-white/5 group overflow-hidden">
-                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-teal-500 to-transparent opacity-50" />
-                        <p className="text-[15px] text-slate-300 leading-relaxed font-medium italic relative z-10">
-                            "{data.score_explanation.why_this_score}"
-                        </p>
+                    <div className="space-y-4">
+                        <div className="relative p-6 rounded-2xl bg-white/[0.02] border border-white/5 group overflow-hidden">
+                            <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-teal-500 to-transparent opacity-50" />
+                            <p className="text-[15px] text-slate-300 leading-relaxed font-medium italic relative z-10">
+                                "{data.score_explanation.why_this_score}"
+                            </p>
+                        </div>
+                        
+                        {/* Band Descriptor Evidence */}
+                        {data.score_explanation.band_descriptor_evidence && (
+                            <div className="p-4 rounded-xl bg-blue-500/5 border border-blue-500/20">
+                                <div className="flex items-start gap-3">
+                                    <BookOpen className="w-4 h-4 text-blue-400 shrink-0 mt-1" />
+                                    <div>
+                                        <h4 className="text-xs font-bold text-blue-400 uppercase tracking-wider mb-2">IELTS Band Descriptor</h4>
+                                        <p className="text-sm text-slate-300 leading-relaxed">{data.score_explanation.band_descriptor_evidence}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                        
+                        {/* Path to Improvement */}
+                        {data.score_explanation.path_to_improvement && (
+                            <div className="p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/20">
+                                <div className="flex items-start gap-3">
+                                    <Target className="w-4 h-4 text-emerald-400 shrink-0 mt-1" />
+                                    <div>
+                                        <h4 className="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">How to Improve</h4>
+                                        <p className="text-sm text-slate-300 leading-relaxed">{data.score_explanation.path_to_improvement}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
 
                 {/* Feedback Sections */}
                 <div className="space-y-8">
+                    {/* Tips Section - Show if available */}
+                    {data.tips && data.tips.length > 0 && (
+                        <div className="space-y-3">
+                            <h3 className="text-xs font-bold uppercase tracking-wider text-purple-400 flex items-center gap-2">
+                                <Lightbulb className="w-4 h-4" />
+                                Quick Wins
+                            </h3>
+                            <div className="space-y-2">
+                                {data.tips.map((tip: any, idx: number) => (
+                                    <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-purple-500/5 border border-purple-500/20">
+                                        <CheckCircle className="w-4 h-4 text-purple-400 shrink-0 mt-0.5" />
+                                        <p className="text-sm text-slate-300">{tip.tip || tip}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                    
+                    {/* Minimal feedback message */}
+                    {(!data.strengths || data.strengths.length === 0) && (!data.weakness_patterns || data.weakness_patterns.length === 0) && !data.tips && (
+                        <div className="p-6 text-center space-y-2 bg-blue-500/5 border border-blue-500/20 rounded-xl">
+                            <BookOpen className="w-8 h-8 mx-auto text-blue-400 opacity-60" />
+                            <p className="text-xs text-slate-400">
+                                Detailed examples and patterns are being generated. The examiner's feedback above provides your score justification.
+                            </p>
+                        </div>
+                    )}
+                    
                     {/* Strengths Section */}
                     {data.strengths && data.strengths.length > 0 && (
                         <Collapsible open={strengthsOpen} onOpenChange={setStrengthsOpen} className="space-y-4">

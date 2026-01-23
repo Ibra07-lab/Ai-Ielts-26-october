@@ -1,7 +1,7 @@
 from enum import Enum
 from pydantic import BaseModel, Field
 from datetime import datetime
-from typing import Optional, List, Any
+from typing import Optional, List, Any, Union
 
 
 class TaskType(str, Enum):
@@ -41,7 +41,7 @@ class ExaminerEvaluation(BaseModel):
     word_count_penalty: bool  # DEPRECATED: Use word_count_ok instead
     off_topic: Optional[bool] = False
     copying_detected: Optional[dict] = None  # Plagiarism check results
-    visual_description: Optional[str] = None  # Description of the chart/image (if provided)
+    visual_description: Optional[Union[str, Any]] = None  # StructuredVisualDescription or legacy string (if provided)
     timestamp: datetime = Field(default_factory=datetime.utcnow)
 
 

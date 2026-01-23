@@ -3,7 +3,7 @@ Task 1 specific schemas.
 """
 
 from pydantic import BaseModel, Field
-from typing import List, Optional, Literal
+from typing import List, Optional, Literal, Union, Any
 from enum import Enum
 
 from .base import (
@@ -102,6 +102,12 @@ class Task1ExaminerResponse(BaseModel):
     
     # Issues found
     red_flags: List[str] = Field(default_factory=list)
+    
+    # Visual description (structured or legacy string)
+    visual_description: Optional[Union[dict, str, Any]] = Field(
+        default=None,
+        description="Structured visual description (StructuredVisualDescription) or legacy string format"
+    )
     
     class Config:
         json_schema_extra = {

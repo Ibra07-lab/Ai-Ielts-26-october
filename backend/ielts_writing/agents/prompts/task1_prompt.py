@@ -317,7 +317,36 @@ Return valid JSON only. No markdown formatting. No explanatory text.
     "high": <float: highest criterion score>
   },
   
-  "visual_description": "<string: Detailed description of the visual data. Include chart type, axes, units, main trends, and key data points. Required if image is provided.>",
+  "visual_description": {
+    "chart_type": "<string: line_graph, bar_chart, pie_chart, table, map, process_diagram>",
+    "title": "<string: optional title of the visual>",
+    "axes": {"x": "<string: x-axis label>", "y": "<string: y-axis label>"},
+    "units": "<string: primary unit (e.g., 'L/capita', '%')>",
+    "time_period": "<string: e.g., '2010-2020'>",
+    "data_points": [
+      {
+        "label": "<string: e.g., 'Turkey - 2020'>",
+        "value": <number or string>,
+        "unit": "<string: optional unit>",
+        "category": "<string: optional category>"
+      }
+    ],
+    "key_features": [
+      {
+        "feature_type": "trend | comparison | extreme | stage | location | change",
+        "description": "<string: detailed description>",
+        "priority": "critical | important | minor",
+        "expected_mention": "<string: keywords student should use>",
+        "related_data": ["<array: related data point labels>"]
+      }
+    ],
+    "stages": ["<array: for process diagrams only>"],
+    "stage_count": <integer: for process diagrams>,
+    "locations": ["<array: for maps only>"],
+    "changes": ["<array: for maps only>"],
+    "text_summary": "<string: Plain text description for backward compatibility>",
+    "expected_elements": ["<array: checklist like 'overview', 'highest value', 'trend'>"]
+  },
   
   "criterion_scores": [
     {

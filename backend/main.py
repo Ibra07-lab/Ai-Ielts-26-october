@@ -48,6 +48,33 @@ async def lifespan(app: FastAPI):
     """
     # Startup
     global agent
+    
+    # Validate configuration FIRST
+    logger.info("=" * 60)
+    logger.info("🚀 Starting IELTS Writing API...")
+    logger.info("=" * 60)
+    
+    try:
+        from ielts_writing.config.validator import validate_all_configs, ConfigurationError
+        logger.info("🔍 Validating configuration...")
+        config = validate_all_configs()
+        logger.info("✅ Configuration validated successfully")
+        logger.info(f"   Teacher: {config['teacher']['model']}")
+        logger.info(f"   Examiner: {config['examiner']['model']}")
+    except ConfigurationError as e:
+        logger.error("=" * 60)
+        logger.error("❌ CONFIGURATION ERROR")
+        logger.error("=" * 60)
+        logger.error(str(e))
+        logger.error("=" * 60)
+        logger.error("⚠️  Backend will start but AI features will not work!")
+        logger.error("   Please fix the configuration and restart.")
+        logger.error("=" * 60)
+        # Don't crash - allow health checks and other endpoints to work
+    except Exception as e:
+        logger.error(f"⚠️  Configuration validation error: {e}")
+    
+    # Initialize reading feedback agent (optional)
     try:
         logger.info("Initializing Reading Feedback Agent...")
         agent = create_reading_feedback_agent(
@@ -56,11 +83,17 @@ async def lifespan(app: FastAPI):
             temperature=float(os.getenv("TEMPERATURE", "0.2")),
             max_tokens=int(os.getenv("MAX_TOKENS", "1000"))
         )
-        logger.info("Agent initialized successfully")
+        logger.info("✅ Reading Feedback Agent initialized")
     except Exception as e:
-        logger.error(f"Failed to initialize agent: {str(e)}")
+        logger.warning(f"⚠️  Reading Feedback Agent initialization failed: {str(e)}")
         # Do not crash the app; allow non-AI endpoints to work
         agent = None
+    
+    logger.info("=" * 60)
+    logger.info("✅ Backend startup complete!")
+    logger.info("   API URL: http://127.0.0.1:8002")
+    logger.info("   API Docs: http://127.0.0.1:8002/docs")
+    logger.info("=" * 60)
     
     yield
     
@@ -112,6 +145,47 @@ class ErrorResponse(BaseModel):
 
 
 # API Endpoints
+
+@app.get("/health/config")
+async def health_check_config():
+    """
+    Check configuration health for all AI agents.
+    Useful for debugging and monitoring.
+    """
+    from ielts_writing.config.validator import validate_all_configs, ConfigurationError
+    
+    try:
+        config = validate_all_configs()
+        return {
+            "status": "healthy",
+            "services": {
+                "teacher": {
+                    "status": "configured",
+                    "model": config["teacher"]["model"],
+                    "api_key_set": config["teacher"]["api_key_set"]
+                },
+                "examiner": {
+                    "status": "configured",
+                    "model": config["examiner"]["model"],
+                    "api_key_set": config["examiner"]["api_key_set"]
+                }
+            }
+        }
+    except ConfigurationError as e:
+        return {
+            "status": "unhealthy",
+            "error": str(e),
+            "services": {
+                "teacher": {"status": "error"},
+                "examiner": {"status": "error"}
+            }
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e)
+        }
+
 
 @app.get("/", response_model=Dict[str, Any])
 async def root():
