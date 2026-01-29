@@ -22,7 +22,7 @@ class MainIssue(BaseModel):
     label: str = Field(..., min_length=3, max_length=100, description="3-6 words naming the pattern")
     why_it_matters: str = Field(..., max_length=300, description="1 sentence, max 18 words")
     frequency: str = Field(..., description="e.g., 'about 3 times', 'in several sentences', 'throughout the essay'")
-    examples: List[str] = Field(..., min_items=1, max_items=10, description="1-10 short quotes from essay")
+    examples: List[str] = Field(default_factory=list, max_items=10, description="1-10 short quotes from essay")
     fix: str = Field(..., max_length=300, description="1 short sentence starting with 'Add…', 'Change…', or 'Summarise…'")
 
 
@@ -51,15 +51,13 @@ class CriterionExplanation(BaseModel):
     )
     
     what_you_did_well: List[WhatYouDidWell] = Field(
-        ..., 
-        min_items=1, 
+        default_factory=list, 
         max_items=20,
         description="List of specific strengths with quotes"
     )
     
     main_issues: List[MainIssue] = Field(
-        ..., 
-        min_items=1, 
+        default_factory=list, 
         max_items=20,
         description="List of PATTERNS (not single mistakes)"
     )

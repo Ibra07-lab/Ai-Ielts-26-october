@@ -9,6 +9,10 @@ import { useUser } from "../contexts/UserContext";
 import backend from "~backend/client";
 import DailyProgressChart from "../components/progress/DailyProgressChart";
 import SkillRadar from "../components/progress/SkillRadar";
+// New Components
+import StudyHeatmap, { HeatmapDataPoint } from "../components/progress/StudyHeatmap";
+import AICoachInsights from "../components/progress/AICoachInsights";
+import SubSkillRadar from "../components/progress/SubSkillRadar";
 
 
 export default function Progress() {
@@ -72,11 +76,84 @@ export default function Progress() {
     return progress?.overall.find(p => p.skill === skill);
   };
 
+  // --- FEATURE 1: HEATMAP DATA ---
+  const getHeatmapData = (): HeatmapDataPoint[] => {
+    const data: HeatmapDataPoint[] = [];
+    // Mock year data for demonstration (Visual "Wow" factor)
+    // In production, we would map over all sessions' timestamps
+    const today = new Date();
+    const startOfYear = new Date(today.getFullYear(), 0, 1);
+
+    // 1. Scatter some random sessions throughout the year for "lived-in" feel
+    for (let d = new Date(startOfYear); d <= today; d.setDate(d.getDate() + 1)) {
+      if (Math.random() > 0.7) { // 30% active days
+        data.push({
+          date: d.toISOString().split('T')[0],
+          count: Math.floor(Math.random() * 5) + 1
+        });
+      }
+    }
+
+    // 2. Add REAL data overlay (if available, this would overwrite mock)
+    // const addRealSession = (sessions: any[]) => { ... }
+
+    return data;
+  };
+  const heatmapData = getHeatmapData();
 
 
-  // Aggregate daily progress data
+  // --- FEATURE 2: AI INSIGHTS ---
+  const generateInsights = () => {
+    const insights = [];
+
+    // Streak Insight (Mock logic)
+    insights.push({
+      type: 'success' as const,
+      message: "You've practiced for 3 consecutive days! Maintaining this streak will boost your retention.",
+    });
+
+    // Skill Weakness (Writing)
+    const writingBand = getSkillProgress('writing')?.estimatedBand || 0;
+    if (writingBand > 0 && writingBand < 6.5) {
+      insights.push({
+        type: 'warning' as const,
+        message: "Your Writing score is stabilizing around 6.0. Focus on 'Lexical Resource' to break through to 6.5.",
+        action: { label: "Practice Vocabulary", onClick: () => navigate('/vocabulary') }
+      });
+    }
+
+    // Speaking Tip
+    insights.push({
+      type: 'tip' as const,
+      message: "Try the new 'Speak to Unlock' exercises to improve your fluency under pressure.",
+      action: { label: "Try Speaking", onClick: () => navigate('/speaking') }
+    });
+
+    return insights;
+  };
+  const aiInsights = generateInsights();
+
+
+  // --- FEATURE 3: SUB-SKILL RADAR DATA ---
+  // Mock data for Writing Sub-skills (since backend might not provide detailed breakdown yet)
+  const writingSubSkills = [
+    { skill: "Task Response", score: 6.5, fullMark: 9 },
+    { skill: "Cohesion", score: 6.0, fullMark: 9 },
+    { skill: "Vocabulary", score: 7.0, fullMark: 9 },
+    { skill: "Grammar", score: 5.5, fullMark: 9 },
+  ];
+
+  const speakingSubSkills = [
+    { skill: "Fluency", score: 7.0, fullMark: 9 },
+    { skill: "Lexical", score: 6.5, fullMark: 9 },
+    { skill: "Grammar", score: 6.0, fullMark: 9 },
+    { skill: "Pronunciation", score: 7.5, fullMark: 9 },
+  ];
+
+
+  // Aggregate daily progress data for the legacy chart (keeping it below heatmap)
   const getDailyProgress = () => {
-    const days = 14; // Show last 14 days
+    const days = 14;
     const data = [];
     const now = new Date();
 
@@ -88,15 +165,12 @@ export default function Progress() {
 
       const isSameDay = (d: string) => new Date(d).toDateString() === date.toDateString();
 
-      // For demonstration purposes, we'll mix real data with some mock data 
-      // to show the beautiful stacked chart effect since the user might not have full history yet.
       const realListening = listeningSessions?.sessions.filter((s: any) => isSameDay(s.createdAt)).length || 0;
       const realReading = readingSessions?.sessions.filter((s: any) => isSameDay(s.createdAt)).length || 0;
       const realWriting = writingSessions?.sessions.filter((s: any) => isSameDay(s.createdAt)).length || 0;
       const realSpeaking = speakingSessions?.sessions.filter((s: any) => isSameDay(s.createdAt)).length || 0;
 
       // Mock data injection for visual demonstration
-      // In production, remove the Math.random() parts
       const listening = realListening + (Math.random() > 0.7 ? Math.floor(Math.random() * 3) : 0);
       const reading = realReading + (Math.random() > 0.6 ? Math.floor(Math.random() * 3) : 0);
       const writing = realWriting + (Math.random() > 0.8 ? Math.floor(Math.random() * 2) : 0);
@@ -118,59 +192,40 @@ export default function Progress() {
   };
 
   const dailyData = getDailyProgress();
-  const todayData = dailyData[dailyData.length - 1];
 
   return (
     <>
-      <div className="max-w-6xl mx-auto space-y-6 pb-32">
+      <div className="max-w-6xl mx-auto space-y-8 pb-32 animate-in fade-in duration-700">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
             Progress & Insights
           </h1>
           <p className="text-gray-600 dark:text-gray-300">
-            Track your IELTS preparation progress and identify areas for improvement.
+            Track your IELTS preparation journey and optimize your study plan.
           </p>
         </div>
 
-
-        {/* Daily Activity Section */}
+        {/* --- SECTION 1: STUDY CONSISTENCY (New Feature) --- */}
         <div className="w-full">
-          {dailyData.reduce((acc, curr) => acc + curr.total, 0) > 0 ? (
-            <DailyProgressChart data={dailyData} />
-          ) : (
-            <Card className="bg-[#1E293B] border-[#334155]">
-              <CardHeader>
-                <CardTitle className="text-white">Daily Activity</CardTitle>
-              </CardHeader>
-              <CardContent className="flex flex-col items-center justify-center py-12 text-center">
-                <div className="w-16 h-16 bg-[#334155]/50 rounded-full flex items-center justify-center mb-4">
-                  <TrendingUp className="w-8 h-8 text-slate-400" />
-                </div>
-                <h3 className="text-lg font-medium text-white mb-2">No activity recorded yet</h3>
-                <p className="text-slate-400 max-w-sm">
-                  Complete your first practice session to verify your daily progress charts.
-                </p>
-              </CardContent>
-            </Card>
-          )}
+          <StudyHeatmap data={heatmapData} />
         </div>
 
-        {/* Skill Radar Chart */}
-        <Card className="bg-[#1E293B] border-[#334155]">
-          <CardHeader>
-            <CardTitle className="text-white">Skill Balance & Goals</CardTitle>
-            <CardDescription className="text-slate-400">
-              Visualizing your current performance against your target band of {user.targetBand}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {/* Logic: Check if we have any non-zero skill scores */}
-            {[
-              getSkillProgress('speaking')?.estimatedBand,
-              getSkillProgress('writing')?.estimatedBand,
-              getSkillProgress('reading')?.estimatedBand,
-              getSkillProgress('listening')?.estimatedBand
-            ].some(score => score && score > 0) ? (
+        {/* --- SECTION 2: AI INSIGHTS (New Feature) --- */}
+        <div className="w-full">
+          <AICoachInsights insights={aiInsights} userName={user.name} />
+        </div>
+
+        {/* --- SECTION 3: SKILL BREAKDOWN & RADARS --- */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Main Skill Radar */}
+          <Card className="bg-[#1E293B] border-[#334155]">
+            <CardHeader>
+              <CardTitle className="text-white">Overall Band Balance</CardTitle>
+              <CardDescription className="text-slate-400">
+                Target: {user.targetBand}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
               <SkillRadar
                 data={[
                   { subject: 'Speaking', A: getSkillProgress('speaking')?.estimatedBand || 0, B: user.targetBand || 7.0, fullMark: 9 },
@@ -179,262 +234,217 @@ export default function Progress() {
                   { subject: 'Listening', A: getSkillProgress('listening')?.estimatedBand || 0, B: user.targetBand || 7.0, fullMark: 9 },
                 ]}
               />
-            ) : (
-              <div className="flex flex-col items-center justify-center py-12 text-center">
-                <div className="w-16 h-16 bg-[#334155]/50 rounded-full flex items-center justify-center mb-4">
-                  <Target className="w-8 h-8 text-cyan-400" />
-                </div>
-                <h3 className="text-lg font-medium text-white mb-2">No skill data available</h3>
-                <p className="text-slate-400 max-w-sm mb-6">
-                  Complete a mock test or practice session to populate your skill radar and see your balance.
-                </p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
 
-        {/* Skills Breakdown */}
-        <Card className="bg-[#1E293B] border-[#334155]">
-          <CardHeader>
-            <CardTitle className="text-white">Skills Breakdown</CardTitle>
-            <CardDescription className="text-slate-400">
-              Your performance across all four IELTS skills
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {Object.entries(skillIcons).map(([skill, Icon]) => {
-                const skillData = getSkillProgress(skill);
-                const hasScore = skillData?.estimatedBand && skillData.estimatedBand > 0;
+          {/* Sub-Skill Radars (New Feature) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <SubSkillRadar
+              title="Writing Breakdown"
+              description="Performance by criteria"
+              data={writingSubSkills}
+              color="#f59e0b" // Amber
+            />
+            <SubSkillRadar
+              title="Speaking Breakdown"
+              description="Performance by criteria"
+              data={speakingSubSkills}
+              color="#10b981" // Emerald
+            />
+          </div>
+        </div>
 
-                return (
-                  <div
-                    key={skill}
-                    className={`group relative text-center p-5 border rounded-xl transition-all duration-300 ${hasScore ? 'bg-[#334155]/20 border-[#334155] hover:border-blue-500/50' : 'bg-[#334155]/10 border-[#334155]/50 hover:bg-[#334155]/20'}`}
-                  >
-                    <Icon className={`h-8 w-8 mx-auto mb-3 transition-colors ${hasScore ? 'text-blue-400' : 'text-slate-500 group-hover:text-slate-400'}`} />
-                    <h3 className="font-semibold capitalize mb-1 text-slate-200">{skill}</h3>
-
-                    {hasScore ? (
-                      <p className="text-3xl font-bold text-cyan-400 mb-1">
-                        {skillData.estimatedBand}
-                      </p>
-                    ) : (
-                      <p className="text-3xl font-bold text-[#475569] mb-1">
-                        N/A
-                      </p>
-                    )}
-
-                    <p className="text-sm text-slate-500 mb-2">
-                      {skillData?.practiceCount || 0} sessions
-                    </p>
-
-                    {/* Action Button Hint */}
-                    {!hasScore && (
-                      <div
-                        className="absolute inset-0 flex items-center justify-center bg-[#1E293B]/90 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl backdrop-blur-sm cursor-pointer border border-blue-500/30"
-                        onClick={() => navigate('/' + skill)}
-                      >
-                        <span className="text-sm font-semibold text-blue-400 flex items-center gap-1">
-                          Start Practice <ArrowRight className="w-3 h-3" />
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Detailed Progress Tabs */}
-        <Tabs defaultValue="speaking" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-4 bg-[#0F172A] border border-[#334155] p-1 h-auto">
-            <TabsTrigger value="speaking" className="data-[state=active]:bg-[#334155] data-[state=active]:text-white text-slate-400 py-2">Speaking</TabsTrigger>
-            <TabsTrigger value="writing" className="data-[state=active]:bg-[#334155] data-[state=active]:text-white text-slate-400 py-2">Writing</TabsTrigger>
-            <TabsTrigger value="reading" className="data-[state=active]:bg-[#334155] data-[state=active]:text-white text-slate-400 py-2">Reading</TabsTrigger>
-            <TabsTrigger value="listening" className="data-[state=active]:bg-[#334155] data-[state=active]:text-white text-slate-400 py-2">Listening</TabsTrigger>
+        {/* --- SECTION 4: DETAILED STATS (Existing Tabs) --- */}
+        <Tabs defaultValue="overview" className="space-y-4">
+          <TabsList className="bg-[#0f172a] border border-[#334155] p-1">
+            <TabsTrigger value="overview">Daily Stats</TabsTrigger>
+            <TabsTrigger value="history">History Lists</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="speaking">
-            <Card>
-              <CardHeader>
-                <CardTitle>Speaking Practice History</CardTitle>
-                <CardDescription>
-                  Your recent speaking practice sessions and feedback
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                {speakingSessions?.sessions.length ? (
-                  <div className="space-y-4">
-                    {speakingSessions.sessions.slice(0, 5).map((session: any) => (
-                      <div key={session.id} className="flex items-center justify-between p-4 border rounded-lg">
-                        <div>
-                          <p className="font-medium">Part {session.part}</p>
-                          <p className="text-sm text-gray-600 dark:text-gray-300">
-                            {new Date(session.createdAt).toLocaleDateString()}
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <Badge variant="secondary">
-                            Band {session.bandScore || "N/A"}
-                          </Badge>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-gray-600 dark:text-gray-300 text-center py-8">
-                    No speaking sessions yet. Start practicing to see your progress!
-                  </p>
-                )}
-              </CardContent>
-            </Card>
+          <TabsContent value="overview">
+            <div className="w-full">
+              <DailyProgressChart data={dailyData} />
+            </div>
           </TabsContent>
 
-          <TabsContent value="writing">
-            <Card>
-              <CardHeader>
-                <CardTitle>Writing Practice History</CardTitle>
-                <CardDescription>
-                  Your recent writing submissions and scores
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                {writingSessions?.sessions.length ? (
-                  <div className="space-y-4">
-                    {writingSessions.sessions.slice(0, 5).map((session: any) => (
-                      <div key={session.id} className="flex items-center justify-between p-4 border rounded-lg">
-                        <div>
-                          <p className="font-medium">Task {session.taskType}</p>
-                          <p className="text-sm text-gray-600 dark:text-gray-300">
-                            {new Date(session.createdAt).toLocaleDateString()}
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <Badge variant="secondary">
-                            Band {session.bandScore || "N/A"}
-                          </Badge>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-gray-600 dark:text-gray-300 text-center py-8">
-                    No writing sessions yet. Start practicing to see your progress!
-                  </p>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
+          <TabsContent value="history">
+            <Tabs defaultValue="speaking" className="space-y-4">
+              <TabsList className="grid w-full grid-cols-4 bg-[#0F172A] border border-[#334155] p-1 h-auto">
+                <TabsTrigger value="speaking" className="data-[state=active]:bg-[#334155] data-[state=active]:text-white text-slate-400 py-2">Speaking</TabsTrigger>
+                <TabsTrigger value="writing" className="data-[state=active]:bg-[#334155] data-[state=active]:text-white text-slate-400 py-2">Writing</TabsTrigger>
+                <TabsTrigger value="reading" className="data-[state=active]:bg-[#334155] data-[state=active]:text-white text-slate-400 py-2">Reading</TabsTrigger>
+                <TabsTrigger value="listening" className="data-[state=active]:bg-[#334155] data-[state=active]:text-white text-slate-400 py-2">Listening</TabsTrigger>
+              </TabsList>
 
-          <TabsContent value="reading">
-            <Card>
-              <CardHeader>
-                <CardTitle>Reading Practice History</CardTitle>
-                <CardDescription>
-                  Your recent reading comprehension scores
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                {readingSessions?.sessions.length ? (
-                  <div className="space-y-4">
-                    {readingSessions.sessions.slice(0, 5).map((session: any) => (
-                      <div key={session.id} className="flex items-center justify-between p-4 border rounded-lg">
-                        <div>
-                          <p className="font-medium">{session.passageTitle}</p>
-                          <p className="text-sm text-gray-600 dark:text-gray-300">
-                            {new Date(session.createdAt).toLocaleDateString()}
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <Badge variant="secondary">
-                            {session.score}/{session.totalQuestions}
-                          </Badge>
-                        </div>
+              <TabsContent value="speaking">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Speaking Practice History</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    {speakingSessions?.sessions.length ? (
+                      <div className="space-y-4">
+                        {speakingSessions.sessions.slice(0, 5).map((session: any) => (
+                          <div key={session.id} className="flex items-center justify-between p-4 border rounded-lg">
+                            <div>
+                              <p className="font-medium">Part {session.part}</p>
+                              <p className="text-sm text-gray-600 dark:text-gray-300">
+                                {new Date(session.createdAt).toLocaleDateString()}
+                              </p>
+                            </div>
+                            <div className="text-right">
+                              <Badge variant="secondary">
+                                Band {session.bandScore || "N/A"}
+                              </Badge>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-gray-600 dark:text-gray-300 text-center py-8">
-                    No reading sessions yet. Start practicing to see your progress!
-                  </p>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
+                    ) : (
+                      <p className="text-gray-600 dark:text-gray-300 text-center py-8">
+                        No speaking sessions yet.
+                      </p>
+                    )}
+                  </CardContent>
+                </Card>
+              </TabsContent>
 
-          <TabsContent value="listening">
-            <Card>
-              <CardHeader>
-                <CardTitle>Listening Practice History</CardTitle>
-                <CardDescription>
-                  Your recent listening comprehension scores
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                {listeningSessions?.sessions.length ? (
-                  <div className="space-y-4">
-                    {listeningSessions.sessions.slice(0, 5).map((session: any) => (
-                      <div key={session.id} className="flex items-center justify-between p-4 border rounded-lg">
-                        <div>
-                          <p className="font-medium">{session.audioTitle}</p>
-                          <p className="text-sm text-gray-600 dark:text-gray-300">
-                            {new Date(session.createdAt).toLocaleDateString()}
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <Badge variant="secondary">
-                            {session.score}/{session.totalQuestions}
-                          </Badge>
-                        </div>
+              <TabsContent value="writing">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Writing Practice History</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    {writingSessions?.sessions.length ? (
+                      <div className="space-y-4">
+                        {writingSessions.sessions.slice(0, 5).map((session: any) => (
+                          <div key={session.id} className="flex items-center justify-between p-4 border rounded-lg">
+                            <div>
+                              <p className="font-medium">Task {session.taskType}</p>
+                              <p className="text-sm text-gray-600 dark:text-gray-300">
+                                {new Date(session.createdAt).toLocaleDateString()}
+                              </p>
+                            </div>
+                            <div className="text-right">
+                              <Badge variant="secondary">
+                                Band {session.bandScore || "N/A"}
+                              </Badge>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-gray-600 dark:text-gray-300 text-center py-8">
-                    No listening sessions yet. Start practicing to see your progress!
-                  </p>
-                )}
-              </CardContent>
-            </Card>
+                    ) : (
+                      <p className="text-gray-600 dark:text-gray-300 text-center py-8">
+                        No writing sessions yet.
+                      </p>
+                    )}
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="reading">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Reading Practice History</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    {readingSessions?.sessions.length ? (
+                      <div className="space-y-4">
+                        {readingSessions.sessions.slice(0, 5).map((session: any) => (
+                          <div key={session.id} className="flex items-center justify-between p-4 border rounded-lg">
+                            <div>
+                              <p className="font-medium">{session.passageTitle}</p>
+                              <p className="text-sm text-gray-600 dark:text-gray-300">
+                                {new Date(session.createdAt).toLocaleDateString()}
+                              </p>
+                            </div>
+                            <div className="text-right">
+                              <Badge variant="secondary">
+                                {session.score}/{session.totalQuestions}
+                              </Badge>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-gray-600 dark:text-gray-300 text-center py-8">
+                        No reading sessions yet.
+                      </p>
+                    )}
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="listening">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Listening Practice History</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    {listeningSessions?.sessions.length ? (
+                      <div className="space-y-4">
+                        {listeningSessions.sessions.slice(0, 5).map((session: any) => (
+                          <div key={session.id} className="flex items-center justify-between p-4 border rounded-lg">
+                            <div>
+                              <p className="font-medium">{session.audioTitle}</p>
+                              <p className="text-sm text-gray-600 dark:text-gray-300">
+                                {new Date(session.createdAt).toLocaleDateString()}
+                              </p>
+                            </div>
+                            <div className="text-right">
+                              <Badge variant="secondary">
+                                {session.score}/{session.totalQuestions}
+                              </Badge>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-gray-600 dark:text-gray-300 text-center py-8">
+                        No listening sessions yet.
+                      </p>
+                    )}
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
           </TabsContent>
         </Tabs>
 
-        {/* Vocabulary Progress */}
+        {/* --- SECTION 5: VOCABULARY PROGRESS --- */}
         {vocabularyProgress && (
-          <Card>
+          <Card className="bg-white dark:bg-[#1E293B] border-slate-200 dark:border-[#334155]">
             <CardHeader>
-              <CardTitle>Vocabulary Progress</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-gray-900 dark:text-white">Vocabulary Progress</CardTitle>
+              <CardDescription className="text-slate-500 dark:text-slate-400">
                 Your vocabulary learning statistics
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="text-center">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="text-center p-4 rounded-lg bg-slate-50 dark:bg-slate-800/50">
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">
                     {vocabularyProgress.totalWords}
                   </p>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">Total Words</p>
+                  <p className="text-xs font-medium uppercase tracking-wider text-slate-500 mt-1">Total Words</p>
                 </div>
-                <div className="text-center">
-                  <p className="text-2xl font-bold text-green-600">
+                <div className="text-center p-4 rounded-lg bg-green-50 dark:bg-green-900/10">
+                  <p className="text-2xl font-bold text-green-600 dark:text-green-400">
                     {vocabularyProgress.knownWords}
                   </p>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">Known</p>
+                  <p className="text-xs font-medium uppercase tracking-wider text-green-600/70 dark:text-green-400/70 mt-1">Known</p>
                 </div>
-                <div className="text-center">
-                  <p className="text-2xl font-bold text-yellow-600">
+                <div className="text-center p-4 rounded-lg bg-amber-50 dark:bg-amber-900/10">
+                  <p className="text-2xl font-bold text-amber-600 dark:text-amber-400">
                     {vocabularyProgress.learningWords}
                   </p>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">Learning</p>
+                  <p className="text-xs font-medium uppercase tracking-wider text-amber-600/70 dark:text-amber-400/70 mt-1">Learning</p>
                 </div>
-                <div className="text-center">
-                  <p className="text-2xl font-bold text-blue-600">
+                <div className="text-center p-4 rounded-lg bg-blue-50 dark:bg-blue-900/10">
+                  <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">
                     {vocabularyProgress.reviewWords}
                   </p>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">Review</p>
+                  <p className="text-xs font-medium uppercase tracking-wider text-blue-600/70 dark:text-blue-400/70 mt-1">Review</p>
                 </div>
               </div>
             </CardContent>

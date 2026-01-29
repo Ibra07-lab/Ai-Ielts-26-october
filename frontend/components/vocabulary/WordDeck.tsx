@@ -1,24 +1,12 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Volume2, RotateCcw, ArrowRight, Star, Sparkles, BookOpen, MessageSquare, Layers } from "lucide-react";
+import { Volume2, RotateCcw, ArrowRight, Star, Sparkles, BookOpen, MessageSquare, Layers, Mic, PenTool, ArrowLeftRight, Link2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
-
-interface WordData {
-    id: number;
-    word: string;
-    definition: string;
-    exampleSentence: string;
-    difficultyLevel: number;
-    topic: string;
-    audioUrl?: string;
-    context?: string;
-    collocations?: string[];
-    synonyms?: { word: string; level: string }[];
-}
+import type { WordData } from "@/data/vocabulary/types";
 
 interface WordDeckProps {
     word: WordData;
@@ -256,6 +244,66 @@ export default function WordDeck({ word, onKnow, onDontKnow, onBack, remainingCo
                                             </div>
                                         </div>
                                     </div>
+
+                                    {/* Speaking Example Section */}
+                                    {word.speakingExample && (
+                                        <div className="p-4 rounded-lg bg-teal-50 dark:bg-teal-900/20 border border-teal-100 dark:border-teal-500/20 space-y-2">
+                                            <div className="flex items-center gap-2 text-teal-600 dark:text-teal-400 mb-1">
+                                                <Mic className="h-4 w-4" />
+                                                <span className="text-xs font-bold uppercase tracking-wider">Speaking Example</span>
+                                            </div>
+                                            <p className="text-gray-700 dark:text-gray-300 text-sm italic">
+                                                "{word.speakingExample}"
+                                            </p>
+                                        </div>
+                                    )}
+
+                                    {/* Writing Example Section */}
+                                    {word.writingExample && (
+                                        <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-500/20 space-y-2">
+                                            <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 mb-1">
+                                                <PenTool className="h-4 w-4" />
+                                                <span className="text-xs font-bold uppercase tracking-wider">Writing Example</span>
+                                            </div>
+                                            <p className="text-gray-700 dark:text-gray-300 text-sm">
+                                                "{word.writingExample}"
+                                            </p>
+                                        </div>
+                                    )}
+
+                                    {/* Antonyms Section */}
+                                    {word.antonyms && word.antonyms.length > 0 && (
+                                        <div className="space-y-3">
+                                            <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400 mb-1">
+                                                <ArrowLeftRight className="h-4 w-4" />
+                                                <span className="text-xs font-bold uppercase tracking-wider">Antonyms</span>
+                                            </div>
+                                            <div className="flex flex-wrap gap-2">
+                                                {word.antonyms.map((ant, i) => (
+                                                    <Badge key={i} variant="secondary" className="bg-rose-100 dark:bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-500/20 py-1.5 px-3">
+                                                        {ant}
+                                                    </Badge>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* Related Phrasal Verbs Section */}
+                                    {word.relatedPhrasalVerbs && word.relatedPhrasalVerbs.length > 0 && (
+                                        <div className="space-y-3">
+                                            <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 mb-1">
+                                                <Link2 className="h-4 w-4" />
+                                                <span className="text-xs font-bold uppercase tracking-wider">Related Phrasal Verbs</span>
+                                            </div>
+                                            <div className="flex flex-wrap gap-2">
+                                                {word.relatedPhrasalVerbs.map((pv, i) => (
+                                                    <Badge key={i} variant="secondary" className="bg-indigo-100 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-500/20 py-1.5 px-3">
+                                                        {pv}
+                                                    </Badge>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
                                 </CardContent>
                             </Card>
                         </div>

@@ -13,9 +13,7 @@ from typing import Optional, List, Dict, Any
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeout
 
 from ..agents.examiner.task1_examiner import Task1Examiner
-from ..agents.teacher.task1_teacher import Task1Teacher
 from ..agents.explanation_agent import Task1ExplanationAgent
-from ..schemas.task1_teacher import Task1TeacherFeedbackRequest
 
 logger = logging.getLogger(__name__)
 
@@ -42,7 +40,6 @@ class Task1Pipeline:
     def __init__(self, model: str = None):
         self.examiner = Task1Examiner(model=model)
         self.explanation_agent = Task1ExplanationAgent()
-        self.teacher = Task1Teacher(model=model)
         self.model = model
     
     async def evaluate_async(
@@ -52,6 +49,7 @@ class Task1Pipeline:
         student_name: str = "Student",
         chart_type: str = None,
         image_url: str = None,
+        image_description: str = None,
         previous_errors: List[str] = None,
         attempt_number: int = 1,
         include_teacher_feedback: bool = True,
@@ -84,7 +82,8 @@ class Task1Pipeline:
                         essay=essay,
                         question=question,
                         image_url=image_url,
-                        chart_type=chart_type
+                        chart_type=chart_type,
+                        image_description=image_description
                     ),
                     timeout=self.EXAMINER_TIMEOUT
                 )
@@ -117,20 +116,20 @@ class Task1Pipeline:
                 "red_flags": examiner_result.get("red_flags", [])
             }
             
+            
             # ============== STEP 2: EXPLANATIONS (concise criterion feedback) ==============
             logger.info("[Task1Pipeline] Generating criterion explanations...")
             explanation_start = asyncio.get_event_loop().time()
             
+            
             try:
+                # Use async method directly for parallel execution (no executor needed)
                 explanations = await asyncio.wait_for(
-                    asyncio.get_event_loop().run_in_executor(
-                        executor,
-                        lambda: self.explanation_agent.generate_explanations(
-                            essay=essay,
-                            question=question,
-                            examiner_scores=examiner_result,
-                            visual_description=examiner_result.get("visual_description")
-                        )
+                    self.explanation_agent.generate_explanations_async(
+                        essay=essay,
+                        question=question,
+                        examiner_scores=examiner_result,
+                        visual_description=examiner_result.get("visual_description")
                     ),
                     timeout=self.EXPLANATION_TIMEOUT
                 )
@@ -158,80 +157,12 @@ class Task1Pipeline:
                 result["explanations_status"] = "error"
                 result["explanations_message"] = str(e)
             
-            # ============== STEP 3: TEACHER (optional, with timeout) ==============
-            if include_teacher_feedback:
-                logger.info("[Task1Pipeline] Running teacher...")
-                teacher_start = asyncio.get_event_loop().time()
-                
-                teacher_request = Task1TeacherFeedbackRequest(
-                    student_name=student_name,
-                    essay=essay,
-                    question=question,
-                    chart_type=chart_type,
-                    image_url=image_url,
-                    previous_errors=previous_errors,
-                    attempt_number=attempt_number,
-                    examiner_scores=examiner_result
-                )
-                
-                try:
-                    teacher_feedback = await asyncio.wait_for(
-                        asyncio.get_event_loop().run_in_executor(
-                            executor,
-                            lambda: self.teacher.generate_feedback(teacher_request)
-                        ),
-                        timeout=self.TEACHER_TIMEOUT
-                    )
-                    
-                    teacher_time = asyncio.get_event_loop().time() - teacher_start
-                    result["timing"]["teacher"] = round(teacher_time, 2)
-                    logger.info(f"[Task1Pipeline] Teacher complete in {teacher_time:.1f}s")
-                    
-                    # Check if this is a fallback response (contains error messages)
-                    feedback_dict = teacher_feedback.model_dump()
-                    is_fallback = False
-                    error_message = None
-                    
-                    # Check if any criterion has the fallback error messages
-                    for criterion_key in ["task_achievement", "coherence_cohesion", "lexical_resource", "grammatical_range"]:
-                        criterion = feedback_dict.get(criterion_key, {})
-                        score_explanation = criterion.get("score_explanation", {})
-                        if score_explanation.get("why_this_score") == "Unable to generate feedback due to system error.":
-                            is_fallback = True
-                            # Extract error from action_plan if available
-                            action_plan = feedback_dict.get("action_plan", {})
-                            priority_reason = action_plan.get("priority_reason", "")
-                            if "Feedback generation failed:" in priority_reason:
-                                error_message = priority_reason.split("Feedback generation failed:")[-1].strip()
-                            break
-                    
-                    if is_fallback:
-                        logger.warning(f"[Task1Pipeline] Teacher returned fallback response: {error_message}")
-                        result["teacher_feedback"] = None
-                        result["teacher_feedback_status"] = "error"
-                        result["teacher_feedback_message"] = error_message or "Feedback generation failed. Please check your OpenRouter API key and try again."
-                    else:
-                        result["teacher_feedback"] = feedback_dict
-                        result["teacher_feedback_status"] = "complete"
-                        
-                        if return_markdown:
-                            result["feedback_markdown"] = self.teacher.format_as_markdown(teacher_feedback)
-                    
-                except asyncio.TimeoutError:
-                    teacher_time = asyncio.get_event_loop().time() - teacher_start
-                    logger.warning(f"[Task1Pipeline] Teacher timed out after {teacher_time:.1f}s")
-                    
-                    result["teacher_feedback"] = None
-                    result["teacher_feedback_status"] = "timeout"
-                    result["teacher_feedback_message"] = "Detailed feedback timed out. Examiner scores are available."
-                    result["timing"]["teacher"] = round(teacher_time, 2)
-                    
-                except Exception as e:
-                    logger.error(f"[Task1Pipeline] Teacher error: {e}")
-                    
-                    result["teacher_feedback"] = None
-                    result["teacher_feedback_status"] = "error"
-                    result["teacher_feedback_message"] = str(e)
+            # ============== TEACHER FEEDBACK DEPRECATED ==============
+            # Teacher Agent has been replaced by Explanation Agent
+            # The explanations field now provides all criterion-specific feedback
+            result["teacher_feedback"] = None
+            result["teacher_feedback_status"] = "not_requested"
+            
             
             logger.info(f"[Task1Pipeline] Complete. Overall: {result['scores']['overall_band']}")
             return result
@@ -252,6 +183,7 @@ class Task1Pipeline:
         student_name: str = "Student",
         chart_type: str = None,
         image_url: str = None,
+        image_description: str = None,
         previous_errors: List[str] = None,
         attempt_number: int = 1,
         include_teacher_feedback: bool = True,
@@ -278,6 +210,7 @@ class Task1Pipeline:
                 student_name=student_name,
                 chart_type=chart_type,
                 image_url=image_url,
+                image_description=image_description,
                 previous_errors=previous_errors,
                 attempt_number=attempt_number,
                 include_teacher_feedback=include_teacher_feedback,
@@ -290,7 +223,8 @@ class Task1Pipeline:
         essay: str,
         question: str,
         chart_type: str = None,
-        image_url: str = None
+        image_url: str = None,
+        image_description: str = None
     ) -> Dict[str, Any]:
         """
         Fast evaluation - examiner only, no teacher feedback.
@@ -306,7 +240,8 @@ class Task1Pipeline:
                     essay=essay,
                     question=question,
                     image_url=image_url,
-                    chart_type=chart_type
+                    chart_type=chart_type,
+                    image_description=image_description
                 ),
                 timeout=self.EXAMINER_TIMEOUT
             )

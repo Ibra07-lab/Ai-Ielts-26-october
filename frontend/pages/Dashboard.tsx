@@ -39,28 +39,29 @@ export default function Dashboard() {
   });
 
   // Dashboard tasks (compact list)
-  const { data: dashTasks } = useQuery({
-    queryKey: ["dashboard-tasks", user?.id, range],
-    queryFn: () => user ? progressApi.listTasks(user.id, "daily", "all") : Promise.resolve({ tasks: [] }),
+  const { data: dashTasksRes } = useQuery({
+    queryKey: ["glow-tasks", user?.id, range],
+    queryFn: () => user ? progressApi.listTasks(user.id, range, "all") : Promise.resolve({ tasks: [] }),
     enabled: !!user,
   });
+  const dashTasks = dashTasksRes?.tasks ?? [];
 
   const createTask = useMutation({
     mutationFn: progressApi.createTask,
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["dashboard-tasks"] });
+      qc.invalidateQueries({ queryKey: ["glow-tasks"] });
     },
   });
   const updateTask = useMutation({
     mutationFn: ({ id, updates }: { id: string; updates: Parameters<typeof progressApi.updateTask>[1] }) => progressApi.updateTask(id, updates),
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["dashboard-tasks"] });
+      qc.invalidateQueries({ queryKey: ["glow-tasks"] });
     },
   });
   const acceptPlan = useMutation({
     mutationFn: progressApi.acceptSuggestions,
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["dashboard-tasks"] });
+      qc.invalidateQueries({ queryKey: ["glow-tasks"] });
     },
   });
 
@@ -115,7 +116,9 @@ export default function Dashboard() {
     },
   ];
 
-  const progressPercentage = 0;
+  const totalTasks = dashTasks.length;
+  const doneTasks = dashTasks.filter((t: any) => t.status === "completed").length;
+  const progressPercentage = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
 
   const currentHour = new Date().getHours();
   const timeOfDay = currentHour < 12 ? 'morning' : currentHour < 18 ? 'afternoon' : 'evening';
@@ -342,83 +345,98 @@ export default function Dashboard() {
         </div>
 
         {/* Vocabulary Builder */}
-        <div>
-          <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white flex items-center gap-2">
-            📖 <span>Vocabulary Builder</span>
-          </h2>
-          <div className="relative group overflow-hidden rounded-3xl bg-gradient-to-br from-orange-500 via-amber-500 to-yellow-500 p-1">
-            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
-            <div className="relative h-full bg-white dark:bg-neutral-900/90 rounded-[22px] overflow-hidden backdrop-blur-xl transition-all duration-500 group-hover:bg-white/90 dark:group-hover:bg-neutral-900/80">
-              {/* Decorative Blobs */}
-              <div className="absolute -top-24 -right-24 w-64 h-64 bg-orange-400/20 rounded-full blur-3xl group-hover:bg-orange-400/30 transition-all duration-500"></div>
-              <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-yellow-400/20 rounded-full blur-3xl group-hover:bg-yellow-400/30 transition-all duration-500"></div>
+        <div className="relative group">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+              <span className="p-2 rounded-xl bg-orange-500/10 text-orange-500">
+                <BookOpen className="h-6 w-6" />
+              </span>
+              <span>Vocabulary Builder</span>
+            </h2>
+          </div>
 
-              <div className="relative p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-8">
-                <div className="flex-1 space-y-6 text-center md:text-left">
-                  <div className="space-y-2">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 text-xs font-bold uppercase tracking-wider">
-                      <Star className="h-3 w-3 fill-current" />
-                      Premium Feature
-                    </div>
-                    <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight">
-                      Vocabulary <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500">Builder</span>
-                    </h2>
-                    <p className="text-lg text-gray-600 dark:text-gray-300 max-w-xl leading-relaxed">
-                      Master high-frequency IELTS words with our scientifically proven spaced repetition system.
-                    </p>
+          <div className="relative overflow-hidden rounded-[2.5rem] bg-slate-900 dark:bg-[#0B0F19] border border-white/10 shadow-2xl transition-all duration-500 hover:shadow-orange-500/10">
+            {/* Animated Background Blobs */}
+            <div className="absolute top-0 right-0 -mt-20 -mr-20 w-96 h-96 bg-orange-600/10 rounded-full blur-[100px] group-hover:bg-orange-600/20 transition-all duration-700"></div>
+            <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-amber-600/10 rounded-full blur-[80px]"></div>
+
+            <div className="relative p-8 sm:p-12 flex flex-col lg:flex-row items-center justify-between gap-12">
+              <div className="flex-1 space-y-8 text-center lg:text-left">
+                <div className="space-y-4">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-orange-400 text-xs font-bold uppercase tracking-widest shadow-sm ring-1 ring-orange-500/20">
+                    <Star className="h-3 w-3 fill-current animate-pulse" />
+                    Premium Feature
                   </div>
-
-                  <div className="flex flex-wrap justify-center md:justify-start gap-4">
-                    <div className="flex items-center gap-2 text-sm font-medium text-gray-500 dark:text-gray-400">
-                      <div className="p-1.5 rounded-full bg-orange-100 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400">
-                        <Target className="h-4 w-4" />
-                      </div>
-                      Context Learning
-                    </div>
-                    <div className="flex items-center gap-2 text-sm font-medium text-gray-500 dark:text-gray-400">
-                      <div className="p-1.5 rounded-full bg-amber-100 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400">
-                        <Clock className="h-4 w-4" />
-                      </div>
-                      Spaced Repetition
-                    </div>
-                    <div className="flex items-center gap-2 text-sm font-medium text-gray-500 dark:text-gray-400">
-                      <div className="p-1.5 rounded-full bg-yellow-100 dark:bg-yellow-500/10 text-yellow-600 dark:text-yellow-400">
-                        <Award className="h-4 w-4" />
-                      </div>
-                      Smart Tracking
-                    </div>
-                  </div>
-
-                  <Button
-                    onClick={() => navigate("/vocabulary")}
-                    size="lg"
-                    className="h-14 px-8 text-lg font-bold rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-105 transition-all duration-300"
-                  >
-                    Start Learning Now <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
+                  <h2 className="text-4xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+                    Vocabulary <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-400">Builder</span>
+                  </h2>
+                  <p className="text-lg text-slate-300 max-w-xl leading-relaxed font-medium">
+                    Master high-frequency IELTS words with our scientifically proven spaced repetition system.
+                  </p>
                 </div>
 
-                {/* Visual Element */}
-                <div className="relative w-full md:w-auto flex justify-center">
-                  <div className="relative w-64 h-64">
-                    <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-full opacity-20 animate-pulse blur-2xl"></div>
-                    <div className="relative z-10 w-full h-full bg-gradient-to-br from-white to-orange-50 dark:from-neutral-800 dark:to-neutral-900 rounded-3xl border border-white/20 shadow-2xl flex items-center justify-center transform rotate-6 hover:rotate-0 transition-all duration-500">
-                      <div className="text-center space-y-2">
-                        <div className="text-6xl">📚</div>
-                        <div className="font-bold text-gray-900 dark:text-white">Word of the Day</div>
-                        <div className="text-sm text-orange-500 font-medium">Click to reveal</div>
-                      </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 auto-rows-fr">
+                  <div className="flex flex-col items-center lg:items-start gap-3 p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-colors">
+                    <div className="p-2 rounded-lg bg-orange-500/20 text-orange-400">
+                      <Target className="h-5 w-5" />
+                    </div>
+                    <span className="text-sm font-bold text-slate-200">Context Learning</span>
+                  </div>
+                  <div className="flex flex-col items-center lg:items-start gap-3 p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-colors">
+                    <div className="p-2 rounded-lg bg-amber-500/20 text-amber-400">
+                      <Clock className="h-5 w-5" />
+                    </div>
+                    <span className="text-sm font-bold text-slate-200">Spaced Repetition</span>
+                  </div>
+                  <div className="flex flex-col items-center lg:items-start gap-3 p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-colors">
+                    <div className="p-2 rounded-lg bg-yellow-500/20 text-yellow-400">
+                      <Award className="h-5 w-5" />
+                    </div>
+                    <span className="text-sm font-bold text-slate-200">Smart Tracking</span>
+                  </div>
+                </div>
 
-                      {/* Floating badges */}
-                      <div className="absolute -top-4 -right-4 px-3 py-1 bg-white dark:bg-neutral-800 rounded-full shadow-lg border border-gray-100 dark:border-white/10 text-xs font-bold text-green-500 flex items-center gap-1 animate-bounce">
-                        <CheckCircle className="h-3 w-3" /> Learned
+                <Button
+                  onClick={() => navigate("/vocabulary")}
+                  size="lg"
+                  className="shimmer-btn h-16 px-10 text-lg font-black rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white shadow-xl shadow-orange-500/20 hover:shadow-orange-500/40 hover:-translate-y-1 transition-all duration-300 border-0"
+                >
+                  Start Learning Now <ArrowRight className="ml-2 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </div>
+
+              {/* Visual Element: Premium Card Stack */}
+              <div className="relative w-full lg:w-80 h-80 perspective-container">
+                <div className="card-stack">
+                  {/* Decorative Back Cards */}
+                  <div className="card-stack-item card-stack-item-1"></div>
+                  <div className="card-stack-item card-stack-item-2"></div>
+
+                  {/* Main Card */}
+                  <div className="card-stack-item card-stack-item-3 overflow-hidden bg-gradient-to-br from-neutral-800 to-neutral-900 border border-white/20 shadow-2xl flex flex-col items-center justify-center group/card cursor-pointer">
+                    <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none"></div>
+                    <div className="relative z-10 text-center space-y-4 p-8">
+                      <div className="inline-block p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md mb-2 transition-transform group-hover/card:scale-110 duration-500">
+                        <BookOpen className="h-12 w-12 text-orange-400" />
                       </div>
-                      <div className="absolute -bottom-4 -left-4 px-3 py-1 bg-white dark:bg-neutral-800 rounded-full shadow-lg border border-gray-100 dark:border-white/10 text-xs font-bold text-blue-500 flex items-center gap-1 animate-bounce delay-700">
-                        <TrendingUp className="h-3 w-3" /> +15 XP
+                      <div className="space-y-1">
+                        <h4 className="text-2xl font-bold text-white leading-tight">Word of the Day</h4>
+                        <p className="text-orange-400 font-bold text-sm tracking-widest uppercase">Click to reveal</p>
                       </div>
+                    </div>
+
+                    {/* Floating Premium Badges */}
+                    <div className="absolute top-6 right-6 px-3 py-1 bg-emerald-500/20 backdrop-blur-lg rounded-full border border-emerald-500/30 text-[10px] font-black text-emerald-400 flex items-center gap-1 shadow-lg animate-bounce">
+                      <CheckCircle className="h-3 w-3" /> LEARNED
+                    </div>
+                    <div className="absolute bottom-6 left-6 px-3 py-1 bg-sky-500/20 backdrop-blur-lg rounded-full border border-sky-500/30 text-[10px] font-black text-sky-400 flex items-center gap-1 shadow-lg animate-bounce delay-700">
+                      <TrendingUp className="h-3 w-3" /> +15 XP
                     </div>
                   </div>
                 </div>
+
+                {/* Ambient Glow */}
+                <div className="absolute inset-0 bg-orange-500/10 rounded-full blur-[60px] -z-10 group-hover:bg-orange-500/20 transition-all duration-700"></div>
               </div>
             </div>
           </div>
@@ -426,8 +444,11 @@ export default function Dashboard() {
 
         {/* Quick Stats */}
         <div>
-          <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white flex items-center gap-2">
-            📊 <span>Your Progress</span>
+          <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white flex items-center gap-3">
+            <span className="p-2 rounded-xl bg-sky-500/10 text-sky-500">
+              <TrendingUp className="h-6 w-6" />
+            </span>
+            <span>Your Progress</span>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Card className="bg-gradient-to-br from-sky-50 to-blue-50 dark:from-sky-950/20 dark:to-blue-950/20 border-2 border-sky-100 hover:shadow-lg transition-shadow">

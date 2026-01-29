@@ -9,7 +9,7 @@ Task 1 requires candidates to describe visual information:
 Key focus: Data accuracy, overview, key features, comparisons
 """
 
-from .shared_descriptors import (
+from ielts_writing.agents.prompts.shared_descriptors import (
     EXAMINER_BASE_INSTRUCTIONS,
     COHERENCE_COHESION_DESCRIPTORS,
     LEXICAL_RESOURCE_DESCRIPTORS,
@@ -454,7 +454,7 @@ Real IELTS examiners are STRICT. If you're unsure between two bands, choose the 
 
 def get_task1_examiner_system_prompt() -> str:
     """Assemble complete Task 1 examiner system prompt."""
-    from .shared_descriptors import get_shared_examiner_prompt
+    from ielts_writing.agents.prompts.shared_descriptors import get_shared_examiner_prompt
     
     return f"""You are a certified IELTS examiner evaluating Task 1 (Academic) responses.
 

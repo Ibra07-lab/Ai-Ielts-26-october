@@ -32,7 +32,7 @@ export const HighlightedEssay: React.FC<HighlightedEssayProps> = ({ essayText, h
 
     if (validHighlights.length === 0) {
         return (
-            <div className="bg-white dark:bg-neutral-900/90 p-10 rounded-3xl border border-slate-200 dark:border-white/5 shadow-2xl min-h-full font-serif text-[20px] leading-[1.8] text-slate-800 dark:text-slate-100/90 tracking-wide selection:bg-teal-500/30">
+            <div className="font-serif text-[20px] leading-[1.8] text-slate-800 dark:text-slate-100/90 tracking-wide selection:bg-teal-500/30">
                 {essayText}
             </div>
         );
@@ -44,7 +44,7 @@ export const HighlightedEssay: React.FC<HighlightedEssayProps> = ({ essayText, h
     const parts = essayText.split(regex);
 
     return (
-        <div className="bg-white dark:bg-neutral-900/90 p-10 rounded-3xl border border-slate-200 dark:border-white/5 shadow-2xl min-h-full font-serif text-[20px] leading-[1.8] text-slate-800 dark:text-slate-100/90 tracking-wide selection:bg-teal-500/30 overflow-y-auto custom-scrollbar relative">
+        <div className="font-serif text-[20px] leading-[1.8] text-slate-800 dark:text-slate-100/90 tracking-wide selection:bg-teal-500/30 overflow-y-auto custom-scrollbar relative">
             {/* Subtle Paper Texture for Light Mode */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')] dark:hidden" />
 
@@ -58,10 +58,10 @@ export const HighlightedEssay: React.FC<HighlightedEssayProps> = ({ essayText, h
                             <mark
                                 key={index}
                                 className={cn(
-                                    "px-1 mx-0.5 rounded-sm transition-all duration-300 font-medium cursor-help",
+                                    "transition-all duration-300 font-bold cursor-help text-inherit",
                                     matchedHighlight.type === 'strength'
-                                        ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-500/10 dark:text-emerald-400 border-b-2 border-emerald-500/30 hover:bg-emerald-200 dark:hover:bg-emerald-500/20 shadow-[0_4px_12px_rgba(16,185,129,0.05)]"
-                                        : "bg-amber-100 text-amber-800 dark:bg-amber-500/10 dark:text-amber-400 border-b-2 border-amber-500/30 hover:bg-amber-200 dark:hover:bg-amber-500/20 shadow-[0_4px_12px_rgba(245,158,11,0.05)]"
+                                        ? "bg-[#0f172a] border-b-2 border-emerald-500/60 rounded-t-lg px-2 py-0.5 mx-0.5 shadow-lg"
+                                        : "bg-[#0f172a] border-b-2 border-dotted border-amber-500/60 rounded-t-lg px-2 py-0.5 mx-0.5 shadow-lg"
                                 )}
                                 title={matchedHighlight.type === 'strength' ? "Effective usage" : "Area for improvement"}
                             >

@@ -24,6 +24,10 @@ export const environmentTopicData: TopicData = {
         description: "Key environmental and sustainability vocabulary",
         wordsCount: 5,
         color: "bg-green-500",
+        ieltsSection: "listening",
+        status: "new",
+        previewWords: ["sustainable", "mitigate", "biodiversity"],
+        progress: 0,
     },
 
     words: [

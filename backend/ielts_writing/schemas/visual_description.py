@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any, Literal, Union
 from enum import Enum
 
-from .task1 import ChartType
+from ielts_writing.schemas.task1 import ChartType
 
 
 # ============================================================

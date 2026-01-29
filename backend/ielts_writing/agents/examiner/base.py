@@ -1,8 +1,8 @@
 import json
 import os
 import httpx
-from ...models import ExaminerEvaluation, TaskType
-from ...prompts.examiner import EXAMINER_SYSTEM_PROMPT, build_examiner_prompt
+from ielts_writing.models import ExaminerEvaluation, TaskType
+from ielts_writing.prompts.examiner import EXAMINER_SYSTEM_PROMPT, build_examiner_prompt
 from agents.direct_llm_client import DirectLLMClient
 
 

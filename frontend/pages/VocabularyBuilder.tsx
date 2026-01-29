@@ -96,7 +96,7 @@ export default function VocabularyBuilder() {
   const selectedTopic = topics.find(t => t.id === selectedTopicId);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-neutral-950 p-6">
+    <div className="min-h-screen bg-gray-50 dark:bg-background p-6">
       <div className="max-w-6xl mx-auto">
         {view === "dashboard" && (
           <VocabularyDashboard

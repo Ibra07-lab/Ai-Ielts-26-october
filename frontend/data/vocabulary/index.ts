@@ -15,11 +15,13 @@ import { TopicData } from "./types";
 import { businessTopicData } from "./business";
 import { environmentTopicData } from "./environment";
 
+import { educationTopicData } from "./education";
+
 // Export all topics
 export const allTopics: TopicData[] = [
     businessTopicData,
     environmentTopicData,
-    // Add new topics here
+    educationTopicData,
 ];
 
 // Helper functions to get specific data

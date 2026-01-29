@@ -11,7 +11,7 @@ import re
 from typing import List, Set, Tuple
 from difflib import SequenceMatcher
 
-from ..schemas.visual_description import (
+from ielts_writing.schemas.visual_description import (
     StructuredVisualDescription,
     VisualFeature,
     FeatureCoverageAnalysis,

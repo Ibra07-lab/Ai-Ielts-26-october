@@ -8,9 +8,9 @@ from __future__ import annotations
 
 import json
 import os
-from ...models import TaskType, ExaminerEvaluation
-from .base import ExaminerAgent
-from ..prompts.task1_prompt import get_task1_examiner_system_prompt
+from ielts_writing.models import TaskType, ExaminerEvaluation
+from ielts_writing.agents.examiner.base import ExaminerAgent
+from ielts_writing.agents.prompts.task1_prompt import get_task1_examiner_system_prompt
 from agents.direct_llm_client import DirectLLMClient
 
 
@@ -18,7 +18,8 @@ def build_task1_examiner_user_prompt(
     question: str,
     essay: str,
     image_url: str = None,
-    chart_type: str = None
+    chart_type: str = None,
+    image_description: str = None
 ) -> str:
     """Build the user prompt for Task 1 Examiner with word count analysis.
     
@@ -27,6 +28,9 @@ def build_task1_examiner_user_prompt(
         essay: The student's essay
         image_url: Optional URL to chart/graph image
         chart_type: Optional type of chart (line_graph, bar_chart, etc.)
+        image_description: Optional text description of the chart (IMAGE_METADATA).
+                          When provided, this is used as the source of truth
+                          instead of analyzing the image.
         
     Returns:
         Formatted user prompt string
@@ -55,8 +59,41 @@ def build_task1_examiner_user_prompt(
 
 """
     
-    # Add image/chart information if provided
-    prompt += f"""### Visual Data
+    # Add image/chart information or text description
+    if image_description:
+        # Handle dict or string description
+        desc_text = image_description
+        if isinstance(image_description, dict):
+            desc_text = json.dumps(image_description, indent=2)
+            
+        # Use provided text description as source of truth
+        prompt += f"""### IMAGE METADATA (Source of Truth)
+Chart Type: {chart_type or "Not specified"}
+
+The following is the FACTUAL DESCRIPTION of the visual data. Use this as the ABSOLUTE SOURCE OF TRUTH when evaluating the student's essay.
+
+---
+{desc_text}
+---
+
+⚠️ DATA VERIFICATION REQUIRED (CRITICAL):
+1. If the student mentions data NOT in this metadata → FLAG as "Hallucination" in red_flags
+2. If the student misses a "Key Trend" from the metadata → LOWER their Task Achievement score
+3. Verify ALL numbers mentioned in the essay against this metadata
+4. Check that trends described match the metadata exactly
+5. Note any made-up or incorrect figures as red flags
+
+For the 'visual_description' field in your response:
+- Copy the key data from this metadata into a structured format.
+- Include 'key_features' from the metadata (treat these as MANDATORY features).
+- DYNAMIC DISCOVERY: If the student identifies a valid trend, comparison, or extreme using the provided 'data_points' that was NOT in my metadata, ADD it to the 'key_features' list in your response. 
+- This ensures downstream agents (Teacher/Explanation) reward the student for valid insights.
+- Include chart_type, data_points, and text_summary as usual.
+
+"""
+    else:
+        # Use image analysis (original behavior)
+        prompt += f"""### Visual Data
 Chart Type: {chart_type or "Not specified"}
 Image: Visual data is provided
 
@@ -120,9 +157,18 @@ class Task1Examiner(ExaminerAgent):
         question: str,
         image_url: str | None = None,
         chart_type: str | None = None,
+        image_description: str | None = None,
     ) -> dict:
         """
         Evaluate Task 1 essay using calibration reminder prompts.
+        
+        Args:
+            essay: The student's essay text
+            question: The task question/prompt
+            image_url: Optional URL to chart/graph image
+            chart_type: Optional type of chart (line_graph, bar_chart, etc.)
+            image_description: Optional text description of the chart (IMAGE_METADATA).
+                              When provided, this is used instead of image analysis.
         
         Returns dict (not ExaminerEvaluation) for pipeline compatibility.
         """
@@ -135,10 +181,12 @@ class Task1Examiner(ExaminerAgent):
             essay=essay,
             image_url=image_url,
             chart_type=chart_type,
+            image_description=image_description,
         )
 
+        # Only process image if image_description is not provided
         image_data = None
-        if image_url:
+        if image_url and not image_description:
             image_data = self._prepare_image(image_url)
 
         # Call direct client
@@ -211,6 +259,7 @@ class Task1Examiner(ExaminerAgent):
         *,
         image_url: str | None = None,
         chart_type: str | None = None,
+        image_description: str | None = None,
     ) -> ExaminerEvaluation:
         """Convenience wrapper that returns ExaminerEvaluation for backward compatibility."""
         result = await self.evaluate(
@@ -218,6 +267,7 @@ class Task1Examiner(ExaminerAgent):
             question=question,
             image_url=image_url,
             chart_type=chart_type,
+            image_description=image_description,
         )
         
         # Convert dict to ExaminerEvaluation

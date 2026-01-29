@@ -197,8 +197,18 @@ class TaskAchievementFeedback(BaseModel):
     
     # General feedback components
     what_it_measures: List[str]
-    strengths: List[StrengthItem]
-    weakness_patterns: List[WeaknessPattern]
+    strengths: List[StrengthItem] = Field(
+        ...,
+        min_length=2,
+        max_length=5,
+        description="2-5 specific strengths with exact quotes from the essay"
+    )
+    weakness_patterns: List[WeaknessPattern] = Field(
+        ...,
+        min_length=2,
+        max_length=5,
+        description="2-5 recurring error patterns sorted by score_impact (high→medium→low)"
+    )
     tips: List[Tip]
     micro_task: MicroTask
     
@@ -220,8 +230,18 @@ class CoherenceCohesionFeedback(BaseModel):
     logical_data_grouping: bool   # Did they group data logically?
     
     what_it_measures: List[str]
-    strengths: List[StrengthItem]
-    weakness_patterns: List[WeaknessPattern]
+    strengths: List[StrengthItem] = Field(
+        ...,
+        min_length=2,
+        max_length=5,
+        description="2-5 specific strengths with exact quotes from the essay"
+    )
+    weakness_patterns: List[WeaknessPattern] = Field(
+        ...,
+        min_length=2,
+        max_length=5,
+        description="2-5 recurring error patterns sorted by score_impact (high→medium→low)"
+    )
     tips: List[Tip]
     micro_task: MicroTask
     
@@ -245,8 +265,18 @@ class LexicalResourceFeedback(BaseModel):
     spelling_issues: List[str]  # List of misspelled words
     
     what_it_measures: List[str]
-    strengths: List[StrengthItem]
-    weakness_patterns: List[WeaknessPattern]
+    strengths: List[StrengthItem] = Field(
+        ...,
+        min_length=2,
+        max_length=5,
+        description="2-5 specific strengths with exact quotes from the essay"
+    )
+    weakness_patterns: List[WeaknessPattern] = Field(
+        ...,
+        min_length=2,
+        max_length=5,
+        description="2-5 recurring error patterns sorted by score_impact (high→medium→low)"
+    )
     tips: List[Tip]
     micro_task: MicroTask
     
@@ -270,8 +300,18 @@ class GrammaticalRangeFeedback(BaseModel):
     sentence_variety: Literal["excellent", "good", "adequate", "limited"]
     
     what_it_measures: List[str]
-    strengths: List[StrengthItem]
-    weakness_patterns: List[WeaknessPattern]
+    strengths: List[StrengthItem] = Field(
+        ...,
+        min_length=2,
+        max_length=5,
+        description="2-5 specific strengths with exact quotes from the essay"
+    )
+    weakness_patterns: List[WeaknessPattern] = Field(
+        ...,
+        min_length=2,
+        max_length=5,
+        description="2-5 recurring error patterns sorted by score_impact (high→medium→low)"
+    )
     tips: List[Tip]
     micro_task: MicroTask
     

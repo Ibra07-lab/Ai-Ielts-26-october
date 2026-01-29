@@ -3,10 +3,10 @@ Task 1 specific schemas.
 """
 
 from pydantic import BaseModel, Field
-from typing import List, Optional, Literal, Union, Any
+from typing import List, Optional, Literal, Union, Any, Dict
 from enum import Enum
 
-from .base import (
+from ielts_writing.schemas.base import (
     StatusLevel,
     CriterionScoreBase,
     BandRange,
@@ -68,6 +68,10 @@ class Task1ExaminerRequest(BaseModel):
     question: str = Field(description="The task question/prompt")
     image_url: Optional[str] = Field(default=None, description="URL to chart/graph image")
     chart_type: Optional[ChartType] = Field(default=None, description="Type of visual")
+    image_description: Optional[Union[str, Dict[str, Any]]] = Field(
+        default=None, 
+        description="Text or structured description of the chart/image (IMAGE_METADATA). When provided, this is used as the source of truth instead of analyzing the image."
+    )
     
 
 class Task1ExaminerResponse(BaseModel):

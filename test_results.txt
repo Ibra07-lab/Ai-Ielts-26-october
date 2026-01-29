@@ -1,0 +1,159 @@
+﻿python : 2026-01-25 00:04:01,
+663 - ielts_writing.agents.ex
+planation_agent - INFO - Task
+1ExplanationAgent initialized
+ with claude-sonnet-4-5-20250
+929
+строка:1 знак:1
++ python test_image_descripti
+on.py 2>&1 | Out-File -FilePa
+th "test_resu ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~
+    + CategoryInfo          :
+ NotSp    ecified: (2026-01-2
+5 00:0...et-    4-5-20250929:
+String) [], Remote    Excepti
+on
+    + FullyQualifiedErrorId :
+ Nativ    eCommandError
+ 
+2026-01-25 00:04:01,663 - iel
+ts_writing.pipelines.task1_pi
+peline - INFO - [Task1Pipelin
+e] Starting async evaluation 
+for Student
+2026-01-25 00:04:01,663 - iel
+ts_writing.pipelines.task1_pi
+peline - INFO - [Task1Pipelin
+e] Running examiner...
+2026-01-25 00:04:26,429 - htt
+px - INFO - HTTP Request: POS
+T https://api.anthropic.com/v
+1/messages "HTTP/1.1 200 OK"
+2026-01-25 00:04:26,431 - iel
+ts_writing.pipelines.task1_pi
+peline - INFO - [Task1Pipelin
+e] Examiner complete in 24.8s
+2026-01-25 00:04:26,431 - iel
+ts_writing.pipelines.task1_pi
+peline - INFO - [Task1Pipelin
+e] Generating criterion expla
+nations...
+2026-01-25 00:04:26,432 - iel
+ts_writing.agents.explanation
+_agent - INFO - Generating ex
+planations for all 4 criteria
+...
+2026-01-25 00:04:26,432 - iel
+ts_writing.agents.explanation
+_agent - INFO - Generating ta
+sk_achievement explanation...
+2026-01-25 00:04:44,189 - htt
+px - INFO - HTTP Request: POS
+T https://api.anthropic.com/v
+1/messages "HTTP/1.1 200 OK"
+2026-01-25 00:04:44,191 - iel
+ts_writing.agents.explanation
+_agent - INFO - Generating co
+herence_cohesion explanation.
+..
+2026-01-25 00:05:02,067 - htt
+px - INFO - HTTP Request: POS
+T https://api.anthropic.com/v
+1/messages "HTTP/1.1 200 OK"
+2026-01-25 00:05:02,077 - iel
+ts_writing.agents.explanation
+_agent - INFO - Generating le
+xical_resource explanation...
+2026-01-25 00:05:18,524 - htt
+px - INFO - HTTP Request: POS
+T https://api.anthropic.com/v
+1/messages "HTTP/1.1 200 OK"
+2026-01-25 00:05:18,528 - iel
+ts_writing.agents.explanation
+_agent - ERROR - Failed to pa
+rse JSON: Expecting ':' delim
+iter: line 8 column 45 (char 
+391)
+2026-01-25 00:05:18,529 - iel
+ts_writing.agents.explanation
+_agent - ERROR - Raw response
+ saved to C:\Users\Honor\Desk
+top\═ютр  яряър (4)\Ai-Ielts-
+26-october\explanation_error_
+raw.txt
+2026-01-25 00:05:18,529 - iel
+ts_writing.agents.explanation
+_agent - ERROR - Error genera
+ting explanations: Expecting 
+':' delimiter: line 8 column 
+45 (char 391)
+2026-01-25 00:05:18,530 - iel
+ts_writing.pipelines.task1_pi
+peline - ERROR - [Task1Pipeli
+ne] Explanation error: Expect
+ing ':' delimiter: line 8 col
+umn 45 (char 391)
+2026-01-25 00:05:18,531 - iel
+ts_writing.pipelines.task1_pi
+peline - INFO - [Task1Pipelin
+e] Running teacher...
+2026-01-25 00:05:18,531 - iel
+ts_writing.pipelines.task1_pi
+peline - ERROR - [Task1Pipeli
+ne] Pipeline error: name 'Tas
+k1TeacherFeedbackRequest' is 
+not defined
+Testing Image Description Feature with Water Consumption Data...
+
+Running evaluation with PRO image_description...
+Traceback (most recent call l
+ast):
+  File "C:\Users\Honor\Deskto
+p\═ютр  яряър (4)\Ai-Ielts-26
+-october\test_image_descripti
+on.py", line 121, in <module>
+    asyncio.run(test_image_de
+scription())
+    ~~~~~~~~~~~^^^^^^^^^^^^^^
+^^^^^^^^^^^^
+  File "C:\Python313\Lib\asyn
+cio\runners.py", line 195, in
+ run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Python313\Lib\asyn
+cio\runners.py", line 118, in
+ run
+    return self._loop.run_unt
+il_complete(task)
+           ~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~^^^^^^
+  File "C:\Python313\Lib\asyn
+cio\base_events.py", line 725
+, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\Honor\Deskto
+p\═ютр  яряър (4)\Ai-Ielts-26
+-october\test_image_descripti
+on.py", line 117, in test_ima
+ge_description
+    print("\n\u274c Evaluatio
+n Failed!")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+  File "C:\Python313\Lib\enco
+dings\cp1251.py", line 19, in
+ encode
+    return codecs.charmap_enc
+ode(input,self.errors,encodin
+g_table)[0]
+           ~~~~~~~~~~~~~~~~~~
+~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^
+UnicodeEncodeError: 'charmap'
+ codec can't encode character
+ '\u274c' in position 2: char
+acter maps to <undefined>

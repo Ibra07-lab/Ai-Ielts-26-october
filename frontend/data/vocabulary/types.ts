@@ -12,6 +12,14 @@ export interface WordData {
     context?: string;
     collocations?: string[];
     synonyms?: { word: string; level: string }[];
+    // New enhanced fields
+    type?: "academic" | "phrasal_verb" | "idiom";
+    cefrLevel?: string;  // e.g., "C1", "B2"
+    speakingExample?: string;
+    writingExample?: string;
+    antonyms?: string[];
+    relatedPhrasalVerbs?: string[];
+    pronunciation?: string;
 }
 
 export interface Topic {
@@ -21,35 +29,60 @@ export interface Topic {
     description: string;
     wordsCount: number;
     color: string;
+    // New fields for redesign
+    ieltsSection?: "reading" | "writing" | "speaking" | "listening";
+    status?: "new" | "in_progress" | "mastered";
+    previewWords?: string[];
+    progress?: number;
 }
 
 export interface SynonymSwapExercise {
-    sentence: string;
-    targetWord: string;
-    options: Array<{
+    // Legacy format support
+    sentence?: string;
+    targetWord?: string;
+    options?: Array<{
         id: string;
         text: string;
         isCorrect: boolean;
         feedback: string;
     }>;
+    // New enhanced format
+    id?: number;
+    target_word?: string;
+    instruction?: string;
+    sentence_original?: string;
+    replace_this?: string;
+    sentence_answer?: string;
 }
 
 export interface ContextTetrisExercise {
-    paragraph: string;
-    gaps: Array<{
+    // Legacy format support
+    paragraph?: string;
+    gaps?: Array<{
         id: string;
         correctWordId: string;
         placeholder: string;
     }>;
-    bubbles: Array<{
+    bubbles?: Array<{
         id: string;
         text: string;
         isCorrect: boolean;
         feedback: string;
     }>;
+    // New enhanced format
+    id?: number;
+    set_name?: string;
+    instruction?: string;
+    word_bank?: string[];
+    items?: Array<{
+        item_id: number;
+        gap_sentence: string;
+        answer: string;
+    }>;
 }
 
 export interface SpeakToUnlockExercise {
+    id?: number;
     question: string;
     targetWords: string[];
 }

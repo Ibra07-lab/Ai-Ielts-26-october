@@ -147,6 +147,10 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
             teacher_feedback_status: data.teacher_feedback_status, // Don't override! Backend sends correct status
             feedback_markdown: data.feedback_markdown || null,
             teacher_feedback: data.teacher_feedback || null,
+            // Add explanations from backend
+            explanations: data.explanations || null,
+            explanations_status: data.explanations_status || null,
+            explanations_message: data.explanations_message || null,
             timing: data.timing || { examiner: 15.0, teacher: 30.0 }
           },
         };
@@ -501,7 +505,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
       {isTestStarted && selectedTest && (
         <div className={cn(
           "h-[calc(100vh-140px)] min-h-[600px] mx-auto animate-in fade-in duration-500 flex flex-col transition-all duration-300",
-          viewMode === "feedback" ? "w-full max-w-[98vw]" : "max-w-[1600px]"
+          viewMode === "feedback" ? "w-full max-w-[2000px]" : "max-w-[1600px]"
         )}>
 
           {/* Top Bar Navigation (Minimal) */}
@@ -559,6 +563,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                     onRetryFeedback={handleGetDetailedFeedback}
                     isLoadingFeedback={isGeneratingFeedback}
                     onBack={() => setViewMode("editor")}
+                    taskType={taskType as 1 | 2}
                   />
                 ) : (
                   <FeedbackContainer

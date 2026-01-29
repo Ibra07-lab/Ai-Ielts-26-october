@@ -2,8 +2,10 @@
 Teacher agents for IELTS Writing feedback.
 """
 
-from .task1_teacher import Task1Teacher
+# Task1Teacher has been removed (replaced by ExplanationAgent)
+# Task2Teacher is a placeholder for future implementation
+from .task2_teacher import Task2Teacher
 
 __all__ = [
-    "Task1Teacher"
+    "Task2Teacher"
 ]

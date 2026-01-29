@@ -41,13 +41,19 @@ For this criterion (Task Achievement) you must produce:
    - Sentence 1: overall judgment in simple words  
    - Sentence 2: main reason + missing piece
 
-2) what_you_did_well  → List ALL significant strengths matched with evidence  
+2) what_you_did_well  → List ALL significant strengths you can find.
+   ⚠️ CRITICAL: Find EVERY strength in the essay. Do NOT limit to just 2-4 items.
+   - If the student did 5 things well, list all 5.
+   - If they did 10 things well, list all 10.
    - Each item has:
      - label (3–6 words)
      - quote from essay
      - short comment (max 18 words)
 
-3) main_issues  → List ALL recurring error patterns involved  
+3) main_issues  → List ALL recurring error patterns you can find.
+   ⚠️ CRITICAL: Find EVERY mistake/pattern that lowered the score. Do NOT limit to just 2-3 items.
+   - If there are 5 different problems, list all 5.
+   - If there are 8 different problems, list all 8.
    For each pattern:
    - label: 3–6 words (e.g. "Weak overview", "Missing key feature")
    - why_it_matters: 1 sentence, max 18 words

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Sparkles, Wand2, CheckCircle, Circle, CircleDot, Plus, Calendar, Target } from "lucide-react";
+import { Sparkles, Wand2, CheckCircle, Circle, CircleDot, Plus, Calendar, Target, Trash2, BookOpen, PenTool, Mic, Headphones, Book, AlignLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
@@ -68,6 +68,15 @@ const CATEGORY_COLORS: Record<string, string> = {
   listening: "bg-gradient-to-r from-violet-400 to-fuchsia-500 shadow-[0_0_15px_rgba(167,139,250,0.6)]",
   vocabulary: "bg-gradient-to-r from-amber-400 to-orange-500 shadow-[0_0_15px_rgba(251,191,36,0.6)]",
   grammar: "bg-gradient-to-r from-slate-400 to-gray-500 shadow-[0_0_15px_rgba(148,163,184,0.6)]",
+};
+
+const CATEGORY_ICONS: Record<string, any> = {
+  reading: BookOpen,
+  writing: PenTool,
+  speaking: Mic,
+  listening: Headphones,
+  vocabulary: Book,
+  grammar: AlignLeft,
 };
 
 function computeCategorySegments(
@@ -223,27 +232,7 @@ export default function GlowingProgressCard({
           </div>
         </div>
 
-        {/* Plan Type Selector */}
-        <div onClick={(e) => e.stopPropagation()}>
-          <Select value={planType} onValueChange={(v) => handlePlanType(v as PlanType)}>
-            <SelectTrigger className={cn(
-              "h-8 rounded-full px-3 text-xs font-medium hover:text-white transition-colors focus:ring-0 focus:ring-offset-0 w-[110px]",
-              theme === "dark"
-                ? "bg-white/5 border-white/10 text-slate-200 hover:bg-white/10"
-                : "bg-slate-900/5 border-slate-200 text-slate-600 hover:bg-slate-900/10 hover:text-slate-900"
-            )}>
-              <SelectValue placeholder="Plan type" />
-            </SelectTrigger>
-            <SelectContent className={cn(
-              "border-slate-800",
-              theme === "dark" ? "bg-slate-900 text-slate-200" : "bg-white text-slate-900"
-            )}>
-              <SelectItem value="daily">Daily plan</SelectItem>
-              <SelectItem value="weekly">Weekly plan</SelectItem>
-              <SelectItem value="custom">Custom</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+
       </div>
 
       {/* Main Progress Area */}
@@ -275,29 +264,34 @@ export default function GlowingProgressCard({
 
         {/* Progress Bar */}
         <div className="relative h-4 w-full rounded-full bg-slate-200/50 ring-1 ring-black/5 overflow-hidden shadow-inner">
+          {/* Visual Gradient Background Layer */}
           <div
-            className="absolute inset-0 rounded-full transition-all duration-700 ease-out"
+            className="absolute inset-0 rounded-full transition-all duration-[4000ms] ease-in-out bg-gradient-to-r from-[#00d9dd] to-[#d8f77e] shadow-[0_0_15px_rgba(0,217,221,0.5)]"
+            style={{ width: `${derivedPercent}%` }}
+          />
+
+          {/* Glow/Blur Layer */}
+          <div
+            className="absolute inset-0 rounded-full transition-all duration-[4000ms] ease-in-out"
             style={{ width: `${derivedPercent}%` }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-blue-500 opacity-20 blur-sm"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#00d9dd] to-[#d8f77e] opacity-50 blur-md"></div>
           </div>
 
+          {/* Interactive Segments Layer (Transparent) */}
           <div className="relative h-full w-full flex rounded-full overflow-hidden">
-            {computeCategorySegments(tasks, derivedPercent).map((seg, i) => {
-              const colorClass = CATEGORY_COLORS[seg.category] || "bg-slate-500";
-              return (
-                <div
-                  key={`${seg.category}-${i}`}
-                  className={`h-full ${colorClass} transition-all duration-500 hover:brightness-110`}
-                  style={{ width: `${seg.width}%` }}
-                  title={`${seg.category} • ${seg.width}%`}
-                />
-              );
-            })}
-            {/* Fallback fill if no categories but percent > 0 */}
-            {derivedPercent > 0 && tasks.filter(t => t.status === 'completed').length === 0 && (
-              <div className="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-full" style={{ width: `${derivedPercent}%` }} />
-            )}
+            {computeCategorySegments(tasks, derivedPercent)
+              .sort((a, b) => a.category.localeCompare(b.category))
+              .map((seg, i) => {
+                return (
+                  <div
+                    key={`${seg.category}`}
+                    className="h-full bg-transparent transition-colors duration-300 hover:bg-white/20 cursor-help"
+                    style={{ width: `${seg.width}%` }}
+                    title={`${seg.category} • ${seg.width}%`}
+                  />
+                );
+              })}
           </div>
         </div>
       </div>
@@ -333,37 +327,7 @@ export default function GlowingProgressCard({
           </Button>
         </div>
 
-        {/* Due Date */}
-        <div className="relative" onClick={(e) => e.stopPropagation()}>
-          {!editingDue ? (
-            <button
-              type="button"
-              onClick={() => setEditingDue(true)}
-              className={cn(
-                "flex items-center gap-2 text-xs font-medium transition-colors px-3 py-1.5 rounded-full hover:bg-black/5",
-                theme === "dark" ? "text-slate-400 hover:text-white" : "text-slate-500 hover:text-slate-900"
-              )}
-            >
-              <Calendar className="h-3.5 w-3.5" />
-              {dueISO ? dueDisplay : "Set due date"}
-            </button>
-          ) : (
-            <input
-              autoFocus
-              type="date"
-              className={cn(
-                "px-3 py-1.5 rounded-lg text-xs outline-none focus:border-indigo-500 transition-colors",
-                theme === "dark" ? "bg-slate-800 text-white border-slate-700" : "bg-white text-slate-900 border-slate-200"
-              )}
-              value={toInputDate(dueISO)}
-              onChange={handleDueInput}
-              onBlur={() => setEditingDue(false)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === "Escape") setEditingDue(false);
-              }}
-            />
-          )}
-        </div>
+
       </div>
 
       {/* Expanded Task List Area */}
@@ -390,72 +354,148 @@ export default function GlowingProgressCard({
               <p className={cn("text-xs mt-1", theme === "dark" ? "text-slate-500" : "text-slate-400")}>Add tasks to start tracking progress</p>
             </div>
           ) : (
-            <ul className="space-y-1">
+            <ul className="space-y-3">
               {tasks.map((t) => {
                 const isDone = t.status === "completed";
                 const isInProgress = t.status === "in_progress";
+                const Icon = CATEGORY_ICONS[t.category] || Target;
+
                 return (
                   <li
                     key={t.id}
                     className={cn(
-                      "group relative overflow-hidden rounded-xl transition-all duration-200",
-                      theme === "dark" ? "hover:bg-white/5" : "hover:bg-slate-900/5"
+                      "group relative overflow-hidden rounded-2xl transition-all duration-300 border",
+                      theme === "dark"
+                        ? "bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10 hover:shadow-lg hover:shadow-indigo-500/10"
+                        : "bg-white border-slate-100 hover:border-indigo-100 hover:shadow-md hover:-translate-y-0.5"
                     )}
                   >
-                    <div className="flex items-center gap-3 p-3">
+                    <div className={cn(
+                      "flex items-center gap-4 p-4 md:p-5 transition-opacity",
+                      isDone ? "opacity-60 grayscale hover:grayscale-0 hover:opacity-100" : "opacity-100"
+                    )}>
                       <button
                         type="button"
-                        className="flex-shrink-0 transition-transform active:scale-90"
+                        className={cn(
+                          "flex-shrink-0 transition-transform active:scale-95",
+                          isDone ? "opacity-100" : "opacity-70 group-hover:opacity-100"
+                        )}
                         onClick={async (e) => {
                           e.stopPropagation();
                           try {
-                            await toggleTaskStatus(
-                              t,
-                              progressApi.updateTask,
-                              async () => {
-                                await queryClient.invalidateQueries({ predicate: (q) => Array.isArray(q.queryKey) && q.queryKey[0] === "glow-tasks" });
-                                await queryClient.refetchQueries({ predicate: (q) => Array.isArray(q.queryKey) && q.queryKey[0] === "glow-tasks" });
-                              }
-                            );
+                            const nextStatus = isDone ? "planned" : "completed";
+                            // Optimistic Update
+                            queryClient.setQueryData<any>(["glow-tasks", user?.id, apiRange], (old: any) => {
+                              if (!old || !old.tasks) return old;
+                              return {
+                                ...old,
+                                tasks: old.tasks.map((task: any) =>
+                                  task.id === t.id ? { ...task, status: nextStatus } : task
+                                )
+                              };
+                            });
+
+                            await progressApi.updateTask(t.id, { status: nextStatus });
+                            await queryClient.invalidateQueries({
+                              predicate: (q) => Array.isArray(q.queryKey) && q.queryKey[0] === "glow-tasks"
+                            });
                           } catch (err) {
                             console.error("Failed to toggle task", err);
+                            // Revert on error
+                            await queryClient.invalidateQueries({
+                              predicate: (q) => Array.isArray(q.queryKey) && q.queryKey[0] === "glow-tasks"
+                            });
                           }
                         }}
                       >
                         {isDone ? (
-                          <CheckCircle className="h-5 w-5 text-emerald-500 fill-emerald-500/20" />
+                          <div className="h-8 w-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
+                            <CheckCircle className="h-5 w-5 text-emerald-500 fill-emerald-500/20" />
+                          </div>
                         ) : isInProgress ? (
-                          <CircleDot className="h-5 w-5 text-indigo-500" />
+                          <div className="h-8 w-8 rounded-full bg-indigo-500/20 flex items-center justify-center">
+                            <CircleDot className="h-5 w-5 text-indigo-500" />
+                          </div>
                         ) : (
-                          <Circle className="h-5 w-5 text-slate-300 group-hover:text-slate-500 transition-colors" />
+                          <div className={cn(
+                            "h-8 w-8 rounded-full border-2 flex items-center justify-center transition-colors",
+                            theme === "dark" ? "border-slate-700 group-hover:border-slate-500" : "border-slate-300 group-hover:border-indigo-300"
+                          )}>
+                            <Circle className={cn("h-5 w-5 transition-colors opacity-0 group-hover:opacity-100", theme === "dark" ? "text-slate-500" : "text-indigo-300")} />
+                          </div>
                         )}
                       </button>
 
-                      <div className="flex-1 min-w-0">
+                      {/* Icon Box */}
+                      <div className={cn(
+                        "hidden sm:flex items-center justify-center w-12 h-12 rounded-xl",
+                        theme === "dark" ? "bg-white/5" : "bg-slate-50"
+                      )}>
+                        <Icon className={cn("h-6 w-6", theme === "dark" ? "text-slate-400" : "text-slate-500")} />
+                      </div>
+
+                      <div className="flex-1 min-w-0 py-1">
                         <div className={cn(
-                          "text-sm font-medium transition-colors",
+                          "text-lg font-semibold transition-colors mb-1.5",
                           isDone
                             ? (theme === "dark" ? "text-slate-500 line-through decoration-slate-600" : "text-slate-400 line-through decoration-slate-300")
-                            : (theme === "dark" ? "text-slate-200 group-hover:text-white" : "text-slate-700 group-hover:text-slate-900")
+                            : (theme === "dark" ? "text-slate-100 group-hover:text-white" : "text-slate-800 group-hover:text-indigo-900")
                         )}>
                           {t.name}
                         </div>
-                        <div className="flex items-center gap-2 mt-0.5">
+                        <div className="flex flex-wrap items-center gap-3">
                           <span className={cn(
-                            "text-[10px] px-1.5 py-0.5 rounded font-medium border",
+                            "inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-md border",
                             isDone
                               ? (theme === "dark" ? "bg-slate-900/50 border-slate-800 text-slate-600" : "bg-slate-100 border-slate-200 text-slate-400")
-                              : "bg-indigo-500/10 border-indigo-500/20 text-indigo-600"
+                              : "bg-indigo-500/10 border-indigo-500/20 text-indigo-600 dark:text-indigo-400"
                           )}>
-                            {t.category}
+                            <Icon className="h-3 w-3" />
+                            <span className="capitalize">{t.category} Module</span>
                           </span>
+
                           {t.estimatedMinutes && (
-                            <span className="text-[10px] text-slate-500">
-                              {t.estimatedMinutes}m
+                            <span className={cn(
+                              "text-xs font-medium flex items-center gap-1",
+                              theme === "dark" ? "text-slate-500" : "text-slate-500"
+                            )}>
+                              <span className="w-1 h-1 rounded-full bg-slate-500 inline-block" />
+                              {t.estimatedMinutes} min
+                            </span>
+                          )}
+
+                          {t.dueAt && (
+                            <span className={cn(
+                              "text-xs font-medium flex items-center gap-1",
+                              theme === "dark" ? "text-slate-500" : "text-slate-500"
+                            )}>
+                              <span className="w-1 h-1 rounded-full bg-slate-500 inline-block" />
+                              {new Date(t.dueAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                             </span>
                           )}
                         </div>
                       </div>
+
+                      <button
+                        type="button"
+                        className={cn(
+                          "opacity-0 group-hover:opacity-100 transition-all p-2.5 rounded-xl hover:bg-rose-500/10 hover:text-rose-500 hover:scale-110 mr-2",
+                          theme === "dark" ? "text-slate-600" : "text-slate-300"
+                        )}
+                        onClick={async (e) => {
+                          e.stopPropagation();
+                          try {
+                            await progressApi.deleteTask(t.id);
+                            await queryClient.invalidateQueries({
+                              predicate: (q) => Array.isArray(q.queryKey) && q.queryKey[0] === "glow-tasks"
+                            });
+                          } catch (err) {
+                            console.error("Failed to delete task", err);
+                          }
+                        }}
+                      >
+                        <Trash2 className="h-5 w-5" />
+                      </button>
                     </div>
                   </li>
                 );

@@ -58,7 +58,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 onClick={() => navigate('/')}
                 aria-label="Go to Home"
               >
-                <div className="w-8 h-8 bg-black dark:bg-white rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-slate-900 dark:bg-white rounded-lg flex items-center justify-center">
                   <span className="text-white dark:text-black font-black text-xs">AI</span>
                 </div>
                 <span className="text-sky-600 dark:text-sky-400">IELTS AI</span>
