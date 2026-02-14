@@ -26,10 +26,10 @@ export default function AddTaskModal({
 	return (
 		<div className="fixed inset-0 z-50 flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
 			<div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
-			<Card className="relative w-full max-w-md mx-4 overflow-hidden border-slate-800 bg-slate-900/90 backdrop-blur-xl shadow-2xl">
+			<Card className="relative w-full max-w-md mx-4 overflow-hidden border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl shadow-2xl">
 				<CardContent className="p-6">
-					<h3 className="text-lg font-semibold mb-6 flex items-center gap-2 text-white">
-						<div className="p-1.5 rounded-lg bg-indigo-500/20 text-indigo-400">
+					<h3 className="text-lg font-semibold mb-6 flex items-center gap-2 text-slate-900 dark:text-white">
+						<div className="p-1.5 rounded-lg bg-indigo-50 border border-indigo-100 dark:bg-indigo-500/20 dark:border-0 text-indigo-600 dark:text-indigo-400">
 							<Plus className="h-4 w-4" />
 						</div>
 						Add Task
@@ -59,7 +59,8 @@ export default function AddTaskModal({
 						<Button
 							className="bg-indigo-500 hover:bg-indigo-400 text-white transition-all shadow-lg shadow-indigo-500/20"
 							onClick={() => {
-								onSubmit({ name, category, difficulty: "medium", estimatedMinutes: 30, dueAt: undefined });
+								const finalName = name.trim() || `${category.charAt(0).toUpperCase() + category.slice(1)} Task`;
+								onSubmit({ name: finalName, category, difficulty: "medium", estimatedMinutes: 30, dueAt: undefined });
 								onClose();
 								setName("");
 								setCategory("reading");

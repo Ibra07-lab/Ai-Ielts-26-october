@@ -14,7 +14,7 @@ const ReadingPracticeCard = () => {
         - Subtle border
         - Overflow hidden to contain the floating icons
       */}
-            <div className="relative overflow-hidden rounded-2xl bg-slate-800 border border-slate-700 p-6 shadow-xl transition-all duration-300 hover:shadow-2xl hover:border-emerald-500/50 h-full flex flex-col group-hover:shadow-emerald-500/20">
+            <div className="relative overflow-hidden rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 shadow-xl transition-all duration-300 hover:shadow-2xl hover:border-emerald-500/50 h-full flex flex-col group-hover:shadow-emerald-500/20">
 
                 {/* Hover Gradient Effect - The "Old Green Color Animation" */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-emerald-500/20 via-transparent to-transparent rounded-2xl pointer-events-none" />
@@ -55,7 +55,7 @@ const ReadingPracticeCard = () => {
                     {/* Header */}
                     <div className="flex justify-between items-start mb-6">
                         {/* Icon Box */}
-                        <div className="w-12 h-12 rounded-xl bg-teal-900/50 flex items-center justify-center border border-teal-800/50 text-emerald-400 group-hover:scale-110 transition-transform duration-300">
+                        <div className="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-teal-900/50 flex items-center justify-center border border-emerald-100 dark:border-teal-800/50 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform duration-300">
                             <BookOpen className="w-6 h-6" />
                         </div>
 
@@ -63,10 +63,10 @@ const ReadingPracticeCard = () => {
 
                     {/* Typography */}
                     <div className="mb-8">
-                        <h3 className="text-xl font-bold text-white mb-2 tracking-tight group-hover:text-white/90 transition-colors">
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 tracking-tight group-hover:text-slate-800 dark:group-hover:text-white/90 transition-colors">
                             Reading Practice
                         </h3>
-                        <p className="text-slate-400 text-sm leading-relaxed">
+                        <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
                             Enhance comprehension with practice passages designed to improve your reading speed and accuracy.
                         </p>
                     </div>
@@ -92,15 +92,18 @@ const ReadingPracticeCard = () => {
                         <div className="grid grid-cols-2 gap-3">
                             <button
                                 onClick={() => navigate('/reading/theory')}
-                                className="py-2.5 px-4 rounded-xl border border-slate-600 text-slate-300 font-medium hover:bg-slate-700 hover:text-white transition-colors text-sm hover:border-slate-500"
+                                className="py-2.5 px-4 rounded-xl border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 font-medium hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white transition-colors text-sm hover:border-slate-300"
                             >
                                 Basics
                             </button>
                             <button
                                 onClick={() => navigate('/reading/tutor-chat')}
-                                className="py-2.5 px-4 rounded-xl border border-slate-600 text-slate-300 font-medium hover:bg-slate-700 hover:text-white transition-colors text-sm hover:border-slate-500"
+                                className="relative inline-flex h-full w-full overflow-hidden rounded-xl p-[1px] focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-slate-50 group/magic"
                             >
-                                AI Tutor
+                                <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#34d399_0%,#6366f1_50%,#34d399_100%)]" />
+                                <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-xl bg-slate-900 px-3 py-2 text-sm font-bold text-emerald-100 backdrop-blur-3xl transition-colors group-hover/magic:bg-slate-800">
+                                    AI Tutor
+                                </span>
                             </button>
                         </div>
                     </div>

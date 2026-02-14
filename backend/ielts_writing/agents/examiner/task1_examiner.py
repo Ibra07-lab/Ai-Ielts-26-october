@@ -145,11 +145,24 @@ class Task1Examiner(ExaminerAgent):
 
     def __init__(self, model: str | None = None):
         # Default to environment variable or fallback to Claude Sonnet 4.5
+        import logging
+        logger = logging.getLogger(__name__)
+
         self.model = model or os.getenv(
             "IELTS_WRITING_MODEL",
             "claude-sonnet-4-5-20250929",
         )
+        
+        # Force reload .env if stale configuration detected
+        if self.model and "20250929" in self.model:
+            logger.warning("Stale configuration detected in Task1Examiner. Reloading .env...")
+            from dotenv import load_dotenv
+            load_dotenv(override=True)
+            self.model = os.getenv("IELTS_WRITING_MODEL", "anthropic/claude-sonnet-4.5")
+            logger.info(f"Reloaded configuration. New model: {self.model}")
+
         self.client = DirectLLMClient()
+        logger.info(f"Task1Examiner initialized with model: {self.model}")
 
     async def evaluate(
         self,

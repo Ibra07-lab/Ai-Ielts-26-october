@@ -6,7 +6,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import ReadingTheoryQuiz from "@/components/ReadingTheoryQuiz";
-import { Local } from "~backend/client";
+import { Local } from "@/backend";
 
 type TFNG = "True" | "False" | "Not Given";
 

@@ -130,33 +130,29 @@ export const getProgressSummary = api(
 // GET /progress/tasks
 export const listTasks = api(
 	{ expose: true, method: "GET", path: "/progress/tasks" },
-	async (params: { userId: number; range?: "daily" | "weekly"; status?: "all" | "planned" | "in-progress" | "completed" }): Promise<{ tasks: Task[] }> => {
-	  const { userId, range = "weekly", status = "all" } = params;
-	  const { from, to } = getRangeBounds(range);
-	  const statusFilter = mapStatusFilter(status);
-  
-	  let rows: any[];
-	  if (statusFilter) {
+	async (params: { userId: number; range?: "daily" | "weekly" | "monthly"; status?: "all" | "planned" | "in-progress" | "completed" }): Promise<{ tasks: Task[] }> => {
+		const { userId, range = "weekly", status = "all" } = params;
+		const { from, to } = getRangeBounds(range);
+		const statusFilter = mapStatusFilter(status);
+		const filterStatus = statusFilter ? statusFilter[0] : null;
+
+		let rows: any[];
 		rows = await ieltsDB.queryAll<any>`
-		  SELECT *
-		  FROM tasks
-		  WHERE user_id = ${userId}
-			AND (due_at IS NULL OR (due_at >= ${from} AND due_at <= ${to}))
-			AND status = ${statusFilter[0]}
-		  ORDER BY COALESCE(due_at, created_at) ASC, created_at DESC
-		`;
-	  } else {
-		rows = await ieltsDB.queryAll<any>`
-		  SELECT *
-		  FROM tasks
-		  WHERE user_id = ${userId}
-			AND (due_at IS NULL OR (due_at >= ${from} AND due_at <= ${to}))
-		  ORDER BY COALESCE(due_at, created_at) ASC, created_at DESC
-		`;
-	  }
-	  return { tasks: rows.map(mapRowToTask) };
+		SELECT *
+		FROM tasks
+		WHERE user_id = ${userId}
+		  AND (
+			(status = 'completed' AND completed_at >= ${from} AND completed_at <= ${to})
+			OR
+			(status != 'completed')
+		  )
+		  AND (status = ${filterStatus}::text OR ${filterStatus}::text IS NULL)
+		ORDER BY status = 'completed' ASC, COALESCE(completed_at, due_at, created_at) DESC
+	`;
+
+		return { tasks: rows.map(mapRowToTask) };
 	}
-  );
+);
 
 // POST /progress/tasks
 export const createTask = api(
@@ -173,10 +169,10 @@ export const createTask = api(
 		const estimatedMinutes = body.estimatedMinutes ?? 20;
 		const dueAt = body.dueAt ? new Date(body.dueAt) : null;
 		const row = await ieltsDB.queryRow<any>`
-			INSERT INTO tasks (user_id, name, category, difficulty, estimated_minutes, due_at)
-			VALUES (${userId}, ${name}, ${category}, ${difficulty}, ${estimatedMinutes}, ${dueAt})
-			RETURNING *
-		`;
+			INSERT INTO tasks(user_id, name, category, difficulty, estimated_minutes, due_at)
+VALUES(${userId}, ${name}, ${category}, ${difficulty}, ${estimatedMinutes}, ${dueAt})
+RETURNING *
+	`;
 		return mapRowToTask(row);
 	}
 );
@@ -187,17 +183,24 @@ export const updateTask = api(
 	async (params: { id: string; progress?: number; status?: "planned" | "in-progress" | "completed"; completedAt?: Date }): Promise<Task> => {
 		const progress = params.progress ?? null;
 		const status = params.status === "in-progress" ? "in_progress" : params.status ?? null;
-		const completedAt = params.completedAt ? new Date(params.completedAt) : null;
+
+		// If status is becoming completed and no date provided, use NOW()
+		let completedAt = params.completedAt ? new Date(params.completedAt) : null;
+
 		const row = await ieltsDB.queryRow<any>`
 			UPDATE tasks
-			SET
-				progress = COALESCE(${progress}, progress),
-				status = COALESCE(${status}::text, status),
-				completed_at = COALESCE(${completedAt}, completed_at),
-				updated_at = NOW()
+SET
+progress = COALESCE(${progress}, progress),
+	status = COALESCE(${status}::text, status),
+	completed_at = CASE 
+					WHEN ${status}::text = 'completed' AND completed_at IS NULL THEN COALESCE(${completedAt}, NOW())
+					WHEN ${status}::text = 'planned' OR ${status}::text = 'in_progress' THEN NULL
+					ELSE COALESCE(${completedAt}, completed_at)
+END,
+	updated_at = NOW()
 			WHERE id = ${params.id}
-			RETURNING *
-		`;
+RETURNING *
+	`;
 		return mapRowToTask(row);
 	}
 );
@@ -206,7 +209,7 @@ export const updateTask = api(
 export const deleteTask = api(
 	{ expose: true, method: "DELETE", path: "/progress/tasks/:id" },
 	async (params: { id: string }): Promise<void> => {
-		await ieltsDB.exec`DELETE FROM tasks WHERE id = ${params.id}`;
+		await ieltsDB.exec`DELETE FROM tasks WHERE id = ${params.id} `;
 	}
 );
 
@@ -231,10 +234,10 @@ export const acceptTaskSuggestions = api(
 		const tasks: Task[] = [];
 		for (const s of body.suggestions) {
 			const row = await ieltsDB.queryRow<any>`
-				INSERT INTO tasks (user_id, name, category, difficulty, estimated_minutes, due_at)
-				VALUES (${body.userId}, ${s.name}, ${s.category}, ${s.difficulty}, ${s.estimatedMinutes ?? 20}, ${s.dueAt ?? null})
-				RETURNING *
-			`;
+				INSERT INTO tasks(user_id, name, category, difficulty, estimated_minutes, due_at)
+VALUES(${body.userId}, ${s.name}, ${s.category}, ${s.difficulty}, ${s.estimatedMinutes ?? 20}, ${s.dueAt ?? null})
+RETURNING *
+	`;
 			tasks.push(mapRowToTask(row));
 		}
 		return { tasks };

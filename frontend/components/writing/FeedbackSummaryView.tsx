@@ -188,7 +188,14 @@ export function FeedbackSummaryView({
                             </div>
 
                             <p className="text-xs text-slate-400 leading-relaxed line-clamp-2">
-                                {score.justification || "Analysis pending..."}
+                                {(score.justification || "Analysis pending...").split(/(Score capped|capped at Band|-\d band|Band \d MAX)/gi).map((part, i) => {
+                                    const isPenalty = /Score capped|capped at Band|-\d band|Band \d MAX/i.test(part);
+                                    return isPenalty ? (
+                                        <span key={i} className="text-rose-400 font-medium">⚠️ {part}</span>
+                                    ) : (
+                                        <span key={i}>{part}</span>
+                                    );
+                                })}
                             </p>
                         </motion.div>
                     );

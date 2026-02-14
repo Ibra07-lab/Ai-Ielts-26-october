@@ -14,7 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Wand2, Plus } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import Confetti from "@/components/progress/Confetti";
-import backend from "~backend/client";
+import backend from "@/backend";
 
 export default function ProgressTracker() {
 	const { user } = useUser();
@@ -80,119 +80,127 @@ export default function ProgressTracker() {
 	if (!user) {
 		return (
 			<div className="flex items-center justify-center min-h-[400px]">
-				<p className="text-gray-600 dark:text-gray-300">Please set up your profile to use Progress Tracker.</p>
+				<p className="text-muted-foreground">Please set up your profile to use Progress Tracker.</p>
 			</div>
 		);
 	}
 
 	return (
-		<div className="pb-24">
+		<div className="pb-24 space-y-8">
 			<Confetti trigger={celebrateTick} />
-			{/* Today's Study Goal Card - Green gradient */}
-			<Card className="border-2 border-green-100 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 dark:border-green-900">
-				<CardContent className="px-6 py-6">
-					{(() => {
-						const completed = dailyGoal?.completedMinutes ?? 0;
-						const target = dailyGoal?.targetMinutes ?? 30;
-						const pct = target > 0 ? Math.round((completed / target) * 100) : 0;
-						const due = new Date().toLocaleDateString(undefined, { month: "long", day: "numeric" });
-						return (
-							<div className="space-y-4">
-								<div className="flex items-center justify-between">
-									<div className="text-base font-semibold text-gray-900 dark:text-white">
-										🎯 Today's Study Goal
+
+			{/* Flat Today's Study Goal */}
+			<div className="py-12 border-b border-border">
+				{(() => {
+					const completed = dailyGoal?.completedMinutes ?? 0;
+					const target = dailyGoal?.targetMinutes ?? 30;
+					const pct = target > 0 ? Math.round((completed / target) * 100) : 0;
+					return (
+						<div className="space-y-8">
+							<div className="flex items-center justify-between">
+								<div className="space-y-2">
+									<h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground">Today's Study Goal</h2>
+									<div className="flex items-center gap-3">
+										<span className="text-4xl font-black text-foreground tabular-nums">{completed} / {target}</span>
+										<span className="text-sm font-bold text-muted-foreground uppercase tracking-widest opacity-50">Minutes</span>
 									</div>
-									<div className="flex items-center gap-2">
-										<div className="px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 text-xs font-medium">
-											Daily plan
+								</div>
+								<div className="flex items-center gap-4">
+									<div className="text-right hidden sm:block">
+										<div className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">
+											🔥 {overview?.studyStreak ?? 0} Day Streak
 										</div>
-										<Button
-											size="sm"
-											onClick={() => setAddOpen(true)}
-											className="bg-green-600 hover:bg-green-700 text-white border-0"
-										>
-											<Plus className="h-3 w-3 mr-1" />
-											Add Task
-										</Button>
-									</div>
-								</div>
-								
-								<div className="text-sm text-gray-700 dark:text-gray-300">
-									Target: Band {user.targetBand}
-								</div>
-								
-								<div>
-									<div className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-2">Study Progress</div>
-									<div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
-										{completed} / {target} minutes
-									</div>
-									<div className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-										{pct}% complete • {completed} min completed
-									</div>
-									
-									<div className="h-3 w-full rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
-										<div
-											className="h-full rounded-full bg-gradient-to-r from-green-500 to-emerald-500 transition-all duration-500"
-											style={{ width: `${Math.max(0, Math.min(100, pct))}%` }}
-										/>
-									</div>
-								</div>
-								
-								<div className="flex items-center justify-between pt-2 border-t border-green-200 dark:border-green-900">
-									<div className="text-sm text-gray-700 dark:text-gray-300">
-										🔥 {overview?.studyStreak ?? 0} days streak
 									</div>
 									<Button
 										size="sm"
-										variant="ghost"
-										onClick={() => setAiOpen(true)}
-										className="text-green-700 hover:text-green-900 hover:bg-green-100 dark:text-green-300 dark:hover:text-green-100 dark:hover:bg-green-900/30"
+										onClick={() => setAddOpen(true)}
+										className="bg-foreground text-background hover:bg-foreground/90 rounded-none h-10 px-6 font-bold"
 									>
-										<Wand2 className="h-3 w-3 mr-1" />
-										AI Suggest
+										<Plus className="h-4 w-4 mr-2" />
+										Add Task
 									</Button>
 								</div>
 							</div>
-						);
-					})()}
-				</CardContent>
-			</Card>
 
-			<div className="flex flex-col items-center gap-4 my-6">
+							<div className="relative h-1 w-full bg-muted rounded-full overflow-hidden">
+								<div
+									className="absolute inset-y-0 left-0 bg-emerald-500 transition-all duration-1000"
+									style={{ width: `${Math.max(0, Math.min(100, pct))}%` }}
+								/>
+							</div>
+
+							<div className="flex items-center justify-between">
+								<div className="flex gap-8">
+									<div>
+										<div className="text-[9px] font-black text-muted-foreground uppercase tracking-widest mb-1 opacity-50">Target</div>
+										<div className="text-sm font-bold text-foreground">Band {user.targetBand}</div>
+									</div>
+									<div>
+										<div className="text-[9px] font-black text-muted-foreground uppercase tracking-widest mb-1 opacity-50">Status</div>
+										<div className="text-sm font-bold text-foreground">{pct}% Complete</div>
+									</div>
+								</div>
+								<Button
+									variant="ghost"
+									size="sm"
+									onClick={() => setAiOpen(true)}
+									className="text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-foreground h-8 px-4"
+								>
+									<Wand2 className="h-3.5 w-3.5 mr-2" />
+									AI Refresh
+								</Button>
+							</div>
+						</div>
+					);
+				})()}
+			</div>
+
+			<div className="flex flex-col items-center gap-8 my-16 border-b border-border pb-16">
 				<CircularProgress percent={percent} />
-				<Button onClick={() => setAddOpen(true)}>
+				<Button onClick={() => setAddOpen(true)} className="rounded-none px-10 h-12 font-black uppercase tracking-widest bg-foreground text-background hover:bg-foreground/90 transition-all">
 					<Plus className="h-4 w-4 mr-2" />
-					Add Task / Generate with AI
+					Compose New Task
 				</Button>
 			</div>
 
-			<Card className="mb-6">
-				<CardContent className="p-4 flex items-center justify-between">
-					<div className="flex items-center gap-3">
-						<Badge variant="secondary">Range</Badge>
-						<div className="flex gap-2">
-							<Button variant={range === "daily" ? "default" : "outline"} size="sm" onClick={() => setRange("daily")}>Daily</Button>
-							<Button variant={range === "weekly" ? "default" : "outline"} size="sm" onClick={() => setRange("weekly")}>Weekly</Button>
-							<Button variant={range === "monthly" ? "default" : "outline"} size="sm" onClick={() => setRange("monthly")}>Monthly</Button>
-						</div>
+			<div className="flex items-center justify-between py-6">
+				<div className="flex items-center gap-8">
+					<div className="flex gap-1 border-b border-border">
+						{["daily", "weekly", "monthly"].map((r) => (
+							<button
+								key={r}
+								className={`text-[10px] font-black uppercase tracking-[0.2em] h-10 px-4 transition-all border-b-2 ${range === r ? "border-primary text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"}`}
+								onClick={() => setRange(r as any)}
+							>
+								{r}
+							</button>
+						))}
 					</div>
-					<div className="flex items-center gap-2">
-						<Button variant="outline" size="sm" onClick={() => setAiOpen(true)}>
-							<Wand2 className="h-4 w-4 mr-2" />
-							AI Suggest
-						</Button>
-					</div>
-				</CardContent>
-			</Card>
+				</div>
+				<Button
+					variant="outline"
+					size="sm"
+					onClick={() => setAiOpen(true)}
+					className="h-9 px-6 rounded-none border-border font-bold hover:bg-muted"
+				>
+					<Wand2 className="h-3.5 w-3.5 mr-2 text-primary" />
+					AI Refresh
+				</Button>
+			</div>
 
-			<Tabs defaultValue="all" onValueChange={(v) => setFilter(v as any)}>
-				<TabsList className="grid grid-cols-4 w-full mb-4">
-					<TabsTrigger value="all">All</TabsTrigger>
-					<TabsTrigger value="planned">Planned</TabsTrigger>
-					<TabsTrigger value="in-progress">In Progress</TabsTrigger>
-					<TabsTrigger value="completed">Completed</TabsTrigger>
+			<Tabs defaultValue="all" onValueChange={(v) => setFilter(v as any)} className="w-full">
+				<TabsList className="bg-transparent w-full flex gap-10 p-0 h-auto mb-10 border-b border-border">
+					{["all", "planned", "in-progress", "completed"].map((v) => (
+						<TabsTrigger
+							key={v}
+							value={v}
+							className="bg-transparent p-0 text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground data-[state=active]:text-foreground border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-12 transition-all"
+						>
+							{v.replace("-", " ")}
+						</TabsTrigger>
+					))}
 				</TabsList>
-				<TabsContent value="all">
+				<TabsContent value="all" className="mt-0">
 					<TaskGroupCard tasks={tasks} onToggle={(t) => {
 						if (t.status === "completed") {
 							updateTask.mutate({ id: t.id, updates: { status: "planned", completedAt: undefined, progress: 0 } });
@@ -202,32 +210,31 @@ export default function ProgressTracker() {
 						}
 					}} />
 				</TabsContent>
-				<TabsContent value="planned">
-					<TaskGroupCard tasks={tasks.filter(t => t.status === "planned")} onToggle={(t) => { updateTask.mutate({ id: t.id, updates: { status: "completed", completedAt: new Date().toISOString(), progress: 100 } }); setCelebrateTick((x)=>x+1); }} />
+				<TabsContent value="planned" className="mt-0">
+					<TaskGroupCard tasks={tasks.filter(t => t.status === "planned")} onToggle={(t) => { updateTask.mutate({ id: t.id, updates: { status: "completed", completedAt: new Date().toISOString(), progress: 100 } }); setCelebrateTick((x) => x + 1); }} />
 				</TabsContent>
-				<TabsContent value="in-progress">
-					<TaskGroupCard tasks={tasks.filter(t => t.status === "in_progress")} onToggle={(t) => { updateTask.mutate({ id: t.id, updates: { status: "completed", completedAt: new Date().toISOString(), progress: 100 } }); setCelebrateTick((x)=>x+1); }} />
+				<TabsContent value="in-progress" className="mt-0">
+					<TaskGroupCard tasks={tasks.filter(t => t.status === "in_progress")} onToggle={(t) => { updateTask.mutate({ id: t.id, updates: { status: "completed", completedAt: new Date().toISOString(), progress: 100 } }); setCelebrateTick((x) => x + 1); }} />
 				</TabsContent>
-				<TabsContent value="completed">
+				<TabsContent value="completed" className="mt-0">
 					<TaskGroupCard tasks={tasks.filter(t => t.status === "completed")} onToggle={(t) => updateTask.mutate({ id: t.id, updates: { status: "planned", completedAt: undefined, progress: 0 } })} />
 				</TabsContent>
 			</Tabs>
 
-			<div className="mt-6">
-				<p className="text-sm text-gray-600 dark:text-gray-300 mb-2">Weekly trend</p>
-				<ProgressTrends data={[2, 3, 4, 3, 5, 6, 4]} />
+			<div className="pt-8 border-t border-border">
+				<p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-4">Weekly trend</p>
+				<div className="h-16 flex items-center">
+					<ProgressTrends data={[2, 3, 4, 3, 5, 6, 4]} />
+				</div>
 			</div>
 
-			{/* Floating FAB */}
 			<Button
-				className="fixed bottom-6 right-6 rounded-full shadow-lg"
+				className="fixed bottom-10 right-10 rounded-none h-14 px-10 font-black uppercase tracking-[0.2em] bg-foreground text-background hover:bg-foreground/90 transition-all z-50 border-2 border-background"
 				onClick={() => setAiOpen(true)}
-				aria-label="AI Suggest"
 			>
-				<Wand2 className="h-5 w-5 mr-2" />
-				Get AI Plan
+				<Wand2 className="h-5 w-5 mr-3" />
+				AI Architect
 			</Button>
-
 			<AddTaskModal
 				open={addOpen}
 				onClose={() => setAddOpen(false)}
@@ -270,47 +277,34 @@ function TaskGroupCard({ tasks, onToggle }: { tasks: api.Task[]; onToggle: (t: a
 
 	if (!tasks.length) {
 		return (
-			<Card>
-				<CardContent className="p-8 text-center">
-					<p className="text-gray-600 dark:text-gray-300">No tasks yet.</p>
-				</CardContent>
-			</Card>
+			<div className="py-20 text-center border-t border-dashed border-border">
+				<p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground opacity-30">No tasks active</p>
+			</div>
 		);
 	}
 
 	return (
-		<Card className="border-gray-200 dark:border-gray-700">
-			<CardContent className="p-6">
-				{/* Header with icon, title, progress count, progress bar, percentage */}
-				<div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100 dark:border-gray-800">
-					<div className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center flex-shrink-0">
-						<div className="w-5 h-5 rounded border-2 border-gray-400 dark:border-gray-500" />
-					</div>
-					<div className="flex-1 min-w-0">
-						<div className="flex items-center gap-3 mb-2">
-							<span className="text-base font-semibold text-gray-900 dark:text-white">Study Tasks</span>
-							<span className="text-xs text-gray-500 dark:text-gray-400">{completed} of {total}</span>
-							<div className="flex-1 h-2 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
-								<div
-									className="h-full bg-green-500 transition-all duration-300"
-									style={{ width: `${percent}%` }}
-								/>
-							</div>
-							<span className="text-sm font-medium text-gray-700 dark:text-gray-300 ml-2">{percent}%</span>
-						</div>
-					</div>
+		<div className="space-y-12">
+			<div className="flex items-end justify-between border-b border-border pb-6">
+				<div className="space-y-2">
+					<h3 className="text-[10px] font-black text-foreground uppercase tracking-[0.4em]">Task Inventory</h3>
+					<div className="text-xs font-bold text-muted-foreground opacity-50">{completed} of {total} items resolved</div>
 				</div>
+				<div className="flex items-center gap-6">
+					<div className="w-48 h-1 bg-muted rounded-full overflow-hidden hidden sm:block">
+						<div className="h-full bg-primary transition-all duration-1000" style={{ width: `${percent}%` }} />
+					</div>
+					<span className="text-xl font-black text-foreground tabular-nums">{percent}%</span>
+				</div>
+			</div>
 
-				{/* Task list */}
-				<div className="space-y-0">
-					{tasks.map((t) => (
-						<TaskCard key={t.id} task={t} onToggleComplete={onToggle} />
-					))}
-				</div>
-			</CardContent>
-		</Card>
+			<div className="divide-y divide-border">
+				{tasks.map((t) => (
+					<div key={t.id} className="py-2">
+						<TaskCard task={t} onToggleComplete={onToggle} />
+					</div>
+				))}
+			</div>
+		</div>
 	);
 }
-
-
-

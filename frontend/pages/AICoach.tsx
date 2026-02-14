@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { useUser } from "../contexts/UserContext";
-import backend from "~backend/client";
+import backend from "@/backend";
 import ReactMarkdown from 'react-markdown';
 
 interface Message {
@@ -216,8 +216,8 @@ What would you like to focus on?`,
                           >
                             <div
                               className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${message.type === "user"
-                                  ? "bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-md"
-                                  : "bg-gradient-to-br from-green-400 to-green-500 text-white shadow-md"
+                                ? "bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-md"
+                                : "bg-gradient-to-br from-green-400 to-green-500 text-white shadow-md"
                                 }`}
                             >
                               {message.type === "user" ? (
@@ -228,8 +228,8 @@ What would you like to focus on?`,
                             </div>
                             <div
                               className={`p-4 rounded-2xl ${message.type === "user"
-                                  ? "bg-blue-500 text-white shadow-md"
-                                  : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm border border-gray-200 dark:border-gray-600"
+                                ? "bg-blue-500 text-white shadow-md"
+                                : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm border border-gray-200 dark:border-gray-600"
                                 }`}
                             >
                               <div className={`chat-content text-sm leading-relaxed ${message.type === "user" ? "text-white" : "text-gray-900 dark:text-white"}`}>
@@ -247,8 +247,8 @@ What would you like to focus on?`,
                               </div>
                               <p
                                 className={`text-xs mt-2 ${message.type === "user"
-                                    ? "text-blue-100"
-                                    : "text-gray-500 dark:text-gray-400"
+                                  ? "text-blue-100"
+                                  : "text-gray-500 dark:text-gray-400"
                                   }`}
                               >
                                 {message.timestamp.toLocaleTimeString([], {

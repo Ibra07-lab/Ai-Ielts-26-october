@@ -11,29 +11,25 @@ export default function TaskCard({
 	const isCompleted = task.status === "completed" || task.progress >= 100;
 
 	return (
-		<div className="flex items-center gap-3 py-2 border-b border-gray-100 dark:border-gray-800 last:border-0">
+		<div className="flex items-center gap-3 py-2 border-b border-border last:border-0">
 			<button
 				onClick={() => onToggleComplete(task)}
-				className={`flex-shrink-0 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
-					isCompleted
-						? "bg-gray-700 dark:bg-gray-600 border-gray-700 dark:border-gray-600"
-						: "border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500"
-				}`}
+				className={`flex-shrink-0 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${isCompleted
+					? "bg-primary border-primary"
+					: "border-muted-foreground/30 hover:border-primary"
+					}`}
 				aria-label="Toggle complete"
 			>
-				{isCompleted && <Check className="w-3 h-3 text-white" strokeWidth={3} />}
+				{isCompleted && <Check className="w-3 h-3 text-primary-foreground" strokeWidth={3} />}
 			</button>
 			<span
-				className={`flex-1 text-sm ${
-					isCompleted
-						? "text-gray-400 dark:text-gray-500 line-through"
-						: "text-gray-700 dark:text-gray-300"
-				}`}
+				className={`flex-1 text-sm ${isCompleted
+					? "text-muted-foreground line-through"
+					: "text-foreground"
+					}`}
 			>
 				{task.name}
 			</span>
 		</div>
 	);
 }
-
-

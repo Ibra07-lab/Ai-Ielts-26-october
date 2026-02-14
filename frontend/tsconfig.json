@@ -29,15 +29,18 @@
         "../backend/*"
       ],
       "~backend/client": [
-        "./client.ts"
+        "./backend.ts"
       ]
     },
-    "types": ["vite/client"]
+    "types": [
+      "vite/client"
+    ]
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "**/*.d.ts"
+    "**/*.d.ts",
+    "../backend/ielts/*.ts"
   ],
   "exclude": [
     "node_modules",

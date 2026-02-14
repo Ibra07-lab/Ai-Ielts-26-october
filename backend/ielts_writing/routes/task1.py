@@ -28,6 +28,7 @@ class Task1EvaluationRequest(BaseModel):
     student_name: str = "Student"
     chart_type: Optional[str] = None
     image_url: Optional[str] = None
+    image_description: Optional[str] = None
     previous_errors: Optional[List[str]] = None
     attempt_number: int = 1
     include_teacher_feedback: bool = True
@@ -59,6 +60,7 @@ async def evaluate_task1(request: Task1EvaluationRequest):
             student_name=request.student_name,
             chart_type=request.chart_type,
             image_url=request.image_url,
+            image_description=request.image_description,
             previous_errors=request.previous_errors,
             attempt_number=request.attempt_number,
             include_teacher_feedback=request.include_teacher_feedback,
@@ -90,7 +92,7 @@ async def evaluate_task1(request: Task1EvaluationRequest):
             status_code=500,
             detail={
                 "error": str(e),
-                "message": "An error occurred. Please try again."
+                "message": f"An error occurred: {str(e)}"
             }
         )
 

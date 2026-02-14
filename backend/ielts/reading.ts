@@ -129,7 +129,7 @@ export interface FlowChartStructure {
 
 export interface ReadingQuestionGroup {
   id: number;
-  type: 'matching-headings' | 'true-false-not-given' | 'gap-fill' | 'multiple-choice' | 'short-answer' | 'sentence-completion' | 'matching-features' | 'summary-completion' | 'note-completion' | 'table-completion' | 'flow-chart-completion'|'matching-information' | 'matching-sentence-endings';
+  type: 'matching-headings' | 'true-false-not-given' | 'gap-fill' | 'multiple-choice' | 'short-answer' | 'sentence-completion' | 'matching-features' | 'summary-completion' | 'note-completion' | 'table-completion' | 'flow-chart-completion' | 'matching-information' | 'matching-sentence-endings';
   title: string;
   instructions: string;
   questions: ReadingQuestion[];
@@ -495,9 +495,9 @@ function loadStruggleModules(): Record<string, ModuleCollection> {
     'completion-modules.json',
     'timing-modules.json'
   ];
-  
+
   const modules: Record<string, ModuleCollection> = {};
-  
+
   for (const file of moduleFiles) {
     const filePath = path.resolve(process.cwd(), "backend", "data", file);
     if (fs.existsSync(filePath)) {
@@ -510,7 +510,7 @@ function loadStruggleModules(): Record<string, ModuleCollection> {
       }
     }
   }
-  
+
   return modules;
 }
 
@@ -604,6 +604,7 @@ export const getStruggleModules = api<void, { modules: Record<string, ModuleColl
 
 export interface ReadingQuestion {
   id: number;
+  type?: string; // e.g., 'multiple-choice', 'gap-fill', 'true-false-not-given'
   questionText: string;
   options?: string[]; // For multiple choice or headings list
   correctAnswer: string | string[];
@@ -1069,7 +1070,7 @@ export const submitReading = api<ReadingSubmission, ReadingResult>(
         : (question as any).correctAnswer;
       correctAnswers[question.id] = correct as string;
       const userAnswer = req.userAnswers[question.id];
-      
+
       const providedExplanation = (question as any).explanation as string | undefined;
 
       if (userAnswer === correct) {
@@ -1124,18 +1125,85 @@ export const getReadingSessions = api<{ userId: number }, { sessions: ReadingSes
   }
 );
 
+export interface ReadingSkill {
+  type: string;
+  total: number;
+  correct: number;
+  accuracy: number;
+}
+
+// Retrieves aggregated reading skills data.
+export const getReadingSkills = api<{ userId: number }, { skills: ReadingSkill[] }>(
+  { expose: true, method: "GET", path: "/users/:userId/reading/skills" },
+  async ({ userId }) => {
+    const sessions = await ieltsDB.queryAll<{ questions: string; score: number; total_questions: number; user_answers: string; correct_answers: string }>`
+      SELECT questions, score, total_questions, user_answers, correct_answers
+      FROM reading_sessions 
+      WHERE user_id = ${userId}
+    `;
+
+    const skillMap = new Map<string, { total: number; correct: number }>();
+
+    for (const session of sessions) {
+      if (!session.questions) continue;
+
+      try {
+        const questions = JSON.parse(session.questions) as ReadingQuestion[];
+        const userAnswers = JSON.parse(session.user_answers) as Record<number, string>;
+        const correctAnswers = JSON.parse(session.correct_answers) as Record<number, string>;
+
+        for (const q of questions) {
+          // Default to 'General' if type is missing
+          const type = q.type || 'General Comprehension';
+
+          if (!skillMap.has(type)) {
+            skillMap.set(type, { total: 0, correct: 0 });
+          }
+
+          const stats = skillMap.get(type)!;
+          stats.total++;
+
+          const uAns = userAnswers[q.id];
+          const cAns = correctAnswers[q.id];
+
+          // Simple string comparison for correctness
+          // Ideally this should match the logic in submitReading
+          if (uAns === cAns) {
+            stats.correct++;
+          }
+        }
+      } catch (e) {
+        console.error("Error parsing session data for skills aggregation", e);
+        // Continue to next session on error
+      }
+    }
+
+    const skills: ReadingSkill[] = Array.from(skillMap.entries()).map(([type, stats]) => ({
+      type,
+      total: stats.total,
+      correct: stats.correct,
+      accuracy: Math.round((stats.correct / stats.total) * 100)
+    }));
+
+    // Sort by total questions (descending) to show most practiced skills first
+    skills.sort((a, b) => b.total - a.total);
+
+    return { skills };
+  }
+);
+
 // Retrieves the latest reading session for a specific test and passage.
 export const getLatestReadingSession = api<
   { userId: number; testId: number; passageId: number },
-  { 
-    id: number; 
-    userId: number; 
-    testId: number; 
-    passageId: number; 
-    userAnswers: Record<number, string>; 
+  {
+    id: number;
+    userId: number;
+    testId: number;
+    passageId: number;
+    userAnswers: Record<number, string>;
     correctAnswers: Record<number, string>;
-    score: number; 
-    totalQuestions: number; 
+    score: number;
+    totalQuestions: number;
     createdAt: string;
   }
 >(
@@ -1162,11 +1230,11 @@ export const getLatestReadingSession = api<
       ORDER BY created_at DESC
       LIMIT 1
     `;
-    
+
     if (!session) {
       throw new Error(`No session found for user ${userId}, test ${testId}, passage ${passageId}`);
     }
-    
+
     return {
       id: session.id,
       userId: session.userId,
@@ -1421,11 +1489,11 @@ export const addToVocabulary = api<AddToVocabularyRequest, { success: boolean; w
         VALUES (${req.text}, ${req.definition}, ${req.exampleSentence}, ${req.topic || 'Reading'}, 2)
         RETURNING id
       `;
-      
+
       if (!newWord) {
         throw new Error("Failed to create vocabulary word");
       }
-      
+
       wordId = newWord.id;
     } else {
       wordId = word.id;
@@ -1458,10 +1526,10 @@ export const createReadingPassage = api<ReadingPassage, { id: number }>(
     // In a real implementation, you would save to database
     // For now, we'll return a mock ID
     const id = Date.now();
-    
+
     // TODO: Save to database
     // await ieltsDB.exec`INSERT INTO reading_passages ...`
-    
+
     return { id };
   }
 );
@@ -1484,7 +1552,7 @@ export const getReadingPassages = api<void, { passages: ReadingPassage[] }>(
             text: "A. The advent of artificial intelligence (AI) has ushered in an era of unprecedented technological advancement, profoundly reshaping the landscape of employment worldwide. As algorithms capable of learning from data proliferate, the integration of AI into various industries promises enhanced efficiency and innovation, yet it simultaneously raises concerns about job displacement and the obsolescence of certain skill sets. Central to this discourse is the notion that while AI automates routine tasks, it also fosters the emergence of novel roles that demand human ingenuity and adaptability. This duality underscores the need for strategic workforce development to mitigate potential disruptions. According to a 2023 report by the World Economic Forum, an estimated 85 million jobs may be displaced by AI by 2025, contrasted by the creation of 97 million new positions, highlighting a net positive shift contingent upon proactive reskilling initiatives."
           },
           {
-            id: "B", 
+            id: "B",
             text: "B. Historically, technological revolutions have mirrored similar patterns of upheaval and renewal, with the Industrial Revolution of the late 18th century serving as a poignant analogy. During that period, mechanization supplanted artisanal labor in textile manufacturing, leading to widespread unemployment among handloom weavers; however, it eventually spurred urbanization and the growth of factory-based economies, engendering diverse employment opportunities. In contemporary terms, AI's incursion into the manufacturing sector exemplifies this trajectory. A case study from the automotive industry illustrates how Ford Motor Company, in collaboration with AI firm Cognizant, implemented predictive maintenance systems in 2022. These systems, leveraging machine learning to forecast equipment failures, reduced downtime by 30 percent and augmented productivity, thereby necessitating fewer manual inspectors but elevating demand for data analysts and AI ethicists to oversee algorithmic fairness."
           },
           {
@@ -1508,7 +1576,7 @@ export const getReadingPassages = api<void, { passages: ReadingPassage[] }>(
                 questionText: "Paragraph A",
                 options: [
                   "AI's dual impact on employment",
-                  "Historical parallels in manufacturing", 
+                  "Historical parallels in manufacturing",
                   "Automation transforming service roles",
                   "Policy measures against job inequality",
                   "AI advancements in medical diagnostics",
@@ -1519,10 +1587,10 @@ export const getReadingPassages = api<void, { passages: ReadingPassage[] }>(
               },
               {
                 id: 2,
-                questionText: "Paragraph B", 
+                questionText: "Paragraph B",
                 options: [
                   "AI's dual impact on employment",
-                  "Historical parallels in manufacturing", 
+                  "Historical parallels in manufacturing",
                   "Automation transforming service roles",
                   "Policy measures against job inequality",
                   "AI advancements in medical diagnostics",
@@ -1536,7 +1604,7 @@ export const getReadingPassages = api<void, { passages: ReadingPassage[] }>(
                 questionText: "Paragraph C",
                 options: [
                   "AI's dual impact on employment",
-                  "Historical parallels in manufacturing", 
+                  "Historical parallels in manufacturing",
                   "Automation transforming service roles",
                   "Policy measures against job inequality",
                   "AI advancements in medical diagnostics",
@@ -1550,7 +1618,7 @@ export const getReadingPassages = api<void, { passages: ReadingPassage[] }>(
                 questionText: "Paragraph D",
                 options: [
                   "AI's dual impact on employment",
-                  "Historical parallels in manufacturing", 
+                  "Historical parallels in manufacturing",
                   "Automation transforming service roles",
                   "Policy measures against job inequality",
                   "AI advancements in medical diagnostics",
@@ -1588,7 +1656,7 @@ export const getReadingPassages = api<void, { passages: ReadingPassage[] }>(
               {
                 id: 8,
                 questionText: "Governments should implement universal basic income to address AI impacts.",
-                correctAnswer: "NOT GIVEN", 
+                correctAnswer: "NOT GIVEN",
                 explanation: "The passage mentions that governments are exploring UBI but doesn't state they should implement it."
               },
               {
@@ -1602,7 +1670,7 @@ export const getReadingPassages = api<void, { passages: ReadingPassage[] }>(
           {
             id: 3,
             type: "gap-fill",
-            title: "Questions 10–14", 
+            title: "Questions 10–14",
             instructions: "Complete the sentences below. Choose ONE WORD ONLY from the passage for each answer. Write your answers in boxes 10–14.",
             questions: [
               {
@@ -1857,7 +1925,7 @@ export const getReadingPassages = api<void, { passages: ReadingPassage[] }>(
         ]
       }
     ];
-    
+
     return { passages };
   }
 );
@@ -1869,11 +1937,11 @@ export const getReadingPassageById = api<{ id: number }, ReadingPassage>(
     // Mock implementation - replace with database query
     const passages = await getReadingPassages();
     const passage = passages.passages.find(p => p.id === id);
-    
+
     if (!passage) {
       throw new Error("Passage not found");
     }
-    
+
     return passage;
   }
 );

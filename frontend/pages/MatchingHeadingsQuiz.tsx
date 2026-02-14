@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
 import ReadingTheoryQuiz from "@/components/ReadingTheoryQuiz";
-import backend, { Local } from "~backend/client";
+import backend, { Local } from "@/backend";
 
 type TheoryQuizQuestion = {
   id: number;
@@ -53,10 +53,10 @@ export default function MatchingHeadingsQuiz() {
 
   const practical = (theoryContent as any)?.practicalQuiz as
     | {
-        passage?: Record<string, string>;
-        headings: string[];
-        questions: PracticalQuestion[];
-      }
+      passage?: Record<string, string>;
+      headings: string[];
+      questions: PracticalQuestion[];
+    }
     | undefined;
 
   const [mhAnswers, setMhAnswers] = useState<Record<number, string>>({});
@@ -83,11 +83,11 @@ export default function MatchingHeadingsQuiz() {
 
   const scoring = (theoryContent as any)?.scoring as
     | {
-        excellent: { range: string; message: string };
-        good: { range: string; message: string };
-        needsReview: { range: string; message: string };
-        needsStudy: { range: string; message: string };
-      }
+      excellent: { range: string; message: string };
+      good: { range: string; message: string };
+      needsReview: { range: string; message: string };
+      needsStudy: { range: string; message: string };
+    }
     | undefined;
 
   function rangeToTuple(range?: string): [number, number] | undefined {
@@ -97,7 +97,7 @@ export default function MatchingHeadingsQuiz() {
     return [parseInt(m[1], 10), parseInt(m[2], 10)];
   }
 
-  
+
 
   const submitPractical = () => {
     setPracticalSubmitted(true);

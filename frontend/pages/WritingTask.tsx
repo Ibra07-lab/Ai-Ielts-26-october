@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { PenTool, RotateCcw, Send, Clock, TrendingUp, Star, Target, Sparkles, BookOpen, GraduationCap, ArrowLeft, CheckCircle, Timer as TimerIcon, Maximize2, X, Save } from "lucide-react";
+import { PenTool, RotateCcw, Send, Clock, TrendingUp, Star, Target, Sparkles, BookOpen, GraduationCap, ArrowLeft, ArrowRight, CheckCircle, Timer as TimerIcon, Maximize2, X, Save } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "../contexts/UserContext";
-import backend from "~backend/client";
+import backend from "@/backend";
 import { cn } from "@/lib/utils";
 import { FeedbackSummaryView } from "@/components/writing/FeedbackSummaryView";
 import { FeedbackContainer } from "@/components/writing/FeedbackContainer";
@@ -17,21 +17,57 @@ import type { EvaluationResult } from "@/types/writing-feedback";
 import { TaskTypeIcon } from "@/components/writing/TaskTypeIcon";
 import TradeConferenceMap from "@/components/writing/TradeConferenceMap";
 import TownEvolutionMap from "@/components/writing/TownEvolutionMap";
+import CropYieldTable from "@/components/writing/CropYieldTable";
+import { AnalysisLoader } from "@/components/ui/analysis-loader";
 
 
 
 // Mock Data for Writing Tests
 const writingTests = [
+  // --- Task 1 Tests (20) ---
   { id: 1, title: "Test 1", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/line_graph_internet.png", chartType: "Line Graph" },
-  { id: 2, title: "Test 1", subtitle: "Academic Task 2", type: "Task 2", difficulty: "Hard", questions: 1, time: 40, taskType: 2, chartType: "Essay" },
   { id: 3, title: "Test 2", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Easy", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/bar_chart_teenagers.png", chartType: "Bar Chart" },
-  { id: 4, title: "Test 2", subtitle: "Academic Task 2", type: "Task 2", difficulty: "Hard", questions: 1, time: 40, taskType: 2, chartType: "Essay" },
   { id: 5, title: "Test 3", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/task1_bar_water_use_2010_2020.png", chartType: "Bar Chart" },
-  { id: 6, title: "Test 3", subtitle: "Academic Task 2", type: "Task 2", difficulty: "Medium", questions: 1, time: 40, taskType: 2, chartType: "Essay" },
-  { id: 7, title: "Test 4", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Hard", questions: 1, time: 20, taskType: 1, chartType: "Map" },
-  { id: 8, title: "Test 4", subtitle: "Academic Task 2", type: "Task 2", difficulty: "Easy", questions: 1, time: 40, taskType: 2, chartType: "Essay" },
-  { id: 9, title: "Test 5", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, chartType: "Map", component: "TradeConferenceMap" },
-  { id: 10, title: "Test 6", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, chartType: "Map", component: "TownEvolutionMap" },
+  { id: 7, title: "Test 4", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Hard", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/transport_commuters.png", chartType: "Line Graph" },
+  { id: 9, title: "Test 5", subtitle: "Test 20: Mixed Charts", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/energy_consumption_costs.png", chartType: "Mixed Chart" },
+  { id: 10, title: "Test 6", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, chartType: "Table", component: "CropYieldTable" },
+  { id: 11, title: "Test 7", subtitle: "Cinema Attendance", type: "Task 1", difficulty: "Hard", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/cinema_attendance_age.png", chartType: "Line Graph" },
+  { id: 12, title: "Test 8", subtitle: "Ocean Temperature", type: "Task 1", difficulty: "Hard", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/ocean_temp_anomalies.png", chartType: "Dual Line Graph" },
+  { id: 13, title: "Test 9", subtitle: "Screen Time", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/screen_time_comparison.png", chartType: "Dual Axis Graph" },
+  { id: 14, title: "Test 10", subtitle: "Carbon Emissions", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/carbon_emissions_sector.png", chartType: "Bar Chart" },
+  { id: 15, title: "Test 11", subtitle: "University Apps", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/university_applications_uk.png", chartType: "Bar Chart" },
+  { id: 16, title: "Test 12", subtitle: "Waste Composition", type: "Task 1", difficulty: "Hard", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/waste_composition_cities.png", chartType: "Stacked Bar Chart" },
+  { id: 17, title: "Test 13", subtitle: "Government Budget", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/government_budget_allocation.png", chartType: "Pie Chart" },
+  { id: 18, title: "Test 14", subtitle: "Tourist Spending", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/tourist_spending_patterns.png", chartType: "Pie Chart" },
+  { id: 19, title: "Test 15", subtitle: "Marine Pollution", type: "Task 1", difficulty: "Hard", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/marine_pollution_sources.png", chartType: "Pie Chart" },
+  { id: 20, title: "Test 16", subtitle: "Healthcare Metrics", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/healthcare_metrics_table.png", chartType: "Table" },
+  { id: 21, title: "Test 17", subtitle: "Museum Statistics", type: "Task 1", difficulty: "Hard", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/museum_statistics_table.png", chartType: "Table" },
+  { id: 22, title: "Test 18", subtitle: "Rainwater Harvesting", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/rainwater_harvesting_diagram.png", chartType: "Process Diagram" },
+  { id: 23, title: "Test 19", subtitle: "Coffee Production", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/coffee_production_simple.png", chartType: "Process Diagram" },
+  { id: 24, title: "Test 20", subtitle: "Tech Access", type: "Task 1", difficulty: "Easy", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/tech_access_bar_chart.png", chartType: "Bar Chart" },
+
+  // --- Task 2 Tests (20) ---
+  { id: 2, title: "Test 1", subtitle: "Homework & Wellbeing", type: "Task 2", difficulty: "Hard", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 4, title: "Test 2", subtitle: "AI Doctors & Nurses", type: "Task 2", difficulty: "Hard", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 6, title: "Test 3", subtitle: "Environmental Regulations", type: "Task 2", difficulty: "Medium", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 8, title: "Test 4", subtitle: "Retirement Policy", type: "Task 2", difficulty: "Easy", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 25, title: "Test 5", subtitle: "Universal Healthcare", type: "Task 2", difficulty: "Medium", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 26, title: "Test 6", subtitle: "Urban vs Regional", type: "Task 2", difficulty: "Hard", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 27, title: "Test 7", subtitle: "Minority Languages", type: "Task 2", difficulty: "Easy", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 28, title: "Test 8", subtitle: "Gap Year Benefits", type: "Task 2", difficulty: "Medium", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 29, title: "Test 9", subtitle: "Urban Overcrowding", type: "Task 2", difficulty: "Hard", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 30, title: "Test 10", subtitle: "Juvenile Delinquency", type: "Task 2", difficulty: "Hard", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 31, title: "Test 11", subtitle: "Screen Addiction", type: "Task 2", difficulty: "Medium", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 32, title: "Test 12", subtitle: "Food Wastage", type: "Task 2", difficulty: "Easy", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 33, title: "Test 13", subtitle: "Electric Vehicles", type: "Task 2", difficulty: "Medium", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 34, title: "Test 14", subtitle: "Private Healthcare", type: "Task 2", difficulty: "Easy", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 35, title: "Test 15", subtitle: "Entrepreneurship", type: "Task 2", difficulty: "Hard", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 36, title: "Test 16", subtitle: "Skilled Migration", type: "Task 2", difficulty: "Medium", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 37, title: "Test 17", subtitle: "Mass Tourism", type: "Task 2", difficulty: "Hard", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 38, title: "Test 18", subtitle: "Urban Cycling", type: "Task 2", difficulty: "Medium", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 39, title: "Test 19", subtitle: "Recidivism Rates", type: "Task 2", difficulty: "Easy", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 40, title: "Test 20", subtitle: "Distance Learning", type: "Task 2", difficulty: "Medium", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 41, title: "Test 21", subtitle: "Children's Freedom", type: "Task 2", difficulty: "Medium", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
 ];
 
 
@@ -57,8 +93,11 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
+
   const selectedTest = writingTests.find(t => t.id === selectedTestId);
   const taskType = selectedTest?.taskType || 1;
+  // @ts-ignore
+  const hasVisualContent = taskType === 1 || !!selectedTest?.imageUrl || !!selectedTest?.component;
 
   const { data: prompt, refetch: getNewPrompt } = useQuery({
     queryKey: ["writingPrompt", taskType, selectedTest?.id],
@@ -92,7 +131,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
       const isTask1 = taskType === 1;
       const endpoint = isTask1
         ? "http://localhost:8002/task1/evaluate"
-        : "http://localhost:8001/ielts_writing/evaluate"; // Legacy fallback
+        : "http://localhost:8002/task2/evaluate"; // Updated to new Task 2 pipeline
 
       const requestBody = isTask1
         ? {
@@ -101,18 +140,16 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
           student_name: user?.name || "Student",
           chart_type: selectedTest?.chartType || null,
           image_url: selectedTest?.imageUrl || null,
+          image_description: prompt?.chartMetadata || null,
           previous_errors: null,
           attempt_number: 1,
           include_teacher_feedback: true,
           include_markdown: true
         }
         : {
-          // Task 2 legacy body
-          task_type: "task2",
-          question: prompt?.prompt || "",
+          // Task 2 new pipeline body
+          question: prompt?.prompt || "Practice Question",
           essay: content.trim(),
-          target_band: 7.0,
-          user_id: user.id.toString(),
         };
 
       const response = await fetch(endpoint, {
@@ -155,10 +192,79 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
           },
         };
       } else {
-        // Legacy Task 2 (already full result)
+        // Map Task 2 new pipeline result to expected frontend format
+        const evalData = data.evaluation;
+        const explainData = data.explanation;
+        const coachData = data.coaching;
+
         result = {
-          evaluation: data.examiner_result,
-          coaching: data.teacher_feedback, // Map if needed
+          evaluation: {
+            overall_band: evalData.band_scores.overall,
+            band_range: { low: evalData.band_scores.overall, high: evalData.band_scores.overall },
+            criterion_scores: [
+              { criterion: "task_response", band: evalData.band_scores.task_response, justification: evalData.analysis.thesis_analysis.thesis_quality ? `Thesis: ${evalData.analysis.thesis_analysis.thesis_quality.replace(/_/g, ' ')}` : "Refer to detailed feedback." },
+              { criterion: "coherence_cohesion", band: evalData.band_scores.coherence_cohesion, justification: evalData.analysis.linker_audit.cohesion_verdict ? `Cohesion: ${evalData.analysis.linker_audit.cohesion_verdict.replace(/_/g, ' ')}` : "Refer to detailed feedback." },
+              { criterion: "lexical_resource", band: evalData.band_scores.lexical_resource, justification: evalData.analysis.vocabulary_range ? `Vocabulary Range: ${evalData.analysis.vocabulary_range.replace(/_/g, ' ')}` : "Refer to detailed feedback." },
+              { criterion: "grammatical_range_accuracy", band: evalData.band_scores.grammatical_range_accuracy, justification: evalData.analysis.grammar_audit.error_type ? `Grammar: ${evalData.analysis.grammar_audit.error_type.replace(/_/g, ' ')}` : "Refer to detailed feedback." },
+            ],
+            word_count: evalData.word_count,
+            word_count_ok: evalData.word_count >= 250,
+            teacher_feedback_status: 'complete'
+          },
+          coaching: {
+            action_plan: [
+              coachData.the_one_big_change.change_statement,
+              `Drill: ${coachData.micro_drill.drill_name} (${coachData.micro_drill.time_limit_minutes} min)`,
+              coachData.score_context.realistic_next_target ? `Next Target: Band ${coachData.score_context.realistic_next_target}` : "Keep practicing"
+            ],
+            strengths: [coachData.diagnosis_summary.strength_acknowledged],
+            weaknesses: explainData.priority_summary
+              ? explainData.priority_summary.map((p: any) =>
+                // Combine Area + Problem + Fix into a concise 2-3 sentence block
+                `**${p.area}**: ${p.current_problem} ${p.action_step}`
+              )
+              : [coachData.diagnosis_summary.core_limitation],
+            grammar_errors: (explainData.micro_feedback || [])
+              .filter((f: any) => (f.error_type === 'grammar' || f.error_type === 'punctuation' || f.issue_type === 'grammar') && f.corrected_sentence)
+              .map((f: any) => ({
+                original: f.original_sentence || f.quote,
+                corrected: f.corrected_sentence || f.correction,
+                explanation: f.explanation,
+                tip: "Watch for this grammar pattern."
+              })),
+            vocabulary_suggestions: [
+              ...(explainData.micro_feedback || [])
+                .filter((f: any) => f.error_type === 'vocabulary' && (f.corrected_sentence || f.correction))
+                .map((f: any) => ({
+                  original: f.original_sentence || f.quote,
+                  better_options: [f.corrected_sentence || f.correction],
+                  context: f.explanation
+                })),
+              ...(explainData.vocabulary_feedback?.word_upgrades || [])
+                .filter((u: any) => u.upgrade_options && u.upgrade_options.length > 0)
+                .map((u: any) => ({
+                  original: u.basic_word,
+                  better_options: u.upgrade_options,
+                  context: u.why_best_fit
+                }))
+            ],
+            coherence_issues: [
+              ...(explainData.micro_feedback || [])
+                .filter((f: any) => f.error_type === 'cohesion' || f.error_type === 'coherence')
+                .map((f: any) => ({
+                  text: f.original_sentence || f.quote,
+                  suggestion: f.corrected_sentence || f.correction,
+                  reason: f.explanation
+                })),
+              ...(explainData.cohesion_fixes || []).map((c: any) => ({
+                text: c.original_sentence,
+                suggestion: c.improved_sentence,
+                reason: c.technique_explanation
+              }))
+            ],
+            raw_coach_output: coachData,
+            raw_explainer_output: explainData
+          },
           teacher_feedback_status: 'complete'
         };
       }
@@ -203,6 +309,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
         student_name: user?.name || "Student",
         chart_type: selectedTest?.chartType || null,
         image_url: selectedTest?.imageUrl || null,
+        image_description: prompt?.chartMetadata || null,
         include_teacher_feedback: true,
         include_markdown: true
       };
@@ -322,7 +429,6 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
     setIsTestStarted(true);
     setContent("");
     setAiAnalysis(null);
-    getNewPrompt();
 
     // Determine which test to start (passed ID or currently selected)
     const targetTestId = testId || selectedTestId;
@@ -411,9 +517,6 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                 // @ts-ignore
                 const chartType = test.chartType || (test.taskType === 1 ? "Generic" : "Essay");
 
-                // Dynamic accents based on difficulty/type
-                const accentColor = test.difficulty === "Hard" ? "ring-rose-500/50" : test.difficulty === "Medium" ? "ring-amber-500/50" : "ring-emerald-500/50";
-
                 return (
 
                   <div
@@ -422,77 +525,78 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                       setSelectedTestId(test.id);
                       handleStartTest(test.id);
                     }}
-                    className={`group relative h-[360px] rounded-2xl transition-all duration-300 cursor-pointer overflow-hidden border
+                    className={`group relative h-[400px] rounded-[32px] transition-all duration-500 cursor-pointer overflow-hidden border
                       ${isSelected
-                        ? "border-blue-500 bg-[#1e293b] shadow-xl shadow-blue-500/10 ring-1 ring-blue-500/20"
-                        : "border-slate-700 bg-[#1e293b] hover:border-slate-600 hover:shadow-lg hover:shadow-blue-900/5"
+                        ? "border-blue-500 bg-white shadow-2xl shadow-blue-500/10 ring-1 ring-blue-500/20"
+                        : "border-slate-100 bg-white hover:border-blue-200 hover:shadow-2xl hover:shadow-slate-200/40"
                       }
+                      dark:bg-slate-900 dark:border-slate-800
                     `}
                   >
                     {/* Content Container */}
-                    <div className="relative h-full p-6 flex flex-col z-10">
+                    <div className="relative h-full p-8 flex flex-col z-10">
 
                       {/* Header: Type Label */}
-                      <div className="flex justify-between items-start mb-6">
-                        <span className="text-[10px] font-bold tracking-[0.2em] text-slate-400 uppercase font-mono">
-                          {chartType}
+                      <div className="flex justify-between items-start mb-4">
+                        <span className="text-[11px] font-bold tracking-[0.2em] text-slate-400 dark:text-slate-500 uppercase font-sans">
+                          {test.taskType === 2 ? "ESSAY" : chartType}
                         </span>
-                        <Badge
-                          variant="outline"
-                          className={`border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide rounded-md
-                              ${test.difficulty === "Hard" ? "border-rose-200/20 text-rose-300 bg-rose-500/5" :
-                              test.difficulty === "Medium" ? "border-amber-200/20 text-amber-300 bg-amber-500/5" :
-                                "border-emerald-200/20 text-emerald-300 bg-emerald-500/5"}
-                            `}
-                        >
-                          {test.difficulty}
-                        </Badge>
                       </div>
 
-                      {/* Hero Visual - Centered */}
-                      <div className="flex-1 flex items-center justify-center p-2">
-                        <div className={`w-full h-full transition-all duration-500 transform ${isSelected ? "scale-105" : "grayscale-[10%] group-hover:grayscale-0 group-hover:scale-105"}`}>
-                          <TaskTypeIcon type={chartType} />
+                      {/* Hero Visual - Large Centered Circle */}
+                      <div className="flex-1 flex items-center justify-center">
+                        <div className={`aspect-square w-44 rounded-full flex items-center justify-center transition-all duration-700 transform 
+                          ${isSelected ? "bg-blue-50 dark:bg-blue-900/10 scale-105" : "bg-blue-50/50 dark:bg-slate-800/50 group-hover:bg-blue-50 group-hover:scale-110"}
+                        `}>
+                          <div className="w-24 h-24">
+                            <TaskTypeIcon type={test.taskType === 2 ? "Essay" : chartType} />
+                          </div>
                         </div>
                       </div>
 
-                      {/* Footer: Title & Layout */}
-                      <div className="mt-6 pt-6 border-t border-slate-700/50">
+                      {/* Footer: Title & Action */}
+                      <div className="mt-8">
                         <div className="flex justify-between items-end">
-                          <div>
-                            <h3 className="text-xl font-bold text-white mb-1.5 tracking-tight group-hover:text-blue-100 transition-colors">
+                          <div className="flex-1 mr-4">
+                            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-1 tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                               {test.title}
                             </h3>
-                            <p className="text-xs text-slate-400 font-medium line-clamp-1">
+                            <p className="text-[13px] text-slate-500 dark:text-slate-400 font-medium line-clamp-1">
                               {test.subtitle}
                             </p>
                           </div>
 
-                          {/* Action Button - Minimal Arrow */}
-                          <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300
-                                ${isSelected ? "bg-blue-600 text-white shadow-lg shadow-blue-500/40" : "bg-slate-700 text-slate-400 group-hover:bg-slate-600 group-hover:text-white"}`}
+                          {/* Action Button - Premium Pill */}
+                          <div className={`px-5 py-2.5 rounded-full flex items-center gap-2 transition-all duration-300 font-bold text-xs tracking-wide
+                                ${isSelected
+                              ? "bg-blue-600 text-white shadow-lg shadow-blue-500/40"
+                              : "bg-blue-600/90 text-white opacity-90 group-hover:opacity-100 group-hover:shadow-lg group-hover:shadow-blue-500/30"
+                            }`}
                           >
-                            <ArrowLeft className="w-4 h-4 rotate-180" />
+                            <ArrowRight className="w-3.5 h-3.5" />
+                            VIEW
                           </div>
                         </div>
 
                         {/* Metadata Row */}
-                        <div className="flex items-center gap-4 text-[10px] font-semibold text-slate-500 uppercase tracking-wider mt-4">
-                          <div className="flex items-center gap-1.5">
-                            <Clock className="w-3 h-3 text-slate-400" />
+                        <div className="flex items-center gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-4">
+                          <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-slate-50 dark:bg-slate-800">
+                            <Clock className="w-3 h-3" />
                             <span>{test.time} MIN</span>
                           </div>
-                          <div className="flex items-center gap-1.5">
-                            <Target className="w-3 h-3 text-slate-400" />
-                            <span>{test.questions} Ques</span>
-                          </div>
+                          {test.taskType !== 2 && (
+                            <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-slate-50 dark:bg-slate-800">
+                              <Target className="w-3 h-3" />
+                              <span>{test.questions} QUES</span>
+                            </div>
+                          )}
                         </div>
-
-                        {/* Interactive Overlay for Start */}
-                        {isSelected && (
-                          <div className="absolute inset-0 z-20 cursor-pointer" onClick={(e: React.MouseEvent) => { e.stopPropagation(); handleStartTest(); }}></div>
-                        )}
                       </div>
+
+                      {/* Interactive Overlay for Start */}
+                      {isSelected && (
+                        <div className="absolute inset-0 z-20 cursor-pointer" onClick={(e: React.MouseEvent) => { e.stopPropagation(); handleStartTest(); }}></div>
+                      )}
                     </div>
                   </div>
                 );
@@ -504,58 +608,47 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
       {/* Writing Interface - Show when test is started */}
       {isTestStarted && selectedTest && (
         <div className={cn(
-          "h-[calc(100vh-140px)] min-h-[600px] mx-auto animate-in fade-in duration-500 flex flex-col transition-all duration-300",
-          viewMode === "feedback" ? "w-full max-w-[2000px]" : "max-w-[1600px]"
+          "h-[calc(100vh-140px)] min-h-[600px] w-full animate-in fade-in duration-500 flex flex-col transition-all duration-300",
+          viewMode === "feedback" ? "" : "px-4 md:px-8 max-w-full ml-0"
         )}>
 
-          {/* Top Bar Navigation (Minimal) */}
-          <div className="flex items-center justify-between mb-4 flex-none px-1">
-            <div className="flex items-center gap-4">
-              <Button variant="ghost" onClick={handleBackToMenu} className="gap-2 pl-0 hover:pl-2 transition-all text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">
-                <ArrowLeft className="w-4 h-4" />
-                Back to Tests
-              </Button>
-              <div className="h-4 w-px bg-slate-200 dark:bg-slate-700"></div>
-              <h2 className="text-lg font-bold text-slate-900 dark:text-white truncate max-w-[300px] lg:max-w-none">
-                {selectedTest.title}: {selectedTest.subtitle}
-              </h2>
-            </div>
-
-            {/* Stats (Timer & Word Count) - Always Visible */}
-            <div className="flex items-center gap-4">
-              {/* Word Count Pill */}
-              <div className={`flex items-center gap-2 px-4 py-2 rounded-full border shadow-sm transition-colors ${wordCountColor}`}>
-                <span className="text-xs font-bold uppercase tracking-wider">Words</span>
-                <span className="text-base font-mono font-bold leading-none">{wordCount}</span>
-                <span className="text-[10px] opacity-60 font-semibold">/ {minWords}</span>
+          {/* Top Bar Navigation (Minimal) - Hide in feedback mode */}
+          {viewMode !== "feedback" && (
+            <div className="flex items-center justify-between mb-4 flex-none px-1">
+              <div className="flex items-center gap-4">
+                <Button variant="ghost" onClick={handleBackToMenu} className="gap-2 pl-0 hover:pl-2 transition-all text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">
+                  <ArrowLeft className="w-4 h-4" />
+                  Back to Tests
+                </Button>
+                <div className="h-4 w-px bg-slate-200 dark:bg-slate-700"></div>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white truncate max-w-[300px] lg:max-w-none">
+                  {selectedTest.title}: {selectedTest.subtitle}
+                </h2>
               </div>
 
-              {/* Timer Pill */}
-              <div className={`flex items-center gap-3 px-4 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm ${timeLeft < 300 ? "animate-pulse border-rose-200 dark:border-rose-900" : ""}`}>
-                <TimerIcon className={`w-4 h-4 ${timeLeft < 300 ? "text-rose-500" : "text-slate-400"}`} />
-                <span className={`text-base font-mono font-bold leading-none ${timeLeft < 300 ? "text-rose-600 dark:text-rose-400" : "text-slate-700 dark:text-slate-200"}`}>
-                  {formatTime(timeLeft)}
-                </span>
+              {/* Stats (Timer & Word Count) - Always Visible */}
+              <div className="flex items-center gap-4">
+                {/* Word Count Pill */}
+                <div className={`flex items-center gap-2 px-4 py-2 rounded-full border shadow-sm transition-colors ${wordCountColor}`}>
+                  <span className="text-xs font-bold uppercase tracking-wider">Words</span>
+                  <span className="text-base font-mono font-bold leading-none">{wordCount}</span>
+                  <span className="text-[10px] opacity-60 font-semibold">/ {minWords}</span>
+                </div>
+
+                {/* Timer Pill */}
+                <div className={`flex items-center gap-3 px-4 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm ${timeLeft < 300 ? "animate-pulse border-rose-200 dark:border-rose-900" : ""}`}>
+                  <TimerIcon className={`w-4 h-4 ${timeLeft < 300 ? "text-rose-500" : "text-slate-400"}`} />
+                  <span className={`text-base font-mono font-bold leading-none ${timeLeft < 300 ? "text-rose-600 dark:text-rose-400" : "text-slate-700 dark:text-slate-200"}`}>
+                    {formatTime(timeLeft)}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           {viewMode === "feedback" && aiAnalysis && aiAnalysis.evaluation ? (
-            <div className="h-full pr-2 flex flex-col min-h-0">
-              {taskType !== 1 && (
-                <div className="flex items-center justify-between mb-4 shrink-0">
-                  <Button variant="ghost" onClick={() => setViewMode("editor")} className="gap-2">
-                    <ArrowLeft className="w-4 h-4" />
-                    Back to Editor
-                  </Button>
-                  <div className="flex items-center gap-2 px-4 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-full border border-slate-200 dark:border-slate-700">
-                    <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
-                      Analysis Complete: {aiAnalysis.evaluation.overall_band} Band
-                    </span>
-                  </div>
-                </div>
-              )}
-              <div className="flex-1 rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 min-h-0">
+            <div className="flex-1 flex flex-col min-h-0 h-full overflow-hidden">
+              <div className="flex-1 flex flex-col min-h-0 h-full overflow-hidden">
                 {taskType === 1 ? (
                   <WritingFeedback
                     result={aiAnalysis.evaluation as EvaluationResult}
@@ -571,6 +664,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                     coaching={aiAnalysis.coaching}
                     essay={content.trim()}
                     taskType="task2"
+                    onBack={() => setViewMode("editor")}
                   />
                 )}
               </div>
@@ -579,72 +673,74 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
             /* Main Split Layout */
             <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-8 h-full overflow-hidden pb-6">
 
-              {/* Left Column: Prompt & Chart (Scrollable, Sticky behavior via internal scroll) */}
-              <div className="lg:w-[45%] h-full overflow-y-auto pr-1 scrollbar-hide space-y-6">
-                <Card className="border-0 shadow-none bg-transparent">
-                  <div className="space-y-6">
-                    {/* Collapsible Prompt Info */}
-                    <details className="group bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 open:pb-4 transition-all">
-                      <summary className="p-4 cursor-pointer flex items-center justify-between list-none text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+              {/* Left Column: Prompt & Chart (Flex Column, No page scroll) */}
+              <div className="flex-1 min-w-0 h-full flex flex-col pr-1 gap-4">
+                <Card className="flex-1 border-0 shadow-none bg-transparent flex flex-col min-h-0">
+                  <div className="flex flex-col h-full gap-4">
+                    {/* Collapsible Prompt Info - Compact Header */}
+                    <details className="group bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 open:pb-4 transition-all flex-none">
+                      <summary className="p-3 cursor-pointer flex items-center justify-between list-none text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
                         <span>Task Instructions</span>
                         <span className="group-open:rotate-180 transition-transform duration-200">
                           <ArrowLeft className="w-4 h-4 -rotate-90" />
                         </span>
                       </summary>
-                      <p className="px-4 text-sm text-slate-700 dark:text-slate-300 leading-relaxed animate-in fade-in slide-in-from-top-1 duration-200">
+                      <p className="px-4 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
                         {getTaskDescription(taskType)}
                       </p>
                     </details>
 
                     {prompt ? (
-                      <div className="space-y-6">
-                        {/* Task Image - Enhanced Visuals */}
-                        {
-                          // @ts-ignore
-                          selectedTest.imageUrl && (
-                            <div
-                              className="group relative rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-white dark:bg-black/40 shadow-sm transition-all duration-300 hover:shadow-md"
-                              onClick={() => setIsImageZoomed(true)}
-                            >
-                              <div className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <Badge variant="secondary" className="cursor-pointer shadow-sm"><Maximize2 className="w-3 h-3 mr-1" /> Zoom</Badge>
-                              </div>
-                              <img
+                      <div className="flex-1 flex flex-col gap-4 min-h-0">
+                        {/* 1. VISUAL CONTENT (Main Focus, Flex-1) - Only show if exists */}
+                        {hasVisualContent && (
+                          <div className="flex-1 min-h-0 relative rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-black/40 shadow-sm overflow-hidden flex flex-col">
+                            <div className="flex-1 overflow-y-auto custom-scrollbar">
+                              {/* Task Image */}
+                              {
                                 // @ts-ignore
-                                src={selectedTest.imageUrl}
-                                alt="Task Chart"
-                                className="w-full h-auto object-contain max-h-[500px] opacity-90 group-hover:opacity-100 transition-opacity"
-                              />
-                              {/* Inner Shadow Overlay for depth */}
-                              <div className="absolute inset-0 ring-1 ring-inset ring-black/5 rounded-xl pointer-events-none"></div>
+                                selectedTest.imageUrl && (
+                                  <div
+                                    className="group relative h-full w-full flex items-center justify-center bg-white rounded-lg overflow-hidden"
+                                    onClick={() => setIsImageZoomed(true)}
+                                  >
+                                    <div className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
+                                      <Badge variant="secondary" className="cursor-pointer shadow-sm"><Maximize2 className="w-3 h-3 mr-1" /> Zoom</Badge>
+                                    </div>
+                                    <img
+                                      // @ts-ignore
+                                      src={selectedTest.imageUrl}
+                                      alt="Task Chart"
+                                      className="w-full h-full object-contain cursor-pointer"
+                                    />
+                                  </div>
+                                )
+                              }
+
+                              {/* Custom Components */}
+                              {
+                                // @ts-ignore
+                                selectedTest.component === "TradeConferenceMap" && <TradeConferenceMap />
+                              }
+                              {
+                                // @ts-ignore
+                                selectedTest.component === "TownEvolutionMap" && <TownEvolutionMap />
+                              }
+                              {
+                                // @ts-ignore
+                                selectedTest.component === "CropYieldTable" && <CropYieldTable />
+                              }
                             </div>
-                          )
-                        }
+                          </div>
+                        )}
 
-                        {/* Custom Component Mapping */}
-                        {
-                          // @ts-ignore
-                          selectedTest.component === "TradeConferenceMap" && (
-                            <div className="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-white dark:bg-black/40 shadow-sm transition-all duration-300">
-                              <TradeConferenceMap />
-                            </div>
-                          )
-                        }
-
-                        {
-                          // @ts-ignore
-                          selectedTest.component === "TownEvolutionMap" && (
-                            <div className="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-white dark:bg-black/40 shadow-sm transition-all duration-300">
-                              <TownEvolutionMap />
-                            </div>
-                          )
-                        }
-
-
-
-                        {/* Question Box */}
-                        <div className="bg-blue-50/50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-100 dark:border-blue-800/40 shadow-sm">
-                          <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-3 flex items-center gap-2">
+                        {/* 2. QUESTION BOX (Bottom) */}
+                        {/* If no visual content/Task 2, this expands to fill space (flex-1). Otherwise compact (flex-none) */}
+                        <div className={`
+                          ${hasVisualContent ? "flex-none max-h-[30%]" : "flex-none h-fit w-full"} 
+                          bg-blue-50/50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-100 dark:border-blue-800/40 shadow-sm overflow-y-auto
+                        `}>
+                          <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-4 flex items-center gap-2 text-sm">
                             <BookOpen className="w-4 h-4" />
                             Question
                           </h3>
@@ -663,7 +759,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
               </div>
 
               {/* Right Column: Editor Area (Wide & Clean) */}
-              <div className="lg:w-[55%] h-full flex flex-col min-h-0">
+              <div className="lg:w-[45%] flex-shrink-0 h-full flex flex-col min-h-0">
 
                 {/* Editor Container (Centered & Constrained) */}
                 <Card className="flex-1 flex flex-col h-full border border-slate-300 dark:border-slate-700 shadow-sm overflow-hidden bg-white dark:bg-slate-900 rounded-xl">
@@ -700,9 +796,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                         className="h-10 px-8 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white text-sm font-bold uppercase tracking-wide shadow-lg shadow-purple-500/20 rounded-lg transition-all transform hover:scale-[1.02]"
                       >
                         {isAnalyzing ? (
-                          <span className="flex items-center gap-2">
-                            <Sparkles className="w-4 h-4 animate-spin" /> Analyzing... (~30-45s)
-                          </span>
+                          <AnalysisLoader />
                         ) : (
                           <span className="flex items-center gap-2">
                             <Sparkles className="w-4 h-4" /> Analyze Essay

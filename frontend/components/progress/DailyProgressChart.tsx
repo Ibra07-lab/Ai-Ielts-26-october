@@ -1,6 +1,6 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { TrendingUp } from "lucide-react";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LabelList } from 'recharts';
+import { CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 interface DailyProgressData {
     date: string;
@@ -10,46 +10,72 @@ interface DailyProgressData {
     writing: number;
     speaking: number;
     vocabulary: number;
+    grammar: number;
     total: number;
+    goal?: number;
 }
 
 interface DailyProgressChartProps {
     data: DailyProgressData[];
+    days: number;
+    onDaysChange: (days: number) => void;
 }
 
-// New "Cool" Palette
 const COLORS = {
-    listening: "#22D3EE", // Cyan
-    reading: "#3B82F6",   // Blue
-    writing: "#6366F1",   // Indigo
-    speaking: "#A855F7",  // Purple
-    vocabulary: "#F43F5E" // Pink (Accent)
+    listening: "#f472b6",
+    reading: "#34d399",
+    writing: "#22d3ee",
+    speaking: "#60a5fa",
+    vocabulary: "#fbbf24",
+    grammar: "#8b5cf6"
 };
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
-        const data = payload[0].payload;
+        const data = payload[0].payload as DailyProgressData;
+        const categories = [
+            { key: 'listening', label: 'Listening' },
+            { key: 'reading', label: 'Reading' },
+            { key: 'writing', label: 'Writing' },
+            { key: 'speaking', label: 'Speaking' },
+            { key: 'vocabulary', label: 'Vocabulary' },
+            { key: 'grammar', label: 'Grammar' }
+        ];
+
+        const goal = data.goal || 5;
+        const percentage = Math.min(100, Math.round((data.total / goal) * 100));
+
         return (
-            <div className="bg-[#1E293B] border border-[#334155] p-4 rounded-xl shadow-xl text-white min-w-[200px] animate-in fade-in zoom-in-95 duration-200">
-                <p className="text-slate-400 text-sm mb-2 font-medium">{data.fullDate}</p>
-                <div className="flex justify-between items-center mb-3 pb-3 border-b border-[#334155]">
-                    <span className="font-bold text-lg">Overall Progress</span>
-                    <span className="font-bold text-lg">{data.total} Tasks</span>
+            <div className="bg-slate-900 border border-white/10 p-4 rounded-2xl shadow-2xl backdrop-blur-md min-w-[180px]">
+                <div className="flex justify-between items-start mb-3 border-b border-white/5 pb-2">
+                    <p className="text-slate-500 text-[10px] font-black uppercase tracking-widest">{data.fullDate}</p>
+                    <div className={cn(
+                        "text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter",
+                        percentage >= 100 ? "bg-emerald-500/20 text-emerald-500" : "bg-indigo-500/20 text-indigo-400"
+                    )}>
+                        {percentage}% Goal
+                    </div>
                 </div>
-                <div className="space-y-2">
-                    {Object.entries(COLORS).map(([key, color]) => {
-                        const value = data[key as keyof DailyProgressData];
-                        if (value === 0) return null;
-                        return (
-                            <div key={key} className="flex items-center justify-between text-sm">
-                                <div className="flex items-center gap-2">
-                                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: color }} />
-                                    <span className="capitalize text-slate-300">{key}</span>
+                <div className="space-y-2 mb-3">
+                    {categories.map(cat => {
+                        const val = (data as any)[cat.key];
+                        if (val > 0) {
+                            return (
+                                <div key={cat.key} className="flex justify-between items-center">
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: (COLORS as any)[cat.key] }} />
+                                        <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">{cat.label}</span>
+                                    </div>
+                                    <span className="text-[10px] font-black text-white tabular-nums">{val}</span>
                                 </div>
-                                <span className="font-mono font-medium">{value}</span>
-                            </div>
-                        );
+                            );
+                        }
+                        return null;
                     })}
+                </div>
+                <div className="flex justify-between items-center pt-2 border-t border-white/5">
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Total</span>
+                    <span className="text-sm font-black text-white tabular-nums">{data.total} / {goal}</span>
                 </div>
             </div>
         );
@@ -57,83 +83,106 @@ const CustomTooltip = ({ active, payload, label }: any) => {
     return null;
 };
 
-export default function DailyProgressChart({ data }: DailyProgressChartProps) {
+export default function DailyProgressChart({ data, days, onDaysChange }: DailyProgressChartProps) {
+    const totalActivity = data.reduce((acc, curr) => acc + curr.total, 0);
+
+    const chartData = data.map(d => {
+        const userGoal = d.goal || 5;
+        const pct = Math.round((d.total / userGoal) * 100);
+        return {
+            ...d,
+            displayValue: Math.min(100, pct),
+            goal: userGoal,
+            percentageLabel: d.total > 0 ? `${Math.min(100, pct)}%` : ""
+        };
+    });
+
+    // Calculate max value for Y-Axis (percentage)
+    const maxVal = 100;
+
     return (
-        <Card className="bg-[#1E293B] border-[#334155] shadow-sm overflow-hidden">
-            <CardHeader className="border-b border-[#334155] pb-4">
-                <div className="flex items-center justify-between">
-                    <div>
-                        <CardTitle className="text-white flex items-center gap-2">
-                            <TrendingUp className="w-5 h-5 text-blue-500" />
-                            Daily Activity
-                        </CardTitle>
-                        <CardDescription className="text-slate-400">
-                            Your daily learning breakdown across all skills
-                        </CardDescription>
-                    </div>
-                    <div className="flex gap-4 text-xs">
-                        {Object.entries(COLORS).map(([key, color]) => (
-                            <div key={key} className="flex items-center gap-1.5">
-                                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: color }} />
-                                <span className="capitalize text-slate-400">{key}</span>
-                            </div>
-                        ))}
+        <div className="w-full h-full bg-transparent flex flex-col">
+            <div className="px-8 pt-8 pb-4 flex justify-between items-start">
+                <div className="space-y-1">
+                    <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em]">{days}-Day Activity</p>
+                    <div className="flex items-baseline gap-2">
+                        <span className="text-5xl font-black text-foreground tracking-tighter tabular-nums">
+                            {totalActivity}
+                        </span>
+                        <span className="text-sm font-bold text-muted-foreground uppercase tracking-widest opacity-50">Points</span>
                     </div>
                 </div>
-            </CardHeader>
-            <CardContent className="p-6 pl-0">
-                <div className="h-[300px] w-full">
+                <div className="flex gap-4 bg-muted/30 p-1 rounded-full border border-border/50">
+                    <button
+                        onClick={() => onDaysChange(7)}
+                        className={cn(
+                            "px-5 py-1.5 text-[10px] font-black uppercase tracking-widest transition-colors rounded-full",
+                            days === 7 ? "bg-foreground text-background shadow-sm" : "text-muted-foreground hover:text-foreground"
+                        )}
+                    >
+                        7D
+                    </button>
+                    <button
+                        onClick={() => onDaysChange(14)}
+                        className={cn(
+                            "px-5 py-1.5 text-[10px] font-black uppercase tracking-widest transition-colors rounded-full",
+                            days === 14 ? "bg-foreground text-background shadow-sm" : "text-muted-foreground hover:text-foreground"
+                        )}
+                    >
+                        14D
+                    </button>
+                </div>
+            </div>
+
+            <CardContent className="px-8 pt-12 pb-4 flex-grow">
+                <div className="h-full w-full">
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart
-                            data={data}
-                            margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
-                            barSize={32} // Thicker bars
+                            data={chartData}
+                            margin={{ top: 20, right: 0, left: -40, bottom: 0 }}
+                            barSize={36}
                         >
-                            <CartesianGrid
-                                strokeDasharray="" // Solid line
-                                vertical={false}
-                                stroke="#334155" // Faint solid line
-                                strokeOpacity={0.4}
-                            />
+                            <defs>
+                                <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor="#d4ff00" />
+                                    <stop offset="100%" stopColor="#00ffd5" />
+                                </linearGradient>
+                            </defs>
                             <XAxis
                                 dataKey="date"
-                                stroke="#64748b"
-                                tick={{ fill: '#94A3B8', fontSize: 12 }} // Slate-400
+                                tick={{ fill: 'currentColor', fontSize: 10, fontWeight: 700 }}
+                                className="text-muted-foreground/40"
                                 tickLine={false}
                                 axisLine={false}
-                                dy={10}
+                                dy={15}
                             />
                             <YAxis
-                                stroke="#64748b"
-                                tick={{ fill: '#94A3B8', fontSize: 12 }} // Slate-400
-                                tickLine={false}
-                                axisLine={false}
-                                tickFormatter={(value) => `${value}`}
-                                domain={[0, 'auto']}
+                                hide={true}
+                                domain={[0, maxVal]}
                             />
                             <Tooltip
                                 content={<CustomTooltip />}
-                                cursor={{ fill: '#334155', opacity: 0.2, radius: 4 }}
+                                cursor={{ fill: 'currentColor', radius: 10, opacity: 0.05 }}
                             />
 
-                            {/* Stacked Bars with Border Radius on Top */}
-                            <Bar dataKey="listening" stackId="a" fill={COLORS.listening} radius={[0, 0, 0, 0]} />
-                            <Bar dataKey="reading" stackId="a" fill={COLORS.reading} radius={[0, 0, 0, 0]} />
-                            <Bar dataKey="writing" stackId="a" fill={COLORS.writing} radius={[0, 0, 0, 0]} />
-                            <Bar dataKey="speaking" stackId="a" fill={COLORS.speaking} radius={[0, 0, 0, 0]} />
-                            {/* The last one in the stack gets the radius if it has value, but since it's stacked, 
-                                we can give the top-most possible item a radius. 
-                                Recharts stacking radius logic can be tricky. 
-                                A common workaround is applying radius to the last item, but if that item is 0, it might look odd.
-                                For now, let's try applying it to the top one (vocabulary) and see.
-                                Ideally, we'd check which is the top-most non-zero value, but that requires custom shape.
-                                Let's stick to standard top radius for the last element in stack order.
-                            */}
-                            <Bar dataKey="vocabulary" stackId="a" fill={COLORS.vocabulary} radius={[6, 6, 0, 0]} />
+                            <Bar
+                                dataKey="displayValue"
+                                name="Activity"
+                                fill="url(#barGradient)"
+                                radius={[20, 20, 20, 20]}
+                                className="transition-all duration-300 hover:opacity-80"
+                            >
+                                <LabelList
+                                    dataKey="percentageLabel"
+                                    position="top"
+                                    offset={10}
+                                    className="fill-muted-foreground/60 text-[10px] font-black"
+                                />
+                            </Bar>
                         </BarChart>
                     </ResponsiveContainer>
                 </div>
             </CardContent>
-        </Card>
+        </div>
     );
 }

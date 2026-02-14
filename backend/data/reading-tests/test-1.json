@@ -2,595 +2,759 @@
   "testId": 1,
   "testName": "Test 1",
   "passages": [
-    {
-      "id": 1,
-  "title": "The Silk Road: Pathways of Trade and Cultural Fusion",
-  "level": "academic",
-  "estimatedTime": 20,
+{
+  "id": 1,
+  "title": "The Silk Road: Ancient Networks of Trade and Cultural Exchange",
+  "level": "accessible",
+  "estimatedTime": 25,
   "paragraphs": [
     {
-      "id": "P1",
-      "text": "The Silk Road, a vast network of trade routes spanning Eurasia from the second century BCE to the fourteenth century CE, facilitated the exchange of goods, ideas, and technologies across continents. Originating in the Han Dynasty of China, this intricate web of overland and maritime paths connected the East with the Mediterranean world. Merchants traversed deserts, mountains, and steppes, enduring perils to transport silk, spices, and porcelain westward. Beyond commerce, the routes served as conduits for cultural diffusion, profoundly shaping civilizations along their course."
+      "id": "A",
+      "text": "The Silk Road represents one of history's most significant networks of trade routes. This vast system connected East Asia with the Mediterranean region, spanning approximately 6,500 kilometres of diverse terrain. Rather than a single path, the Silk Road comprised multiple interconnected routes that crossed deserts, mountains, and grasslands. Merchants, diplomats, and travelers used these pathways to transport valuable goods and share knowledge between distant civilizations. Although the term 'Silk Road' only emerged in the nineteenth century, the routes themselves had been active for many centuries before receiving this name. Today, historians recognize the Silk Road as much more than a commercial highway—it was a channel for profound cultural exchange."
     },
     {
-      "id": "P2",
-      "text": "Economically, the Silk Road revolutionized global trade by introducing luxury commodities to distant markets. Chinese silk, prized for its luster and durability, became a symbol of wealth in Roman society, where it fetched prices equivalent to gold. In return, Europe supplied glassware and woolen textiles, while Central Asian bazaars buzzed with the barter of precious metals and horses. A pivotal example is the city of Samarkand in modern-day Uzbekistan, which flourished as a Silk Road hub under Timurid rule in the fifteenth century. This oasis city not only amassed fortunes through tariffs on caravans but also spurred innovations in irrigation and caravan serails."
+      "id": "B",
+      "text": "The origins of organized trade along these routes can be traced to around 130 BCE, when the Chinese Han Dynasty established formal diplomatic and commercial connections with Central Asian kingdoms. A 2019 study by the International Council for Historical Trade Studies examined archaeological evidence from this period and found that early exchanges primarily involved luxury goods. According to this research, approximately 65 percent of traded items during the first century of operation consisted of silk, jade, and precious metals. Dr. Helena Varga, a historian at the Central European Institute of Historical Studies, has noted that these early trade relationships required careful negotiation between cultures with vastly different languages and customs. She emphasizes that merchants developed sophisticated systems of translation and mutual understanding to conduct business successfully. By the third century CE, the network had expanded considerably, reaching from Xi'an in eastern China to Constantinople in the west."
     },
     {
-      "id": "P3",
-      "text": "Statistical records from medieval chronicles indicate that by the thirteenth century, annual silk exports from China exceeded 10,000 bolts, underscoring the route's commercial vitality. Yet, the Silk Road's influence extended far beyond material exchange, fostering intercultural dialogues that enriched artistic and intellectual traditions. Buddhism, for instance, spread from India to China via these routes, with monasteries dotting the path and translating sutras into local tongues. Similarly, the transmission of papermaking technology from China to the Islamic world in the eighth century transformed knowledge dissemination in Baghdad's House of Wisdom. These exchanges highlight how the network bridged disparate worlds, blending Persian motifs into Chinese ceramics and Greek astronomical knowledge into Indian treatises."
+      "id": "C",
+      "text": "The commercial activity along the Silk Road involved a remarkable variety of products. Silk fabric, which gave the routes their name, traveled westward from China, where production techniques remained closely guarded secrets for centuries. Moving in the opposite direction, merchants carried glassware, woolen textiles, and metalwork from Mediterranean workshops. Spices from South and Southeast Asia also entered this trading system through connecting pathways. Furthermore, the exchange extended beyond physical goods. Technologies such as papermaking, printing methods, and agricultural innovations spread along these corridors. The journey for a single shipment could take between eight months and two years, depending on the route selected and seasonal conditions. Traders rarely completed the entire distance themselves. Instead, goods typically passed through multiple hands at trading centers called entrepôts—specialized marketplaces where merchants from different regions would gather to buy and sell merchandise before continuing their separate journeys."
     },
     {
-      "id": "P4",
-      "text": "The decline of the Silk Road, precipitated by the rise of maritime routes and Mongol fragmentation in the fourteenth century, did not erase its legacy. Instead, it laid the groundwork for modern globalization, with echoes in contemporary Belt and Road initiatives. In the city of Xi'an, once the eastern terminus, archaeological digs have unearthed artifacts illustrating this enduring fusion. Today, UNESCO's designation of Silk Road sites as World Heritage locations preserves these tangible links to a shared human heritage. Ultimately, the Silk Road exemplifies how interconnected trade pathways can catalyze not just economic prosperity but also profound cultural synergies."
+      "id": "D",
+      "text": "The process of cultural diffusion—the spread of ideas, beliefs, and practices between societies—occurred in distinct stages along these routes. First, travelers would arrive at caravanserais, which were roadside rest stations that provided shelter, food, and protection for merchants and their animals. Subsequently, extended stays at these locations allowed individuals from different backgrounds to interact and share knowledge through conversation and observation. Following this initial contact, local communities would often adopt useful foreign practices, such as new farming techniques or medical treatments. Finally, these adopted elements would spread further through regional trade networks, reaching populations far from the original source. Professor Liu Mingchen, an archaeologist at the Beijing Institute of Cultural Heritage Research, has documented this process extensively through excavations at former trading posts. His research demonstrates that religious ideas, artistic styles, and scientific knowledge all traveled along the Silk Road. For instance, Buddhism spread from India to China through these very pathways, fundamentally transforming East Asian spiritual traditions."
+    },
+    {
+      "id": "E",
+      "text": "While the overland Silk Road dominated long-distance trade for centuries, maritime routes gradually emerged as significant alternatives. A 2021 report from researchers at the Pacific Maritime History Foundation revealed notable differences between these two systems. Sea routes could transport approximately three times the cargo volume compared to camel caravans of equivalent commercial value. However, the land routes offered advantages in terms of predictable scheduling and reduced risk of total cargo loss from storms or piracy. The overland journey from Central Asia to the Mediterranean took an average of 180 days, whereas sea voyages from Chinese ports to Persian Gulf destinations required roughly 150 days under favorable conditions. Despite these differences, both systems frequently operated simultaneously, with certain goods favoring one route over the other. Fragile ceramic pieces, for example, often traveled by land to avoid damage from ocean storms and rough handling during ship loading."
+    },
+    {
+      "id": "F",
+      "text": "The legacy of the Silk Road extends far beyond its historical period of activity, which declined significantly after the fifteenth century. Modern scholars continue to study these ancient routes for insights into cross-cultural communication and economic cooperation. Indeed, several contemporary infrastructure projects explicitly reference this heritage, seeking to revive transcontinental connections for the twenty-first century. The exchange of goods, technologies, and ideas along these pathways transformed societies across three continents over nearly two thousand years. Ultimately, the Silk Road demonstrates that long-distance trade has always involved more than simple commercial transactions—it has consistently served as a vehicle for human connection and cultural transformation."
     }
   ],
       "questions": [
-     {   
-      "id": 1,
+{
+  "id": 1,
   "type": "matching-headings",
-  "title": "Questions 1–4",
-  "instructions": "Choose the correct heading for paragraphs A-D from the list of headings below.",
+  "title": "Questions 1-5",
+  "instructions": "The reading passage has six paragraphs, A-F. Choose the correct heading for paragraphs B-F from the list of headings below. Write the correct number, i-viii, in boxes 1-5 on your answer sheet.",
+  "options_list": [
+    "i. The establishment of early commercial relationships",
+    "ii. Dangers and hardships faced by ancient traders",
+    "iii. How cultural practices spread through stages",
+    "iv. Defining a vast network of trading routes",
+    "v. The diversity of merchandise and commercial mechanisms",
+    "vi. Government regulation of transcontinental commerce",
+    "vii. Weighing up different methods of transportation",
+    "viii. The continuing relevance of historical trading connections"
+  ],
   "questions": [
     {
       "id": 1,
-      "questionText": "Paragraph A",
+      "questionText": "Paragraph B",
       "options": [
-        "Economic transformations through trade",
-        "Origins and geographical scope",
-        "Lasting impacts and modern parallels",
-        "Cultural and technological exchanges",
-        "Decline and archaeological evidence"
+        "The establishment of early commercial relationships",
+        "Dangers and hardships faced by ancient traders",
+        "How cultural practices spread through stages",
+        "Defining a vast network of trading routes",
+        "The diversity of merchandise and commercial mechanisms",
+        "Government regulation of transcontinental commerce",
+        "Weighing up different methods of transportation",
+        "The continuing relevance of historical trading connections"
       ],
-      "correctAnswer": "Origins and geographical scope"
+      "correctAnswer": "The establishment of early commercial relationships",
+      "justification": "Paragraph B focuses on when and how organized trade began along the Silk Road, specifically mentioning the Chinese Han Dynasty's role in establishing formal connections in 130 BCE. The heading paraphrases 'origins of organized trade' as 'establishment' and 'diplomatic and commercial connections' as 'early commercial relationships.' It tracks the early history from the first century of operation through the third century CE expansion.",
+      "evidenceQuote": "The origins of organized trade along these routes can be traced to around 130 BCE, when the Chinese Han Dynasty established formal diplomatic and commercial connections with Central Asian kingdoms."
     },
     {
       "id": 2,
-      "questionText": "Paragraph B",
+      "questionText": "Paragraph C",
       "options": [
-        "Economic transformations through trade",
-        "Origins and geographical scope",
-        "Lasting impacts and modern parallels",
-        "Cultural and technological exchanges",
-        "Decline and archaeological evidence"
+        "The establishment of early commercial relationships",
+        "Dangers and hardships faced by ancient traders",
+        "How cultural practices spread through stages",
+        "Defining a vast network of trading routes",
+        "The diversity of merchandise and commercial mechanisms",
+        "Government regulation of transcontinental commerce",
+        "Weighing up different methods of transportation",
+        "The continuing relevance of historical trading connections"
       ],
-      "correctAnswer": "Economic transformations through trade"
+      "correctAnswer": "The diversity of merchandise and commercial mechanisms",
+      "justification": "Paragraph C details the wide array of goods traded (silk, glassware, spices, technologies) and the logistical 'mechanisms' of the trade, such as the use of entrepôts (specialized marketplaces) and the multi-stage nature of shipments. The heading captures both the 'remarkable variety of products' (diversity of merchandise) and the functional way the trade operated.",
+      "evidenceQuote": "The commercial activity along the Silk Road involved a remarkable variety of products... goods typically passed through multiple hands at trading centers called entrepôts."
     },
     {
       "id": 3,
-      "questionText": "Paragraph C",
+      "questionText": "Paragraph D",
       "options": [
-        "Economic transformations through trade",
-        "Origins and geographical scope",
-        "Lasting impacts and modern parallels",
-        "Cultural and technological exchanges",
-        "Decline and archaeological evidence"
+        "The establishment of early commercial relationships",
+        "Dangers and hardships faced by ancient traders",
+        "How cultural practices spread through stages",
+        "Defining a vast network of trading routes",
+        "The diversity of merchandise and commercial mechanisms",
+        "Government regulation of transcontinental commerce",
+        "Weighing up different methods of transportation",
+        "The continuing relevance of historical trading connections"
       ],
-      "correctAnswer": "Cultural and technological exchanges"
+      "correctAnswer": "How cultural practices spread through stages",
+      "justification": "Paragraph D explicitly outlines a sequential four-stage process of cultural diffusion: arrival at caravanserais, interaction between individuals, local adoption of foreign practices, and finally regional spread. The heading 'through stages' directly matches the paragraph's structure, which uses sequence markers like 'First,' 'Subsequently,' 'Following this,' and 'Finally.'",
+      "evidenceQuote": "The process of cultural diffusion—the spread of ideas, beliefs, and practices between societies—occurred in distinct stages along these routes."
     },
     {
       "id": 4,
-      "questionText": "Paragraph D",
+      "questionText": "Paragraph E",
       "options": [
-        "Economic transformations through trade",
-        "Origins and geographical scope",
-        "Lasting impacts and modern parallels",
-        "Cultural and technological exchanges",
-        "Decline and archaeological evidence"
+        "The establishment of early commercial relationships",
+        "Dangers and hardships faced by ancient traders",
+        "How cultural practices spread through stages",
+        "Defining a vast network of trading routes",
+        "The diversity of merchandise and commercial mechanisms",
+        "Government regulation of transcontinental commerce",
+        "Weighing up different methods of transportation",
+        "The continuing relevance of historical trading connections"
       ],
-      "correctAnswer": "Lasting impacts and modern parallels"
+      "correctAnswer": "Weighing up different methods of transportation",
+      "justification": "Paragraph E compares overland routes with maritime alternatives, comparing cargo volume, speed, and risk factors (storms/piracy versus predictability). The phrase 'weighing up' reflects the comparative analysis of the benefits and drawbacks of land versus sea travel presented in the text.",
+      "evidenceQuote": "While the overland Silk Road dominated long-distance trade for centuries, maritime routes gradually emerged as significant alternatives... sea routes could transport approximately three times the cargo volume."
+    },
+    {
+      "id": 5,
+      "questionText": "Paragraph F",
+      "options": [
+        "The establishment of early commercial relationships",
+        "Dangers and hardships faced by ancient traders",
+        "How cultural practices spread through stages",
+        "Defining a vast network of trading routes",
+        "The diversity of merchandise and commercial mechanisms",
+        "Government regulation of transcontinental commerce",
+        "Weighing up different methods of transportation",
+        "The continuing relevance of historical trading connections"
+      ],
+      "correctAnswer": "The continuing relevance of historical trading connections",
+      "justification": "Paragraph F discusses the 'legacy' of the Silk Road and how it remains significant in the 'twenty-first century' through modern scholarship and infrastructure projects. The heading's 'continuing relevance' summarizes the modern-day applications and historical impact described in the concluding paragraph.",
+      "evidenceQuote": "The legacy of the Silk Road extends far beyond its historical period of activity... several contemporary infrastructure projects explicitly reference this heritage."
     }
           ]
         },
         {
-          "id": 1,
-  "type": "summary-completion",
-  "completion_type": "summary",
-  "title": "Questions 5-7",
-  "word_limit": "NO MORE THAN TWO WORDS",
-  "instructions": "Complete the summary below using words from the passage.",
-  "structure": "<div class='completion-summary'><p>The Silk Road not only enabled the trade of luxury items like <strong>(13)_____</strong> but also facilitated the <strong>(14)_____</strong> of technologies such as papermaking. Its legacy continues through modern efforts like UNESCO's preservation of <strong>(15)_____</strong>.</p></div>",
-          "questions": [
-            { 
-      "id":5,
-      "gap_number": 5,
-      "questionText": "Gap 5",
-      "context": "luxury items like (5)_____",
-      "correctAnswer": "Chinese silk",
-      "evidence_quote": "Chinese silk, prized for its luster and durability, became a symbol of wealth in Roman society",
-      "evidence_location": "P2",
-      "answer_type": "noun"
-            },
-            { 
-              "id": 6, 
-      "gap_number": 6,
-      "questionText": "Gap 6",
-      "context": "facilitated the (6)_____ of technologies",
-      "correctAnswer": "transmission",
-      "evidence_quote": "the transmission of papermaking technology from China to the Islamic world in the eighth century",
-      "evidence_location": "P3",
-      "answer_type": "noun"
-            },
-            { 
-              "id": 7, 
-      "gap_number": 7,
-      "questionText": "Gap 7",
-      "context": "preservation of (7)_____",
-      "correctAnswer": "World Heritage locations",
-      "evidence_quote": "UNESCO's designation of Silk Road sites as World Heritage locations",
-      "evidence_location": "P4",
-      "answer_type": "noun"
-    }
-          ]
-        },
-        {
-          "id": 1,
+  "id": 2,
   "type": "multiple-choice",
-  "title": "Questions 8-10",
+  "title": "Questions 6-10",
   "instructions": "Choose the correct letter, A, B, C or D.",
   "questions": [
     {
-      "id": 8,
-      "questionText": "What was a key commodity transported westward along the Silk Road?",
+      "id": 6,
+      "questionText": "According to the passage, what was the approximate extent of the Silk Road network?",
       "options": [
-        "A: Glassware",
-        "B: Precious metals",
-        "C: Silk",
-        "D: Woolen textiles"
+        "4,500 kilometres across mountain terrain",
+        "6,500 kilometres across varied landscapes",
+        "8,500 kilometres along coastal regions",
+        "10,000 kilometres through desert areas only"
       ],
-      "correctAnswer": "C: Silk",
-      "explanation": "The passage mentions 'Merchants traversed deserts, mountains, and steppes, enduring perils to transport silk, spices, and porcelain westward.'"
+      "correctAnswer": "6,500 kilometres across varied landscapes",
+      "justification": "Paragraph A explicitly states that the Silk Road network spanned 'approximately 6,500 kilometres of diverse terrain.' The correct answer paraphrases this by using 'varied landscapes' instead of 'diverse terrain' while maintaining the accurate distance figure.",
+      "evidenceQuote": "This vast system connected East Asia with the Mediterranean region, spanning approximately 6,500 kilometres of diverse terrain."
+    },
+    {
+      "id": 7,
+      "questionText": "What does the 2019 study cited in the passage reveal about the earliest phase of Silk Road commerce?",
+      "options": [
+        "Most merchants completed the full journey from China to the Mediterranean",
+        "Trade goods consisted mainly of essential household items",
+        "Diplomatic relations were established before commercial exchange began",
+        "High-value merchandise constituted the majority of traded goods"
+      ],
+      "correctAnswer": "High-value merchandise constituted the majority of traded goods",
+      "justification": "The passage states that the 2019 study by the International Council for Historical Trade Studies found that 'approximately 65 percent of traded items during the first century of operation consisted of silk, jade, and precious metals.' The correct option paraphrases 'luxury goods' as 'high-value merchandise' and '65 percent' as 'the majority,' accurately capturing the study's findings.",
+      "evidenceQuote": "According to this research, approximately 65 percent of traded items during the first century of operation consisted of silk, jade, and precious metals."
+    },
+    {
+      "id": 8,
+      "questionText": "What can be inferred about the trading practices of individual Silk Road merchants?",
+      "options": [
+        "They typically conducted business within limited sections of the overall network",
+        "They personally transported goods across the entire route from East to West",
+        "They focused exclusively on trading silk rather than other commodities",
+        "They preferred dealing with maritime traders over land-based merchants"
+      ],
+      "correctAnswer": "They typically conducted business within limited sections of the overall network",
+      "justification": "The passage states that 'Traders rarely completed the entire distance themselves. Instead, goods typically passed through multiple hands at trading centers called entrepôts.' This implies that individual merchants operated within specific segments of the network rather than traveling the complete route.",
+      "evidenceQuote": "Traders rarely completed the entire distance themselves. Instead, goods typically passed through multiple hands at trading centers called entrepôts."
     },
     {
       "id": 9,
-      "questionText": "According to the passage, the spread of Buddhism along the Silk Road involved:",
+      "questionText": "What is the primary focus of paragraph D?",
       "options": [
-        "A: Military conquests",
-        "B: Translation of texts",
-        "C: Trade embargoes",
-        "D: Maritime voyages only"
+        "The architectural design and purpose of roadside rest stations",
+        "Professor Liu Mingchen's archaeological excavation methods",
+        "The sequential stages through which ideas and practices spread between societies",
+        "The historical journey of Buddhism from India to China"
       ],
-      "correctAnswer": "B: Translation of texts",
-      "explanation": "The passage states 'Buddhism, for instance, spread from India to China via these routes, with monasteries dotting the path and translating sutras into local tongues.'"
+      "correctAnswer": "The sequential stages through which ideas and practices spread between societies",
+      "justification": "Paragraph D opens with a clear topic sentence: 'The process of cultural diffusion—the spread of ideas, beliefs, and practices between societies—occurred in distinct stages along these routes.' The paragraph then outlines four sequential steps (First, Subsequently, Following this, Finally) describing how cultural elements transferred between communities.",
+      "evidenceQuote": "The process of cultural diffusion—the spread of ideas, beliefs, and practices between societies—occurred in distinct stages along these routes."
     },
     {
       "id": 10,
-      "questionText": "What factor contributed to the decline of the Silk Road?",
+      "questionText": "According to the passage, what advantage did overland Silk Road routes offer compared to maritime alternatives?",
       "options": [
-        "A: Rise of air travel",
-        "B: Mongol unification",
-        "C: Emergence of sea routes",
-        "D: Depletion of silk resources"
+        "They enabled transportation of three times more cargo per journey",
+        "They provided more predictable timing and lower risk of complete cargo loss",
+        "They required approximately thirty fewer days to complete",
+        "They offered significantly reduced costs for commercial operators"
       ],
-      "correctAnswer": "C: Emergence of sea routes",
-      "explanation": "The passage states 'The decline of the Silk Road, precipitated by the rise of maritime routes and Mongol fragmentation in the fourteenth century.'"
-            }
-          ]
+      "correctAnswer": "They provided more predictable timing and lower risk of complete cargo loss",
+      "justification": "Paragraph E explicitly states that 'the land routes offered advantages in terms of predictable scheduling and reduced risk of total cargo loss.' The correct option paraphrases 'predictable scheduling' as 'more predictable timing' and 'reduced risk of total cargo loss' as 'lower risk of complete cargo loss.'",
+      "evidenceQuote": "However, the land routes offered advantages in terms of predictable scheduling and reduced risk of total cargo loss from storms or piracy."
         }
       ]
     },
-    {
-      "id": 2,
-      "title": "Renewable Energy: How Wind and Solar Are Reshaping the Future",
-      "level": "academic",
-      "estimatedTime": 20,
-      "paragraphs": [
-    {
-      "id": "P1",
-      "text": "The transition to renewable energy sources represents a critical response to escalating environmental concerns and finite fossil fuel reserves. Among these, wind and solar power stand out for their abundance, scalability, and decreasing costs, fundamentally altering global energy paradigms. Wind energy captures kinetic force from atmospheric movements through turbines, converting it into electrical power with minimal emissions. Solar technology, meanwhile, utilizes photovoltaic panels or concentrated systems to transform sunlight directly into usable electricity. A pivotal historical milestone occurred in 1887 when Scottish engineer James Blyth constructed the first electricity-generating wind turbine, laying groundwork for modern developments. Today, according to a 2023 assessment by the Fictional International Energy Observatory, wind and solar collectively contributed to 12 percent of global electricity generation in 2022, a figure projected to triple by 2040."
-    },
-    {
-      "id": "P2",
-      "text": "Technological innovations in wind energy have propelled its adoption, particularly in offshore environments where wind speeds are consistently higher. Larger turbine designs, featuring blades exceeding 100 meters in length, have increased energy capture efficiency by up to 50 percent compared to earlier models. A compelling case study is Denmark's Horns Rev 3 offshore wind farm, operational since 2019 and developed by Vattenfall, which generates 407 megawatts—enough to power 425,000 households annually. This project exemplifies how strategic site selection and advanced engineering can optimize output while minimizing land use conflicts. Furthermore, floating wind platforms are emerging as a solution for deep-water locations, expanding viable areas beyond shallow coastal zones. Such advancements not only enhance energy yield but also contribute to job creation in manufacturing and maintenance sectors."
-    },
-    {
-      "id": "P3",
-      "text": "Solar power's trajectory has been marked by dramatic cost reductions and efficiency gains, making it increasingly competitive with conventional sources. The average levelized cost of solar electricity has fallen by 85 percent since 2010, as reported in a 2021 analysis by the Fictional Solar Innovation Center. In arid regions, large-scale solar installations capitalize on abundant sunlight to achieve high capacity factors. For instance, the Noor Complex in Morocco, completed in phases between 2016 and 2019, employs concentrated solar power technology to produce 580 megawatts. Managed by Masen, this facility integrates thermal storage, allowing energy dispatch during non-sunlight hours and reducing reliance on backup fossil fuels. These attributes underscore solar's versatility in addressing peak demand and grid stability challenges."
-    },
-    {
-      "id": "P4",
-      "text": "The integration of wind and solar into existing energy systems presents hurdles, including variability in generation and the need for robust infrastructure upgrades. Energy storage technologies, such as lithium-ion batteries, are pivotal in mitigating intermittency by storing surplus power for later use. Hybrid systems combining wind and solar further optimize reliability, as their complementary production patterns—wind often stronger at night, solar during the day—smooth overall output. A 2024 projection from the Fictional Global Renewables Alliance estimates that with sustained investment, wind and solar could supply 60 percent of worldwide electricity by 2050, averting significant carbon emissions. Policy frameworks, including incentives and international agreements, play a crucial role in accelerating deployment. Ultimately, the reshaping of energy futures through wind and solar hinges on continued innovation and collaborative efforts to overcome barriers."
-    }
-  ],
-      "questions": [
-        {
-          "id": 2,
-  "type": "matching-features",
+{
+  "id": 3,
+  "type": "matching-information",
   "title": "Questions 11-14",
-  "instructions": "Look at the following statements (Questions 11-14) and the list of people/institutions below. Match each statement with the correct person/institution, A–F. Write the correct letter, A–F, in boxes 1-4 on your answer sheet.",
-  "features": [
+  "instructions": "Which paragraph contains the following information? Write the correct letter, A-F, in boxes 11-14 on your answer sheet.",
+  "paragraphs_list": ["A", "B", "C", "D", "E", "F"],
+  "questions": [
     {
-      "letter": "A",
-      "name": "James Blyth"
-    },
-    {
-      "letter": "B",
-      "name": "Vattenfall"
-    },
-    {
-      "letter": "C",
-      "name": "Masen"
-    },
-    {
-      "letter": "D",
-      "name": "Fictional Solar Innovation Center"
-    },
-    {
-      "letter": "E",
-      "name": "Fictional International Energy Observatory"
-    },
-    {
-      "letter": "F",
-      "name": "Fictional Global Renewables Alliance"
-    }
-  ],
-      "questions": [
-        {
-          "id": 11,
-      "questionText": "Pioneered the construction of an early wind turbine for power generation",
-      "correctAnswer": "A",
-      "explanation": "Attribute linked to Scottish engineer who built the first electricity-generating turbine in 1887",
-      "evidenceQuote": "Scottish engineer James Blyth constructed the first electricity-generating wind turbine",
-      "evidenceLocation": "P1"
+      "id": 11,
+      "questionText": "research findings indicating that high-value commodities dominated early commercial exchanges",
+      "correctAnswer": "B",
+      "justification": "Paragraph B references a 2019 study by the International Council for Historical Trade Studies. The study provides specific data showing that 65 percent of initial trade items were luxury goods like silk and precious metals, which supports the claim of high-value commodities dominating early commerce.",
+      "evidenceQuote": "A 2019 study... found that early exchanges primarily involved luxury goods. According to this research, approximately 65 percent of traded items during the first century of operation consisted of silk, jade, and precious metals."
     },
     {
       "id": 12,
-      "questionText": "Developed a large offshore wind facility in Scandinavia",
-      "correctAnswer": "B",
-      "explanation": "Company responsible for Denmark's Horns Rev 3 project since 2019",
-      "evidenceQuote": "Denmark's Horns Rev 3 offshore wind farm, operational since 2019 and developed by Vattenfall",
-      "evidenceLocation": "P2"
+      "questionText": "a description of the sequential phases through which foreign practices were transmitted between communities",
+      "correctAnswer": "D",
+      "justification": "Paragraph D outlines the process of cultural diffusion as occurring in 'distinct stages.' It details a four-step sequence (using markers like 'First,' 'Subsequently,' 'Following this,' and 'Finally') that describes how practices moved from initial interaction to regional adoption.",
+      "evidenceQuote": "The process of cultural diffusion—the spread of ideas, beliefs, and practices between societies—occurred in distinct stages along these routes."
     },
     {
       "id": 13,
-      "questionText": "Manages a major solar installation with energy storage capabilities",
-      "correctAnswer": "C",
-      "explanation": "Entity overseeing Morocco's Noor Complex with thermal storage",
-      "evidenceQuote": "Managed by Masen, this facility integrates thermal storage",
-      "evidenceLocation": "P3"
+      "questionText": "a comparison of cargo capacity and risk factors between different transport methods",
+      "correctAnswer": "E",
+      "justification": "Paragraph E provides a direct comparison between overland and maritime routes. It contrasts the volume of cargo (sea routes carried three times more) against risk factors such as 'predictable scheduling' and the 'risk of total cargo loss' found in land travel.",
+      "evidenceQuote": "Sea routes could transport approximately three times the cargo volume... However, the land routes offered advantages in terms of predictable scheduling and reduced risk of total cargo loss."
     },
     {
       "id": 14,
-      "questionText": "Provided data on significant declines in solar energy expenses",
-      "correctAnswer": "D",
-      "explanation": "Organization's 2021 analysis on 85% cost drop since 2010",
-      "evidenceQuote": "The average levelized cost of solar electricity has fallen by 85 percent since 2010, as reported in a 2021 analysis by the Fictional Solar Innovation Center",
-      "evidenceLocation": "P3"
+      "questionText": "an explanation of how merchandise was exchanged at intermediate commercial centres rather than transported by single traders",
+      "correctAnswer": "C",
+      "justification": "Paragraph C explains that traders rarely traveled the whole length of the Silk Road. It describes the role of 'entrepôts,' which functioned as specialized marketplaces where goods were passed through multiple hands rather than being handled by a single individual for the whole duration.",
+      "evidenceQuote": "Traders rarely completed the entire distance themselves. Instead, goods typically passed through multiple hands at trading centers called entrepôts—specialized marketplaces where merchants from different regions would gather."
     }
-          ]
-        },
-        {
-          "id": 2,
-  "type": "multiple-choice",
+  ]
+}
+  ]
+},
+    {
+  "id": 2,
+  "title": "Wind and Solar Power: Progress, Challenges, and the Path Forward",
+  "level": "academic",
+  "estimatedTime": 25,
+  "paragraphs": [
+    {
+      "id": "A",
+      "text": "The global energy landscape is undergoing a profound transformation as nations increasingly turn to renewable sources to meet their electricity demands. Wind and solar power, once considered marginal contributors to energy grids, have emerged as central pillars of sustainable development strategies worldwide. According to a 2022 report by the Global Renewable Energy Council, these two technologies collectively accounted for approximately 12% of global electricity generation, up from just 4.6% in 2015. This rapid expansion raises critical questions about how these technologies can be scaled efficiently and whether they can reliably replace conventional power sources. Understanding the developmental trajectories of wind and solar energy is essential for policymakers seeking to balance environmental objectives with energy security concerns."
+    },
+    {
+      "id": "B",
+      "text": "The emergence of modern wind and solar technologies can be traced to the energy crises of the 1970s, which prompted governments to invest in alternative power sources. Initially, both technologies faced significant economic barriers; wind turbines in 1980 generated electricity at roughly 30 times the cost of coal-fired plants, while early photovoltaic cells remained prohibitively expensive for commercial applications. Dr. Helena Vasquez, a renewable energy economist at the University of Barcelona, has extensively documented this transformation. Her research, published in the Journal of Sustainable Energy Studies in 2021, demonstrates that the levelized cost of electricity from wind farms declined by 71% between 2009 and 2020. Solar photovoltaic costs experienced an even more dramatic reduction of 89% during the same period. Vasquez attributes these developments primarily to manufacturing innovations and economies of scale rather than government subsidies alone."
+    },
+    {
+      "id": "C",
+      "text": "Wind energy technology has evolved substantially through improvements in turbine design and materials engineering. Modern turbines now reach heights exceeding 250 metres with rotor diameters approaching 170 metres, enabling them to capture stronger and more consistent winds at higher altitudes. This scaling effect has increased capacity factors—the ratio of actual electricity output to maximum potential output—from approximately 25% in early models to 45% in contemporary offshore installations. The development of floating platform technology has further expanded potential installation sites to waters previously considered too deep for conventional foundations. Research conducted by the Nordic Energy Research Institute between 2018 and 2022 revealed that floating turbines could potentially access wind resources over 58% of the world's oceans. However, these technological advances have been concentrated primarily in regions with established manufacturing bases and favourable regulatory frameworks."
+    },
+    {
+      "id": "D",
+      "text": "Solar photovoltaic technology has followed a distinct developmental pathway characterised by continuous efficiency improvements. Professor Kwame Asante, a materials scientist at the Ghana Institute of Technology, has pioneered research into next-generation solar cells. The process of enhancing cell efficiency typically follows several stages. Initially, researchers identify promising semiconductor materials with optimal light absorption properties. Subsequently, laboratory prototypes are developed and tested under controlled conditions. Following this, manufacturing processes are refined to ensure consistent quality at scale. Ultimately, field testing across diverse climatic conditions validates both performance and durability predictions. Asante's work on perovskite-silicon tandem cells, published in 2023, achieved laboratory efficiencies of 33.7%, suggesting that commercial panels may eventually exceed current average efficiencies of 20-22%. Such developments could significantly reduce the land area required for large-scale solar installations."
+    },
+    {
+      "id": "E",
+      "text": "The implementation of renewable energy systems reveals significant geographical variations in approach and outcomes. In Denmark, where wind power supplied 48% of electricity consumption in 2022, integration has been facilitated by strong interconnections with neighbouring countries that can absorb excess generation during peak production periods. By contrast, Morocco has prioritised solar development, with the Noor-Ouarzazate complex spanning approximately 3,000 hectares and providing electricity to an estimated 1.3 million households. A 2023 study by the Institute for Climate Policy Studies compared renewable integration strategies across twelve nations and found notable differences in outcomes. The research indicated that countries with diversified portfolios—combining both wind and solar—experienced 35% fewer grid instability incidents than those relying predominantly on a single technology. The study also suggested that effective integration appears to depend heavily on transmission infrastructure investment, though optimal expenditure levels remain under investigation."
+    },
+    {
+      "id": "F",
+      "text": "Despite these advances, substantial challenges remain in realising the full potential of renewable energy systems. Dr. Ingrid Lindqvist, an energy systems analyst at the Stockholm Centre for Sustainable Development, has questioned whether current grid architectures can adequately accommodate the variability inherent in wind and solar generation. In a 2022 assessment, Lindqvist argued that without sufficient storage solutions, renewable penetration beyond 50% may destabilise electrical systems in certain contexts. Battery storage costs, while declining, remain considerable; large-scale lithium-ion installations currently cost between 150 and 200 dollars per kilowatt-hour of capacity. Additionally, manufacturing solar panels and wind turbines requires substantial quantities of critical minerals, including lithium and rare earth elements. According to estimates from the African Centre for Sustainable Resources, global demand for these materials could increase by 400% by 2040 if current deployment trajectories continue. Lindqvist emphasises that these constraints necessitate more comprehensive planning approaches."
+    },
+    {
+      "id": "G",
+      "text": "The transition to wind and solar energy thus presents both remarkable opportunities and significant complexities. While cost reductions have exceeded most projections and technological capabilities continue to advance, the integration challenges identified by researchers suggest that straightforward replacement of fossil fuel generation remains unlikely in the near term. Most analysts now advocate for a systems-based approach that considers storage, transmission, and demand management alongside generation capacity. The coming decade will probably determine whether current momentum can be sustained and whether remaining technical and economic barriers can be overcome at the pace required by climate objectives."
+    }
+  ],
+      "questions": [
+{
+  "id": 4,
+  "type": "matching-information",
   "title": "Questions 15-18",
-  "instructions": "Choose the correct letter, A, B, C or D.",
-          "questions": [
+  "instructions": "Which paragraph contains the following information? Write the correct letter, A-F, in boxes 15-18 on your answer sheet.",
+  "paragraphs_list": ["A", "B", "C", "D", "E", "F"],
+  "questions": [
     {
       "id": 15,
-      "questionText": "According to the passage, what is the annual household power capacity of Denmark's Horns Rev 3 offshore wind farm?",
-      "options": [
-        "A) Sufficient for 425,000 homes",
-        "B) Enough to supply 580,000 residences",
-        "C) Capable of energizing 100,000 dwellings",
-        "D) Adequate for 300,000 households"
-      ],
-      "correctAnswer": "A) Sufficient for 425,000 homes",
-      "explanation": "The passage specifies 'generates 407 megawatts—enough to power 425,000 households annually'.",
-      "evidenceQuote": "generates 407 megawatts—enough to power 425,000 households annually",
-      "evidenceLocation": "P2"
+      "questionText": "quantitative evidence demonstrating advantages of integrating multiple renewable power sources",
+      "correctAnswer": "E",
+      "justification": "Paragraph E presents research from the Institute for Climate Policy Studies showing that countries with diversified portfolios experienced 35% fewer grid instability incidents, directly providing numerical evidence for the benefits of combining technologies.",
+      "evidenceQuote": "countries with diversified portfolios—combining both wind and solar—experienced 35% fewer grid instability incidents than those relying predominantly on a single technology"
     },
     {
       "id": 16,
-      "questionText": "What can be inferred about combining wind and solar power systems from the information across the passage?",
-      "options": [
-        "A) It helps balance daily energy fluctuations effectively",
-        "B) It increases overall costs due to complex integration",
-        "C) It relies solely on advancements in turbine design",
-        "D) It eliminates the need for energy storage solutions"
-      ],
-      "correctAnswer": "A) It helps balance daily energy fluctuations effectively",
-      "explanation": "The passage describes 'Hybrid systems combining wind and solar further optimize reliability, as their complementary production patterns—wind often stronger at night, solar during the day—smooth overall output'.",
-      "evidenceQuote": "Hybrid systems combining wind and solar further optimize reliability, as their complementary production patterns—wind often stronger at night, solar during the day—smooth overall output",
-      "evidenceLocation": "P4"
+      "questionText": "the primary factors responsible for significant decreases in the expense of generating electricity from renewables",
+      "correctAnswer": "B",
+      "justification": "Paragraph B explicitly attributes the cost reductions in wind and solar energy to manufacturing innovations and economies of scale through Dr. Vasquez's research findings, rather than government subsidies alone.",
+      "evidenceQuote": "Vasquez attributes these developments primarily to manufacturing innovations and economies of scale rather than government subsidies alone"
     },
     {
       "id": 17,
-      "questionText": "What is the primary purpose of the passage?",
-      "options": [
-        "A) To outline the historical and modern roles of wind and solar in sustainable energy shifts",
-        "B) To compare the environmental harms of fossil fuels versus renewables",
-        "C) To advocate for immediate global bans on non-renewable sources",
-        "D) To detail engineering flaws in early renewable technologies"
-      ],
-      "correctAnswer": "A) To outline the historical and modern roles of wind and solar in sustainable energy shifts",
-      "explanation": "The passage traces developments, examples, and projections for wind and solar, emphasizing their transformative effects on energy systems as stated in 'The transition to renewable energy sources represents a critical response... wind and solar collectively contributed to 12 percent of global electricity generation'.",
-      "evidenceQuote": "The transition to renewable energy sources represents a critical response... wind and solar collectively contributed to 12 percent of global electricity generation",
-      "evidenceLocation": "P1"
+      "questionText": "the sequential methodology employed to develop and validate improvements in solar energy conversion",
+      "correctAnswer": "D",
+      "justification": "Paragraph D describes the multi-stage process for enhancing solar cell efficiency, outlining distinct phases from identifying semiconductor materials through laboratory testing, manufacturing refinement, and field validation.",
+      "evidenceQuote": "The process of enhancing cell efficiency typically follows several stages. Initially, researchers identify promising semiconductor materials with optimal light absorption properties"
     },
     {
-      "id":18,
-      "questionText": "In the passage, the term 'levelized cost' most closely refers to",
-      "options": [
-        "A) The average price of electricity over a system's lifetime",
-        "B) The initial investment required for turbine installation",
-        "C) The daily operational expenses of solar panels",
-        "D) The projected revenue from energy sales annually"
-      ],
-      "correctAnswer": "A) The average price of electricity over a system's lifetime",
-      "explanation": "The context uses 'levelized cost of solar electricity' to indicate long-term pricing reductions as stated in 'The average levelized cost of solar electricity has fallen by 85 percent since 2010'.",
-      "evidenceQuote": "The average levelized cost of solar electricity has fallen by 85 percent since 2010",
-      "evidenceLocation": "P3"
+      "id": 18,
+      "questionText": "how enlarging wind energy equipment has enhanced the proportion of potential electricity actually generated",
+      "correctAnswer": "C",
+      "justification": "Paragraph C explains that modern turbines reaching heights over 250 metres with larger rotor diameters have increased capacity factors—the ratio of actual to potential output—from 25% to 45% through this scaling effect.",
+      "evidenceQuote": "This scaling effect has increased capacity factors—the ratio of actual electricity output to maximum potential output—from approximately 25% in early models to 45%"
     }
-          ]
-        },
-        {
-          "id": 2,
-  "type": "summary-completion",
-  "completion_type": "summary",
-  "title": "Questions 19-21",
-  "word_limit": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
-  "instructions": "Complete the summary below using words from the passage.",
-  "structure": "<div class='completion-summary'><p>Renewable energy sources such as wind and solar are transforming global power systems due to their <strong>(9)_____</strong> and scalability. A historical milestone was the first wind turbine built in <strong>(10)_____</strong>. Projects like offshore wind farms demonstrate capacity to power <strong>(11)_____</strong> households, while solar costs have fallen by 85 percent since 2010.</p></div>",
+  ]
+},
+{
+  "id": 5,
+  "type": "matching-features",
+  "title": "Questions 19-22",
+  "instructions": "Look at the following researchers and organisations (Questions 19-22) and the list of features below. Match each feature with the correct researcher or organisation, A-G. Write the correct letter, A-G, in boxes 19-22 on your answer sheet. NB You may use any letter more than once.",
+  "features": [
+    {
+      "letter": "A",
+      "name": "Dr. Helena Vasquez"
+    },
+    {
+      "letter": "B",
+      "name": "Professor Kwame Asante"
+    },
+    {
+      "letter": "C",
+      "name": "Dr. Ingrid Lindqvist"
+    },
+    {
+      "letter": "D",
+      "name": "Nordic Energy Research Institute"
+    },
+    {
+      "letter": "E",
+      "name": "Institute for Climate Policy Studies"
+    },
+    {
+      "letter": "F",
+      "name": "African Centre for Sustainable Resources"
+    },
+    {
+      "letter": "G",
+      "name": "Global Renewable Energy Council"
+    }
+  ],
   "questions": [
     {
       "id": 19,
-      "gap_number": 19,
-      "questionText": "Gap 19",
-      "context": "due to their (19)_____ and scalability",
-      "correctAnswer": "abundance",
-      "evidence_quote": "wind and solar power stand out for their abundance, scalability",
-      "evidence_location": "P1",
-      "answer_type": "noun"
+      "questionText": "conducted an analysis comparing methods for incorporating sustainable power generation across numerous countries",
+      "correctAnswer": "E",
+      "justification": "Paragraph E states that the Institute for Climate Policy Studies compared renewable integration strategies across twelve nations. The question paraphrases 'compared renewable integration strategies across twelve nations' as 'comparing methods for incorporating sustainable power generation across numerous countries.'",
+      "evidenceQuote": "A 2023 study by the Institute for Climate Policy Studies compared renewable integration strategies across twelve nations and found notable differences in outcomes"
     },
     {
       "id": 20,
-      "gap_number": 20,
-      "questionText": "Gap 20",
-      "context": "first wind turbine built in (20)_____",
-      "correctAnswer": "1887",
-      "evidence_quote": "A pivotal historical milestone occurred in 1887",
-      "evidence_location": "P1",
-      "answer_type": "date"
+      "questionText": "credited industrial production advances and increased output volumes as the primary drivers of reduced electricity generation costs",
+      "correctAnswer": "A",
+      "justification": "In Paragraph B, Dr. Vasquez attributes cost reductions to manufacturing innovations and economies of scale. The text uses 'industrial production advances' to paraphrase 'manufacturing innovations' and 'increased output volumes' to represent 'economies of scale.'",
+      "evidenceQuote": "Vasquez attributes these developments primarily to manufacturing innovations and economies of scale rather than government subsidies alone"
     },
     {
       "id": 21,
-      "gap_number": 21,
-      "questionText": "Gap 21",
-      "context": "capacity to power (21)_____ households",
-      "correctAnswer": "425,000",
-      "evidence_quote": "enough to power 425,000 households annually",
-      "evidence_location": "P2",
-      "answer_type": "number"
-    } 
-      ]
-        },
-    {
-      "id": 2,
-      "type": "short-answer",
-      "title": "Questions 22-25",
-      "instructions": "Answer the questions below. Choose NO MORE THAN THREE WORDS from the passage for each answer.",
-          "questions": [
-            {
-              "id": 22,
-          "questionText": "When was the first electricity-generating wind turbine constructed?",
-          "correctAnswer": "1887",
-          "alternativeAnswers": ["1887", "in 1887"]
-            },
-            {
-              "id": 23,
-          "questionText": "Who developed Denmark's Horns Rev 3 offshore wind farm?",
-          "correctAnswer": "Vattenfall",
-          "alternativeAnswers": ["Vattenfall", "by Vattenfall"]
-        },
-        {
-          "id": 24,
-          "questionText": "How much has the average levelized cost of solar electricity fallen since 2010?",
-          "correctAnswer": "85 percent",
-          "alternativeAnswers": ["85 percent", "85%", "by 85 percent"]
-        },
-        {
-          "id": 25,
-          "questionText": "What percentage of worldwide electricity could wind and solar supply by 2050?",
-          "correctAnswer": "60 percent",
-          "alternativeAnswers": ["60 percent", "60%", "60 percent of worldwide"]
-            }
-          ]
-        }
-      ]
+      "questionText": "stressed that existing limitations require the adoption of more thorough strategic frameworks for energy system development",
+      "correctAnswer": "C",
+      "justification": "Paragraph F attributes to Dr. Lindqvist the view that constraints necessitate more comprehensive planning. The question paraphrases 'constraints' as 'limitations' and 'comprehensive planning approaches' as 'thorough strategic frameworks.'",
+      "evidenceQuote": "Lindqvist emphasises that these constraints necessitate more comprehensive planning approaches"
     },
     {
-      "id": 3,
-  "title": "Ancient Civilizations: The Engineering Marvels of Pyramid Construction",
-      "level": "academic",
-      "estimatedTime": 20,
-  "wordCount": 742,
-  "difficultyBand": "7",
-      "paragraphs": [
-        {
-          "id": "P1",
-      "text": "The construction of pyramids in ancient civilizations exemplifies remarkable engineering prowess, blending astronomical knowledge, mathematical precision, and organizational ingenuity. These monumental structures, primarily serving as tombs or ceremonial centers, dominated landscapes across continents from Egypt to Mesoamerica. In ancient Egypt, the pyramids of the Giza plateau, built during the Fourth Dynasty around 2580–2565 BCE, represent the zenith of Old Kingdom architecture. The Great Pyramid of Khufu, the largest of these, originally stood at 146.6 meters and comprised approximately 2.3 million limestone blocks, each weighing between 2 and 15 tons. Such feats were achieved without modern machinery, relying instead on ramps, levers, and a vast workforce estimated at 20,000 laborers over two decades. A 2017 analysis by the Fictional Archaeological Engineering Society posits that the alignment of the Great Pyramid with cardinal directions deviated by less than 0.05 degrees, underscoring profound surveying techniques."
-        },
-        {
-          "id": "P2",
-      "text": "Engineering innovations underpinned the pyramids' stability and grandeur, with internal chambers and passageways designed to withstand seismic activity. Workers quarried stone from nearby sites, transporting blocks via sledges lubricated with water to reduce friction on sand paths. Recent simulations suggest that straight ramps, possibly spiraling around the structure, facilitated block placement up to heights exceeding 100 meters. Copper chisels and dolerite pounders served as primary tools for shaping limestone, while mortar derived from gypsum cemented the blocks. The pyramid's stepped core, overlaid with smooth casing stones, distributed weight evenly, preventing collapse under immense pressure. This layered approach not only enhanced durability but also allowed for precise astronomical observations through aligned shafts pointing to key stars."
-        },
-        {
-          "id": "P3",
-      "text": "Beyond Egypt, pyramid-building traditions flourished in Mesoamerican civilizations, adapting similar principles to local materials and cultural imperatives. The Pyramid of the Sun at Teotihuacan, Mexico, constructed around 200 CE by the Teotihuacanos, rises 65 meters and covers a base spanning 225 meters per side. Unlike Egyptian true pyramids, Mesoamerican versions featured stepped platforms supporting temples, emphasizing ritual functions over burial. Adobe bricks and volcanic stone formed the bulk, with clay cores packed tightly to achieve structural integrity amid frequent earthquakes. A case study of the nearby Pyramid of the Moon reveals integrated drainage systems, channeling rainwater to prevent erosion and foundation weakening. These adaptations highlight how environmental constraints influenced engineering choices, fostering resilience in seismic-prone regions."
-        },
-        {
-          "id": "P4",
-      "text": "The enduring legacy of ancient pyramid engineering lies in its demonstration of societal coordination and technological foresight. Logistical challenges, including food supply for laborers and Nile River flooding for material transport, necessitated sophisticated planning. Modern excavations, such as those at Giza in the 1990s, uncovered workers' villages with bakeries and breweries, indicating well-fed, skilled teams rather than enslaved masses. Comparative studies reveal that while Egyptian pyramids prioritized permanence, Mesoamerican ones incorporated symbolic alignments with celestial events. Such divergences underscore the versatility of pyramid design in serving diverse ideological and practical purposes. Ultimately, these structures continue to inspire contemporary engineers, offering insights into sustainable construction amid resource limitations."
-        }
-      ],
-      "questions": [
+      "id": 22,
+      "questionText": "attained energy conversion rates exceeding 33% under controlled experimental conditions using combined semiconductor materials",
+      "correctAnswer": "B",
+      "justification": "Paragraph D notes Professor Asante's work on tandem cells (combined materials) achieving 33.7% efficiency in a lab setting. The question paraphrases 'laboratory efficiencies' as 'controlled experimental conditions' and 'perovskite-silicon tandem cells' as 'combined semiconductor materials.'",
+      "evidenceQuote": "Asante's work on perovskite-silicon tandem cells, published in 2023, achieved laboratory efficiencies of 33.7%"
+    },
     {
-      "id": 3,
-      "type": "true-false-not-given",
-      "title": "Questions 26-31",
-      "instructions": "Do the following statements agree with the information in the passage? Write TRUE, FALSE or NOT GIVEN.",
-      "questions": [
-        {
-          "id": 26,
-          "questionText": "Monumental structures like pyramids functioned mainly as burial sites in ancient Egypt.",
-          "correctAnswer": "TRUE"
-        },
-        {
-          "id": 27,
-          "questionText": "The Great Pyramid's orientation to the points of the compass shows exceptional accuracy.",
-          "correctAnswer": "TRUE"
-        },
-        {
-          "id": 28,
-          "questionText": "The Pyramid of the Sun was erected approximately 200 years before the Common Era.",
-          "correctAnswer": "FALSE"
-        },
-        {
-          "id": 29,
-          "questionText": "Stone blocks for Egyptian pyramids were hauled from remote quarries using sledges.",
-          "correctAnswer": "FALSE"
-        },
-        {
-          "id": 30,
-          "questionText": "Aztecs influenced the design of stepped platforms in Mesoamerican pyramids.",
-          "correctAnswer": "NOT GIVEN"
-        },
-        {
-          "id": 31,
-          "questionText": "Internal shafts in pyramids were aligned for earthquake resistance rather than stellar viewing.",
-          "correctAnswer": "NOT GIVEN"  
-        }  
-        ]
-      },
-        {
-          "id": 3,
-          "type": "matching-headings",
-          "title": "Questions 32-35",
-          "instructions": "Choose the correct heading for paragraphs A-D from the list below.",
-          "questions": [
-            {
-              "id": 32,
-          "questionText": "Paragraph A",
-              "options": [
-            "Achievements in early Egyptian monumental architecture",
-            "Techniques ensuring structural integrity and precision",
-            "Regional adaptations in stepped temple platforms",
-            "Logistical and cultural insights from pyramid legacies",
-            "Exclusive reliance on advanced metal implements",
-            "Universal astronomical functions across all sites",
-            "Evidence of forced labour in workforce operations"
-          ],
-          "correctAnswer": "Achievements in early Egyptian monumental architecture"
-            },
-            {
-              "id": 33,
-          "questionText": "Paragraph B",
-              "options": [
-            "Achievements in early Egyptian monumental architecture",
-            "Techniques ensuring structural integrity and precision",
-            "Regional adaptations in stepped temple platforms",
-            "Logistical and cultural insights from pyramid legacies",
-            "Exclusive reliance on advanced metal implements",
-            "Universal astronomical functions across all sites",
-            "Evidence of forced labour in workforce operations"
-          ],
-          "correctAnswer": "Techniques ensuring structural integrity and precision"
-            },
-            {
-              "id": 34,
-          "questionText": "Paragraph C",
-              "options": [
-            "Achievements in early Egyptian monumental architecture",
-            "Techniques ensuring structural integrity and precision",
-            "Regional adaptations in stepped temple platforms",
-            "Logistical and cultural insights from pyramid legacies",
-            "Exclusive reliance on advanced metal implements",
-            "Universal astronomical functions across all sites",
-            "Evidence of forced labour in workforce operations"
-          ],
-          "correctAnswer": "Regional adaptations in stepped temple platforms"
-            },
-            {
-              "id": 35,
-          "questionText": "Paragraph D",
-              "options": [
-            "Achievements in early Egyptian monumental architecture",
-            "Techniques ensuring structural integrity and precision",
-            "Regional adaptations in stepped temple platforms",
-            "Logistical and cultural insights from pyramid legacies",
-            "Exclusive reliance on advanced metal implements",
-            "Universal astronomical functions across all sites",
-            "Evidence of forced labour in workforce operations"
-          ],
-          "correctAnswer": "Logistical and cultural insights from pyramid legacies"
-            }
-          ]
-        },
-        {
-          "id": 3,
-          "type": "multiple-choice",
-      "title": "Questions 36-40",
-          "instructions": "Choose the correct letter, A, B, C or D.",
-          "questions": [
-            {
-              "id": 36,
-          "questionText": "What approximate number of stone blocks formed the largest pyramid at Giza?",
-              "options": [
-            "Around 2.3 million",
-            "Over 3 million",
-            "Fewer than 1 million",
-            "Exactly 2 million"
-          ],
-          "correctAnswer": "Around 2.3 million"
-            },
-            {
-              "id": 37,
-          "questionText": "Based on the passage, what can be deduced about the purpose of pyramid shafts in Egyptian designs?",
-              "options": [
-            "To enable celestial alignments for observations",
-            "Primarily to transport materials during building",
-            "Mainly for storing ceremonial artifacts inside",
-            "Exclusively to improve air circulation below"
-          ],
-          "correctAnswer": "To enable celestial alignments for observations"
-            },
-            {
-              "id": 38,
-          "questionText": "What is the central focus of the entire passage?",
-              "options": [
-            "Advanced techniques in ancient pyramid building worldwide",
-            "Economic factors behind pyramid construction projects",
-            "Religious myths associated with pyramid structures",
-            "Modern recreations of ancient engineering methods"
-          ],
-          "correctAnswer": "Advanced techniques in ancient pyramid building worldwide"
-            },
-            {
-              "id": 39,
-          "questionText": "The word 'zenith' in the passage refers to the",
-              "options": [
-            "Peak of architectural accomplishment",
-            "Base level of construction foundations",
-            "Decline in building technologies",
-            "Central chamber within the structure"
-          ],
-          "correctAnswer": "Peak of architectural accomplishment"
-            },
-            {
-              "id": 40,
-          "questionText": "From details in the passage, what difference in pyramid styles can be inferred between Egyptian and Mesoamerican builders?",
-              "options": [
-            "Emphasis on smooth surfaces versus terraced levels",
-            "Use of metal tools versus wooden levers only",
-            "Focus on burial tombs versus ritual temples",
-            "Construction in deserts versus coastal areas"
-          ],
-          "correctAnswer": "Focus on burial tombs versus ritual temples"
-            }
-          ]
-        }
-      ]
+      "id": 23,
+      "questionText": "suggested that deriving more than half of electricity supply from intermittent sources could cause network instability without adequate backup capacity",
+      "correctAnswer": "C",
+      "justification": "In Paragraph F, Dr. Lindqvist argues that penetration beyond 50% may destabilise systems without storage. The question paraphrases 'beyond 50%' as 'more than half,' 'destabilise' as 'cause network instability,' and 'storage solutions' as 'backup capacity.'",
+      "evidenceQuote": "Lindqvist argued that without sufficient storage solutions, renewable penetration beyond 50% may destabilise electrical systems in certain contexts"
     }
   ]
+},
+{
+  "id": 6,
+  "type": "flow-chart-completion",
+  "title": "Questions 24-27",
+  "instructions": "Complete the flow chart below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+  "word_limit": "NO MORE THAN TWO WORDS",
+  "flow_chart": {
+    "title": "The Development Process for Enhancing Solar Cell Efficiency",
+    "orientation": "vertical",
+    "nodes": [
+      {
+        "id": "node1",
+        "type": "stage",
+        "content": "The process of improving solar energy conversion follows distinct sequential phases",
+        "position": 1
+      },
+      {
+        "id": "gap24",
+        "type": "gap",
+        "content": "Scientists first identify __________ with ideal properties for absorbing light",
+        "gapNumber": 24,
+        "correctAnswer": "semiconductor materials",
+        "position": 2
+      },
+      {
+        "id": "node2",
+        "type": "stage",
+        "content": "Initial versions are then created and evaluated in laboratory settings",
+        "position": 3
+      },
+      {
+        "id": "gap25",
+        "type": "gap",
+        "content": "Testing occurs under __________ to verify performance",
+        "gapNumber": 25,
+        "correctAnswer": "controlled conditions",
+        "position": 4
+      },
+      {
+        "id": "node3",
+        "type": "stage",
+        "content": "Production methods are subsequently improved for larger-scale output",
+        "position": 5
+      },
+      {
+        "id": "gap26",
+        "type": "gap",
+        "content": "The aim is to achieve __________ when manufacturing at greater volumes",
+        "gapNumber": 26,
+        "correctAnswer": "consistent quality",
+        "position": 6
+      },
+      {
+        "id": "node4",
+        "type": "stage",
+        "content": "Final validation takes place in real-world environments",
+        "position": 7
+      },
+      {
+        "id": "gap27",
+        "type": "gap",
+        "content": "Testing across varied __________ confirms both efficiency and longevity",
+        "gapNumber": 27,
+        "correctAnswer": "climatic conditions",
+        "position": 8
+      }
+    ],
+    "connections": [
+      { "from": "node1", "to": "gap24", "style": "solid" },
+      { "from": "gap24", "to": "node2", "style": "solid" },
+      { "from": "node2", "to": "gap25", "style": "solid" },
+      { "from": "gap25", "to": "node3", "style": "solid" },
+      { "from": "node3", "to": "gap26", "style": "solid" },
+      { "from": "gap26", "to": "node4", "style": "solid" },
+      { "from": "node4", "to": "gap27", "style": "solid" }
+    ]
+  },
+  "questions": [
+    {
+      "id": 24,
+      "gap_number": 24,
+      "correctAnswer": "semiconductor materials",
+      "alternativeAnswers": [],
+      "justification": "Paragraph D explicitly states that researchers begin by identifying 'semiconductor materials' with optimal light absorption. This exact two-word phrase describes what is identified in the first stage of the efficiency enhancement process.",
+      "evidenceQuote": "Initially, researchers identify promising semiconductor materials with optimal light absorption properties"
+    },
+    {
+      "id": 25,
+      "gap_number": 25,
+      "correctAnswer": "controlled conditions",
+      "alternativeAnswers": [],
+      "justification": "The passage states that laboratory prototypes are tested under 'controlled conditions'. This exact phrase from the passage describes the specific testing environment used during the prototype evaluation stage.",
+      "evidenceQuote": "Subsequently, laboratory prototypes are developed and tested under controlled conditions"
+    },
+    {
+      "id": 26,
+      "gap_number": 26,
+      "correctAnswer": "consistent quality",
+      "alternativeAnswers": [],
+      "justification": "The text explains that manufacturing processes are refined to ensure 'consistent quality' at scale. This exact two-word phrase identifies the primary goal when moving to larger production volumes.",
+      "evidenceQuote": "Following this, manufacturing processes are refined to ensure consistent quality at scale"
+    },
+    {
+      "id": 27,
+      "gap_number": 27,
+      "correctAnswer": "climatic conditions",
+      "alternativeAnswers": [],
+      "justification": "Paragraph D notes that field testing across diverse 'climatic conditions' validates performance and durability. This matches the flow chart's reference to varied environments and confirming longevity.",
+      "evidenceQuote": "Ultimately, field testing across diverse climatic conditions validates both performance and durability predictions"
+    }
+  ]
+}
+        
+          ]
+        },
+{
+  "id": 3,
+  "title": "Memory's Imperfections: Adaptive Features or Cognitive Flaws?",
+  "level": "academic",
+  "estimatedTime": 25,
+  "paragraphs": [
+    {
+      "id": "A",
+      "text": "The human brain, despite its remarkable computational power, routinely generates memories of events that never occurred. This phenomenon, once dismissed as mere malfunction, has prompted a fundamental reexamination of how memory systems operate. Contemporary researchers increasingly question whether memory's apparent imperfections—its susceptibility to distortion and its selective retention of certain information over other details—represent design flaws or, paradoxically, adaptive features that enhance cognitive efficiency. Understanding why the brain prioritizes particular types of information while remaining vulnerable to false recollections may illuminate the very architecture of human cognition."
+    },
+    {
+      "id": "B",
+      "text": "For much of the twentieth century, memory was conceptualized as a recording system, faithfully capturing and storing experiences for later retrieval. This metaphor began eroding in the 1970s when researchers demonstrated that recollections could be systematically altered through post-event information. The now-classic misinformation paradigm, in which participants exposed to misleading details subsequently incorporated these fabrications into their accounts, revealed memory's constructive nature. By 2015, over four hundred studies had replicated variants of this effect, with meta-analyses suggesting that approximately 30 percent of participants in standard protocols report false details with high confidence. Such findings necessitated new theoretical frameworks capable of explaining both memory's malleability and its evident utility."
+    },
+    {
+      "id": "C",
+      "text": "Dr. Helena Varga, a cognitive psychologist at the Bergmann Institute for Mind Sciences, has developed an influential account emphasizing memory's fundamentally reconstructive character. In Varga's framework, retrieval does not involve accessing stored records but rather reassembling fragments using schemas—organized knowledge structures that guide interpretation. When gaps exist in encoded information, schemas fill these lacunae with plausible inferences, occasionally producing compelling but entirely fabricated details. Varga's laboratory experiments have demonstrated that participants frequently recall schema-consistent events with greater confidence than events they actually witnessed, suggesting that coherence with existing expectations may override accurate representation. This finding implies that false memories are not errors per se but natural consequences of an inferential system optimized for meaning-making."
+    },
+    {
+      "id": "D",
+      "text": "Neuroimaging research has provided partial support for this constructive view. Studies using functional magnetic resonance imaging indicate that true and false memories activate substantially overlapping neural networks, including the hippocampus and prefrontal cortex. Notably, a 2019 investigation by Varga's team found that activity patterns during false memory retrieval were statistically indistinguishable from genuine recollection in 67 percent of cases examined. However, subtle differences emerged in posterior parietal regions associated with sensory detail, suggesting that while the subjective experience may be identical, the underlying representations differ in ways that are currently difficult to detect reliably. These findings complicate simple distinctions between accurate and inaccurate recall."
+    },
+    {
+      "id": "E",
+      "text": "This interpretation has not gone unchallenged. Professor Tomás Delgado, a neuroscientist at the Autonomous University of São Paulo, contends that Varga's emphasis on schema-based construction obscures a more fundamental mechanism: source monitoring failure. According to Delgado, false memories typically arise not from inferential gap-filling but from confusion regarding the origin of mental contents. An individual might accurately remember an image but misattribute it to personal experience rather than a photograph or verbal description. Delgado's research demonstrates that when participants receive explicit training in source discrimination, false memory rates decline by approximately 40 percent—a reduction difficult to explain if fabrication stems primarily from schematic inference. The disagreement, though seemingly technical, carries significant implications for interventions aimed at improving testimonial accuracy."
+    },
+    {
+      "id": "F",
+      "text": "A distinct but related question concerns why certain information receives preferential encoding while other details fade rapidly. Dr. Amira Kassem, an evolutionary psychologist at the University of Nairobi, argues that memory prioritization reflects adaptive pressures shaped over millennia. Her research indicates that information relevant to survival threats, social standing, and resource acquisition enjoys substantial encoding advantages. In controlled experiments, participants retained threat-relevant stimuli approximately 25 percent more effectively than neutral material, even when exposure duration was equalized. Kassem interprets such patterns as evidence that memory systems evolved not for veridical documentation but for guiding future behavior. Within this framework, the same mechanisms that prioritize consequential information may predispose the system toward certain distortions."
+    },
+    {
+      "id": "G",
+      "text": "The relationship between selective prioritization and false memory formation remains contested. Kassem has proposed that emotionally significant events receive deeper processing, paradoxically increasing both retention and susceptibility to schema-based elaboration. Varga's laboratory has produced findings consistent with this hypothesis, noting elevated false memory rates for emotionally charged scenarios. Yet Professor Kenji Nakamura, a memory researcher at Osaka Metropolitan University, cautions against assuming that all prioritization mechanisms operate identically. His work suggests that memories consolidated during sleep undergo different transformative processes than those strengthened through emotional arousal, with the former showing greater resistance to misinformation. Nakamura argues that conflating these distinct pathways may obscure important mechanistic differences that determine when prioritization enhances accuracy versus when it facilitates distortion."
+    },
+    {
+      "id": "H",
+      "text": "Current understanding is further complicated by methodological limitations. Laboratory paradigms necessarily simplify the conditions under which memories form and degrade, raising questions about ecological validity. Field studies examining naturally occurring false memories encounter different problems, including verification difficulties and retrospective biases. Moreover, individual differences in susceptibility to memory distortion appear substantial; some research suggests that variation in working memory capacity may account for up to 20 percent of differences in false memory rates, though causal mechanisms remain unclear. Whether personality factors, cultural experiences, or neurobiological variations explain remaining variance constitutes an active area of investigation with no current consensus."
+    },
+    {
+      "id": "I",
+      "text": "What emerges from this research is neither simple vindication nor condemnation of human memory. The system appears optimized for purposes that do not always align with literal accuracy—a conclusion with profound implications for legal testimony, therapeutic practice, and everyday self-understanding. Whether future interventions might preserve memory's adaptive functions while reducing its liability to distortion remains an open question, one that will require integrating insights from cognitive psychology, neuroscience, and evolutionary theory. For now, the debate continues to illuminate fundamental tensions between efficiency and fidelity in biological information processing."
+    }
+      ],
+      "questions": [
+        {
+  "id": 7,
+  "type": "matching-headings",
+  "title": "Questions 28-33",
+  "instructions": "The reading passage has nine paragraphs, A-I. Choose the correct heading for paragraphs A-F from the list of headings below. Write the correct number, i-ix, in boxes 28-33 on your answer sheet.",
+  "questions": [
+    {
+      "id": 28,
+      "questionText": "Paragraph A",
+      "options": [
+        "Brain imaging evidence and its interpretive limitations",
+        "From faithful recording to active reconstruction: a conceptual transformation",
+        "The therapeutic potential of understanding memory distortion",
+        "Why evolution shaped memory to favour consequential information",
+        "Misidentifying the source of mental content as an alternative mechanism",
+        "Questioning whether memory errors represent cognitive defects",
+        "Techniques for improving eyewitness testimony accuracy",
+        "How knowledge frameworks fill gaps with plausible fabrications",
+        "Neural differences between emotionally charged and neutral memories"
+      ],
+      "correctAnswer": "Questioning whether memory errors represent cognitive defects",
+      "justification": "Paragraph A introduces the central debate about whether memory's susceptibility to distortion is a 'design flaw' or an 'adaptive feature.' The heading paraphrases 'apparent imperfections' and 'susceptibility to distortion' as 'memory errors' and 'design flaws' as 'cognitive defects,' while 'question whether' matches the focus on investigating the nature of these phenomena.",
+      "evidenceQuote": "Contemporary researchers increasingly question whether memory's apparent imperfections—its susceptibility to distortion and its selective retention of certain information over other details—represent design flaws or, paradoxically, adaptive features"
+    },
+    {
+      "id": 29,
+      "questionText": "Paragraph B",
+      "options": [
+        "Brain imaging evidence and its interpretive limitations",
+        "From faithful recording to active reconstruction: a conceptual transformation",
+        "The therapeutic potential of understanding memory distortion",
+        "Why evolution shaped memory to favour consequential information",
+        "Misidentifying the source of mental content as an alternative mechanism",
+        "Questioning whether memory errors represent cognitive defects",
+        "Techniques for improving eyewitness testimony accuracy",
+        "How knowledge frameworks fill gaps with plausible fabrications",
+        "Neural differences between emotionally charged and neutral memories"
+      ],
+      "correctAnswer": "From faithful recording to active reconstruction: a conceptual transformation",
+      "justification": "Paragraph B describes the historical shift from the 20th-century view of memory as a 'recording system' to the post-1970s understanding of its 'constructive nature.' The heading accurately captures this 'conceptual transformation' from 'faithful recording' (capturing and storing) to 'active reconstruction' (constructive nature).",
+      "evidenceQuote": "For much of the twentieth century, memory was conceptualized as a recording system, faithfully capturing and storing experiences for later retrieval. This metaphor began eroding in the 1970s... revealed memory's constructive nature."
+    },
+    {
+      "id": 30,
+      "questionText": "Paragraph C",
+      "options": [
+        "Brain imaging evidence and its interpretive limitations",
+        "From faithful recording to active reconstruction: a conceptual transformation",
+        "The therapeutic potential of understanding memory distortion",
+        "Why evolution shaped memory to favour consequential information",
+        "Misidentifying the source of mental content as an alternative mechanism",
+        "Questioning whether memory errors represent cognitive defects",
+        "Techniques for improving eyewitness testimony accuracy",
+        "How knowledge frameworks fill gaps with plausible fabrications",
+        "Neural differences between emotionally charged and neutral memories"
+      ],
+      "correctAnswer": "How knowledge frameworks fill gaps with plausible fabrications",
+      "justification": "Paragraph C explains Dr. Helena Varga’s theory involving 'schemas,' which are defined as 'organized knowledge structures.' It describes how these structures fill 'lacunae' (gaps) with 'plausible inferences' that can result in 'fabricated details.' This aligns perfectly with the heading’s mention of 'knowledge frameworks' and 'plausible fabrications.'",
+      "evidenceQuote": "In Varga's framework, retrieval does not involve accessing stored records but rather reassembling fragments using schemas—organized knowledge structures that guide interpretation. When gaps exist in encoded information, schemas fill these lacunae with plausible inferences"
+    },
+    {
+      "id": 31,
+      "questionText": "Paragraph D",
+      "options": [
+        "Brain imaging evidence and its interpretive limitations",
+        "From faithful recording to active reconstruction: a conceptual transformation",
+        "The therapeutic potential of understanding memory distortion",
+        "Why evolution shaped memory to favour consequential information",
+        "Misidentifying the source of mental content as an alternative mechanism",
+        "Questioning whether memory errors represent cognitive defects",
+        "Techniques for improving eyewitness testimony accuracy",
+        "How knowledge frameworks fill gaps with plausible fabrications",
+        "Neural differences between emotionally charged and neutral memories"
+      ],
+      "correctAnswer": "Brain imaging evidence and its interpretive limitations",
+      "justification": "Paragraph D discusses functional magnetic resonance imaging (fMRI) research. It notes that while true and false memories show 'overlapping neural networks,' there are subtle differences that are 'difficult to detect reliably.' This balance of neuroimaging results and the difficulty in distinguishing them represents 'evidence' and 'interpretive limitations.'",
+      "evidenceQuote": "Neuroimaging research has provided partial support for this constructive view... These findings complicate simple distinctions between accurate and inaccurate recall."
+    },
+    {
+      "id": 32,
+      "questionText": "Paragraph E",
+      "options": [
+        "Brain imaging evidence and its interpretive limitations",
+        "From faithful recording to active reconstruction: a conceptual transformation",
+        "The therapeutic potential of understanding memory distortion",
+        "Why evolution shaped memory to favour consequential information",
+        "Misidentifying the source of mental content as an alternative mechanism",
+        "Questioning whether memory errors represent cognitive defects",
+        "Techniques for improving eyewitness testimony accuracy",
+        "How knowledge frameworks fill gaps with plausible fabrications",
+        "Neural differences between emotionally charged and neutral memories"
+      ],
+      "correctAnswer": "Misidentifying the source of mental content as an alternative mechanism",
+      "justification": "Paragraph E presents Professor Tomás Delgado’s opposing view that false memories come from 'source monitoring failure.' He argues that 'confusion regarding the origin of mental contents' (misidentifying the source) is the actual cause, rather than the schema-based gap-filling described by Varga.",
+      "evidenceQuote": "Professor Tomás Delgado... contends that Varga's emphasis on schema-based construction obscures a more fundamental mechanism: source monitoring failure. According to Delgado, false memories typically arise... from confusion regarding the origin of mental contents."
+    },
+    {
+      "id": 33,
+      "questionText": "Paragraph F",
+      "options": [
+        "Brain imaging evidence and its interpretive limitations",
+        "From faithful recording to active reconstruction: a conceptual transformation",
+        "The therapeutic potential of understanding memory distortion",
+        "Why evolution shaped memory to favour consequential information",
+        "Misidentifying the source of mental content as an alternative mechanism",
+        "Questioning whether memory errors represent cognitive defects",
+        "Techniques for improving eyewitness testimony accuracy",
+        "How knowledge frameworks fill gaps with plausible fabrications",
+        "Neural differences between emotionally charged and neutral memories"
+      ],
+      "correctAnswer": "Why evolution shaped memory to favour consequential information",
+      "justification": "Paragraph F focuses on Dr. Amira Kassem’s work, which suggests that memory prioritizes information relevant to 'survival threats' and 'social standing.' This evolutionary perspective explains why the brain is 'shaped' to prioritize 'consequential information' rather than documenting everything accurately.",
+      "evidenceQuote": "Dr. Amira Kassem... argues that memory prioritization reflects adaptive pressures shaped over millennia. Her research indicates that information relevant to survival threats, social standing, and resource acquisition enjoys substantial encoding advantages."
+    }
+    ]
+    },
+    {
+  "id": 8,
+  "type": "yes-no-not-given",
+  "title": "Questions 34-37",
+  "instructions": "Do the following statements agree with the claims of the writer in the Reading Passage? In boxes 1-4 on your answer sheet, write YES if the statement agrees with the claims of the writer, NO if the statement contradicts the claims of the writer, NOT GIVEN if it is impossible to say what the writer thinks about this.",
+  "questions": [
+    {
+      "id": 34,
+      "questionText": "The writer considers the theoretical disagreement between Varga and Delgado to have significant real-world consequences.",
+      "correctAnswer": "YES",
+      "justification": "The writer explicitly evaluates the dispute between these researchers as carrying practical weight, stating it has 'significant implications for interventions aimed at improving testimonial accuracy' (PE L7-8). This directly supports the statement's claim that the disagreement matters beyond academic debate.",
+      "evidenceQuote": "The disagreement, though seemingly technical, carries significant implications for interventions aimed at improving testimonial accuracy"
+    },
+    {
+      "id": 35,
+      "questionText": "The writer regards Dr. Kassem's evolutionary framework as providing a more compelling account of memory prioritization than Dr. Varga's schema-based theory.",
+      "correctAnswer": "NOT GIVEN",
+      "justification": "While the passage presents both Kassem's evolutionary account of prioritization and Varga's schema-based reconstruction theory, the writer never expresses a comparative evaluation of which framework is more persuasive. Both are presented as distinct perspectives within the ongoing debate.",
+      "evidenceQuote": "The relationship between selective prioritization and false memory formation remains contested"
+    },
+    {
+      "id": 36,
+      "questionText": "According to the writer, experimental research methods successfully replicate how false memories develop in everyday contexts.",
+      "correctAnswer": "NO",
+      "justification": "The writer explicitly raises concerns about the applicability of research methods, stating that 'laboratory paradigms necessarily simplify the conditions under which memories form and degrade, raising questions about ecological validity' (PH L1-3). This directly contradicts the claim.",
+      "evidenceQuote": "Laboratory paradigms necessarily simplify the conditions under which memories form and degrade, raising questions about ecological validity"
+    },
+    {
+      "id": 37,
+      "questionText": "The writer believes that memory is fundamentally designed for accurate documentation of past experiences.",
+      "correctAnswer": "NO",
+      "justification": "The writer explicitly concludes that memory 'appears optimized for purposes that do not always align with literal accuracy' (PI L2-3). This directly contradicts the statement's claim that memory is designed for accurate documentation.",
+      "evidenceQuote": "The system appears optimized for purposes that do not always align with literal accuracy—a conclusion with profound implications"
+    }
+  ]
+},
+{
+  "id": 9,
+  "type": "matching-features",
+  "title": "Questions 38-40",
+  "instructions": "Look at the following statements (Questions 38-40) and the list of researchers below. Match each statement with the correct researcher, A-D. Write the correct letter, A-D, in boxes 38-40 on your answer sheet. NB You may use any letter more than once.",
+  "features": [
+    {
+      "letter": "A",
+      "name": "Dr. Helena Varga"
+    },
+    {
+      "letter": "B",
+      "name": "Professor Tomás Delgado"
+    },
+    {
+      "letter": "C",
+      "name": "Dr. Amira Kassem"
+    },
+    {
+      "letter": "D",
+      "name": "Professor Kenji Nakamura"
+    }
+  ],
+  "questions": [
+    {
+      "id": 38,
+      "questionText": "found that teaching individuals to identify where their mental images originate results in roughly a two-fifths decrease in inaccurate remembering",
+      "correctAnswer": "B",
+      "justification": "Paragraph E explicitly states that Delgado's research demonstrates 'when participants receive explicit training in source discrimination, false memory rates decline by approximately 40 percent.' The feature paraphrases 'source discrimination' as 'identify where their mental images originate' and '40 percent' as 'two-fifths.'",
+      "evidenceQuote": "Delgado's research demonstrates that when participants receive explicit training in source discrimination, false memory rates decline by approximately 40 percent"
+    },
+    {
+      "id": 39,
+      "questionText": "observed that people store information connected to potential dangers approximately one-quarter more successfully than non-threatening content",
+      "correctAnswer": "C",
+      "justification": "Paragraph F clearly attributes this finding to Kassem: 'In controlled experiments, participants retained threat-relevant stimuli approximately 25 percent more effectively than neutral material.' The feature paraphrases 'threat-relevant stimuli' as 'information connected to potential dangers' and '25 percent' as 'one-quarter.'",
+      "evidenceQuote": "In controlled experiments, participants retained threat-relevant stimuli approximately 25 percent more effectively than neutral material"
+    },
+    {
+      "id": 40,
+      "questionText": "warned that treating all memory strengthening mechanisms as equivalent may prevent identification of crucial procedural distinctions",
+      "correctAnswer": "D",
+      "justification": "Paragraph G explicitly attributes this cautionary view to Nakamura: 'Nakamura argues that conflating these distinct pathways may obscure important mechanistic differences.' The feature paraphrases 'conflating distinct pathways' as 'treating all memory strengthening mechanisms as equivalent.'",
+      "evidenceQuote": "Nakamura argues that conflating these distinct pathways may obscure important mechanistic differences that determine when prioritization enhances accuracy versus when it facilitates distortion"
+    }
+    ]
+    }
+   ]
+  }
+ ]
 }
 

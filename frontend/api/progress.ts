@@ -47,7 +47,7 @@ export async function getSummary(userId: number, range: SummaryRange = "weekly")
 	return await resp.json();
 }
 
-export async function listTasks(userId: number, range: "daily" | "weekly" = "weekly", status: "all" | "planned" | "in-progress" | "completed" = "all"): Promise<{ tasks: Task[] }> {
+export async function listTasks(userId: number, range: "daily" | "weekly" | "monthly" = "weekly", status: "all" | "planned" | "in-progress" | "completed" = "all"): Promise<{ tasks: Task[] }> {
 	const url = new URL(`/progress/tasks`, API_ORIGIN);
 	url.searchParams.set("userId", String(userId));
 	url.searchParams.set("range", range);

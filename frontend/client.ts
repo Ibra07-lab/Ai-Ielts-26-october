@@ -88,18 +88,21 @@ import {
     chatWithCoach as api_ielts_ai_chatWithCoach,
     chatWithCoachMemory as api_ielts_ai_chatWithCoachMemory,
     getVocabularyEnhancement as api_ielts_ai_getVocabularyEnhancement
-} from "~backend/ielts/ai";
+} from "../backend/ielts/ai";
 import {
     getListeningAudio as api_ielts_listening_getListeningAudio,
     getListeningSessions as api_ielts_listening_getListeningSessions,
-    submitListening as api_ielts_listening_submitListening
-} from "~backend/ielts/listening";
+    submitListening as api_ielts_listening_submitListening,
+    getListeningTests as api_ielts_listening_getListeningTests,
+    getListeningTest as api_ielts_listening_getListeningTest,
+    getListeningTranscript as api_ielts_listening_getListeningTranscript
+} from "../backend/ielts/listening";
 import {
     getDailyGoal as api_ielts_progress_getDailyGoal,
     getProgress as api_ielts_progress_getProgress,
     updateDailyGoal as api_ielts_progress_updateDailyGoal,
     updateProgress as api_ielts_progress_updateProgress
-} from "~backend/ielts/progress";
+} from "../backend/ielts/progress";
 import {
     addToVocabulary as api_ielts_reading_addToVocabulary,
     createHighlight as api_ielts_reading_createHighlight,
@@ -116,28 +119,28 @@ import {
     getReadingTests as api_ielts_reading_getReadingTests,
     submitReading as api_ielts_reading_submitReading,
     translateText as api_ielts_reading_translateText
-} from "~backend/ielts/reading";
+} from "../backend/ielts/reading";
 import {
     getSpeakingQuestion as api_ielts_speaking_getSpeakingQuestion,
     getSpeakingSessions as api_ielts_speaking_getSpeakingSessions,
     submitSpeaking as api_ielts_speaking_submitSpeaking
-} from "~backend/ielts/speaking";
+} from "../backend/ielts/speaking";
 import {
     createUser as api_ielts_user_createUser,
     getUser as api_ielts_user_getUser,
     updateUser as api_ielts_user_updateUser
-} from "~backend/ielts/user";
+} from "../backend/ielts/user";
 import {
     getVocabularyProgress as api_ielts_vocabulary_getVocabularyProgress,
     getVocabularyTopics as api_ielts_vocabulary_getVocabularyTopics,
     getVocabularyWords as api_ielts_vocabulary_getVocabularyWords,
     updateVocabularyStatus as api_ielts_vocabulary_updateVocabularyStatus
-} from "~backend/ielts/vocabulary";
+} from "../backend/ielts/vocabulary";
 import {
     getWritingPrompt as api_ielts_writing_getWritingPrompt,
     getWritingSessions as api_ielts_writing_getWritingSessions,
     submitWriting as api_ielts_writing_submitWriting
-} from "~backend/ielts/writing";
+} from "../backend/ielts/writing";
 
 export namespace ielts {
 
@@ -159,6 +162,9 @@ export namespace ielts {
             this.getHighlights = this.getHighlights.bind(this)
             this.getListeningAudio = this.getListeningAudio.bind(this)
             this.getListeningSessions = this.getListeningSessions.bind(this)
+            this.getListeningTests = this.getListeningTests.bind(this)
+            this.getListeningTest = this.getListeningTest.bind(this)
+            this.getListeningTranscript = this.getListeningTranscript.bind(this)
             this.getProgress = this.getProgress.bind(this)
             this.getReadingPassage = this.getReadingPassage.bind(this)
             this.getReadingPassageById = this.getReadingPassageById.bind(this)
@@ -303,6 +309,33 @@ export namespace ielts {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/listening/sessions`, { method: "GET", body: undefined })
             return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_listening_getListeningSessions>
+        }
+
+        /**
+         * Get list of all available listening tests
+         */
+        public async getListeningTests(): Promise<ResponseType<typeof api_ielts_listening_getListeningTests>> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI(`/listening/tests`, { method: "GET", body: undefined })
+            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_listening_getListeningTests>
+        }
+
+        /**
+         * Get a specific listening test by ID (without correct answers for practice)
+         */
+        public async getListeningTest(params: { testId: number }): Promise<ResponseType<typeof api_ielts_listening_getListeningTest>> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI(`/listening/tests/${encodeURIComponent(params.testId)}`, { method: "GET", body: undefined })
+            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_listening_getListeningTest>
+        }
+
+        /**
+         * Get transcript for a test (can be shown after submission or during practice based on settings)
+         */
+        public async getListeningTranscript(params: { testId: number }): Promise<ResponseType<typeof api_ielts_listening_getListeningTranscript>> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI(`/listening/tests/${encodeURIComponent(params.testId)}/transcript`, { method: "GET", body: undefined })
+            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_listening_getListeningTranscript>
         }
 
         /**

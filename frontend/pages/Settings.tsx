@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "../contexts/UserContext";
 import { useTheme } from "../contexts/ThemeContext";
-import backend from "~backend/client";
+import backend from "@/backend";
 import { useNavigate } from "react-router-dom";
 import type { UpdateUserRequest } from "~backend/ielts/user";
 
@@ -293,17 +293,17 @@ export default function Settings() {
               <p className="text-sm">
                 This is a sample text with a{" "}
                 <span className={`px-1 rounded ${highlightSettings.wordColor === 'yellow' ? 'bg-yellow-200 dark:bg-yellow-800' :
-                    highlightSettings.wordColor === 'green' ? 'bg-green-200 dark:bg-green-800' :
-                      highlightSettings.wordColor === 'pink' ? 'bg-pink-200 dark:bg-pink-800' :
-                        'bg-orange-200 dark:bg-orange-800'
+                  highlightSettings.wordColor === 'green' ? 'bg-green-200 dark:bg-green-800' :
+                    highlightSettings.wordColor === 'pink' ? 'bg-pink-200 dark:bg-pink-800' :
+                      'bg-orange-200 dark:bg-orange-800'
                   }`}>
                   highlighted word
                 </span>{" "}
                 and{" "}
                 <span className={`px-1 rounded ${highlightSettings.sentenceColor === 'lightblue' ? 'bg-blue-200 dark:bg-blue-800' :
-                    highlightSettings.sentenceColor === 'lightgreen' ? 'bg-green-200 dark:bg-green-800' :
-                      highlightSettings.sentenceColor === 'lightpurple' ? 'bg-purple-200 dark:bg-purple-800' :
-                        'bg-gray-200 dark:bg-gray-800'
+                  highlightSettings.sentenceColor === 'lightgreen' ? 'bg-green-200 dark:bg-green-800' :
+                    highlightSettings.sentenceColor === 'lightpurple' ? 'bg-purple-200 dark:bg-purple-800' :
+                      'bg-gray-200 dark:bg-gray-800'
                   }`}>
                   this is a highlighted sentence
                 </span>.

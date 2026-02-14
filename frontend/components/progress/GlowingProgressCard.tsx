@@ -354,7 +354,7 @@ export default function GlowingProgressCard({
               <p className={cn("text-xs mt-1", theme === "dark" ? "text-slate-500" : "text-slate-400")}>Add tasks to start tracking progress</p>
             </div>
           ) : (
-            <ul className="space-y-3">
+            <ul className="space-y-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
               {tasks.map((t) => {
                 const isDone = t.status === "completed";
                 const isInProgress = t.status === "in_progress";
@@ -519,15 +519,10 @@ export default function GlowingProgressCard({
               category: data.category,
               difficulty: data.difficulty,
               estimatedMinutes: data.estimatedMinutes,
-              dueAt: data.dueAt ? new Date(data.dueAt).toISOString() : undefined,
+              dueAt: data.dueAt ? new Date(data.dueAt).toISOString() : new Date().toISOString(),
             });
             setAddOpen(false);
-            await queryClient.invalidateQueries({
-              predicate: (q) => Array.isArray(q.queryKey) && q.queryKey[0] === "glow-tasks"
-            });
-            await queryClient.refetchQueries({
-              predicate: (q) => Array.isArray(q.queryKey) && q.queryKey[0] === "glow-tasks"
-            });
+            await queryClient.invalidateQueries({ queryKey: ["glow-tasks"] });
           } catch (e) {
             console.error("Failed to create task", e);
           }

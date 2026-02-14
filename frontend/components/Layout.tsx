@@ -21,7 +21,6 @@ const navigation = [
   { name: "Dashboard", href: "/", icon: Home },
   { name: "Progress", href: "/progress", icon: TrendingUp },
   { name: "Progress Tracker", href: "/progress-tracker", icon: TrendingUp },
-  { name: "AI Coach", href: "/coach", icon: MessageCircle },
   { name: "Settings", href: "/settings", icon: Settings },
 ];
 
@@ -65,31 +64,22 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </Button>
             </div>
 
-            <div className="flex items-center gap-4">
-              <Button
-                variant="outline"
-                size="sm"
-                className="sm:block hidden"
-                onClick={() => navigate('/coach')}
-                aria-label="AI Teacher"
-              >
-                <GraduationCap className="h-4 w-4 mr-2" />
-                AI Teacher
-              </Button>
+            <div className="flex items-center gap-3">
 
               <Button
-                variant="outline"
+                variant="ghost"
                 size="sm"
-                className="sm:block hidden"
+                className="hidden sm:flex items-center h-10 px-4 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition-all duration-300"
                 onClick={() => navigate('/progress')}
                 aria-label="Progress"
               >
-                <TrendingUp className="h-4 w-4 mr-2" />
+                <TrendingUp className="h-4 w-4 mr-2 text-emerald-500 dark:text-emerald-400" />
                 Progress
               </Button>
 
-              <SkeuomorphicToggle />
-
+              <div className="ml-2">
+                <SkeuomorphicToggle />
+              </div>
             </div>
           </div>
         </div>

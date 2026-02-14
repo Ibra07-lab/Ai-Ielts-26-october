@@ -1,0 +1,905 @@
+{
+    "id": 7,
+    "title": "Practice Test 7",
+    "section": 1,
+    "difficulty": "medium",
+    "audioFile": "/audio/test-7.mp3",
+    "duration": 1800,
+    "instructions": "Answer all the questions.",
+    "questions": [
+        {
+            "id": 1,
+            "type": "fill-in-blank",
+            "questionNumber": 1,
+            "question": "Address: 52 [blank], Peacetown",
+            "options": [],
+            "correctAnswer": "Marrowfield Street",
+            "explanation": "The applicant states his address is 52 Marrowfield Street, and spells out M-A-R-R-O-W-F-I-E-L-D."
+        },
+        {
+            "id": 2,
+            "type": "fill-in-blank",
+            "questionNumber": 2,
+            "question": "Website: suggested by a [blank]",
+            "options": [],
+            "correctAnswer": "relative",
+            "explanation": "Dan mentions he was talking to a relative who suggested the club."
+        },
+        {
+            "id": 3,
+            "type": "fill-in-blank",
+            "questionNumber": 3,
+            "question": "Target of joining: to enter competitions and [blank]",
+            "options": [],
+            "correctAnswer": "socialise / socialize",
+            "explanation": "Dan says he likes to socialise with other photographers."
+        },
+        {
+            "id": 4,
+            "type": "fill-in-blank",
+            "questionNumber": 4,
+            "question": "Membership type: [blank] membership (£30 per year)",
+            "options": [],
+            "correctAnswer": "full",
+            "explanation": "The full membership costs £30 a year."
+        },
+        {
+            "id": 5,
+            "type": "fill-in-blank",
+            "questionNumber": 5,
+            "question": "Competition 1 Theme: [blank]",
+            "options": [],
+            "correctAnswer": "Domestic Life",
+            "explanation": "The theme of the first competition was 'Domestic Life'."
+        },
+        {
+            "id": 6,
+            "type": "fill-in-blank",
+            "questionNumber": 6,
+            "question": "Competition 2 Theme: Sunsets\nFeedback: The [blank] were not captured.",
+            "options": [],
+            "correctAnswer": "clouds",
+            "explanation": " The instructions were to capture the clouds as well."
+        },
+        {
+            "id": 7,
+            "type": "fill-in-blank",
+            "questionNumber": 7,
+            "question": "Competition 2 Feedback: The [blank] was wrong.",
+            "options": [],
+            "correctAnswer": "timing",
+            "explanation": "Breda says 'So the timing wasn't right', and Dan confirms."
+        },
+        {
+            "id": 8,
+            "type": "fill-in-blank",
+            "questionNumber": 8,
+            "question": "Competition 3 Theme: [blank]",
+            "options": [],
+            "correctAnswer": "Animal Magic",
+            "explanation": "The third competition was called 'Animal Magic'. (Note: The user provided answer key lists this as Question 8, while transcript flow suggests this is the name of the competition)."
+        },
+        {
+            "id": 9,
+            "type": "fill-in-blank",
+            "questionNumber": 9,
+            "question": "Scene must show [blank]",
+            "options": [],
+            "correctAnswer": "(animal) movement",
+            "explanation": "The feedback was that there had to be some movement in the scene."
+        },
+        {
+            "id": 10,
+            "type": "fill-in-blank",
+            "questionNumber": 10,
+            "question": "Competition 3 Feedback: The photo of the fox was too [blank].",
+            "options": [],
+            "correctAnswer": "dark",
+            "explanation": "Dan was told the photo was 'a bit dark'."
+        },
+        {
+            "id": 11,
+            "type": "multiple-choice",
+            "questionNumber": 11,
+            "question": "Which TWO warnings does Dan give about picking mushrooms?",
+            "options": [
+                "A Don't pick more than one variety of mushroom at a time.",
+                "B Don't pick mushrooms near busy roads.",
+                "C Don't eat mushrooms given to you.",
+                "D Don't eat mushrooms while picking them.",
+                "E Don't pick old mushrooms."
+            ],
+            "correctAnswer": [
+                "B",
+                "C"
+            ],
+            "explanation": "Dan warns to avoid mushrooms growing beside busy roads (B) and never consume mushrooms picked by friends/neighbours (C)."
+        },
+        {
+            "id": 12,
+            "type": "multiple-choice",
+            "questionNumber": 12,
+            "question": "Which TWO warnings does Dan give about picking mushrooms?",
+            "options": [
+                "A Don't pick more than one variety of mushroom at a time.",
+                "B Don't pick mushrooms near busy roads.",
+                "C Don't eat mushrooms given to you.",
+                "D Don't eat mushrooms while picking them.",
+                "E Don't pick old mushrooms."
+            ],
+            "correctAnswer": [
+                "B",
+                "C"
+            ],
+            "explanation": "Dan warns to avoid mushrooms growing beside busy roads (B) and never consume mushrooms picked by friends/neighbours (C)."
+        },
+        {
+            "id": 13,
+            "type": "multiple-choice",
+            "questionNumber": 13,
+            "question": "Which TWO ideas about wild mushrooms does Dan say are correct?",
+            "options": [
+                "A Mushrooms should always be peeled before eating.",
+                "B Mushrooms eaten by animals may be unsafe.",
+                "C Cooking destroys toxins in mushrooms.",
+                "D Brightly coloured mushrooms can be edible.",
+                "E All poisonous mushrooms have a bad smell."
+            ],
+            "correctAnswer": [
+                "B",
+                "D"
+            ],
+            "explanation": "Dan says just because animals eat them doesn't mean you can (B), and some edible mushrooms are bright red (D)."
+        },
+        {
+            "id": 14,
+            "type": "multiple-choice",
+            "questionNumber": 14,
+            "question": "Which TWO ideas about wild mushrooms does Dan say are correct?",
+            "options": [
+                "A Mushrooms should always be peeled before eating.",
+                "B Mushrooms eaten by animals may be unsafe.",
+                "C Cooking destroys toxins in mushrooms.",
+                "D Brightly coloured mushrooms can be edible.",
+                "E All poisonous mushrooms have a bad smell."
+            ],
+            "correctAnswer": [
+                "B",
+                "D"
+            ],
+            "explanation": "Dan says just because animals eat them doesn't mean you can (B), and some edible mushrooms are bright red (D)."
+        },
+        {
+            "id": 15,
+            "type": "multiple-choice",
+            "questionNumber": 15,
+            "question": "What advice does Dan give about picking mushrooms in parks?",
+            "options": [
+                "A Choose wooded areas.",
+                "B Don't disturb wildlife.",
+                "C Get there early."
+            ],
+            "correctAnswer": "C",
+            "explanation": "Dan says you need to be there first thing in the morning."
+        },
+        {
+            "id": 16,
+            "type": "multiple-choice",
+            "questionNumber": 16,
+            "question": "Dan says it is a good idea for beginners to",
+            "options": [
+                "A use a mushroom app.",
+                "B join a group.",
+                "C take a reference book."
+            ],
+            "correctAnswer": "B",
+            "explanation": "Dan suggests going with a group led by an expert."
+        },
+        {
+            "id": 17,
+            "type": "multiple-choice",
+            "questionNumber": 17,
+            "question": "What does Dan say is important for conservation?",
+            "options": [
+                "A selecting only fully grown mushrooms",
+                "B picking a limited amount of mushrooms",
+                "C avoiding areas where rare mushroom species grow"
+            ],
+            "correctAnswer": "B",
+            "explanation": "Dan says collect only enough for your own needs."
+        },
+        {
+            "id": 18,
+            "type": "multiple-choice",
+            "questionNumber": 18,
+            "question": "According to Dan, some varieties of wild mushrooms are in decline because there is",
+            "options": [
+                "A a huge demand for them from restaurants.",
+                "B a lack of rain in this part of the country.",
+                "C a rise in building developments locally."
+            ],
+            "correctAnswer": "C",
+            "explanation": "Dan mentions that so many new houses have been built in the area."
+        },
+        {
+            "id": 19,
+            "type": "multiple-choice",
+            "questionNumber": 19,
+            "question": "Dan says that when storing mushrooms, people should",
+            "options": [
+                "A keep them in the fridge for no more than two days.",
+                "B keep them in a brown bag in a dark room.",
+                "C leave them for a period after washing them."
+            ],
+            "correctAnswer": "A",
+            "explanation": "Dan says put them in the fridge and they'll be fine for a couple of days."
+        },
+        {
+            "id": 20,
+            "type": "multiple-choice",
+            "questionNumber": 20,
+            "question": "What does Dan say about trying new varieties of mushrooms?",
+            "options": [
+                "A Experiment with different recipes.",
+                "B Expect some to have a strong taste.",
+                "C Cook them for a long time."
+            ],
+            "correctAnswer": "A",
+            "explanation": "Dan suggests experimenting with different recipes like stir fries, risottos, pasta."
+        },
+        {
+            "id": 21,
+            "type": "multiple-choice",
+            "questionNumber": 21,
+            "question": "Which TWO opinions about the Luddites do the students express?",
+            "options": [
+                "A Their actions were ineffective.",
+                "B They are still influential today.",
+                "C They have received unfair criticism.",
+                "D They were proved right.",
+                "E Their attitude is understandable."
+            ],
+            "correctAnswer": [
+                "A",
+                "E"
+            ],
+            "explanation": "They didn't achieve anything (A), and the Luddites' attitude is understandable (E)."
+        },
+        {
+            "id": 22,
+            "type": "multiple-choice",
+            "questionNumber": 22,
+            "question": "Which TWO opinions about the Luddites do the students express?",
+            "options": [
+                "A Their actions were ineffective.",
+                "B They are still influential today.",
+                "C They have received unfair criticism.",
+                "D They were proved right.",
+                "E Their attitude is understandable."
+            ],
+            "correctAnswer": [
+                "A",
+                "E"
+            ],
+            "explanation": "They didn't achieve anything (A), and the Luddites' attitude is understandable (E)."
+        },
+        {
+            "id": 23,
+            "type": "multiple-choice",
+            "questionNumber": 23,
+            "question": "Which TWO predictions about the future of work are the students doubtful about?",
+            "options": [
+                "A Work will be more rewarding.",
+                "B Unemployment will fall.",
+                "C People will want to delay retiring.",
+                "D Working hours will be shorter.",
+                "E People will change jobs more frequently."
+            ],
+            "correctAnswer": [
+                "B",
+                "D"
+            ],
+            "explanation": "Doubtful about lower unemployment (B) and people spending longer than ever at work implies doubtful about shorter hours (D)."
+        },
+        {
+            "id": 24,
+            "type": "multiple-choice",
+            "questionNumber": 24,
+            "question": "Which TWO predictions about the future of work are the students doubtful about?",
+            "options": [
+                "A Work will be more rewarding.",
+                "B Unemployment will fall.",
+                "C People will want to delay retiring.",
+                "D Working hours will be shorter.",
+                "E People will change jobs more frequently."
+            ],
+            "correctAnswer": [
+                "B",
+                "D"
+            ],
+            "explanation": "Doubtful about lower unemployment (B) and people spending longer than ever at work implies doubtful about shorter hours (D)."
+        },
+        {
+            "id": 25,
+            "type": "matching",
+            "questionNumber": 25,
+            "question": "Accountants",
+            "options": [
+                "A These jobs are likely to be at risk.",
+                "B Their role has become more interesting in recent years.",
+                "C The number of people working in this sector has fallen dramatically.",
+                "D This job will require more qualifications.",
+                "E Higher disposable income has led to a huge increase in jobs.",
+                "F There is likely to be a significant rise in demand for this service.",
+                "G Both employment and productivity have risen."
+            ],
+            "correctAnswer": "G",
+            "explanation": "There are more of them than ever and they have become far more efficient (G)."
+        },
+        {
+            "id": 26,
+            "type": "matching",
+            "questionNumber": 26,
+            "question": "Hairdressers",
+            "options": [],
+            "correctAnswer": "E",
+            "explanation": "People's earning power has gone up so they can afford personal services (E)."
+        },
+        {
+            "id": 27,
+            "type": "matching",
+            "questionNumber": 27,
+            "question": "Administrative staff",
+            "options": [],
+            "correctAnswer": "B",
+            "explanation": "Given much more responsibility and higher status, not boring anymore (B)."
+        },
+        {
+            "id": 28,
+            "type": "matching",
+            "questionNumber": 28,
+            "question": "Agricultural workers",
+            "options": [],
+            "correctAnswer": "C",
+            "explanation": "Number has fallen from 25% or 50% to less than 0.2% (C)."
+        },
+        {
+            "id": 29,
+            "type": "matching",
+            "questionNumber": 29,
+            "question": "Care workers",
+            "options": [],
+            "correctAnswer": "F",
+            "explanation": "This sector will see huge growth (F)."
+        },
+        {
+            "id": 30,
+            "type": "matching",
+            "questionNumber": 30,
+            "question": "Bank clerks",
+            "options": [],
+            "correctAnswer": "A",
+            "explanation": "Technology will make most of the jobs they do redundant (A)."
+        },
+        {
+            "id": 31,
+            "type": "fill-in-blank",
+            "questionNumber": 31,
+            "question": "would aim to set up legal and [blank] ways of improving safety.",
+            "options": [],
+            "correctAnswer": "technical",
+            "explanation": "We'd also have to develop the technical systems to enable us to prevent such accidents."
+        },
+        {
+            "id": 32,
+            "type": "fill-in-blank",
+            "questionNumber": 32,
+            "question": "Satellites are now quite [blank] and therefore more widespread",
+            "options": [],
+            "correctAnswer": "cheap",
+            "explanation": "Satellites are relatively cheap these days."
+        },
+        {
+            "id": 33,
+            "type": "fill-in-blank",
+            "questionNumber": 33,
+            "question": "(e.g. there are constellations made up of [blank] of satellites).",
+            "options": [],
+            "correctAnswer": "thousands",
+            "explanation": "Whole constellations, consisting of thousands of them."
+        },
+        {
+            "id": 34,
+            "type": "fill-in-blank",
+            "questionNumber": 34,
+            "question": "At present, satellites are not required to transmit information to help with their [blank] .",
+            "options": [],
+            "correctAnswer": "identification",
+            "explanation": "It doesn't have to send back any information to Earth to allow its identification."
+        },
+        {
+            "id": 35,
+            "type": "fill-in-blank",
+            "questionNumber": 35,
+            "question": "There are few systems for [blank] satellites.",
+            "options": [],
+            "correctAnswer": "tracking",
+            "explanation": "At present we don't have anything like enough proper ways of tracking them."
+        },
+        {
+            "id": 36,
+            "type": "fill-in-blank",
+            "questionNumber": 36,
+            "question": "Operators may be unwilling to share details of satellites used for [blank] or commercial reasons.",
+            "options": [],
+            "correctAnswer": "military",
+            "explanation": "A satellite may be designed for military purposes."
+        },
+        {
+            "id": 37,
+            "type": "fill-in-blank",
+            "questionNumber": 37,
+            "question": "It may be hard to collect details of the object's [blank] at a given time.",
+            "options": [],
+            "correctAnswer": "location",
+            "explanation": "Details are needed about the object itself, as well as about its location."
+        },
+        {
+            "id": 38,
+            "type": "fill-in-blank",
+            "questionNumber": 38,
+            "question": "Scientists can only make a [blank] about where the satellite will go.",
+            "options": [],
+            "correctAnswer": "prediction",
+            "explanation": "All that the scientists can do is to put forward a prediction."
+        },
+        {
+            "id": 39,
+            "type": "fill-in-blank",
+            "questionNumber": 39,
+            "question": "The information should be combined in one [blank] .",
+            "options": [],
+            "correctAnswer": "database",
+            "explanation": "Creating a single database on which it can be entered."
+        },
+        {
+            "id": 40,
+            "type": "fill-in-blank",
+            "questionNumber": 40,
+            "question": "A coordinated system must be designed to create [blank] in its users.",
+            "options": [],
+            "correctAnswer": "trust",
+            "explanation": "One that establishes trust in the people that use it."
+        }
+    ],
+    "transcripts": [
+        {
+            "title": "Part 1",
+            "lines": [
+                {
+                    "speaker": "BREDA",
+                    "text": "Hello, Wayside Camera Club, Breda speaking."
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "Oh, hello, um, my name's Dan and I'd like to join your club."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "That's great, Dan. We have an application form – would you like to complete it over the phone, then you can ask any questions you might have?"
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "Oh, yes, thanks."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "OK, so what's your family name?"
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "It's Green – Dan Green."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "So – can I take your email address?"
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "Yes, it's dan1068@market.com."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "Thanks. And what about your home address?"
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "Well, I'm about ten miles away from your club in Peacetown. I live in a house there."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "OK, so what's the house number and street?"
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "It's <mark>52 Marrowfield Street</mark>."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "Is that M-A-R-R-O-W-F-I-E-L-D?"
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "That's right."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "… and that's Peacetown, you said?"
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "Uhuh."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "So how did you hear about our club? Did you look on the internet?"
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "I usually do that, but this time, well, I was talking to a <mark>relative</mark> the other day and he suggested it."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "Oh, is he a member too?"
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "He belongs to another club – but he'd heard good things about yours."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "OK. So what do you hope to get from joining?"
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "Well, one thing that really interests me is the competitions that you have. I enjoy entering those."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "Right. Anything else?"
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "Well, I also like to <mark>socialise</mark> with other photographers."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "That's great. So what type of membership would you like?"
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "What are the options?"
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "It's <mark>£30</mark> a year for full membership or £20 a year if you're an associate."
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "I think I'll go for the full membership, then."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "That's a good idea because you can't vote in meetings with an associate membership."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "If I could just find out a bit more about you …"
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "OK."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "So you said you wanted to compete – have you ever won any photography competitions?"
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "Not yet, but I have entered three in the past."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "Oh, that's interesting. So why don't you tell me something about those? Let's start with the first one."
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "Well, the theme was entitled '<mark>Domestic Life</mark>'."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "I see – so it had to be something related to the home?"
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "Yeah. I chose to take a photo of a family sitting round the dinner table having a meal, and, um, I didn't win, but I did get some feedback."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "Oh, what did the judges say?"
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "That it was too 'busy' as a picture."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "Aha – so it was the composition of the picture that they criticised?"
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "That's right – and once they'd told me that, I could see my mistake."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "So what was the theme of the second competition?"
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "Well, my university was on the coast and that area gets a lot of beautiful sunsets, so that was the theme."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "Oh, sunsets, that's a great theme."
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "Yes. The instructions were to capture the <mark>clouds</mark> as well – it couldn't just be blue sky and a setting sun."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "Sure, cause they give you all those amazing pinks and purples."
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "Yeah – and I thought I'd done all that, well, but the feedback was that I should have waited a bit longer to get the shot."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "I see. So the <mark>timing</mark> wasn't right."
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "Yes – I took it too <mark>soon</mark>, basically. And then the third competition I entered was called '<mark>Animal Magic</mark>'."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "Well, that's a difficult subject!"
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "I know! I had to take hundreds of shots."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "I'm sure – because animals move all the time."
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "That's what we had to show – there had to be some movement in the scene. I got a great shot of a fox in the end, but I took it at night and, well, I suspected that it was a bit <mark>dark</mark>, which is what I was told."
+                },
+                {
+                    "speaker": "BREDA",
+                    "text": "Well Dan – you seem to be really keen and we'd be delighted to have you in our club. I'm sure we can help with all those areas that you've outlined."
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "Thanks, that's great."
+                }
+            ]
+        },
+        {
+            "title": "Part 2",
+            "lines": [
+                {
+                    "speaker": "PRESENTER",
+                    "text": "This evening we're delighted to welcome Dan Beagle, who's just written a book on looking for and finding food in the wild. He's going to tell us everything we need to know about picking wild mushrooms."
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "Thank you very much. Well, I need to start by talking about safety. You really need to know what you're doing because some mushrooms are extremely poisonous. Having said that, once you know what to look for, it's really worth doing for the amazing variety of mushrooms available – which you can't get in the shops. But of course, you have to be very careful and that's why I always say you should never consume mushrooms picked by friends or neighbours – always remember that some poisonous mushrooms look very similar to edible ones and it's easy for people to get confused. The other thing to avoid is mushrooms growing beside busy roads for obvious reasons. But nothing beats the taste of freshly picked mushrooms – don't forget that the ones in the shops are often several days old and past their best."
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "There are certain ideas about wild mushrooms that it's important to be aware of. Don't listen to people who tell you that it's only OK to eat mushrooms that are pale or dull – this is completely untrue. Some edible mushrooms are bright red, for example. Personally, I prefer mushrooms cooked but it won't do you any harm to eat them uncooked in salads – it's not necessary to peel them. Another thing you should remember is that you can't tell if a mushroom is safe to eat by its smell – some of the most deadly mushrooms have no smell and taste quite nice, apparently. Finally, just because deer or squirrels eat a particular mushroom doesn't mean that you can."
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "Of course, mushroom picking is associated with the countryside but if you haven't got a car, your local park can be a great place to start. There are usually a range of habitats where mushrooms grow, such as playing fields and wooded areas. But you need to be there first thing in the morning, as there's likely to be a lot of competition – not just from people but wildlife too. The deer often get the best mushrooms in my local park."
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "If you're a complete beginner, I wouldn't recommend going alone or relying on photos in a book, even the one I've written! There are some really good phone apps for identifying mushrooms, but you can't always rely on getting a good signal in the middle of a wood. If possible, you should go with a group led by an expert – you'll stay safe and learn a lot that way."
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "Conservation is a really important consideration and you must follow a few basic rules. You should never pick all the mushrooms in one area – collect only enough for your own needs. Be very careful that you don't trample on young mushrooms or other plants. And make sure you don't pick any mushrooms that are endangered and protected by law."
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "There's been a decline in some varieties of wild mushrooms in this part of the country. Restaurants are becoming more interested in locally sourced food like wild mushrooms, but the biggest problem is that so many new houses have been built in this area in the last ten years. And more water is being taken from rivers and reservoirs because of this, and mushroom habitats have been destroyed."
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "Anyway, a word of advice on storing mushrooms. Collect them in a brown paper bag and as soon as you get home, put them in the fridge. They'll be fine for a couple of days, but it's best to cook them as soon as possible – after washing them really carefully first, of course."
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "So everybody knows what a mushroom tastes like, right? Well, you'll be surprised by the huge variety of wild mushrooms there are. Be adventurous! They're great in so many dishes – stir fries, risottos, pasta. But just be aware that some people can react badly to certain varieties so it's a good idea not to eat huge quantities to begin with."
+                },
+                {
+                    "speaker": "DAN",
+                    "text": "OK, so now I'm going to show you …"
+                }
+            ]
+        },
+        {
+            "title": "Part 3",
+            "lines": [
+                {
+                    "speaker": "YOUNG MAN",
+                    "text": "That seminar yesterday on automation and the future of work was really good, wasn't it? Looking at the first industrial revolution in Britain in the 19th century and seeing how people reacted to massive change was a real eye-opener."
+                },
+                {
+                    "speaker": "YOUNG WOMAN",
+                    "text": "Yes. It was interesting to hear how people felt about automation then and what challenges they faced. I didn't know that first started with workers in the textile industry."
+                },
+                {
+                    "speaker": "YOUNG MAN",
+                    "text": "With those protesting workers called the Luddites destroying their knitting machines because they were so worried about losing their jobs."
+                },
+                {
+                    "speaker": "YOUNG WOMAN",
+                    "text": "Yes, and ultimately, they didn't achieve anything. And anyway, industrialisation created more jobs than it destroyed."
+                },
+                {
+                    "speaker": "YOUNG MAN",
+                    "text": "Yes, that's true – but it probably didn't seem a positive thing at the time. I can see why the Luddites felt so threatened."
+                },
+                {
+                    "speaker": "YOUNG WOMAN",
+                    "text": "I know. I'm sure I would have felt the same. The discussion about the future of work was really optimistic for a change. I like the idea that work won't involve doing boring, repetitive tasks, as robots will do all that. Normally, you only hear negative stuff about the future."
+                },
+                {
+                    "speaker": "YOUNG MAN",
+                    "text": "Bit too optimistic, don't you think? For example, I can't see how people are about to have more leisure time, when all the evidence shows people are spending longer than ever at work."
+                },
+                {
+                    "speaker": "YOUNG WOMAN",
+                    "text": "No – that's true. And what about lower unemployment? I'm not so sure about that."
+                },
+                {
+                    "speaker": "YOUNG MAN",
+                    "text": "Perhaps in the long term – but not in the foreseeable future."
+                },
+                {
+                    "speaker": "YOUNG WOMAN",
+                    "text": "Mmm. And I expect most people will be expected to work until they're much older – as everyone's living much longer."
+                },
+                {
+                    "speaker": "YOUNG MAN",
+                    "text": "That's already happening."
+                },
+                {
+                    "speaker": "YOUNG WOMAN",
+                    "text": "I enjoyed all that stuff on how technology has changed some jobs and how they're likely to change in the near future."
+                },
+                {
+                    "speaker": "YOUNG MAN",
+                    "text": "Yeah, incredible. Like accountants. You might think all the technological innovations would have put them out of a job, but in fact there are more of them than ever. They're still really in demand and have become far more efficient."
+                },
+                {
+                    "speaker": "YOUNG WOMAN",
+                    "text": "Right. That was amazing. Twenty times more accountants in this country compared to the 19th century."
+                },
+                {
+                    "speaker": "YOUNG MAN",
+                    "text": "I know. I'd never have thought that demand for hairdressing would have gone up so much in the last hundred years. One hairdresser for every 287 people now, compared to one for over 1,500."
+                },
+                {
+                    "speaker": "YOUNG WOMAN",
+                    "text": "Yeah because people's earning power has gone up so they can afford to spend more on personal services like that."
+                },
+                {
+                    "speaker": "YOUNG MAN",
+                    "text": "But technology hasn't changed the actual job that much."
+                },
+                {
+                    "speaker": "YOUNG WOMAN",
+                    "text": "No, they've got hairdryers, etc. but it's one job where you don't depend on a computer … The kind of work that administrative staff do has changed enormously, thanks to technology. Even 20 years ago there were secretaries doing dictation and typing."
+                },
+                {
+                    "speaker": "YOUNG MAN",
+                    "text": "Yes. Really boring compared to these days, when they're given much more responsibility and higher status."
+                },
+                {
+                    "speaker": "YOUNG WOMAN",
+                    "text": "Mmm. A lot of graduates go in for this kind of work now … I'd expected there to be a much bigger change in the number of agricultural workers in the 19th century. But the 1871 census showed that roughly 25% of the population worked on the land."
+                },
+                {
+                    "speaker": "YOUNG MAN",
+                    "text": "Yeah, I'd have assumed it would be more than 50%. Now it's less than 0.2%."
+                },
+                {
+                    "speaker": "YOUNG WOMAN",
+                    "text": "What about care workers?"
+                },
+                {
+                    "speaker": "YOUNG MAN",
+                    "text": "They barely existed in the 19th century as people's lifespan was so much shorter. But now of course this sector will see huge growth."
+                },
+                {
+                    "speaker": "YOUNG WOMAN",
+                    "text": "Yeah – and it's hard enough to meet current demand. The future looks quite bleak for bank clerks. They've been in decline since ATMs were introduced in the eighties."
+                },
+                {
+                    "speaker": "YOUNG MAN",
+                    "text": "And technology will certainly make most of the jobs they do now redundant, I think."
+                },
+                {
+                    "speaker": "YOUNG WOMAN",
+                    "text": "I agree, although the situation may change. It's very hard to predict what will happen."
+                }
+            ]
+        },
+        {
+            "title": "Part 4",
+            "lines": [
+                {
+                    "speaker": "LECTURER",
+                    "text": "In today's astronomy lecture, I'm going to talk about the need for a system to manage the movement of satellites and other objects in orbit around the Earth. In other words, a Space Traffic Management system. We already have effective Air Traffic Control systems that are used internationally to ensure that planes navigate our skies safely. Well, Space Traffic Management is a similar concept, but focusing on the control of satellites."
+                },
+                {
+                    "speaker": "LECTURER",
+                    "text": "The aim of such a system would be to prevent the danger of collisions in space between the objects in orbit around the Earth. In order to do this, we'd need to have a set of legal measures, and we'd also have to develop the technical systems to enable us to prevent such accidents."
+                },
+                {
+                    "speaker": "LECTURER",
+                    "text": "But unfortunately, at present we don't actually have a Space Traffic Management system that works. So why not? What are the problems in developing such a system?"
+                },
+                {
+                    "speaker": "LECTURER",
+                    "text": "Well, for one thing, satellites are relatively cheap these days, compared with how they were in the past, meaning that more people can afford to put them into space. So there's a lot more of them out there, and people aren't just launching single satellites but whole constellations, consisting of thousands of them designed to work together. So space is getting more crowded every day."
+                },
+                {
+                    "speaker": "LECTURER",
+                    "text": "But in spite of this, one thing you may be surprised to learn is that you can launch a satellite into space and, once it's out there, it doesn't have to send back any information to Earth to allow its identification. So while we have international systems for ensuring we know where the planes in our skies are, and to prevent them from colliding with one another, when it comes to the safety of satellites, at present we don't have anything like enough proper ways of tracking them."
+                },
+                {
+                    "speaker": "LECTURER",
+                    "text": "And it isn't just entire satellites that we need to consider. A greater threat is the huge amount of space debris in orbit around the Earth – broken bits of satellite and junk from space stations and so on. And some of these are so small that they can be very hard to identify, but they can still be very dangerous."
+                },
+                {
+                    "speaker": "LECTURER",
+                    "text": "In addition, some operators may be unwilling to share information about the satellites they've launched. For example, a satellite may be designed for military purposes, or it may have been launched for commercial reasons, and the operators don't want competitors to have information about it."
+                },
+                {
+                    "speaker": "LECTURER",
+                    "text": "And even if the operators are willing to provide it, the information isn't easy to collect. Details are needed about the object itself, as well as about its location at a particular time – and remember that a satellite isn't very big, and it's likely to be moving at thousands of kilometres an hour. We don't have any sensors that can constantly follow something moving so fast, so all that the scientists can do is to put forward a prediction concerning where the satellite is heading next."
+                },
+                {
+                    "speaker": "LECTURER",
+                    "text": "So those are some of the problems that we're facing. Let's consider now some of the solutions that have been suggested. One key issue is the way in which information is dealt with. We need more information, but it also needs to be accessible at a global level, so we need to establish shared standards that we can all agree on for the way in which this information is presented. We already do this in other areas of science, so although this is a challenge, it's not an impossible task. Then, as all this information's collected, it needs to be put together so it can be used, and that will involve creating a single database on which it can be entered."
+                },
+                {
+                    "speaker": "LECTURER",
+                    "text": "As we continue to push forward new developments, congestion of the space environment is only going to increase. To cope with this, we need to develop a system like the one I've described to coordinate the work of the numerous spacecraft operators, but it's also essential that this system is one that establishes trust in the people that use it, both nationally and at a global level."
+                },
+                {
+                    "speaker": "LECTURER",
+                    "text": "One interesting development …"
+                }
+            ]
+        }
+    ]
+}

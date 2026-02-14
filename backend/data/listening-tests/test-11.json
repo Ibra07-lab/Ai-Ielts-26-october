@@ -1,0 +1,438 @@
+{
+    "id": 11,
+    "title": "IELTS Listening Test 11",
+    "hasWorksheet": true,
+    "section": 1,
+    "difficulty": "medium",
+    "audioFile": "/audio/test-11.mp3",
+    "duration": 1800,
+    "questions": [
+        {
+            "id": 1,
+            "type": "fill-in-blank",
+            "questionNumber": 1,
+            "part": 1,
+            "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
+            "text": "Administrative assistant in a company that produces 1 .......................... (North London)",
+            "answer": "furniture",
+            "explanation": ""
+        },
+        {
+            "id": 2,
+            "type": "fill-in-blank",
+            "questionNumber": 2,
+            "part": 1,
+            "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
+            "text": "go to 2 .......................... and take notes",
+            "answer": "meetings",
+            "explanation": ""
+        },
+        {
+            "id": 3,
+            "type": "fill-in-blank",
+            "questionNumber": 3,
+            "part": 1,
+            "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
+            "text": "management of 3 ..........................",
+            "answer": "diary",
+            "explanation": ""
+        },
+        {
+            "id": 4,
+            "type": "fill-in-blank",
+            "questionNumber": 4,
+            "part": 1,
+            "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
+            "text": "attention to 4 ..........................",
+            "answer": "details",
+            "explanation": ""
+        },
+        {
+            "id": 5,
+            "type": "fill-in-blank",
+            "questionNumber": 5,
+            "part": 1,
+            "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
+            "text": "need a minimum of 5 .......................... of experience of teleconferencing",
+            "answer": "1 year",
+            "explanation": ""
+        },
+        {
+            "id": 6,
+            "type": "fill-in-blank",
+            "questionNumber": 6,
+            "part": 1,
+            "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
+            "text": "managing 6 ..........................",
+            "answer": "accounts",
+            "explanation": ""
+        },
+        {
+            "id": 7,
+            "type": "fill-in-blank",
+            "questionNumber": 7,
+            "part": 1,
+            "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
+            "text": "very organised and 7 ..........................",
+            "answer": "punctual",
+            "explanation": ""
+        },
+        {
+            "id": 8,
+            "type": "fill-in-blank",
+            "questionNumber": 8,
+            "part": 1,
+            "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
+            "text": "used to working in a 8 ..........................",
+            "answer": "warehouse",
+            "explanation": ""
+        },
+        {
+            "id": 9,
+            "type": "fill-in-blank",
+            "questionNumber": 9,
+            "part": 1,
+            "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
+            "text": "able to cope with items that are 9 ..........................",
+            "answer": "heavy",
+            "explanation": ""
+        },
+        {
+            "id": 10,
+            "type": "fill-in-blank",
+            "questionNumber": 10,
+            "part": 1,
+            "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
+            "text": "10 .......................... service",
+            "answer": "customer",
+            "explanation": ""
+        },
+        {
+            "id": 11,
+            "type": "multiple-choice",
+            "questionNumber": 11,
+            "part": 2,
+            "instruction": "Choose the correct letter, A, B or C.",
+            "question": "When did the Street Play Scheme first take place?",
+            "options": [
+                "A. two years ago",
+                "B. three years ago",
+                "C. six years ago"
+            ],
+            "answer": "B",
+            "explanation": "The speaker mentions that the scheme has been running for three years."
+        },
+        {
+            "id": 12,
+            "type": "multiple-choice",
+            "questionNumber": 12,
+            "part": 2,
+            "instruction": "Choose the correct letter, A, B or C.",
+            "question": "How often is Beechwood Road closed to traffic now?",
+            "options": [
+                "A. once a week",
+                "B. on Saturdays and Sundays",
+                "C. once a month"
+            ],
+            "answer": "A",
+            "explanation": "Beechwood Road is now closed once a week."
+        },
+        {
+            "id": 13,
+            "type": "multiple-choice",
+            "questionNumber": 13,
+            "part": 2,
+            "instruction": "Choose the correct letter, A, B or C.",
+            "question": "Who is responsible for closing the road?",
+            "options": [
+                "A. a council official",
+                "B. the police",
+                "C. local wardens"
+            ],
+            "answer": "C",
+            "explanation": "Local wardens are responsible for closing the road."
+        },
+        {
+            "id": 14,
+            "type": "multiple-choice",
+            "questionNumber": 14,
+            "part": 2,
+            "instruction": "Choose the correct letter, A, B or C.",
+            "question": "Residents who want to use their cars",
+            "options": [
+                "A. have to park in another street.",
+                "B. must drive very slowly.",
+                "C. need permission from a warden."
+            ],
+            "answer": "B",
+            "explanation": "Residents who need to use their cars must drive very slowly (under 20 km/h)."
+        },
+        {
+            "id": 15,
+            "type": "multiple-choice",
+            "questionNumber": 15,
+            "part": 2,
+            "instruction": "Choose the correct letter, A, B or C.",
+            "question": "Alice says that Street Play Schemes are most needed in",
+            "options": [
+                "A. wealthy areas.",
+                "B. quiet suburban areas.",
+                "C. areas with heavy traffic."
+            ],
+            "answer": "C",
+            "explanation": "Alice suggests that these schemes are most beneficial in areas with heavy traffic."
+        },
+        {
+            "id": 16,
+            "type": "multiple-choice",
+            "questionNumber": 16,
+            "part": 2,
+            "instruction": "Choose the correct letter, A, B or C.",
+            "question": "What has been the reaction of residents who are not parents?",
+            "options": [
+                "A. Many of them were unhappy at first.",
+                "B. They like seeing children play in the street.",
+                "C. They are surprised by the lack of noise."
+            ],
+            "answer": "B",
+            "explanation": "Residents who are not parents generally enjoy seeing children playing in the street."
+        },
+        {
+            "id": 17,
+            "type": "pick-two",
+            "questionNumber": 17,
+            "part": 2,
+            "instruction": "Choose TWO letters, A–E.",
+            "question": "Which TWO benefits for children does Alice think are the most important?",
+            "options": [
+                "A. increased physical activity",
+                "B. increased sense of independence",
+                "C. opportunity to learn new games",
+                "D. opportunity to be part of a community",
+                "E. opportunity to make new friends"
+            ],
+            "answer": [
+                "B",
+                "D"
+            ],
+            "explanation": "Alice emphasizes the sense of independence and the sense of community as key benefits."
+        },
+        {
+            "id": 18,
+            "type": "pick-two",
+            "questionNumber": 18,
+            "part": 2,
+            "instruction": "Choose TWO letters, A–E.",
+            "question": "Which TWO benefits for children does Alice think are the most important?",
+            "options": [
+                "A. increased physical activity",
+                "B. increased sense of independence",
+                "C. opportunity to learn new games",
+                "D. opportunity to be part of a community",
+                "E. opportunity to make new friends"
+            ],
+            "answer": [
+                "B",
+                "D"
+            ],
+            "explanation": "Alice emphasizes the sense of independence and the sense of community as key benefits."
+        },
+        {
+            "id": 19,
+            "type": "pick-two",
+            "questionNumber": 19,
+            "part": 2,
+            "instruction": "Choose TWO letters, A–E.",
+            "question": "Which TWO results of the King Street experiment surprised Alice?",
+            "options": [
+                "A. more shoppers",
+                "B. improved safety",
+                "C. less air pollution",
+                "D. more relaxed atmosphere",
+                "E. less noise pollution"
+            ],
+            "answer": [
+                "A",
+                "E"
+            ],
+            "explanation": "Alice was surprised by the increase in shoppers and how much quieter the street was (less noise pollution)."
+        },
+        {
+            "id": 20,
+            "type": "pick-two",
+            "questionNumber": 20,
+            "part": 2,
+            "instruction": "Choose TWO letters, A–E.",
+            "question": "Which TWO results of the King Street experiment surprised Alice?",
+            "options": [
+                "A. more shoppers",
+                "B. improved safety",
+                "C. less air pollution",
+                "D. more relaxed atmosphere",
+                "E. less noise pollution"
+            ],
+            "answer": [
+                "A",
+                "E"
+            ],
+            "explanation": "Alice was surprised by the increase in shoppers and how much quieter the street was (less noise pollution)."
+        },
+        {
+            "id": 21,
+            "type": "fill-in-blank",
+            "questionNumber": 21,
+            "part": 3,
+            "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+            "text": "what 21 .......................... the item is on",
+            "answer": "",
+            "explanation": ""
+        },
+        {
+            "id": 22,
+            "type": "fill-in-blank",
+            "questionNumber": 22,
+            "part": 3,
+            "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+            "text": "the 22 .......................... of the item, including the headline",
+            "answer": "",
+            "explanation": ""
+        },
+        {
+            "id": 23,
+            "type": "fill-in-blank",
+            "questionNumber": 23,
+            "part": 3,
+            "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+            "text": "any 23 .......................... accompanying the item",
+            "answer": "",
+            "explanation": ""
+        },
+        {
+            "id": 24,
+            "type": "fill-in-blank",
+            "questionNumber": 24,
+            "part": 3,
+            "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+            "text": "the 24 .......................... of the item, e.g. what's made prominent",
+            "answer": "",
+            "explanation": ""
+        },
+        {
+            "id": 25,
+            "type": "fill-in-blank",
+            "questionNumber": 25,
+            "part": 3,
+            "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+            "text": "the writer's main 25 ..........................",
+            "answer": "",
+            "explanation": ""
+        },
+        {
+            "id": 26,
+            "type": "fill-in-blank",
+            "questionNumber": 26,
+            "part": 3,
+            "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+            "text": "the 26 .......................... the writer may make about the reader",
+            "answer": "",
+            "explanation": ""
+        },
+        {
+            "id": 27,
+            "type": "matching",
+            "questionNumber": 27,
+            "part": 3,
+            "instruction": "What does Hazel decide to do about each of the following types of articles? Write the correct letter, A, B or C, next to Questions 27–30.",
+            "question": "national news item",
+            "options": [
+                {
+                    "letter": "A",
+                    "text": "She will definitely look for a suitable article."
+                },
+                {
+                    "letter": "B",
+                    "text": "She may look for a suitable article."
+                },
+                {
+                    "letter": "C",
+                    "text": "She definitely won't look for an article."
+                }
+            ],
+            "answer": "",
+            "explanation": ""
+        },
+        {
+            "id": 28,
+            "type": "matching",
+            "questionNumber": 28,
+            "part": 3,
+            "instruction": "What does Hazel decide to do about each of the following types of articles? Write the correct letter, A, B or C, next to Questions 27–30.",
+            "question": "editorial",
+            "options": [
+                {
+                    "letter": "A",
+                    "text": "She will definitely look for a suitable article."
+                },
+                {
+                    "letter": "B",
+                    "text": "She may look for a suitable article."
+                },
+                {
+                    "letter": "C",
+                    "text": "She definitely won't look for an article."
+                }
+            ],
+            "answer": "",
+            "explanation": ""
+        },
+        {
+            "id": 29,
+            "type": "matching",
+            "questionNumber": 29,
+            "part": 3,
+            "instruction": "What does Hazel decide to do about each of the following types of articles? Write the correct letter, A, B or C, next to Questions 27–30.",
+            "question": "human interest",
+            "options": [
+                {
+                    "letter": "A",
+                    "text": "She will definitely look for a suitable article."
+                },
+                {
+                    "letter": "B",
+                    "text": "She may look for a suitable article."
+                },
+                {
+                    "letter": "C",
+                    "text": "She definitely won't look for an article."
+                }
+            ],
+            "answer": "",
+            "explanation": ""
+        },
+        {
+            "id": 30,
+            "type": "matching",
+            "questionNumber": 30,
+            "part": 3,
+            "instruction": "What does Hazel decide to do about each of the following types of articles? Write the correct letter, A, B or C, next to Questions 27–30.",
+            "question": "arts",
+            "options": [
+                {
+                    "letter": "A",
+                    "text": "She will definitely look for a suitable article."
+                },
+                {
+                    "letter": "B",
+                    "text": "She may look for a suitable article."
+                },
+                {
+                    "letter": "C",
+                    "text": "She definitely won't look for an article."
+                }
+            ],
+            "answer": "",
+            "explanation": ""
+        }
+    ],
+    "transcripts": []
+}

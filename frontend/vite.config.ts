@@ -10,7 +10,7 @@ export default defineConfig(({ command }) => {
     resolve: {
       alias: {
         '@': path.resolve(__dirname),
-        '~backend/client': path.resolve(__dirname, './client'),
+        '~backend/client': path.resolve(__dirname, './backend.ts'),
         '~backend': path.resolve(__dirname, '../backend'),
       },
     },
@@ -23,12 +23,13 @@ export default defineConfig(({ command }) => {
         overlay: false,
       },
       proxy: {
-        '/progress': {
+
+        // Optional: also proxy user progress/daily-goal if needed from same-origin
+        '/users': {
           target: 'http://localhost:4000',
           changeOrigin: true,
         },
-        // Optional: also proxy user progress/daily-goal if needed from same-origin
-        '/users': {
+        '/progress': {
           target: 'http://localhost:4000',
           changeOrigin: true,
         },

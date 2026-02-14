@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, startTransition, useMemo } from "react";
+import React, { useState, useEffect, useRef, startTransition, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { BookOpen, Clock, Send, RotateCcw, Highlighter, CheckCircle, XCircle, Lightbulb, AlertCircle, Sparkles, GraduationCap, Eye, EyeOff } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,7 +14,7 @@ import { useUser } from "../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import TextHighlighter from "../components/TextHighlighter";
 import ReadingTheoryQuiz from "@/components/ReadingTheoryQuiz";
-import backend, { Local } from "~backend/client";
+import backend, { Local } from "@/backend";
 import { getAIFeedback } from '../services/aiFeedback';
 import NoteCompletion from "@/components/questions/NoteCompletion";
 
@@ -724,22 +724,23 @@ function FlowChartCompletion({
                         <div className="text-sm text-gray-900 dark:text-white leading-relaxed">
                           {node.content.split('__________').map((part, idx, arr) => (
                             <>
-                              {part}
-                              {idx < arr.length - 1 && (
-                                <input
-                                  type="text"
-                                  value={answers[node.gapNumber!] || ""}
-                                  onChange={(e) => {
-                                    const newValue = e.target.value;
-                                    setAnswers(prev => ({
-                                      ...prev,
-                                      [node.gapNumber!]: newValue
-                                    }));
-                                  }}
-                                  disabled={!!result}
-                                  placeholder="..."
-                                  aria-label={`Question ${node.gapNumber}: Enter answer`}
-                                  className={`
+                              <React.Fragment key={`part-${idx}`}>
+                                {part}
+                                {idx < arr.length - 1 && (
+                                  <input
+                                    type="text"
+                                    value={answers[node.gapNumber!] || ""}
+                                    onChange={(e) => {
+                                      const newValue = e.target.value;
+                                      setAnswers(prev => ({
+                                        ...prev,
+                                        [node.gapNumber!]: newValue
+                                      }));
+                                    }}
+                                    disabled={!!result}
+                                    placeholder="..."
+                                    aria-label={`Question ${node.gapNumber}: Enter answer`}
+                                    className={`
                                     inline-block w-28 h-6 px-1 mx-1 -translate-y-[1px] align-middle transition-all
                                     bg-transparent border-t-0 border-l-0 border-r-0 border-b-2 border-dotted
                                     ${getNodeState(node.gapNumber!) === 'empty' ? 'border-slate-400 dark:border-slate-500' : ''}
@@ -750,8 +751,9 @@ function FlowChartCompletion({
                                     focus:border-blue-500 focus:border-solid focus:ring-0 focus:outline-none rounded-none
                                     text-sm text-center
                                   `}
-                                />
-                              )}
+                                  />
+                                )}
+                              </React.Fragment>
                             </>
                           ))}
                         </div>
@@ -1947,8 +1949,7 @@ export default function ReadingPractice() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {testsData?.tests?.map((test: any, index: number) => {
                 // Mock difficulty for visual variety
-                const difficulty = index % 3 === 0 ? "Hard" : index % 2 === 0 ? "Medium" : "Easy";
-                const difficultyColor = difficulty === "Hard" ? "text-rose-600 bg-rose-50 border-rose-200" : difficulty === "Medium" ? "text-amber-600 bg-amber-50 border-amber-200" : "text-emerald-600 bg-emerald-50 border-emerald-200";
+                // Mock difficulty removed as per user request
 
                 return (
                   <Card
@@ -1962,12 +1963,11 @@ export default function ReadingPractice() {
                         setResult(null);
                         setHighlights([]);
                       });
-                      // Immediately start the test
                       setTimeout(() => enterTest(0), 50);
                     }}
                     tabIndex={0}
                     role="button"
-                    aria-label={`Start ${test.testName} - ${difficulty} difficulty, 60 minutes, ${test.totalQuestions} questions`}
+                    aria-label={`Start ${test.testName}, 60 minutes, ${test.totalQuestions} questions`}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
@@ -1982,49 +1982,46 @@ export default function ReadingPractice() {
                         setTimeout(() => enterTest(0), 50);
                       }
                     }}
-                    className="cursor-pointer group relative overflow-hidden transition-all duration-200 border-2 border-transparent hover:border-[#0055ff] hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(0,85,255,0.3)] focus:border-[#0055ff] focus:-translate-y-1 focus:shadow-[0_0_20px_rgba(0,85,255,0.3)] focus:outline-none dark:bg-slate-800"
+                    className="cursor-pointer group relative overflow-hidden transition-all duration-300 border h-full flex flex-col justify-between border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800 hover:border-blue-300 dark:hover:border-blue-800 hover:shadow-md"
                   >
-                    <CardHeader className="pb-3">
-                      <div className="flex justify-between items-start mb-2">
-                        <div className="p-2 rounded-lg bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300 group-hover:bg-blue-100 group-hover:text-blue-600 group-focus:bg-blue-100 group-focus:text-blue-600 transition-colors duration-200">
-                          <BookOpen className="w-6 h-6" />
+                    <CardHeader className="flex-1">
+                      <div className="flex justify-between items-start mb-4">
+                        <div className="p-3 rounded-2xl bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400 group-hover:bg-blue-50 group-hover:text-blue-600 dark:group-hover:bg-blue-900/20 dark:group-hover:text-blue-300 transition-colors duration-300">
+                          <BookOpen className="w-8 h-8" />
                         </div>
-                        <span className={`text-xs font-bold px-2 py-1 rounded-full border ${difficultyColor} dark:bg-opacity-10`}>
-                          {difficulty}
-                        </span>
                       </div>
-                      <CardTitle className="text-lg font-bold text-slate-800 dark:text-slate-100 group-hover:text-blue-600 group-focus:text-blue-600 transition-colors duration-200">
-                        {test.testName}
-                      </CardTitle>
-                      <CardDescription className="flex items-center gap-2 mt-1">
-                        <Clock className="w-3.5 h-3.5" />
-                        60 mins
-                        <span>•</span>
-                        {test.totalQuestions} Questions
-                      </CardDescription>
+
+                      <div className="space-y-2">
+                        <CardTitle className="text-xl font-bold text-slate-900 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                          {test.testName}
+                        </CardTitle>
+                        <p className="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed min-h-[2.5rem]">
+                          Academic & General Training Practice Test
+                        </p>
+                      </div>
                     </CardHeader>
 
-                    <CardContent>
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between text-sm text-slate-600 dark:text-slate-400">
-                          <span>Completion Rate</span>
-                          <span className="font-medium">0%</span>
+                    <CardContent className="mt-auto pt-0">
+                      <div className="flex items-center gap-4 text-xs font-semibold text-slate-500 dark:text-slate-500 uppercase tracking-wider mb-6">
+                        <div className="flex items-center gap-1.5 flex-1 p-2 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 justify-center">
+                          <Clock className="w-3.5 h-3.5" />
+                          <span>60 MIN</span>
                         </div>
-                        <div className="h-2 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
-                          <div className="h-full bg-blue-500 w-0 rounded-full"></div>
+                        <div className="flex items-center gap-1.5 flex-1 p-2 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 justify-center">
+                          <BookOpen className="w-3.5 h-3.5" />
+                          <span>{test.totalQuestions} Qs</span>
                         </div>
+                      </div>
 
-                        {/* Button hidden by default, slides up on hover */}
-                        <div className="pt-4 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-focus:opacity-100 group-focus:translate-y-0 transition-all duration-200">
-                          <Button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                            }}
-                            className="w-full bg-blue-600 hover:bg-blue-700 text-white shadow-md pointer-events-none"
-                          >
-                            Start Test Now
-                          </Button>
-                        </div>
+                      <div className="opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                        <Button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}
+                          className="w-full bg-blue-600 hover:bg-blue-700 text-white shadow-md font-semibold h-11 pointer-events-none"
+                        >
+                          Start Test
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>

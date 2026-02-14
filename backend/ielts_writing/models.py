@@ -1,7 +1,7 @@
 from enum import Enum
 from pydantic import BaseModel, Field
 from datetime import datetime
-from typing import Optional, List, Any, Union
+from typing import Optional, List, Any, Union, Dict
 
 
 class TaskType(str, Enum):
@@ -91,6 +91,33 @@ class BandGap(BaseModel):
     specific_gaps: List[str]  # What's missing to reach target
 
 
+class TopicAnalysis(BaseModel):
+    """Deep analysis of error topics."""
+    topic: str  # e.g., "Subject-Verb Agreement", "Task Response Depth"
+    count: int
+    category: str # "Grammar", "Vocabulary", "Coherence", "Task Response"
+
+
+class TopicWord(BaseModel):
+    word: str
+    example: str
+
+
+class TopicVocabulary(BaseModel):
+    topic: str
+    useful_words: List[TopicWord]
+    useful_collocations: List[TopicWord]
+
+    first_seen: datetime = Field(default_factory=datetime.utcnow)
+    last_seen: datetime = Field(default_factory=datetime.utcnow)
+
+
+class CoherenceAdvice(BaseModel):
+    strategy: str
+    specific_direction: str
+    example: str
+
+
 class TutorFeedback(BaseModel):
     """Coaching output based on examiner's evaluation."""
     
@@ -103,10 +130,17 @@ class TutorFeedback(BaseModel):
     # Areas to improve
     weaknesses: List[str] = Field(default_factory=list)
     
+    # Topic-based analysis (NEW)
+    topic_analysis: List[TopicAnalysis] = Field(default_factory=list)
+    
     # Structured feedback arrays (NEW)
     grammar_errors: List[GrammarError] = Field(default_factory=list)
     vocabulary_suggestions: List[VocabularySuggestion] = Field(default_factory=list)
     coherence_issues: List[CoherenceIssue] = Field(default_factory=list)
+    
+    # Topic-specific vocabulary toolkit (NEW)
+    topic_vocabulary: Optional[TopicVocabulary] = None
+    coherence_advice: Optional[CoherenceAdvice] = None
     
     # Band gap analysis
     target_band: float
@@ -121,6 +155,9 @@ class TutorFeedback(BaseModel):
     # Encouragement (LEGACY - use strengths/weaknesses instead)
     strengths_summary: Optional[str] = None
     next_focus: Optional[str] = None
+    
+    # Store raw output for flexible frontend rendering (e.g. Strategic Focus cards)
+    raw_coach_output: Optional[Dict[str, Any]] = None
 
 
 # --- Error Memory ---
@@ -128,8 +165,8 @@ class ErrorPattern(BaseModel):
     pattern_type: str  # "articles", "verb_tense", "weak_vocabulary", etc.
     examples: List[str]
     frequency: int
-    first_seen: datetime
-    last_seen: datetime
+
+
 
 
 class UserErrorProfile(BaseModel):

@@ -110,6 +110,23 @@ export interface EvaluationResult {
         teacher?: number;
         explanations?: number;
     };
+    // Detailed rich feedback for Reports
+    detailed_feedback?: DetailedFeedback;
+}
+
+export interface CriterionFeedback {
+    band: number;
+    summary: string;
+    why_score_is_here: string;
+    weak_spots: string[];
+    strengths: string[];
+}
+
+export interface DetailedFeedback {
+    task_response: CriterionFeedback;
+    coherence: CriterionFeedback;
+    lexical: CriterionFeedback;
+    grammar: CriterionFeedback;
 }
 
 // ----------------------------------------------------------------------------
@@ -131,17 +148,48 @@ export interface VocabularySuggestion {
 
 export interface CoherenceIssue {
     text: string;
-    suggestion: string;
+    suggestion?: string;  // Legacy field
+    corrected?: string;   // New field - the improved version
     reason: string;
+}
+
+export interface TopicAnalysis {
+    topic: string;
+    count: number;
+    category: string;
+    description: string;
+    why_it_matters: string;
+}
+
+export interface TopicWord {
+    word: string;
+    example: string;
+}
+
+export interface TopicVocabulary {
+    topic: string;
+    useful_words: TopicWord[];
+    useful_collocations: TopicWord[];
+}
+
+export interface CoherenceAdvice {
+    strategy: string;
+    specific_direction: string;
+    example: string;
 }
 
 export interface CoachingResult {
     action_plan: string[]; // Array of 3 priority fixes
     strengths: string[]; // Things done well
     weaknesses: string[]; // Areas to improve
+    topic_analysis?: TopicAnalysis[]; // NEW
+    topic_vocabulary?: TopicVocabulary; // NEW - Topic Word Bank
+    coherence_advice?: CoherenceAdvice; // NEW - Strategic Flow Advice
     grammar_errors: GrammarError[];
     vocabulary_suggestions: VocabularySuggestion[];
     coherence_issues: CoherenceIssue[];
+    raw_coach_output?: any; // Pass through full backend response
+    raw_explainer_output?: any; // Pass through full explainer response (rewrites, etc)
 }
 
 // ----------------------------------------------------------------------------

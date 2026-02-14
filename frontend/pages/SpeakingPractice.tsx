@@ -8,7 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "../contexts/UserContext";
-import backend from "~backend/client";
+import backend from "@/backend";
 
 export default function SpeakingPractice() {
   const [selectedPart, setSelectedPart] = useState(1);
@@ -24,7 +24,7 @@ export default function SpeakingPractice() {
 
   const { data: question, refetch: getNewQuestion } = useQuery({
     queryKey: ["speakingQuestion", selectedPart],
-    queryFn: () => backend.ielts.getSpeakingQuestion(selectedPart),
+    queryFn: () => backend.ielts.getSpeakingQuestion({ part: selectedPart }),
     enabled: true,
   });
 
@@ -73,12 +73,12 @@ export default function SpeakingPractice() {
 
   const startRecording = () => {
     if (!question || !user) return;
-    
+
     setIsRecording(true);
     setRecordingTime(0);
     setCurrentQuestion(question.question);
     setFeedback(null);
-    
+
     // Start timer
     const timer = setInterval(() => {
       setRecordingTime(prev => {
@@ -102,7 +102,7 @@ export default function SpeakingPractice() {
 
     // Mock transcription - in a real app, this would use speech-to-text
     const mockTranscription = "This is a mock transcription of the user's speaking response. In a real application, this would be generated using speech-to-text technology.";
-    
+
     setTranscription(mockTranscription);
 
     submitSpeakingMutation.mutate({
@@ -219,7 +219,7 @@ export default function SpeakingPractice() {
                         <RotateCcw className="h-5 w-5 mr-2" />
                         New Question
                       </Button>
-                      
+
                       {transcription && (
                         <Button
                           onClick={handleAiAnalysis}
@@ -333,8 +333,8 @@ export default function SpeakingPractice() {
                               <span className="text-sm font-medium">Fluency & Coherence</span>
                               <Badge variant="outline">{aiAnalysis.fluencyCoherence}</Badge>
                             </div>
-                            <Progress 
-                              value={(aiAnalysis.fluencyCoherence / 9) * 100} 
+                            <Progress
+                              value={(aiAnalysis.fluencyCoherence / 9) * 100}
                               className="h-2"
                               aria-label={`Fluency & Coherence score: ${aiAnalysis.fluencyCoherence} out of 9`}
                             />
@@ -345,8 +345,8 @@ export default function SpeakingPractice() {
                               <span className="text-sm font-medium">Lexical Resource</span>
                               <Badge variant="outline">{aiAnalysis.lexicalResource}</Badge>
                             </div>
-                            <Progress 
-                              value={(aiAnalysis.lexicalResource / 9) * 100} 
+                            <Progress
+                              value={(aiAnalysis.lexicalResource / 9) * 100}
                               className="h-2"
                               aria-label={`Lexical Resource score: ${aiAnalysis.lexicalResource} out of 9`}
                             />
@@ -357,8 +357,8 @@ export default function SpeakingPractice() {
                               <span className="text-sm font-medium">Grammatical Range</span>
                               <Badge variant="outline">{aiAnalysis.grammaticalRange}</Badge>
                             </div>
-                            <Progress 
-                              value={(aiAnalysis.grammaticalRange / 9) * 100} 
+                            <Progress
+                              value={(aiAnalysis.grammaticalRange / 9) * 100}
                               className="h-2"
                               aria-label={`Grammatical Range score: ${aiAnalysis.grammaticalRange} out of 9`}
                             />
@@ -369,8 +369,8 @@ export default function SpeakingPractice() {
                               <span className="text-sm font-medium">Pronunciation</span>
                               <Badge variant="outline">{aiAnalysis.pronunciation}</Badge>
                             </div>
-                            <Progress 
-                              value={(aiAnalysis.pronunciation / 9) * 100} 
+                            <Progress
+                              value={(aiAnalysis.pronunciation / 9) * 100}
                               className="h-2"
                               aria-label={`Pronunciation score: ${aiAnalysis.pronunciation} out of 9`}
                             />

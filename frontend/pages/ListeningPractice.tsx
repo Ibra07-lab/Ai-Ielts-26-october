@@ -1,6 +1,10 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Headphones, Play, Pause, RotateCcw, Send, Volume2, Sparkles, Clock, GraduationCap, ArrowLeft, CheckCircle, BookOpen } from "lucide-react";
+import {
+  Headphones, Play, Pause, RotateCcw, Send, Volume2, Sparkles, Clock,
+  GraduationCap, ArrowLeft, CheckCircle, BookOpen, FileText, Eye, EyeOff,
+  Trophy, Target
+} from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -10,19 +14,57 @@ import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "../contexts/UserContext";
-import backend from "~backend/client";
+import backend from "@/backend";
+import ListeningWorksheet from "../components/listening/ListeningWorksheet";
+import ErrorBoundary from "../components/ErrorBoundary";
+import { useHighlighter } from "../hooks/useHighlighter";
 
-// Mock Data for Listening Tests
-const listeningTests = [
-  { id: 1, title: "Test 1", subtitle: "Section 1: Social Context", difficulty: "Easy", questions: 10, time: 30 },
-  { id: 2, title: "Test 2", subtitle: "Section 2: General Context", difficulty: "Medium", questions: 10, time: 30 },
-  { id: 3, title: "Test 3", subtitle: "Section 3: Academic Context", difficulty: "Hard", questions: 10, time: 30 },
-  { id: 4, title: "Test 4", subtitle: "Section 4: Academic Lecture", difficulty: "Hard", questions: 10, time: 30 },
-  { id: 5, title: "Test 5", subtitle: "Full Practice Test A", difficulty: "Medium", questions: 40, time: 30 },
-  { id: 6, title: "Test 6", subtitle: "Full Practice Test B", difficulty: "Hard", questions: 40, time: 30 },
-  { id: 7, title: "Test 7", subtitle: "Section 1 & 2 Practice", difficulty: "Easy", questions: 20, time: 15 },
-  { id: 8, title: "Test 8", subtitle: "Section 3 & 4 Practice", difficulty: "Hard", questions: 20, time: 15 },
-];
+interface ListeningTestMeta {
+  id: number;
+  title: string;
+  section: number;
+  difficulty: string;
+  questionCount: number;
+  duration: number;
+}
+
+interface TranscriptLine {
+  speaker: string;
+  timestamp: string;
+  text: string;
+}
+
+interface ListeningQuestion {
+  id: number;
+  type: string;
+  questionNumber: number;
+  question: string;
+  options?: string[];
+  correctAnswer: string;
+  explanation?: string;
+}
+
+interface ListeningTest {
+  id: number;
+  title: string;
+  section: number;
+  difficulty: string;
+  audioFile: string;
+  duration: number;
+  instructions?: string;
+  transcript: TranscriptLine[];
+  questions: ListeningQuestion[];
+}
+
+interface TranscriptSection {
+  title: string;
+  lines: TranscriptLine[];
+}
+
+interface TranscriptResponse {
+  transcript: TranscriptLine[];
+  transcripts?: TranscriptSection[];
+}
 
 export default function ListeningPractice() {
   const [selectedTestId, setSelectedTestId] = useState<number | null>(null);
@@ -33,26 +75,84 @@ export default function ListeningPractice() {
   const [duration, setDuration] = useState(0);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [result, setResult] = useState<any>(null);
+  const [showTranscript, setShowTranscript] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  // Highlighting Logic
+  const { containerRef, contextMenu, applyHighlight, clearHighlights, hasHighlights, isSupported } = useHighlighter();
+
+  useEffect(() => {
+    if (isTestStarted && !isSupported) {
+      toast({
+        title: "Highlighting Limited",
+        description: "Your browser doesn't support the Highlight API. Highlighting won't be visible, but you can still use the transcript.",
+        variant: "destructive"
+      });
+    } else if (isTestStarted && isSupported && !hasHighlights) {
+      toast({
+        title: "Pro Tip",
+        description: "Select text and right-click to highlight important keywords in the transcript or worksheet!",
+        variant: "default"
+      });
+    }
+  }, [isTestStarted, isSupported]);
 
   const { user } = useUser();
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const selectedTest = listeningTests.find(t => t.id === selectedTestId);
-
-  const { data: audio, refetch: refetchAudio } = useQuery({
-    queryKey: ["listeningAudio", selectedTestId],
+  // Fetch available tests
+  const { data: testsData, isLoading: isLoadingTests } = useQuery({
+    queryKey: ["listeningTests"],
     queryFn: async () => {
-      const data = await backend.ielts.getListeningAudio();
-      setAnswers({});
-      setResult(null);
-      setCurrentTime(0);
-      setIsPlaying(false);
+      const data = await backend.ielts.getListeningTests();
       return data;
     },
-    enabled: !!selectedTest,
   });
+
+  const listeningTests = testsData?.tests || [];
+
+  // Fetch selected test
+  const { data: testData, refetch: refetchTest, isLoading: isLoadingTest, error: testError } = useQuery({
+    queryKey: ["listeningTest", selectedTestId],
+    queryFn: async () => {
+      if (!selectedTestId) return null;
+      console.log("🔍 [DEBUG] Fetching test with ID:", selectedTestId);
+      try {
+        const data = await backend.ielts.getListeningTest({ testId: selectedTestId });
+        console.log("✅ [DEBUG] Test data received:", data);
+        console.log("✅ [DEBUG] Test questions:", data?.questions?.length);
+        console.log("✅ [DEBUG] Test transcript:", data?.transcript?.length);
+        return data as ListeningTest;
+      } catch (err) {
+        console.error("❌ [DEBUG] Error fetching test:", err);
+        throw err;
+      }
+    },
+    enabled: !!selectedTestId && isTestStarted,
+  });
+
+  // Fetch transcript (always available when test is started)
+  const { data: transcriptData } = useQuery({
+    queryKey: ["listeningTranscript", selectedTestId],
+    queryFn: async () => {
+      if (!selectedTestId) return null;
+      const data = await backend.ielts.getListeningTranscript({ testId: selectedTestId });
+      console.log("📜 [DEBUG] Transcript Data Received:", data);
+      return data as TranscriptResponse;
+    },
+    enabled: !!selectedTestId && isTestStarted, // Always fetch when test starts
+  });
+
+  useEffect(() => {
+    console.log("📜 [DEBUG] showTranscript:", showTranscript);
+    console.log("📜 [DEBUG] transcriptData availability:", !!transcriptData);
+    if (transcriptData) {
+      console.log("📜 [DEBUG] transcriptData keys:", Object.keys(transcriptData));
+    }
+  }, [showTranscript, transcriptData]);
+
+  const selectedTest = listeningTests.find((t: ListeningTestMeta) => t.id === selectedTestId);
 
   const submitListeningMutation = useMutation({
     mutationFn: backend.ielts.submitListening,
@@ -61,7 +161,7 @@ export default function ListeningPractice() {
       queryClient.invalidateQueries({ queryKey: ["progress"] });
       toast({
         title: "Listening submitted successfully!",
-        description: `You scored ${data.score}/${data.totalQuestions}`,
+        description: `You scored ${data.score}/${data.totalQuestions} (Band ${data.bandScore})`,
       });
     },
     onError: (error) => {
@@ -74,13 +174,36 @@ export default function ListeningPractice() {
     },
   });
 
+  // DEBUG: Log component lifecycle and state changes
+  useEffect(() => {
+    console.log("🚀 [DEBUG] ListeningPractice MOUNTED");
+    return () => console.log("💀 [DEBUG] ListeningPractice UNMOUNTED");
+  }, []);
+
+  useEffect(() => {
+    console.log("📊 [DEBUG] State change:", {
+      selectedTestId,
+      isTestStarted,
+      testDataExists: !!testData,
+      testError: testError?.message,
+      isLoadingTest,
+    });
+  }, [selectedTestId, isTestStarted, testData, testError, isLoadingTest]);
+
   const togglePlayback = () => {
     if (!audioRef.current) return;
 
     if (isPlaying) {
       audioRef.current.pause();
     } else {
-      audioRef.current.play();
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          if (error.name !== 'AbortError') {
+            console.error("Playback failed:", error);
+          }
+        });
+      }
     }
     setIsPlaying(!isPlaying);
   };
@@ -113,24 +236,23 @@ export default function ListeningPractice() {
   };
 
   const handleSubmit = () => {
-    if (!user || !audio) return;
+    if (!user || !selectedTestId) return;
 
     submitListeningMutation.mutate({
       userId: user.id,
-      audioTitle: audio?.title ?? "",
-      audioUrl: audio?.audioUrl ?? "",
-      questions: audio?.questions ?? [],
+      testId: selectedTestId,
       userAnswers: answers,
       timeTaken: Math.floor(currentTime),
     });
   };
 
-  const handleAnswerChange = (questionId: number, answer: string) => {
-    setAnswers(prev => ({ ...prev, [questionId]: answer }));
+  // Tests that use the custom worksheet component (Test 3, 4, 5, 6, 7, 8, 9)
+  const isWorksheetTest = (testId: number) => {
+    return [3, 4, 5, 6, 7, 8, 9, 10, 11].includes(testId);
   };
 
-  const getNewAudio = () => {
-    refetchAudio();
+  const handleAnswerChange = (questionId: number, answer: string) => {
+    setAnswers(prev => ({ ...prev, [questionId]: answer }));
   };
 
   const formatTime = (time: number) => {
@@ -139,53 +261,151 @@ export default function ListeningPractice() {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  const handleStartTest = () => {
+  const handleStartTest = (testId: number) => {
+    console.log("🎯 [DEBUG] handleStartTest called with testId:", testId);
+    setSelectedTestId(testId); // FIX: Set the test ID!
     setIsTestStarted(true);
     setAnswers({});
     setResult(null);
     setCurrentTime(0);
     setIsPlaying(false);
-    refetchAudio();
+    setShowTranscript(false);
   };
 
   const handleBackToMenu = () => {
     setIsTestStarted(false);
     setSelectedTestId(null);
     setIsPlaying(false);
+    setResult(null);
+    setShowTranscript(false);
   };
 
-  const renderQuestion = (question: any) => {
+  const getDifficultyColor = (difficulty: string) => {
+    switch (difficulty.toLowerCase()) {
+      case 'easy': return 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400';
+      case 'medium': return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400';
+      case 'hard': return 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400';
+      default: return 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400';
+    }
+  };
+
+  const renderQuestion = (question: ListeningQuestion, showResult: boolean = false) => {
+    const userAnswer = answers[question.id];
+    const correctAns = result?.correctAnswers?.[question.id];
+    const isCorrect = (() => {
+      if (!correctAns || !userAnswer) return false;
+      if (Array.isArray(correctAns)) {
+        // Pick-two: user's single letter answer must be in the valid answers array
+        return correctAns.map((a: string) => a.toUpperCase()).includes(userAnswer.toUpperCase());
+      }
+      return correctAns.toLowerCase() === userAnswer.toLowerCase();
+    })();
+
     switch (question.type) {
       case "multiple-choice":
         return (
-          <div key={question.id} className="space-y-3 p-4 bg-white dark:bg-gray-800/50 rounded-lg border border-gray-100 dark:border-gray-700">
-            <h4 className="font-medium text-gray-900 dark:text-gray-100">{question.id}. {question.question}</h4>
+          <div
+            key={question.id}
+            className={`space-y-3 p-4 rounded-lg border transition-colors ${showResult
+              ? isCorrect
+                ? 'bg-green-50 border-green-200 dark:bg-green-900/20 dark:border-green-800'
+                : 'bg-red-50 border-red-200 dark:bg-red-900/20 dark:border-red-800'
+              : 'bg-white dark:bg-gray-800/50 border-gray-100 dark:border-gray-700'
+              }`}
+          >
+            <div className="flex justify-between items-start">
+              <h4 className="font-medium text-gray-900 dark:text-gray-100">
+                {question.questionNumber}. {question.question}
+              </h4>
+              {showResult && (
+                <Badge variant={isCorrect ? "default" : "destructive"} className="ml-2">
+                  {isCorrect ? "Correct" : "Incorrect"}
+                </Badge>
+              )}
+            </div>
             <RadioGroup
               value={answers[question.id] || ""}
               onValueChange={(value) => handleAnswerChange(question.id, value)}
+              disabled={!!result}
             >
               {question.options?.map((option: string, index: number) => (
                 <div key={index} className="flex items-center space-x-2">
                   <RadioGroupItem value={option} id={`q${question.id}-${index}`} />
-                  <Label htmlFor={`q${question.id}-${index}`} className="text-sm text-gray-700 dark:text-gray-300 cursor-pointer">
+                  <Label
+                    htmlFor={`q${question.id}-${index}`}
+                    className={`text-sm cursor-pointer ${showResult && (() => {
+                      const ca = result?.correctAnswers?.[question.id];
+                      if (Array.isArray(ca)) {
+                        return ca.some((a: string) => option.toUpperCase().startsWith(a.toUpperCase()));
+                      }
+                      return ca === option;
+                    })()
+                      ? 'text-green-700 dark:text-green-400 font-medium'
+                      : 'text-gray-700 dark:text-gray-300'
+                      }`}
+                  >
                     {option}
+                    {showResult && (() => {
+                      const ca = result?.correctAnswers?.[question.id];
+                      if (Array.isArray(ca)) {
+                        return ca.some((a: string) => option.toUpperCase().startsWith(a.toUpperCase()));
+                      }
+                      return ca === option;
+                    })() && " ✓"}
                   </Label>
                 </div>
               ))}
             </RadioGroup>
+            {showResult && result?.explanations?.[question.id] && (
+              <p className="text-sm text-slate-600 dark:text-slate-400 mt-2 pt-2 border-t border-slate-200 dark:border-slate-700">
+                {result.explanations[question.id]}
+              </p>
+            )}
           </div>
         );
 
       case "fill-in-blank":
         return (
-          <div key={question.id} className="space-y-3 p-4 bg-white dark:bg-gray-800/50 rounded-lg border border-gray-100 dark:border-gray-700">
-            <h4 className="font-medium text-gray-900 dark:text-gray-100">{question.id}. {question.question}</h4>
+          <div
+            key={question.id}
+            className={`space-y-3 p-4 rounded-lg border transition-colors ${showResult
+              ? isCorrect
+                ? 'bg-green-50 border-green-200 dark:bg-green-900/20 dark:border-green-800'
+                : 'bg-red-50 border-red-200 dark:bg-red-900/20 dark:border-red-800'
+              : 'bg-white dark:bg-gray-800/50 border-gray-100 dark:border-gray-700'
+              }`}
+          >
+            <div className="flex justify-between items-start">
+              <h4 className="font-medium text-gray-900 dark:text-gray-100">
+                {question.questionNumber}. {question.question}
+              </h4>
+              {showResult && (
+                <Badge variant={isCorrect ? "default" : "destructive"} className="ml-2">
+                  {isCorrect ? "Correct" : "Incorrect"}
+                </Badge>
+              )}
+            </div>
             <Input
               placeholder="Type your answer..."
               value={answers[question.id] || ""}
               onChange={(e) => handleAnswerChange(question.id, e.target.value)}
               className="max-w-md"
+              disabled={!!result}
             />
+            {showResult && (
+              <div className="text-sm mt-2 pt-2 border-t border-slate-200 dark:border-slate-700">
+                {!isCorrect && (
+                  <p className="text-green-700 dark:text-green-400 font-medium">
+                    Correct answer: {result?.correctAnswers?.[question.id]}
+                  </p>
+                )}
+                {result?.explanations?.[question.id] && (
+                  <p className="text-slate-600 dark:text-slate-400 mt-1">
+                    {result.explanations[question.id]}
+                  </p>
+                )}
+              </div>
+            )}
           </div>
         );
 
@@ -195,11 +415,11 @@ export default function ListeningPractice() {
   };
 
   const answeredQuestions = Object.keys(answers).length;
-  const totalQuestions = audio?.questions.length || 0;
+  const totalQuestions = testData?.questions.length || 0;
 
   return (
     <div className="max-w-7xl mx-auto space-y-8 pb-32">
-      {/* Hero Section - Only show when not in a test */}
+      {/* Hero Section */}
       {!isTestStarted && (
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-purple-600 to-indigo-600 dark:from-purple-900 dark:to-indigo-900 text-white shadow-xl">
           <div className="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
@@ -209,14 +429,13 @@ export default function ListeningPractice() {
             <div className="space-y-4 max-w-2xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/30 border border-purple-400/30 text-purple-100 text-sm font-medium backdrop-blur-sm">
                 <Sparkles className="w-4 h-4 text-yellow-300" />
-                <span>New AI-Powered Analysis Available</span>
+                <span>Authentic IELTS Practice</span>
               </div>
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white">
                 Master IELTS Listening
               </h1>
               <p className="text-lg text-purple-100 leading-relaxed">
-                Improve your listening skills with authentic recordings, diverse accents, and instant feedback.
-                Practice all 4 sections of the IELTS Listening test.
+                Practice with real audio recordings, view transcripts after submission, and get instant feedback with band score estimates.
               </p>
               <div className="flex flex-wrap gap-4 pt-2">
                 <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/10">
@@ -224,12 +443,12 @@ export default function ListeningPractice() {
                   <span className="font-medium">{listeningTests.length} Practice Tests</span>
                 </div>
                 <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/10">
-                  <Clock className="w-5 h-5 text-purple-200" />
-                  <span className="font-medium">30 Min / Test</span>
+                  <FileText className="w-5 h-5 text-purple-200" />
+                  <span className="font-medium">Full Transcripts</span>
                 </div>
                 <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/10">
-                  <GraduationCap className="w-5 h-5 text-purple-200" />
-                  <span className="font-medium">Academic & General</span>
+                  <Trophy className="w-5 h-5 text-purple-200" />
+                  <span className="font-medium">Band Score Estimate</span>
                 </div>
               </div>
             </div>
@@ -251,85 +470,118 @@ export default function ListeningPractice() {
               <Headphones className="w-6 h-6 text-purple-600 dark:text-purple-400" />
               Available Tests
             </h2>
-            <div className="flex gap-2">
-              <Badge variant="outline" className="px-3 py-1">All Sections</Badge>
-              <Badge variant="outline" className="px-3 py-1">Full Tests</Badge>
+          </div>
+
+          {isLoadingTests ? (
+            <div className="text-center py-12 text-slate-500">Loading tests...</div>
+          ) : listeningTests.length === 0 ? (
+            <div className="text-center py-12">
+              <div className="w-16 h-16 mx-auto mb-4 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center">
+                <Headphones className="w-8 h-8 text-slate-400" />
+              </div>
+              <p className="text-slate-500 dark:text-slate-400">No listening tests available yet.</p>
+              <p className="text-sm text-slate-400 dark:text-slate-500 mt-2">
+                Add JSON test files to backend/data/listening-tests/
+              </p>
             </div>
-          </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {listeningTests.map((test: ListeningTestMeta) => {
+                const isSelected = selectedTestId === test.id;
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {listeningTests.map((test) => {
-              const isSelected = selectedTestId === test.id;
-              const difficultyColor = test.difficulty === "Hard" ? "text-rose-600 bg-rose-50 border-rose-200" : test.difficulty === "Medium" ? "text-amber-600 bg-amber-50 border-amber-200" : "text-emerald-600 bg-emerald-50 border-emerald-200";
-
-              return (
-                <Card
-                  key={test.id}
-                  onClick={() => setSelectedTestId(test.id)}
-                  className={`cursor-pointer group relative overflow-hidden transition-all duration-300 border-2
-                  ${isSelected
-                      ? "border-purple-500 shadow-lg ring-2 ring-purple-200 dark:ring-purple-900"
-                      : "border-transparent hover:border-purple-200 hover:shadow-md dark:bg-slate-800 dark:hover:border-slate-600"
-                    }`}
-                >
-                  <CardHeader className="pb-3">
-                    <div className="flex justify-between items-start mb-2">
-                      <div className={`p-2 rounded-lg ${isSelected ? 'bg-purple-100 text-purple-600' : 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300'}`}>
-                        <Headphones className="w-6 h-6" />
-                      </div>
-                      <span className={`text-xs font-bold px-2 py-1 rounded-full border ${difficultyColor} dark:bg-opacity-10`}>
-                        {test.difficulty}
-                      </span>
-                    </div>
-                    <CardTitle className="text-lg font-bold text-slate-800 dark:text-slate-100 group-hover:text-purple-600 transition-colors">
-                      {test.title}
-                    </CardTitle>
-                    <CardDescription className="flex flex-col gap-1 mt-1">
-                      <span className="font-medium text-slate-700 dark:text-slate-300">{test.subtitle}</span>
-                      <div className="flex items-center gap-2 text-xs">
-                        <Clock className="w-3.5 h-3.5" />
-                        {test.time} mins
-                        <span>•</span>
-                        {test.questions} Questions
-                      </div>
-                    </CardDescription>
-                  </CardHeader>
-
-                  <CardContent>
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between text-sm text-slate-600 dark:text-slate-400">
-                        <span>Completion Rate</span>
-                        <span className="font-medium">0%</span>
-                      </div>
-                      <div className="h-2 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
-                        <div className="h-full bg-purple-500 w-0 rounded-full"></div>
-                      </div>
-
-                      {isSelected && (
-                        <div className="pt-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                          <Button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleStartTest();
-                            }}
-                            className="w-full bg-purple-600 hover:bg-purple-700 text-white shadow-md group-hover:shadow-lg transition-all"
-                          >
-                            Start Test Now
-                          </Button>
+                return (
+                  <Card
+                    key={test.id}
+                    onClick={() => setSelectedTestId(test.id)}
+                    className={`cursor-pointer group relative overflow-hidden transition-all duration-300 border h-full flex flex-col justify-between
+                    ${isSelected
+                        ? "border-purple-500 bg-purple-50/10 shadow-lg ring-1 ring-purple-500/20 dark:ring-purple-400/20"
+                        : "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800 hover:border-purple-200 dark:hover:border-purple-900/50 hover:shadow-md"
+                      }`}
+                  >
+                    <CardHeader className="flex-1">
+                      <div className="flex justify-between items-start mb-4">
+                        <div className={`p-3 rounded-2xl transition-colors duration-300 ${isSelected ? 'bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-300' : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400 group-hover:bg-purple-50 group-hover:text-purple-600 dark:group-hover:bg-purple-900/20 dark:group-hover:text-purple-300'}`}>
+                          <Headphones className="w-8 h-8" />
                         </div>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
+                        <Badge className={getDifficultyColor(test.difficulty)}>
+                          {test.difficulty}
+                        </Badge>
+                      </div>
+
+                      <div className="space-y-2">
+                        <CardTitle className="text-xl font-bold text-slate-900 dark:text-slate-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                          {test.title}
+                        </CardTitle>
+                        <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+                          Section {test.section}
+                        </p>
+                      </div>
+                    </CardHeader>
+
+                    <CardContent className="mt-auto pt-0">
+                      <div className="flex items-center gap-4 text-xs font-semibold text-slate-500 dark:text-slate-500 uppercase tracking-wider mb-6">
+                        <div className="flex items-center gap-1.5 flex-1 p-2 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 justify-center">
+                          <Clock className="w-3.5 h-3.5" />
+                          <span>{Math.floor(test.duration / 60)} MIN</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 flex-1 p-2 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 justify-center">
+                          <Target className="w-3.5 h-3.5" />
+                          <span>{test.questionCount} Qs</span>
+                        </div>
+                      </div>
+
+                      <div className={`transition-all duration-300 ${isSelected ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0'}`}>
+                        <Button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleStartTest(test.id); // FIX: Pass test ID
+                          }}
+                          className="w-full bg-purple-600 hover:bg-purple-700 text-white shadow-md font-semibold h-11"
+                        >
+                          Start Test
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          )}
         </div>
       )}
 
-      {/* Listening Interface - Show when test is started */}
+      {/* Listening Interface */}
       {isTestStarted && selectedTest && (
-        <div className="space-y-6 animate-in fade-in duration-500">
+        <div ref={containerRef} className="space-y-6 animate-in fade-in duration-500 relative pb-24">
+          {/* Custom Context Menu */}
+          {contextMenu && (
+            <div
+              className="fixed z-[100] bg-white border border-slate-200 shadow-xl rounded-lg py-1 min-w-[140px] animate-in fade-in zoom-in-95 duration-100"
+              style={{ top: contextMenu.y, left: contextMenu.x }}
+            >
+              <button
+                onClick={(e) => { e.stopPropagation(); applyHighlight(); }}
+                disabled={!contextMenu.canHighlight}
+                className={`w-full text-left px-4 py-2 text-sm font-medium flex items-center gap-2 
+                                ${contextMenu.canHighlight
+                    ? 'hover:bg-yellow-50 text-slate-700 hover:text-yellow-700'
+                    : 'text-slate-300 cursor-not-allowed'
+                  }`}
+              >
+                <span>🖊️</span> Highlight
+              </button>
+              {hasHighlights && (
+                <button
+                  onClick={(e) => { e.stopPropagation(); clearHighlights(e); }}
+                  className="w-full text-left px-4 py-2 hover:bg-red-50 text-sm font-medium flex items-center gap-2 text-red-600 border-t border-slate-100"
+                >
+                  <span>✕</span> Clear Selection
+                </button>
+              )}
+            </div>
+          )}
+
           <div className="flex items-center gap-4 mb-6">
             <Button variant="ghost" onClick={handleBackToMenu} className="gap-2 pl-0 hover:pl-2 transition-all">
               <ArrowLeft className="w-4 h-4" />
@@ -337,215 +589,259 @@ export default function ListeningPractice() {
             </Button>
             <div className="h-6 w-px bg-slate-200 dark:bg-slate-700"></div>
             <h2 className="text-xl font-bold text-slate-900 dark:text-white">
-              {selectedTest.title}: {selectedTest.subtitle}
+              {selectedTest.title}
             </h2>
+            <Badge className={getDifficultyColor(selectedTest.difficulty)}>
+              {selectedTest.difficulty}
+            </Badge>
           </div>
 
-          {audio ? (
-            <div className="grid lg:grid-cols-3 gap-6">
-              {/* Left Column: Audio Player (Sticky) */}
-              <div className="lg:col-span-1">
-                <div className="sticky top-6 space-y-6">
-                  <Card className="border-purple-100 dark:border-purple-900/50 shadow-lg">
-                    <CardHeader className="bg-purple-50/50 dark:bg-purple-900/20 pb-4">
-                      <CardTitle className="flex items-center gap-2 text-lg">
-                        <Headphones className="h-5 w-5 text-purple-600" />
-                        Audio Player
-                      </CardTitle>
-                      <CardDescription>
-                        {audio.title}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="pt-6 space-y-6">
-                      {/* Mock audio element */}
-                      <audio
-                        ref={audioRef}
-                        onTimeUpdate={handleTimeUpdate}
-                        onLoadedMetadata={handleLoadedMetadata}
-                        onEnded={() => setIsPlaying(false)}
-                        style={{ display: 'none' }}
-                      >
-                        <source src={audio.audioUrl} type="audio/mpeg" />
-                      </audio>
-
-                      <div className="flex flex-col items-center gap-4">
-                        <div className="relative w-full h-32 bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center justify-center overflow-hidden group cursor-pointer" onClick={togglePlayback}>
-                          <div className="absolute inset-0 bg-purple-500/5 group-hover:bg-purple-500/10 transition-colors"></div>
-                          {/* Visualizer bars simulation */}
-                          <div className="flex items-end gap-1 h-12">
-                            {[...Array(12)].map((_, i) => (
-                              <div
-                                key={i}
-                                className={`w-1.5 bg-purple-500 rounded-t-sm transition-all duration-300 ${isPlaying ? 'animate-pulse' : ''}`}
-                                style={{ height: isPlaying ? `${Math.random() * 100}%` : '20%' }}
-                              ></div>
-                            ))}
-                          </div>
-
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="w-12 h-12 rounded-full bg-purple-600 text-white flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform">
-                              {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5 ml-1" />}
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="w-full space-y-2">
-                          <Slider
-                            value={[currentTime]}
-                            max={duration || 100}
-                            step={1}
-                            onValueChange={handleSeek}
-                            className="w-full"
-                          />
-                          <div className="flex justify-between text-xs text-slate-500 font-medium">
-                            <span>{formatTime(currentTime)}</span>
-                            <span>{formatTime(duration)}</span>
-                          </div>
-                        </div>
+          {testData ? (
+            <div className="space-y-6">
+              {/* Audio Player Bar - Now at top, compact version */}
+              <Card className="border-purple-100 dark:border-purple-900/50 shadow-sm bg-white dark:bg-slate-900 sticky top-4 z-40 rounded-2xl">
+                <CardContent className="py-2 px-4">
+                  <div className="flex flex-col lg:flex-row gap-8 items-start">
+                    {/* Left Column - Audio Play button */}
+                    <div className="flex flex-1 items-center gap-4">
+                      <div className="relative h-10 w-10 shrink-0">
+                        <div className="absolute inset-0 bg-purple-100 dark:bg-purple-900/30 rounded-full animate-pulse z-0" style={{ animationDuration: isPlaying ? '2s' : '0s' }}></div>
+                        <Button
+                          size="icon"
+                          className="relative z-10 h-10 w-10 rounded-full bg-purple-600 hover:bg-purple-700 text-white shadow-md transition-transform active:scale-95"
+                          onClick={togglePlayback}
+                        >
+                          {isPlaying ? <Pause className="h-4 w-4 fill-current" /> : <Play className="h-4 w-4 fill-current ml-0.5" />}
+                        </Button>
                       </div>
 
-                      <div className="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800">
-                        <div className="flex items-center gap-2">
-                          <Volume2 className="h-4 w-4 text-slate-400" />
-                          <span className="text-xs font-medium text-slate-600 dark:text-slate-400">Speed</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className={`h-7 px-2 text-xs ${playbackSpeed === 1 ? 'bg-purple-100 text-purple-700' : ''}`}
-                            onClick={() => handleSpeedChange([1])}
-                          >
-                            1x
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className={`h-7 px-2 text-xs ${playbackSpeed === 1.25 ? 'bg-purple-100 text-purple-700' : ''}`}
-                            onClick={() => handleSpeedChange([1.25])}
-                          >
-                            1.25x
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className={`h-7 px-2 text-xs ${playbackSpeed === 1.5 ? 'bg-purple-100 text-purple-700' : ''}`}
-                            onClick={() => handleSpeedChange([1.5])}
-                          >
-                            1.5x
-                          </Button>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+                      {/* Visualizer & Scrubber - Fluid width */}
+                      <div className="flex-1 flex items-center gap-3 bg-slate-50 dark:bg-slate-800/50 px-3 py-1.5 rounded-lg border border-slate-100 dark:border-slate-800 h-10">
+                        <span className="text-[10px] font-mono font-medium text-purple-600 dark:text-purple-400 w-8">{formatTime(currentTime)}</span>
 
-                  <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-xl border border-yellow-100 dark:border-yellow-900/50 text-sm">
-                    <p className="text-yellow-800 dark:text-yellow-200 flex gap-2">
-                      <span className="text-lg">🎧</span>
-                      Use headphones for the best experience. You can play the audio only once in the real test.
-                    </p>
+                        <div className="flex-1 flex gap-0.5 h-6 items-end mx-1">
+                          {[...Array(60)].map((_, i) => (
+                            <div
+                              key={i}
+                              className={`flex-1 rounded-t-[1px] transition-all duration-200 ${i / 60 < currentTime / (duration || 1)
+                                ? 'bg-purple-400 dark:bg-purple-500'
+                                : 'bg-slate-200 dark:bg-slate-700'
+                                }`}
+                              style={{
+                                height: isPlaying ? `${15 + Math.random() * 85}%` : '25%',
+                                opacity: i / 60 < currentTime / (duration || 1) ? 1 : 0.4
+                              }}
+                            ></div>
+                          ))}
+                        </div>
+
+                        <span className="text-[10px] font-mono font-medium text-slate-400 w-8 text-right">{formatTime(duration)}</span>
+
+                        <audio
+                          ref={audioRef}
+                          onTimeUpdate={handleTimeUpdate}
+                          onLoadedMetadata={handleLoadedMetadata}
+                          onEnded={() => setIsPlaying(false)}
+                          style={{ display: 'none' }}
+                        >
+                          <source src={testData.audioFile} type="audio/mpeg" />
+                        </audio>
+                      </div>
+
+                      {/* Right Actions - Compact Group */}
+                      <div className="flex items-center gap-2 shrink-0">
+                        <div className="flex items-center gap-0.5 bg-slate-100 dark:bg-slate-800 rounded-md p-0.5">
+                          {[1, 1.25, 1.5].map(speed => (
+                            <button
+                              key={speed}
+                              className={`px-1.5 py-0.5 text-[10px] font-bold rounded transition-colors ${playbackSpeed === speed
+                                ? 'bg-white dark:bg-slate-700 text-purple-600 dark:text-purple-300 shadow-sm'
+                                : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'
+                                }`}
+                              onClick={() => handleSpeedChange([speed])}
+                            >
+                              {speed}x
+                            </button>
+                          ))}
+                        </div>
+
+                        <div className="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-1"></div>
+
+                        <Button
+                          variant={showTranscript ? "secondary" : "ghost"}
+                          size="sm"
+                          onClick={() => setShowTranscript(!showTranscript)}
+                          className="h-8 px-2 text-xs gap-1.5 font-medium text-slate-600 dark:text-slate-300"
+                        >
+                          {showTranscript ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+                          <span className="hidden sm:inline">Transcript</span>
+                        </Button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              {/* Right Column: Questions */}
-              <div className="lg:col-span-2 space-y-6">
-                <Card>
-                  <CardHeader>
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <CardTitle>Questions</CardTitle>
-                        <CardDescription>
-                          Answer as you listen
-                        </CardDescription>
-                      </div>
-                      <Badge variant={answeredQuestions === totalQuestions ? "default" : "secondary"}>
-                        {answeredQuestions}/{totalQuestions} Answered
-                      </Badge>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="space-y-6">
-                    <div className="space-y-6">
-                      {audio.questions.map(renderQuestion)}
-                    </div>
+                  {/* Expanded Transcript */}
+                  {showTranscript && (transcriptData?.transcripts || transcriptData?.transcript) && (
+                    <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 animate-in slide-in-from-top-2">
+                      <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-4 max-h-[400px] overflow-y-auto space-y-6">
+                        {(transcriptData.transcripts || [{ title: "", lines: transcriptData.transcript }]).map((section: any, sectionIndex: number) => (
+                          <div key={sectionIndex} className="space-y-3">
+                            {section.title && (
+                              <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider border-b border-slate-200 dark:border-slate-700 pb-2">
+                                {section.title}
+                              </h4>
+                            )}
+                            <div className="space-y-3">
+                              {(section.lines || []).map((line: TranscriptLine, index: number) => {
+                                const parts = line.text.split(/(<mark>.*?<\/mark>)/g);
 
-                    <div className="pt-6 border-t">
-                      <Button
-                        onClick={handleSubmit}
-                        disabled={answeredQuestions === 0 || submitListeningMutation.isPending}
-                        className="w-full bg-purple-600 hover:bg-purple-700 text-white"
-                        size="lg"
-                      >
-                        <Send className="h-4 w-4 mr-2" />
-                        {submitListeningMutation.isPending ? "Submitting..." : "Submit Answers"}
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {result && (
-                  <Card className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 animate-in slide-in-from-bottom-4 duration-500">
-                    <CardHeader>
-                      <CardTitle className="text-green-800 dark:text-green-200 flex items-center gap-2">
-                        <CheckCircle className="w-5 h-5" />
-                        Test Results
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                      <div className="flex items-center gap-6 p-6 bg-white dark:bg-green-900/40 rounded-xl border border-green-100 dark:border-green-800/50">
-                        <div className="text-center">
-                          <p className="text-sm font-medium text-green-600 dark:text-green-300 uppercase tracking-wider mb-1">Your Score</p>
-                          <p className="text-4xl font-bold text-green-700 dark:text-green-200">
-                            {result.score}/{result.totalQuestions}
-                          </p>
-                        </div>
-                        <div className="h-12 w-px bg-green-200 dark:bg-green-800"></div>
-                        <div>
-                          <p className="text-lg font-medium text-green-800 dark:text-green-100">
-                            {Math.round((result.score / result.totalQuestions) * 100)}% Correct
-                          </p>
-                          <p className="text-sm text-green-600 dark:text-green-300">
-                            Great job! Review your answers below.
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="space-y-4">
-                        <h4 className="font-semibold text-green-800 dark:text-green-200 flex items-center gap-2">
-                          <BookOpen className="w-4 h-4" />
-                          Detailed Review
-                        </h4>
-                        {audio.questions.map((question: any) => (
-                          <div key={question.id} className={`p-4 rounded-lg border ${answers[question.id] === result.correctAnswers[question.id] ? 'bg-green-100/50 border-green-200' : 'bg-red-50 border-red-200'}`}>
-                            <div className="flex justify-between items-start mb-2">
-                              <p className="font-medium text-sm text-slate-900 dark:text-slate-100">
-                                {question.id}. {question.question}
-                              </p>
-                              {answers[question.id] === result.correctAnswers[question.id] ? (
-                                <Badge className="bg-green-100 text-green-700 hover:bg-green-200 border-green-200">Correct</Badge>
-                              ) : (
-                                <Badge variant="destructive">Incorrect</Badge>
-                              )}
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-4 mt-3 text-sm">
-                              <div>
-                                <span className="text-slate-500 block text-xs mb-1">Your Answer</span>
-                                <span className="font-medium">{answers[question.id] || "Not answered"}</span>
-                              </div>
-                              <div>
-                                <span className="text-slate-500 block text-xs mb-1">Correct Answer</span>
-                                <span className="font-medium text-green-700">{result.correctAnswers[question.id]}</span>
-                              </div>
-                            </div>
-
-                            <div className="mt-3 pt-3 border-t border-slate-200/50 text-sm text-slate-600">
-                              <span className="font-medium text-slate-700 mr-2">Explanation:</span>
-                              {result.explanations[question.id]}
+                                return (
+                                  <div key={index} className="text-sm leading-relaxed flex gap-3">
+                                    <span className="font-bold text-purple-600 dark:text-purple-400 text-xs shrink-0 w-16 pt-0.5">
+                                      {line.speaker}
+                                    </span>
+                                    <div className="space-y-0.5">
+                                      <p className="text-slate-700 dark:text-slate-300">
+                                        {parts.map((part, i) => {
+                                          if (part.startsWith('<mark>') && part.endsWith('</mark>')) {
+                                            const content = part.replace(/<\/?mark>/g, '');
+                                            // Only highlight if result is available (test submitted)
+                                            return result ? (
+                                              <span key={i} className="bg-purple-200 dark:bg-purple-900/50 text-purple-800 dark:text-purple-200 font-semibold px-1 rounded mx-0.5">
+                                                {content}
+                                              </span>
+                                            ) : (
+                                              <span key={i}>{content}</span>
+                                            );
+                                          }
+                                          return <span key={i}>{part}</span>;
+                                        })}
+                                      </p>
+                                      {line.timestamp && (
+                                        <span className="text-slate-400 text-[10px]">
+                                          {line.timestamp}
+                                        </span>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              })}
                             </div>
                           </div>
                         ))}
                       </div>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* Main Content Area - Full Width */}
+              <div className="space-y-6">
+                <Card className="border-none shadow-none bg-transparent">
+                  <CardContent className="p-0 space-y-6">
+                    <div className="space-y-6">
+                      {isWorksheetTest(testData.id) ? (
+                        <ErrorBoundary fallbackMessage="Error in Listening Worksheet">
+                          <ListeningWorksheet
+                            test={testData}
+                            answers={answers}
+                            handleAnswerChange={handleAnswerChange}
+                            result={result}
+                          />
+                        </ErrorBoundary>
+                      ) : (
+                        testData.questions.map((question: ListeningQuestion) =>
+                          renderQuestion(question, !!result)
+                        )
+                      )}
+                    </div>
+
+                    {!result && (
+                      <div className="pt-8 border-t border-slate-100 dark:border-slate-800 flex justify-end">
+                        <Button
+                          onClick={handleSubmit}
+                          disabled={answeredQuestions === 0 || submitListeningMutation.isPending}
+                          className="bg-purple-600 hover:bg-purple-700 text-white shadow-lg px-8 py-6 text-lg rounded-xl transition-transform hover:scale-105"
+                        >
+                          {submitListeningMutation.isPending ? (
+                            <div className="flex items-center gap-2">
+                              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                              <span>Submitting...</span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center gap-2">
+                              <Send className="h-5 w-5" />
+                              <span>Submit Answers</span>
+                            </div>
+                          )}
+                        </Button>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+
+                {/* Results Summary */}
+                {result && (
+                  <Card className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border-green-200 dark:border-green-800 animate-in slide-in-from-bottom-4 duration-500">
+                    <CardHeader>
+                      <CardTitle className="text-green-800 dark:text-green-200 flex items-center gap-2">
+                        <Trophy className="w-5 h-5" />
+                        Test Results
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid grid-cols-3 gap-6">
+                        <div className="text-center p-4 bg-white/50 dark:bg-green-900/30 rounded-xl">
+                          <p className="text-sm font-medium text-green-600 dark:text-green-300 uppercase tracking-wider mb-1">Score</p>
+                          <p className="text-3xl font-bold text-green-700 dark:text-green-200">
+                            {result.score}/{result.totalQuestions}
+                          </p>
+                        </div>
+                        <div className="text-center p-4 bg-white/50 dark:bg-green-900/30 rounded-xl">
+                          <p className="text-sm font-medium text-green-600 dark:text-green-300 uppercase tracking-wider mb-1">Percentage</p>
+                          <p className="text-3xl font-bold text-green-700 dark:text-green-200">
+                            {Math.round((result.score / result.totalQuestions) * 100)}%
+                          </p>
+                        </div>
+                        <div className="text-center p-4 bg-white/50 dark:bg-green-900/30 rounded-xl">
+                          <p className="text-sm font-medium text-green-600 dark:text-green-300 uppercase tracking-wider mb-1">Band Score</p>
+                          <p className="text-3xl font-bold text-green-700 dark:text-green-200">
+                            {result.bandScore}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Answer Comparison List */}
+                      <div className="mt-6 bg-white/70 dark:bg-green-900/20 rounded-xl p-4">
+                        <h4 className="font-semibold text-green-800 dark:text-green-200 mb-3">Answer Review</h4>
+                        <div className="space-y-2">
+                          <div className="grid grid-cols-4 gap-2 text-xs font-semibold text-green-700 dark:text-green-300 pb-2 border-b border-green-200 dark:border-green-700">
+                            <span>Q#</span>
+                            <span>Your Answer</span>
+                            <span>Correct Answer</span>
+                            <span>Status</span>
+                          </div>
+                          {Object.entries(result.correctAnswers).map(([qId, correctAns]) => {
+                            const studentAns = answers[Number(qId)] || '-';
+                            const isCorrect = Array.isArray(correctAns)
+                              ? correctAns.map((a: string) => a.toUpperCase()).includes(String(studentAns).toUpperCase())
+                              : String(studentAns).toLowerCase() === String(correctAns).toLowerCase();
+                            const displayCorrect = Array.isArray(correctAns) ? correctAns.join(', ') : String(correctAns);
+                            return (
+                              <div key={qId} className={`grid grid-cols-4 gap-2 text-sm py-1.5 rounded px-1 ${isCorrect ? 'bg-green-100 dark:bg-green-800/30' : 'bg-red-100 dark:bg-red-800/30'}`}>
+                                <span className="font-bold">{qId}</span>
+                                <span className={isCorrect ? 'text-green-700 dark:text-green-300' : 'text-red-600 dark:text-red-400'}>{studentAns}</span>
+                                <span className="text-green-700 dark:text-green-300 font-medium">{displayCorrect}</span>
+                                <span>{isCorrect ? '✓' : '✗'}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      <p className="text-center text-green-600 dark:text-green-400 mt-4">
+                        Review your answers above. Click the transcript button to see the full audio text.
+                      </p>
                     </CardContent>
                   </Card>
                 )}
@@ -553,7 +849,7 @@ export default function ListeningPractice() {
             </div>
           ) : (
             <div className="text-center py-12 text-slate-500">
-              Loading audio test...
+              Loading test...
             </div>
           )}
         </div>

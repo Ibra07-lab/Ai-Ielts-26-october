@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { BookMarked, X, Volume2, Trash2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "../contexts/UserContext";
-import backend from "~backend/client";
+import backend from "@/backend";
 
 interface Highlight {
   id: number;

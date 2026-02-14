@@ -56,6 +56,7 @@ class TutorAgent:
             )
         
         content = response_text.strip()
+        print(f"DEBUG: Raw Tutor Response: {content[:500]}...") # DEBUG
         try:
             # Handle potential markdown fencing or extra text
             if "```json" in content:
@@ -70,6 +71,7 @@ class TutorAgent:
                 content = content[start:end]
                 
             result = json.loads(content)
+            print(f"DEBUG: Parsed Topic Analysis: {result.get('topic_analysis')}") # DEBUG
         except (json.JSONDecodeError, IndexError) as e:
             # Enhanced logging for debugging
             with open("tutor_debug.log", "a", encoding="utf-8") as f:
@@ -103,7 +105,7 @@ class TutorAgent:
         
         # Ensure all required list fields exist (safety net)
         list_fields = [
-            "action_plan", "strengths", "weaknesses", 
+            "action_plan", "strengths", "weaknesses", "topic_analysis",
             "grammar_errors", "vocabulary_suggestions", "coherence_issues",
             "band_gaps", "rewrites", "micro_tasks"
         ]
@@ -111,6 +113,12 @@ class TutorAgent:
             if field not in result:
                 result[field] = []
         
+        # FALLBACK: Generate topic_analysis if LLM returned empty
+        if not result.get("topic_analysis") or len(result["topic_analysis"]) == 0:
+            print("DEBUG: topic_analysis is empty, generating fallback topics...")
+            result["topic_analysis"] = self._generate_fallback_topics(evaluation)
+            print(f"DEBUG: Generated {len(result['topic_analysis'])} fallback topics")
+
         # Fix micro_tasks that use 'task' instead of 'instruction'
         import re
         for mt in result.get("micro_tasks", []):
@@ -131,7 +139,46 @@ class TutorAgent:
             mt.setdefault("instruction", "")
             mt.setdefault("example", "")
         
+        if fallback_topics:
+            result["topic_analysis"] = fallback_topics
+        # The `fallback_topics` variable was not defined, removed this line.
+        # if fallback_topics:
+        #     result["topic_analysis"] = fallback_topics
+            
+        # Ensure micro_drill exists (frontend expects singular, prompt gives plural)
+        if "micro_tasks" in result and result["micro_tasks"] and "micro_drill" not in result:
+            result["micro_drill"] = result["micro_tasks"][0]
+            # Ensure time_limit_minutes exists
+            if "duration_minutes" in result["micro_drill"] and "time_limit_minutes" not in result["micro_drill"]:
+                result["micro_drill"]["time_limit_minutes"] = result["micro_drill"]["duration_minutes"]
+
+        # Inject original result into raw_coach_output for frontend usage
+        result["raw_coach_output"] = result.copy()
+            
         return TutorFeedback(**result)
+    
+    def _parse_json(self, content: str, raw_response_text: str) -> dict:
+        """Helper method to parse JSON content with robust error handling."""
+        try:
+            # Handle potential markdown fencing or extra text
+            if "```json" in content:
+                content = content.split("```json")[1].split("```")[0].strip()
+            elif "```" in content:
+                content = content.split("```")[1].split("```")[0].strip()
+            
+            # Final fallback: find the first { and last }
+            if "{" in content and "}" in content:
+                start = content.find("{")
+                end = content.rfind("}") + 1
+                content = content[start:end]
+                
+            return json.loads(content)
+        except (json.JSONDecodeError, IndexError) as e:
+            raise ValueError(
+                f"Failed to parse JSON response. "
+                f"Error: {str(e)}. "
+                f"Content length: {len(raw_response_text)}. "
+            )
     
     def _calculate_band_gaps(
         self,
@@ -154,3 +201,62 @@ class TutorAgent:
         # Sort by largest gap first
         gaps.sort(key=lambda x: x["gap"], reverse=True)
         return gaps
+    
+    def _generate_fallback_topics(self, evaluation: ExaminerEvaluation) -> list[dict]:
+        """Generate fallback topic analysis when LLM returns empty."""
+        
+        topics = []
+        
+        # Topic templates for each criterion and band range
+        topic_templates = {
+            "task_response": [
+                {"topic": "Thesis Development", "category": "Task Response"},
+                {"topic": "Argument Structure", "category": "Task Response"},
+                {"topic": "Supporting Examples", "category": "Task Response"},
+            ],
+            "task_achievement": [
+                {"topic": "Data Selection", "category": "Task Achievement"},
+                {"topic": "Trend Description", "category": "Task Achievement"},
+                {"topic": "Key Features", "category": "Task Achievement"},
+            ],
+            "coherence_cohesion": [
+                {"topic": "Paragraph Organization", "category": "Coherence"},
+                {"topic": "Cohesive Devices", "category": "Coherence"},
+                {"topic": "Logical Flow", "category": "Coherence"},
+            ],
+            "lexical_resource": [
+                {"topic": "Academic Vocabulary", "category": "Vocabulary"},
+                {"topic": "Collocations", "category": "Vocabulary"},
+                {"topic": "Word Choice", "category": "Vocabulary"},
+            ],
+            "grammatical_range_accuracy": [
+                {"topic": "Complex Sentences", "category": "Grammar"},
+                {"topic": "Article Usage", "category": "Grammar"},
+                {"topic": "Tense Consistency", "category": "Grammar"},
+            ],
+        }
+        
+        # Find the weakest criteria and generate topics based on them
+        sorted_scores = sorted(evaluation.criterion_scores, key=lambda x: x.band)
+        
+        for score in sorted_scores[:3]:  # Focus on 3 weakest criteria
+            criterion_key = score.criterion.value if hasattr(score.criterion, 'value') else str(score.criterion)
+            
+            if criterion_key in topic_templates:
+                for template in topic_templates[criterion_key]:
+                    # Weight by how far below target
+                    count = max(1, int(7.5 - score.band))  # Higher count for lower bands
+                    topics.append({
+                        "topic": template["topic"],
+                        "count": count,
+                        "category": template["category"]
+                    })
+        
+        # Ensure we have at least 4 topics
+        if len(topics) < 4:
+            topics.extend([
+                {"topic": "Essay Structure", "count": 2, "category": "General"},
+                {"topic": "Academic Writing Style", "count": 2, "category": "General"},
+            ])
+        
+        return topics[:6]  # Return max 6 topics

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Headphones, Music, Radio, Volume2 } from 'lucide-react';
+import { Headphones, Music, Radio, Volume2, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const ListeningPracticeCard = () => {
@@ -8,7 +8,10 @@ const ListeningPracticeCard = () => {
     return (
         <div className="relative group w-full max-w-sm mx-auto h-full">
             {/* Container */}
-            <div className="relative overflow-hidden rounded-2xl bg-slate-800 border border-slate-700 p-6 shadow-xl transition-all duration-300 hover:shadow-2xl hover:border-violet-500/50 h-full flex flex-col group-hover:shadow-violet-500/20">
+            <div
+                onClick={() => navigate('/listening')}
+                className="relative overflow-hidden rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 shadow-xl h-full flex flex-col cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all duration-300"
+            >
 
                 {/* Hover Gradient Effect */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-violet-500/20 via-transparent to-transparent rounded-2xl pointer-events-none" />
@@ -43,7 +46,7 @@ const ListeningPracticeCard = () => {
                     {/* Header */}
                     <div className="flex justify-between items-start mb-6">
                         {/* Icon Box */}
-                        <div className="w-12 h-12 rounded-xl bg-violet-900/50 flex items-center justify-center border border-violet-800/50 text-violet-400 group-hover:scale-110 transition-transform duration-300">
+                        <div className="w-12 h-12 rounded-2xl bg-violet-100 dark:bg-violet-900/50 flex items-center justify-center border border-violet-100 dark:border-violet-800/50 text-violet-600 dark:text-violet-400 group-hover:scale-110 transition-transform duration-300">
                             <Headphones className="w-6 h-6" />
                         </div>
 
@@ -51,31 +54,22 @@ const ListeningPracticeCard = () => {
 
                     {/* Typography */}
                     <div className="mb-8">
-                        <h3 className="text-xl font-bold text-white mb-2 tracking-tight group-hover:text-white/90 transition-colors">
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 tracking-tight group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
                             Listening Practice
                         </h3>
-                        <p className="text-slate-400 text-sm leading-relaxed">
-                            Sharpen your listening skills with diverse audio clips and comprehension questions.
+                        <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                            Sharpen your listening skills with diverse audio clips, transcripts, and comprehension questions.
                         </p>
                     </div>
 
                     {/* Buttons */}
                     <div className="mt-auto space-y-3">
                         <button
-                            onClick={() => navigate('/listening')}
-                            className="w-full py-3 px-4 bg-violet-600 hover:bg-violet-500 active:bg-violet-700 text-white rounded-xl font-medium transition-colors shadow-lg shadow-violet-900/20 flex items-center justify-center gap-2 group/btn"
+                            className="w-full py-3 px-4 bg-violet-600 hover:bg-violet-700 text-white rounded-xl font-medium border border-violet-500 flex items-center justify-center gap-2 transition-colors"
                         >
                             Start Practice
-                            <svg
-                                className="w-4 h-4 transition-transform group-hover/btn:translate-x-1"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
+                            <ArrowRight className="w-4 h-4" />
                         </button>
-
                     </div>
 
                 </div>
@@ -85,3 +79,4 @@ const ListeningPracticeCard = () => {
 };
 
 export default ListeningPracticeCard;
+

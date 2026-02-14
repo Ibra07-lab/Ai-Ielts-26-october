@@ -16,32 +16,32 @@ const DIFFICULTY_POINTS: Record<TaskDifficulty, number> = { easy: 1, medium: 1.5
 
 function startOfDay(d: Date): Date {
 	const x = new Date(d);
-	x.setHours(0, 0, 0, 0);
+	x.setUTCHours(0, 0, 0, 0);
 	return x;
 }
 function endOfDay(d: Date): Date {
 	const x = new Date(d);
-	x.setHours(23, 59, 59, 999);
+	x.setUTCHours(23, 59, 59, 999);
 	return x;
 }
 function startOfWeek(d: Date): Date {
-	const day = d.getDay(); // 0=Sun..6=Sat
+	const day = d.getUTCDay(); // 0=Sun..6=Sat
 	const mondayOffset = (day + 6) % 7; // 0 for Mon
 	const x = new Date(d);
-	x.setDate(d.getDate() - mondayOffset);
+	x.setUTCDate(d.getUTCDate() - mondayOffset);
 	return startOfDay(x);
 }
 function endOfWeek(d: Date): Date {
 	const s = startOfWeek(d);
 	const x = new Date(s);
-	x.setDate(s.getDate() + 6);
+	x.setUTCDate(s.getUTCDate() + 6);
 	return endOfDay(x);
 }
 function startOfMonth(d: Date): Date {
-	return new Date(d.getFullYear(), d.getMonth(), 1, 0, 0, 0, 0);
+	return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1, 0, 0, 0, 0));
 }
 function endOfMonth(d: Date): Date {
-	return new Date(d.getFullYear(), d.getMonth() + 1, 0, 23, 59, 59, 999);
+	return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0, 23, 59, 59, 999));
 }
 
 export function getRangeBounds(range: SummaryRange, now = new Date()): { from: Date; to: Date } {

@@ -266,6 +266,54 @@ function transformStrengths(
     return highlights;
 }
 
+/**
+ * Transforms micro_feedback from Explainer into highlights
+ * These are sentence-level errors that should be highlighted in red
+ */
+function transformMicroFeedback(
+    essay: string,
+    microFeedback: any[]
+): Highlight[] {
+    const highlights: Highlight[] = [];
+    let searchOffset = 0;
+
+    microFeedback.forEach((item, index) => {
+        const originalSentence = item.original_sentence || item.quote;
+        if (!originalSentence) return;
+
+        const position = findTextPosition(essay, originalSentence, searchOffset);
+
+        if (position) {
+            // Determine the highlight type based on error_type
+            const highlightType: HighlightType =
+                item.error_type === 'grammar' || item.error_type === 'punctuation'
+                    ? "grammar"
+                    : item.error_type === 'vocabulary'
+                        ? "vocabulary"
+                        : "coherence";
+
+            highlights.push({
+                id: generateHighlightId(highlightType, index),
+                start: position.start,
+                end: position.end,
+                type: highlightType,
+                original: originalSentence,
+                corrected: item.corrected_sentence || item.correction,
+                reason: item.explanation,
+                tip: item.specific_error || "Review this sentence",
+                justification: item.explanation,
+                improvement_tip: item.corrected_sentence
+                    ? `Consider: "${item.corrected_sentence}"`
+                    : "Review this sentence for improvement.",
+            });
+
+            searchOffset = position.end;
+        }
+    });
+
+    return highlights;
+}
+
 // ----------------------------------------------------------------------------
 // Main Transformation Function
 // ----------------------------------------------------------------------------
@@ -288,10 +336,17 @@ export function transformToHighlights(
     highlights.push(...transformCoherenceIssues(essay, coaching.coherence_issues));
     highlights.push(...transformStrengths(essay, coaching.strengths));
 
+    // Also transform micro_feedback from Explainer if available
+    const explainerData = coaching.raw_explainer_output;
+    if (explainerData?.micro_feedback) {
+        highlights.push(...transformMicroFeedback(essay, explainerData.micro_feedback));
+    }
+
     // Sort highlights by position for easier rendering
     highlights.sort((a, b) => a.start - b.start);
 
-    return highlights;
+    // Merge overlapping highlights to avoid duplicates
+    return mergeOverlappingHighlights(highlights);
 }
 
 // ----------------------------------------------------------------------------

@@ -49,6 +49,10 @@ Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd backend; encor
 Write-Host "Starting Backend (FastAPI Python)..." -ForegroundColor Yellow
 Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd backend; python -m uvicorn main:app --reload --port 8002"
 
+# Start AI Tutor Backend (App) - Using port 8001 for Reading Mentor
+Write-Host "Starting AI Tutor Backend (App)..." -ForegroundColor Yellow
+Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd app; python -m uvicorn main:app --reload --port 8001"
+
 # Wait a moment for backend to start
 Start-Sleep -Seconds 3
 

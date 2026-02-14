@@ -55,7 +55,8 @@ class Task1ExplanationAgent:
     
     def __init__(self, model_name: str = None):
         """Initialize the explanation agent."""
-        self.model = model_name or os.getenv("IELTS_WRITING_MODEL", "claude-sonnet-4-5-20250929")
+        # Use dedicated EXPLANATION_MODEL for explanations (defaults to GPT-4.1 via OpenRouter)
+        self.model = model_name or os.getenv("EXPLANATION_MODEL", os.getenv("IELTS_WRITING_MODEL", "claude-sonnet-4-5-20250929"))
         self.client = DirectLLMClient()
         
         logger.info(f"Task1ExplanationAgent initialized with {self.model}")
@@ -314,7 +315,7 @@ class Task1ExplanationAgent:
 
         logger.info(f"Generating {criterion} explanation (async)...")
         
-        # Use async API calls
+        # Use async API calls - route based on model type
         if "claude" in self.model.lower():
             response_text = await self.client.call_anthropic_async(
                 model=self.model,
@@ -323,7 +324,17 @@ class Task1ExplanationAgent:
                 temperature=0.0,
                 max_tokens=1500
             )
+        elif self.model.startswith("openai/") or self.model.startswith("gpt-"):
+            # OpenRouter models (e.g., openai/gpt-4.1)
+            response_text = await self.client.call_openrouter_async(
+                model=self.model,
+                system_prompt=system_prompt,
+                user_prompt=user_prompt,
+                temperature=0.0,
+                max_tokens=1500
+            )
         else:
+            # Direct OpenAI API
             response_text = await self.client.call_openai_async(
                 model=self.model,
                 system_prompt=system_prompt,

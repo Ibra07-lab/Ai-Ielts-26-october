@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useUser } from "../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
-import backend from "~backend/client";
+import backend from "@/backend";
 import * as progressApi from "@/api/progress";
 import AddTaskModal from "@/components/progress/AddTaskModal";
 import AISuggestDrawer from "@/components/progress/AISuggestDrawer";
@@ -24,7 +24,7 @@ export default function Dashboard() {
   const [addOpen, setAddOpen] = useState(false);
   const [aiOpen, setAiOpen] = useState(false);
   const [range] = useState<"daily">("daily");
-  const dueISO = new Date().toISOString().slice(0, 16);
+  const dueISO = new Date().toISOString();
 
   const { data: progress } = useQuery({
     queryKey: ["progress", user?.id],
@@ -414,7 +414,7 @@ export default function Dashboard() {
 
                   {/* Main Card */}
                   <div className="card-stack-item card-stack-item-3 overflow-hidden bg-gradient-to-br from-neutral-800 to-neutral-900 border border-white/20 shadow-2xl flex flex-col items-center justify-center group/card cursor-pointer">
-                    <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none"></div>
+                    <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZmlsdGVyIGlkPSJ4Ij48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC42NSIgbnVtT2N0YXZlcz0iMyIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCN4KSIgb3BhY2l0eT0iMC40Ii8+PC9zdmc+')] opacity-20 pointer-events-none"></div>
                     <div className="relative z-10 text-center space-y-4 p-8">
                       <div className="inline-block p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md mb-2 transition-transform group-hover/card:scale-110 duration-500">
                         <BookOpen className="h-12 w-12 text-orange-400" />
@@ -546,8 +546,9 @@ export default function Dashboard() {
             category: d.category,
             difficulty: d.difficulty,
             estimatedMinutes: d.estimatedMinutes,
-            dueAt: d.dueAt ?? dueISO,
+            dueAt: d.dueAt ? new Date(d.dueAt).toISOString() : new Date().toISOString(),
           });
+          setAddOpen(false);
         }}
         defaultDueISO={dueISO}
       />

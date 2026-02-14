@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import client from "../client";
+import client from "@/backend";
 import type {
     EvaluateRequest,
     WritingFeedbackResponse,
