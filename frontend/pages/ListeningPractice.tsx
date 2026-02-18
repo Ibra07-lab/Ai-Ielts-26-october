@@ -246,9 +246,9 @@ export default function ListeningPractice() {
     });
   };
 
-  // Tests that use the custom worksheet component (Test 3, 4, 5, 6, 7, 8, 9)
+  // Tests that use the custom worksheet component (Test 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)
   const isWorksheetTest = (testId: number) => {
-    return [3, 4, 5, 6, 7, 8, 9, 10, 11].includes(testId);
+    return [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].includes(testId);
   };
 
   const handleAnswerChange = (questionId: number, answer: string) => {

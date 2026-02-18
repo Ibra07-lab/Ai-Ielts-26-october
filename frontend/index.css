@@ -2,7 +2,7 @@
 
 @import "tw-animate-css";
 
-/* stylelint-disable-next-line at-rule-no-unknown */
+/* stylelint-disable at-rule-no-unknown */
 /* css-lint unknownAtRules: ignore */
 /*noinspection CssUnknownAtRule*/
 @custom-variant dark (&:where(.dark, .dark *));
@@ -32,6 +32,18 @@
 }
 
 :root {
+  /* Premium Dark Theme Palette */
+  --bg-main: #0a0c10;
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --neon-blue: #00d2ff;
+  --neon-purple: #9d50bb;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --accent-gradient: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+  --premium-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+
   --radius: 0.625rem;
   --background: #F1F5F9;
   /* Slate-100 - Cool Grey/Blue tint */
@@ -72,6 +84,25 @@
   --sidebar-accent-foreground: #0F172A;
   --sidebar-border: #E2E8F0;
   --sidebar-ring: #94A3B8;
+}
+
+.premium-glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--premium-shadow);
+}
+
+.neon-glow {
+  text-shadow: 0 0 10px rgba(0, 210, 255, 0.5), 0 0 20px rgba(0, 210, 255, 0.3);
+}
+
+.premium-gradient-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .dark {

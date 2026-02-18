@@ -13,8 +13,8 @@
             "questionNumber": 1,
             "part": 1,
             "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
-            "text": "Administrative assistant in a company that produces 1 .......................... (North London)",
-            "answer": "furniture",
+            "question": "Administrative assistant in a company that produces 1 .......................... (North London)",
+            "correctAnswer": "furniture",
             "explanation": ""
         },
         {
@@ -23,8 +23,8 @@
             "questionNumber": 2,
             "part": 1,
             "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
-            "text": "go to 2 .......................... and take notes",
-            "answer": "meetings",
+            "question": "go to 2 .......................... and take notes",
+            "correctAnswer": "meetings",
             "explanation": ""
         },
         {
@@ -33,8 +33,8 @@
             "questionNumber": 3,
             "part": 1,
             "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
-            "text": "management of 3 ..........................",
-            "answer": "diary",
+            "question": "management of 3 ..........................",
+            "correctAnswer": "diary",
             "explanation": ""
         },
         {
@@ -43,8 +43,8 @@
             "questionNumber": 4,
             "part": 1,
             "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
-            "text": "attention to 4 ..........................",
-            "answer": "details",
+            "question": "attention to 4 ..........................",
+            "correctAnswer": "details",
             "explanation": ""
         },
         {
@@ -53,8 +53,8 @@
             "questionNumber": 5,
             "part": 1,
             "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
-            "text": "need a minimum of 5 .......................... of experience of teleconferencing",
-            "answer": "1 year",
+            "question": "need a minimum of 5 .......................... of experience of teleconferencing",
+            "correctAnswer": "1 year",
             "explanation": ""
         },
         {
@@ -63,8 +63,8 @@
             "questionNumber": 6,
             "part": 1,
             "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
-            "text": "managing 6 ..........................",
-            "answer": "accounts",
+            "question": "managing 6 ..........................",
+            "correctAnswer": "deliveries",
             "explanation": ""
         },
         {
@@ -73,8 +73,8 @@
             "questionNumber": 7,
             "part": 1,
             "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
-            "text": "very organised and 7 ..........................",
-            "answer": "punctual",
+            "question": "very organised and 7 ..........................",
+            "correctAnswer": "tidy",
             "explanation": ""
         },
         {
@@ -83,8 +83,8 @@
             "questionNumber": 8,
             "part": 1,
             "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
-            "text": "used to working in a 8 ..........................",
-            "answer": "warehouse",
+            "question": "used to working in a 8 ..........................",
+            "correctAnswer": "team",
             "explanation": ""
         },
         {
@@ -93,8 +93,8 @@
             "questionNumber": 9,
             "part": 1,
             "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
-            "text": "able to cope with items that are 9 ..........................",
-            "answer": "heavy",
+            "question": "able to cope with items that are 9 ..........................",
+            "correctAnswer": "heavy",
             "explanation": ""
         },
         {
@@ -103,8 +103,8 @@
             "questionNumber": 10,
             "part": 1,
             "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
-            "text": "10 .......................... service",
-            "answer": "customer",
+            "question": "10 .......................... service",
+            "correctAnswer": "customer",
             "explanation": ""
         },
         {
@@ -119,7 +119,7 @@
                 "B. three years ago",
                 "C. six years ago"
             ],
-            "answer": "B",
+            "correctAnswer": "B",
             "explanation": "The speaker mentions that the scheme has been running for three years."
         },
         {
@@ -134,7 +134,7 @@
                 "B. on Saturdays and Sundays",
                 "C. once a month"
             ],
-            "answer": "A",
+            "correctAnswer": "A",
             "explanation": "Beechwood Road is now closed once a week."
         },
         {
@@ -149,7 +149,7 @@
                 "B. the police",
                 "C. local wardens"
             ],
-            "answer": "C",
+            "correctAnswer": "C",
             "explanation": "Local wardens are responsible for closing the road."
         },
         {
@@ -164,7 +164,7 @@
                 "B. must drive very slowly.",
                 "C. need permission from a warden."
             ],
-            "answer": "B",
+            "correctAnswer": "B",
             "explanation": "Residents who need to use their cars must drive very slowly (under 20 km/h)."
         },
         {
@@ -179,7 +179,7 @@
                 "B. quiet suburban areas.",
                 "C. areas with heavy traffic."
             ],
-            "answer": "C",
+            "correctAnswer": "C",
             "explanation": "Alice suggests that these schemes are most beneficial in areas with heavy traffic."
         },
         {
@@ -194,7 +194,7 @@
                 "B. They like seeing children play in the street.",
                 "C. They are surprised by the lack of noise."
             ],
-            "answer": "B",
+            "correctAnswer": "B",
             "explanation": "Residents who are not parents generally enjoy seeing children playing in the street."
         },
         {
@@ -211,7 +211,7 @@
                 "D. opportunity to be part of a community",
                 "E. opportunity to make new friends"
             ],
-            "answer": [
+            "correctAnswer": [
                 "B",
                 "D"
             ],
@@ -231,7 +231,7 @@
                 "D. opportunity to be part of a community",
                 "E. opportunity to make new friends"
             ],
-            "answer": [
+            "correctAnswer": [
                 "B",
                 "D"
             ],
@@ -251,7 +251,7 @@
                 "D. more relaxed atmosphere",
                 "E. less noise pollution"
             ],
-            "answer": [
+            "correctAnswer": [
                 "A",
                 "E"
             ],
@@ -271,7 +271,7 @@
                 "D. more relaxed atmosphere",
                 "E. less noise pollution"
             ],
-            "answer": [
+            "correctAnswer": [
                 "A",
                 "E"
             ],
@@ -283,8 +283,8 @@
             "questionNumber": 21,
             "part": 3,
             "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
-            "text": "what 21 .......................... the item is on",
-            "answer": "",
+            "question": "what 21 .......................... the item is on",
+            "correctAnswer": "page",
             "explanation": ""
         },
         {
@@ -293,8 +293,8 @@
             "questionNumber": 22,
             "part": 3,
             "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
-            "text": "the 22 .......................... of the item, including the headline",
-            "answer": "",
+            "question": "the 22 .......................... of the item, including the headline",
+            "correctAnswer": "size",
             "explanation": ""
         },
         {
@@ -303,8 +303,8 @@
             "questionNumber": 23,
             "part": 3,
             "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
-            "text": "any 23 .......................... accompanying the item",
-            "answer": "",
+            "question": "any 23 .......................... accompanying the item",
+            "correctAnswer": "graphics",
             "explanation": ""
         },
         {
@@ -313,8 +313,8 @@
             "questionNumber": 24,
             "part": 3,
             "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
-            "text": "the 24 .......................... of the item, e.g. what's made prominent",
-            "answer": "",
+            "question": "the 24 .......................... of the item, e.g. what's made prominent",
+            "correctAnswer": "structure",
             "explanation": ""
         },
         {
@@ -323,8 +323,8 @@
             "questionNumber": 25,
             "part": 3,
             "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
-            "text": "the writer's main 25 ..........................",
-            "answer": "",
+            "question": "the writer's main 25 ..........................",
+            "correctAnswer": "purpose",
             "explanation": ""
         },
         {
@@ -333,8 +333,8 @@
             "questionNumber": 26,
             "part": 3,
             "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
-            "text": "the 26 .......................... the writer may make about the reader",
-            "answer": "",
+            "question": "the 26 .......................... the writer may make about the reader",
+            "correctAnswer": "assumptions",
             "explanation": ""
         },
         {
@@ -347,18 +347,18 @@
             "options": [
                 {
                     "letter": "A",
-                    "text": "She will definitely look for a suitable article."
+                    "question": "She will definitely look for a suitable article."
                 },
                 {
                     "letter": "B",
-                    "text": "She may look for a suitable article."
+                    "question": "She may look for a suitable article."
                 },
                 {
                     "letter": "C",
-                    "text": "She definitely won't look for an article."
+                    "question": "She definitely won't look for an article."
                 }
             ],
-            "answer": "",
+            "correctAnswer": "A",
             "explanation": ""
         },
         {
@@ -371,18 +371,18 @@
             "options": [
                 {
                     "letter": "A",
-                    "text": "She will definitely look for a suitable article."
+                    "question": "She will definitely look for a suitable article."
                 },
                 {
                     "letter": "B",
-                    "text": "She may look for a suitable article."
+                    "question": "She may look for a suitable article."
                 },
                 {
                     "letter": "C",
-                    "text": "She definitely won't look for an article."
+                    "question": "She definitely won't look for an article."
                 }
             ],
-            "answer": "",
+            "correctAnswer": "C",
             "explanation": ""
         },
         {
@@ -395,18 +395,18 @@
             "options": [
                 {
                     "letter": "A",
-                    "text": "She will definitely look for a suitable article."
+                    "question": "She will definitely look for a suitable article."
                 },
                 {
                     "letter": "B",
-                    "text": "She may look for a suitable article."
+                    "question": "She may look for a suitable article."
                 },
                 {
                     "letter": "C",
-                    "text": "She definitely won't look for an article."
+                    "question": "She definitely won't look for an article."
                 }
             ],
-            "answer": "",
+            "correctAnswer": "C",
             "explanation": ""
         },
         {
@@ -419,20 +419,549 @@
             "options": [
                 {
                     "letter": "A",
-                    "text": "She will definitely look for a suitable article."
+                    "question": "She will definitely look for a suitable article."
                 },
                 {
                     "letter": "B",
-                    "text": "She may look for a suitable article."
+                    "question": "She may look for a suitable article."
                 },
                 {
                     "letter": "C",
-                    "text": "She definitely won't look for an article."
+                    "question": "She definitely won't look for an article."
                 }
             ],
-            "answer": "",
+            "correctAnswer": "B",
+            "explanation": ""
+        },
+        {
+            "id": 31,
+            "type": "fill-in-blank",
+            "questionNumber": 31,
+            "part": 4,
+            "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+            "question": "water was used to wash off 31 ..........................",
+            "correctAnswer": "mud",
+            "explanation": ""
+        },
+        {
+            "id": 32,
+            "type": "fill-in-blank",
+            "questionNumber": 32,
+            "part": 4,
+            "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+            "question": "soap-like material found in 32 .......................... cylinders",
+            "correctAnswer": "clay",
+            "explanation": ""
+        },
+        {
+            "id": 33,
+            "type": "fill-in-blank",
+            "questionNumber": 33,
+            "part": 4,
+            "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+            "question": "used a strigil – scraper made of 33 ..........................",
+            "correctAnswer": "metal",
+            "explanation": ""
+        },
+        {
+            "id": 34,
+            "type": "fill-in-blank",
+            "questionNumber": 34,
+            "part": 4,
+            "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+            "question": "used soap to colour their 34 ..........................",
+            "correctAnswer": "hair",
+            "explanation": ""
+        },
+        {
+            "id": 35,
+            "type": "fill-in-blank",
+            "questionNumber": 35,
+            "part": 4,
+            "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+            "question": "from about 312 BC, water carried to Roman 35 .......................... by aqueducts",
+            "correctAnswer": "baths",
+            "explanation": ""
+        },
+        {
+            "id": 36,
+            "type": "fill-in-blank",
+            "questionNumber": 36,
+            "part": 4,
+            "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+            "question": "decline in bathing contributed to occurrence of 36 ..........................",
+            "correctAnswer": "diseases",
+            "explanation": ""
+        },
+        {
+            "id": 37,
+            "type": "fill-in-blank",
+            "questionNumber": 37,
+            "part": 4,
+            "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+            "question": "37 .......................... began to be added to soap",
+            "correctAnswer": "perfume",
+            "explanation": ""
+        },
+        {
+            "id": 38,
+            "type": "fill-in-blank",
+            "questionNumber": 38,
+            "part": 4,
+            "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+            "question": "1791: Leblanc invented a way of making soda ash from 38 ..........................",
+            "correctAnswer": "salt",
+            "explanation": ""
+        },
+        {
+            "id": 39,
+            "type": "fill-in-blank",
+            "questionNumber": 39,
+            "part": 4,
+            "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+            "question": "early 1800s: Chevreul turned soapmaking into a 39 ..........................",
+            "correctAnswer": "science",
+            "explanation": ""
+        },
+        {
+            "id": 40,
+            "type": "fill-in-blank",
+            "questionNumber": 40,
+            "part": 4,
+            "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+            "question": "from 1800s, there was no longer a 40 .......................... on soap",
+            "correctAnswer": "tax",
             "explanation": ""
         }
     ],
-    "transcripts": []
+    "transcripts": [
+        {
+            "title": "Part 1: Employment Agency",
+            "lines": [
+                {
+                    "speaker": "SALLY",
+                    "text": "Good morning. Thanks for coming in to see us here at the agency, Joe. I'm one of the agency representatives, and my name's Sally Baker."
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "Hi Sally. I think we spoke on the phone, didn't we?"
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "That's right, we did. So thank you for sending in your CV. We've had quite a careful look at it and I think we have two jobs that might be suitable for you."
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "OK."
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "The first one is in a company based in North London. They're looking for an administrative assistant."
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "OK. What sort of company is it?"
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "They're called Home Solutions and they design and make furniture."
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "Oh, I don't know much about that, but it sounds interesting."
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "Yes, well as I said, they want someone in their office, and looking at your past experience it does look as if you fit quite a few of the requirements. So on your CV it appears you've done some data entry?"
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "Yes."
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "So that's one skill they want. Then they expect the person they appoint to attend meetings and take notes there …"
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "OK. I've done that before, yes."
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "And you'd need to be able to cope with general admin."
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "Filing, and keeping records and so on? That should be OK. And in my last job I also had to manage the diary."
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "Excellent. That's something they want here too. I'd suggest you add it to your CV – I don't think you mentioned that, did you?"
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "No."
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "So as far as the requirements go, they want good computer skills, of course, and they particularly mention spreadsheets."
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "That should be fine."
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "And interpersonal skills – which would be something they'd check with your references."
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "I think that should be OK, yes."
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "Then they mention that they want someone who is careful and takes care with details – just looking at your CV, I'd say you're probably alright there."
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "I think so, yes. Do they want any special experience?"
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "I think they wanted some experience of teleconferencing."
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "I've got three years' experience of that."
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "Let's see, yes, good. In fact they're only asking for at least one year, so that's great. So is that something that might interest you?"
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "It is, yes. The only thing is, you said they were in North London so it would be quite a long commute for me."
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "OK."
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "So the second position might suit you better as far as the location goes; that's for a warehouse assistant and that's in South London."
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "Yes, that would be a lot closer."
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "And you've worked in a warehouse before, haven't you?"
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "Yes."
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "So as far as the responsibilities for this position go, they want someone who can manage the stock, obviously, and also deliveries."
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "That should be OK. You've got to keep track of stuff, but I've always been quite good with numbers."
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "Good. that's their first requirement. And they want someone who's computer literate, which we know you are."
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "Sure."
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "Then they mention organisational skills. They want someone who's well organised."
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "Yes, I think I am."
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "And tidy?"
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "Yes, they go together really, don't they?"
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "Sure. Then the usual stuff; they want someone who can communicate well both orally and in writing."
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "OK. And for the last warehouse job I had, one of the things I enjoyed most was being part of a team. I found that was really essential for the job."
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "Excellent. Yes, they do mention that they want someone who's used to that, yes. Now when you were working in a warehouse last time, what sorts of items were you dealing with?"
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "It was mostly bathroom and kitchen equipment, sinks and stoves and fridges."
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "So you're OK moving heavy things?"
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "Sure. I'm quite strong, and I've had the training."
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "Good. Now as far as experience goes, they mention they want someone with a licence, and that you have experience of driving in London – so you can cope with the traffic and so on."
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "Yes, no problem."
+                },
+                {
+                    "speaker": "SALLY",
+                    "text": "And you've got experience of warehouse work … and the final thing they mention is customer service. I think looking at your CV you're OK there."
+                },
+                {
+                    "speaker": "JOE",
+                    "text": "Right. So what about pay? Can you tell me a bit more about that, please …"
+                }
+            ]
+        },
+        {
+            "title": "Part 2: Street Play Scheme",
+            "lines": [
+                {
+                    "speaker": "PRESENTER",
+                    "text": "My guest on the show today is Alice Riches who started the Street Play Scheme where she lives in Beechwood Road. For those of you that don't already know – Street Play involves local residents closing off their street for a few hours so that children have a chance to play in the street safely. She started it in her own street, Beechwood Road, and the idea caught on, and there are now Street Play Schemes all over the city. So when did you actually start the scheme, Alice?"
+                },
+                {
+                    "speaker": "ALICE",
+                    "text": "Well, I first had the idea when my oldest child was still a toddler, so that's about six years ago now – but it took at least two years of campaigning before we were actually able to make it happen. So the scheme's been up and running for three years now. We'd love to be able to close our road for longer – for the whole weekend, from Saturday morning until Sunday evening, for example. At the moment it's just once a week. But when we started it was only once a month. But we're working on it."
+                },
+                {
+                    "speaker": "PRESENTER",
+                    "text": "So what actually happens when Beechwood Road is closed?"
+                },
+                {
+                    "speaker": "ALICE",
+                    "text": "We have volunteer wardens, mostly parents but some elderly residents too, who block off our road at either end. The council have provided special signs but there's always a volunteer there to explain what's happening to any motorists. Generally, they're fine about it – we've only had to get the police involved once or twice."
+                },
+                {
+                    "speaker": "ALICE",
+                    "text": "Now I should explain that the road isn't completely closed to cars. But only residents' cars are allowed. If people really need to get in or out of Beechwood Road, it's not a problem – as long as they drive at under 20 kilometres per hour. But most people just decide not to use their cars during this time, or they park in another street. The wardens are only there to stop through traffic."
+                },
+                {
+                    "speaker": "PRESENTER",
+                    "text": "So can anyone apply to get involved in Street Play?"
+                },
+                {
+                    "speaker": "ALICE",
+                    "text": "Absolutely – we want to include all kids in the city – especially those who live on busy roads. It's here that demand is greatest. Obviously, there isn't such demand in wealthier areas where the children have access to parks or large gardens – or in the suburbs where there are usually more places for children to play outside."
+                },
+                {
+                    "speaker": "ALICE",
+                    "text": "I'd recommend that anyone listening who likes the idea should just give it a go. We've been surprised by the positive reaction of residents all over the city. And that's not just parents. There are always a few who complain but they're a tiny minority. On the whole everyone is very supportive and say they're very happy to see children out on the street – even if it does get quite noisy."
+                },
+                {
+                    "speaker": "ALICE",
+                    "text": "There have been so many benefits of Street Play for the kids. Parents really like the fact that the kids are getting fresh air instead of sitting staring at a computer screen, even if they're not doing anything particularly energetic. And of course it's great that kids can play with their friends outside without being supervised by their parents – but for me the biggest advantage is that kids develop confidence in themselves to be outside without their parents. The other really fantastic thing is that children get to know the adults in the street – it's like having a big extended family."
+                },
+                {
+                    "speaker": "PRESENTER",
+                    "text": "It certainly does have a lot of benefits. I want to move on now and ask you about a related project in King Street."
+                },
+                {
+                    "speaker": "ALICE",
+                    "text": "Right. Well this was an experiment I was involved in where local residents decided to try and reduce the traffic along King Street, which is the busiest main road in our area, by persuading people not to use their cars for one day. We thought about making people pay more for parking – but we decided that would be really unpopular – so instead we just stopped people from parking on King Street but left the other car parks open."
+                },
+                {
+                    "speaker": "ALICE",
+                    "text": "It was surprising how much of a difference all this made. As we'd predicted, air quality was significantly better but what I hadn't expected was how much quieter it would be – even with the buses still running. Of course everyone said they felt safer but we were actually amazed that sales in the shops went up considerably that day – we thought there'd be fewer people out shopping – not more."
+                },
+                {
+                    "speaker": "PRESENTER",
+                    "text": "That's really interesting so the fact that …"
+                }
+            ]
+        },
+        {
+            "title": "Part 3: Media Studies Assignment",
+            "lines": [
+                {
+                    "speaker": "HAZEL",
+                    "text": "Tom, could I ask you for some advice, please?"
+                },
+                {
+                    "speaker": "TOM",
+                    "text": "Yes of course, if you think I can help. What's it about?"
+                },
+                {
+                    "speaker": "HAZEL",
+                    "text": "It's my first media studies assignment, and I'm not sure how to go about it. You must have done it last year."
+                },
+                {
+                    "speaker": "TOM",
+                    "text": "Is that the one comparing the coverage of a particular story in a range of newspapers?"
+                },
+                {
+                    "speaker": "HAZEL",
+                    "text": "That's right."
+                },
+                {
+                    "speaker": "TOM",
+                    "text": "Oh yes, I really enjoyed writing it."
+                },
+                {
+                    "speaker": "HAZEL",
+                    "text": "So what sort of things do I need to compare?"
+                },
+                {
+                    "speaker": "TOM",
+                    "text": "Well, there are several things. For example, there's the question of which page of the newspaper the item appears on."
+                },
+                {
+                    "speaker": "HAZEL",
+                    "text": "You mean, because there's a big difference between having it on the front page and the bottom of page ten, for instance?"
+                },
+                {
+                    "speaker": "TOM",
+                    "text": "Exactly. And that shows how important the editor thinks the story is. Then there's the size – how many column inches the story is given, how many columns it spreads over."
+                },
+                {
+                    "speaker": "HAZEL",
+                    "text": "And I suppose that includes the headline."
+                },
+                {
+                    "speaker": "TOM",
+                    "text": "It certainly does. It's all part of attracting the reader's attention."
+                },
+                {
+                    "speaker": "HAZEL",
+                    "text": "What about graphics – whether there's anything visual in addition to the text?"
+                },
+                {
+                    "speaker": "TOM",
+                    "text": "Yes, you need to consider those, too, because they can have a big effect on the reader's understanding of the story – sometimes a bigger effect than the text itself. Then you'll need to look at how the item is put together: what structure is it given? Bear in mind that not many people read beyond the first paragraph, so what has the journalist put at the beginning? And if, say, there are conflicting opinions about something, does one appear near the end, where people probably won't read it?"
+                },
+                {
+                    "speaker": "HAZEL",
+                    "text": "And newspapers sometimes give wrong or misleading information, don't they? Either deliberately or by accident. Should I be looking at that, too?"
+                },
+                {
+                    "speaker": "TOM",
+                    "text": "Yes, if you can. Compare what's in different versions, and as far as possible, try and work out what's true and what isn't. And that relates to a very important point: what's the writer's purpose, or at least the most important one, if they have several. It may seem to be to inform the public, but often it's that they want to create fear, or controversy, or to make somebody look ridiculous."
+                },
+                {
+                    "speaker": "HAZEL",
+                    "text": "Gosh, I see what you mean. And I suppose the writer may make assumptions about the reader."
+                },
+                {
+                    "speaker": "TOM",
+                    "text": "That's right – about their knowledge of the subject, their attitudes, and their level of education, which means writing so that the readers understand without feeling patronised. All of that will make a difference to how the story is presented."
+                },
+                {
+                    "speaker": "HAZEL",
+                    "text": "Does it matter what type of story I write about?"
+                },
+                {
+                    "speaker": "TOM",
+                    "text": "No – national or international politics, the arts … Anything, as long as it's covered in two or three newspapers. Though of course it'll be easier and more fun if it's something you're interested in and know something about."
+                },
+                {
+                    "speaker": "HAZEL",
+                    "text": "And on that basis a national news item would be worth analysing – I'm quite keen on politics, so I'll try and find a suitable topic. What did you choose for your analysis, Tom?"
+                },
+                {
+                    "speaker": "TOM",
+                    "text": "I was interested in how newspapers express their opinions explicitly, so I wanted to compare editorials in different papers, but when I started looking, I couldn't find two on the same topic that I felt like analysing."
+                },
+                {
+                    "speaker": "HAZEL",
+                    "text": "In that case, I won't even bother to look."
+                },
+                {
+                    "speaker": "TOM",
+                    "text": "So in the end I chose a human interest story – a terribly emotional story about a young girl who was very ill, and lots of other people – mostly strangers – raised money so she could go abroad for treatment. Actually, I was surprised – some papers just wrote about how wonderful everyone was, but others considered the broader picture, like why treatment wasn't available here."
+                },
+                {
+                    "speaker": "HAZEL",
+                    "text": "Hmm, I usually find stories like that raise quite strong feelings in me! I'll avoid that. Perhaps I'll choose an arts topic, like different reviews of a film, or something about funding for the arts – I'll think about that."
+                },
+                {
+                    "speaker": "TOM",
+                    "text": "Yes, that might be interesting."
+                },
+                {
+                    "speaker": "HAZEL",
+                    "text": "OK, well thanks a lot for your help, Tom. It's been really useful."
+                },
+                {
+                    "speaker": "TOM",
+                    "text": "You're welcome. Good luck with the assignment, Hazel."
+                }
+            ]
+        },
+        {
+            "title": "Part 4: Early History of Keeping Clean",
+            "lines": [
+                {
+                    "speaker": "LECTURER",
+                    "text": "Nowadays, we use different products for personal cleanliness, laundry, dishwashing and household cleaning, but this is very much a 20th-century development."
+                },
+                {
+                    "speaker": "LECTURER",
+                    "text": "The origins of cleanliness date back to prehistoric times. Since water is essential for life, the earliest people lived near water and knew something about its cleansing properties – at least that it rinsed mud off their hands."
+                },
+                {
+                    "speaker": "LECTURER",
+                    "text": "During the excavation of ancient Babylon, evidence was found that soapmaking was known as early as 2800 BC. Archaeologists discovered cylinders made of clay, with inscriptions on them saying that fats were boiled with ashes. This is a method of making soap, though there's no reference to the purpose of this material."
+                },
+                {
+                    "speaker": "LECTURER",
+                    "text": "The early Greeks bathed for aesthetic reasons and apparently didn't use soap. Instead, they cleaned their bodies with blocks of sand, pumice and ashes, then anointed themselves with oil, and scraped off the oil and dirt with a metal instrument known as a strigil. They also used oil mixed with ashes. Clothes were washed without soap in streams."
+                },
+                {
+                    "speaker": "LECTURER",
+                    "text": "The ancient Germans and Gauls were also credited with discovering how to make a substance called 'soap', made of melted animal fat and ashes. They used this mixture to tint their hair red."
+                },
+                {
+                    "speaker": "LECTURER",
+                    "text": "Soap got its name, according to an ancient Roman legend, from Mount Sapo, where animals were sacrificed, leaving deposits of animal fat. Rain washed these deposits, along with wood ashes, down into the clay soil along the River Tiber. Women found that this mixture greatly reduced the effort required to wash their clothes."
+                },
+                {
+                    "speaker": "LECTURER",
+                    "text": "As Roman civilisation advanced, so did bathing. The first of the famous Roman baths, supplied with water from their aqueducts, was built around 312 BC. The baths were luxurious, and bathing became very popular. And by the second century AD, the Greek physician Galen recommended soap for both medicinal and cleansing purposes. After the fall of Rome in 467 AD and the resulting decline in bathing habits, much of Europe felt the impact of filth on public health. This lack of personal cleanliness and related unsanitary living conditions were major factors in the outbreaks of disease in the Middle Ages, and especially the Black Death of the 14th century."
+                },
+                {
+                    "speaker": "LECTURER",
+                    "text": "Nevertheless, soapmaking became an established craft in Europe, and associations of soapmakers guarded their trade secrets closely. Vegetable and animal oils were used with ashes of plants, along with perfume, apparently for the first time. Gradually more varieties of soap became available for shaving and shampooing, as well as bathing and laundering."
+                },
+                {
+                    "speaker": "LECTURER",
+                    "text": "A major step toward large-scale commercial soapmaking occurred in 1791, when a French chemist, Nicholas Leblanc, patented a process for turning salt into soda ash, or sodium carbonate. Soda ash is the alkali obtained from ashes that combines with fat to form soap. The Leblanc process yielded quantities of good-quality, inexpensive soda ash."
+                },
+                {
+                    "speaker": "LECTURER",
+                    "text": "Modern soapmaking was born some 20 years later, in the early 19th century, with the discovery by Michel Eugène Chevreul, another French chemist, of the chemical nature and relationship of fats, glycerine and fatty acids. His studies established the basis for both fat and soap chemistry, and soapmaking became a science. Further developments during the 19th century made it easier and cheaper to manufacture soap."
+                },
+                {
+                    "speaker": "LECTURER",
+                    "text": "Until the 19th century, soap was regarded as a luxury item, and was heavily taxed in several countries. As it became more readily available, it became an everyday necessity, a development that was reinforced when the high tax was removed. Soap was then something ordinary people could afford, and cleanliness standards improved."
+                },
+                {
+                    "speaker": "LECTURER",
+                    "text": "With this widespread use came the development of milder soaps for bathing and soaps for use in the washing machines that were available to consumers by the turn of the 20th century."
+                }
+            ]
+        }
+    ]
 }
