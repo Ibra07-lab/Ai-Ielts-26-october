@@ -31,7 +31,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const { user } = useUser();
   const { theme, setTheme } = useTheme();
 
-  const isChatUI = location.pathname === '/tutor' || location.pathname === '/reading/tutor-chat';
+  const isFullHeightUI = location.pathname === '/tutor' || location.pathname === '/reading/tutor-chat' || location.pathname === '/vocabulary';
 
   return (
     <div className="min-h-screen mesh-gradient">
@@ -85,8 +85,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
 
         {/* Page content */}
-        <main className={isChatUI ? "h-[calc(100vh-4rem)]" : "py-6"}>
-          <div className={isChatUI ? "h-full" : "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"}>
+        <main className={isFullHeightUI ? "h-[calc(100vh-4rem)]" : "py-6"}>
+          <div className={isFullHeightUI ? "h-full" : "w-full"}>
             {children}
           </div>
         </main>

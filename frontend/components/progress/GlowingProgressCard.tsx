@@ -253,20 +253,20 @@ export default function GlowingProgressCard({
           <div className="text-right mb-2">
             <div className={cn(
               "text-sm font-medium",
-              theme === "dark" ? "text-slate-300" : "text-slate-600"
+              theme === "dark" ? "text-cyan-400" : "text-indigo-600"
             )}>
-              <span className={cn("font-bold", theme === "dark" ? "text-white" : "text-slate-900")}>{doneTasks}</span>
-              <span className="text-slate-500 mx-1">/</span>
-              <span className="text-slate-400">{totalTasks} tasks</span>
+              <span className={cn("font-bold", theme === "dark" ? "text-cyan-300" : "text-indigo-700")}>{doneTasks}</span>
+              <span className={cn("mx-1", theme === "dark" ? "text-cyan-500/60" : "text-indigo-400")}>/</span>
+              <span className={cn(theme === "dark" ? "text-cyan-400/80" : "text-indigo-500")}>{totalTasks} tasks</span>
             </div>
           </div>
         </div>
 
         {/* Progress Bar */}
-        <div className="relative h-4 w-full rounded-full bg-slate-200/50 ring-1 ring-black/5 overflow-hidden shadow-inner">
+        <div className={cn("relative h-4 w-full rounded-full ring-1 overflow-hidden shadow-inner", theme === "dark" ? "bg-slate-800/80 ring-white/5" : "bg-slate-200/50 ring-black/5")}>
           {/* Visual Gradient Background Layer */}
           <div
-            className="absolute inset-0 rounded-full transition-all duration-[4000ms] ease-in-out bg-gradient-to-r from-[#00d9dd] to-[#d8f77e] shadow-[0_0_15px_rgba(0,217,221,0.5)]"
+            className="absolute inset-0 rounded-full transition-all duration-[4000ms] ease-in-out bg-gradient-to-r from-[#3b82f6] via-[#6366f1] to-[#a855f7] shadow-[0_0_15px_rgba(99,102,241,0.5)]"
             style={{ width: `${derivedPercent}%` }}
           />
 
@@ -275,7 +275,7 @@ export default function GlowingProgressCard({
             className="absolute inset-0 rounded-full transition-all duration-[4000ms] ease-in-out"
             style={{ width: `${derivedPercent}%` }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-[#00d9dd] to-[#d8f77e] opacity-50 blur-md"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#3b82f6] via-[#6366f1] to-[#a855f7] opacity-50 blur-md"></div>
           </div>
 
           {/* Interactive Segments Layer (Transparent) */}

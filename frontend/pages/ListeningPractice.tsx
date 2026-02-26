@@ -248,7 +248,7 @@ export default function ListeningPractice() {
 
   // Tests that use the custom worksheet component (Test 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)
   const isWorksheetTest = (testId: number) => {
-    return [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].includes(testId);
+    return [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].includes(testId);
   };
 
   const handleAnswerChange = (questionId: number, answer: string) => {
@@ -280,14 +280,6 @@ export default function ListeningPractice() {
     setShowTranscript(false);
   };
 
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty.toLowerCase()) {
-      case 'easy': return 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400';
-      case 'medium': return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400';
-      case 'hard': return 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400';
-      default: return 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400';
-    }
-  };
 
   const renderQuestion = (question: ListeningQuestion, showResult: boolean = false) => {
     const userAnswer = answers[question.id];
@@ -504,9 +496,6 @@ export default function ListeningPractice() {
                         <div className={`p-3 rounded-2xl transition-colors duration-300 ${isSelected ? 'bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-300' : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400 group-hover:bg-purple-50 group-hover:text-purple-600 dark:group-hover:bg-purple-900/20 dark:group-hover:text-purple-300'}`}>
                           <Headphones className="w-8 h-8" />
                         </div>
-                        <Badge className={getDifficultyColor(test.difficulty)}>
-                          {test.difficulty}
-                        </Badge>
                       </div>
 
                       <div className="space-y-2">
@@ -591,9 +580,6 @@ export default function ListeningPractice() {
             <h2 className="text-xl font-bold text-slate-900 dark:text-white">
               {selectedTest.title}
             </h2>
-            <Badge className={getDifficultyColor(selectedTest.difficulty)}>
-              {selectedTest.difficulty}
-            </Badge>
           </div>
 
           {testData ? (

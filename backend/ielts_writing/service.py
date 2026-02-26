@@ -1,6 +1,21 @@
-﻿from fastapi import APIRouter
+﻿"""
+DEPRECATED: Legacy IELTS Writing routes.
+
+This module provides the old 2-agent pipeline (Examiner + Tutor).
+The frontend has migrated to the new 3-agent pipeline:
+  - POST /task2/evaluate  (full evaluation)
+  - POST /task2/score     (quick scoring only)
+  - POST /task1/evaluate  (Task 1 evaluation)
+
+These legacy endpoints remain functional but log deprecation warnings.
+They will be removed in a future release.
+"""
+
+from fastapi import APIRouter
 import os
 import traceback
+import warnings
+import logging
 from datetime import datetime
 
 from .models import (
@@ -9,11 +24,19 @@ from .models import (
     WritingFeedbackWithTeacherReport,
     UserErrorProfile
 )
-from .agents.pipeline import get_pipeline
-from .memory.error_patterns import ErrorPatternMemory
+try:
+    from .agents.pipeline import get_pipeline
+except ImportError:
+    get_pipeline = None  # Legacy pipeline module removed
 
+try:
+    from .memory.error_patterns import ErrorPatternMemory
+except ImportError:
+    ErrorPatternMemory = None
 
-router = APIRouter(prefix="/ielts_writing", tags=["IELTS Writing"])
+logger = logging.getLogger(__name__)
+
+router = APIRouter(prefix="/ielts_writing", tags=["IELTS Writing (DEPRECATED)"])
 
 
 @router.post("/evaluate")
@@ -21,17 +44,27 @@ async def evaluate_writing(
     request: EvaluateRequest
 ) -> WritingFeedbackResponse:
     """
+    DEPRECATED: Use POST /task2/evaluate instead.
+    
     Evaluate writing with two-agent pipeline.
     
     1. Examiner scores strictly by IELTS criteria
     2. Tutor provides actionable coaching
     3. Error memory tracks recurring patterns
     """
+    logger.warning(
+        "⚠️ DEPRECATED: /ielts_writing/evaluate was called. "
+        "This endpoint uses the old 2-agent pipeline. "
+        "Please migrate to POST /task2/evaluate for the new 3-agent pipeline."
+    )
     print(f"\n[BACKEND] Received evaluation request!")
     print(f"Task Type: {request.task_type}")
     print(f"Question: {request.question[:50]}...")
     print(f"Essay ({len(request.essay)} chars): {request.essay[:50]}...")
     
+    if get_pipeline is None:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=503, detail="Legacy pipeline removed. Use POST /task2/evaluate instead.")
     try:
         pipeline = get_pipeline()
         return await pipeline.evaluate(request)
@@ -48,15 +81,17 @@ async def evaluate_with_teacher_report(
     request: EvaluateRequest
 ) -> WritingFeedbackWithTeacherReport:
     """
+    DEPRECATED: Use POST /task2/evaluate instead.
+    
     Evaluate writing with comprehensive teacher feedback report.
-    
-    Requires student_name in request for personalized feedback.
-    
-    1. Examiner scores strictly by IELTS criteria
-    2. Tutor provides actionable coaching
-    3. Teacher report generates comprehensive, section-by-section feedback
-    4. Error memory tracks recurring patterns
     """
+    logger.warning(
+        "⚠️ DEPRECATED: /ielts_writing/evaluate/teacher-report was called. "
+        "Please migrate to POST /task2/evaluate."
+    )
+    if get_pipeline is None:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=503, detail="Legacy pipeline removed. Use POST /task2/evaluate instead.")
     pipeline = get_pipeline()
     return await pipeline.evaluate_with_teacher_report(request)
 
@@ -69,3 +104,4 @@ async def get_error_profile(user_id: str) -> UserErrorProfile | None:
     if result:
         return UserErrorProfile(**result)
     return None
+

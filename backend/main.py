@@ -109,7 +109,7 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-from ielts_writing.service import router as writing_router
+from ielts_writing.service import router as writing_router  # DEPRECATED — legacy 2-agent pipeline
 from ielts_writing.routes.task1 import router as task1_router
 from ielts_writing.routes.task2 import router as task2_router
 

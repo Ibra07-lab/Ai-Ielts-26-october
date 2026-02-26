@@ -1,0 +1,716 @@
+{
+    "id": 15,
+    "title": "Test 15",
+    "section": 1,
+    "difficulty": "medium",
+    "audioFile": "/audio/Test-15.mp3",
+    "duration": 1800,
+    "questions": [
+        {
+            "id": 1,
+            "type": "fill-in-blank",
+            "questionNumber": 1,
+            "question": "First of all, children at this level are taken to practise in a ...",
+            "correctAnswer": "park",
+            "explanation": "The children are taken to a park to practice."
+        },
+        {
+            "id": 2,
+            "type": "fill-in-blank",
+            "questionNumber": 2,
+            "question": "Instructors wear ... shirts.",
+            "correctAnswer": "blue",
+            "explanation": "The instructors' shirts are blue."
+        },
+        {
+            "id": 3,
+            "type": "fill-in-blank",
+            "questionNumber": 3,
+            "question": "A ... is required and training is given.",
+            "correctAnswer": "reference",
+            "explanation": "A reference is needed for the course."
+        },
+        {
+            "id": 4,
+            "type": "fill-in-blank",
+            "questionNumber": 4,
+            "question": "There are quiet times during the morning for a ... or a game.",
+            "correctAnswer": "story",
+            "explanation": "The kids listen to a story during quiet times."
+        },
+        {
+            "id": 5,
+            "type": "fill-in-blank",
+            "questionNumber": 5,
+            "question": "Classes are held even if there is ...",
+            "correctAnswer": "rain",
+            "explanation": "Rain doesn't stop the classes."
+        },
+        {
+            "id": 6,
+            "type": "fill-in-blank",
+            "questionNumber": 6,
+            "question": "What to bring: a change of clothing, a ...",
+            "correctAnswer": "snack",
+            "explanation": "Children should bring a snack."
+        },
+        {
+            "id": 7,
+            "type": "fill-in-blank",
+            "questionNumber": 7,
+            "question": "What to bring: Charlie's ...",
+            "correctAnswer": "medication",
+            "explanation": "Charlie needs his medication."
+        },
+        {
+            "id": 8,
+            "type": "fill-in-blank",
+            "questionNumber": 8,
+            "question": "Before the class, his ... will be checked.",
+            "correctAnswer": "helmet",
+            "explanation": "Safety check includes the helmet."
+        },
+        {
+            "id": 9,
+            "type": "fill-in-blank",
+            "questionNumber": 9,
+            "question": "He should then go to the ... to meet his class instructor.",
+            "correctAnswer": "tent",
+            "explanation": "Meeting point is the tent."
+        },
+        {
+            "id": 10,
+            "type": "fill-in-blank",
+            "questionNumber": 10,
+            "question": "The course costs ... $ per week.",
+            "correctAnswer": "199",
+            "explanation": "The price is $199."
+        },
+        {
+            "id": 11,
+            "type": "pick-two",
+            "questionNumber": 11,
+            "question": "According to Megan, what are the TWO main advantages of working in the agriculture and horticulture sectors?",
+            "options": [
+                "A. the active lifestyle",
+                "B. the above-average salaries",
+                "C. the flexible working opportunities",
+                "D. the opportunities for overseas travel",
+                "E. the chance to be in a natural environment"
+            ],
+            "correctAnswer": "A,C",
+            "explanation": "Active lifestyle and flexible opportunities are mentioned."
+        },
+        {
+            "id": 12,
+            "type": "pick-two",
+            "questionNumber": 12,
+            "question": "",
+            "correctAnswer": "A,C",
+            "explanation": "Active lifestyle and flexible opportunities are mentioned."
+        },
+        {
+            "id": 13,
+            "type": "pick-two",
+            "questionNumber": 13,
+            "question": "Which TWO of the following are likely to be disadvantages for people working outdoors?",
+            "options": [
+                "A. the increasing risk of accidents",
+                "B. being in a very quiet location",
+                "C. difficult weather conditions at times",
+                "D. the cost of housing",
+                "E. the level of physical fitness required"
+            ],
+            "correctAnswer": "B,C",
+            "explanation": "Quiet location and difficult weather are disadvantages."
+        },
+        {
+            "id": 14,
+            "type": "pick-two",
+            "questionNumber": 14,
+            "question": "",
+            "correctAnswer": "B,C",
+            "explanation": "Quiet location and difficult weather are disadvantages."
+        },
+        {
+            "id": 15,
+            "type": "matching",
+            "questionNumber": 15,
+            "question": "Fresh food commercial manager",
+            "options": [
+                "A. not a permanent job",
+                "B. involves leading a team",
+                "C. experience not essential",
+                "D. intensive work but also fun",
+                "E. chance to earn more through overtime",
+                "F. chance for rapid promotion",
+                "G. accommodation available",
+                "H. local travel involved"
+            ],
+            "correctAnswer": "D",
+            "explanation": ""
+        },
+        {
+            "id": 16,
+            "type": "matching",
+            "questionNumber": 16,
+            "question": "Agronomist",
+            "correctAnswer": "F",
+            "explanation": ""
+        },
+        {
+            "id": 17,
+            "type": "matching",
+            "questionNumber": 17,
+            "question": "Fresh produce buyer",
+            "correctAnswer": "A",
+            "explanation": ""
+        },
+        {
+            "id": 18,
+            "type": "matching",
+            "questionNumber": 18,
+            "question": "Garden centre sales manager",
+            "correctAnswer": "H",
+            "explanation": ""
+        },
+        {
+            "id": 19,
+            "type": "matching",
+            "questionNumber": 19,
+            "question": "Tree technician",
+            "correctAnswer": "C",
+            "explanation": ""
+        },
+        {
+            "id": 20,
+            "type": "matching",
+            "questionNumber": 20,
+            "question": "Farm worker",
+            "correctAnswer": "G",
+            "explanation": ""
+        },
+        {
+            "id": 21,
+            "type": "pick-two",
+            "questionNumber": 21,
+            "question": "Which TWO points does Adam make about his experiment on artificial sweeteners?",
+            "options": [
+                "A. The results were what he had predicted.",
+                "B. The experiment was simple to set up.",
+                "C. A large sample of people was tested.",
+                "D. The subjects were unaware of what they were drinking.",
+                "E. The test was repeated several times for each person."
+            ],
+            "correctAnswer": "C,D",
+            "explanation": "Large sample and unaware subjects."
+        },
+        {
+            "id": 22,
+            "type": "pick-two",
+            "questionNumber": 22,
+            "question": "",
+            "correctAnswer": "C,D",
+            "explanation": "Large sample and unaware subjects."
+        },
+        {
+            "id": 23,
+            "type": "pick-two",
+            "questionNumber": 23,
+            "question": "Which TWO problems did Rosie have when measuring the fat content of nuts?",
+            "options": [
+                "A. She used the wrong sort of nuts.",
+                "B. She used an unsuitable chemical.",
+                "C. She did not grind the nuts finely enough.",
+                "D. The information on the nut package was incorrect.",
+                "E. The weighing scales may have been unsuitable."
+            ],
+            "correctAnswer": "C,E",
+            "explanation": "Coarse grinding and scale issues."
+        },
+        {
+            "id": 24,
+            "type": "pick-two",
+            "questionNumber": 24,
+            "question": "",
+            "correctAnswer": "C,E",
+            "explanation": "Coarse grinding and scale issues."
+        },
+        {
+            "id": 25,
+            "type": "multiple-choice",
+            "questionNumber": 25,
+            "question": "Adam suggests that restaurants could reduce obesity if their menus",
+            "options": [
+                "A. offered fewer options.",
+                "B. had more low-calorie foods.",
+                "C. were organised in a particular way."
+            ],
+            "correctAnswer": "C",
+            "explanation": ""
+        },
+        {
+            "id": 26,
+            "type": "multiple-choice",
+            "questionNumber": 26,
+            "question": "The students agree that food manufacturers deliberately",
+            "options": [
+                "A. make calorie counts hard to understand.",
+                "B. fail to provide accurate calorie counts.",
+                "C. use ineffective methods to reduce calories."
+            ],
+            "correctAnswer": "A",
+            "explanation": ""
+        },
+        {
+            "id": 27,
+            "type": "multiple-choice",
+            "questionNumber": 27,
+            "question": "What does Rosie say about levels of exercise in England?",
+            "options": [
+                "A. The amount recommended is much too low.",
+                "B. Most people overestimate how much they do.",
+                "C. Women now exercise more than they used to."
+            ],
+            "correctAnswer": "B",
+            "explanation": ""
+        },
+        {
+            "id": 28,
+            "type": "multiple-choice",
+            "questionNumber": 28,
+            "question": "Adam refers to the location and width of stairs in a train station to illustrate",
+            "options": [
+                "A. practical changes that can influence people's behaviour.",
+                "B. methods of helping people who have mobility problems.",
+                "C. ways of preventing accidents by controlling crowd movement."
+            ],
+            "correctAnswer": "A",
+            "explanation": ""
+        },
+        {
+            "id": 29,
+            "type": "multiple-choice",
+            "questionNumber": 29,
+            "question": "What do the students agree about including reference to exercise in their presentation?",
+            "options": [
+                "A. They should probably leave it out.",
+                "B. They need to do more research on it.",
+                "C. They should discuss this with their tutor."
+            ],
+            "correctAnswer": "A",
+            "explanation": ""
+        },
+        {
+            "id": 30,
+            "type": "multiple-choice",
+            "questionNumber": 30,
+            "question": "What are the students going to do next for their presentation?",
+            "options": [
+                "A. prepare some slides for it",
+                "B. find out how long they have for it",
+                "C. decide on its content and organisation"
+            ],
+            "correctAnswer": "C",
+            "explanation": ""
+        },
+        {
+            "id": 31,
+            "type": "blank",
+            "questionNumber": 31,
+            "question": "We imagine someone like a [blank] knitting.",
+            "correctAnswer": "grandmother",
+            "explanation": ""
+        },
+        {
+            "id": 32,
+            "type": "blank",
+            "questionNumber": 32,
+            "question": "A [blank] ago, knitting was expected to disappear.",
+            "correctAnswer": "decade",
+            "explanation": ""
+        },
+        {
+            "id": 33,
+            "type": "blank",
+            "questionNumber": 33,
+            "question": "People are buying more [blank] for knitting nowadays.",
+            "correctAnswer": "equipment",
+            "explanation": ""
+        },
+        {
+            "id": 34,
+            "type": "blank",
+            "questionNumber": 34,
+            "question": "gives support in times of [blank] difficulty",
+            "correctAnswer": "economic",
+            "explanation": ""
+        },
+        {
+            "id": 35,
+            "type": "blank",
+            "questionNumber": 35,
+            "question": "requires only [blank] skills and little money to start",
+            "correctAnswer": "basic",
+            "explanation": ""
+        },
+        {
+            "id": 36,
+            "type": "blank",
+            "questionNumber": 36,
+            "question": "Findings show early knitted items to be [blank] in shape.",
+            "correctAnswer": "round",
+            "explanation": ""
+        },
+        {
+            "id": 37,
+            "type": "blank",
+            "questionNumber": 37,
+            "question": "The first needles were made of natural materials such as wood and [blank] .",
+            "correctAnswer": "bone",
+            "explanation": ""
+        },
+        {
+            "id": 38,
+            "type": "blank",
+            "questionNumber": 38,
+            "question": "Early yarns felt [blank] to touch.",
+            "correctAnswer": "rough",
+            "explanation": ""
+        },
+        {
+            "id": 39,
+            "type": "blank",
+            "questionNumber": 39,
+            "question": "Geographical areas had their own [blank] of knitting.",
+            "correctAnswer": "style",
+            "explanation": ""
+        },
+        {
+            "id": 40,
+            "type": "blank",
+            "questionNumber": 40,
+            "question": "Everyday tasks like looking after [blank] were done while knitting.",
+            "correctAnswer": "sheep",
+            "explanation": ""
+        }
+    ],
+    "transcripts": [
+        {
+            "title": "Part 1",
+            "lines": [
+                {
+                    "speaker": "JAKE",
+                    "text": "Hello, Junior Cycle camp, Jake speaking."
+                },
+                {
+                    "speaker": "WOMAN",
+                    "text": "Hi. I'm calling for some information about the cycle camp – I'm thinking of sending my son."
+                },
+                {
+                    "speaker": "JAKE",
+                    "text": "Great. Well, it's held every weekday morning over the summer vacation and we focus on basic cycling skills and safety. We have eight levels for children from three years upwards. How old's your son?"
+                },
+                {
+                    "speaker": "WOMAN",
+                    "text": "Charlie? He's seven. He can ride a bike, but he needs a little more training before he's safe to go on the road."
+                },
+                {
+                    "speaker": "JAKE",
+                    "text": "He'd probably be best in Level 5. They start off practising on the site here, and we aim to get them riding on the road, but first they're taken to ride in the park, away from the traffic."
+                },
+                {
+                    "speaker": "WOMAN",
+                    "text": "Right. And can you tell me a bit about the instructors?"
+                },
+                {
+                    "speaker": "JAKE",
+                    "text": "Well, all our staff wear different coloured shirts. So, we have three supervisors, and they have red shirts. They support the instructors, and they also stand in for me if I'm not around. Then the instructors themselves are in blue shirts, and one of these is responsible for each class."
+                },
+                {
+                    "speaker": "WOMAN",
+                    "text": "OK."
+                },
+                {
+                    "speaker": "JAKE",
+                    "text": "In order to be accepted, all our instructors have to submit a reference from someone who's seen them work with children – like if they've worked as a babysitter, for example. Then they have to complete our training course, including how to do lesson plans, and generally care for the well-being of the kids in their class. They do a great job, I have to say."
+                },
+                {
+                    "speaker": "WOMAN",
+                    "text": "Right. And tell me a bit about the classes. What size will Charlie's class be?"
+                },
+                {
+                    "speaker": "JAKE",
+                    "text": "We have a limit of eight children in each class, so their instructor really gets to know them well. They're out riding most of the time but they have quiet times too, where their instructor might tell them a story that's got something to do with cycling, or got them to play a game together. It's a lot of fun."
+                },
+                {
+                    "speaker": "WOMAN",
+                    "text": "It must be. Now, what happens if there's rain? Do the classes still run?"
+                },
+                {
+                    "speaker": "JAKE",
+                    "text": "Oh yes. We don't let that put us off – we just put on our waterproofs and keep cycling."
+                },
+                {
+                    "speaker": "WOMAN",
+                    "text": "And is there anything special Charlie should bring along with him?"
+                },
+                {
+                    "speaker": "JAKE",
+                    "text": "Well, maybe some spare clothes, especially if the weather's not so good. And a snack for break time."
+                },
+                {
+                    "speaker": "WOMAN",
+                    "text": "How about a drink?"
+                },
+                {
+                    "speaker": "JAKE",
+                    "text": "No, we'll provide that. And make sure he has shoes, not sandals."
+                },
+                {
+                    "speaker": "WOMAN",
+                    "text": "Sure. And just at present Charlie has to take medication every few hours, so I'll make sure he has that."
+                },
+                {
+                    "speaker": "JAKE",
+                    "text": "Absolutely. Just give us details of when he has to take it and we'll make sure he does."
+                },
+                {
+                    "speaker": "WOMAN",
+                    "text": "Thanks."
+                },
+                {
+                    "speaker": "JAKE",
+                    "text": "Now, there are a few things you should know about Day 1 of the camp. The classes normally start at 9.30 every morning, but on Day 1 you should aim to get Charlie here by 9.20. The finishing time will be 12.30 as usual. We need the additional time because there are a few extra things to do. The most important is that we have a very careful check to make sure that every child's helmet fits properly. If it doesn't fit, we'll try to adjust it, or we'll find him another one – but he must wear it all the time he's on the bike."
+                },
+                {
+                    "speaker": "WOMAN",
+                    "text": "Of course."
+                },
+                {
+                    "speaker": "JAKE",
+                    "text": "Then after that, all the instructors will be waiting to meet their classes, and they'll meet up in the tent – you can't miss it. And each instructor will take their class away and get started."
+                },
+                {
+                    "speaker": "WOMAN",
+                    "text": "OK. Well that all sounds good. Now can you tell me how much the camp costs a week?"
+                },
+                {
+                    "speaker": "JAKE",
+                    "text": "One hundred ninety-nine dollars. We've managed to keep the price more or less the same as last year – it was one hundred ninety then. But the places are filling up quite quickly."
+                },
+                {
+                    "speaker": "WOMAN",
+                    "text": "Right. OK, well I'd like to book for ..."
+                }
+            ]
+        },
+        {
+            "title": "Part 2",
+            "lines": [
+                {
+                    "speaker": "MEGAN",
+                    "text": "Hello everyone. My name's Megan Baker and I'm a recruitment consultant at AVT Recruitment specialists."
+                },
+                {
+                    "speaker": "MEGAN",
+                    "text": "Now, our company specialises in positions that involve working in the agriculture and horticulture sectors, so that's fresh food production, garden and park maintenance and so on. And these sectors do provide some very special career opportunities. For a start, they often offer opportunities for those who don't want to be stuck with a 40-hour week, but need to juggle work with other responsibilities such as child care – and this is very important for many of our recruits. Some people like working in a rural setting, surrounded by plants and trees instead of buildings, although we can't guarantee that. But there are certainly health benefits, especially in jobs where you're not sitting all day looking at a screen – a big plus for many people. Salaries can sometimes be good too, although there's a lot of variety here. And you may have the opportunity in some types of jobs for travel overseas, although that obviously depends on the job, and not everyone is keen to do it."
+                },
+                {
+                    "speaker": "MEGAN",
+                    "text": "Of course, working outdoors does have its challenges. It's fine in summer, but can be extremely unpleasant when it's cold and windy. You may need to be pretty fit for some jobs, though with modern technology that's not as important as it once was. And standards of health and safety are much higher now than they used to be, so there are fewer work-related accidents. But if you like a lively city environment surrounded by lots of people, these jobs are probably not for you – they're often in pretty remote areas. And some people worry about finding a suitable place to live, but in our experience, this usually turns out fine."
+                },
+                {
+                    "speaker": "MEGAN",
+                    "text": "Now let me tell you about some of the exciting jobs that we have on our books right now."
+                },
+                {
+                    "speaker": "MEGAN",
+                    "text": "One is for a fresh food commercial manager. Our client here is a very large fresh food producer supplying a range of top supermarkets. They operate in a very fast-paced environment with low profit margins – the staff there work hard, but they play hard as well, so if you've a sociable personality this may be for you."
+                },
+                {
+                    "speaker": "MEGAN",
+                    "text": "We have an exciting post as an agronomist advising farmers on issues such as crop nutrition, protection against pests, and the latest legislation on farming and agricultural practices. There are good opportunities for the right person to quickly make their way up the career ladder, but a deep knowledge of the agricultural sector is expected of applicants."
+                },
+                {
+                    "speaker": "MEGAN",
+                    "text": "A leading supermarket is looking for a fresh produce buyer who is available for a 12-month maternity cover contract. You need to have experience in administration, planning and buying in the fresh produce industry, and in return will receive a very competitive salary."
+                },
+                {
+                    "speaker": "MEGAN",
+                    "text": "We have also received a request for a sales manager for a chain of garden centres. You will be visiting centres in the region to ensure their high levels of customer service are maintained. This post is only suitable for someone who is prepared to live in the region."
+                },
+                {
+                    "speaker": "MEGAN",
+                    "text": "There is also a vacancy for a tree technician to carry out tree cutting, forestry and conservation work. Candidates must have a clean driving licence and have training in safety procedures. A year's experience would be preferred but the company might be prepared to consider someone who has just completed an appropriate training course."
+                },
+                {
+                    "speaker": "MEGAN",
+                    "text": "Finally, we have a position for a farm worker. This will involve a wide range of farm duties including crop sowing and harvesting, machine maintenance and animal care. Perks of the job include the possibility of renting a small cottage on the estate, and the chance to earn a competitive salary. A driving licence and tractor driving experience are essential."
+                }
+            ]
+        },
+        {
+            "title": "Part 3",
+            "lines": [
+                {
+                    "speaker": "ADAM",
+                    "text": "OK Rosie, shall we try to get some ideas together for our presentation on diet and obesity?"
+                },
+                {
+                    "speaker": "ROSIE",
+                    "text": "Sure."
+                },
+                {
+                    "speaker": "ADAM",
+                    "text": "I can talk about the experiment I did to see if people can tell the difference between real sugar and artificial sweeteners."
+                },
+                {
+                    "speaker": "ROSIE",
+                    "text": "Where you gave people drinks with either sugar or artificial sweeteners and they had to say which they thought it was?"
+                },
+                {
+                    "speaker": "ADAM",
+                    "text": "Yeah. It took me ages to decide exactly how I'd organise it, especially how I could make sure that people didn't know which drink I was giving them. It was hard to keep track of it all, especially as I had so many people doing it – I had to make sure I kept a proper record of what each person had."
+                },
+                {
+                    "speaker": "ROSIE",
+                    "text": "So could most people tell the difference?"
+                },
+                {
+                    "speaker": "ADAM",
+                    "text": "Yeah – I hadn't thought they would be able to, but most people could."
+                },
+                {
+                    "speaker": "ROSIE",
+                    "text": "Then there's that experiment I did measuring the fat content of nuts, to see if the nutritional information given on the packet was accurate."
+                },
+                {
+                    "speaker": "ADAM",
+                    "text": "The one where you ground up the nuts and mixed them with a chemical to absorb the fat?"
+                },
+                {
+                    "speaker": "ROSIE",
+                    "text": "Yes. My results were a bit problematic – the fat content for that type of nut seemed much lower than it said on the package. But I reckon the package information was right. I think I should probably have ground up the nuts more than I did. It's possible that the scales for weighing the fat weren't accurate enough, too. I'd really like to try the experiment again some time."
+                },
+                {
+                    "speaker": "ADAM",
+                    "text": "So what can we say about helping people to lose weight?"
+                },
+                {
+                    "speaker": "ROSIE",
+                    "text": "There's a lot we could say about what restaurants could do to reduce obesity. I read that the items at the start of a menu and the items at the end of a menu are much more likely to be chosen than the items in the middle. So, if you put the low-calorie items at the beginning and end of the menu, people will probably go for the food with fewer calories, without even realising what they're doing."
+                },
+                {
+                    "speaker": "ROSIE",
+                    "text": "I think food manufacturers could do more to encourage healthy eating."
+                },
+                {
+                    "speaker": "ADAM",
+                    "text": "How?"
+                },
+                {
+                    "speaker": "ROSIE",
+                    "text": "Well, when manufacturers put calorie counts of a food on the label, they're sometimes really confusing and I suspect they do it on purpose. Because food that's high in calories tastes better, and so they'll sell more."
+                },
+                {
+                    "speaker": "ADAM",
+                    "text": "Yeah, so if you look at the amount of calories in a pizza, they'll give you the calories per quarter pizza and you think, oh that's not too bad. But who's going to eat a quarter pizza?"
+                },
+                {
+                    "speaker": "ROSIE",
+                    "text": "Exactly."
+                },
+                {
+                    "speaker": "ADAM",
+                    "text": "I suppose another approach to this problem is to get people to exercise more."
+                },
+                {
+                    "speaker": "ROSIE",
+                    "text": "Right. In England, the current guidelines are for at least 30 minutes of brisk walking, five days a week. Now when you ask them, about 40% of men and 30% of women say they do this, but when you objectively measure the amount of walking they do with motion sensors, you find that only 6% of men and 4% of women do the recommended amount of exercise."
+                },
+                {
+                    "speaker": "ADAM",
+                    "text": "Mm, so you can see why obesity is growing."
+                },
+                {
+                    "speaker": "ROSIE",
+                    "text": "So how can people be encouraged to take more exercise?"
+                },
+                {
+                    "speaker": "ADAM",
+                    "text": "Well, for example, think of the location of stairs in a train station. If people reach the stairs before they reach the escalator when they're leaving the station, they'll be more likely to take the stairs. And if you increase the width of the stairs, you'll get more people using them at the same time. It's an unconscious process and influenced by minor modifications in their environment."
+                },
+                {
+                    "speaker": "ROSIE",
+                    "text": "Right. And it might not be a big change, but if it happens every day, it all adds up."
+                },
+                {
+                    "speaker": "ADAM",
+                    "text": "Yes. But actually, I'm not sure if we should be talking about exercise in our presentation."
+                },
+                {
+                    "speaker": "ROSIE",
+                    "text": "Well, we've done quite a bit of reading about it."
+                },
+                {
+                    "speaker": "ADAM",
+                    "text": "I know, but it's going to mean we have a very wide focus, and our tutor did say that we need to focus on causes and solutions in terms of nutrition."
+                },
+                {
+                    "speaker": "ROSIE",
+                    "text": "I suppose so. And we've got plenty of information about that. OK, well that will be simpler."
+                },
+                {
+                    "speaker": "ADAM",
+                    "text": "So what shall we do now? We've still got half an hour before our next lecture."
+                },
+                {
+                    "speaker": "ROSIE",
+                    "text": "Let's think about what we're going to include and what will go where. Then we can decide what slides we need."
+                },
+                {
+                    "speaker": "ADAM",
+                    "text": "OK, fine."
+                }
+            ]
+        },
+        {
+            "title": "Part 4",
+            "lines": [
+                {
+                    "speaker": "SPEAKER",
+                    "text": "Good morning everyone. So today we're going to look at an important creative activity and that's hand knitting. Ancient knitted garments have been found in many different countries, showing that knitting is a global activity with a long history."
+                },
+                {
+                    "speaker": "SPEAKER",
+                    "text": "When someone says the word 'knitting' we might well picture an elderly person – a grandmother perhaps – sitting by the fire knitting garments for themselves or other members of the family. It's a homely image, but one that may lead you to feel that knitting is an activity of the past – and, indeed, during the previous decade, it was one of the skills that was predicted to vanish from everyday life. For although humans have sewn and knitted their own clothing for a very long time, many of these craft-based skills went into decline when industrial machines took over – mainly because they were no longer passed down from one generation to another. However, that's all changing and interest in knitting classes in many countries is actually rising, as more and more people are seeking formal instruction in the skill. With that trend, we're also seeing an increase in the sales figures for knitting equipment."
+                },
+                {
+                    "speaker": "SPEAKER",
+                    "text": "So why do people want to be taught to knit at a time when a machine can readily do the job for them? The answer is that knitting, as a handicraft, has numerous benefits for those doing it. Let's consider what some of these might be. While many people knitted garments in the past because they couldn't afford to buy clothes, it's still true today that knitting can be helpful if you're experiencing economic hardship. If you have several children who all need warm winter clothes, knitting may save you a lot of money. And the results of knitting your own clothes can be very rewarding, even though the skills you need to get going are really quite basic and the financial outlay is minimal."
+                },
+                {
+                    "speaker": "SPEAKER",
+                    "text": "But the more significant benefits in today's world are to do with well-being. In a world where it's estimated that we spend up to nine hours a day online, doing something with our hands that is craft-based makes us feel good. It releases us from the stress of a technological, fast-paced life."
+                },
+                {
+                    "speaker": "SPEAKER",
+                    "text": "Now, let's look back a bit to early knitting activities. In fact, no one really knows when knitting first began, but archaeological remains have disclosed plenty of information for us to think about."
+                },
+                {
+                    "speaker": "SPEAKER",
+                    "text": "One of the interesting things about knitting is that the earliest pieces of clothing that have been found suggest that most of the items produced were round rather than flat. Discoveries from the 3rd and 4th centuries in Egypt show that things like socks and gloves, that were needed to keep hands and feet warm, were knitted in one piece using four or five needles. That's very different from most knitting patterns today, which only require two. What's more, the very first needles people used were hand carved out of wood and other natural materials, like bone, whereas today's needles are largely made of steel or plastic and make that characteristic clicking sound when someone's using them. Ancient people knitted using yarns made from linen, hemp, cotton and wool, and these were often very rough on the skin. The spinning wheel, which allowed people to make finer yarns and produce much greater quantities of them, led to the dominance of wool in the knitting industry – often favoured for its warmth."
+                },
+                {
+                    "speaker": "SPEAKER",
+                    "text": "Another interesting fact about knitting is that because it was practised in so many parts of the world for so many purposes, regional differences in style developed. This visual identity has allowed researchers to match bits of knitted clothing that have been unearthed over time to the region from which the wearer came or the job that he or she did."
+                },
+                {
+                    "speaker": "SPEAKER",
+                    "text": "As I've mentioned, knitting offered people from poor communities a way of making extra money while doing other tasks. For many centuries, it seems, men, women and children took every opportunity to knit, for example, while watching over sheep, walking to market or riding in boats. So, let's move on to take a ..."
+                }
+            ]
+        }
+    ]
+}

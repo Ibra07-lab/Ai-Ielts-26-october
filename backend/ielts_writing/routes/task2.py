@@ -68,8 +68,8 @@ async def evaluate_task2(request: Task2EvaluationRequest):
         # Time each step
         examiner_start = time.time()
         
-        # Run the full pipeline
-        result = pipeline.evaluate_essay(
+        # Run the full pipeline (async — does not block the event loop)
+        result = await pipeline.evaluate_essay(
             essay=request.essay,
             question=request.question
         )
@@ -159,9 +159,9 @@ async def score_task2_quick(request: Task2QuickRequest):
         from ..agents.examiner import Task2Examiner
         
         examiner = Task2Examiner()
-        evaluation = examiner.evaluate(
-            essay=request.essay,
-            question=request.question
+        loop = asyncio.get_event_loop()
+        evaluation = await loop.run_in_executor(
+            None, examiner.evaluate, request.essay, request.question
         )
         
         return {

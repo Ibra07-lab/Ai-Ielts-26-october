@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { Play, BookOpen, MessageSquare, Mic, Layers, ArrowRight, ChevronDown, ChevronUp, PenTool, ArrowLeftRight, Link2, Search, Filter, CheckCircle2 } from "lucide-react";
+import { Play, BookOpen, MessageSquare, Mic, Layers, ArrowRight, ChevronDown, ChevronUp, PenTool, ArrowLeftRight, Link2, Search, Filter, CheckCircle2, Volume2, Heart, ArrowLeft, Quote, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -15,11 +15,11 @@ interface TopicWordListProps {
     onBack: () => void;
 }
 
-// Type badge color mapping
+// Type badge color mapping - Darkened text for better contrast
 const typeBadgeColors: Record<string, string> = {
-    academic: "bg-blue-100 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-500/20",
-    phrasal_verb: "bg-purple-100 dark:bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-200 dark:border-purple-500/20",
-    idiom: "bg-amber-100 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-500/20",
+    academic: "bg-blue-100 dark:bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-500/20",
+    phrasal_verb: "bg-purple-100 dark:bg-purple-500/10 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-500/20",
+    idiom: "bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-500/20",
 };
 
 const typeLabels: Record<string, string> = {
@@ -29,261 +29,291 @@ const typeLabels: Record<string, string> = {
 };
 
 export default function TopicWordList({ topicName, words, onStartLearning, onStartExercise, onBack }: TopicWordListProps) {
-    const [expandedWordId, setExpandedWordId] = useState<number | null>(null);
+    const [selectedWordId, setSelectedWordId] = useState<number | null>(words[0]?.id || null);
     const [searchQuery, setSearchQuery] = useState("");
-    const [filterStatus, setFilterStatus] = useState<"all" | "mastered" | "new">("all");
+    const [filterStatus, setFilterStatus] = useState<"all" | "speaking" | "writing">("all");
+    const [bookmarkedWords, setBookmarkedWords] = useState<Set<number>>(new Set());
 
-    // "Solo-Expansion" Logic: Toggle current, close others (already inherent in state design)
-    const toggleExpand = (wordId: number) => {
-        setExpandedWordId(expandedWordId === wordId ? null : wordId);
+    const toggleBookmark = (e: React.MouseEvent, wordId: number) => {
+        e.stopPropagation();
+        setBookmarkedWords(prev => {
+            const next = new Set(prev);
+            if (next.has(wordId)) {
+                next.delete(wordId);
+            } else {
+                next.add(wordId);
+            }
+            return next;
+        });
     };
 
-    // Filter Logic
+    const playAudio = (text: string) => {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-GB';
+        window.speechSynthesis.speak(utterance);
+    };
+
     const filteredWords = useMemo(() => {
         return words.filter(word => {
             const matchesSearch = word.word.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 word.definition.toLowerCase().includes(searchQuery.toLowerCase());
-            // Mock status filtering for now as WordData doesn't explicitly store 'status' per user yet in this view
-            // Assuming 'new' for all unless we pass in progress data. 
-            // For UI demo, we'll just check "all" or pass through.
-            const matchesFilter = filterStatus === "all" ? true : true;
+
+            let matchesFilter = true;
+            if (filterStatus === "speaking") matchesFilter = !!word.speakingExample;
+            else if (filterStatus === "writing") matchesFilter = !!word.writingExample;
 
             return matchesSearch && matchesFilter;
         });
     }, [words, searchQuery, filterStatus]);
 
-    const activeWord = words.find(w => w.id === expandedWordId);
+    // Update selected word if the list changes or filter causes current selection to disappear
+    // But try to keep selection if possible
+    const activeWord = words.find(w => w.id === selectedWordId) || filteredWords[0];
 
     return (
-        <div className="max-w-6xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 mb-20">
-            {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                <div>
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{topicName} Vocabulary</h1>
-                    <p className="text-gray-500 dark:text-gray-400 max-w-xl">Master these high-frequency words to boost your score. Use the "Solo" mode to focus on one word at a time.</p>
-                </div>
-                <Button variant="outline" onClick={onBack} className="border-gray-200 dark:border-white/10 hover:bg-gray-100 dark:hover:bg-white/5 text-gray-900 dark:text-white">
-                    Back to Topics
-                </Button>
-            </div>
+        <div className="w-full h-full flex flex-col space-y-4">
+            <h1 className="text-4xl font-serif font-bold text-gray-900 dark:text-white">
+                {topicName}
+            </h1>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                {/* Main Content (List) - Span 8 */}
-                <div className="lg:col-span-8 space-y-6">
-
-                    {/* Search & Filter Bar */}
-                    <div className="sticky top-4 z-30 bg-white/80 dark:bg-[#0B0F19]/80 backdrop-blur-md p-4 rounded-2xl border border-gray-200 dark:border-white/5 shadow-sm space-y-4 md:space-y-0 md:flex md:items-center md:gap-4">
-                        <div className="relative flex-1">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                            <Input
-                                placeholder="Search words..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                className="pl-9 bg-white dark:bg-white/5 border-gray-200 dark:border-white/10"
-                            />
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <Button
-                                variant={filterStatus === "all" ? "default" : "outline"}
-                                size="sm"
-                                onClick={() => setFilterStatus("all")}
-                                className={cn("rounded-full", filterStatus === "all" ? "bg-gray-900 dark:bg-white text-white dark:text-black" : "border-gray-200 dark:border-white/10")}
-                            >
-                                All
-                            </Button>
-                            {/* Placeholders for future status filtering */}
-                            <Button variant="outline" size="sm" className="rounded-full border-gray-200 dark:border-white/10 opacity-50 cursor-not-allowed">New</Button>
-                            <Button variant="outline" size="sm" className="rounded-full border-gray-200 dark:border-white/10 opacity-50 cursor-not-allowed">Mastered</Button>
-                        </div>
-                    </div>
-
-                    <div className="space-y-4">
-                        <div className="flex items-center justify-between px-2">
-                            <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-2">
+            {/* Master-Detail Layout */}
+            <div className="grid grid-cols-12 gap-8 h-full">
+                {/* Left Sidebar: Word List */}
+                <div className="col-span-4 flex flex-col bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-white/5 shadow-sm overflow-hidden">
+                    <div className="p-4 border-b border-gray-100 dark:border-white/5 sticky top-0 bg-white/95 dark:bg-card/95 backdrop-blur z-10 space-y-3">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-wider">
                                 <BookOpen className="h-4 w-4" /> Word List
-                            </h2>
-                            <span className="text-xs text-gray-400">{filteredWords.length} visible</span>
+                            </div>
+                            <Badge variant="secondary" className="bg-gray-100 text-gray-600 dark:bg-white/10 dark:text-gray-300">
+                                {filteredWords.length}
+                            </Badge>
                         </div>
 
-                        {filteredWords.map((word) => (
-                            <Card
-                                key={word.id}
-                                className={cn(
-                                    "bg-white dark:bg-[#151B2B] border-gray-200 dark:border-white/5 transition-all duration-300 group overflow-hidden",
-                                    expandedWordId === word.id
-                                        ? "ring-2 ring-blue-500/20 dark:ring-blue-500/30 shadow-lg"
-                                        : "hover:border-blue-300 dark:hover:border-blue-500/30 cursor-pointer"
-                                )}
-                                onClick={() => toggleExpand(word.id)}
-                            >
-                                <CardContent className="p-0">
-                                    {/* Collapsed Header state */}
-                                    <div className="p-5 flex items-start justify-between">
-                                        <div className="space-y-1">
-                                            <div className="flex items-center gap-3 flex-wrap">
-                                                <h3 className={cn("text-lg font-bold transition-colors", expandedWordId === word.id ? "text-blue-600 dark:text-blue-400" : "text-gray-900 dark:text-white")}>
-                                                    {word.word}
-                                                </h3>
-                                                <div className="flex gap-2">
-                                                    <Badge variant="outline" className="text-[10px] text-gray-500 border-gray-200 dark:border-white/10 uppercase font-medium">{word.partOfSpeech}</Badge>
-                                                    <Badge variant="secondary" className="text-[10px] bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold">Band {word.difficultyLevel}</Badge>
-                                                    {word.type && <Badge variant="secondary" className={cn("text-[10px]", typeBadgeColors[word.type])}>{typeLabels[word.type]}</Badge>}
-                                                </div>
-                                            </div>
-                                            <p className="text-sm text-gray-600 dark:text-slate-400 leading-relaxed max-w-xl">{word.definition}</p>
-                                        </div>
-                                        <div className={cn("mt-1 transition-transform duration-300", expandedWordId === word.id ? "rotate-180" : "")}>
-                                            <ChevronDown className="h-5 w-5 text-gray-400" />
-                                        </div>
-                                    </div>
-
-                                    {/* Expanded Content "Accordion" */}
-                                    {expandedWordId === word.id && (
-                                        <div className="bg-slate-50/50 dark:bg-slate-900/30 border-t border-gray-100 dark:border-white/5 p-5 space-y-6 animate-in slide-in-from-top-2 duration-300">
-                                            {/* Collocations */}
-                                            {word.collocations && (
-                                                <div className="space-y-3">
-                                                    <div className="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-wider">
-                                                        <Layers className="h-3 w-3" /> Collocations
-                                                    </div>
-                                                    <div className="flex flex-wrap gap-2">
-                                                        {word.collocations.map((col, i) => (
-                                                            <div key={i} className="px-3 py-1.5 rounded-lg bg-white dark:bg-white/5 border border-gray-200 dark:border-white/5 text-sm text-gray-700 dark:text-slate-300 font-medium">
-                                                                {col}
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            )}
-
-                                            {/* Registers: Speaking vs Writing */}
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                {/* Speaking: Informal/Chatty - Green/Teal */}
-                                                {word.speakingExample && (
-                                                    <div className="p-4 rounded-xl bg-emerald-50/50 dark:bg-emerald-500/5 border border-emerald-100 dark:border-emerald-500/20 space-y-2 relative overflow-hidden group/speak">
-                                                        <div className="absolute top-0 right-0 p-2 opacity-10 group-hover/speak:opacity-20 transition-opacity">
-                                                            <MessageSquare className="h-12 w-12 text-emerald-500" />
-                                                        </div>
-                                                        <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400 mb-1">
-                                                            <div className="p-1.5 bg-emerald-100 dark:bg-emerald-500/20 rounded-md">
-                                                                <MessageSquare className="h-3.5 w-3.5" />
-                                                            </div>
-                                                            <span className="text-[10px] font-bold uppercase tracking-wider">Speaking (Natural)</span>
-                                                        </div>
-                                                        <p className="text-sm text-gray-800 dark:text-slate-200 italic font-medium leading-relaxed">"{word.speakingExample}"</p>
-                                                    </div>
-                                                )}
-
-                                                {/* Writing: Formal/Academic - Blue/Amber */}
-                                                {word.writingExample && (
-                                                    <div className="p-4 rounded-xl bg-blue-50/50 dark:bg-blue-500/5 border border-blue-100 dark:border-blue-500/20 space-y-2 relative overflow-hidden group/write">
-                                                        <div className="absolute top-0 right-0 p-2 opacity-10 group-hover/write:opacity-20 transition-opacity">
-                                                            <PenTool className="h-12 w-12 text-blue-500" />
-                                                        </div>
-                                                        <div className="flex items-center gap-2 text-blue-700 dark:text-blue-400 mb-1">
-                                                            <div className="p-1.5 bg-blue-100 dark:bg-blue-500/20 rounded-md">
-                                                                <PenTool className="h-3.5 w-3.5" />
-                                                            </div>
-                                                            <span className="text-[10px] font-bold uppercase tracking-wider">Writing (Academic)</span>
-                                                        </div>
-                                                        <p className="text-sm text-gray-800 dark:text-slate-200 font-serif leading-relaxed border-l-2 border-blue-300 dark:border-blue-500/30 pl-3">"{word.writingExample}"</p>
-                                                    </div>
-                                                )}
-                                            </div>
-
-                                            {/* Synonyms & Antonyms */}
-                                            <div className="flex gap-6 pt-2 border-t border-gray-200 dark:border-white/5">
-                                                {word.synonyms && (
-                                                    <div className="space-y-2">
-                                                        <span className="text-[10px] font-bold text-gray-400 uppercase">Synonyms</span>
-                                                        <div className="flex gap-2 text-sm text-gray-600 dark:text-slate-400">
-                                                            {word.synonyms.map(s => s.word).join(", ")}
-                                                        </div>
-                                                    </div>
-                                                )}
-                                                {word.antonyms && (
-                                                    <div className="space-y-2">
-                                                        <span className="text-[10px] font-bold text-gray-400 uppercase">Antonyms</span>
-                                                        <div className="flex gap-2 text-sm text-rose-600 dark:text-rose-400">
-                                                            {word.antonyms.join(", ")}
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
-                                    )}
-                                </CardContent>
-                            </Card>
-                        ))}
-
-                        {filteredWords.length === 0 && (
-                            <div className="text-center py-20 text-gray-500">
-                                <p>No words found matching "{searchQuery}"</p>
-                            </div>
-                        )}
-                    </div>
-                </div>
-
-                {/* Sidebar (Quick Actions) - Span 4 */}
-                <div className="lg:col-span-4 space-y-6">
-                    {/* Practice CTA */}
-                    <Card className="bg-gradient-to-br from-indigo-600 to-purple-700 text-white border-0 shadow-xl relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-fullblur-3xl -mr-32 -mt-32 pointer-events-none"></div>
-                        <CardContent className="p-8 space-y-6 relative z-10">
-                            <div>
-                                <h3 className="text-2xl font-bold mb-2">Ready to Practice?</h3>
-                                <p className="text-indigo-100 text-sm opacity-90">Start with flashcards to learn, then test your knowledge.</p>
-                            </div>
-                            <Button
-                                onClick={onStartLearning}
-                                className="w-full bg-white text-indigo-600 hover:bg-indigo-50 font-bold h-12 rounded-xl shadow-lg border-0"
-                            >
-                                <Play className="w-4 h-4 mr-2 fill-current" /> Start Learning
-                            </Button>
-                        </CardContent>
-                    </Card>
-
-                    {/* Quick Exercises Sidebar */}
-                    <div className="bg-white dark:bg-[#151B2B] rounded-2xl border border-gray-200 dark:border-white/5 p-2 shadow-sm">
-                        <div className="px-4 py-3 border-b border-gray-100 dark:border-white/5 mb-2">
-                            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider">Quick Exercises</h3>
-                        </div>
-
-                        <div className="space-y-1">
-                            {/* Context-Aware Exercise Buttons */}
-                            {[
-                                { id: "synonym", label: "Synonym Swap", desc: "Replace basic words", icon: MessageSquare, color: "text-sky-500", bg: "bg-sky-500/10", border: "group-hover:border-sky-500/30" },
-                                { id: "tetris", label: "Context Tetris", desc: "Fill in the gaps", icon: Layers, color: "text-purple-500", bg: "bg-purple-500/10", border: "group-hover:border-purple-500/30" },
-                                { id: "speak", label: "Speak to Unlock", desc: "Use words in speech", icon: Mic, color: "text-emerald-500", bg: "bg-emerald-500/10", border: "group-hover:border-emerald-500/30" }
-                            ].map((ex) => (
+                        {/* Filter Tabs */}
+                        <div className="flex p-1 bg-gray-100 dark:bg-white/5 rounded-lg">
+                            {(["all", "speaking", "writing"] as const).map((tab) => (
                                 <button
-                                    key={ex.id}
-                                    onClick={() => onStartExercise(ex.id as any)}
+                                    key={tab}
+                                    onClick={() => setFilterStatus(tab)}
                                     className={cn(
-                                        "w-full p-3 rounded-xl flex items-center gap-4 text-left group transition-all duration-200 border border-transparent hover:bg-slate-50 dark:hover:bg-white/5",
-                                        ex.border
+                                        "flex-1 py-1.5 text-xs font-medium rounded-md transition-all capitalize",
+                                        filterStatus === tab
+                                            ? "bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm"
+                                            : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                                     )}
                                 >
-                                    <div className={cn("p-2.5 rounded-lg transition-colors", ex.bg, ex.color)}>
-                                        <ex.icon className="h-5 w-5" />
-                                    </div>
-                                    <div className="flex-1">
-                                        <div className="flex justify-between items-center mb-0.5">
-                                            <h4 className="font-semibold text-gray-900 dark:text-white text-sm group-hover:text-blue-500 transition-colors">{ex.label}</h4>
-                                            {/* Progress Ring Simulation */}
-                                            <div className="h-4 w-4 rounded-full border-2 border-slate-200 dark:border-white/10 group-hover:border-current group-hover:text-green-500 transition-colors flex items-center justify-center">
-                                                {/* <CheckCircle2 className="h-3 w-3" /> */}
-                                            </div>
-                                        </div>
-                                        <p className="text-xs text-gray-400 group-hover:text-gray-500">
-                                            {activeWord ? `Practice with "${activeWord.word}"` : ex.desc}
-                                        </p>
-                                    </div>
-                                    <ArrowRight className="h-4 w-4 text-gray-300 group-hover:text-blue-500 group-hover:translate-x-1 transition-transform" />
+                                    {tab}
                                 </button>
                             ))}
                         </div>
                     </div>
+
+                    <div className="flex-1 overflow-y-auto p-3 space-y-2 custom-scrollbar">
+                        {filteredWords.map((word) => (
+                            <div
+                                key={word.id}
+                                onClick={() => setSelectedWordId(word.id)}
+                                className={cn(
+                                    "p-4 rounded-xl cursor-pointer transition-all duration-200 group border text-left",
+                                    selectedWordId === word.id
+                                        ? "bg-blue-50/80 dark:bg-blue-500/10 border-blue-200 dark:border-blue-500/20 shadow-sm"
+                                        : "bg-transparent border-transparent hover:bg-gray-50 dark:hover:bg-white/5 hover:border-gray-200 dark:hover:border-white/10"
+                                )}
+                            >
+                                <div className="flex justify-between items-start mb-1">
+                                    <h3 className={cn(
+                                        "font-bold text-lg font-serif transition-colors",
+                                        selectedWordId === word.id
+                                            ? "text-blue-700 dark:text-blue-400"
+                                            : "text-gray-900 dark:text-white"
+                                    )}>
+                                        {word.word}
+                                    </h3>
+                                    {bookmarkedWords.has(word.id) && (
+                                        <Heart className="h-3 w-3 text-rose-500 fill-current" />
+                                    )}
+                                </div>
+                                <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed">
+                                    {word.definition}
+                                </p>
+                                <div className="mt-3 flex flex-wrap gap-2">
+                                    {word.type && (
+                                        <span className={cn(
+                                            "text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide",
+                                            word.type === 'phrasal_verb' ? "bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-300" :
+                                                word.type === 'idiom' ? "bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300" :
+                                                    "bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-300"
+                                        )}>
+                                            {typeLabels[word.type]}
+                                        </span>
+                                    )}
+                                    {word.difficultyLevel >= 3 && (
+                                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300">
+                                            Band {word.difficultyLevel}+
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Right Panel: Word Detail */}
+                <div className="col-span-8 overflow-y-auto custom-scrollbar pr-2 pb-8">
+                    {activeWord ? (
+                        <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
+                            {/* Word Card */}
+                            <div className="bg-white dark:bg-card rounded-3xl border border-gray-200 dark:border-white/5 shadow-sm overflow-hidden relative">
+                                {/* Decorative blob */}
+                                <div className="absolute top-0 right-0 w-64 h-64 bg-slate-50 dark:bg-slate-800/50 rounded-bl-full -mr-16 -mt-16 pointer-events-none" />
+
+                                <div className="p-6 relative z-10">
+                                    {/* Header Row */}
+                                    <div className="flex items-start justify-between mb-4">
+                                        <div className="flex items-center gap-4">
+                                            <h2 className="text-4xl font-serif font-bold text-gray-900 dark:text-white tracking-tight">
+                                                {activeWord.word}
+                                            </h2>
+                                            <button
+                                                onClick={() => playAudio(activeWord.word)}
+                                                className="p-3 rounded-full bg-gray-100 dark:bg-white/10 hover:bg-blue-100 dark:hover:bg-blue-500/20 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all"
+                                            >
+                                                <Volume2 className="h-5 w-5" />
+                                            </button>
+                                        </div>
+                                        <div className="flex gap-2">
+                                            <button
+                                                onClick={(e) => toggleBookmark(e, activeWord.id)}
+                                                className={cn(
+                                                    "p-2 rounded-full transition-colors",
+                                                    bookmarkedWords.has(activeWord.id)
+                                                        ? "text-rose-500 bg-rose-50 dark:bg-rose-500/10"
+                                                        : "text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5"
+                                                )}
+                                            >
+                                                <Heart className={cn("h-6 w-6", bookmarkedWords.has(activeWord.id) && "fill-current")} />
+                                            </button>
+                                            <button className="p-2 text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 rounded-full">
+                                                <MoreHorizontal className="h-6 w-6" />
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* Tags */}
+                                    <div className="flex gap-3 mb-6">
+                                        <Badge variant="secondary" className="px-3 py-1.5 text-xs font-bold uppercase tracking-wider bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-300 hover:bg-purple-200">
+                                            {typeLabels[activeWord.type || "academic"]}
+                                        </Badge>
+                                        <Badge variant="secondary" className="px-3 py-1.5 text-xs font-bold uppercase tracking-wider bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300 hover:bg-orange-200">
+                                            Band {activeWord.difficultyLevel}
+                                        </Badge>
+                                        <Badge variant="outline" className="px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-gray-500 border-gray-200 dark:border-white/10">
+                                            {topicName}
+                                        </Badge>
+                                    </div>
+
+                                    {/* Definition */}
+                                    <div className="mb-6">
+                                        <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Definition</div>
+                                        <p className="text-2xl text-gray-900 dark:text-gray-100 font-serif leading-relaxed">
+                                            {activeWord.definition}
+                                        </p>
+                                    </div>
+
+                                    {/* Example Usage */}
+                                    <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6 border border-gray-100 dark:border-white/5">
+                                        <div className="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
+                                            <Quote className="h-3 w-3" /> Example Usage
+                                        </div>
+                                        <div className="space-y-4">
+                                            <p className="text-lg text-gray-700 dark:text-gray-300 font-serif italic">
+                                                "{activeWord.exampleSentence.split(new RegExp(`(${activeWord.word})`, 'gi')).map((part, i) =>
+                                                    part.toLowerCase() === activeWord.word.toLowerCase()
+                                                        ? <span key={i} className="text-blue-600 dark:text-blue-400 font-semibold bg-blue-50 dark:bg-blue-500/10 px-1 rounded">{part}</span>
+                                                        : part
+                                                )}"
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {/* Synonyms & Collocations */}
+                                    <div className="grid grid-cols-2 gap-8 mt-8 pt-8 border-t border-gray-100 dark:border-white/5">
+                                        {activeWord.synonyms && activeWord.synonyms.length > 0 && (
+                                            <div>
+                                                <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Synonyms</div>
+                                                <div className="flex flex-wrap gap-2">
+                                                    {activeWord.synonyms.map((syn, i) => (
+                                                        <span key={i} className="px-3 py-1.5 bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 text-sm font-medium rounded-lg border border-transparent hover:border-gray-200 dark:hover:border-white/10">
+                                                            {syn.word}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+                                        {activeWord.collocations && activeWord.collocations.length > 0 && (
+                                            <div>
+                                                <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Collocations</div>
+                                                <div className="flex flex-wrap gap-2">
+                                                    {activeWord.collocations.map((col, i) => (
+                                                        <span key={i} className="px-3 py-1.5 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 text-sm font-medium rounded-lg">
+                                                            ~ {col.replace(activeWord.word, "").trim() || col}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Exercise Hub */}
+                            <div className="bg-white dark:bg-card rounded-3xl border border-gray-200 dark:border-white/5 shadow-sm p-6">
+                                <div className="flex items-center justify-between mb-4">
+                                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">Exercise Hub</h3>
+                                    <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400">
+                                        3 Available
+                                    </Badge>
+                                </div>
+                                <div className="grid grid-cols-3 gap-4">
+                                    <button
+                                        onClick={() => onStartExercise("synonym")}
+                                        className="flex flex-col items-center justify-center p-4 rounded-2xl bg-gray-50 dark:bg-white/5 hover:bg-blue-50 dark:hover:bg-blue-500/10 border border-transparent hover:border-blue-200 dark:hover:border-blue-500/20 transition-all group"
+                                    >
+                                        <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400 mb-2 group-hover:scale-110 transition-transform">
+                                            <Link2 className="h-4 w-4" />
+                                        </div>
+                                        <span className="font-bold text-gray-900 dark:text-white mb-0.5 text-sm">Collocation Match</span>
+                                        <span className="text-[10px] text-gray-500">Connect word pairs</span>
+                                    </button>
+                                    <button
+                                        onClick={() => onStartExercise("tetris")}
+                                        className="flex flex-col items-center justify-center p-4 rounded-2xl bg-gray-50 dark:bg-white/5 hover:bg-purple-50 dark:hover:bg-purple-500/10 border border-transparent hover:border-purple-200 dark:hover:border-purple-500/20 transition-all group"
+                                    >
+                                        <div className="w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center text-purple-600 dark:text-purple-400 mb-2 group-hover:scale-110 transition-transform">
+                                            <PenTool className="h-4 w-4" />
+                                        </div>
+                                        <span className="font-bold text-gray-900 dark:text-white mb-0.5 text-sm">Usage Practice</span>
+                                        <span className="text-[10px] text-gray-500">Fill in the blanks</span>
+                                    </button>
+                                    <button
+                                        onClick={() => onStartExercise("speak")}
+                                        className="flex flex-col items-center justify-center p-4 rounded-2xl bg-gray-50 dark:bg-white/5 hover:bg-orange-50 dark:hover:bg-orange-500/10 border border-transparent hover:border-orange-200 dark:hover:border-orange-500/20 transition-all group"
+                                    >
+                                        <div className="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center text-orange-600 dark:text-orange-400 mb-2 group-hover:scale-110 transition-transform">
+                                            <ArrowLeftRight className="h-4 w-4" />
+                                        </div>
+                                        <span className="font-bold text-gray-900 dark:text-white mb-0.5 text-sm">Spelling Bee</span>
+                                        <span className="text-[10px] text-gray-500">Test your spelling</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="flex items-center justify-center h-full text-gray-400">
+                            Select a word to view details
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

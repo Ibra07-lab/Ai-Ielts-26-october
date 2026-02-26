@@ -22,6 +22,7 @@ class TopicAnalysis(BaseModel):
     category: str = Field(..., description="Type: Grammar, Vocabulary, Coherence, Task Response")
     description: str = Field(..., description="What exactly to study (e.g. 'Using Not Only/But Also for emphasis')")
     why_it_matters: str = Field(..., description="The specific score benefit (e.g. 'Boosts GRA complexity')")
+    evidence_from_essay: Optional[str] = Field(None, description="A specific sentence from the student's essay that demonstrates this weakness")
 
 
 
@@ -251,6 +252,14 @@ class MicroDrill(BaseModel):
         None,
         description="Alternative version if student wants variety"
     )
+
+    @field_validator('practice_content', mode='before')
+    @classmethod
+    def coerce_list_to_string(cls, v):
+        """LLM sometimes returns a list of sentences instead of a single string."""
+        if isinstance(v, list):
+            return "\n".join(str(item) for item in v)
+        return v
 
 
 # ============================================================================

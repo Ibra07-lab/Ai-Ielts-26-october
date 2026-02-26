@@ -6,7 +6,7 @@ const ListeningPracticeCard = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="relative group w-full max-w-sm mx-auto h-full">
+        <div className="relative group w-full mx-auto h-full">
             {/* Container */}
             <div
                 onClick={() => navigate('/listening')}

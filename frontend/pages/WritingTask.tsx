@@ -25,49 +25,49 @@ import { AnalysisLoader } from "@/components/ui/analysis-loader";
 // Mock Data for Writing Tests
 const writingTests = [
   // --- Task 1 Tests (20) ---
-  { id: 1, title: "Test 1", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/line_graph_internet.png", chartType: "Line Graph" },
-  { id: 3, title: "Test 2", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Easy", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/bar_chart_teenagers.png", chartType: "Bar Chart" },
-  { id: 5, title: "Test 3", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/task1_bar_water_use_2010_2020.png", chartType: "Bar Chart" },
-  { id: 7, title: "Test 4", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Hard", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/transport_commuters.png", chartType: "Line Graph" },
-  { id: 9, title: "Test 5", subtitle: "Test 20: Mixed Charts", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/energy_consumption_costs.png", chartType: "Mixed Chart" },
-  { id: 10, title: "Test 6", subtitle: "Academic Task 1", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, chartType: "Table", component: "CropYieldTable" },
-  { id: 11, title: "Test 7", subtitle: "Cinema Attendance", type: "Task 1", difficulty: "Hard", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/cinema_attendance_age.png", chartType: "Line Graph" },
-  { id: 12, title: "Test 8", subtitle: "Ocean Temperature", type: "Task 1", difficulty: "Hard", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/ocean_temp_anomalies.png", chartType: "Dual Line Graph" },
-  { id: 13, title: "Test 9", subtitle: "Screen Time", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/screen_time_comparison.png", chartType: "Dual Axis Graph" },
-  { id: 14, title: "Test 10", subtitle: "Carbon Emissions", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/carbon_emissions_sector.png", chartType: "Bar Chart" },
-  { id: 15, title: "Test 11", subtitle: "University Apps", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/university_applications_uk.png", chartType: "Bar Chart" },
-  { id: 16, title: "Test 12", subtitle: "Waste Composition", type: "Task 1", difficulty: "Hard", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/waste_composition_cities.png", chartType: "Stacked Bar Chart" },
-  { id: 17, title: "Test 13", subtitle: "Government Budget", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/government_budget_allocation.png", chartType: "Pie Chart" },
-  { id: 18, title: "Test 14", subtitle: "Tourist Spending", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/tourist_spending_patterns.png", chartType: "Pie Chart" },
-  { id: 19, title: "Test 15", subtitle: "Marine Pollution", type: "Task 1", difficulty: "Hard", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/marine_pollution_sources.png", chartType: "Pie Chart" },
-  { id: 20, title: "Test 16", subtitle: "Healthcare Metrics", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/healthcare_metrics_table.png", chartType: "Table" },
-  { id: 21, title: "Test 17", subtitle: "Museum Statistics", type: "Task 1", difficulty: "Hard", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/museum_statistics_table.png", chartType: "Table" },
-  { id: 22, title: "Test 18", subtitle: "Rainwater Harvesting", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/rainwater_harvesting_diagram.png", chartType: "Process Diagram" },
-  { id: 23, title: "Test 19", subtitle: "Coffee Production", type: "Task 1", difficulty: "Medium", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/coffee_production_simple.png", chartType: "Process Diagram" },
-  { id: 24, title: "Test 20", subtitle: "Tech Access", type: "Task 1", difficulty: "Easy", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/tech_access_bar_chart.png", chartType: "Bar Chart" },
+  { id: 1, title: "Test 1", subtitle: "Academic Task 1", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/line_graph_internet.png", chartType: "Line Graph" },
+  { id: 3, title: "Test 2", subtitle: "Academic Task 1", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/bar_chart_teenagers.png", chartType: "Bar Chart" },
+  { id: 5, title: "Test 3", subtitle: "Academic Task 1", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/task1_bar_water_use_2010_2020.png", chartType: "Bar Chart" },
+  { id: 7, title: "Test 4", subtitle: "Academic Task 1", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/transport_commuters.png", chartType: "Line Graph" },
+  { id: 9, title: "Test 5", subtitle: "Test 20: Mixed Charts", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/energy_consumption_costs.png", chartType: "Mixed Chart" },
+  { id: 10, title: "Test 6", subtitle: "Academic Task 1", type: "Task 1", questions: 1, time: 20, taskType: 1, chartType: "Table", component: "CropYieldTable" },
+  { id: 11, title: "Test 7", subtitle: "Cinema Attendance", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/cinema_attendance_age.png", chartType: "Line Graph" },
+  { id: 12, title: "Test 8", subtitle: "Ocean Temperature", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/ocean_temp_anomalies.png", chartType: "Dual Line Graph" },
+  { id: 13, title: "Test 9", subtitle: "Screen Time", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/screen_time_comparison.png", chartType: "Dual Axis Graph" },
+  { id: 14, title: "Test 10", subtitle: "Carbon Emissions", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/carbon_emissions_sector.png", chartType: "Bar Chart" },
+  { id: 15, title: "Test 11", subtitle: "University Apps", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/university_applications_uk.png", chartType: "Bar Chart" },
+  { id: 16, title: "Test 12", subtitle: "Waste Composition", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/waste_composition_cities.png", chartType: "Stacked Bar Chart" },
+  { id: 17, title: "Test 13", subtitle: "Government Budget", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/government_budget_allocation.png", chartType: "Pie Chart" },
+  { id: 18, title: "Test 14", subtitle: "Tourist Spending", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/tourist_spending_patterns.png", chartType: "Pie Chart" },
+  { id: 19, title: "Test 15", subtitle: "Marine Pollution", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/marine_pollution_sources.png", chartType: "Pie Chart" },
+  { id: 20, title: "Test 16", subtitle: "Healthcare Metrics", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/healthcare_metrics_table.png", chartType: "Table" },
+  { id: 21, title: "Test 17", subtitle: "Museum Statistics", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/museum_statistics_table.png", chartType: "Table" },
+  { id: 22, title: "Test 18", subtitle: "Rainwater Harvesting", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/rainwater_harvesting_diagram.png", chartType: "Process Diagram" },
+  { id: 23, title: "Test 19", subtitle: "Coffee Production", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/coffee_production_simple.png", chartType: "Process Diagram" },
+  { id: 24, title: "Test 20", subtitle: "Tech Access", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/tech_access_bar_chart.png", chartType: "Bar Chart" },
 
   // --- Task 2 Tests (20) ---
-  { id: 2, title: "Test 1", subtitle: "Homework & Wellbeing", type: "Task 2", difficulty: "Hard", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 4, title: "Test 2", subtitle: "AI Doctors & Nurses", type: "Task 2", difficulty: "Hard", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 6, title: "Test 3", subtitle: "Environmental Regulations", type: "Task 2", difficulty: "Medium", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 8, title: "Test 4", subtitle: "Retirement Policy", type: "Task 2", difficulty: "Easy", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 25, title: "Test 5", subtitle: "Universal Healthcare", type: "Task 2", difficulty: "Medium", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 26, title: "Test 6", subtitle: "Urban vs Regional", type: "Task 2", difficulty: "Hard", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 27, title: "Test 7", subtitle: "Minority Languages", type: "Task 2", difficulty: "Easy", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 28, title: "Test 8", subtitle: "Gap Year Benefits", type: "Task 2", difficulty: "Medium", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 29, title: "Test 9", subtitle: "Urban Overcrowding", type: "Task 2", difficulty: "Hard", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 30, title: "Test 10", subtitle: "Juvenile Delinquency", type: "Task 2", difficulty: "Hard", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 31, title: "Test 11", subtitle: "Screen Addiction", type: "Task 2", difficulty: "Medium", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 32, title: "Test 12", subtitle: "Food Wastage", type: "Task 2", difficulty: "Easy", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 33, title: "Test 13", subtitle: "Electric Vehicles", type: "Task 2", difficulty: "Medium", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 34, title: "Test 14", subtitle: "Private Healthcare", type: "Task 2", difficulty: "Easy", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 35, title: "Test 15", subtitle: "Entrepreneurship", type: "Task 2", difficulty: "Hard", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 36, title: "Test 16", subtitle: "Skilled Migration", type: "Task 2", difficulty: "Medium", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 37, title: "Test 17", subtitle: "Mass Tourism", type: "Task 2", difficulty: "Hard", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 38, title: "Test 18", subtitle: "Urban Cycling", type: "Task 2", difficulty: "Medium", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 39, title: "Test 19", subtitle: "Recidivism Rates", type: "Task 2", difficulty: "Easy", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 40, title: "Test 20", subtitle: "Distance Learning", type: "Task 2", difficulty: "Medium", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 41, title: "Test 21", subtitle: "Children's Freedom", type: "Task 2", difficulty: "Medium", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 2, title: "Test 1", subtitle: "Homework & Wellbeing", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 4, title: "Test 2", subtitle: "AI Doctors & Nurses", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 6, title: "Test 3", subtitle: "Environmental Regulations", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 8, title: "Test 4", subtitle: "Retirement Policy", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 25, title: "Test 5", subtitle: "Universal Healthcare", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 26, title: "Test 6", subtitle: "Urban vs Regional", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 27, title: "Test 7", subtitle: "Minority Languages", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 28, title: "Test 8", subtitle: "Gap Year Benefits", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 29, title: "Test 9", subtitle: "Urban Overcrowding", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 30, title: "Test 10", subtitle: "Juvenile Delinquency", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 31, title: "Test 11", subtitle: "Screen Addiction", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 32, title: "Test 12", subtitle: "Food Wastage", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 33, title: "Test 13", subtitle: "Electric Vehicles", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 34, title: "Test 14", subtitle: "Private Healthcare", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 35, title: "Test 15", subtitle: "Entrepreneurship", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 36, title: "Test 16", subtitle: "Skilled Migration", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 37, title: "Test 17", subtitle: "Mass Tourism", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 38, title: "Test 18", subtitle: "Urban Cycling", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 39, title: "Test 19", subtitle: "Recidivism Rates", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 40, title: "Test 20", subtitle: "Distance Learning", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 41, title: "Test 21", subtitle: "Children's Freedom", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
 ];
 
 
@@ -263,7 +263,10 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
               }))
             ],
             raw_coach_output: coachData,
-            raw_explainer_output: explainData
+            raw_explainer_output: explainData,
+            topic_analysis: coachData.topic_analysis || [],
+            topic_vocabulary: coachData.topic_vocabulary || undefined,
+            coherence_advice: coachData.coherence_advice || undefined
           },
           teacher_feedback_status: 'complete'
         };
@@ -446,7 +449,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
   };
 
   return (
-    <div className="max-w-[95vw] mx-auto space-y-8 pb-32">
+    <div className={isTestStarted ? "max-w-[95vw] mx-auto space-y-8 pb-32" : "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 pb-32"}>
       {/* Hero Section - Only show when not in a test */}
       {!isTestStarted && (
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 to-indigo-700 dark:from-blue-900 dark:to-indigo-900 text-white shadow-xl">
@@ -674,7 +677,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
             <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-8 h-full overflow-hidden pb-6">
 
               {/* Left Column: Prompt & Chart (Flex Column, No page scroll) */}
-              <div className="flex-1 min-w-0 h-full flex flex-col pr-1 gap-4">
+              <div className="lg:w-[45%] flex-shrink-0 min-w-0 h-full flex flex-col pr-1 gap-4">
                 <Card className="flex-1 border-0 shadow-none bg-transparent flex flex-col min-h-0">
                   <div className="flex flex-col h-full gap-4">
                     {/* Collapsible Prompt Info - Compact Header */}
@@ -759,7 +762,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
               </div>
 
               {/* Right Column: Editor Area (Wide & Clean) */}
-              <div className="lg:w-[45%] flex-shrink-0 h-full flex flex-col min-h-0">
+              <div className="flex-1 min-w-0 h-full flex flex-col min-h-0">
 
                 {/* Editor Container (Centered & Constrained) */}
                 <Card className="flex-1 flex flex-col h-full border border-slate-300 dark:border-slate-700 shadow-sm overflow-hidden bg-white dark:bg-slate-900 rounded-xl">

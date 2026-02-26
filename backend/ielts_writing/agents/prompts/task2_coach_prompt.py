@@ -275,25 +275,27 @@ The drill must include:
 
 ## LOGIC CHECK D: THE "TOPIC RECOMMENDER"
 
-**Purpose:** Identify 3-5 key study topics to help the student level up.
+**Purpose:** Identify 3-5 key study topics that directly address the student's weaknesses, with concrete evidence from their essay.
+
+**CRITICAL: Each topic MUST include `evidence_from_essay`** — a specific sentence from the student's essay that demonstrates WHY they need to study this topic. Generic recommendations without evidence are USELESS.
 
 **For Band < 6.5 Students (Foundational):**
 Focus on core mechanisms. Ensure a mix: 1 Grammar, 1 Structure, 1 Vocabulary topic.
-- "Paragraph Structure" (TR) -> Desc: "Write clear Topic Sentences" -> Why: "Ensures paragraphs have a central focus"
-- "Complex Sentences" (GRA) -> Desc: "Practice 'Although' and 'While' clauses" -> Why: "Boosts GRA score range"
-- "Topic Vocabulary" (LR) -> Desc: "Learn 5 collocations for this topic" -> Why: "Avoids repetition and increases precision"
+- "Paragraph Structure" (TR) -> Desc: "Write clear Topic Sentences" -> Why: "Ensures paragraphs have a central focus" -> Evidence: Quote their weakest topic sentence
+- "Complex Sentences" (GRA) -> Desc: "Practice 'Although' and 'While' clauses" -> Why: "Boosts GRA score range" -> Evidence: Quote a simple sentence that should be complex
+- "Topic Vocabulary" (LR) -> Desc: "Learn 5 collocations for this topic" -> Why: "Avoids repetition and increases precision" -> Evidence: Quote a sentence with basic/repeated words
 
 **For Band >= 7.5 Students (Advanced):**
 Focus on nuance, style, and flow. DO NOT suggest basic grammar.
-- "Inversion & Cleft Sentences" (GRA) -> Desc: "Master inversion (e.g. 'Never have I...')" -> Why: "Demonstrates stylistic control for Band 9"
-- "Nominalization" (GRA/LR) -> Desc: "Turn verbs into nouns for academic tone" -> Why: "Increases formality and density"
-- "Advanced Referencing" (CC) -> Desc: "Use 'This view' instead of 'It'" -> Why: "Creates seamless cohesion"
-- "Collocation Precision" (LR) -> Desc: "Use precise adj+noun pairings" -> Why: "Native-like fluency"
+- "Inversion & Cleft Sentences" (GRA) -> Desc: "Master inversion (e.g. 'Never have I...')" -> Why: "Demonstrates stylistic control for Band 9" -> Evidence: Quote where inversion would elevate their writing
+- "Nominalization" (GRA/LR) -> Desc: "Turn verbs into nouns for academic tone" -> Why: "Increases formality and density" -> Evidence: Quote a verb-heavy sentence
+- "Advanced Referencing" (CC) -> Desc: "Use 'This view' instead of 'It'" -> Why: "Creates seamless cohesion" -> Evidence: Quote a vague pronoun reference
 
 **Output Format:**
 Populate the `topic_analysis` list with 3-5 topics.
 IMPORTANT: Try to select at least one topic from Grammar (GRA), Vocabulary (LR), and Coherence (CC) if relevant weaknesses exist. Do not output only Coherence topics.
 `count` should be a priority score (8-10 for critical, 5-7 for secondary).
+`evidence_from_essay` MUST be an actual sentence from the student's essay — this is what makes the recommendation actionable.
 
 ---
 
@@ -410,11 +412,28 @@ You must output a single valid JSON object following this EXACT structure:
   },
   "topic_analysis": [
     {
-      "topic": "<Specific Topic e.g. Inversion or Collocations>",
-      "count": 5, // Priority level 1-10
-      "category": "<Grammar/Vocabulary/Coherence/Task Response>",
-      "description": "<What exactly to study (e.g. 'Using Not Only/But Also')>",
-      "why_it_matters": "<Specific score benefit (e.g. 'Boosts GRA complexity')>"
+      "topic": "Complex Sentence Structures",
+      "count": 9,
+      "category": "Grammar",
+      "description": "Practice combining ideas using 'although', 'while', and relative clauses to show grammatical range",
+      "why_it_matters": "Your GRA score is capped at 6.0 because most sentences use Subject-Verb-Object pattern. Complex structures push you to Band 7+.",
+      "evidence_from_essay": "Technology is important. It helps people in many ways."
+    },
+    {
+      "topic": "Cohesive Referencing",
+      "count": 7,
+      "category": "Coherence",
+      "description": "Replace mechanical linkers (Furthermore, Moreover) with demonstrative references (This approach, Such measures)",
+      "why_it_matters": "Starting 4 out of 8 sentences with 'Furthermore/Moreover' signals Band 6 cohesion to examiners.",
+      "evidence_from_essay": "Furthermore, technology can help students learn faster. Moreover, it provides access to information."
+    },
+    {
+      "topic": "Topic-Specific Collocations",
+      "count": 6,
+      "category": "Vocabulary",
+      "description": "Replace basic words with precise academic collocations related to your essay topic",
+      "why_it_matters": "Using 'good' and 'bad' repeatedly limits your Lexical Resource to Band 5-6 range.",
+      "evidence_from_essay": "Technology has good effects on education and bad effects on health."
     }
   ],
   "coherence_advice": {

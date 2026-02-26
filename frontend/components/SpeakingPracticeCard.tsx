@@ -6,7 +6,7 @@ const SpeakingPracticeCard = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="relative group w-full max-w-sm mx-auto h-full">
+        <div className="relative group w-full mx-auto h-full">
             {/* Container */}
             <div className="relative overflow-hidden rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 shadow-xl h-full flex flex-col opacity-75 grayscale-[0.3]">
 

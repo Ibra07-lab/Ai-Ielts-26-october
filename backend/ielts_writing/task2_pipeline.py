@@ -6,9 +6,12 @@ Orchestrates all three Task 2 agents in sequence:
 2. Explainer (Agent 2): Generates feedback → ExplainerOutput
 3. Coach (Agent 3): Creates action plan → CoachOutput
 
+Each agent call is offloaded to a thread pool via run_in_executor
+so that the pipeline does NOT block FastAPI's event loop.
+
 Usage:
     pipeline = Task2Pipeline()
-    result = pipeline.evaluate_essay(essay, question)
+    result = await pipeline.evaluate_essay(essay, question)
     
     # Access results
     print(result["evaluation"].band_scores.overall)
@@ -18,6 +21,9 @@ Usage:
 
 from __future__ import annotations
 
+import asyncio
+import logging
+from concurrent.futures import ThreadPoolExecutor
 from typing import TypedDict
 
 from ielts_writing.schemas.task2 import IELTSEvaluation
@@ -27,6 +33,11 @@ from ielts_writing.schemas.task2_coach import CoachOutput
 from .agents.examiner.task2_examiner import Task2Examiner
 from .agents.explainer.task2_explainer import Task2Explainer
 from .agents.coach.task2_coach import Task2Coach
+
+logger = logging.getLogger(__name__)
+
+# Thread pool for offloading sync LLM calls
+_executor = ThreadPoolExecutor(max_workers=4)
 
 
 class PipelineResult(TypedDict):
@@ -44,6 +55,9 @@ class Task2Pipeline:
     - Strict, evidence-based scoring (Examiner)
     - Actionable corrections and rewrites (Explainer)
     - Focused coaching with "One Big Change" (Coach)
+    
+    All agent calls are offloaded to a thread pool so that
+    the FastAPI event loop is never blocked.
     """
 
     def __init__(self, model: str | None = None):
@@ -56,9 +70,12 @@ class Task2Pipeline:
         self.explainer = Task2Explainer(model=model)
         self.coach = Task2Coach(model=model)
 
-    def evaluate_essay(self, essay: str, question: str) -> PipelineResult:
+    async def evaluate_essay(self, essay: str, question: str) -> PipelineResult:
         """
-        Run the complete evaluation pipeline.
+        Run the complete evaluation pipeline (async).
+        
+        Each agent call is offloaded to a thread pool to avoid
+        blocking the FastAPI event loop during ~15s LLM calls.
         
         Args:
             essay: The student's essay text
@@ -67,29 +84,39 @@ class Task2Pipeline:
         Returns:
             dict with 'evaluation', 'explanation', and 'coaching' keys
         """
-        # 1. Evaluate (Strict Scoring)
-        print("🔍 1. Running Examiner...")
-        evaluation = self.examiner.evaluate(essay, question)
-        eval_dict = evaluation.model_dump()
-        print(f"   → Overall Band: {evaluation.band_scores.overall}")
+        loop = asyncio.get_event_loop()
 
-        # 2. Explain (Edits & Rewrites)
-        print("📝 2. Running Explainer...")
-        explanation = self.explainer.explain(essay, question, eval_dict)
-        explainer_dict = explanation.model_dump()
-        print(f"   → Top Priority: {explanation.priority_summary[0].area if explanation.priority_summary else 'N/A'}")
-
-        # 3. Coach (Action Plan)
-        print("🎯 3. Running Coach...")
-        coaching = self.coach.generate_plan(
-            examiner_data=eval_dict, 
-            explainer_data=explainer_dict,
-            essay=essay,
-            question=question
+        # 1. Evaluate (Strict Scoring) — offload to thread
+        logger.info("🔍 1. Running Examiner...")
+        evaluation = await loop.run_in_executor(
+            _executor, self.examiner.evaluate, essay, question
         )
-        print(f"   → Focus: {coaching.the_one_big_change.visual_reminder}")
+        eval_dict = evaluation.model_dump()
+        logger.info(f"   → Overall Band: {evaluation.band_scores.overall}")
 
-        print("✅ Pipeline complete!")
+        # 2. Explain (Edits & Rewrites) — offload to thread
+        logger.info("📝 2. Running Explainer...")
+        explanation = await loop.run_in_executor(
+            _executor, self.explainer.explain, essay, question, eval_dict
+        )
+        explainer_dict = explanation.model_dump()
+        logger.info(f"   → Top Priority: {explanation.priority_summary[0].area if explanation.priority_summary else 'N/A'}")
+
+        # 3. Coach (Action Plan) — offload to thread
+        # Note: Coach depends on Explainer output, so these cannot be parallelized.
+        logger.info("🎯 3. Running Coach...")
+        coaching = await loop.run_in_executor(
+            _executor,
+            lambda: self.coach.generate_plan(
+                examiner_data=eval_dict,
+                explainer_data=explainer_dict,
+                essay=essay,
+                question=question,
+            )
+        )
+        logger.info(f"   → Focus: {coaching.the_one_big_change.visual_reminder}")
+
+        logger.info("✅ Pipeline complete!")
 
         return {
             "evaluation": evaluation,
@@ -97,13 +124,13 @@ class Task2Pipeline:
             "coaching": coaching
         }
 
-    def evaluate_essay_dict(self, essay: str, question: str) -> dict:
+    async def evaluate_essay_dict(self, essay: str, question: str) -> dict:
         """
-        Run pipeline and return all results as dicts.
+        Run pipeline and return all results as dicts (async).
         
         Useful for JSON serialization.
         """
-        result = self.evaluate_essay(essay, question)
+        result = await self.evaluate_essay(essay, question)
         return {
             "evaluation": result["evaluation"].model_dump(),
             "explanation": result["explanation"].model_dump(),
@@ -159,9 +186,9 @@ class Task2Pipeline:
 # CONVENIENCE FUNCTION
 # ============================================================
 
-def run_task2_pipeline(essay: str, question: str, model: str | None = None) -> PipelineResult:
+async def run_task2_pipeline(essay: str, question: str, model: str | None = None) -> PipelineResult:
     """
-    Quick function to run the complete Task 2 pipeline.
+    Quick function to run the complete Task 2 pipeline (async).
     
     Args:
         essay: The student's essay
@@ -172,4 +199,4 @@ def run_task2_pipeline(essay: str, question: str, model: str | None = None) -> P
         PipelineResult with evaluation, explanation, and coaching
     """
     pipeline = Task2Pipeline(model=model)
-    return pipeline.evaluate_essay(essay, question)
+    return await pipeline.evaluate_essay(essay, question)

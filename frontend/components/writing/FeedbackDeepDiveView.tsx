@@ -285,39 +285,35 @@ export function FeedbackDeepDiveView({
         <div className="flex flex-col h-full bg-[#0f172a] text-slate-100 overflow-hidden">
 
             {/* TOP BAR: Scores & Criteria Selection */}
-            <div className="h-20 shrink-0 bg-[#0f172a] border-b border-slate-800 flex items-center px-6 justify-between z-30">
+            <div className="h-14 shrink-0 bg-[#0f172a] border-b border-slate-800 flex items-center px-4 justify-between z-30">
                 {/* Left: Back Button + Overall Score */}
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-3">
                     <Button
                         variant="ghost"
                         onClick={onBack}
-                        className="gap-2 text-slate-400 hover:text-white hover:bg-slate-800"
+                        className="gap-2 text-slate-400 hover:text-white hover:bg-slate-800 h-8 px-3 text-xs"
                     >
-                        <ArrowLeft className="w-4 h-4" />
-                        Back to Editor
+                        <ArrowLeft className="w-3.5 h-3.5" />
+                        Back
                     </Button>
 
-                    <div className="h-10 w-px bg-slate-800" />
+                    <div className="h-7 w-px bg-slate-800" />
 
-                    <div>
-                        <h2 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Essay Analysis</h2>
-                        <div className="flex items-baseline gap-3">
-                            <span className="text-xl font-black text-white tracking-tight">Band {evaluation.overall_band}</span>
-                            <span className="text-xs font-medium text-slate-500 bg-slate-800/50 px-2 py-0.5 rounded-full border border-slate-700">{evaluation.word_count} Words</span>
-                        </div>
+                    <div className="flex items-baseline gap-2">
+                        <span className="text-base font-black text-white tracking-tight">Band {evaluation.overall_band}</span>
+                        <span className="text-[10px] font-medium text-slate-500 bg-slate-800/50 px-2 py-0.5 rounded-full border border-slate-700">{evaluation.word_count}w</span>
                     </div>
 
-                    <div className="h-10 w-px bg-slate-800 mx-2" />
+                    <div className="h-7 w-px bg-slate-800" />
 
                     {/* Criteria Tabs - Horizontal */}
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1">
                         {ORDERED_CRITERIA.map(crit => {
                             const config = CRITERIA_CONFIG[crit];
                             const score = evaluation.criterion_scores.find(s => s.criterion === crit);
                             const isActive = currentCriterion === crit;
                             const scoreVal = score?.band || 0;
 
-                            // Color logic
                             let scoreColor = "text-rose-400";
                             if (scoreVal >= 7) scoreColor = "text-emerald-400";
                             else if (scoreVal >= 6) scoreColor = "text-amber-400";
@@ -327,21 +323,18 @@ export function FeedbackDeepDiveView({
                                     key={crit}
                                     onClick={() => onCriterionChange(crit)}
                                     className={cn(
-                                        "flex flex-col justify-center px-4 py-2 rounded-lg border transition-all duration-200 min-w-[140px]",
+                                        "flex items-center gap-2 px-3 py-1.5 rounded-md border transition-all duration-200",
                                         isActive
-                                            ? "bg-slate-800 border-indigo-500/50 shadow-lg shadow-indigo-900/10"
+                                            ? "bg-slate-800 border-slate-600 shadow-md"
                                             : "bg-transparent border-transparent hover:bg-slate-800/50"
                                     )}
                                 >
-                                    <div className="flex justify-between items-center w-full gap-3">
-                                        <span className={cn("text-xs font-bold whitespace-nowrap", isActive ? "text-white" : "text-slate-400")}>
-                                            {config.label}
-                                        </span>
-                                        <span className={cn("text-sm font-mono font-black", scoreColor)}>
-                                            {scoreVal}
-                                        </span>
-                                    </div>
-                                    <div className={cn("h-0.5 w-full mt-1.5 rounded-full transition-all", isActive ? "bg-indigo-500" : "bg-transparent")} />
+                                    <span className={cn("text-[11px] font-bold whitespace-nowrap", isActive ? "text-white" : "text-slate-400")}>
+                                        {config.label}
+                                    </span>
+                                    <span className={cn("text-xs font-mono font-black", scoreColor)}>
+                                        {scoreVal}
+                                    </span>
                                 </button>
                             );
                         })}
@@ -349,7 +342,7 @@ export function FeedbackDeepDiveView({
                 </div>
 
                 {/* Right: Legend */}
-                <div className="flex gap-4 text-[10px] font-bold uppercase tracking-widest pl-6 border-l border-slate-800 h-10 items-center">
+                <div className="flex gap-3 text-[10px] font-bold uppercase tracking-widest pl-4 border-l border-slate-800 items-center">
                     <span className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> Strength</span>
                     <span className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-red-500" /> Weakness</span>
                 </div>
@@ -394,7 +387,7 @@ export function FeedbackDeepDiveView({
                         </p>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto custom-scrollbar p-8">
+                    <div className="flex-1 overflow-y-auto custom-scrollbar px-5 py-4">
                         <div className="leading-relaxed text-lg text-slate-200 font-serif">
                             <HighlightedEssay
                                 essayText={essay}
@@ -418,81 +411,79 @@ export function FeedbackDeepDiveView({
 
                 {/* COLUMN 2: RIGHT FEEDBACK (60%) */}
                 <div className="w-[60%] bg-[#111827] flex flex-col min-h-0 overflow-hidden relative">
-                    {/* Feedback Header - fixed at top of flex column */}
-                    <div className="p-6 border-b border-slate-800 bg-[#1e293b]/30 shrink-0 z-20 backdrop-blur-sm space-y-6">
-                        {/* Header Row */}
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <h3 className="font-bold text-white text-xl flex items-center gap-3">
-                                    {Icon && <div className="p-2 rounded-lg bg-indigo-500/20"><Icon className="w-5 h-5 text-indigo-400" /></div>}
-                                    {CRITERIA_CONFIG[currentCriterion].label}
-                                </h3>
-                                <p className="text-xs text-slate-400 pl-[52px]">{CRITERIA_CONFIG[currentCriterion].description}</p>
-                            </div>
-                            <div className="flex flex-col items-end">
-                                <div className={cn(
-                                    "px-4 py-1 rounded-full text-sm font-black border",
-                                    currentScore >= 7 ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/50" :
-                                        currentScore >= 6 ? "bg-amber-500/10 text-amber-400 border-amber-500/50" :
-                                            "bg-rose-500/10 text-rose-400 border-rose-500/50"
-                                )}>
-                                    Band {currentScore}
+                    {/* Feedback Header - compact */}
+                    <div className="px-5 py-2.5 border-b border-slate-800 bg-[#1e293b]/30 shrink-0 z-20 flex items-center justify-between gap-4">
+                        {/* Left: Criterion label + score badge */}
+                        <div className="flex items-center gap-3 min-w-0">
+                            {Icon && <Icon className="w-4 h-4 text-slate-400 shrink-0" />}
+                            <div className="min-w-0">
+                                <div className="flex items-center gap-2">
+                                    <h3 className="font-black text-white text-sm leading-tight">{CRITERIA_CONFIG[currentCriterion].label}</h3>
+                                    <div className={cn(
+                                        "px-2 py-0.5 rounded text-xs font-black shrink-0",
+                                        currentScore >= 7 ? "bg-emerald-500/15 text-emerald-400" :
+                                            currentScore >= 6 ? "bg-amber-500/15 text-amber-400" :
+                                                "bg-rose-500/15 text-rose-400"
+                                    )}>
+                                        B{currentScore}
+                                    </div>
                                 </div>
+                                <p className="text-[10px] text-slate-500 leading-tight truncate">{CRITERIA_CONFIG[currentCriterion].description}</p>
                             </div>
                         </div>
 
-                        {/* Tabs Row */}
-                        <div className="flex bg-slate-900/50 p-1 rounded-lg border border-slate-800 w-fit">
+                        {/* Right: Tabs */}
+                        <div className="flex bg-slate-900/60 p-0.5 rounded-lg border border-slate-800 shrink-0">
                             <button
                                 onClick={() => setActiveTab('report')}
                                 className={cn(
-                                    "px-4 py-1.5 rounded-md text-xs font-bold transition-all flex items-center gap-2",
+                                    "px-3 py-1 rounded-md text-[11px] font-bold transition-all flex items-center gap-1.5",
                                     activeTab === 'report'
-                                        ? "bg-indigo-500 text-white shadow-lg shadow-indigo-500/25"
+                                        ? "bg-indigo-500 text-white shadow-md"
                                         : "text-slate-400 hover:text-slate-200 hover:bg-slate-800"
                                 )}
                             >
-                                <Layout className="w-3.5 h-3.5" /> Report
+                                <Layout className="w-3 h-3" /> Report
                             </button>
                             <button
                                 onClick={() => setActiveTab('strengths')}
                                 className={cn(
-                                    "px-4 py-1.5 rounded-md text-xs font-bold transition-all flex items-center gap-2",
+                                    "px-3 py-1 rounded-md text-[11px] font-bold transition-all flex items-center gap-1.5",
                                     activeTab === 'strengths'
-                                        ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/25"
+                                        ? "bg-emerald-500 text-white shadow-md"
                                         : "text-slate-400 hover:text-slate-200 hover:bg-slate-800"
                                 )}
                             >
-                                <CheckCircle2 className="w-3.5 h-3.5" /> Strengths
-                                <span className="bg-slate-900/30 px-1.5 py-0.5 rounded text-[10px]">{strengthItems.length}</span>
+                                <CheckCircle2 className="w-3 h-3" /> Strengths
+                                <span className="bg-white/10 px-1 py-px rounded text-[9px]">{strengthItems.length}</span>
                             </button>
                             <button
                                 onClick={() => setActiveTab('issues')}
                                 className={cn(
-                                    "px-4 py-1.5 rounded-md text-xs font-bold transition-all flex items-center gap-2",
+                                    "px-3 py-1 rounded-md text-[11px] font-bold transition-all flex items-center gap-1.5",
                                     activeTab === 'issues'
-                                        ? "bg-rose-500 text-white shadow-lg shadow-rose-500/25"
+                                        ? "bg-rose-500 text-white shadow-md"
                                         : "text-slate-400 hover:text-slate-200 hover:bg-slate-800"
                                 )}
                             >
-                                <AlertTriangle className="w-3.5 h-3.5" /> Issues
-                                <span className="bg-slate-900/30 px-1.5 py-0.5 rounded text-[10px]">{issueItems.length}</span>
+                                <AlertTriangle className="w-3 h-3" /> Issues
+                                <span className="bg-white/10 px-1 py-px rounded text-[9px]">{issueItems.length}</span>
                             </button>
                             <button
                                 onClick={() => setActiveTab('summary')}
                                 className={cn(
-                                    "px-4 py-1.5 rounded-md text-xs font-bold transition-all flex items-center gap-2",
+                                    "px-3 py-1 rounded-md text-[11px] font-bold transition-all flex items-center gap-1.5",
                                     activeTab === 'summary'
-                                        ? "bg-amber-500 text-white shadow-lg shadow-amber-500/25"
+                                        ? "bg-amber-500 text-white shadow-md"
                                         : "text-slate-400 hover:text-slate-200 hover:bg-slate-800"
                                 )}
                             >
-                                <Target className="w-3.5 h-3.5" /> Topics
+                                <Target className="w-3 h-3" /> Topics
                             </button>
                         </div>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6 h-0">
+                    <div className="flex-1 overflow-y-auto custom-scrollbar p-4 space-y-4 h-0">
 
                         {/* TAB: REPORT */}
                         {activeTab === 'report' && (
@@ -578,8 +569,22 @@ export function FeedbackDeepDiveView({
                                                             {currentCriterion === 'coherence_cohesion' && score >= 7 && "Ensure seamless paragraph transitions and use referencing naturally (this, such, these). Cohesion should be effortless."}
                                                             {currentCriterion === 'lexical_resource' && score < 7 && "Expand your vocabulary range with less common words. Focus on collocations and avoid basic word choices like 'very good'."}
                                                             {currentCriterion === 'lexical_resource' && score >= 7 && "Use more sophisticated vocabulary with natural collocations. Show precise word choice and awareness of style throughout."}
-                                                            {currentCriterion === 'grammatical_range_accuracy' && score < 7 && "Use more complex sentence structures (relative clauses, conditionals). Reduce basic errors in articles and tenses."}
-                                                            {currentCriterion === 'grammatical_range_accuracy' && score >= 7 && "Increase error-free complex sentences. Show consistent accuracy in advanced structures like inversion and emphasis."}
+                                                            {currentCriterion === 'grammatical_range_accuracy' && (() => {
+                                                                const gf = coaching.raw_explainer_output?.grammar_feedback;
+                                                                if (gf?.grammar_priority) {
+                                                                    const priorityMsg = gf.grammar_priority === 'critical'
+                                                                        ? `Critical: Fix the ${gf.pattern_lessons?.length || 0} systematic error pattern(s) below — they are directly capping your score.`
+                                                                        : gf.grammar_priority === 'important'
+                                                                            ? `Focus on the ${gf.pattern_lessons?.length || 0} grammar pattern(s) identified below. Fixing them can push your score up by 0.5-1.0 bands.`
+                                                                            : gf.grammar_priority === 'minor'
+                                                                                ? "Your grammar is mostly accurate. Focus on sentence complexity upgrades below for the next band."
+                                                                                : "Your grammar control is strong. See complexity suggestions to demonstrate range.";
+                                                                    return priorityMsg;
+                                                                }
+                                                                return score < 7
+                                                                    ? "Use more complex sentence structures (relative clauses, conditionals). Reduce basic errors in articles and tenses."
+                                                                    : "Increase error-free complex sentences. Show consistent accuracy in advanced structures like inversion and emphasis.";
+                                                            })()}
                                                         </p>
                                                     </div>
                                                 )}
@@ -604,7 +609,7 @@ export function FeedbackDeepDiveView({
                                                 <div className="p-1.5 bg-slate-700 rounded text-slate-300"><FileText className="w-4 h-4" /></div>
                                                 <span className="text-sm font-bold text-slate-300 uppercase tracking-wider">Detailed Analysis</span>
                                             </div>
-                                            <div className="p-5 grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div className="p-3 grid grid-cols-1 md:grid-cols-2 gap-3">
                                                 {/* Weak Spots */}
                                                 {hasWeakSpots && (
                                                     <div className="space-y-3">
@@ -652,8 +657,8 @@ export function FeedbackDeepDiveView({
                                             <div className="p-1.5 bg-indigo-500 rounded text-white"><Layout className="w-4 h-4" /></div>
                                             <span className="text-sm font-bold text-indigo-300 uppercase tracking-wider">Strategic Focus</span>
                                         </div>
-                                        <div className="p-6 grid grid-cols-2 gap-6">
-                                            <div className="space-y-4 col-span-2">
+                                        <div className="p-4 grid grid-cols-2 gap-4">
+                                            <div className="space-y-3 col-span-2">
                                                 <p className="text-sm text-indigo-200/80 italic border-l-2 border-indigo-500/50 pl-3">
                                                     "{coaching.raw_coach_output.the_one_big_change.why_this_matters_most}"
                                                 </p>
@@ -681,7 +686,7 @@ export function FeedbackDeepDiveView({
                                             <div className="p-1.5 bg-amber-500 rounded text-white"><Layout className="w-4 h-4" /></div>
                                             <span className="text-sm font-bold text-amber-300 uppercase tracking-wider">Cohesion Improvements</span>
                                         </div>
-                                        <div className="p-6 space-y-4">
+                                        <div className="p-4 space-y-3">
                                             {coaching.coherence_issues?.slice(0, 2).map((issue: any, idx: number) => (
                                                 <div key={`coh-${idx}`} className="grid grid-cols-2 gap-4">
                                                     <div className="space-y-2">
@@ -753,15 +758,167 @@ export function FeedbackDeepDiveView({
                                     </div>
                                 )}
 
-                                {/* 4. STRATEGY CARD - Grammar */}
+                                {/* 4a. GRAMMAR PATTERN LESSONS — Grouped error patterns with examples from the essay */}
+                                {currentCriterion === 'grammatical_range_accuracy' && coaching.raw_explainer_output?.grammar_feedback?.pattern_lessons?.length > 0 && (
+                                    <div className="rounded-xl overflow-hidden border border-violet-500/30 bg-gradient-to-br from-violet-900/20 to-purple-900/20 shadow-xl">
+                                        <div className="bg-violet-500/10 p-4 border-b border-violet-500/20 flex items-center gap-2">
+                                            <div className="p-1.5 bg-violet-500 rounded text-white"><PenTool className="w-4 h-4" /></div>
+                                            <span className="text-sm font-bold text-violet-300 uppercase tracking-wider">Grammar Lessons from Your Essay</span>
+                                        </div>
+                                        <div className="p-6 space-y-6">
+                                            {coaching.raw_explainer_output.grammar_feedback.pattern_lessons.map((lesson: any, idx: number) => (
+                                                <div key={`lesson-${idx}`} className="space-y-4">
+                                                    {/* Pattern Header */}
+                                                    <div className="flex items-center gap-3">
+                                                        <span className="bg-violet-500/20 text-violet-300 px-2.5 py-1 rounded-full text-xs font-bold border border-violet-500/30">
+                                                            Pattern {idx + 1}
+                                                        </span>
+                                                        <h4 className="text-sm font-bold text-white">
+                                                            {lesson.pattern_name_friendly || lesson.error_pattern || 'Grammar Pattern'}
+                                                        </h4>
+                                                    </div>
+
+                                                    {/* The Rule */}
+                                                    {lesson.the_rule && (
+                                                        <div className="bg-indigo-950/30 border border-indigo-500/20 rounded-lg p-4">
+                                                            <div className="text-[10px] font-bold text-indigo-400 uppercase mb-2 flex items-center gap-1.5">
+                                                                <BookOpen className="w-3 h-3" /> The Rule
+                                                            </div>
+                                                            <p className="text-sm text-slate-200 leading-relaxed">{lesson.the_rule}</p>
+                                                        </div>
+                                                    )}
+
+                                                    {/* Examples from the essay */}
+                                                    {lesson.examples_from_essay?.length > 0 && (
+                                                        <div className="space-y-3">
+                                                            <div className="text-[10px] font-bold text-slate-400 uppercase">From Your Essay:</div>
+                                                            {lesson.examples_from_essay.map((ex: any, exIdx: number) => (
+                                                                <div key={`ex-${idx}-${exIdx}`} className="grid grid-cols-2 gap-3">
+                                                                    <div className="space-y-1">
+                                                                        <div className="text-[10px] font-bold text-rose-400 uppercase">Your Version</div>
+                                                                        <p className="text-sm text-rose-200/80 bg-rose-950/20 p-3 rounded border border-rose-900/30">
+                                                                            {ex.error_highlighted ? (
+                                                                                <>
+                                                                                    {ex.original?.split(ex.error_highlighted).map((part: string, pi: number, arr: string[]) => (
+                                                                                        <span key={pi}>
+                                                                                            {part}
+                                                                                            {pi < arr.length - 1 && (
+                                                                                                <span className="bg-rose-500/30 text-rose-200 px-1 rounded font-bold underline decoration-wavy decoration-rose-500">
+                                                                                                    {ex.error_highlighted}
+                                                                                                </span>
+                                                                                            )}
+                                                                                        </span>
+                                                                                    ))}
+                                                                                </>
+                                                                            ) : (
+                                                                                <span className="line-through decoration-rose-500/50">"{ex.original}"</span>
+                                                                            )}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div className="space-y-1">
+                                                                        <div className="text-[10px] font-bold text-emerald-400 uppercase">Correct Version</div>
+                                                                        <p className="text-sm text-emerald-100 bg-emerald-950/20 p-3 rounded border border-emerald-900/30">
+                                                                            "{ex.corrected}"
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    )}
+
+                                                    {/* Memory Trick */}
+                                                    {lesson.memory_trick && (
+                                                        <div className="flex items-start gap-2 bg-amber-950/20 border border-amber-500/20 rounded-lg p-3">
+                                                            <Sparkles className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                                                            <div>
+                                                                <div className="text-[10px] font-bold text-amber-400 uppercase mb-1">Memory Trick</div>
+                                                                <p className="text-xs text-amber-100/80">{lesson.memory_trick}</p>
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {/* Divider between lessons */}
+                                                    {idx < coaching.raw_explainer_output.grammar_feedback.pattern_lessons.length - 1 && (
+                                                        <div className="border-t border-slate-700/50 pt-2" />
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* 4b. SENTENCE COMPLEXITY UPGRADES */}
+                                {currentCriterion === 'grammatical_range_accuracy' && coaching.raw_explainer_output?.grammar_feedback?.complexity_suggestions?.length > 0 && (
+                                    <div className="rounded-xl overflow-hidden border border-cyan-500/30 bg-gradient-to-br from-cyan-900/20 to-blue-900/20 shadow-xl">
+                                        <div className="bg-cyan-500/10 p-4 border-b border-cyan-500/20 flex items-center gap-2">
+                                            <div className="p-1.5 bg-cyan-500 rounded text-white"><ArrowRight className="w-4 h-4" /></div>
+                                            <span className="text-sm font-bold text-cyan-300 uppercase tracking-wider">Sentence Complexity Upgrades</span>
+                                            <span className="text-[10px] text-cyan-400/60 ml-auto">Combine simple sentences → Band 7+ structures</span>
+                                        </div>
+                                        <div className="p-6 space-y-5">
+                                            {coaching.raw_explainer_output.grammar_feedback.complexity_suggestions.map((sug: any, idx: number) => (
+                                                <div key={`comp-${idx}`} className="space-y-3 bg-slate-800/20 p-4 rounded-lg border border-slate-700/50">
+                                                    {/* Simple sentences */}
+                                                    <div className="space-y-2">
+                                                        <div className="text-[10px] font-bold text-rose-400 uppercase">Your Simple Sentences</div>
+                                                        {sug.simple_sentences?.map((s: string, si: number) => (
+                                                            <p key={si} className="text-sm text-rose-200/70 bg-rose-950/20 p-2.5 rounded border border-rose-900/20">
+                                                                "{s}"
+                                                            </p>
+                                                        ))}
+                                                    </div>
+
+                                                    {/* Arrow */}
+                                                    <div className="flex justify-center">
+                                                        <div className="flex items-center gap-2 text-cyan-400">
+                                                            <div className="h-px w-8 bg-cyan-500/50" />
+                                                            <ArrowRight className="w-4 h-4" />
+                                                            <span className="text-[10px] font-bold uppercase">Combined</span>
+                                                            <div className="h-px w-8 bg-cyan-500/50" />
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Complex version */}
+                                                    <div className="space-y-1">
+                                                        <div className="text-[10px] font-bold text-emerald-400 uppercase">Band 7+ Version</div>
+                                                        <p className="text-sm text-emerald-100 bg-emerald-950/20 p-3 rounded border border-emerald-900/30 leading-relaxed">
+                                                            "{sug.complex_version}"
+                                                        </p>
+                                                    </div>
+
+                                                    {/* Structures used */}
+                                                    {sug.structures_demonstrated?.length > 0 && (
+                                                        <div className="flex flex-wrap gap-2 mt-1">
+                                                            {sug.structures_demonstrated.map((struct: string, si: number) => (
+                                                                <span key={si} className="px-2 py-1 bg-cyan-500/15 text-cyan-300 text-[11px] rounded-full border border-cyan-500/25 font-medium">
+                                                                    {struct}
+                                                                </span>
+                                                            ))}
+                                                        </div>
+                                                    )}
+
+                                                    {/* Explanation */}
+                                                    {sug.explanation && (
+                                                        <div className="text-xs text-slate-400 flex gap-2 mt-1">
+                                                            <Info className="w-3.5 h-3.5 shrink-0 text-cyan-400 mt-0.5" />
+                                                            <span>{sug.explanation}</span>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* 4c. STRATEGY CARD - Grammar Corrections (micro_feedback fallback) */}
                                 {currentCriterion === 'grammatical_range_accuracy' && coaching.grammar_errors?.length > 0 && (
                                     <div className="rounded-xl overflow-hidden border border-violet-500/30 bg-gradient-to-br from-violet-900/20 to-purple-900/20 shadow-xl">
                                         <div className="bg-violet-500/10 p-4 border-b border-violet-500/20 flex items-center gap-2">
                                             <div className="p-1.5 bg-violet-500 rounded text-white"><Layout className="w-4 h-4" /></div>
-                                            <span className="text-sm font-bold text-violet-300 uppercase tracking-wider">Grammar Corrections</span>
+                                            <span className="text-sm font-bold text-violet-300 uppercase tracking-wider">Sentence-Level Corrections</span>
                                         </div>
                                         <div className="p-6 space-y-4">
-                                            {coaching.grammar_errors.slice(0, 3).map((err: any, idx: number) => (
+                                            {coaching.grammar_errors.slice(0, 5).map((err: any, idx: number) => (
                                                 <div key={`gram-${idx}`} className="space-y-3 bg-slate-800/30 p-4 rounded-lg border border-slate-700/50">
                                                     <div className="grid grid-cols-2 gap-4">
                                                         <div className="space-y-1">
@@ -1002,25 +1159,23 @@ export function FeedbackDeepDiveView({
 
                         {/* TAB: SUMMARY (Topics) */}
                         {activeTab === 'summary' && (
-                            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                                <div className="p-6 bg-slate-900/50 border border-slate-800 rounded-xl text-center">
-                                    <h3 className="text-lg font-bold text-white mb-2">Focus Areas</h3>
-                                    <p className="text-slate-400 text-sm">
-                                        Based on your errors, here are the key topics you should study to improve your score.
-                                    </p>
+                            <div className="space-y-3 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                                <div className="flex items-center gap-2 pb-1 border-b border-slate-800/60">
+                                    <Target className="w-3.5 h-3.5 text-amber-400" />
+                                    <h3 className="text-[11px] font-black text-slate-300 uppercase tracking-widest">Priority Study Areas</h3>
                                 </div>
 
-                                <div className="grid grid-cols-1 gap-4">
+                                <div className="grid grid-cols-1 gap-3">
                                     {/* 1. AGENT-GENERATED TOPICS */}
                                     {coaching.topic_analysis && coaching.topic_analysis.length > 0 && (
-                                        <div className="space-y-4 mb-6">
+                                        <div className="space-y-3">
                                             {coaching.topic_analysis.map((topic, i) => (
-                                                <div key={i} className="flex flex-col gap-3 p-4 bg-[#1e293b]/50 border border-slate-800 rounded-xl hover:border-slate-700 transition-colors">
+                                                <div key={i} className="flex flex-col gap-2 p-3 bg-[#1e293b]/50 border border-slate-800 rounded-lg hover:border-slate-700 transition-colors">
                                                     {/* Header: Score + Title + Category */}
                                                     <div className="flex items-center justify-between">
-                                                        <div className="flex items-center gap-4">
+                                                        <div className="flex items-center gap-3">
                                                             <div className={cn(
-                                                                "w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs",
+                                                                "w-7 h-7 rounded-md flex items-center justify-center font-black text-[11px]",
                                                                 topic.category === 'Grammar' ? "bg-indigo-500/20 text-indigo-400" :
                                                                     topic.category === 'Vocabulary' ? "bg-emerald-500/20 text-emerald-400" :
                                                                         "bg-amber-500/20 text-amber-400"
@@ -1028,18 +1183,21 @@ export function FeedbackDeepDiveView({
                                                                 {topic.count}
                                                             </div>
                                                             <div>
-                                                                <div className="font-bold text-slate-200">{topic.topic}</div>
+                                                                <div className="font-bold text-sm text-slate-200">{topic.topic}</div>
                                                                 <div className="text-[10px] text-slate-500 uppercase tracking-wider">{topic.category}</div>
                                                             </div>
                                                         </div>
-                                                        <div className="flex items-center gap-2 text-xs font-medium text-indigo-400 bg-indigo-500/10 px-3 py-1.5 rounded-full border border-indigo-500/20">
-                                                            Study Topic <ArrowRight className="w-3 h-3" />
-                                                        </div>
+                                                        <span className={cn(
+                                                            "text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded",
+                                                            topic.category === 'Grammar' ? "bg-indigo-500/10 text-indigo-400" :
+                                                                topic.category === 'Vocabulary' ? "bg-emerald-500/10 text-emerald-400" :
+                                                                    "bg-amber-500/10 text-amber-400"
+                                                        )}>{topic.category}</span>
                                                     </div>
 
-                                                    {/* Rich Details: Description + Why It Matters */}
-                                                    {(topic.description || topic.why_it_matters) && (
-                                                        <div className="pl-12 space-y-2">
+                                                    {/* Rich Details: Description + Why It Matters + Evidence */}
+                                                    {(topic.description || topic.why_it_matters || topic.evidence_from_essay) && (
+                                                        <div className="pl-10 space-y-1.5">
                                                             {topic.description && (
                                                                 <p className="text-sm text-slate-300">
                                                                     {topic.description}
@@ -1049,6 +1207,15 @@ export function FeedbackDeepDiveView({
                                                                 <div className="flex items-start gap-2 text-xs text-indigo-300/80 bg-indigo-500/5 p-2 rounded border border-indigo-500/10">
                                                                     <div className="shrink-0 mt-0.5">💡</div>
                                                                     <span><strong>Why it matters:</strong> {topic.why_it_matters}</span>
+                                                                </div>
+                                                            )}
+                                                            {topic.evidence_from_essay && (
+                                                                <div className="flex items-start gap-2 text-xs text-amber-300/80 bg-amber-500/5 p-2.5 rounded border border-amber-500/15">
+                                                                    <div className="shrink-0 mt-0.5">📝</div>
+                                                                    <div>
+                                                                        <strong className="text-amber-400">From your essay:</strong>
+                                                                        <p className="mt-1 italic text-amber-200/70">"{topic.evidence_from_essay}"</p>
+                                                                    </div>
                                                                 </div>
                                                             )}
                                                         </div>

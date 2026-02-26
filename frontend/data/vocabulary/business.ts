@@ -924,6 +924,7 @@ export const businessTopicData: TopicData = {
                     { item_id: 5, gap_sentence: "Allowing staff to work from home can create ___, because employees gain flexibility and employers save on office costs.", answer: "a win-win situation" }
                 ]
             }
-        ]
+        ],
+        speakToUnlock: []
     }
 };

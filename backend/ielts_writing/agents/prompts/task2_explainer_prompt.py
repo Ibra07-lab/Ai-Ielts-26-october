@@ -196,29 +196,38 @@ If Agent 1 flagged `vocabulary_range` as "limited" or "adequate," also identify 
 
 | Error Type | Action |
 |------------|--------|
-| `MINIMAL` | Skip this section. Student doesn't need grammar coaching. |
-| `MOSTLY_SLIPS` | Light touch. Note 1-2 patterns, praise complexity attempts. |
-| `SYSTEMATIC` | **Full intervention.** Identify THE pattern, show 3 examples, teach the rule. |
+| `MINIMAL` | Light touch: note 1 minor pattern, praise accuracy, **still provide complexity_suggestions**. |
+| `MOSTLY_SLIPS` | Note 1-2 patterns, praise complexity attempts, provide complexity upgrade. |
+| `SYSTEMATIC` | **Full intervention.** Identify THE pattern, show 2-3 examples, teach the rule. |
 | `SEVERE` | Focus on meaning-impeding errors only. Simplification may be necessary. |
 
 **Step D.1 — Pattern Identification**
 
 Read `analysis.grammar_audit.systematic_errors_identified`. For each pattern listed:
-1. Find 1 example of this error in the student's essay
+1. Find 1-2 examples of this error in the student's essay
 2. Correct each example
 3. Extract the underlying rule
+
+**CRITICAL: You MUST populate `pattern_lessons` with at least 1 lesson.** Even for MINIMAL errors, identify a minor pattern (e.g., article usage, preposition choice) that the student could refine. Include `examples_from_essay` with actual sentences from the essay, `the_rule`, and `memory_trick`.
 
 **Step D.2 — Rule Teaching Format**
 
 - ERROR PATTERN: Name from Agent 1
-- EXAMPLES: 1 ❌/✓ pair
+- EXAMPLES: 1-2 ❌/✓ pairs from the student's actual essay
 - THE RULE: Max 1 sentence explanation
+- MEMORY TRICK: A practical self-check technique
 
-**Step D.3 — Complexity Coaching**
+**Step D.3 — Complexity Coaching (MANDATORY)**
 
-If the student only uses simple sentences, provide 1 example of how to combine their simple sentences into complex structures.
+**ALWAYS provide at least 1 `complexity_suggestions` item, regardless of error type.** Find 2 consecutive simple sentences from the student's essay and demonstrate how to combine them into a single complex structure using relative clauses, participial phrases, subordinate clauses, or other Band 7+ structures.
 
----
+Each complexity_suggestion MUST include:
+- `simple_sentences`: 2 actual simple sentences from the student's essay (never leave empty)
+- `complex_version`: the combined Band 7+ sentence (never leave empty)
+- `structures_demonstrated`: names of grammar structures used
+- `explanation`: why this combination improves the score
+
+
 
 ## PRIORITIZATION PROTOCOL
 
@@ -317,8 +326,38 @@ You must output a single valid JSON object following this EXACT structure:
     "topic_specific_vocabulary": []
   },
   "grammar_feedback": {
-    "pattern_lessons": [],
-    "complexity_suggestions": [],
+    "pattern_lessons": [
+      {
+        "error_pattern": "subject_verb_agreement",
+        "pattern_name_friendly": "Subject-Verb Agreement with Complex Subjects",
+        "examples_from_essay": [
+          {
+            "original": "The increase in digital devices have caused problems.",
+            "corrected": "The increase in digital devices has caused problems.",
+            "error_highlighted": "have → has"
+          },
+          {
+            "original": "Many people who use social media finds it addictive.",
+            "corrected": "Many people who use social media find it addictive.",
+            "error_highlighted": "finds → find"
+          }
+        ],
+        "the_rule": "The verb must agree with the HEAD noun of the subject, not the nearest noun.",
+        "memory_trick": "Cross out prepositional phrases between subject and verb to find the true subject.",
+        "practice_tip": "Read each sentence aloud and ask: who/what is doing the action?"
+      }
+    ],
+    "complexity_suggestions": [
+      {
+        "simple_sentences": [
+          "Social media apps are designed to be addictive.",
+          "They send notifications that make people want to check their phones."
+        ],
+        "complex_version": "Social media apps, which are deliberately designed to be addictive, send constant notifications that trigger an irresistible urge to check one's phone.",
+        "structures_demonstrated": ["Relative clause (non-defining)", "Noun phrase with 'that' clause"],
+        "explanation": "Combining two simple sentences with a non-defining relative clause shows the examiner you can control complex grammar while maintaining clarity."
+      }
+    ],
     "grammar_priority": "important"
   },
   "score_projections": [

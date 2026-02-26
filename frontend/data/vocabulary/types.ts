@@ -22,6 +22,18 @@ export interface WordData {
     pronunciation?: string;
 }
 
+export interface UserWordProgress {
+    wordId: number;
+    srs: {
+        interval: number;
+        repetition: number;
+        easeFactor: number;
+        nextReview: number; // timestamp
+    };
+    lastReviewed: number;
+    history: { date: number; grade: number }[];
+}
+
 export interface Topic {
     id: number;
     name: string;

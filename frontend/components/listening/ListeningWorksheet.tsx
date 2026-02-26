@@ -117,7 +117,7 @@ const ListeningWorksheet: React.FC<ListeningWorksheetProps> = ({
                 <div className="space-y-3 ml-4">
                     {options.map((optString: string) => {
                         const letter = optString.charAt(0); // "A"
-                        const text = optString.replace(/^[A-Z][\.\)\s]*/, '').trim();
+                        const text = optString.replace(/^[A-Z][\.\)\s:]*/, '').trim();
 
                         // Check if this letter is selected in EITHER answer slot
                         const isSelected = answers[question1.id] === letter || answers[question2.id] === letter;
@@ -199,7 +199,7 @@ const ListeningWorksheet: React.FC<ListeningWorksheetProps> = ({
                                     ${isSelected || (result && letter === result.correctAnswers[question.id]) ? 'border-current' : 'border-slate-400 text-slate-500'}`}>
                                     {letter}
                                 </span>
-                                <span className="text-lg font-serif">{option.replace(/^[A-Z][\.\)\s]*/, '').trim()}</span>
+                                <span className="text-lg font-serif">{option.replace(/^[A-Z][\.\)\s:]*/, '').trim()}</span>
                             </div>
                         );
                     })}
@@ -743,6 +743,364 @@ const ListeningWorksheet: React.FC<ListeningWorksheetProps> = ({
 
                                     </div>
                                 )}
+                            </div>
+                        )}
+
+                        {/* Test 14 */}
+                        {test.id === 14 && (
+                            <div className="animate-in fade-in duration-300">
+                                {activePart === 1 && (
+                                    <>
+                                        <p className="italic mb-2">Complete the notes below.</p>
+                                        <p className="italic mb-6">Write <strong>ONE WORD AND/OR A NUMBER</strong> for each answer.</p>
+
+                                        <div className="border border-black p-8 bg-white text-slate-900 font-serif max-w-4xl mx-auto shadow-sm">
+                                            <h3 className="text-2xl font-bold text-center mb-6 border-b-2 border-slate-800 pb-4 uppercase tracking-wider">Copying photos to digital format</h3>
+
+                                            <div className="mb-6 font-bold text-lg">
+                                                Name of company: Picturerep
+                                            </div>
+
+                                            <div className="space-y-6">
+                                                {/* Requirements */}
+                                                <section>
+                                                    <h4 className="font-bold text-lg mb-2">Requirements</h4>
+                                                    <ul className="list-disc pl-8 space-y-2">
+                                                        <li>Maximum size of photos is 30 cm, minimum size 4 cm.</li>
+                                                        <li>
+                                                            <div className="flex flex-wrap items-baseline gap-1">
+                                                                <span>Photos must not be in a</span>
+                                                                {renderBlank(1, "w-48")}
+                                                                <span>or an album.</span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </section>
+
+                                                {/* Cost */}
+                                                <section>
+                                                    <h4 className="font-bold text-lg mb-2">Cost</h4>
+                                                    <ul className="list-disc pl-8 space-y-2">
+                                                        <li>
+                                                            <div className="flex flex-wrap items-baseline gap-1">
+                                                                <span>The cost for 360 photos is</span>
+                                                                <span className="font-bold">£</span>
+                                                                {renderBlank(2, "w-32")}
+                                                                <span>(including one disk).</span>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div className="flex flex-wrap items-baseline gap-1">
+                                                                <span>Before the completed order is sent,</span>
+                                                                {renderBlank(3, "w-48")}
+                                                                <span>is required.</span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </section>
+
+                                                {/* Services included */}
+                                                <section>
+                                                    <h4 className="font-bold text-lg mb-2">Services included in the price</h4>
+                                                    <ul className="list-disc pl-8 space-y-2">
+                                                        <li>
+                                                            <div className="flex flex-wrap items-baseline gap-1">
+                                                                <span>Photos can be placed in a folder, e.g. with the name</span>
+                                                                {renderBlank(4, "w-48")}
+                                                                <span>.</span>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div className="flex flex-wrap items-baseline gap-1">
+                                                                <span>The</span>
+                                                                {renderBlank(5, "w-48")}
+                                                                <span>and contrast can be improved if necessary.</span>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div className="flex flex-wrap items-baseline gap-1">
+                                                                <span>Photos which are very fragile will be scanned by</span>
+                                                                {renderBlank(6, "w-48")}
+                                                                <span>.</span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </section>
+
+                                                {/* Special restore service */}
+                                                <section>
+                                                    <h4 className="font-bold text-lg mb-2">Special restore service (costs extra)</h4>
+                                                    <ul className="list-disc pl-8 space-y-2">
+                                                        <li>
+                                                            <div className="flex flex-wrap items-baseline gap-1">
+                                                                <span>It may be possible to remove an object from a photo, or change the</span>
+                                                                {renderBlank(7, "w-48")}
+                                                                <span>.</span>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div className="flex flex-wrap items-baseline gap-1">
+                                                                <span>A photo which is not correctly in</span>
+                                                                {renderBlank(8, "w-48")}
+                                                                <span>cannot be fixed.</span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </section>
+
+                                                {/* Other information */}
+                                                <section>
+                                                    <h4 className="font-bold text-lg mb-2">Other information</h4>
+                                                    <ul className="list-disc pl-8 space-y-2">
+                                                        <li>
+                                                            <div className="flex flex-wrap items-baseline gap-1">
+                                                                <span>Orders are completed within</span>
+                                                                {renderBlank(9, "w-48")}
+                                                                <span>.</span>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div className="flex flex-wrap items-baseline gap-1">
+                                                                <span>Send the photos in a box (not</span>
+                                                                {renderBlank(10, "w-48")}
+                                                                <span>).</span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </section>
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+
+                            </div>
+                        )}
+
+                        {/* Test 15 - Part 1 */}
+                        {test.id === 15 && (
+                            <div className="animate-in fade-in duration-300">
+                                <p className="italic mb-2">Complete the notes below.</p>
+                                <p className="italic mb-6">Write <strong>ONE WORD AND/OR A NUMBER</strong> for each answer.</p>
+
+                                <div className="border border-black p-8 bg-white text-slate-900 font-serif max-w-4xl mx-auto shadow-sm">
+                                    <h3 className="text-2xl font-bold text-center mb-4 uppercase tracking-wider border-b-2 border-slate-800 pb-2">JUNIOR CYCLE CAMP</h3>
+                                    <p className="mb-6 font-medium">The course focuses on skills and safety.</p>
+
+                                    <ul className="list-disc pl-5 space-y-4 mb-8">
+                                        <li className="pl-2">Charlie would be placed in Level 5.</li>
+                                        <li className="pl-2">
+                                            <div className="flex flex-wrap items-baseline gap-1">
+                                                <span>First of all, children at this level are taken to practise in a</span>
+                                                {renderBlank(1, "w-40")}
+                                                <span>.</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <div className="space-y-6">
+                                        {/* Instructors */}
+                                        <div>
+                                            <h4 className="font-bold text-lg mb-2">Instructors</h4>
+                                            <ul className="list-disc pl-5 space-y-2">
+                                                <li className="pl-2">
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>Instructors wear</span>
+                                                        {renderBlank(2, "w-40")}
+                                                        <span>shirts.</span>
+                                                    </div>
+                                                </li>
+                                                <li className="pl-2">
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>A</span>
+                                                        {renderBlank(3, "w-40")}
+                                                        <span>is required and training is given.</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        {/* Classes */}
+                                        <div>
+                                            <h4 className="font-bold text-lg mb-2">Classes</h4>
+                                            <ul className="list-disc pl-5 space-y-2">
+                                                <li className="pl-2">The size of the classes is limited.</li>
+                                                <li className="pl-2">
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>There are quiet times during the morning for a</span>
+                                                        {renderBlank(4, "w-40")}
+                                                        <span>or a game.</span>
+                                                    </div>
+                                                </li>
+                                                <li className="pl-2">
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>Classes are held even if there is</span>
+                                                        {renderBlank(5, "w-40")}
+                                                        <span>.</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        {/* What to bring */}
+                                        <div>
+                                            <h4 className="font-bold text-lg mb-2">What to bring</h4>
+                                            <ul className="list-disc pl-5 space-y-2">
+                                                <li className="pl-2">a change of clothing</li>
+                                                <li className="pl-2">
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>a</span>
+                                                        {renderBlank(6, "w-40")}
+                                                    </div>
+                                                </li>
+                                                <li className="pl-2">shoes (not sandals)</li>
+                                                <li className="pl-2">
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>Charlie&apos;s</span>
+                                                        {renderBlank(7, "w-40")}
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        {/* Day 1 */}
+                                        <div>
+                                            <h4 className="font-bold text-lg mb-2">Day 1</h4>
+                                            <ul className="list-disc pl-5 space-y-2">
+                                                <li className="pl-2">Charlie should arrive at 9.20 am on the first day.</li>
+                                                <li className="pl-2">
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>Before the class, his</span>
+                                                        {renderBlank(8, "w-40")}
+                                                        <span>will be checked.</span>
+                                                    </div>
+                                                </li>
+                                                <li className="pl-2">
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>He should then go to the</span>
+                                                        {renderBlank(9, "w-40")}
+                                                        <span>to meet his class instructor.</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        {/* Cost */}
+                                        <div>
+                                            <h4 className="font-bold text-lg mb-2">Cost</h4>
+                                            <ul className="list-disc pl-5 space-y-2">
+                                                <li className="pl-2">
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>The course costs</span>
+                                                        <span className="font-bold">$</span>
+                                                        {renderBlank(10, "w-32")}
+                                                        <span>per week.</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Test 16 Part 1 */}
+                        {test.id === 16 && (
+                            <div className="animate-in fade-in duration-300">
+                                <p className="italic mb-2">Complete the notes below.</p>
+                                <p className="italic mb-6">Write <strong>ONE WORD AND/OR A NUMBER</strong> for each answer.</p>
+
+                                <div className="border border-black p-8 bg-white text-slate-900 font-serif max-w-4xl mx-auto shadow-sm">
+                                    <h3 className="text-2xl font-bold text-center mb-6 border-b-2 border-slate-800 pb-4 uppercase tracking-wider">Holiday rental</h3>
+
+                                    <p className="mb-6 font-medium text-lg">Owners&apos; names: Jack Fitzgerald and Shirley Fitzgerald</p>
+
+                                    <div className="space-y-8">
+                                        {/* Granary Cottage */}
+                                        <section>
+                                            <h4 className="text-xl font-bold mb-4 underline decoration-1 underline-offset-4">Granary Cottage</h4>
+                                            <ul className="list-disc pl-8 space-y-3">
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span className="text-lg">available for week beginning</span>
+                                                        {renderBlank(1, "w-40")}
+                                                        <span className="text-lg">May</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span className="text-lg">cost for the week: £</span>
+                                                        {renderBlank(2, "w-32")}
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </section>
+
+                                        {/* [Blank] Cottage */}
+                                        <section>
+                                            <div className="flex flex-wrap items-baseline gap-1 mb-4">
+                                                {renderBlank(3, "w-48")}
+                                                <h4 className="text-xl font-bold underline decoration-1 underline-offset-4">Cottage</h4>
+                                            </div>
+                                            <ul className="list-disc pl-8 space-y-3 text-lg">
+                                                <li>cost for the week: £480</li>
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>building was originally a</span>
+                                                        {renderBlank(4, "w-48")}
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>walk through doors from living room into a</span>
+                                                        {renderBlank(5, "w-48")}
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>several</span>
+                                                        {renderBlank(6, "w-40")}
+                                                        <span>spaces at the front</span>
+                                                    </div>
+                                                </li>
+                                                <li>bathroom has a shower</li>
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>central heating and stove that burns</span>
+                                                        {renderBlank(7, "w-40")}
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>views of old</span>
+                                                        {renderBlank(8, "w-40")}
+                                                        <span>from living room</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>view of hilltop</span>
+                                                        {renderBlank(9, "w-40")}
+                                                        <span>from the bedroom</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </section>
+
+                                        {/* Payment */}
+                                        <section className="pt-6 border-t border-slate-200">
+                                            <h4 className="text-xl font-bold mb-4 uppercase tracking-wide">Payment</h4>
+                                            <ul className="list-disc pl-8 space-y-3 text-lg">
+                                                <li>deposit: £144</li>
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>deadline for final payment: end of</span>
+                                                        {renderBlank(10, "w-48")}
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </section>
+                                    </div>
+                                </div>
                             </div>
                         )}
 
@@ -2138,7 +2496,71 @@ const ListeningWorksheet: React.FC<ListeningWorksheetProps> = ({
 
 
 
-                            {test.id === 12 ? (
+                            {test.id === 16 ? (
+                                <div className="animate-in fade-in duration-300">
+                                    <h3 className="text-xl font-bold mb-6 text-slate-800 border-b border-slate-200 pb-2">Local council report on traffic and highways</h3>
+
+                                    <div className="mb-12">
+                                        <p className="italic mb-6 text-slate-600">Choose the correct letter, A, B or C.</p>
+                                        <div className="space-y-4">
+                                            {test.questions.filter((q: any) => q.id >= 11 && q.id <= 14).map((q: any) => renderMultipleChoice(q))}
+                                        </div>
+                                    </div>
+
+                                    <div className="pt-8 border-t border-slate-200">
+                                        <h3 className="text-xl font-bold mb-6 text-slate-800">Recreation ground after proposed changes</h3>
+                                        <p className="italic mb-6 text-slate-600">Label the map below. Write the correct letter, A–I, next to Questions 15–20.</p>
+
+                                        {renderMapDiagram(
+                                            "/images/test-16-map.png",
+                                            test.questions.filter((q: any) => q.id >= 15 && q.id <= 20)
+                                        )}
+                                    </div>
+                                </div>
+                            ) : test.id === 15 ? (
+                                <div className="animate-in fade-in duration-300">
+                                    {/* Questions 11-12 */}
+                                    <div className="mb-8">
+                                        <p className="italic mb-6">Choose <strong>TWO</strong> letters, <strong>A–E</strong>.</p>
+                                        {renderPickTwo(
+                                            test.questions.find((q: any) => q.id === 11),
+                                            test.questions.find((q: any) => q.id === 12)
+                                        )}
+                                    </div>
+
+                                    {/* Questions 13-14 */}
+                                    <div className="mt-12 pt-8 border-t border-slate-200">
+                                        <p className="italic mb-6">Choose <strong>TWO</strong> letters, <strong>A–E</strong>.</p>
+                                        {renderPickTwo(
+                                            test.questions.find((q: any) => q.id === 13),
+                                            test.questions.find((q: any) => q.id === 14)
+                                        )}
+                                    </div>
+
+                                    {/* Questions 15-20 */}
+                                    <div className="mt-12 pt-8 border-t border-slate-200">
+                                        <p className="italic mb-6">What information does Megan give about each of the following job opportunities?</p>
+                                        <p className="italic mb-8 font-serif leading-relaxed">Choose <strong>SIX</strong> answers from the box and write the correct letter, <strong>A–H</strong>, next to Questions 15–20.</p>
+
+                                        {renderMatching(
+                                            [15, 16, 17, 18, 19, 20].map(id => test.questions.find((q: any) => q.id === id)).filter(Boolean),
+                                            [
+                                                { letter: "A", text: "not a permanent job" },
+                                                { letter: "B", text: "involves leading a team" },
+                                                { letter: "C", text: "experience not essential" },
+                                                { letter: "D", text: "intensive work but also fun" },
+                                                { letter: "E", text: "chance to earn more through overtime" },
+                                                { letter: "F", text: "chance for rapid promotion" },
+                                                { letter: "G", text: "accommodation available" },
+                                                { letter: "H", text: "local travel involved" }
+                                            ],
+                                            "Information",
+                                            "",
+                                            "Job opportunities"
+                                        )}
+                                    </div>
+                                </div>
+                            ) : test.id === 12 ? (
                                 <div className="animate-in fade-in duration-300">
                                     {/* Questions 11-16: Map Labeling - Test 12 */}
                                     <div className="mb-12">
@@ -2665,6 +3087,85 @@ const ListeningWorksheet: React.FC<ListeningWorksheetProps> = ({
                                         )}
                                     </div>
                                 </div>
+                            ) : test.id === 14 ? (
+                                <div className="animate-in fade-in duration-300">
+                                    {/* Questions 11-15 (Multiple Choice) */}
+                                    <div className="mb-12">
+                                        <div className="mb-4">
+                                            <span className="italic text-lg">Questions 11–15</span>
+                                        </div>
+                                        <p className="italic mb-6">Choose the correct letter, <strong>A, B or C</strong>.</p>
+                                        <div className="space-y-8">
+                                            {[11, 12, 13, 14, 15].map(id => {
+                                                const q = test.questions.find((q: any) => q.id === id);
+                                                return q ? renderMultipleChoice(q) : null;
+                                            })}
+                                        </div>
+                                    </div>
+
+                                    {/* Questions 16-18 (Matching) */}
+                                    <div className="mt-12 pt-8 border-t border-slate-200">
+                                        <div className="mb-4">
+                                            <span className="italic text-lg">Questions 16–18</span>
+                                        </div>
+                                        <p className="italic mb-6">
+                                            What comment does the speaker make about each of the following serving points in the Food Hall?
+                                            <br />
+                                            Choose <strong>THREE</strong> answers from the box and write the correct letter, <strong>A–D</strong>, next to Questions 16–18.
+                                        </p>
+
+                                        <div className="flex flex-col md:flex-row gap-8 items-start">
+                                            <div className="border border-black p-6 bg-white w-full md:w-1/2 shadow-sm">
+                                                <h4 className="font-bold text-center mb-6 text-lg border-b border-gray-200 pb-2">Comments</h4>
+                                                <div className="space-y-3 font-serif">
+                                                    <div className="flex gap-4"><span className="font-bold w-6 text-slate-900">A</span><span className="text-slate-800">pupils help to plan menus</span></div>
+                                                    <div className="flex gap-4"><span className="font-bold w-6 text-slate-900">B</span><span className="text-slate-800">only vegetarian food</span></div>
+                                                    <div className="flex gap-4"><span className="font-bold w-6 text-slate-900">C</span><span className="text-slate-800">different food every week</span></div>
+                                                    <div className="flex gap-4"><span className="font-bold w-6 text-slate-900">D</span><span className="text-slate-800">daily change in menu</span></div>
+                                                </div>
+                                            </div>
+
+                                            <div className="w-full md:w-1/2">
+                                                <h4 className="font-bold mb-6 text-lg text-slate-900">Food available at serving points in Food Hall</h4>
+                                                <div className="space-y-6">
+                                                    <div className="flex items-center justify-between border-b border-gray-100 pb-2">
+                                                        <div className="flex gap-4 items-center">
+                                                            <span className="font-bold text-slate-500 min-w-[2rem]">16</span>
+                                                            <span className="font-medium text-lg">World Adventures</span>
+                                                        </div>
+                                                        {renderBlank(16, "w-24", false)}
+                                                    </div>
+                                                    <div className="flex items-center justify-between border-b border-gray-100 pb-2">
+                                                        <div className="flex gap-4 items-center">
+                                                            <span className="font-bold text-slate-500 min-w-[2rem]">17</span>
+                                                            <span className="font-medium text-lg">Street Life</span>
+                                                        </div>
+                                                        {renderBlank(17, "w-24", false)}
+                                                    </div>
+                                                    <div className="flex items-center justify-between border-b border-gray-100 pb-2">
+                                                        <div className="flex gap-4 items-center">
+                                                            <span className="font-bold text-slate-500 min-w-[2rem]">18</span>
+                                                            <span className="font-medium text-lg">Speedy Italian</span>
+                                                        </div>
+                                                        {renderBlank(18, "w-24", false)}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Questions 19-20 (Pick Two) */}
+                                    <div className="mt-12 pt-8 border-t border-slate-200">
+                                        <div className="mb-4">
+                                            <span className="italic text-lg">Questions 19 and 20</span>
+                                        </div>
+                                        <p className="italic mb-6">Choose <strong>TWO</strong> letters, <strong>A–E</strong>.</p>
+                                        {renderPickTwo(
+                                            test.questions.find((q: any) => q.id === 19),
+                                            test.questions.find((q: any) => q.id === 20)
+                                        )}
+                                    </div>
+                                </div>
                             ) : (
                                 <div className="border border-black p-6">
                                     <div className="mb-4">
@@ -2865,6 +3366,117 @@ const ListeningWorksheet: React.FC<ListeningWorksheetProps> = ({
                                 </div>
                             )}
 
+                            {test.id === 14 && (
+                                <div className="animate-in fade-in duration-300">
+                                    {/* Questions 21-24: Multiple Choice */}
+                                    <div className="mb-12">
+                                        <div className="mb-4">
+                                            <span className="italic text-lg">Questions 21–24</span>
+                                        </div>
+                                        <p className="italic mb-6">Choose the correct letter, <strong>A, B or C</strong>.</p>
+                                        <h3 className="text-xl font-bold text-center mb-8 text-slate-800">Assignment on sleep and dreams</h3>
+                                        <div className="space-y-8">
+                                            {[21, 22, 23, 24].map(id => {
+                                                const q = test.questions.find((q: any) => q.id === id);
+                                                return q ? renderMultipleChoice(q) : null;
+                                            })}
+                                        </div>
+                                    </div>
+
+                                    {/* Questions 25-30: Flowchart */}
+                                    <div className="mt-12 pt-8 border-t border-slate-200">
+                                        <div className="mb-4">
+                                            <span className="italic text-lg">Questions 25–30</span>
+                                        </div>
+                                        <p className="italic mb-2">Complete the flow chart below.</p>
+                                        <p className="italic mb-8">Write <strong>ONE WORD ONLY</strong> for each answer.</p>
+
+                                        <div className="border border-black p-8 bg-white text-slate-900 font-serif max-w-3xl mx-auto">
+                                            <h3 className="text-xl font-bold text-center mb-8 uppercase tracking-wider">Assignment plan</h3>
+
+                                            {/* Step 1: Research question */}
+                                            <div className="border border-slate-400 p-4 text-center mb-2">
+                                                <p className="font-bold mb-1">Decide on research question:</p>
+                                                <p className="text-sm">Is there a relationship between hours of sleep and number of dreams?</p>
+                                            </div>
+                                            <div className="flex justify-center mb-2">
+                                                <span className="text-2xl text-slate-600">↓</span>
+                                            </div>
+
+                                            {/* Step 2: Sample */}
+                                            <div className="border border-slate-400 p-4 text-center mb-2">
+                                                <p className="font-bold mb-2">Decide on sample:</p>
+                                                <div className="flex flex-wrap items-baseline justify-center gap-1">
+                                                    <span>Twelve students from the</span>
+                                                    {renderBlank(25, "w-40")}
+                                                    <span>department</span>
+                                                </div>
+                                            </div>
+                                            <div className="flex justify-center mb-2">
+                                                <span className="text-2xl text-slate-600">↓</span>
+                                            </div>
+
+                                            {/* Step 3: Methodology */}
+                                            <div className="border border-slate-400 p-4 text-center mb-2">
+                                                <p className="font-bold mb-1">Decide on methodology:</p>
+                                                <p>Self-reporting</p>
+                                            </div>
+                                            <div className="flex justify-center mb-2">
+                                                <span className="text-2xl text-slate-600">↓</span>
+                                            </div>
+
+                                            {/* Step 4: Procedure */}
+                                            <div className="border border-slate-400 p-4 text-center mb-2">
+                                                <p className="font-bold mb-2">Decide on procedure:</p>
+                                                <div className="flex flex-wrap items-baseline justify-center gap-1">
+                                                    <span>Answers on</span>
+                                                    {renderBlank(26, "w-40")}
+                                                </div>
+                                            </div>
+                                            <div className="flex justify-center mb-2">
+                                                <span className="text-2xl text-slate-600">↓</span>
+                                            </div>
+
+                                            {/* Step 5: Ethics */}
+                                            <div className="border border-slate-400 p-4 text-center mb-2">
+                                                <div className="flex flex-wrap items-baseline justify-center gap-1 mb-2">
+                                                    <span>Check ethical guidelines for working with</span>
+                                                    {renderBlank(27, "w-40")}
+                                                </div>
+                                                <div className="flex flex-wrap items-baseline justify-center gap-1">
+                                                    <span>Ensure that risk is assessed and</span>
+                                                    {renderBlank(28, "w-40")}
+                                                    <span>is kept to a minimum</span>
+                                                </div>
+                                            </div>
+                                            <div className="flex justify-center mb-2">
+                                                <span className="text-2xl text-slate-600">↓</span>
+                                            </div>
+
+                                            {/* Step 6: Results */}
+                                            <div className="border border-slate-400 p-4 text-center mb-2">
+                                                <p className="font-bold mb-2">Analyse the results</p>
+                                                <div className="flex flex-wrap items-baseline justify-center gap-1">
+                                                    <span>Calculate the correlation and make a</span>
+                                                    {renderBlank(29, "w-40")}
+                                                </div>
+                                            </div>
+                                            <div className="flex justify-center mb-2">
+                                                <span className="text-2xl text-slate-600">↓</span>
+                                            </div>
+
+                                            {/* Step 7: Final */}
+                                            <div className="border border-slate-400 p-4 text-center">
+                                                <div className="flex flex-wrap items-baseline justify-center gap-1">
+                                                    {renderBlank(30, "w-40")}
+                                                    <span>the research</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
                             {test.id === 12 && (
                                 <div className="animate-in fade-in duration-300">
                                     {/* Questions 21-24: Multiple Choice */}
@@ -2899,6 +3511,91 @@ const ListeningWorksheet: React.FC<ListeningWorksheetProps> = ({
                                             ],
                                             "Topics",
                                             ""
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+
+                            {test.id === 15 && (
+                                <div className="animate-in fade-in duration-300">
+                                    {/* Questions 21 and 22 */}
+                                    <div className="mb-12">
+                                        <p className="italic mb-6">Choose <strong>TWO</strong> letters, <strong>A–E</strong>.</p>
+                                        {renderPickTwo(
+                                            test.questions.find((q: any) => q.id === 21),
+                                            test.questions.find((q: any) => q.id === 22)
+                                        )}
+                                    </div>
+
+                                    {/* Questions 23 and 24 */}
+                                    <div className="mt-12 pt-8 border-t border-slate-200 mb-12">
+                                        <p className="italic mb-6">Choose <strong>TWO</strong> letters, <strong>A–E</strong>.</p>
+                                        {renderPickTwo(
+                                            test.questions.find((q: any) => q.id === 23),
+                                            test.questions.find((q: any) => q.id === 24)
+                                        )}
+                                    </div>
+
+                                    {/* Questions 25-30 */}
+                                    <div className="mt-12 pt-8 border-t border-slate-200">
+                                        <div className="mb-4">
+                                            <span className="italic text-lg">Questions 25–30</span>
+                                        </div>
+                                        <p className="italic mb-8">Choose the correct letter, <strong>A, B or C</strong>.</p>
+                                        <div className="space-y-8">
+                                            {[25, 26, 27, 28, 29, 30].map(id => {
+                                                const q = test.questions.find((q: any) => q.id === id);
+                                                return q ? renderMultipleChoice(q) : null;
+                                            })}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {test.id === 16 && activePart === 3 && (
+                                <div className="animate-in fade-in duration-300">
+                                    {/* Questions 21 and 22 (Pick Two) */}
+                                    <div className="mb-12">
+                                        <div className="mb-4">
+                                            <span className="italic text-lg">Questions 21–22</span>
+                                        </div>
+                                        <p className="italic mb-6">Choose <strong>TWO</strong> letters, <strong>A–E</strong>.</p>
+                                        <p className="font-bold mb-6">Which TWO benefits of city bike-sharing schemes do the students agree are the most important?</p>
+                                        {renderPickTwo(
+                                            test.questions.find((q: any) => q.id === 21),
+                                            test.questions.find((q: any) => q.id === 22)
+                                        )}
+                                    </div>
+
+                                    {/* Questions 23 and 24 (Pick Two) */}
+                                    <div className="mt-12 pt-8 border-t border-slate-200 mb-12">
+                                        <div className="mb-4">
+                                            <span className="italic text-lg">Questions 23–24</span>
+                                        </div>
+                                        <p className="italic mb-6">Choose <strong>TWO</strong> letters, <strong>A–E</strong>.</p>
+                                        <p className="font-bold mb-6">Which TWO things do the students think are necessary for successful bike-sharing schemes?</p>
+                                        {renderPickTwo(
+                                            test.questions.find((q: any) => q.id === 23),
+                                            test.questions.find((q: any) => q.id === 24)
+                                        )}
+                                    </div>
+
+                                    {/* Questions 25-30 (Matching) */}
+                                    <div className="mt-12 pt-8 border-t border-slate-200">
+                                        {renderMatching(
+                                            [25, 26, 27, 28, 29, 30].map(id => test.questions.find((q: any) => q.id === id)).filter(Boolean),
+                                            [
+                                                { letter: "A", text: "They agree it has been disappointing." },
+                                                { letter: "B", text: "They think it should be cheaper." },
+                                                { letter: "C", text: "They are surprised it has been so successful." },
+                                                { letter: "D", text: "They agree that more investment is required." },
+                                                { letter: "E", text: "They think the system has been well designed." },
+                                                { letter: "F", text: "They disagree about the reasons for its success." },
+                                                { letter: "G", text: "They think it has expanded too quickly." }
+                                            ],
+                                            "Opinion of bike-sharing scheme",
+                                            "What is the speakers' opinion of the bike-sharing schemes in each of the following cities? Choose SIX answers from the box and write the correct letter, A\u2013G, next to Questions 25\u201330.",
+                                            "Cities"
                                         )}
                                     </div>
                                 </div>
@@ -3510,6 +4207,116 @@ const ListeningWorksheet: React.FC<ListeningWorksheetProps> = ({
                                 <span className="italic text-lg">Questions 31–40</span>
                             </div>
 
+                            {test.id === 16 && (
+                                <div className="animate-in fade-in duration-300">
+                                    <p className="italic mb-2">Complete the notes below.</p>
+                                    <p className="italic mb-6">Write <strong>ONE WORD ONLY</strong> for each answer.</p>
+
+                                    <div className="border border-black p-8 bg-white text-slate-900 font-serif max-w-4xl mx-auto shadow-sm">
+                                        <h3 className="text-2xl font-bold text-center mb-6 border-b-2 border-slate-800 pb-4 uppercase tracking-wider">The Extinction of the Dodo Bird</h3>
+
+                                        <p className="mb-6 text-lg">The dodo was a large flightless bird which used to inhabit the island of Mauritius.</p>
+
+                                        <div className="space-y-8">
+                                            {/* History */}
+                                            <section>
+                                                <h4 className="text-xl font-bold mb-4 underline decoration-1 underline-offset-4">History</h4>
+                                                <ul className="list-disc pl-8 space-y-3 text-lg">
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>1507 &ndash; Portuguese ships transporting</span>
+                                                            {renderBlank(31, "w-40")}
+                                                            <span>stopped at the island to collect food and water.</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>1638 &ndash; The Dutch established a</span>
+                                                            {renderBlank(32, "w-40")}
+                                                            <span>on the island.</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>They killed the dodo birds for their meat.</li>
+                                                    <li>The last one was killed in 1681.</li>
+                                                </ul>
+                                            </section>
+
+                                            {/* Description */}
+                                            <section className="pt-6 border-t border-slate-200">
+                                                <h4 className="text-xl font-bold mb-4 underline decoration-1 underline-offset-4">Description</h4>
+                                                <ul className="list-disc pl-8 space-y-3 text-lg">
+                                                    <li>The only record we have is written descriptions and pictures (possibly unreliable).</li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>A Dutch painting suggests the dodo was very</span>
+                                                            {renderBlank(33, "w-40")}
+                                                            <span>.</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>The only remaining soft tissue is a dried</span>
+                                                            {renderBlank(34, "w-40")}
+                                                            <span>.</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>Recent studies of a dodo skeleton suggest the birds were capable of rapid</span>
+                                                            {renderBlank(35, "w-40")}
+                                                            <span>.</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>It&apos;s thought they were able to use their small wings to maintain</span>
+                                                            {renderBlank(36, "w-40")}
+                                                            <span>.</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>Their</span>
+                                                            {renderBlank(37, "w-40")}
+                                                            <span>was of average size.</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>Their sense of</span>
+                                                            {renderBlank(38, "w-40")}
+                                                            <span>enabled them to find food.</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </section>
+
+                                            {/* Reasons for extinction */}
+                                            <section className="pt-6 border-t border-slate-200">
+                                                <h4 className="text-xl font-bold mb-4 underline decoration-1 underline-offset-4">Reasons for extinction</h4>
+                                                <ul className="list-disc pl-8 space-y-3 text-lg">
+                                                    <li>Hunting was probably not the main cause.</li>
+                                                    <li>Sailors brought dogs and monkeys.</li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            {renderBlank(39, "w-40")}
+                                                            <span>also escaped onto the island and ate the birds&apos; eggs.</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>The arrival of farming meant the</span>
+                                                            {renderBlank(40, "w-40")}
+                                                            <span>was destroyed.</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
                             {test.id === 13 && (
                                 <div className="animate-in fade-in duration-300">
                                     <p className="italic mb-2">Complete the notes below.</p>
@@ -3661,6 +4468,302 @@ const ListeningWorksheet: React.FC<ListeningWorksheetProps> = ({
                                                     </li>
                                                     <li className="text-lg pl-2 leading-loose">
                                                         <span>It teaches people that having a strong character is more important than anything else.</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {test.id === 14 && (
+                                <div className="animate-in fade-in duration-300">
+                                    <p className="italic mb-2">Complete the notes below.</p>
+                                    <p className="italic mb-6">Write <strong>ONE WORD ONLY</strong> for each answer.</p>
+
+                                    <div className="border border-black p-8 bg-white max-w-4xl mx-auto">
+                                        <h3 className="text-2xl font-bold text-center mb-6">Health benefits of dance</h3>
+
+                                        {/* Recent findings */}
+                                        <div className="mb-8">
+                                            <h4 className="font-bold text-lg mb-4">Recent findings:</h4>
+                                            <ul className="list-disc ml-6 space-y-3">
+                                                <li className="pl-2 leading-relaxed">
+                                                    <span>All forms of dance produce various hormones associated with feelings of happiness.</span>
+                                                </li>
+                                                <li className="pl-2 leading-relaxed">
+                                                    <span>Dancing with others has a more positive impact than dancing alone.</span>
+                                                </li>
+                                                <li className="pl-2 leading-relaxed">
+                                                    <div className="flex flex-wrap items-baseline gap-2">
+                                                        <span>An experiment on university students suggested that dance increases</span>
+                                                        <div className="inline-flex items-center gap-2">
+                                                            <span className="font-bold text-sm text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">31</span>
+                                                            {renderBlank(31, "w-48", false)}
+                                                        </div>
+                                                        <span>.</span>
+                                                    </div>
+                                                </li>
+                                                <li className="pl-2 leading-relaxed">
+                                                    <div className="flex flex-wrap items-baseline gap-2">
+                                                        <span>For those with mental illness, dance could be used as a form of</span>
+                                                        <div className="inline-flex items-center gap-2">
+                                                            <span className="font-bold text-sm text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">32</span>
+                                                            {renderBlank(32, "w-48", false)}
+                                                        </div>
+                                                        <span>.</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        {/* Benefits of dance for older people */}
+                                        <div className="mb-8">
+                                            <h4 className="font-bold text-lg mb-4">Benefits of dance for older people:</h4>
+                                            <ul className="list-disc ml-6 space-y-3">
+                                                <li className="pl-2 leading-relaxed">
+                                                    <div className="flex flex-wrap items-baseline gap-2">
+                                                        <span>accessible for people with low levels of</span>
+                                                        <div className="inline-flex items-center gap-2">
+                                                            <span className="font-bold text-sm text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">33</span>
+                                                            {renderBlank(33, "w-48", false)}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li className="pl-2 leading-relaxed">
+                                                    <span>reduces the risk of heart disease</span>
+                                                </li>
+                                                <li className="pl-2 leading-relaxed">
+                                                    <div className="flex flex-wrap items-baseline gap-2">
+                                                        <span>better</span>
+                                                        <div className="inline-flex items-center gap-2">
+                                                            <span className="font-bold text-sm text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">34</span>
+                                                            {renderBlank(34, "w-48", false)}
+                                                        </div>
+                                                        <span>reduces the risk of accidents</span>
+                                                    </div>
+                                                </li>
+                                                <li className="pl-2 leading-relaxed">
+                                                    <div className="flex flex-wrap items-baseline gap-2">
+                                                        <span>improves</span>
+                                                        <div className="inline-flex items-center gap-2">
+                                                            <span className="font-bold text-sm text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">35</span>
+                                                            {renderBlank(35, "w-48", false)}
+                                                        </div>
+                                                        <span>function by making it work faster</span>
+                                                    </div>
+                                                </li>
+                                                <li className="pl-2 leading-relaxed">
+                                                    <span>improves participants' general well-being</span>
+                                                </li>
+                                                <li className="pl-2 leading-relaxed">
+                                                    <div className="flex flex-wrap items-baseline gap-2">
+                                                        <span>gives people more</span>
+                                                        <div className="inline-flex items-center gap-2">
+                                                            <span className="font-bold text-sm text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">36</span>
+                                                            {renderBlank(36, "w-48", false)}
+                                                        </div>
+                                                        <span>to take exercise</span>
+                                                    </div>
+                                                </li>
+                                                <li className="pl-2 leading-relaxed">
+                                                    <div className="flex flex-wrap items-baseline gap-2">
+                                                        <span>can lessen the feeling of</span>
+                                                        <div className="inline-flex items-center gap-2">
+                                                            <span className="font-bold text-sm text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">37</span>
+                                                            {renderBlank(37, "w-48", false)}
+                                                        </div>
+                                                        <span>, very common in older people</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        {/* Benefits of Zumba */}
+                                        <div>
+                                            <h4 className="font-bold text-lg mb-4">Benefits of Zumba:</h4>
+                                            <ul className="list-disc ml-6 space-y-3">
+                                                <li className="pl-2 leading-relaxed">
+                                                    <div className="flex flex-wrap items-baseline gap-2">
+                                                        <span>A study at The University of Wisconsin showed that doing Zumba for 40 minutes uses up as many</span>
+                                                        <div className="inline-flex items-center gap-2">
+                                                            <span className="font-bold text-sm text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">38</span>
+                                                            {renderBlank(38, "w-48", false)}
+                                                        </div>
+                                                        <span>as other quite intense forms of exercise.</span>
+                                                    </div>
+                                                </li>
+                                                <li className="pl-2 leading-relaxed">
+                                                    <span>The <em>American Journal of Health Behavior</em> study showed that:</span>
+                                                    <ul className="list-disc ml-6 mt-2 space-y-2">
+                                                        <li className="pl-2 leading-relaxed">
+                                                            <div className="flex flex-wrap items-baseline gap-2">
+                                                                <span>women suffering from</span>
+                                                                <div className="inline-flex items-center gap-2">
+                                                                    <span className="font-bold text-sm text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">39</span>
+                                                                    {renderBlank(39, "w-48", false)}
+                                                                </div>
+                                                                <span>benefited from doing Zumba.</span>
+                                                            </div>
+                                                        </li>
+                                                        <li className="pl-2 leading-relaxed">
+                                                            <div className="flex flex-wrap items-baseline gap-2">
+                                                                <span>Zumba became a</span>
+                                                                <div className="inline-flex items-center gap-2">
+                                                                    <span className="font-bold text-sm text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">40</span>
+                                                                    {renderBlank(40, "w-48", false)}
+                                                                </div>
+                                                                <span>for the participants.</span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                            {test.id === 15 && (
+                                <div className="animate-in fade-in duration-300">
+                                    <p className="italic mb-2">Complete the notes below.</p>
+                                    <p className="italic mb-6">Write <strong>ONE WORD ONLY</strong> for each answer.</p>
+
+                                    <div className="border border-black p-8 bg-white max-w-4xl mx-auto">
+                                        <h3 className="text-2xl font-bold text-center mb-6">Hand knitting</h3>
+
+                                        <div className="space-y-8">
+                                            {/* Interest in knitting */}
+                                            <div>
+                                                <h4 className="font-bold text-lg mb-4">Interest in knitting</h4>
+                                                <ul className="list-disc ml-6 space-y-3">
+                                                    <li className="text-lg pl-2 leading-loose">
+                                                        <span>Knitting has a long history around the world.</span>
+                                                    </li>
+                                                    <li className="text-lg pl-2 leading-loose">
+                                                        <div className="inline-flex flex-wrap items-baseline gap-2">
+                                                            <span>We imagine someone like a </span>
+                                                            <div className="inline-flex items-center gap-2 align-baseline mx-1">
+                                                                <span className="font-bold text-sm text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">31</span>
+                                                                {renderBlank(31, "w-48", false)}
+                                                            </div>
+                                                            <span> knitting.</span>
+                                                        </div>
+                                                    </li>
+                                                    <li className="text-lg pl-2 leading-loose">
+                                                        <div className="inline-flex flex-wrap items-baseline gap-2">
+                                                            <span>A </span>
+                                                            <div className="inline-flex items-center gap-2 align-baseline mx-1">
+                                                                <span className="font-bold text-sm text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">32</span>
+                                                                {renderBlank(32, "w-48", false)}
+                                                            </div>
+                                                            <span> ago, knitting was expected to disappear.</span>
+                                                        </div>
+                                                    </li>
+                                                    <li className="text-lg pl-2 leading-loose">
+                                                        <span>The number of knitting classes is now increasing.</span>
+                                                    </li>
+                                                    <li className="text-lg pl-2 leading-loose">
+                                                        <div className="inline-flex flex-wrap items-baseline gap-2">
+                                                            <span>People are buying more </span>
+                                                            <div className="inline-flex items-center gap-2 align-baseline mx-1">
+                                                                <span className="font-bold text-sm text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">33</span>
+                                                                {renderBlank(33, "w-48", false)}
+                                                            </div>
+                                                            <span> for knitting nowadays.</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            {/* Benefits of knitting */}
+                                            <div>
+                                                <h4 className="font-bold text-lg mb-4">Benefits of knitting</h4>
+                                                <ul className="list-disc ml-6 space-y-3">
+                                                    <li className="text-lg pl-2 leading-loose">
+                                                        <div className="inline-flex flex-wrap items-baseline gap-2">
+                                                            <span>gives support in times of </span>
+                                                            <div className="inline-flex items-center gap-2 align-baseline mx-1">
+                                                                <span className="font-bold text-sm text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">34</span>
+                                                                {renderBlank(34, "w-48", false)}
+                                                            </div>
+                                                            <span> difficulty</span>
+                                                        </div>
+                                                    </li>
+                                                    <li className="text-lg pl-2 leading-loose">
+                                                        <div className="inline-flex flex-wrap items-baseline gap-2">
+                                                            <span>requires only </span>
+                                                            <div className="inline-flex items-center gap-2 align-baseline mx-1">
+                                                                <span className="font-bold text-sm text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">35</span>
+                                                                {renderBlank(35, "w-48", false)}
+                                                            </div>
+                                                            <span> skills and little money to start</span>
+                                                        </div>
+                                                    </li>
+                                                    <li className="text-lg pl-2 leading-loose">
+                                                        <span>reduces stress in a busy life</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            {/* Early knitting */}
+                                            <div>
+                                                <h4 className="font-bold text-lg mb-4">Early knitting</h4>
+                                                <ul className="list-disc ml-6 space-y-3">
+                                                    <li className="text-lg pl-2 leading-loose">
+                                                        <span>The origins are not known.</span>
+                                                    </li>
+                                                    <li className="text-lg pl-2 leading-loose">
+                                                        <div className="inline-flex flex-wrap items-baseline gap-2">
+                                                            <span>Findings show early knitted items to be </span>
+                                                            <div className="inline-flex items-center gap-2 align-baseline mx-1">
+                                                                <span className="font-bold text-sm text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">36</span>
+                                                                {renderBlank(36, "w-48", false)}
+                                                            </div>
+                                                            <span> in shape.</span>
+                                                        </div>
+                                                    </li>
+                                                    <li className="text-lg pl-2 leading-loose">
+                                                        <div className="inline-flex flex-wrap items-baseline gap-2">
+                                                            <span>The first needles were made of natural materials such as wood and </span>
+                                                            <div className="inline-flex items-center gap-2 align-baseline mx-1">
+                                                                <span className="font-bold text-sm text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">37</span>
+                                                                {renderBlank(37, "w-48", false)}
+                                                            </div>
+                                                            <span> .</span>
+                                                        </div>
+                                                    </li>
+                                                    <li className="text-lg pl-2 leading-loose">
+                                                        <div className="inline-flex flex-wrap items-baseline gap-2">
+                                                            <span>Early yarns felt </span>
+                                                            <div className="inline-flex items-center gap-2 align-baseline mx-1">
+                                                                <span className="font-bold text-sm text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">38</span>
+                                                                {renderBlank(38, "w-48", false)}
+                                                            </div>
+                                                            <span> to touch.</span>
+                                                        </div>
+                                                    </li>
+                                                    <li className="text-lg pl-2 leading-loose">
+                                                        <span>Wool became the most popular yarn for spinning.</span>
+                                                    </li>
+                                                    <li className="text-lg pl-2 leading-loose">
+                                                        <div className="inline-flex flex-wrap items-baseline gap-2">
+                                                            <span>Geographical areas had their own </span>
+                                                            <div className="inline-flex items-center gap-2 align-baseline mx-1">
+                                                                <span className="font-bold text-sm text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">39</span>
+                                                                {renderBlank(39, "w-48", false)}
+                                                            </div>
+                                                            <span> of knitting.</span>
+                                                        </div>
+                                                    </li>
+                                                    <li className="text-lg pl-2 leading-loose">
+                                                        <div className="inline-flex flex-wrap items-baseline gap-2">
+                                                            <span>Everyday tasks like looking after </span>
+                                                            <div className="inline-flex items-center gap-2 align-baseline mx-1">
+                                                                <span className="font-bold text-sm text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">40</span>
+                                                                {renderBlank(40, "w-48", false)}
+                                                            </div>
+                                                            <span> were done while knitting.</span>
+                                                        </div>
                                                     </li>
                                                 </ul>
                                             </div>

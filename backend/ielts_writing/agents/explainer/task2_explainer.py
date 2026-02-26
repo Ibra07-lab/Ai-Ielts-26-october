@@ -74,8 +74,16 @@ class Task2Explainer:
             evaluation=evaluation
         )
 
-        # Call LLM
-        if "claude" in self.model.lower():
+        # Call LLM based on model type
+        if self.model.startswith("openrouter/") or self.model.startswith("openai/") or self.model.startswith("anthropic/"):
+            response_text = self.client.call_openrouter(
+                model=self.model,
+                system_prompt=system_prompt,
+                user_prompt=user_prompt,
+                temperature=0.3,
+                max_tokens=6000
+            )
+        elif "claude" in self.model.lower():
             response_text = self.client.call_anthropic(
                 model=self.model,
                 system_prompt=system_prompt,

@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { UserProvider } from "./contexts/UserContext";
+import { VocabularyProvider } from "./contexts/VocabularyContext";
 import Layout from "./components/Layout";
 import Dashboard from "./pages/Dashboard";
 import SpeakingPractice from "./pages/SpeakingPractice";
@@ -69,10 +70,12 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <UserProvider>
-          <ErrorBoundary>
-            <AppInner />
-          </ErrorBoundary>
-          <Toaster />
+          <VocabularyProvider>
+            <ErrorBoundary>
+              <AppInner />
+            </ErrorBoundary>
+            <Toaster />
+          </VocabularyProvider>
         </UserProvider>
       </ThemeProvider>
     </QueryClientProvider>

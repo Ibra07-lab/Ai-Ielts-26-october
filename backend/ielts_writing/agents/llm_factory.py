@@ -1,4 +1,13 @@
+"""
+DEPRECATED: LangChain compatibility wrapper.
+
+This module wraps DirectLLMClient to look like a LangChain ChatModel.
+It was used by the legacy pipeline but is no longer needed.
+Use DirectLLMClient directly instead.
+"""
+
 import os
+import warnings
 from pathlib import Path
 from dotenv import load_dotenv
 from agents.direct_llm_client import DirectLLMClient
@@ -9,9 +18,16 @@ load_dotenv(dotenv_path=backend_dir / ".env", override=True)
 
 def get_chat_model(model_name: str = "gpt-4o", temperature: float = 0.0, max_tokens: int = 1024):
     """
-    Factory to get the appropriate Chat Model based on the model name.
+    DEPRECATED: Factory to get the appropriate Chat Model based on the model name.
     Now returns a wrapper that uses DirectLLMClient.
+    
+    Use DirectLLMClient directly instead of this wrapper.
     """
+    warnings.warn(
+        "get_chat_model() is deprecated. Use DirectLLMClient directly.",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     client = DirectLLMClient()
     
     class ModelWrapper:
@@ -40,3 +56,4 @@ def get_chat_model(model_name: str = "gpt-4o", temperature: float = 0.0, max_tok
                 return client.call_openai(self.model, system, user, self.temperature, self.max_tokens)
 
     return ModelWrapper(model_name, temperature, max_tokens)
+

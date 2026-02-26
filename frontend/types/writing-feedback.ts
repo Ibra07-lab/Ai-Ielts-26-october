@@ -159,6 +159,7 @@ export interface TopicAnalysis {
     category: string;
     description: string;
     why_it_matters: string;
+    evidence_from_essay?: string;
 }
 
 export interface TopicWord {

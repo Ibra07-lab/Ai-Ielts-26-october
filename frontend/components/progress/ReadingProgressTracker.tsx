@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { CheckCircle2 } from "lucide-react";
+import { BookOpen, TrendingUp, AlertCircle } from "lucide-react";
 import { useUser } from "../../contexts/UserContext";
 
 interface ReadingSkill {
@@ -9,11 +9,9 @@ interface ReadingSkill {
     accuracy: number;
 }
 
-
 export default function ReadingProgressTracker() {
     const { user } = useUser();
 
-    // Use default skills for now (static/empty state)
     const skills: ReadingSkill[] = [
         { type: "Matching Headings", total: 0, correct: 0, accuracy: 0 },
         { type: "True/False/Not Given", total: 0, correct: 0, accuracy: 0 },
@@ -25,90 +23,102 @@ export default function ReadingProgressTracker() {
         { type: "Short Answer", total: 0, correct: 0, accuracy: 0 },
     ];
 
-    // Sort data: Weakest first for potentially highlighting, then strongest
-    const sortedData = [...skills].sort((a, b) => a.accuracy - b.accuracy);
-    // Strongest areas (Top 3)
-    const strongAreas = [...skills].sort((a, b) => b.accuracy - a.accuracy).slice(0, 3);
+    const hasData = skills.some(s => s.total > 0);
 
-    // Animation variants
-    const container = {
-        hidden: { opacity: 0 },
-        show: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.1
-            }
-        }
+    const getBarColor = (accuracy: number) => {
+        if (accuracy >= 80) return "from-emerald-400 to-emerald-500";
+        if (accuracy >= 60) return "from-blue-400 to-blue-500";
+        if (accuracy >= 40) return "from-amber-400 to-amber-500";
+        return "from-rose-400 to-rose-500";
     };
 
-    return (
-        <div className="w-full space-y-12 font-sans">
-            {/* SECTION 2: DOMINANCE ZONES (Strong Areas) */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div className="space-y-6">
-                    <h3 className="text-xl font-black text-foreground uppercase tracking-widest flex items-center gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-emerald-500" />
-                        Dominance Zones
-                    </h3>
-                    <div className="space-y-3">
-                        {strongAreas.map((skill) => (
-                            <div key={skill.type} className="flex flex-col gap-1">
-                                <div className="flex justify-between items-end">
-                                    <span className="text-xs font-bold uppercase text-foreground">{skill.type}</span>
-                                    <span className="text-sm font-black text-emerald-500">{skill.accuracy}%</span>
-                                </div>
-                                <div className="h-6 bg-muted/50 w-full relative overflow-hidden flex items-center px-2">
-                                    <motion.div
-                                        initial={{ width: 0 }}
-                                        whileInView={{ width: `${skill.accuracy}%` }}
-                                        viewport={{ once: true }}
-                                        transition={{ duration: 0.8, ease: "easeOut" }}
-                                        className="absolute top-0 left-0 h-full bg-emerald-500 opacity-20"
-                                    />
-                                    <motion.div
-                                        initial={{ width: 0 }}
-                                        whileInView={{ width: `${skill.accuracy}%` }}
-                                        viewport={{ once: true }}
-                                        transition={{ duration: 0.8, ease: "easeOut" }}
-                                        className="absolute bottom-0 left-0 h-0.5 bg-emerald-500"
-                                    />
-                                    <span className="relative z-10 text-[9px] font-mono text-emerald-500 tracking-widest opacity-0 hover:opacity-100 transition-opacity">
-                                        MAX EFFICIENCY
-                                    </span>
-                                </div>
-                            </div>
-                        ))}
+    const getBarBg = (accuracy: number) => {
+        if (accuracy >= 80) return "bg-emerald-100 dark:bg-emerald-950/30";
+        if (accuracy >= 60) return "bg-blue-100 dark:bg-blue-950/30";
+        if (accuracy >= 40) return "bg-amber-100 dark:bg-amber-950/30";
+        return "bg-rose-100 dark:bg-rose-950/30";
+    };
+
+    const getAccuracyColor = (accuracy: number) => {
+        if (accuracy >= 80) return "text-emerald-600 dark:text-emerald-400";
+        if (accuracy >= 60) return "text-blue-600 dark:text-blue-400";
+        if (accuracy >= 40) return "text-amber-600 dark:text-amber-400";
+        return "text-rose-600 dark:text-rose-400";
+    };
+
+    if (!hasData) {
+        return (
+            <div className="rounded-2xl border border-border/60 bg-white/80 dark:bg-white/[0.04] p-8 backdrop-blur-sm">
+                <div className="flex items-center gap-3 mb-6">
+                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center">
+                        <BookOpen className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                        <h3 className="text-base font-bold text-foreground">Reading Skills Breakdown</h3>
+                        <p className="text-xs text-muted-foreground">Track accuracy by question type</p>
                     </div>
                 </div>
-
-                {/* SECTION 3: TACTICAL OVERVIEW (Full Chart) */}
-                <div className="relative">
-                    <h3 className="text-xl font-black text-foreground uppercase tracking-widest mb-6">
-                        Full Spectrum
-                    </h3>
-                    <div className="flex flex-col gap-1 h-[250px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-foreground/20 scrollbar-track-transparent">
-                        {sortedData.reverse().map((skill) => (
-                            <div key={skill.type} className="group flex items-center gap-4 text-xs hover:bg-muted/50 p-1 transition-colors">
-                                <span className="w-32 truncate font-medium text-muted-foreground group-hover:text-foreground transition-colors">{skill.type}</span>
-                                <div className="flex-1 h-1.5 bg-muted overflow-hidden">
-                                    <motion.div
-                                        initial={{ width: 0 }}
-                                        whileInView={{ width: `${skill.accuracy}%` }}
-                                        viewport={{ once: true }}
-                                        className={`h-full ${skill.accuracy > 80 ? 'bg-emerald-500' : skill.accuracy < 60 ? 'bg-cyan-500' : 'bg-blue-400'}`}
-                                    />
-                                </div>
-                                <span className="w-8 text-right font-mono text-muted-foreground">{skill.accuracy}%</span>
-                            </div>
-                        ))}
+                <div className="flex flex-col items-center justify-center py-12 text-center">
+                    <div className="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-white/[0.06] flex items-center justify-center mb-4">
+                        <AlertCircle className="w-7 h-7 text-slate-400 dark:text-slate-500" />
                     </div>
-                    {/* Visual Decor */}
-                    <div className="absolute -bottom-4 -right-4 w-12 h-12 border-b-2 border-r-2 border-foreground/20" />
-                    <div className="absolute -top-4 -left-4 w-4 h-4 border-t-2 border-l-2 border-foreground/20" />
+                    <p className="text-sm font-semibold text-foreground mb-1">No reading data yet</p>
+                    <p className="text-xs text-muted-foreground max-w-xs">
+                        Complete a few reading practice tests to see your accuracy breakdown across all 8 question types.
+                    </p>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <div className="rounded-2xl border border-border/60 bg-white/80 dark:bg-white/[0.04] p-6 sm:p-8 backdrop-blur-sm">
+            <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center">
+                        <BookOpen className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                        <h3 className="text-base font-bold text-foreground">Reading Skills Breakdown</h3>
+                        <p className="text-xs text-muted-foreground">Accuracy by question type</p>
+                    </div>
+                </div>
+                <div className="text-xs text-muted-foreground font-medium">
+                    {skills.filter(s => s.accuracy >= 70).length}/{skills.length} skills above 70%
                 </div>
             </div>
 
+            <div className="space-y-4">
+                {skills.map((skill, i) => (
+                    <motion.div
+                        key={skill.type}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: i * 0.05, duration: 0.3 }}
+                        className="group"
+                    >
+                        <div className="flex items-center gap-4">
+                            <span className="w-44 text-sm font-medium text-foreground/80 group-hover:text-foreground transition-colors truncate">
+                                {skill.type}
+                            </span>
+                            <div className="flex-1 relative">
+                                <div className={`h-3 rounded-full overflow-hidden ${getBarBg(skill.accuracy)} transition-colors`}>
+                                    <motion.div
+                                        initial={{ width: 0 }}
+                                        whileInView={{ width: `${Math.max(skill.accuracy, 2)}%` }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.8, ease: "easeOut", delay: i * 0.05 }}
+                                        className={`h-full rounded-full bg-gradient-to-r ${getBarColor(skill.accuracy)} shadow-sm`}
+                                    />
+                                </div>
+                            </div>
+                            <span className={`w-12 text-right text-sm font-bold tabular-nums ${getAccuracyColor(skill.accuracy)}`}>
+                                {skill.accuracy}%
+                            </span>
+                        </div>
+                    </motion.div>
+                ))}
+            </div>
         </div>
     );
 }
-

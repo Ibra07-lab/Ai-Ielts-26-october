@@ -227,13 +227,18 @@ export const submitListening = api<ListeningSubmission, ListeningResult>(
 
       let isCorrect = false;
 
-      if (Array.isArray(question.correctAnswer)) {
+      if (question.type === "pick-two" || Array.isArray(question.correctAnswer)) {
         // Handle pick-two questions (e.g. Q14 & Q15 are a pair)
         // Each question number expects ONE answer from the user
         // User gets 1 mark if their single answer is in the correct answers pool
         // Order doesn't matter - "B" for Q14 and "E" for Q15 is the same as "E" for Q14 and "B" for Q15
-        const correctParts = question.correctAnswer.map(a => a.trim().toUpperCase());
-        isCorrect = correctParts.includes(userAnswer.toUpperCase());
+        const correctAnswer = question.correctAnswer;
+        const correctParts = Array.isArray(correctAnswer)
+          ? correctAnswer
+          : (typeof correctAnswer === 'string' ? correctAnswer.split(',') : []);
+
+        const normalizedParts = correctParts.map(a => a.trim().toUpperCase());
+        isCorrect = normalizedParts.includes(userAnswer.toUpperCase());
       } else {
         // Handle single-answer questions
         const correctAnswer = question.correctAnswer.toLowerCase().trim();

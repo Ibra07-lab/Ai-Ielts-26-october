@@ -149,7 +149,7 @@ export default function WordDeck({ word, onKnow, onDontKnow, onBack, remainingCo
                             onClick={handleFlip}
                         >
                             {/* Front of Card */}
-                            <Card className="absolute inset-0 w-full h-full backface-hidden bg-gradient-to-br from-white to-gray-50 dark:from-neutral-900 dark:to-neutral-800 border-gray-200 dark:border-white/10 shadow-xl dark:shadow-2xl flex flex-col items-center justify-center p-8 group hover:border-sky-500/30 transition-colors">
+                            <Card className="absolute inset-0 w-full h-full backface-hidden bg-gradient-to-br from-white to-gray-50 dark:from-card dark:to-background border-gray-200 dark:border-white/10 shadow-xl dark:shadow-2xl flex flex-col items-center justify-center p-8 group hover:border-sky-500/30 transition-colors">
                                 <div className="absolute top-6 right-6">
                                     <Star className="h-6 w-6 text-yellow-500/20 group-hover:text-yellow-500 transition-colors" />
                                 </div>
@@ -176,7 +176,7 @@ export default function WordDeck({ word, onKnow, onDontKnow, onBack, remainingCo
                             </Card>
 
                             {/* Back of Card */}
-                            <Card className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-white dark:bg-neutral-900 border-gray-200 dark:border-white/10 shadow-xl dark:shadow-2xl overflow-y-auto custom-scrollbar">
+                            <Card className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-white dark:bg-card border-gray-200 dark:border-white/10 shadow-xl dark:shadow-2xl overflow-y-auto custom-scrollbar">
                                 <CardContent className="p-8 space-y-6">
                                     {/* Definition Section */}
                                     <div className="space-y-2">

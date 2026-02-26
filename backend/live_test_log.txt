@@ -1,0 +1,157 @@
+﻿python : 2026-02-23 13:22:34,334 - i
+elts_writing.agents.examiner.task2_e
+xaminer - INFO - Task2Examiner initi
+alized with model: anthropic/claude-
+sonnet-4.5
+строка:1 знак:1
++ python live_pipeline_test.py 2>&1 
+| Out-File -Encoding utf8 live_test 
+...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSp 
+   ecified: (2026-02-23 13:2...aud  
+  e-sonnet-4.5:String) [], Remote   
+ Exception
+    + FullyQualifiedErrorId : Nativ 
+   eCommandError
+ 
+2026-02-23 13:22:34,334 - ielts_writ
+ing.agents.examiner.task2_examiner -
+ WARNING - Task2Examiner using stand
+ard Anthropic key: sk-ant-api...
+2026-02-23 13:22:34,334 - ielts_writ
+ing.task2_pipeline - INFO - \U0001f5
+0d 1. Running Examiner...
+2026-02-23 13:22:38,997 - httpx - IN
+FO - HTTP Request: POST https://open
+router.ai/api/v1/chat/completions "H
+TTP/1.1 200 OK"
+2026-02-23 13:23:40,008 - ielts_writ
+ing.task2_pipeline - INFO -    \u219
+2 Overall Band: 5.0
+2026-02-23 13:23:40,008 - ielts_writ
+ing.task2_pipeline - INFO - \U0001f4
+dd 2. Running Explainer...
+============================================================
+LIVE PIPELINE TEST Ч Task 2 Evaluation
+============================================================
+
+Essay: 125 words
+Question: Some people think that governments should invest more money in public transport....
+
+Starting pipeline (this takes ~30-60 seconds)...
+
+[DEBUG] call_anthropic called with model=anthropic/claude-sonnet-4.5
+2026-02-23 13:23:45,917 - httpx - IN
+FO - HTTP Request: POST https://api.
+anthropic.com/v1/messages "HTTP/1.1 
+404 Not Found"
+2026-02-23 13:23:45,918 - agents.dir
+ect_llm_client - ERROR - Anthropic A
+PI Error: {"type":"error","error":{"
+type":"not_found_error","message":"m
+odel: anthropic/claude-sonnet-4.5"},
+"request_id":"req_011CYQgLji1c7xqzew
+WMw4dX"}
+Traceback (most recent call last):
+  File "C:\Users\Honor\Desktop\═ютр 
+ яряър (4)\Ai-Ielts-26-october\backe
+nd\live_pipeline_test.py", line 38, 
+in main
+    result = await pipeline.evaluate
+_essay(SAMPLE_ESSAY, SAMPLE_QUESTION
+)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^
+  File "C:\Users\Honor\Desktop\═ютр 
+ яряър (4)\Ai-Ielts-26-october\backe
+nd\ielts_writing\task2_pipeline.py",
+ line 99, in evaluate_essay
+    explanation = await loop.run_in_
+executor(
+                  ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^
+        _executor, self.explainer.ex
+plain, essay, question, eval_dict
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Python313\Lib\concurrent\
+futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **s
+elf.kwargs)
+  File "C:\Users\Honor\Desktop\═ютр 
+ яряър (4)\Ai-Ielts-26-october\backe
+nd\ielts_writing\agents\explainer\ta
+sk2_explainer.py", line 79, in expla
+in
+    response_text = self.client.call
+_anthropic(
+        model=self.model,
+    ...<4 lines>...
+        image_data=None
+    )
+  File "C:\Users\Honor\Desktop\═ютр 
+ яряър (4)\Ai-Ielts-26-october\backe
+nd\agents\direct_llm_client.py", lin
+e 140, in call_anthropic
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Honor\AppData\Roami
+ng\Python\Python313\site-packages\ht
+tpx\_models.py", line 829, in raise_
+for_status
+    raise HTTPStatusError(message, r
+equest=request, response=self)
+httpx.HTTPStatusError: Client error 
+'404 Not Found' for url 'https://api
+.anthropic.com/v1/messages'
+For more information check: https://
+developer.mozilla.org/en-US/docs/Web
+/HTTP/Status/404
+
+During handling of the above excepti
+on, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Honor\Desktop\═ютр 
+ яряър (4)\Ai-Ielts-26-october\backe
+nd\live_pipeline_test.py", line 126,
+ in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "C:\Python313\Lib\asyncio\run
+ners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Python313\Lib\asyncio\run
+ners.py", line 118, in run
+    return self._loop.run_until_comp
+lete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~^^^^^^
+  File "C:\Python313\Lib\asyncio\bas
+e_events.py", line 725, in run_until
+_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\Honor\Desktop\═ютр 
+ яряър (4)\Ai-Ielts-26-october\backe
+nd\live_pipeline_test.py", line 120,
+ in main
+    print(f"\n\u274c Pipeline failed
+ after {elapsed:.1f}s")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\c
+p1251.py", line 19, in encode
+    return codecs.charmap_encode(inp
+ut,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec 
+can't encode character '\u274c' in p
+osition 2: character maps to <undefi
+ned>
