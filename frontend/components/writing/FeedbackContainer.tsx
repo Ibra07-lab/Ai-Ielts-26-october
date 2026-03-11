@@ -14,7 +14,7 @@ export function FeedbackContainer({ evaluation, coaching, essay, taskType, onBac
     const [activeCriterion, setActiveCriterion] = useState<Criterion | null>(null);
 
     return (
-        <div className="w-full flex-1 flex flex-col bg-[#0F172A] text-slate-100 min-h-0 overflow-hidden">
+        <div className="w-full flex-1 flex flex-col bg-white dark:bg-[#0f172a] text-slate-900 dark:text-slate-100 min-h-0 overflow-hidden">
             <main className="flex-1 flex flex-col relative overflow-hidden min-h-0">
                 <FeedbackDeepDiveView
                     essay={essay}

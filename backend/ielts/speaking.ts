@@ -7,7 +7,7 @@ export interface SpeakingQuestion {
 }
 
 export interface SpeakingSubmission {
-  userId: number;
+  userId: string;
   part: number;
   question: string;
   transcription?: string;
@@ -114,7 +114,7 @@ export const submitSpeaking = api<SpeakingSubmission, SpeakingFeedback>(
 );
 
 // Retrieves user's speaking session history.
-export const getSpeakingSessions = api<{ userId: number }, { sessions: SpeakingSession[] }>(
+export const getSpeakingSessions = api<{ userId: string }, { sessions: SpeakingSession[] }>(
   { expose: true, method: "GET", path: "/users/:userId/speaking/sessions" },
   async ({ userId }) => {
     const sessions = await ieltsDB.queryAll<SpeakingSession>`

@@ -48,7 +48,7 @@ export interface ListeningTestMeta {
 }
 
 export interface ListeningSubmission {
-  userId: number;
+  userId: string;
   testId: number;
   userAnswers: Record<number, string>;
   timeTaken?: number;
@@ -288,7 +288,7 @@ export const submitListening = api<ListeningSubmission, ListeningResult>(
 );
 
 // Get user's listening session history
-export const getListeningSessions = api<{ userId: number }, { sessions: ListeningSession[] }>(
+export const getListeningSessions = api<{ userId: string }, { sessions: ListeningSession[] }>(
   { expose: true, method: "GET", path: "/users/:userId/listening/sessions" },
   async ({ userId }) => {
     const sessions = await ieltsDB.queryAll<ListeningSession>`

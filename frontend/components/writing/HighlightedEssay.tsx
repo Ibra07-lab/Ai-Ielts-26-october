@@ -30,7 +30,7 @@ const TYPE_CONFIG = {
         color: 'rose',
         bgClass: 'bg-rose-500/10',
         borderClass: 'border-rose-500/30',
-        textClass: 'text-rose-400',
+        textClass: 'text-rose-600 dark:text-rose-400',
     },
     vocabulary: {
         icon: BookOpen,
@@ -38,7 +38,7 @@ const TYPE_CONFIG = {
         color: 'emerald',
         bgClass: 'bg-emerald-500/10',
         borderClass: 'border-emerald-500/30',
-        textClass: 'text-emerald-400',
+        textClass: 'text-emerald-700 dark:text-emerald-400',
     },
     coherence: {
         icon: Layout,
@@ -46,7 +46,7 @@ const TYPE_CONFIG = {
         color: 'indigo',
         bgClass: 'bg-indigo-500/10',
         borderClass: 'border-indigo-500/30',
-        textClass: 'text-indigo-400',
+        textClass: 'text-indigo-600 dark:text-indigo-400',
     },
 };
 
@@ -86,7 +86,7 @@ export const HighlightedEssay: React.FC<HighlightedEssayProps> = ({
 
         if (validCorrections.length === 0) {
             return (
-                <div className="font-serif text-[20px] leading-[1.8] text-slate-800 dark:text-slate-100/90 tracking-wide selection:bg-teal-500/30">
+                <div className="font-serif text-base md:text-[18px] leading-[1.7] md:leading-[1.8] text-slate-800 dark:text-slate-100/90 tracking-wide selection:bg-teal-500/30 overflow-y-auto custom-scrollbar relative">
                     {improvedText}
                 </div>
             );
@@ -99,7 +99,7 @@ export const HighlightedEssay: React.FC<HighlightedEssayProps> = ({
 
         return (
             <Tooltip.Provider delayDuration={200}>
-                <div className="font-serif text-[20px] leading-[1.8] text-slate-800 dark:text-slate-100/90 tracking-wide selection:bg-teal-500/30 overflow-y-auto custom-scrollbar relative">
+                <div className="font-serif text-base md:text-[18px] leading-[1.7] md:leading-[1.8] text-slate-800 dark:text-slate-100/90 tracking-wide selection:bg-teal-500/30 overflow-y-auto custom-scrollbar relative">
                     <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')] dark:hidden" />
 
                     <div className="relative z-10">
@@ -122,11 +122,11 @@ export const HighlightedEssay: React.FC<HighlightedEssayProps> = ({
                                         </Tooltip.Trigger>
                                         <Tooltip.Portal>
                                             <Tooltip.Content
-                                                className="z-50 w-[350px] bg-slate-900 border border-slate-700 rounded-xl shadow-2xl p-0 overflow-hidden animate-in fade-in-0 zoom-in-95"
+                                                className="z-50 w-[350px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl p-0 overflow-hidden animate-in fade-in-0 zoom-in-95"
                                                 sideOffset={8}
                                             >
                                                 {/* Header */}
-                                                <div className={cn("px-4 py-2 border-b border-slate-700 flex items-center gap-2", config.bgClass)}>
+                                                <div className={cn("px-4 py-2 border-b border-slate-200 dark:border-slate-700 flex items-center gap-2", config.bgClass)}>
                                                     <IconComponent className={cn("w-4 h-4", config.textClass)} />
                                                     <span className={cn("text-xs font-bold uppercase tracking-wider", config.textClass)}>
                                                         {config.label} Improvement
@@ -141,7 +141,7 @@ export const HighlightedEssay: React.FC<HighlightedEssayProps> = ({
                                                             <AlertCircle className="w-3 h-3" />
                                                             <span>Original</span>
                                                         </div>
-                                                        <p className="text-sm text-slate-400 line-through pl-5">
+                                                        <p className="text-sm text-slate-500 dark:text-slate-400 line-through pl-5">
                                                             "{matchedCorrection.original}"
                                                         </p>
                                                     </div>
@@ -152,24 +152,24 @@ export const HighlightedEssay: React.FC<HighlightedEssayProps> = ({
                                                             <CheckCircle2 className="w-3 h-3" />
                                                             <span>Improved</span>
                                                         </div>
-                                                        <p className="text-sm text-emerald-300 font-medium pl-5">
+                                                        <p className="text-sm text-emerald-800 dark:text-emerald-300 font-medium pl-5">
                                                             "{matchedCorrection.corrected}"
                                                         </p>
                                                     </div>
 
                                                     {/* Explanation */}
-                                                    <div className="space-y-1 pt-2 border-t border-slate-700/50">
-                                                        <div className="flex items-center gap-2 text-xs font-medium text-amber-400">
+                                                    <div className="space-y-1 pt-2 border-t border-slate-200 dark:border-slate-700/50">
+                                                        <div className="flex items-center gap-2 text-xs font-medium text-amber-600 dark:text-amber-400">
                                                             <Lightbulb className="w-3 h-3" />
                                                             <span>Why this is better</span>
                                                         </div>
-                                                        <p className="text-sm text-slate-300 pl-5">
+                                                        <p className="text-sm text-slate-700 dark:text-slate-300 pl-5">
                                                             {matchedCorrection.explanation}
                                                         </p>
                                                     </div>
                                                 </div>
 
-                                                <Tooltip.Arrow className="fill-slate-700" />
+                                                <Tooltip.Arrow className="fill-white dark:fill-slate-700" />
                                             </Tooltip.Content>
                                         </Tooltip.Portal>
                                     </Tooltip.Root>
@@ -200,7 +200,7 @@ export const HighlightedEssay: React.FC<HighlightedEssayProps> = ({
 
     if (uniquePatterns.length === 0) {
         return (
-            <div className="font-serif text-[20px] leading-[1.8] text-slate-800 dark:text-slate-100/90 tracking-wide selection:bg-teal-500/30">
+            <div className="font-serif text-base md:text-[18px] leading-[1.7] md:leading-[1.8] text-slate-800 dark:text-slate-100/90 tracking-wide selection:bg-teal-500/30 overflow-y-auto custom-scrollbar relative">
                 {essayText}
             </div>
         );
@@ -272,19 +272,19 @@ export const HighlightedEssay: React.FC<HighlightedEssayProps> = ({
                                                 </div>
 
                                                 {/* Explanation */}
-                                                <div className="space-y-1 pt-2 border-t border-slate-700/50">
-                                                    <div className="flex items-center gap-2 text-xs font-medium text-amber-400">
+                                                <div className="space-y-1 pt-2 border-t border-slate-200 dark:border-slate-700/50">
+                                                    <div className="flex items-center gap-2 text-xs font-medium text-amber-600 dark:text-amber-400">
                                                         <Lightbulb className="w-3 h-3" />
                                                         <span>Why</span>
                                                     </div>
-                                                    <p className="text-sm text-slate-300 pl-5">
+                                                    <p className="text-sm text-slate-700 dark:text-slate-300 pl-5">
                                                         {matchedCorrection.explanation}
                                                     </p>
                                                 </div>
 
                                                 {/* Tip if available */}
                                                 {matchedCorrection.tip && (
-                                                    <div className="text-xs text-slate-500 pl-5 italic">
+                                                    <div className="text-xs text-slate-500 dark:text-slate-400 pl-5 italic">
                                                         💡 {matchedCorrection.tip}
                                                     </div>
                                                 )}
@@ -319,7 +319,7 @@ export const HighlightedEssay: React.FC<HighlightedEssayProps> = ({
                                     </Tooltip.Trigger>
                                     <Tooltip.Portal>
                                         <Tooltip.Content
-                                            className="z-50 max-w-[250px] bg-slate-900 border border-slate-700 rounded-lg shadow-xl px-3 py-2 text-sm text-slate-200"
+                                            className="z-50 max-w-[250px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl px-3 py-2 text-sm text-slate-700 dark:text-slate-200"
                                             sideOffset={5}
                                         >
                                             {matchedHighlight.type === 'strength'

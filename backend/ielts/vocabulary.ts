@@ -22,7 +22,7 @@ export interface VocabularyProgress {
 }
 
 // Retrieves vocabulary words for practice.
-export const getVocabularyWords = api<{ userId: number; topic?: string; limit?: number }, { words: VocabularyWord[] }>(
+export const getVocabularyWords = api<{ userId: string; topic?: string; limit?: number }, { words: VocabularyWord[] }>(
   { expose: true, method: "GET", path: "/users/:userId/vocabulary" },
   async ({ userId, topic, limit = 10 }) => {
     let query = `
@@ -32,14 +32,14 @@ export const getVocabularyWords = api<{ userId: number; topic?: string; limit?: 
       FROM vocabulary_words v
       LEFT JOIN user_vocabulary uv ON v.id = uv.word_id AND uv.user_id = $1
     `;
-    
+
     const params: any[] = [userId];
-    
+
     if (topic) {
       query += ` WHERE v.topic = $${params.length + 1}`;
       params.push(topic);
     }
-    
+
     query += ` ORDER BY RANDOM() LIMIT $${params.length + 1}`;
     params.push(limit);
 
@@ -50,10 +50,10 @@ export const getVocabularyWords = api<{ userId: number; topic?: string; limit?: 
 );
 
 // Updates user's vocabulary word status.
-export const updateVocabularyStatus = api<{ userId: number; wordId: number; status: string }, void>(
+export const updateVocabularyStatus = api<{ userId: string; wordId: number; status: string }, void>(
   { expose: true, method: "POST", path: "/users/:userId/vocabulary/:wordId/status" },
   async ({ userId, wordId, status }) => {
-    const nextReviewDate = status === 'review' 
+    const nextReviewDate = status === 'review'
       ? new Date(Date.now() + 24 * 60 * 60 * 1000) // Tomorrow
       : null;
 
@@ -71,7 +71,7 @@ export const updateVocabularyStatus = api<{ userId: number; wordId: number; stat
 );
 
 // Retrieves vocabulary progress for a user.
-export const getVocabularyProgress = api<{ userId: number }, VocabularyProgress>(
+export const getVocabularyProgress = api<{ userId: string }, VocabularyProgress>(
   { expose: true, method: "GET", path: "/users/:userId/vocabulary/progress" },
   async ({ userId }) => {
     const progress = await ieltsDB.queryRow<VocabularyProgress>`

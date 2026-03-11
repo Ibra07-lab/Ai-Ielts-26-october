@@ -119,7 +119,7 @@ export default function ListeningPractice() {
       if (!selectedTestId) return null;
       console.log("🔍 [DEBUG] Fetching test with ID:", selectedTestId);
       try {
-        const data = await backend.ielts.getListeningTest({ testId: selectedTestId });
+        const data = await backend.ielts.getListeningTest(selectedTestId);
         console.log("✅ [DEBUG] Test data received:", data);
         console.log("✅ [DEBUG] Test questions:", data?.questions?.length);
         console.log("✅ [DEBUG] Test transcript:", data?.transcript?.length);
@@ -137,7 +137,7 @@ export default function ListeningPractice() {
     queryKey: ["listeningTranscript", selectedTestId],
     queryFn: async () => {
       if (!selectedTestId) return null;
-      const data = await backend.ielts.getListeningTranscript({ testId: selectedTestId });
+      const data = await backend.ielts.getListeningTranscript(selectedTestId);
       console.log("📜 [DEBUG] Transcript Data Received:", data);
       return data as TranscriptResponse;
     },
@@ -246,9 +246,9 @@ export default function ListeningPractice() {
     });
   };
 
-  // Tests that use the custom worksheet component (Test 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)
+  // Tests that use the custom worksheet component (Test 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20)
   const isWorksheetTest = (testId: number) => {
-    return [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].includes(testId);
+    return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].includes(testId);
   };
 
   const handleAnswerChange = (questionId: number, answer: string) => {

@@ -1,8 +1,14 @@
 import os
 import json
 import logging
+import time
+import asyncio
 import httpx
 from typing import List, Dict, Any, Optional
+
+# Retry configuration
+MAX_RETRIES = 3
+RETRY_DELAYS = [5, 15, 30]  # seconds between retries (exponential backoff)
 
 logger = logging.getLogger(__name__)
 
@@ -48,7 +54,8 @@ class DirectLLMClient:
         max_tokens: int = 1024,
         image_data: Optional[str] = None,
         image_media_type: Optional[str] = None,
-        enable_caching: bool = None  # None = use global toggle
+        enable_caching: bool = None,  # None = use global toggle
+        timeout: float = 120.0  # Per-call timeout in seconds
     ) -> str:
         """Call Anthropic API directly with optional prompt caching.
         
@@ -133,44 +140,65 @@ class DirectLLMClient:
             "temperature": temperature,
         }
 
-        with httpx.Client(timeout=600.0) as client:
-            response = client.post("https://api.anthropic.com/v1/messages", headers=headers, json=data)
-            if response.status_code >= 400:
-                logger.error(f"Anthropic API Error: {response.text}")
-            response.raise_for_status()
-            response_json = response.json()
-            
-            # Log token usage and cost (with caching breakdown)
-            usage = response_json.get("usage", {})
-            input_tokens = usage.get("input_tokens", 0)
-            output_tokens = usage.get("output_tokens", 0)
-            cache_read_tokens = usage.get("cache_read_input_tokens", 0)
-            cache_creation_tokens = usage.get("cache_creation_input_tokens", 0)
-            
-            # Calculate cost with caching discounts
-            uncached_input = input_tokens - cache_read_tokens
-            input_cost = (uncached_input / 1_000_000 * CLAUDE_SONNET_INPUT_PRICE)
-            cached_cost = (cache_read_tokens / 1_000_000 * CLAUDE_CACHED_INPUT_PRICE)
-            cache_write_cost = (cache_creation_tokens / 1_000_000 * CLAUDE_CACHE_WRITE_PRICE)
-            output_cost = (output_tokens / 1_000_000 * CLAUDE_SONNET_OUTPUT_PRICE)
-            total_cost = input_cost + cached_cost + cache_write_cost + output_cost
-            
-            # Calculate savings from caching
-            cost_without_cache = (input_tokens / 1_000_000 * CLAUDE_SONNET_INPUT_PRICE) + output_cost
-            savings = cost_without_cache - total_cost if cache_read_tokens > 0 else 0
-            
-            if cache_read_tokens > 0 or cache_creation_tokens > 0:
-                log_msg = (f"[TOKEN_USAGE] Anthropic | Model: {model} | Input: {input_tokens} | Output: {output_tokens} | "
-                           f"Cache Read: {cache_read_tokens} | Cache Write: {cache_creation_tokens} | "
-                           f"Cost: ${total_cost:.4f} | Saved: ${savings:.4f}")
-                logger.info(log_msg)
-                print(log_msg, flush=True)  # Also print for immediate visibility
-            else:
-                log_msg = f"[TOKEN_USAGE] Anthropic | Model: {model} | Input: {input_tokens} | Output: {output_tokens} | Cost: ${total_cost:.4f}"
-                logger.info(log_msg)
-                print(log_msg, flush=True)  # Also print for immediate visibility
-            
-            return response_json["content"][0]["text"]
+        last_exception = None
+        for attempt in range(MAX_RETRIES):
+            try:
+                with httpx.Client(timeout=timeout) as client:
+                    response = client.post("https://api.anthropic.com/v1/messages", headers=headers, json=data)
+                    if response.status_code >= 500:
+                        raise httpx.HTTPStatusError(
+                            f"Server error {response.status_code}", 
+                            request=response.request, 
+                            response=response
+                        )
+                    if response.status_code >= 400:
+                        logger.error(f"Anthropic API Error: {response.text}")
+                    response.raise_for_status()
+                    response_json = response.json()
+                    
+                    # Log token usage and cost (with caching breakdown)
+                    usage = response_json.get("usage", {})
+                    input_tokens = usage.get("input_tokens", 0)
+                    output_tokens = usage.get("output_tokens", 0)
+                    cache_read_tokens = usage.get("cache_read_input_tokens", 0)
+                    cache_creation_tokens = usage.get("cache_creation_input_tokens", 0)
+                    
+                    # Calculate cost with caching discounts
+                    uncached_input = input_tokens - cache_read_tokens
+                    input_cost = (uncached_input / 1_000_000 * CLAUDE_SONNET_INPUT_PRICE)
+                    cached_cost = (cache_read_tokens / 1_000_000 * CLAUDE_CACHED_INPUT_PRICE)
+                    cache_write_cost = (cache_creation_tokens / 1_000_000 * CLAUDE_CACHE_WRITE_PRICE)
+                    output_cost = (output_tokens / 1_000_000 * CLAUDE_SONNET_OUTPUT_PRICE)
+                    total_cost = input_cost + cached_cost + cache_write_cost + output_cost
+                    
+                    # Calculate savings from caching
+                    cost_without_cache = (input_tokens / 1_000_000 * CLAUDE_SONNET_INPUT_PRICE) + output_cost
+                    savings = cost_without_cache - total_cost if cache_read_tokens > 0 else 0
+                    
+                    if cache_read_tokens > 0 or cache_creation_tokens > 0:
+                        log_msg = (f"[TOKEN_USAGE] Anthropic | Model: {model} | Input: {input_tokens} | Output: {output_tokens} | "
+                                   f"Cache Read: {cache_read_tokens} | Cache Write: {cache_creation_tokens} | "
+                                   f"Cost: ${total_cost:.4f} | Saved: ${savings:.4f}")
+                        logger.info(log_msg)
+                        print(log_msg, flush=True)
+                    else:
+                        log_msg = f"[TOKEN_USAGE] Anthropic | Model: {model} | Input: {input_tokens} | Output: {output_tokens} | Cost: ${total_cost:.4f}"
+                        logger.info(log_msg)
+                        print(log_msg, flush=True)
+                    
+                    return response_json["content"][0]["text"]
+                    
+            except (httpx.ReadTimeout, httpx.ConnectTimeout, httpx.HTTPStatusError) as e:
+                last_exception = e
+                delay = RETRY_DELAYS[min(attempt, len(RETRY_DELAYS) - 1)]
+                logger.warning(f"[RETRY] Anthropic call failed (attempt {attempt + 1}/{MAX_RETRIES}): {type(e).__name__}. Retrying in {delay}s...")
+                print(f"[RETRY] Attempt {attempt + 1}/{MAX_RETRIES} failed: {type(e).__name__}. Retrying in {delay}s...", flush=True)
+                if attempt < MAX_RETRIES - 1:
+                    time.sleep(delay)
+        
+        # All retries exhausted
+        logger.error(f"[RETRY EXHAUSTED] Anthropic call failed after {MAX_RETRIES} attempts")
+        raise last_exception
 
     def call_openai(
         self, 
@@ -197,7 +225,7 @@ class DirectLLMClient:
             "temperature": temperature,
         }
 
-        with httpx.Client(timeout=600.0) as client:
+        with httpx.Client(timeout=120.0) as client:
             response = client.post("https://api.openai.com/v1/chat/completions", headers=headers, json=data)
             response.raise_for_status()
             response_json = response.json()
@@ -238,7 +266,7 @@ class DirectLLMClient:
             "temperature": temperature,
         }
 
-        with httpx.Client(timeout=600.0) as client:
+        with httpx.Client(timeout=120.0) as client:
             response = client.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data)
             response.raise_for_status()
             return response.json()["choices"][0]["message"]["content"]
@@ -254,7 +282,8 @@ class DirectLLMClient:
         max_tokens: int = 1024,
         image_data: Optional[str] = None,
         image_media_type: Optional[str] = None,
-        enable_caching: bool = None  # None = use global toggle
+        enable_caching: bool = None,  # None = use global toggle
+        timeout: float = 120.0  # Per-call timeout in seconds
     ) -> str:
         """Async version of call_anthropic for parallel execution with prompt caching.
         
@@ -320,40 +349,61 @@ class DirectLLMClient:
             "temperature": temperature,
         }
 
-        async with httpx.AsyncClient(timeout=600.0) as client:
-            response = await client.post("https://api.anthropic.com/v1/messages", headers=headers, json=data)
-            if response.status_code >= 400:
-                logger.error(f"Anthropic API Error: {response.text}")
-            response.raise_for_status()
-            response_json = response.json()
-            
-            # Log token usage and cost (with caching breakdown)
-            usage = response_json.get("usage", {})
-            input_tokens = usage.get("input_tokens", 0)
-            output_tokens = usage.get("output_tokens", 0)
-            cache_read_tokens = usage.get("cache_read_input_tokens", 0)
-            cache_creation_tokens = usage.get("cache_creation_input_tokens", 0)
-            
-            # Calculate cost with caching discounts
-            uncached_input = input_tokens - cache_read_tokens
-            input_cost = (uncached_input / 1_000_000 * CLAUDE_SONNET_INPUT_PRICE)
-            cached_cost = (cache_read_tokens / 1_000_000 * CLAUDE_CACHED_INPUT_PRICE)
-            cache_write_cost = (cache_creation_tokens / 1_000_000 * CLAUDE_CACHE_WRITE_PRICE)
-            output_cost = (output_tokens / 1_000_000 * CLAUDE_SONNET_OUTPUT_PRICE)
-            total_cost = input_cost + cached_cost + cache_write_cost + output_cost
-            
-            # Calculate savings from caching
-            cost_without_cache = (input_tokens / 1_000_000 * CLAUDE_SONNET_INPUT_PRICE) + output_cost
-            savings = cost_without_cache - total_cost if cache_read_tokens > 0 else 0
-            
-            if cache_read_tokens > 0 or cache_creation_tokens > 0:
-                logger.info(f"[TOKEN_USAGE] Anthropic Async | Model: {model} | Input: {input_tokens} | Output: {output_tokens} | "
-                           f"Cache Read: {cache_read_tokens} | Cache Write: {cache_creation_tokens} | "
-                           f"Cost: ${total_cost:.4f} | Saved: ${savings:.4f}")
-            else:
-                logger.info(f"[TOKEN_USAGE] Anthropic Async | Model: {model} | Input: {input_tokens} | Output: {output_tokens} | Cost: ${total_cost:.4f}")
-            
-            return response_json["content"][0]["text"]
+        last_exception = None
+        for attempt in range(MAX_RETRIES):
+            try:
+                async with httpx.AsyncClient(timeout=timeout) as client:
+                    response = await client.post("https://api.anthropic.com/v1/messages", headers=headers, json=data)
+                    if response.status_code >= 500:
+                        raise httpx.HTTPStatusError(
+                            f"Server error {response.status_code}",
+                            request=response.request,
+                            response=response
+                        )
+                    if response.status_code >= 400:
+                        logger.error(f"Anthropic API Error: {response.text}")
+                    response.raise_for_status()
+                    response_json = response.json()
+                    
+                    # Log token usage and cost (with caching breakdown)
+                    usage = response_json.get("usage", {})
+                    input_tokens = usage.get("input_tokens", 0)
+                    output_tokens = usage.get("output_tokens", 0)
+                    cache_read_tokens = usage.get("cache_read_input_tokens", 0)
+                    cache_creation_tokens = usage.get("cache_creation_input_tokens", 0)
+                    
+                    # Calculate cost with caching discounts
+                    uncached_input = input_tokens - cache_read_tokens
+                    input_cost = (uncached_input / 1_000_000 * CLAUDE_SONNET_INPUT_PRICE)
+                    cached_cost = (cache_read_tokens / 1_000_000 * CLAUDE_CACHED_INPUT_PRICE)
+                    cache_write_cost = (cache_creation_tokens / 1_000_000 * CLAUDE_CACHE_WRITE_PRICE)
+                    output_cost = (output_tokens / 1_000_000 * CLAUDE_SONNET_OUTPUT_PRICE)
+                    total_cost = input_cost + cached_cost + cache_write_cost + output_cost
+                    
+                    # Calculate savings from caching
+                    cost_without_cache = (input_tokens / 1_000_000 * CLAUDE_SONNET_INPUT_PRICE) + output_cost
+                    savings = cost_without_cache - total_cost if cache_read_tokens > 0 else 0
+                    
+                    if cache_read_tokens > 0 or cache_creation_tokens > 0:
+                        logger.info(f"[TOKEN_USAGE] Anthropic Async | Model: {model} | Input: {input_tokens} | Output: {output_tokens} | "
+                                   f"Cache Read: {cache_read_tokens} | Cache Write: {cache_creation_tokens} | "
+                                   f"Cost: ${total_cost:.4f} | Saved: ${savings:.4f}")
+                    else:
+                        logger.info(f"[TOKEN_USAGE] Anthropic Async | Model: {model} | Input: {input_tokens} | Output: {output_tokens} | Cost: ${total_cost:.4f}")
+                    
+                    return response_json["content"][0]["text"]
+                    
+            except (httpx.ReadTimeout, httpx.ConnectTimeout, httpx.HTTPStatusError) as e:
+                last_exception = e
+                delay = RETRY_DELAYS[min(attempt, len(RETRY_DELAYS) - 1)]
+                logger.warning(f"[RETRY] Anthropic Async call failed (attempt {attempt + 1}/{MAX_RETRIES}): {type(e).__name__}. Retrying in {delay}s...")
+                print(f"[RETRY] Async attempt {attempt + 1}/{MAX_RETRIES} failed: {type(e).__name__}. Retrying in {delay}s...", flush=True)
+                if attempt < MAX_RETRIES - 1:
+                    await asyncio.sleep(delay)
+        
+        # All retries exhausted
+        logger.error(f"[RETRY EXHAUSTED] Anthropic Async call failed after {MAX_RETRIES} attempts")
+        raise last_exception
 
     async def call_openai_async(
         self, 
@@ -384,7 +434,7 @@ class DirectLLMClient:
             "temperature": temperature,
         }
 
-        async with httpx.AsyncClient(timeout=600.0) as client:
+        async with httpx.AsyncClient(timeout=120.0) as client:
             response = await client.post("https://api.openai.com/v1/chat/completions", headers=headers, json=data)
             response.raise_for_status()
             response_json = response.json()
@@ -430,7 +480,7 @@ class DirectLLMClient:
             "temperature": temperature,
         }
 
-        async with httpx.AsyncClient(timeout=600.0) as client:
+        async with httpx.AsyncClient(timeout=120.0) as client:
             response = await client.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data)
             if response.status_code >= 400:
                 logger.error(f"OpenRouter API Error: {response.text}")

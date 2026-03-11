@@ -41,10 +41,10 @@ class TestCoverageIntegration(unittest.TestCase):
                 "priority": "Grouping",
                 "priority_quick_win": "Use linkers"
             },
-            "task_achievement": {"band": 6.5, "strengths": [], "weakness_patterns": [], "top_tip": "Add overview"},
-            "coherence_cohesion": {"band": 6.0, "strengths": [], "weakness_patterns": [], "top_tip": "Link ideas"},
-            "lexical_resource": {"band": 6.5, "strengths": [], "weakness_patterns": [], "top_tip": "Vary words"},
-            "grammatical_range": {"band": 6.0, "strengths": [], "weakness_patterns": [], "top_tip": "Check tenses"},
+            "task_achievement": {"band": 6.5, "weakness_patterns": [], "top_tip": "Add overview"},
+            "coherence_cohesion": {"band": 6.0, "weakness_patterns": [], "top_tip": "Link ideas"},
+            "lexical_resource": {"band": 6.5, "weakness_patterns": [], "top_tip": "Vary words"},
+            "grammatical_range": {"band": 6.0, "weakness_patterns": [], "top_tip": "Check tenses"},
             "action_plan": {"priority_focus": "Grammar", "quick_wins": ["Review tenses"]}
         }
         mock_call.return_value = json.dumps(mock_lite_response)

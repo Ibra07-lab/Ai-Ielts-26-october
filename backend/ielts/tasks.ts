@@ -2,11 +2,19 @@ import { api } from "encore.dev/api";
 import { ieltsDB } from "./db";
 import { difficultyPoints, generateSuggestions, getRangeBounds, TaskSuggestion, TaskCategory, TaskDifficulty } from "./aiSuggest";
 
+/** Normalize a date to midnight local time so due_at represents a clean day boundary. */
+function normalizeToStartOfDay(d: Date | string | null | undefined): Date | null {
+	if (!d) return null;
+	const date = new Date(d);
+	date.setHours(0, 0, 0, 0);
+	return date;
+}
+
 type SummaryRange = "daily" | "weekly" | "monthly";
 
 export interface Task {
 	id: string;
-	userId: number;
+	userId: string;
 	name: string;
 	category: TaskCategory;
 	difficulty: TaskDifficulty;
@@ -56,7 +64,7 @@ function mapStatusFilter(status: string | undefined): ("planned" | "in_progress"
 // GET /progress/summary
 export const getProgressSummary = api(
 	{ expose: true, method: "GET", path: "/progress/summary" },
-	async (params: { userId: number; range?: SummaryRange }): Promise<ProgressSummary> => {
+	async (params: { userId: string; range?: SummaryRange }): Promise<ProgressSummary> => {
 		const { userId, range = "weekly" } = params;
 		const { from, to } = getRangeBounds(range);
 
@@ -130,7 +138,7 @@ export const getProgressSummary = api(
 // GET /progress/tasks
 export const listTasks = api(
 	{ expose: true, method: "GET", path: "/progress/tasks" },
-	async (params: { userId: number; range?: "daily" | "weekly" | "monthly"; status?: "all" | "planned" | "in-progress" | "completed" }): Promise<{ tasks: Task[] }> => {
+	async (params: { userId: string; range?: "daily" | "weekly" | "monthly"; status?: "all" | "planned" | "in-progress" | "completed" }): Promise<{ tasks: Task[] }> => {
 		const { userId, range = "weekly", status = "all" } = params;
 		const { from, to } = getRangeBounds(range);
 		const statusFilter = mapStatusFilter(status);
@@ -144,7 +152,11 @@ export const listTasks = api(
 		  AND (
 			(status = 'completed' AND completed_at >= ${from} AND completed_at <= ${to})
 			OR
-			(status != 'completed')
+			(status != 'completed' AND (
+			  (due_at IS NOT NULL AND due_at >= ${from} AND due_at <= ${to})
+			  OR
+			  (due_at IS NULL AND created_at >= ${from} AND created_at <= ${to})
+			))
 		  )
 		  AND (status = ${filterStatus}::text OR ${filterStatus}::text IS NULL)
 		ORDER BY status = 'completed' ASC, COALESCE(completed_at, due_at, created_at) DESC
@@ -158,7 +170,7 @@ export const listTasks = api(
 export const createTask = api(
 	{ expose: true, method: "POST", path: "/progress/tasks" },
 	async (body: {
-		userId: number;
+		userId: string;
 		name: string;
 		category: TaskCategory;
 		difficulty: TaskDifficulty;
@@ -167,7 +179,7 @@ export const createTask = api(
 	}): Promise<Task> => {
 		const { userId, name, category, difficulty } = body;
 		const estimatedMinutes = body.estimatedMinutes ?? 20;
-		const dueAt = body.dueAt ? new Date(body.dueAt) : null;
+		const dueAt = normalizeToStartOfDay(body.dueAt);
 		const row = await ieltsDB.queryRow<any>`
 			INSERT INTO tasks(user_id, name, category, difficulty, estimated_minutes, due_at)
 VALUES(${userId}, ${name}, ${category}, ${difficulty}, ${estimatedMinutes}, ${dueAt})
@@ -216,7 +228,7 @@ export const deleteTask = api(
 // POST /progress/ai/generate
 export const generateTaskSuggestions = api(
 	{ expose: true, method: "POST", path: "/progress/ai/generate" },
-	async (body: { userId: number; range: SummaryRange; timeAvailableMinutes: number; targetBand?: number }): Promise<{ suggestions: TaskSuggestion[] }> => {
+	async (body: { userId: string; range: SummaryRange; timeAvailableMinutes: number; targetBand?: number }): Promise<{ suggestions: TaskSuggestion[] }> => {
 		const suggestions = await generateSuggestions({
 			userId: body.userId,
 			range: body.range,
@@ -230,12 +242,13 @@ export const generateTaskSuggestions = api(
 // POST /progress/ai/accept
 export const acceptTaskSuggestions = api(
 	{ expose: true, method: "POST", path: "/progress/ai/accept" },
-	async (body: { userId: number; suggestions: TaskSuggestion[] }): Promise<{ tasks: Task[] }> => {
+	async (body: { userId: string; suggestions: TaskSuggestion[] }): Promise<{ tasks: Task[] }> => {
 		const tasks: Task[] = [];
 		for (const s of body.suggestions) {
+			const normalizedDueAt = normalizeToStartOfDay(s.dueAt);
 			const row = await ieltsDB.queryRow<any>`
 				INSERT INTO tasks(user_id, name, category, difficulty, estimated_minutes, due_at)
-VALUES(${body.userId}, ${s.name}, ${s.category}, ${s.difficulty}, ${s.estimatedMinutes ?? 20}, ${s.dueAt ?? null})
+VALUES(${body.userId}, ${s.name}, ${s.category}, ${s.difficulty}, ${s.estimatedMinutes ?? 20}, ${normalizedDueAt})
 RETURNING *
 	`;
 			tasks.push(mapRowToTask(row));

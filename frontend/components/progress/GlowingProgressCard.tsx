@@ -206,15 +206,13 @@ export default function GlowingProgressCard({
       aria-expanded={isOpen}
       onClick={() => setIsOpen((v) => !v)}
     >
-      {/* Background Effects */}
-      <div className="absolute top-0 right-0 -mt-20 -mr-20 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl opacity-50 pointer-events-none group-hover:opacity-70 transition-opacity duration-500"></div>
-      <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl opacity-30 pointer-events-none"></div>
+      {/* Background Effects (Removed for a cleaner look) */}
 
       {/* Header */}
       <div className="relative flex items-center justify-between gap-4 z-10">
         <div className="flex items-center gap-3">
-          <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-blue-600 shadow-lg shadow-indigo-500/25 ring-1 ring-white/20">
-            <Target className="h-5 w-5 text-white" />
+          <div className="p-2 sm:p-2.5 bg-slate-100 dark:bg-white/5 rounded-2xl ring-1 ring-slate-200 dark:ring-white/10 shrink-0">
+            <Target className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
           </div>
           <div>
             <h3 className={cn(
@@ -224,8 +222,8 @@ export default function GlowingProgressCard({
               {title}
             </h3>
             <p className={cn(
-              "text-xs font-medium mt-1",
-              theme === "dark" ? "text-slate-400" : "text-slate-500"
+              "text-xs font-bold mt-1",
+              theme === "dark" ? "text-slate-300" : "text-slate-500"
             )}>
               Track your goals
             </p>
@@ -246,18 +244,18 @@ export default function GlowingProgressCard({
               {derivedPercent}
             </span>
             <span className={cn(
-              "text-2xl font-medium mb-1",
-              theme === "dark" ? "text-indigo-200/60" : "text-slate-400"
+              "text-2xl font-bold mb-1",
+              theme === "dark" ? "text-indigo-200" : "text-slate-400"
             )}>%</span>
           </div>
           <div className="text-right mb-2">
             <div className={cn(
-              "text-sm font-medium",
-              theme === "dark" ? "text-cyan-400" : "text-indigo-600"
+              "text-sm font-bold",
+              theme === "dark" ? "text-cyan-200" : "text-indigo-600"
             )}>
-              <span className={cn("font-bold", theme === "dark" ? "text-cyan-300" : "text-indigo-700")}>{doneTasks}</span>
-              <span className={cn("mx-1", theme === "dark" ? "text-cyan-500/60" : "text-indigo-400")}>/</span>
-              <span className={cn(theme === "dark" ? "text-cyan-400/80" : "text-indigo-500")}>{totalTasks} tasks</span>
+              <span className={cn("font-black", theme === "dark" ? "text-cyan-100" : "text-indigo-700")}>{doneTasks}</span>
+              <span className={cn("mx-1", theme === "dark" ? "text-cyan-400/80" : "text-indigo-400")}>/</span>
+              <span className={cn(theme === "dark" ? "text-cyan-200" : "text-indigo-500")}>{totalTasks} tasks</span>
             </div>
           </div>
         </div>
@@ -266,17 +264,11 @@ export default function GlowingProgressCard({
         <div className={cn("relative h-4 w-full rounded-full ring-1 overflow-hidden shadow-inner", theme === "dark" ? "bg-slate-800/80 ring-white/5" : "bg-slate-200/50 ring-black/5")}>
           {/* Visual Gradient Background Layer */}
           <div
-            className="absolute inset-0 rounded-full transition-all duration-[4000ms] ease-in-out bg-gradient-to-r from-[#3b82f6] via-[#6366f1] to-[#a855f7] shadow-[0_0_15px_rgba(99,102,241,0.5)]"
+            className="absolute inset-0 rounded-full transition-all duration-[4000ms] ease-in-out bg-gradient-to-r from-[#3b82f6] via-[#6366f1] to-[#a855f7]"
             style={{ width: `${derivedPercent}%` }}
           />
 
-          {/* Glow/Blur Layer */}
-          <div
-            className="absolute inset-0 rounded-full transition-all duration-[4000ms] ease-in-out"
-            style={{ width: `${derivedPercent}%` }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-[#3b82f6] via-[#6366f1] to-[#a855f7] opacity-50 blur-md"></div>
-          </div>
+          {/* Glowing blur intentionally removed for cleaner look */}
 
           {/* Interactive Segments Layer (Transparent) */}
           <div className="relative h-full w-full flex rounded-full overflow-hidden">
@@ -519,7 +511,7 @@ export default function GlowingProgressCard({
               category: data.category,
               difficulty: data.difficulty,
               estimatedMinutes: data.estimatedMinutes,
-              dueAt: data.dueAt ? new Date(data.dueAt).toISOString() : new Date().toISOString(),
+              dueAt: data.dueAt ? new Date(new Date(data.dueAt).setHours(0, 0, 0, 0)).toISOString() : new Date(new Date().setHours(0, 0, 0, 0)).toISOString(),
             });
             setAddOpen(false);
             await queryClient.invalidateQueries({ queryKey: ["glow-tasks"] });

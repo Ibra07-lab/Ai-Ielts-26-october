@@ -1,0 +1,23 @@
+components/TextHighlighter.tsx(217,27): error TS2554: Expected 2 arguments, but got 1.
+pages/Dashboard.tsx(31,53): error TS2345: Argument of type '{ userId: string; }' is not assignable to parameter of type 'string'.
+pages/Dashboard.tsx(37,54): error TS2345: Argument of type '{ userId: string; }' is not assignable to parameter of type 'string'.
+pages/ListeningPractice.tsx(122,59): error TS2345: Argument of type '{ testId: number; }' is not assignable to parameter of type 'number'.
+pages/ListeningPractice.tsx(140,63): error TS2345: Argument of type '{ testId: number; }' is not assignable to parameter of type 'number'.
+pages/MatchingHeadingsQuiz.tsx(32,55): error TS2345: Argument of type '{ questionType: string; }' is not assignable to parameter of type 'string'.
+pages/Progress.tsx(31,54): error TS2345: Argument of type '{ userId: string; }' is not assignable to parameter of type 'string'.
+pages/Progress.tsx(37,62): error TS2345: Argument of type '{ userId: string; }' is not assignable to parameter of type 'string'.
+pages/Progress.tsx(43,61): error TS2345: Argument of type '{ userId: string; }' is not assignable to parameter of type 'string'.
+pages/Progress.tsx(49,61): error TS2345: Argument of type '{ userId: string; }' is not assignable to parameter of type 'string'.
+pages/Progress.tsx(55,63): error TS2345: Argument of type '{ userId: string; }' is not assignable to parameter of type 'string'.
+pages/Progress.tsx(61,64): error TS2345: Argument of type '{ userId: string; }' is not assignable to parameter of type 'string'.
+pages/ProgressTracker.tsx(33,45): error TS2345: Argument of type '{ userId: string; }' is not assignable to parameter of type 'string'.
+pages/ProgressTracker.tsx(33,55): error TS18047: 'user' is possibly 'null'.
+pages/ProgressTracker.tsx(38,44): error TS2345: Argument of type '{ userId: string; }' is not assignable to parameter of type 'string'.
+pages/ProgressTracker.tsx(38,54): error TS18047: 'user' is possibly 'null'.
+pages/ReadingPractice.tsx(983,53): error TS2345: Argument of type '{ testId: number; }' is not assignable to parameter of type 'number'.
+pages/ReadingPractice.tsx(1111,52): error TS2554: Expected 2 arguments, but got 1.
+pages/Settings.tsx(59,21): error TS2554: Expected 2 arguments, but got 1.
+pages/Settings.tsx(99,9): error TS2322: Type 'string' is not assignable to type 'number'.
+pages/Settings.tsx(118,9): error TS2322: Type 'string' is not assignable to type 'number'.
+pages/SpeakingPractice.tsx(27,54): error TS2345: Argument of type '{ part: number; }' is not assignable to parameter of type 'number'.
+pages/WritingFeedbackHistory.tsx(19,68): error TS2345: Argument of type '{ id: number; }' is not assignable to parameter of type 'number'.

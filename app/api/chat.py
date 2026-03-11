@@ -2,7 +2,13 @@ from fastapi import APIRouter, Depends
 from fastapi.responses import StreamingResponse
 
 from app.services.agent_service import AgentService, DeeperFeedbackResponse
-from app.models.chat_models import DeeperFeedbackRequest, ChatRequest, ChatMessage
+from app.models.chat_models import (
+    DeeperFeedbackRequest,
+    ChatRequest,
+    ChatMessage,
+    TrainingStartRequest,
+    TrainingStartResponse,
+)
 
 
 # Initialize router
@@ -75,3 +81,32 @@ async def post_chat_message_stream(
 
     return StreamingResponse(text_stream(), media_type="text/plain")
 
+
+@router.post("/training/start", response_model=TrainingStartResponse)
+async def start_training(
+    request: TrainingStartRequest,
+    service: AgentService = Depends(get_agent_service)
+):
+    """
+    Start a multi-phase training session for a specific reading skill.
+    Returns the AI's first message (Phase 1 diagnostic).
+    """
+    context_payload = {
+        "student_id": request.student_id,
+        "skill": request.skill,
+        "accuracy": request.accuracy,
+        "total_attempted": request.total_attempted,
+        "correct": request.correct,
+        "recent_errors": [e.model_dump() for e in request.recent_errors],
+    }
+    
+    first_message = await service.start_training_session(
+        session_id=request.session_id,
+        skill=request.skill,
+        context_payload=context_payload,
+    )
+    
+    return TrainingStartResponse(
+        session_id=request.session_id,
+        first_message=first_message,
+    )

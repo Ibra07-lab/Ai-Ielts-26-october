@@ -5,7 +5,7 @@ import {
 import type { Topic, WordData } from "@/data/vocabulary/types";
 import { cn } from "@/lib/utils";
 import FlashcardMode from "./FlashcardMode";
-import RetentionCurve from "./RetentionCurve";
+
 import { TopicCard } from "./TopicCard";
 import { StatCard } from "./StatCard";
 import { WordOfDayCard } from "./WordOfDayCard";
@@ -77,32 +77,26 @@ export default function VocabularyDashboard({ topics, allWords, onTopicSelect }:
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <StatCard
                                 title="Mastery Rate"
-                                value="72.4%"
-                                trend={{ value: "+4.1%", isPositive: true }}
-                                progressValue={72.4}
+                                value={`${allWords?.length ? ((Object.values(userProgress).filter(p => p.srs.repetition >= 4).length / allWords.length) * 100).toFixed(1) : "0.0"}%`}
+                                progressValue={allWords?.length ? (Object.values(userProgress).filter(p => p.srs.repetition >= 4).length / allWords.length) * 100 : 0}
                                 icon={<Star className="w-5 h-5" />}
                             />
                             <StatCard
                                 title="Words Today"
-                                value="24"
+                                value={Object.values(userProgress).filter(p => p.history.some(h => new Date(h.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0))).length.toString()}
                                 subtitle="Goal: 30"
                                 icon={<BookOpen className="w-5 h-5" />}
                                 avatars={
                                     <div className="flex -space-x-2">
-                                        <div className="w-8 h-8 rounded-full border-2 border-white dark:border-[#0B0F1A] bg-sky-100 text-sky-600 flex items-center justify-center text-[10px] font-bold">A1</div>
-                                        <div className="w-8 h-8 rounded-full border-2 border-white dark:border-[#0B0F1A] bg-purple-100 text-purple-600 flex items-center justify-center text-[10px] font-bold">B2</div>
-                                        <div className="w-8 h-8 rounded-full border-2 border-white dark:border-[#0B0F1A] bg-slate-100 text-slate-400 flex items-center justify-center text-[10px] font-bold">+2</div>
+                                        <div className="w-8 h-8 rounded-full border-2 border-white dark:border-[#151624] bg-sky-100 text-sky-600 flex items-center justify-center text-[10px] font-bold">A1</div>
+                                        <div className="w-8 h-8 rounded-full border-2 border-white dark:border-[#151624] bg-purple-100 text-purple-600 flex items-center justify-center text-[10px] font-bold">B2</div>
+                                        <div className="w-8 h-8 rounded-full border-2 border-white dark:border-[#151624] bg-slate-100 text-slate-400 flex items-center justify-center text-[10px] font-bold">+2</div>
                                     </div>
                                 }
                             />
                         </div>
 
-                        {/* Retention Curve */}
-                        <RetentionCurve
-                            data={retentionData}
-                            studyList={studyList}
-                            topics={topics}
-                        />
+
 
                         {/* Active Topics */}
                         <section>
@@ -127,12 +121,22 @@ export default function VocabularyDashboard({ topics, allWords, onTopicSelect }:
 
                     {/* Right Sidebar */}
                     <aside className="col-span-12 xl:col-span-3 space-y-8">
-                        <WordOfDayCard
-                            word="Ephemeral"
-                            phonetic="əˈfemərəl"
-                            partOfSpeech="adjective"
-                            definition="Lasting for a very short time."
-                        />
+                        {allWords?.length > 0 && (
+                            (() => {
+                                const dateStr = new Date().toDateString();
+                                let hash = 0;
+                                for (let i = 0; i < dateStr.length; i++) hash = dateStr.charCodeAt(i) + ((hash << 5) - hash);
+                                const wordOfDay = allWords[Math.abs(hash) % allWords.length];
+                                return (
+                                    <WordOfDayCard
+                                        word={wordOfDay.word}
+                                        phonetic={wordOfDay.pronunciation || "N/A"}
+                                        partOfSpeech={wordOfDay.partOfSpeech}
+                                        definition={wordOfDay.definition}
+                                    />
+                                );
+                            })()
+                        )}
 
                         {/* Demo Controls - Subtle */}
                         <div className="flex items-center justify-center gap-4 pt-4 opacity-50 hover:opacity-100 transition-opacity">

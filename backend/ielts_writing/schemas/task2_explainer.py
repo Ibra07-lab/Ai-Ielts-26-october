@@ -454,24 +454,183 @@ class ScoreProjection(BaseModel):
     )
 
 
-class CriterionStrength(BaseModel):
-    """AI-generated personalized strength description for a specific criterion."""
+# ============================================================================
+# IDEA DEVELOPMENT MODELS
+# ============================================================================
+
+class IdeaNode(BaseModel):
+    """A single idea/argument used in the student's essay."""
     
-    criterion: str = Field(
+    paragraph_index: int = Field(
         ...,
-        description="The criterion: 'task_response', 'coherence_cohesion', 'lexical_resource', or 'grammatical_range_accuracy'"
+        ge=1,
+        description="Which paragraph this idea appears in (1-indexed)"
     )
-    title: str = Field(
+    idea_summary: str = Field(
         ...,
-        description="A short, encouraging title for this strength (3-6 words)"
+        description="1-sentence summary of the idea/argument in this paragraph"
     )
-    description: str = Field(
+    development_level: str = Field(
         ...,
-        description="A detailed 40-60 word explanation of what the student did well in this specific essay, with concrete examples from their writing"
+        description="How well the idea is developed: 'well_developed', 'partially_developed', 'underdeveloped', or 'missing'"
     )
-    evidence_from_essay: Optional[str] = Field(
+    development_details: str = Field(
+        ...,
+        description="Brief explanation of why the idea received this development rating"
+    )
+    evidence_used: Optional[str] = Field(
         default=None,
-        description="A specific quote or example from the essay that demonstrates this strength"
+        description="What example or evidence the student used to support this idea, if any"
+    )
+    missing_elements: List[str] = Field(
+        default_factory=list,
+        description="What's missing from the development (e.g., 'specific example', 'explanation of why', 'link to thesis')"
+    )
+
+
+class AlternativeIdea(BaseModel):
+    """An alternative argument the student could have explored."""
+    
+    idea: str = Field(
+        ...,
+        description="The alternative idea or argument angle"
+    )
+    why_strong: str = Field(
+        ...,
+        description="Why this would be a strong argument for this specific topic"
+    )
+    example_sentence: str = Field(
+        ...,
+        description="A starter sentence showing how to introduce this idea in an essay"
+    )
+    topic_relevance: str = Field(
+        ...,
+        description="How this idea directly connects to the essay's specific topic/prompt"
+    )
+
+
+class IdeaDevelopmentAnalysis(BaseModel):
+    """Complete analysis of how the student's ideas are developed, plus alternatives."""
+    
+    essay_thesis: str = Field(
+        ...,
+        description="The student's main position/thesis as detected from their essay"
+    )
+    thesis_clarity: str = Field(
+        ...,
+        description="How clearly the thesis is stated: 'clear', 'vague', or 'missing'"
+    )
+    idea_map: List[IdeaNode] = Field(
+        default_factory=list,
+        description="One IdeaNode per body paragraph, showing the argument map"
+    )
+    alternative_ideas: List[AlternativeIdea] = Field(
+        default_factory=list,
+        description="2-3 alternative argument angles the student could have explored"
+    )
+    overall_assessment: str = Field(
+        ...,
+        description="1-2 sentence summary of the overall quality of idea development"
+    )
+
+
+# ============================================================================
+# LEXICAL RESOURCE BREAKDOWN MODELS
+# ============================================================================
+
+class VocabDrill(BaseModel):
+    """A targeted vocabulary exercise for a weak area."""
+    
+    drill_name: str = Field(
+        ...,
+        description="Name of the drill (e.g., 'Precision Swap', 'Collocation Builder')"
+    )
+    weakness_targeted: str = Field(
+        ...,
+        description="The specific vocabulary weakness this drill addresses"
+    )
+    instructions: str = Field(
+        ...,
+        description="How to perform the drill (1-2 sentences)"
+    )
+    practice_items: List[str] = Field(
+        default_factory=list,
+        description="3-5 practice items for the student to work through"
+    )
+    example_before: Optional[str] = Field(
+        default=None,
+        description="A weak sentence from the student's essay"
+    )
+    example_after: Optional[str] = Field(
+        default=None,
+        description="The improved version with better vocabulary"
+    )
+
+
+class TopicWordBankItem(BaseModel):
+    """A single word or collocation in the topic word bank."""
+    
+    term: str = Field(
+        ...,
+        description="The word or collocation"
+    )
+    definition: Optional[str] = Field(
+        default=None,
+        description="Brief definition"
+    )
+    example_sentence: str = Field(
+        ...,
+        description="Example sentence using this term in the essay's topic context"
+    )
+
+
+class TopicWordBank(BaseModel):
+    """Topic-specific vocabulary for the essay's subject."""
+    
+    topic: str = Field(
+        ...,
+        description="The essay's topic area (e.g., 'Environment & Climate', 'Education')"
+    )
+    words: List[TopicWordBankItem] = Field(
+        default_factory=list,
+        description="5-8 topic-specific words the student could use"
+    )
+    collocations: List[TopicWordBankItem] = Field(
+        default_factory=list,
+        description="3-5 useful collocations for this topic"
+    )
+
+
+class LexicalBreakdown(BaseModel):
+    """Detailed breakdown of lexical resource scoring."""
+    
+    range_score: str = Field(
+        ...,
+        description="Vocabulary range rating: 'wide', 'sufficient', 'adequate', 'limited'"
+    )
+    range_details: str = Field(
+        ...,
+        description="Why the student received this range rating (1-2 sentences)"
+    )
+    accuracy_score: str = Field(
+        ...,
+        description="Vocabulary accuracy: 'precise', 'generally_accurate', 'some_errors', 'frequent_errors'"
+    )
+    accuracy_details: str = Field(
+        ...,
+        description="Why the student received this accuracy rating (1-2 sentences)"
+    )
+    vocab_drills: List[VocabDrill] = Field(
+        default_factory=list,
+        description="1-2 targeted vocabulary drills based on weaker dimension"
+    )
+    topic_word_bank: Optional[TopicWordBank] = Field(
+        default=None,
+        description="Topic-specific words and collocations for this essay's subject"
+    )
+    overall_lr_assessment: Optional[str] = Field(
+        default=None,
+        description="1-2 sentence summary of overall lexical resource quality"
     )
 
 
@@ -543,12 +702,6 @@ class ExplainerOutput(BaseModel):
         description="Projected scores for each criterion if feedback is implemented"
     )
     
-    # ===== CRITERION-SPECIFIC STRENGTHS (AI-Generated) =====
-    criterion_strengths: List[CriterionStrength] = Field(
-        default_factory=list,
-        description="AI-generated personalized strength descriptions for each criterion (TR, CC, LR, GRA), based on the specific essay content"
-    )
-    
     # ===== ENCOURAGEMENT (Brief) =====
     one_thing_done_well: Optional[str] = Field(
         default=None,
@@ -563,6 +716,18 @@ class ExplainerOutput(BaseModel):
     practice_suggestion: Optional[str] = Field(
         default=None,
         description="A specific practice exercise recommendation"
+    )
+    
+    # ===== IDEA DEVELOPMENT ANALYSIS =====
+    idea_development: Optional[IdeaDevelopmentAnalysis] = Field(
+        default=None,
+        description="Analysis of how ideas are developed in the essay + alternative approaches"
+    )
+    
+    # ===== LEXICAL RESOURCE BREAKDOWN =====
+    lexical_breakdown: Optional[LexicalBreakdown] = Field(
+        default=None,
+        description="Detailed breakdown of lexical resource scoring with drills and topic word bank"
     )
 
     @field_validator('current_overall_band', 'target_band_demonstrated')

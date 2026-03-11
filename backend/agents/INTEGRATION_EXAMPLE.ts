@@ -74,15 +74,15 @@ interface BatchFeedbackResponse {
  * });
  */
 export const getReadingAIFeedback = api(
-  { 
-    expose: true, 
-    method: "POST", 
-    path: "/reading/ai-feedback" 
+  {
+    expose: true,
+    method: "POST",
+    path: "/reading/ai-feedback"
   },
   async (params: FeedbackRequest): Promise<FeedbackResponse> => {
     try {
       console.log(`[AI Feedback] Requesting feedback for question type: ${params.questionType}`);
-      
+
       // Call Python feedback service
       const response = await axios.post<FeedbackResponse>(
         `${FEEDBACK_SERVICE_URL}/api/feedback`,
@@ -103,29 +103,29 @@ export const getReadingAIFeedback = api(
 
       console.log(`[AI Feedback] Received feedback: is_correct=${response.data.is_correct}`);
       return response.data;
-      
+
     } catch (error: any) {
       console.error("[AI Feedback] Error:", error.message);
-      
+
       // Handle specific error cases
       if (error.code === "ECONNREFUSED") {
         throw new Error(
           "AI Feedback service is not available. Please ensure the Python service is running."
         );
       }
-      
+
       if (error.response?.status === 400) {
         throw new Error(
           `Invalid input: ${error.response.data?.detail || "Please check your request parameters"}`
         );
       }
-      
+
       if (error.code === "ECONNABORTED") {
         throw new Error(
           "AI Feedback service timeout. The request took too long to process."
         );
       }
-      
+
       throw new Error(
         `Failed to generate AI feedback: ${error.message}`
       );
@@ -151,24 +151,24 @@ export const getReadingAIFeedback = api(
  * });
  */
 export const getReadingAIFeedbackBatch = api(
-  { 
-    expose: true, 
-    method: "POST", 
-    path: "/reading/ai-feedback/batch" 
+  {
+    expose: true,
+    method: "POST",
+    path: "/reading/ai-feedback/batch"
   },
   async (params: BatchFeedbackRequest): Promise<BatchFeedbackResponse> => {
     try {
       console.log(`[AI Feedback Batch] Processing ${params.feedbacks.length} questions`);
-      
+
       // Validate batch size
       if (params.feedbacks.length > 40) {
         throw new Error("Maximum batch size is 40 questions");
       }
-      
+
       if (params.feedbacks.length === 0) {
         throw new Error("Batch cannot be empty");
       }
-      
+
       // Convert camelCase to snake_case for Python API
       const pythonPayload = params.feedbacks.map(feedback => ({
         passage: feedback.passage,
@@ -177,7 +177,7 @@ export const getReadingAIFeedbackBatch = api(
         correct_answer: feedback.correctAnswer,
         student_answer: feedback.studentAnswer,
       }));
-      
+
       // Call Python feedback service
       const response = await axios.post<BatchFeedbackResponse>(
         `${FEEDBACK_SERVICE_URL}/api/feedback/batch`,
@@ -193,18 +193,18 @@ export const getReadingAIFeedbackBatch = api(
       console.log(
         `[AI Feedback Batch] Complete: ${response.data.successful}/${response.data.total} successful`
       );
-      
+
       return response.data;
-      
+
     } catch (error: any) {
       console.error("[AI Feedback Batch] Error:", error.message);
-      
+
       if (error.code === "ECONNREFUSED") {
         throw new Error(
           "AI Feedback service is not available. Please ensure the Python service is running."
         );
       }
-      
+
       throw new Error(
         `Failed to generate batch feedback: ${error.message}`
       );
@@ -224,10 +224,10 @@ export const getReadingAIFeedbackBatch = api(
  * console.log(`Service status: ${health.status}`);
  */
 export const checkAIFeedbackHealth = api(
-  { 
-    expose: true, 
-    method: "GET", 
-    path: "/reading/ai-feedback/health" 
+  {
+    expose: true,
+    method: "GET",
+    path: "/reading/ai-feedback/health"
   },
   async (): Promise<{ status: string; version: string; model: string }> => {
     try {
@@ -235,9 +235,9 @@ export const checkAIFeedbackHealth = api(
         `${FEEDBACK_SERVICE_URL}/health`,
         { timeout: 5000 }
       );
-      
+
       return response.data;
-      
+
     } catch (error: any) {
       console.error("[AI Feedback Health] Error:", error.message);
       throw new Error("AI Feedback service is not healthy");
@@ -275,10 +275,10 @@ export const submitReadingWithAIFeedback = api(
   }> => {
     // 1. Get passage and questions (use existing logic)
     // const passage = await getPassageById(params.passageId);
-    
+
     // 2. Grade answers (use existing logic)
-    const results = []; // Your existing grading logic here
-    
+    const results: any[] = []; // Your existing grading logic here
+
     // 3. For each incorrect answer, get AI feedback
     const feedbackPromises = results
       .filter(result => !result.isCorrect)
@@ -291,7 +291,7 @@ export const submitReadingWithAIFeedback = api(
             correctAnswer: result.correctAnswer,
             studentAnswer: result.studentAnswer,
           });
-          
+
           result.aiFeedback = feedback;
         } catch (error) {
           console.error(`Failed to get AI feedback for question ${result.questionId}:`, error);
@@ -299,10 +299,10 @@ export const submitReadingWithAIFeedback = api(
           result.aiFeedback = undefined;
         }
       });
-    
+
     // Wait for all feedback requests
     await Promise.all(feedbackPromises);
-    
+
     // 4. Return enhanced results
     return {
       score: 0, // Calculate from results
@@ -319,24 +319,24 @@ export const submitReadingWithAIFeedback = api(
 
 /**
  * Example usage from ReadingPractice.tsx:
- * 
+ *
  * ```typescript
  * import backend from './client';
- * 
+ *
  * const handleSubmit = async () => {
  *   try {
  *     setLoading(true);
- *     
+ *
  *     // Submit with AI feedback
  *     const result = await backend.ielts.submitReadingWithAIFeedback({
  *       testId: selectedTestId,
  *       passageId: activePassageId,
  *       answers: userAnswers
  *     });
- *     
+ *
  *     // Display results
  *     setResults(result.results);
- *     
+ *
  *     // Show AI feedback for incorrect answers
  *     result.results.forEach(answer => {
  *       if (!answer.isCorrect && answer.aiFeedback) {
@@ -345,7 +345,7 @@ export const submitReadingWithAIFeedback = api(
  *         console.log('Reference:', answer.aiFeedback.passage_reference);
  *       }
  *     });
- *     
+ *
  *   } catch (error) {
  *     console.error('Submission failed:', error);
  *   } finally {
@@ -353,13 +353,13 @@ export const submitReadingWithAIFeedback = api(
  *   }
  * };
  * ```
- * 
+ *
  * Or use the single feedback endpoint for real-time feedback:
- * 
+ *
  * ```typescript
  * const handleAnswerChange = async (questionId: number, answer: string) => {
  *   setAnswers(prev => ({ ...prev, [questionId]: answer }));
- *   
+ *
  *   // Optional: Get instant AI feedback
  *   if (answer) {
  *     try {
@@ -370,7 +370,7 @@ export const submitReadingWithAIFeedback = api(
  *         correctAnswer: questions[questionId].correctAnswer,
  *         studentAnswer: answer
  *       });
- *       
+ *
  *       // Show feedback in UI
  *       setInstantFeedback(prev => ({
  *         ...prev,
@@ -390,10 +390,10 @@ export const submitReadingWithAIFeedback = api(
 
 /**
  * Add to your .env file:
- * 
+ *
  * # AI Feedback Service
  * FEEDBACK_SERVICE_URL=http://localhost:8000
- * 
+ *
  * For production, use your deployed service URL:
  * FEEDBACK_SERVICE_URL=https://feedback.yourdomain.com
  */
@@ -404,13 +404,13 @@ export const submitReadingWithAIFeedback = api(
 
 /**
  * Add to backend/package.json:
- * 
+ *
  * {
  *   "dependencies": {
  *     "axios": "^1.6.7"
  *   }
  * }
- * 
+ *
  * Then run: npm install
  */
 

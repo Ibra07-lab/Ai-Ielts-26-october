@@ -1,0 +1,167 @@
+{
+  "prompt_analyzed": "Some people believe that it is best to accept a bad situation, such as an unsatisfactory job or shortage of money. Others argue that it is better to try and improve such situations. Discuss both these views and give your own opinion.",
+  "task_type_required": "discussion",
+  "task_type_detected": "discussion",
+  "band_scores": {
+    "task_response": 8.0,
+    "coherence_cohesion": 7.5,
+    "lexical_resource": 7.5,
+    "grammatical_range_accuracy": 8.0,
+    "overall": 7.5
+  },
+  "fatal_flaws": [],
+  "score_caps_applied": [],
+  "analysis": {
+    "word_count": 403,
+    "paragraph_count": 5,
+    "thesis_analysis": {
+      "thesis_found": true,
+      "thesis_statement": "Both of these views have their merit, but I personally align with the latter perspective.",
+      "thesis_quality": "clear_and_specific",
+      "position_maintained": true
+    },
+    "task_type_match": true,
+    "circular_arguments_detected": false,
+    "all_parts_addressed": true,
+    "linker_audit": {
+      "total_sentences": 18,
+      "mechanical_linker_count": 6,
+      "mechanical_linker_ratio": 0.33,
+      "mechanical_linkers_found": [
+        "On the one hand",
+        "Moreover",
+        "Therefore",
+        "On the other hand",
+        "For example",
+        "In conclusion"
+      ],
+      "referencing_devices_used": [],
+      "cohesion_verdict": "adequate"
+    },
+    "cliche_audit": {
+      "tier1_cliches": [],
+      "tier2_cliches": [
+        "According to this view"
+      ],
+      "total_cliche_count": 1,
+      "lexical_penalty_applied": 0.0,
+      "memorized_language_verdict": "minimal"
+    },
+    "vocabulary_range": "wide",
+    "grammar_audit": {
+      "error_type": "minimal",
+      "systematic_errors_identified": [],
+      "error_examples": [],
+      "complex_structures_attempted": true,
+      "sentence_variety": "excellent"
+    }
+  },
+  "detailed_feedback": {
+    "task_response": {
+      "band": 8.0,
+      "summary": "Excellent response that fully addresses all parts of the task with well-developed ideas",
+      "why_score_is_here": "Band 8.0 awarded because the essay sufficiently addresses all parts of the Discussion task: balanced treatment of both views (acceptance in para 2, improvement in para 3), clear personal opinion stated early and reinforced throughout, all ideas well-developed with relevant examples (job-hopping consequences, education/career change benefits). Position is clear and consistent from introduction through conclusion.",
+      "weak_spots": [
+        "Opinion paragraph (para 4) could be slightly more developed with an additional concrete example",
+        "Could explore counter-arguments to own position for even greater depth"
+      ]
+    },
+    "coherence": {
+      "band": 7.5,
+      "summary": "Logically organized with clear progression and appropriate cohesive devices",
+      "why_score_is_here": "Band 7.5 awarded for logical organization with clear progression throughout. Paragraphing is skillful with distinct functions. Uses cohesive devices appropriately though some are conventional ('On the one hand/other hand'). Good use of referencing ('their viewpoint', 'this view', 'they argue'). Each paragraph has clear internal coherence with topic sentences and supporting details.",
+      "weak_spots": [
+        "Reliance on conventional 'On the one hand/On the other hand' structure, though used correctly",
+        "Could vary transitional phrases more to achieve Band 8.0"
+      ]
+    },
+    "lexical": {
+      "band": 7.5,
+      "summary": "Wide vocabulary range with natural collocations and some less common items",
+      "why_score_is_here": "Band 7.5 awarded for sufficient range with flexibility and precision. Uses less common lexical items accurately ('contentment', 'chronic dissatisfaction', 'stagnation', 'unfulfilled potential', 'proactive', 'empower'). Natural collocations throughout ('job satisfaction', 'financial stability', 'root causes'). Awareness of style and register. Minimal reliance on formulaic language (only 1 Tier 2 phrase detected).",
+      "weak_spots": [
+        "Some word choices are safe rather than sophisticated (e.g., 'bad situation' repeated from prompt)",
+        "Could demonstrate more stylistic variation in vocabulary choices"
+      ]
+    },
+    "grammar": {
+      "band": 8.0,
+      "summary": "Wide range of structures with excellent control and rare errors",
+      "why_score_is_here": "Band 8.0 awarded for wide range of grammatical structures used accurately. Complex sentences with subordinate clauses, conditionals, relative clauses, passive constructions all handled skillfully. Excellent sentence variety. Majority of sentences are error-free. No systematic errors detected. Complex structures attempted successfully throughout (e.g., 'By actively seeking to enhance their circumstances, individuals can discover new opportunities').",
+      "weak_spots": [
+        "Very minor: could push for even more sophisticated structures (inversion, cleft sentences) for Band 8.5+",
+        "No significant grammatical weaknesses identified"
+      ]
+    }
+  },
+  "paragraph_breakdown": [
+    {
+      "paragraph_number": 1,
+      "paragraph_type": "introduction",
+      "word_count": null,
+      "main_idea": null,
+      "function": "Introduces the topic, acknowledges both views, states clear position favoring improvement",
+      "topic_sentence_present": null,
+      "topic_sentence_quality": "clear",
+      "supporting_details": null,
+      "development_quality": "fully_developed",
+      "issues_identified": []
+    },
+    {
+      "paragraph_number": 2,
+      "paragraph_type": "body",
+      "word_count": null,
+      "main_idea": null,
+      "function": "Discusses the view favoring acceptance with reasoning and examples",
+      "topic_sentence_present": null,
+      "topic_sentence_quality": "clear",
+      "supporting_details": null,
+      "development_quality": "fully_developed",
+      "issues_identified": []
+    },
+    {
+      "paragraph_number": 3,
+      "paragraph_type": "body",
+      "word_count": null,
+      "main_idea": null,
+      "function": "Discusses the view favoring improvement with reasoning and examples",
+      "topic_sentence_present": null,
+      "topic_sentence_quality": "clear",
+      "supporting_details": null,
+      "development_quality": "fully_developed",
+      "issues_identified": []
+    },
+    {
+      "paragraph_number": 4,
+      "paragraph_type": "body",
+      "word_count": null,
+      "main_idea": null,
+      "function": "Provides writer's own opinion with justification",
+      "topic_sentence_present": null,
+      "topic_sentence_quality": "clear",
+      "supporting_details": null,
+      "development_quality": "fully_developed",
+      "issues_identified": []
+    },
+    {
+      "paragraph_number": 5,
+      "paragraph_type": "conclusion",
+      "word_count": null,
+      "main_idea": null,
+      "function": "Summarizes position and provides final recommendation",
+      "topic_sentence_present": null,
+      "topic_sentence_quality": "clear",
+      "supporting_details": null,
+      "development_quality": "adequately_developed",
+      "issues_identified": []
+    }
+  ],
+  "scoring_justification": "LOGIC CHECK A: Task type correctly identified as DISCUSSION. Essay structure matches requirement: balanced treatment of both views (paragraphs 2 and 3) followed by writer's opinion (paragraph 4). Thesis clearly stated in introduction: 'I personally align with the latter perspective.' All parts addressed: acceptance view (para 2), improvement view (para 3), own opinion (para 4). No circular arguments detected - each paragraph develops distinct points with specific examples (job-hopping perception, education/career change). Task Response: 8.0 - sufficiently addresses all parts with well-developed response, clear position throughout, relevant ideas extended with examples. LOGIC CHECK B: Total sentences = 18. Mechanical linkers at sentence start: 'On the one hand' (1), 'Moreover' (1), 'Therefore' (1), 'On the other hand' (1), 'For example' (1), 'In conclusion' (1) = 6/18 = 0.33 ratio. Below 0.50 threshold, no cap applied. Cohesion quality: good use of referencing ('their viewpoint', 'this view', 'they argue'), logical progression between ideas, clear topic sentences in each paragraph. Paragraphing is well-managed with clear internal structure. Coherence & Cohesion: 7.5 - logically organized with clear progression, appropriate use of cohesive devices though some are conventional (on the one hand/other hand), skillful paragraphing. LOGIC CHECK C: Tier 1 clich\u00e9s: none detected. Tier 2 clich\u00e9s: 'According to this view' (1 instance). Total = 1, below 3-phrase threshold for penalty. Vocabulary assessment: wide range with topic-appropriate lexical items ('contentment', 'chronic dissatisfaction', 'stagnation', 'unfulfilled potential', 'coping mechanism', 'helplessness', 'resignation', 'proactive steps', 'empower'). Natural collocations ('job satisfaction', 'financial stability', 'positive change', 'root causes'). Some less common items used accurately ('advocate', 'align with', 'overshadow', 'proponents', 'endeavor'). Lexical Resource: 7.5 - sufficient range with flexibility, some less common items, awareness of style and collocation, occasional conventional phrases but generally skillful. LOGIC CHECK D: Error inventory: No systematic errors detected. No severe errors. Grammar range: excellent variety including complex sentences with subordinate clauses ('if someone is unhappy with their job, continuously looking for a new one might result in...'), relative clauses ('which can be perceived negatively'), conditional structures, passive voice ('can be perceived'), gerunds and infinitives used accurately. Mix of simple, compound, and complex sentences. Error-free sentences dominate. Grammatical Range & Accuracy: 8.0 - wide range of structures, majority of sentences error-free, good control of complex grammar, rare slips only. OVERALL: TR=8.0, CC=7.5, LR=7.5, GRA=8.0. Average = 7.75, rounds to 7.5.",
+  "improvement_priorities": [
+    "Develop opinion paragraph with additional concrete example to strengthen personal stance",
+    "Vary transitional phrases beyond conventional 'On the one hand/other hand' structure",
+    "Push vocabulary choices beyond safe/common words to more sophisticated alternatives",
+    "Consider addressing potential counter-arguments to own position for greater depth"
+  ],
+  "evaluation_confidence": 0.95
+}

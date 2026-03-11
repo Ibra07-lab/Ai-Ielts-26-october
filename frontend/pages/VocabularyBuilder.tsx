@@ -8,6 +8,7 @@ import SpeakToUnlock from "@/components/vocabulary/exercises/SpeakToUnlock";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { getAllTopics, getWordsByTopicId, getExercisesByTopicId } from "@/data/vocabulary";
+import { shuffleArray } from "@/lib/utils";
 
 type ViewState = "dashboard" | "wordList" | "deck" | "exercise";
 type ExerciseType = "synonym" | "tetris" | "speak";
@@ -18,6 +19,7 @@ export default function VocabularyBuilder() {
   const [currentExercise, setCurrentExercise] = useState<ExerciseType | null>(null);
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const [learningQueue, setLearningQueue] = useState<any[]>([]);
+  const [shuffledExercises, setShuffledExercises] = useState<any[]>([]);
   const [filterMode, setFilterMode] = useState<"all" | "speaking" | "writing">("all");
 
   // Get all topics from the data files
@@ -58,12 +60,24 @@ export default function VocabularyBuilder() {
   };
 
   const handleStartLearning = () => {
-    // Initialize queue with filtered words
-    setLearningQueue([...filteredWords]);
+    // Initialize queue with filtered words in random order
+    setLearningQueue(shuffleArray([...filteredWords]));
     setView("deck");
   };
 
   const handleStartExercise = (type: ExerciseType) => {
+    let originalExercises: any[] = [];
+    if (type === "synonym") {
+      originalExercises = filterMode === "writing" && selectedExercises.writingSynonymSwap
+        ? selectedExercises.writingSynonymSwap
+        : selectedExercises.synonymSwap;
+    } else if (type === "tetris") {
+      originalExercises = selectedExercises.contextTetris;
+    } else {
+      originalExercises = selectedExercises.speakToUnlock;
+    }
+
+    setShuffledExercises(shuffleArray([...originalExercises]));
     setCurrentExercise(type);
     setView("exercise");
     setCurrentExerciseIndex(0);
@@ -97,18 +111,13 @@ export default function VocabularyBuilder() {
   };
 
   const handleExerciseComplete = () => {
-    const exerciseArray = currentExercise === "synonym"
-      ? selectedExercises.synonymSwap
-      : currentExercise === "tetris"
-        ? selectedExercises.contextTetris
-        : selectedExercises.speakToUnlock;
-
-    if (currentExerciseIndex < exerciseArray.length - 1) {
+    if (currentExerciseIndex < shuffledExercises.length - 1) {
       setCurrentExerciseIndex(currentExerciseIndex + 1);
     } else {
       setView("wordList");
       setCurrentExercise(null);
       setCurrentExerciseIndex(0);
+      setShuffledExercises([]);
     }
   };
 
@@ -161,35 +170,55 @@ export default function VocabularyBuilder() {
 
         {view === "exercise" && (
           <div className="h-full overflow-y-auto px-3 sm:px-5 py-3 pb-24">
-            <Button
-              variant="ghost"
-              onClick={() => {
-                setView("wordList");
-                setCurrentExercise(null);
-              }}
-              className="mb-3 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" /> Back to Word List
-            </Button>
+            <div className="flex items-center justify-between mb-4">
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setView("wordList");
+                  setCurrentExercise(null);
+                }}
+                className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+              >
+                <ArrowLeft className="mr-2 h-4 w-4" /> Back to Word List
+              </Button>
+
+              {/* Set Navigation (if multiple sets exist) */}
+              {currentExercise === "tetris" && shuffledExercises.length > 1 && (
+                <div className="flex bg-gray-100 dark:bg-white/5 p-1 rounded-lg">
+                  {shuffledExercises.map((ex, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setCurrentExerciseIndex(idx)}
+                      className={`px-3 py-1.5 text-sm font-medium rounded-md transition-all ${currentExerciseIndex === idx
+                        ? "bg-white dark:bg-neutral-800 text-blue-600 dark:text-blue-400 shadow-sm"
+                        : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 hover:bg-black/5 dark:hover:bg-white/5"
+                        }`}
+                    >
+                      {ex.set_name || `Set ${idx + 1}`}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
 
             <div>
-              {currentExercise === "synonym" && selectedExercises.synonymSwap.length > 0 && (
+              {currentExercise === "synonym" && shuffledExercises.length > 0 && (
                 <SynonymSwap
-                  {...selectedExercises.synonymSwap[currentExerciseIndex]}
+                  {...shuffledExercises[currentExerciseIndex]}
                   onComplete={handleExerciseComplete}
                 />
               )}
 
-              {currentExercise === "tetris" && selectedExercises.contextTetris.length > 0 && (
+              {currentExercise === "tetris" && shuffledExercises.length > 0 && (
                 <ContextTetris
-                  {...selectedExercises.contextTetris[currentExerciseIndex]}
+                  {...shuffledExercises[currentExerciseIndex]}
                   onComplete={handleExerciseComplete}
                 />
               )}
 
-              {currentExercise === "speak" && selectedExercises.speakToUnlock.length > 0 && (
+              {currentExercise === "speak" && shuffledExercises.length > 0 && (
                 <SpeakToUnlock
-                  {...selectedExercises.speakToUnlock[currentExerciseIndex]}
+                  {...shuffledExercises[currentExerciseIndex]}
                   onComplete={handleExerciseComplete}
                 />
               )}

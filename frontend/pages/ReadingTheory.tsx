@@ -534,7 +534,7 @@ export default function ReadingTheory() {
 
       {/* Detailed Theory Sections */}
       {sections && sections.length > 0 && (
-        <div className="space-y-8">
+        <div className="space-y-6">
           {sections.map((section: any) => (
             <Card
               key={section.id}
@@ -564,15 +564,15 @@ export default function ReadingTheory() {
               </CardHeader>
 
               {!collapsedSections[section.id] && (
-                <CardContent className="space-y-8 animate-in slide-in-from-top-2 duration-200">
+                <CardContent className="space-y-6 animate-in slide-in-from-top-2 duration-200">
                   {section.subsections?.map((sub: any, idx: number) => (
-                    <div key={idx} className="space-y-4">
+                    <div key={idx} className="space-y-3">
                       <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 border-b border-slate-200 dark:border-slate-700 pb-2">
                         {sub.title}
                       </h3>
 
-                      {sub.content && <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-lg max-w-[800px]">{sub.content}</p>}
-                      {sub.description && <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-lg max-w-[800px]">{sub.description}</p>}
+                      {sub.content && <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-lg max-w-[800px]"><span dangerouslySetInnerHTML={{ __html: sub.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>') }} /></p>}
+                      {sub.description && <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-lg max-w-[800px]"><span dangerouslySetInnerHTML={{ __html: sub.description.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>') }} /></p>}
 
                       {/* Analysis (List) - ENHANCED with Visual Anchors */}
                       {sub.analysis && Array.isArray(sub.analysis) && (
@@ -634,7 +634,7 @@ export default function ReadingTheory() {
 
                       {/* Table Renderer - REFINED */}
                       {sub.tables && sub.tables.length > 0 && (
-                        <div className="space-y-8 my-6">
+                        <div className="space-y-6 my-4">
                           {sub.tables.map((table: any, tblIdx: number) => {
                             const isDifficult = table.headers && table.headers.some((h: string) => h.includes('Matching Information'));
 
@@ -668,7 +668,7 @@ export default function ReadingTheory() {
                                                   {cell}
                                                 </span>
                                               ) : (
-                                                <span dangerouslySetInnerHTML={{ __html: cell.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+                                                <span dangerouslySetInnerHTML={{ __html: cell.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/(?<!\*)\*(?!\*)(.*?)(?<!\*)\*(?!\*)/g, '<em>$1</em>') }} />
                                               )}
                                             </td>
                                           ))}
@@ -728,7 +728,7 @@ export default function ReadingTheory() {
                       {/* Criteria Lists */}
                       {sub.criteria && (
                         <ul className="space-y-1 ml-5 list-disc text-slate-700 dark:text-slate-300">
-                          {sub.criteria.map((c: string, i: number) => <li key={i}>{c}</li>)}
+                          {sub.criteria.map((c: string, i: number) => <li key={i} dangerouslySetInnerHTML={{ __html: c.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/(?<!\*)\*(?!\*)(.*?)(?<!\*)\*(?!\*)/g, '<em>$1</em>') }} />)}
                         </ul>
                       )}
 
@@ -844,7 +844,7 @@ export default function ReadingTheory() {
 
                       {/* Steps (Strategy) - REFINED with Badges & Progress */}
                       {sub.steps && (
-                        <div className="relative space-y-12 pl-6 my-10 before:absolute before:left-[21px] before:top-4 before:bottom-4 before:w-0.5 before:bg-indigo-100 dark:before:bg-indigo-900/50">
+                        <div className="relative space-y-8 pl-6 my-6 before:absolute before:left-[21px] before:top-4 before:bottom-4 before:w-0.5 before:bg-indigo-100 dark:before:bg-indigo-900/50">
                           {sub.steps.map((step: any, i: number) => (
                             <div key={i} className="relative pl-8">
                               {/* Connector & Badge */}
@@ -941,7 +941,7 @@ export default function ReadingTheory() {
                               {typeItem.examples && Array.isArray(typeItem.examples) && (
                                 <ul className="list-disc ml-5 space-y-1 text-sm text-indigo-700 dark:text-indigo-300">
                                   {typeItem.examples.map((ex: string, j: number) => (
-                                    <li key={j}>{ex}</li>
+                                    <li key={j} dangerouslySetInnerHTML={{ __html: ex.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/(?<!\*)\*(?!\*)(.*?)(?<!\*)\*(?!\*)/g, '<em>$1</em>') }} />
                                   ))}
                                 </ul>
                               )}
@@ -988,7 +988,7 @@ export default function ReadingTheory() {
                       {/* Simple List */}
                       {sub.list && (
                         <ul className="list-disc ml-5 space-y-1 text-slate-700 dark:text-slate-300">
-                          {sub.list.map((item: string, i: number) => <li key={i}>{item}</li>)}
+                          {sub.list.map((item: string, i: number) => <li key={i}><span dangerouslySetInnerHTML={{ __html: item.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/(?<!\*)\*(?!\*)(.*?)(?<!\*)\*(?!\*)/g, '<em>$1</em>') }} /></li>)}
                         </ul>
                       )}
 

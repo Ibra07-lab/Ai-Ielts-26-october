@@ -57,7 +57,7 @@ class Task2Examiner:
             logger.warning("Stale configuration detected in Task2Examiner. Reloading .env...")
             from dotenv import load_dotenv
             load_dotenv(override=True)
-            self.model = os.getenv("IELTS_WRITING_MODEL", "anthropic/claude-sonnet-4.5")
+            self.model = os.getenv("IELTS_WRITING_MODEL", "claude-sonnet-4-5-20250929")
             logger.info(f"Reloaded configuration. New model: {self.model}")
 
         self.client = DirectLLMClient()

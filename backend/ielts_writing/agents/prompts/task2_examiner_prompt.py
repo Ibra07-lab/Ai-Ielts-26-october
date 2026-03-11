@@ -369,11 +369,6 @@ For the `detailed_feedback` object, you must generate a mini-report for EACH cri
 - **Good**: "Subject-verb agreement errors in Paragraph 2."
 - **Good**: "Overuse of 'Firstly/Secondly' linkers."
 
-### Guidelines for "Strengths":
-- List 1-2 positive aspects.
-- **Example**: "Clear position maintained throughout."
-- **Example**: "Attempted complex conditional structures."
-
 ---
 
 ## OUTPUT FORMAT
@@ -466,29 +461,25 @@ The JSON MUST match this exact structure:
       "band": <float>,
       "summary": "<short verdict e.g. 'Good ideas but undeveloped'>",
       "why_score_is_here": "<explanation of score level>",
-      "weak_spots": ["<specific weak point 1>", "<specific weak point 2>"],
-      "strengths": ["<specific strength 1>", "<specific strength 2>"]
+      "weak_spots": ["<specific weak point 1>", "<specific weak point 2>"]
     },
     "coherence": {
       "band": <float>,
       "summary": "<short verdict>",
       "why_score_is_here": "<explanation>",
-      "weak_spots": ["<weak point>"],
-      "strengths": ["<strength>"]
+      "weak_spots": ["<weak point>"]
     },
     "lexical": {
       "band": <float>,
       "summary": "<short verdict>",
       "why_score_is_here": "<explanation>",
-      "weak_spots": ["<weak point>"],
-      "strengths": ["<strength>"]
+      "weak_spots": ["<weak point>"]
     },
     "grammar": {
       "band": <float>,
       "summary": "<short verdict>",
       "why_score_is_here": "<explanation>",
-      "weak_spots": ["<weak point>"],
-      "strengths": ["<strength>"]
+      "weak_spots": ["<weak point>"]
     }
   },
 

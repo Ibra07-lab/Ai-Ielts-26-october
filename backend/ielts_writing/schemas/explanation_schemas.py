@@ -10,11 +10,7 @@ from pydantic import BaseModel, Field
 from typing import List, Literal
 
 
-class WhatYouDidWell(BaseModel):
-    """A specific strength with evidence."""
-    label: str = Field(..., min_length=3, max_length=100, description="3-6 words describing the strength")
-    quote: str = Field(..., description="Exact quote from essay")
-    comment: str = Field(..., max_length=300, description="Max 18 words explaining why this is good")
+
 
 
 class MainIssue(BaseModel):
@@ -50,12 +46,7 @@ class CriterionExplanation(BaseModel):
         description="Exactly 2 sentences, max 40 words total. Sentence 1: overall judgment. Sentence 2: main reason + missing piece"
     )
     
-    what_you_did_well: List[WhatYouDidWell] = Field(
-        default_factory=list, 
-        max_items=20,
-        description="List of specific strengths with quotes"
-    )
-    
+
     main_issues: List[MainIssue] = Field(
         default_factory=list, 
         max_items=20,

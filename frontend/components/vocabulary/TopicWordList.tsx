@@ -148,11 +148,6 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
                                             {typeLabels[word.type]}
                                         </span>
                                     )}
-                                    {word.difficultyLevel >= 3 && (
-                                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300">
-                                            Band {word.difficultyLevel}+
-                                        </span>
-                                    )}
                                 </div>
                             </div>
                         ))}
@@ -205,9 +200,7 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
                                         <Badge variant="secondary" className="px-3 py-1.5 text-xs font-bold uppercase tracking-wider bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-300 hover:bg-purple-200">
                                             {typeLabels[activeWord.type || "academic"]}
                                         </Badge>
-                                        <Badge variant="secondary" className="px-3 py-1.5 text-xs font-bold uppercase tracking-wider bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300 hover:bg-orange-200">
-                                            Band {activeWord.difficultyLevel}
-                                        </Badge>
+
                                         <Badge variant="outline" className="px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-gray-500 border-gray-200 dark:border-white/10">
                                             {topicName}
                                         </Badge>
@@ -222,11 +215,11 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
                                     </div>
 
                                     {/* Example Usage */}
-                                    <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6 border border-gray-100 dark:border-white/5">
+                                    <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6 border border-gray-100 dark:border-white/5 mb-6">
                                         <div className="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
                                             <Quote className="h-3 w-3" /> Example Usage
                                         </div>
-                                        <div className="space-y-4">
+                                        <div className="space-y-2">
                                             <p className="text-lg text-gray-700 dark:text-gray-300 font-serif italic">
                                                 "{activeWord.exampleSentence.split(new RegExp(`(${activeWord.word})`, 'gi')).map((part, i) =>
                                                     part.toLowerCase() === activeWord.word.toLowerCase()
@@ -235,6 +228,34 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
                                                 )}"
                                             </p>
                                         </div>
+                                        {activeWord.speakingExample && activeWord.speakingExample !== activeWord.exampleSentence && (
+                                            <div className="space-y-2 mt-4 pt-4 border-t border-gray-200 dark:border-white/10">
+                                                <div className="flex items-center gap-2 text-xs font-bold text-purple-500 uppercase tracking-widest">
+                                                    <Mic className="h-3 w-3" /> Speaking Example
+                                                </div>
+                                                <p className="text-lg text-gray-700 dark:text-gray-300 font-serif italic">
+                                                    "{activeWord.speakingExample.split(new RegExp(`(${activeWord.word})`, 'gi')).map((part, i) =>
+                                                        part.toLowerCase() === activeWord.word.toLowerCase()
+                                                            ? <span key={i} className="text-purple-600 dark:text-purple-400 font-semibold bg-purple-50 dark:bg-purple-500/10 px-1 rounded">{part}</span>
+                                                            : part
+                                                    )}"
+                                                </p>
+                                            </div>
+                                        )}
+                                        {activeWord.writingExample && activeWord.writingExample !== activeWord.exampleSentence && (
+                                            <div className="space-y-2 mt-4 pt-4 border-t border-gray-200 dark:border-white/10">
+                                                <div className="flex items-center gap-2 text-xs font-bold text-blue-500 uppercase tracking-widest">
+                                                    <PenTool className="h-3 w-3" /> Writing Example
+                                                </div>
+                                                <p className="text-lg text-gray-700 dark:text-gray-300 font-serif italic">
+                                                    "{activeWord.writingExample.split(new RegExp(`(${activeWord.word})`, 'gi')).map((part, i) =>
+                                                        part.toLowerCase() === activeWord.word.toLowerCase()
+                                                            ? <span key={i} className="text-blue-600 dark:text-blue-400 font-semibold bg-blue-50 dark:bg-blue-500/10 px-1 rounded">{part}</span>
+                                                            : part
+                                                    )}"
+                                                </p>
+                                            </div>
+                                        )}
                                     </div>
 
                                     {/* Synonyms & Collocations */}
@@ -283,8 +304,8 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
                                         <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400 mb-2 group-hover:scale-110 transition-transform">
                                             <Link2 className="h-4 w-4" />
                                         </div>
-                                        <span className="font-bold text-gray-900 dark:text-white mb-0.5 text-sm">Collocation Match</span>
-                                        <span className="text-[10px] text-gray-500">Connect word pairs</span>
+                                        <span className="font-bold text-gray-900 dark:text-white mb-0.5 text-sm">Synonym Swap</span>
+                                        <span className="text-[10px] text-gray-500">Find the right word</span>
                                     </button>
                                     <button
                                         onClick={() => onStartExercise("tetris")}

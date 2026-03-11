@@ -105,7 +105,7 @@ class TutorAgent:
         
         # Ensure all required list fields exist (safety net)
         list_fields = [
-            "action_plan", "strengths", "weaknesses", "topic_analysis",
+            "action_plan", "weaknesses", "topic_analysis",
             "grammar_errors", "vocabulary_suggestions", "coherence_issues",
             "band_gaps", "rewrites", "micro_tasks"
         ]

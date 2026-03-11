@@ -29,7 +29,7 @@ type PracticalQuestion = {
 export default function MatchingHeadingsQuiz() {
   const { data: theoryContent, isLoading, isError } = useQuery({
     queryKey: ["reading-theory", "matching-headings"],
-    queryFn: () => backend.ielts.getReadingTheoryById({ questionType: "matching-headings" })
+    queryFn: () => backend.ielts.getReadingTheoryById("matching-headings")
   });
 
   const theoryQuiz = useMemo(() => {

@@ -41,15 +41,6 @@ For this criterion (Task Achievement) you must produce:
    - Sentence 1: overall judgment in simple words  
    - Sentence 2: main reason + missing piece
 
-2) what_you_did_well  → List ALL significant strengths you can find.
-   ⚠️ CRITICAL: Find EVERY strength in the essay. Do NOT limit to just 2-4 items.
-   - If the student did 5 things well, list all 5.
-   - If they did 10 things well, list all 10.
-   - Each item has:
-     - label (3–6 words)
-     - quote from essay
-     - short comment (max 18 words)
-
 3) main_issues  → List ALL recurring error patterns you can find.
    ⚠️ CRITICAL: Find EVERY mistake/pattern that lowered the score. Do NOT limit to just 2-3 items.
    - If there are 5 different problems, list all 5.
@@ -93,13 +84,7 @@ Return ONLY valid JSON with this structure:
   "criterion": "task_achievement",
   "band": <number>,                 // e.g. 5.5
   "summary": "<2 sentences, <=40 words>",
-  "what_you_did_well": [
-    {
-      "label": "<3-6 words>",
-      "quote": "<exact quote from essay>",
-      "comment": "<<=18 words>"
-    }
-  ],
+
   "main_issues": [
     {
       "label": "<3-6 words>",

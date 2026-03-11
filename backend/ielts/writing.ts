@@ -8,10 +8,15 @@ export interface WritingPrompt {
 }
 
 export interface WritingSubmission {
-  userId: number;
+  userId: string;
   taskType: number;
   prompt: string;
   content: string;
+  bandScore?: number;
+  grammarFeedback?: string;
+  vocabularyFeedback?: string;
+  structureFeedback?: string;
+  coherenceFeedback?: string;
 }
 
 export interface WritingFeedback {
@@ -50,90 +55,86 @@ const writingPrompts: Record<number, string[]> = {
 };
 
 const testSpecificPrompts: Record<number, WritingPrompt> = {
-  // --- Task 2 Specific Prompts (Tests 1-10) ---
+  // --- Task 2 Specific Prompts (Tests 1-20) ---
   2: {
     taskType: 2,
-    prompt: "It is often argued that homework places unnecessary stress on primary school children and should be completely banned by education authorities to protect their wellbeing. Others believe it is essential for reinforcing classroom learning and developing independent study skills. To what extent do you agree or disagree?"
+    prompt: "Some people believe that homework is an essential part of schooling, while others think it puts too much pressure on students and limits their free time. To what extent do you agree or disagree?"
   },
   4: {
     taskType: 2,
-    prompt: "It has been persuasively argued that advanced artificial intelligence systems will eventually replace doctors and nurses in the majority of medical facilities worldwide within the next few decades. However, others maintain that human empathy and complex clinical judgment can never be truly replicated by machines. To what extent do you agree or disagree?"
+    prompt: "Artificial intelligence will eventually replace most human jobs in the workplace. To what extent do you agree or disagree with this statement?"
   },
   6: {
     taskType: 2,
-    prompt: "It is frequently claimed that environmental degradation can only be reversed through strict regulations imposed on multinational corporations rather than through individual lifestyle changes. Others contend that meaningful ecological progress requires collective shifts in consumer behaviour and cannot be mandated solely through legislation. To what extent do you agree or disagree?"
+    prompt: "Individuals should be responsible for reducing their carbon footprint rather than relying on governments to solve climate change. Do you agree or disagree?"
   },
   8: {
     taskType: 2,
-    prompt: "There is a view that compulsory retirement ages should be abolished in all sectors to allow older workers to continue contributing their expertise and maintaining financial independence. Conversely, others argue that mandatory retirement creates necessary opportunities for younger generations entering the workforce and prevents stagnation. To what extent do you agree or disagree?"
+    prompt: "The best way to improve public health is by increasing the number of sports facilities in cities. To what extent do you agree or disagree?"
   },
   25: {
     taskType: 2,
-    prompt: "Some people believe that governments should provide completely free healthcare for all citizens regardless of their income level or social status. However, others argue that individuals should contribute privately for non-essential medical treatments to reduce public spending and encourage personal responsibility. Discuss both these views and give your own opinion."
+    prompt: "Some people think that the best way to reduce traffic congestion in cities is to build wider roads. Others believe that introducing more public transportation options is more effective. Discuss both views and give your opinion."
   },
   26: {
     taskType: 2,
-    prompt: "It is often claimed that young professionals should be encouraged to relocate from overcrowded capital cities to smaller regional towns where housing is more affordable and living costs are reduced. Others, however, argue that concentrating talent in major urban centres maximises economic productivity, innovation networks, and career advancement opportunities. Discuss both these views and give your own opinion."
+    prompt: "Some argue that the spread of multinational companies and global brands is beneficial for local economies. Others believe it destroys local cultures and traditional businesses. Discuss both views and give your opinion."
   },
   27: {
     taskType: 2,
-    prompt: "Some linguists argue that the disappearance of minority languages is an inevitable consequence of globalisation that facilitates necessary international communication and economic integration. However, others contend that linguistic diversity represents irreplaceable cultural knowledge and distinct worldviews that must be actively preserved through comprehensive government intervention. Discuss both these views and give your own opinion."
+    prompt: "Some people believe that children should start learning a foreign language as early as possible. Others think it is better to wait until they are teenagers. Discuss both views and give your opinion."
   },
   28: {
     taskType: 2,
-    prompt: "There is a view that secondary school students should take a mandatory year of voluntary work or travel before commencing university studies to gain maturity and practical experience. However, others believe this creates academic discontinuity and financial burdens that negatively impact long-term educational outcomes and career trajectories. Discuss both these views and give your own opinion."
+    prompt: "Some people think that the purpose of prison is to punish criminals, while others believe its primary function should be to rehabilitate offenders and prepare them for life outside prison. Discuss both views and give your opinion."
   },
   29: {
     taskType: 2,
-    prompt: "Many major cities around the world are currently experiencing severe housing shortages and transport congestion due to rapid population growth and internal migration. What are the primary causes of this increasing urban overcrowding? What practical measures could municipal authorities implement to effectively address these specific challenges?"
+    prompt: "An increasing number of people are using social media platforms to communicate and share information. What are the advantages and disadvantages of this trend?"
   },
   30: {
     taskType: 2,
-    prompt: "Reports indicate that juvenile delinquency rates are rising in many developed nations, with an increasing number of serious offences committed by adolescents under the age of sixteen. What are the underlying socioeconomic and familial factors contributing to this troubling trend? What comprehensive preventive strategies could families, educational institutions, and communities collaboratively adopt to reduce youth involvement in criminal activity?"
+    prompt: "Many companies now offer employees the option to work remotely from home rather than coming into the office. What are the advantages and disadvantages of working from home?"
   },
   31: {
     taskType: 2,
-    prompt: "There is growing concern that excessive screen-based entertainment and social media consumption among working-age adults is leading to decreased productivity and deteriorating mental health in professional environments. What are the root psychological and structural causes of this digital dependency? What institutional policies might employers implement to mitigate these adverse effects without infringing on personal liberties?"
+    prompt: "More students are choosing to take online courses and distance learning programs instead of attending traditional universities. What are the advantages and disadvantages of this development?"
   },
   32: {
     taskType: 2,
-    prompt: "Supermarkets and restaurants in developed countries discard vast quantities of edible food annually while many communities remain food insecure. What are the main structural and economic factors driving this wastage throughout the supply chain? What comprehensive solutions could retailers, policymakers, and consumers implement to create more sustainable food distribution systems?"
+    prompt: "Some historic buildings and monuments are being converted into tourist attractions to generate income. What are the advantages and disadvantages of using historical sites for tourism purposes?"
   },
   33: {
     taskType: 2,
-    prompt: "Many governments are currently offering significant financial incentives to encourage citizens to purchase electric vehicles instead of traditional petrol or petrol cars. Do the environmental advantages of this policy outweigh the potential economic disadvantages regarding manufacturing costs, battery disposal, and charging infrastructure requirements?"
+    prompt: "In many cities, air pollution has reached dangerous levels and is affecting residents' health. What are the main causes of this problem, and what solutions can you suggest?"
   },
   34: {
     taskType: 2,
-    prompt: "An increasing proportion of the population is opting for private medical insurance rather than relying solely on public healthcare systems to ensure faster access to specialist treatments. Do the benefits of reduced waiting times and greater patient choice outweigh the drawbacks of increased societal inequality and potential financial stress on lower-income households?"
+    prompt: "Obesity rates are rising rapidly in many developed countries, particularly among young people. What are the causes of this trend, and what measures could be taken to address it?"
   },
   35: {
     taskType: 2,
-    prompt: "Contemporary business culture increasingly glorifies entrepreneurship and self-employment over traditional hierarchical employment models within large organisations. Do the advantages of innovation and economic dynamism generated by this cultural shift outweigh the potential disadvantages regarding individual job security, benefits provision, and the erosion of collective bargaining power?"
+    prompt: "Housing affordability has become a serious problem in major cities around the world, with many people unable to buy their own homes. What are the causes of this issue, and what solutions can you propose?"
   },
   36: {
     taskType: 2,
-    prompt: "Many developed nations are actively recruiting skilled migrants to address critical labour shortages in key industries such as healthcare, technology, and agriculture. Do the economic advantages of filling skills gaps and demographic deficits outweigh the potential social disadvantages related to community cohesion pressures and housing market inflation?"
+    prompt: "Many young people today struggle to find employment after graduating from university. What are the causes of this problem, and what solutions can you suggest?"
   },
   37: {
     taskType: 2,
-    prompt: "International tourism has expanded significantly in recent decades, with many historic cities receiving millions of visitors annually. Why has international travel become so accessible to the general population compared to previous generations? Do you consider the overall impact of mass tourism on local communities and cultural heritage sites to be positive or negative?"
+    prompt: "Many people now shop online instead of visiting physical stores. Why is this happening? Do you think this is a positive or negative development?"
   },
   38: {
     taskType: 2,
-    prompt: "Urban cycling has experienced a significant resurgence in popularity among commuters in major metropolitan areas seeking alternatives to motorised transport. What are the primary environmental and infrastructural factors motivating this shift away from private vehicles? Does this trend have more positive or negative implications for urban planning and public health outcomes?"
+    prompt: "In many families today, both parents work full-time, and children spend more time in daycare or with grandparents. Why is this trend becoming more common? Is this a positive or negative development for children?"
   },
   39: {
     taskType: 2,
-    prompt: "Recidivism rates remain persistently high despite increased expenditure on correctional facilities and longer sentencing periods in many jurisdictions. Why do traditional incarceration methods frequently fail to prevent reoffending upon release? What alternative approaches to offender management might prove more effective in promoting long-term law-abiding behaviour and community safety?"
+    prompt: "Some countries are experiencing water shortages and drought conditions due to climate change. Why is this happening in some places more than others? What can governments do to address this problem?"
   },
   40: {
     taskType: 2,
-    prompt: "Distance learning through digital platforms has become an integral component of mainstream education at all levels, from primary schools to universities. What are the principal technological and pedagogical factors driving the institutional adoption of online teaching methodologies? Is this transition toward virtual classrooms ultimately a beneficial or detrimental development for educational equity and learning outcomes?"
-  },
-  41: {
-    taskType: 2,
-    prompt: "Nowadays, people often give more freedom to their children than in the past. Is it a positive or negative development?"
+    prompt: "Traditional festivals and celebrations are becoming less important to younger generations in many countries. Why is this happening? Do you think this is a positive or negative development?"
   },
 
   // --- Task 1 Specific Prompts ---
@@ -699,28 +700,29 @@ export const submitWriting = api<WritingSubmission, WritingFeedback>(
 
     // Mock AI evaluation - in a real app, this would call an AI service
     const wordCount = req.content.split(/\s+/).length;
-    const bandScore = Math.round((Math.random() * 3 + 5) * 10) / 10; // 5.0-8.0 range
+    const bandScore = req.bandScore ?? (Math.round((Math.random() * 3 + 5) * 10) / 10); // 5.0-8.0 range
 
-    const grammarFeedback = bandScore >= 7
+    const grammarFeedback = req.grammarFeedback ?? (bandScore >= 7
       ? "Good grammar usage with minor errors. Consider reviewing complex sentence structures."
-      : "Focus on improving grammar accuracy. Pay attention to verb tenses and subject-verb agreement.";
+      : "Focus on improving grammar accuracy. Pay attention to verb tenses and subject-verb agreement.");
 
-    const vocabularyFeedback = bandScore >= 7
+    const vocabularyFeedback = req.vocabularyFeedback ?? (bandScore >= 7
       ? "Good range of vocabulary. Try to use more sophisticated and topic-specific words."
-      : "Expand your vocabulary range. Use more varied and precise words to express your ideas.";
+      : "Expand your vocabulary range. Use more varied and precise words to express your ideas.");
 
-    const structureFeedback = req.taskType === 1
+    const structureFeedback = req.structureFeedback ?? (req.taskType === 1
       ? "Ensure you have a clear introduction, body paragraphs describing the data, and a conclusion."
-      : "Make sure you have a clear introduction, body paragraphs with supporting arguments, and a conclusion.";
+      : "Make sure you have a clear introduction, body paragraphs with supporting arguments, and a conclusion.");
 
-    const coherenceFeedback = wordCount < 150
+    const coherenceFeedback = req.coherenceFeedback ?? (wordCount < 150
       ? "Your response is too short. Aim for at least 150 words for Task 1 or 250 words for Task 2."
-      : "Good coherence and cohesion. Use more linking words to improve flow between ideas.";
+      : "Good coherence and cohesion. Use more linking words to improve flow between ideas.");
 
     const session = await ieltsDB.queryRow<WritingFeedback>`
       INSERT INTO writing_submissions
       (user_id, task_type, prompt, content, band_score, grammar_feedback,
         vocabulary_feedback, structure_feedback, coherence_feedback)
+
 VALUES(${req.userId
       }, ${req.taskType}, ${req.prompt}, ${req.content},
   ${bandScore}, ${grammarFeedback}, ${vocabularyFeedback},
@@ -738,8 +740,23 @@ VALUES(${req.userId
   }
 );
 
+export const getWritingSessionById = api<{ id: number }, { session: WritingSession | null }>(
+  { expose: true, method: "GET", path: "/writing/sessions/:id" },
+  async ({ id }) => {
+    const session = await ieltsDB.queryRow<WritingSession>`
+      SELECT id, task_type as "taskType", prompt, content, band_score as "bandScore",
+        grammar_feedback as "grammarFeedback", vocabulary_feedback as "vocabularyFeedback",
+        structure_feedback as "structureFeedback", coherence_feedback as "coherenceFeedback",
+        created_at as "createdAt"
+      FROM writing_submissions
+      WHERE id = ${id}
+    `;
+    return { session };
+  }
+);
+
 // Retrieves user's writing session history.
-export const getWritingSessions = api<{ userId: number }, { sessions: WritingSession[] }>(
+export const getWritingSessions = api<{ userId: string }, { sessions: WritingSession[] }>(
   { expose: true, method: "GET", path: "/users/:userId/writing/sessions" },
   async ({ userId }) => {
     const sessions = await ieltsDB.queryAll<WritingSession>`

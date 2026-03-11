@@ -10,7 +10,8 @@ import {
   CreditCard,
   GraduationCap,
   Sun,
-  Moon
+  Moon,
+  LogOut
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useUser } from "../contexts/UserContext";
@@ -28,8 +29,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { user } = useUser();
+  const { user, signOut } = useUser();
   const { theme, setTheme } = useTheme();
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate('/login');
+  };
 
   const isFullHeightUI = location.pathname === '/tutor' || location.pathname === '/reading/tutor-chat' || location.pathname === '/vocabulary';
 
@@ -50,21 +56,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </Button>
 
           <div className="flex flex-1 items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Button
-                variant="link"
-                className="text-xl font-bold p-0 h-auto flex items-center gap-2"
-                onClick={() => navigate('/')}
-                aria-label="Go to Home"
-              >
-                <div className="w-8 h-8 bg-slate-900 dark:bg-white rounded-lg flex items-center justify-center">
-                  <span className="text-white dark:text-black font-black text-xs">AI</span>
-                </div>
-                <span className="text-sky-600 dark:text-sky-400">IELTS AI</span>
-              </Button>
-            </div>
+            <Link to="/" className="flex items-center gap-2 group">
+              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-indigo-600 dark:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20 group-hover:scale-110 transition-transform">
+                <GraduationCap className="h-5 w-5" />
+              </div>
+              <span className="text-xl font-black tracking-tight text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                NewBand
+              </span>
+            </Link>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center justify-end w-full gap-3">
 
               <Button
                 variant="ghost"
@@ -80,6 +81,28 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <div className="ml-2">
                 <SkeuomorphicToggle />
               </div>
+
+              {user ? (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="flex items-center gap-2 h-10 px-3 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-rose-50 dark:hover:bg-rose-900/20 hover:text-rose-600 dark:hover:text-rose-400 transition-all"
+                  onClick={handleLogout}
+                  aria-label="Sign out"
+                >
+                  <LogOut className="h-4 w-4" />
+                  <span className="hidden sm:inline text-sm">{user.email?.split('@')[0]}</span>
+                </Button>
+              ) : (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="flex items-center gap-2 h-10 px-4 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-all"
+                  onClick={() => navigate('/login')}
+                >
+                  Sign In
+                </Button>
+              )}
             </div>
           </div>
         </div>

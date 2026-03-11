@@ -9,6 +9,7 @@ import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "../contexts/UserContext";
 import backend from "@/backend";
+import { supabase } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
 import { FeedbackSummaryView } from "@/components/writing/FeedbackSummaryView";
 import { FeedbackContainer } from "@/components/writing/FeedbackContainer";
@@ -47,27 +48,26 @@ const writingTests = [
   { id: 24, title: "Test 20", subtitle: "Tech Access", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/tech_access_bar_chart.png", chartType: "Bar Chart" },
 
   // --- Task 2 Tests (20) ---
-  { id: 2, title: "Test 1", subtitle: "Homework & Wellbeing", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 4, title: "Test 2", subtitle: "AI Doctors & Nurses", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 6, title: "Test 3", subtitle: "Environmental Regulations", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 8, title: "Test 4", subtitle: "Retirement Policy", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 25, title: "Test 5", subtitle: "Universal Healthcare", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 26, title: "Test 6", subtitle: "Urban vs Regional", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 27, title: "Test 7", subtitle: "Minority Languages", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 28, title: "Test 8", subtitle: "Gap Year Benefits", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 29, title: "Test 9", subtitle: "Urban Overcrowding", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 30, title: "Test 10", subtitle: "Juvenile Delinquency", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 31, title: "Test 11", subtitle: "Screen Addiction", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 32, title: "Test 12", subtitle: "Food Wastage", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 33, title: "Test 13", subtitle: "Electric Vehicles", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 34, title: "Test 14", subtitle: "Private Healthcare", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 35, title: "Test 15", subtitle: "Entrepreneurship", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 36, title: "Test 16", subtitle: "Skilled Migration", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 37, title: "Test 17", subtitle: "Mass Tourism", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 38, title: "Test 18", subtitle: "Urban Cycling", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 39, title: "Test 19", subtitle: "Recidivism Rates", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 40, title: "Test 20", subtitle: "Distance Learning", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
-  { id: 41, title: "Test 21", subtitle: "Children's Freedom", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 2, title: "Test 1", subtitle: "Education: Homework", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 4, title: "Test 2", subtitle: "Technology: AI & Jobs", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 6, title: "Test 3", subtitle: "Environment: Carbon Footprint", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 8, title: "Test 4", subtitle: "Health: Sports Facilities", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 25, title: "Test 5", subtitle: "Urbanization: Traffic", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 26, title: "Test 6", subtitle: "Globalization: Local Economies", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 27, title: "Test 7", subtitle: "Education: Foreign Languages", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 28, title: "Test 8", subtitle: "Crime: Purpose of Prison", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 29, title: "Test 9", subtitle: "Technology: Social Media", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 30, title: "Test 10", subtitle: "Work: Remote Work", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 31, title: "Test 11", subtitle: "Education: Online Courses", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 32, title: "Test 12", subtitle: "Tourism: Historic Sites", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 33, title: "Test 13", subtitle: "Environment: Air Pollution", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 34, title: "Test 14", subtitle: "Health: Obesity Rates", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 35, title: "Test 15", subtitle: "Urbanization: Housing", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 36, title: "Test 16", subtitle: "Education: Youth Employment", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 37, title: "Test 17", subtitle: "Technology: Online Shopping", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 38, title: "Test 18", subtitle: "Family: Working Parents", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 39, title: "Test 19", subtitle: "Environment: Water Shortages", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
+  { id: 40, title: "Test 20", subtitle: "Culture: Traditional Festivals", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
 ];
 
 
@@ -103,7 +103,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
     queryKey: ["writingPrompt", taskType, selectedTest?.id],
     queryFn: () => {
       // @ts-ignore: Adding test_id to supported extended backend
-      return backend.ielts.getWritingPrompt({ taskType, test_id: selectedTest?.id });
+      return backend.ielts.getWritingPrompt(taskType, { test_id: selectedTest?.id });
     },
     enabled: !!selectedTest,
   });
@@ -152,9 +152,18 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
           essay: content.trim(),
         };
 
+      // Get auth token for backend
+      const { data: { session } } = await supabase.auth.getSession();
+      const authHeaders: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+      if (session?.access_token) {
+        authHeaders["Authorization"] = `Bearer ${session.access_token}`;
+      }
+
       const response = await fetch(endpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: authHeaders,
         body: JSON.stringify(requestBody),
       });
 
@@ -209,7 +218,8 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
             ],
             word_count: evalData.word_count,
             word_count_ok: evalData.word_count >= 250,
-            teacher_feedback_status: 'complete'
+            teacher_feedback_status: 'complete',
+            detailed_feedback: evalData.detailed_feedback
           },
           coaching: {
             action_plan: [
@@ -266,7 +276,15 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
             raw_explainer_output: explainData,
             topic_analysis: coachData.topic_analysis || [],
             topic_vocabulary: coachData.topic_vocabulary || undefined,
-            coherence_advice: coachData.coherence_advice || undefined
+            coherence_advice: coachData.coherence_advice || undefined,
+            score_context: coachData.score_context,
+            root_cause_analysis: coachData.root_cause_analysis,
+            diagnosis_summary: coachData.diagnosis_summary,
+            the_one_big_change: coachData.the_one_big_change,
+            pattern_breaker: coachData.pattern_breaker,
+            micro_drill: coachData.micro_drill,
+            next_essay_plan: coachData.next_essay_plan,
+            motivation: coachData.motivation
           },
           teacher_feedback_status: 'complete'
         };
@@ -274,6 +292,9 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
 
       setAiAnalysis(result);
       setViewMode("feedback");
+
+      // Evaluation saving now happens automatically via the Python pipeline API
+
       toast({ title: "Score Ready!", description: `Band ${result.evaluation?.overall_band}` });
       queryClient.invalidateQueries({ queryKey: ["progress"] });
 
@@ -449,7 +470,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
   };
 
   return (
-    <div className={isTestStarted ? "max-w-[95vw] mx-auto space-y-8 pb-32" : "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 pb-32"}>
+    <div className={isTestStarted ? cn("max-w-[95vw] mx-auto", viewMode === "feedback" ? "py-2" : "space-y-8 pb-32") : "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 pb-32"}>
       {/* Hero Section - Only show when not in a test */}
       {!isTestStarted && (
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 to-indigo-700 dark:from-blue-900 dark:to-indigo-900 text-white shadow-xl">
@@ -611,8 +632,8 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
       {/* Writing Interface - Show when test is started */}
       {isTestStarted && selectedTest && (
         <div className={cn(
-          "h-[calc(100vh-140px)] min-h-[600px] w-full animate-in fade-in duration-500 flex flex-col transition-all duration-300",
-          viewMode === "feedback" ? "" : "px-4 md:px-8 max-w-full ml-0"
+          "min-h-[600px] w-full animate-in fade-in duration-500 flex flex-col transition-all duration-300",
+          viewMode === "feedback" ? "h-[calc(100vh-130px)]" : "h-[calc(100vh-140px)] px-4 md:px-8 max-w-full ml-0"
         )}>
 
           {/* Top Bar Navigation (Minimal) - Hide in feedback mode */}
@@ -796,6 +817,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                       <Button
                         onClick={handleQuickAnalysis}
                         disabled={!content.trim() || isAnalyzing}
+                        aria-label="Analyze Essay"
                         className="h-10 px-8 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white text-sm font-bold uppercase tracking-wide shadow-lg shadow-purple-500/20 rounded-lg transition-all transform hover:scale-[1.02]"
                       >
                         {isAnalyzing ? (

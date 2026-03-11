@@ -24,7 +24,7 @@ export interface DailyGoal {
 }
 
 // Retrieves user progress overview.
-export const getProgress = api<{ userId: number }, ProgressOverview>(
+export const getProgress = api<{ userId: string }, ProgressOverview>(
   { expose: true, method: "GET", path: "/users/:userId/progress" },
   async ({ userId }) => {
     const progress = await ieltsDB.queryAll<UserProgress>`
@@ -54,7 +54,7 @@ export const getProgress = api<{ userId: number }, ProgressOverview>(
 );
 
 // Updates user progress for a specific skill.
-export const updateProgress = api<{ userId: number; skill: string; estimatedBand?: number }, void>(
+export const updateProgress = api<{ userId: string; skill: string; estimatedBand?: number }, void>(
   { expose: true, method: "POST", path: "/users/:userId/progress/:skill" },
   async ({ userId, skill, estimatedBand }) => {
     await ieltsDB.exec`
@@ -71,9 +71,10 @@ export const updateProgress = api<{ userId: number; skill: string; estimatedBand
 );
 
 // Retrieves today's daily goal for a user.
-export const getDailyGoal = api<{ userId: number }, DailyGoal>(
+export const getDailyGoal = api<{ userId: string }, DailyGoal>(
   { expose: true, method: "GET", path: "/users/:userId/daily-goal" },
   async ({ userId }) => {
+    // 1. Try fetching the existing goal for today
     const goal = await ieltsDB.queryRow<DailyGoal>`
       SELECT goal_date as "goalDate", target_minutes as "targetMinutes", 
              completed_minutes as "completedMinutes", activities_completed as "activitiesCompleted",
@@ -82,8 +83,12 @@ export const getDailyGoal = api<{ userId: number }, DailyGoal>(
       WHERE user_id = ${userId} AND goal_date = CURRENT_DATE
     `;
 
-    if (!goal) {
-      // Create a new daily goal for today
+    if (goal) {
+      return goal;
+    }
+
+    // 2. Insert new daily goal (and gracefully handle foreign key violation if the user doesn't exist yet)
+    try {
       const newGoal = await ieltsDB.queryRow<DailyGoal>`
         INSERT INTO daily_goals (user_id, goal_date, target_minutes, target_activities)
         VALUES (${userId}, CURRENT_DATE, 30, 3)
@@ -92,14 +97,33 @@ export const getDailyGoal = api<{ userId: number }, DailyGoal>(
                   target_activities as "targetActivities"
       `;
       return newGoal!;
-    }
+    } catch (error: any) {
+      // If it's a foreign key constraint violation (code 23503), the user doesn't exist in our table.
+      // Auto-create a minimal placeholder user since Supabase is the actual source of truth for auth.
+      if (error?.code === "23503" || error?.message?.includes("foreign key constraint")) {
+        await ieltsDB.exec`
+          INSERT INTO users (id, name, target_band, language, theme)
+          VALUES (${userId}, 'Student', 7.0, 'en', 'light')
+          ON CONFLICT (id) DO NOTHING
+        `;
 
-    return goal;
+        // Retry creating the daily goal
+        const retryGoal = await ieltsDB.queryRow<DailyGoal>`
+          INSERT INTO daily_goals (user_id, goal_date, target_minutes, target_activities)
+          VALUES (${userId}, CURRENT_DATE, 30, 3)
+          RETURNING goal_date as "goalDate", target_minutes as "targetMinutes", 
+                    completed_minutes as "completedMinutes", activities_completed as "activitiesCompleted",
+                    target_activities as "targetActivities"
+        `;
+        return retryGoal!;
+      }
+      throw error;
+    }
   }
 );
 
 // Updates daily goal progress.
-export const updateDailyGoal = api<{ userId: number; minutesCompleted: number; activitiesCompleted: number }, void>(
+export const updateDailyGoal = api<{ userId: string; minutesCompleted: number; activitiesCompleted: number }, void>(
   { expose: true, method: "POST", path: "/users/:userId/daily-goal/update" },
   async ({ userId, minutesCompleted, activitiesCompleted }) => {
     await ieltsDB.exec`

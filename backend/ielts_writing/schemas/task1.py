@@ -11,7 +11,6 @@ from ielts_writing.schemas.base import (
     CriterionScoreBase,
     BandRange,
     ErrorPattern,
-    StrengthItem,
     MicroTask,
     ActionPlanDay
 )
@@ -157,9 +156,6 @@ class Task1CriterionFeedback(BaseModel):
     
     # What this measures (Task 1 specific descriptions)
     what_it_measures: List[str]
-    
-    # Strengths with evidence
-    strengths: List[StrengthItem] = Field(max_length=3)
     
     # Weakness patterns (not individual errors)
     weakness_patterns: List[ErrorPattern] = Field(max_length=3)

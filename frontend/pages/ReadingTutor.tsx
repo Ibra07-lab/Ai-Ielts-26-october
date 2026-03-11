@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Send, Sparkles, BookOpen, History, Bot, User as UserIcon, Clock, ArrowUp, ChevronRight, MessageSquare } from "lucide-react";
+import { Send, Sparkles, BookOpen, History, Bot, User as UserIcon, Clock, ArrowUp, ChevronRight, MessageSquare, Target, Trophy, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { sendChatMessage, streamChatMessage, generateSessionId, ChatMessage as APIChatMessage } from "@/services/chatApi";
+import { sendChatMessage, streamChatMessage, generateSessionId, startTrainingSession, ChatMessage as APIChatMessage } from "@/services/chatApi";
 import ReactMarkdown from "react-markdown";
 import { Input } from "@/components/ui/input";
 
@@ -31,6 +32,32 @@ type ChatMessage = {
 	content: string;
 };
 
+type TrainingState = {
+	skill: string;
+	accuracy: number;
+	totalAttempted: number;
+	correct: number;
+	studentId: string;
+};
+
+type SessionResult = {
+	skill: string;
+	mistake_pattern: string;
+	diagnostic_score: number;
+	drill_score: number;
+	simulation_score: number;
+	total_correct: number;
+	total_questions: number;
+	accuracy: number;
+	recommendation: string;
+};
+
+const SKILL_LABELS: Record<string, string> = {
+	tfng: "True / False / Not Given",
+	matching_headings: "Matching Headings",
+	multiple_choice: "Multiple Choice",
+};
+
 export default function ReadingTutor() {
 	const [messages, setMessages] = useState<ChatMessage[]>([]);
 	const [input, setInput] = useState("");
@@ -41,7 +68,51 @@ export default function ReadingTutor() {
 	const hasText = input.trim().length > 0;
 	const [streamingEnabled, setStreamingEnabled] = useState(true);
 
-	const isLanding = messages.length === 0;
+	// ========== TRAINING SESSION STATE ==========
+	const location = useLocation();
+	const trainingState = location.state as TrainingState | undefined;
+	const isTrainingSession = !!trainingState?.skill;
+	const [isTrainingInit, setIsTrainingInit] = useState(false);
+	const [sessionResult, setSessionResult] = useState<SessionResult | null>(null);
+
+	// Auto-start training session when navigated with training state
+	useEffect(() => {
+		if (!isTrainingSession || messages.length > 0) return;
+		const init = async () => {
+			setIsTrainingInit(true);
+			try {
+				const response = await startTrainingSession({
+					session_id: sessionId,
+					skill: trainingState.skill,
+					student_id: trainingState.studentId,
+					accuracy: trainingState.accuracy,
+					total_attempted: trainingState.totalAttempted,
+					correct: trainingState.correct,
+					recent_errors: [],
+				});
+				setMessages([{ id: crypto.randomUUID(), role: "assistant", content: response.first_message }]);
+			} catch (err) {
+				console.error("Failed to start training:", err);
+				setMessages([{ id: crypto.randomUUID(), role: "assistant", content: "Sorry, I couldn't start the training session. Please make sure the AI server is running and try again." }]);
+			} finally {
+				setIsTrainingInit(false);
+			}
+		};
+		init();
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+	// Parse :::SESSION_RESULT::: from AI responses
+	const parseSessionResult = (content: string): SessionResult | null => {
+		const match = content.match(/:::SESSION_RESULT\s*\n?([\s\S]*?)\n?:::/);
+		if (!match) return null;
+		try { return JSON.parse(match[1].trim()); } catch { return null; }
+	};
+
+	const stripResultBlock = (content: string): string =>
+		content.replace(/:::SESSION_RESULT[\s\S]*?:::/g, "").trim();
+	// ========== END TRAINING STATE ==========
+
+	const isLanding = messages.length === 0 && !isTrainingSession;
 
 	const suggestions = [
 		{ text: "Explain True/False/Not Given logic", icon: Sparkles },
@@ -49,6 +120,7 @@ export default function ReadingTutor() {
 		{ text: "Give me a practice passage", icon: Sparkles },
 		{ text: "Typical Reading exam timing", icon: Clock },
 	];
+
 
 	type StructuredMatchingData = {
 		context: string[];
@@ -96,7 +168,12 @@ export default function ReadingTutor() {
 	// Sanitize AI response: trim and collapse excessive newlines
 	const sanitizeContent = (raw: string): string => {
 		let processed = raw.trim();
+		// Collapse 3+ newlines to 2
 		processed = processed.replace(/\n{3,}/g, '\n\n');
+		// Collapse double newlines to single (markdown <p> handles spacing)
+		processed = processed.replace(/\n\n/g, '\n');
+		// Restore double newlines before bold headings (** at line start)
+		processed = processed.replace(/\n(\*\*[A-Z])/g, '\n\n$1');
 		return processed;
 	};
 
@@ -112,6 +189,11 @@ export default function ReadingTutor() {
 
 		// Remove blank lines BETWEEN consecutive list items
 		collapsed = collapsed.replace(/(\n\s*(?:\d+\.|[-*]|•)\s[^\n]+)\n\s*\n(?=\s*(?:\d+\.|[-*]|•)\s)/g, '$1\n');
+
+		// The training prompt outputs highly structured text that doesn't need aggressive numbering.
+		if (isTrainingSession) {
+			return collapsed;
+		}
 
 		return collapsed.replace(/(Statements?|Questions?|True\/False\/Not Given|T\/F\/NG):\s*\n([\s\S]+)/i, (_, header, rest) => {
 			const lines = rest.split('\n');
@@ -213,6 +295,17 @@ export default function ReadingTutor() {
 			setMessages((m) => [...m, { id: crypto.randomUUID(), role: "assistant", content: "Sorry, I encountered an error. Please try again." }]);
 		} finally {
 			setIsLoading(false);
+			// Check for session result after streaming completes
+			if (isTrainingSession) {
+				setMessages((prev) => {
+					const last = prev[prev.length - 1];
+					if (last?.role === "assistant") {
+						const result = parseSessionResult(last.content);
+						if (result) setSessionResult(result);
+					}
+					return prev;
+				});
+			}
 		}
 	};
 
@@ -229,6 +322,21 @@ export default function ReadingTutor() {
 			</div>
 
 			<div className="flex-1 flex flex-col relative z-10 max-w-4xl mx-auto w-full h-full">
+
+				{/* Training Mode Banner */}
+				{isTrainingSession && (
+					<div className="px-4 pt-3 pb-1 flex-shrink-0">
+						<div className="flex items-center gap-3 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 dark:from-indigo-900/30 dark:to-purple-900/30 border border-indigo-200/30 dark:border-indigo-700/30 rounded-xl px-4 py-2.5">
+							<Target className="h-4 w-4 text-indigo-500" />
+							<span className="text-sm font-bold text-indigo-700 dark:text-indigo-300">
+								{SKILL_LABELS[trainingState?.skill || ""] || trainingState?.skill} Training Session
+							</span>
+							<span className="text-xs text-indigo-500/70 dark:text-indigo-400/60">
+								• {trainingState?.accuracy}% accuracy • {trainingState?.correct}/{trainingState?.totalAttempted} correct
+							</span>
+						</div>
+					</div>
+				)}
 
 				<div className={cn(
 					"flex-1 overflow-hidden transition-all duration-1000 ease-in-out flex flex-col",
@@ -248,9 +356,9 @@ export default function ReadingTutor() {
 														if (parsed) return <StructuredAiMessage data={parsed} />;
 													}
 													return (
-														<div className="chat-content whitespace-pre-wrap break-words">
+														<div className="chat-content break-words">
 															<ReactMarkdown components={{ p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>, ul: ({ children }) => <ul className="list-disc pl-4 mb-3 space-y-1.5">{children}</ul>, ol: ({ children }) => <ol className="list-decimal pl-4 mb-3 space-y-1.5">{children}</ol>, li: ({ children }) => <li className="pl-1">{children}</li> }}>
-																{m.role === "assistant" ? formatAssistantContent(m.content) : m.content}
+																{m.role === "assistant" ? stripResultBlock(formatAssistantContent(m.content)) : m.content}
 															</ReactMarkdown>
 														</div>
 													);
@@ -296,6 +404,41 @@ export default function ReadingTutor() {
 						What can I <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">help</span> with?
 					</h1>
 				</div>
+
+				{/* Session Result Card (Training Mode) */}
+				{sessionResult && (
+					<div className="px-4 pb-3 flex-shrink-0 animate-in fade-in slide-in-from-bottom-4">
+						<div className="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 rounded-2xl p-5 space-y-3">
+							<div className="flex items-center gap-2">
+								<Trophy className="h-5 w-5 text-amber-400" />
+								<h2 className="text-lg font-bold text-white">Session Complete</h2>
+							</div>
+							<div className="grid grid-cols-3 gap-3">
+								<div className="bg-slate-800/50 rounded-xl p-2.5 text-center">
+									<p className="text-[10px] text-slate-400 mb-0.5">Diagnostic</p>
+									<p className="text-xl font-bold text-emerald-400">{sessionResult.diagnostic_score}/3</p>
+								</div>
+								<div className="bg-slate-800/50 rounded-xl p-2.5 text-center">
+									<p className="text-[10px] text-slate-400 mb-0.5">Drill</p>
+									<p className="text-xl font-bold text-blue-400">{sessionResult.drill_score}/5</p>
+								</div>
+								<div className="bg-slate-800/50 rounded-xl p-2.5 text-center">
+									<p className="text-[10px] text-slate-400 mb-0.5">Simulation</p>
+									<p className="text-xl font-bold text-purple-400">{sessionResult.simulation_score}/4</p>
+								</div>
+							</div>
+							<div className="flex items-center justify-between pt-2 border-t border-slate-700">
+								<div>
+									<p className="text-xs text-slate-400">Pattern: <span className="text-white">{sessionResult.mistake_pattern}</span></p>
+									<p className="text-xs text-slate-400">Overall: <span className="text-white font-bold">{sessionResult.total_correct}/{sessionResult.total_questions} ({sessionResult.accuracy}%)</span></p>
+								</div>
+							</div>
+							{sessionResult.recommendation && (
+								<p className="text-xs text-slate-300 bg-slate-800/30 rounded-lg p-2.5 border-l-2 border-blue-500">💡 {sessionResult.recommendation}</p>
+							)}
+						</div>
+					</div>
+				)}
 
 				<div className={cn(
 					"w-full px-4 transition-all duration-700 ease-in-out z-20 flex-shrink-0",

@@ -31,7 +31,7 @@ export default function MissionControl() {
             name,
             category: "reading", // Default for quick add
             difficulty: "medium",
-            dueAt: new Date().toISOString(),
+            dueAt: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(),
         }),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["glow-tasks"] });

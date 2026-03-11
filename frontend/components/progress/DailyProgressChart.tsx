@@ -104,20 +104,22 @@ export default function DailyProgressChart({ data, days, onDaysChange }: DailyPr
         <div className="w-full h-full bg-transparent flex flex-col">
             <div className="px-8 pt-8 pb-4 flex justify-between items-start">
                 <div className="space-y-1">
-                    <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em]">{days}-Day Activity</p>
+                    <p className="text-[10px] font-black text-indigo-400 dark:text-indigo-300 uppercase tracking-[0.3em]">{days}-Day Activity</p>
                     <div className="flex items-baseline gap-2">
                         <span className="text-5xl font-black text-foreground tracking-tighter tabular-nums">
                             {totalActivity}
                         </span>
-                        <span className="text-sm font-bold text-muted-foreground uppercase tracking-widest opacity-50">Points</span>
+                        <span className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Points</span>
                     </div>
                 </div>
-                <div className="flex gap-4 bg-muted/30 p-1 rounded-full border border-border/50">
+                <div className="flex gap-4 bg-slate-100 dark:bg-white/5 p-1.5 rounded-full border border-slate-200 dark:border-white/10">
                     <button
                         onClick={() => onDaysChange(7)}
                         className={cn(
-                            "px-5 py-1.5 text-[10px] font-black uppercase tracking-widest transition-colors rounded-full",
-                            days === 7 ? "bg-foreground text-background shadow-sm" : "text-muted-foreground hover:text-foreground"
+                            "px-5 py-1.5 text-[10px] font-black uppercase tracking-widest transition-all rounded-full",
+                            days === 7
+                                ? "bg-white dark:bg-white text-slate-900 shadow-lg"
+                                : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                         )}
                     >
                         7D
@@ -125,8 +127,10 @@ export default function DailyProgressChart({ data, days, onDaysChange }: DailyPr
                     <button
                         onClick={() => onDaysChange(14)}
                         className={cn(
-                            "px-5 py-1.5 text-[10px] font-black uppercase tracking-widest transition-colors rounded-full",
-                            days === 14 ? "bg-foreground text-background shadow-sm" : "text-muted-foreground hover:text-foreground"
+                            "px-5 py-1.5 text-[10px] font-black uppercase tracking-widest transition-all rounded-full",
+                            days === 14
+                                ? "bg-white dark:bg-white text-slate-900 shadow-lg"
+                                : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                         )}
                     >
                         14D
@@ -151,7 +155,7 @@ export default function DailyProgressChart({ data, days, onDaysChange }: DailyPr
                             <XAxis
                                 dataKey="date"
                                 tick={{ fill: 'currentColor', fontSize: 10, fontWeight: 700 }}
-                                className="text-muted-foreground/40"
+                                className="text-slate-500 dark:text-slate-400"
                                 tickLine={false}
                                 axisLine={false}
                                 dy={15}
@@ -176,7 +180,7 @@ export default function DailyProgressChart({ data, days, onDaysChange }: DailyPr
                                     dataKey="percentageLabel"
                                     position="top"
                                     offset={10}
-                                    className="fill-muted-foreground/60 text-[10px] font-black"
+                                    className="fill-slate-600 dark:fill-slate-300 text-[10px] font-black"
                                 />
                             </Bar>
                         </BarChart>

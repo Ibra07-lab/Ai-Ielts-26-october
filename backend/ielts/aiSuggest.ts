@@ -16,32 +16,32 @@ const DIFFICULTY_POINTS: Record<TaskDifficulty, number> = { easy: 1, medium: 1.5
 
 function startOfDay(d: Date): Date {
 	const x = new Date(d);
-	x.setUTCHours(0, 0, 0, 0);
+	x.setHours(0, 0, 0, 0);
 	return x;
 }
 function endOfDay(d: Date): Date {
 	const x = new Date(d);
-	x.setUTCHours(23, 59, 59, 999);
+	x.setHours(23, 59, 59, 999);
 	return x;
 }
 function startOfWeek(d: Date): Date {
-	const day = d.getUTCDay(); // 0=Sun..6=Sat
+	const day = d.getDay(); // 0=Sun..6=Sat
 	const mondayOffset = (day + 6) % 7; // 0 for Mon
 	const x = new Date(d);
-	x.setUTCDate(d.getUTCDate() - mondayOffset);
+	x.setDate(d.getDate() - mondayOffset);
 	return startOfDay(x);
 }
 function endOfWeek(d: Date): Date {
 	const s = startOfWeek(d);
 	const x = new Date(s);
-	x.setUTCDate(s.getUTCDate() + 6);
+	x.setDate(s.getDate() + 6);
 	return endOfDay(x);
 }
 function startOfMonth(d: Date): Date {
-	return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1, 0, 0, 0, 0));
+	return new Date(d.getFullYear(), d.getMonth(), 1, 0, 0, 0, 0);
 }
 function endOfMonth(d: Date): Date {
-	return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0, 23, 59, 59, 999));
+	return new Date(d.getFullYear(), d.getMonth() + 1, 0, 23, 59, 59, 999);
 }
 
 export function getRangeBounds(range: SummaryRange, now = new Date()): { from: Date; to: Date } {
@@ -66,7 +66,7 @@ const CATEGORY_TEMPLATES: Record<TaskCategory, string[]> = {
 	speaking: ["Record 10-min response: Part 2 topics", "Mock Speaking Part 3 Q&A (10 min)"],
 };
 
-export async function computeWeakAreas(userId: number): Promise<TaskCategory[]> {
+export async function computeWeakAreas(userId: string): Promise<TaskCategory[]> {
 	// Simple heuristic: count completions in last 14 days per category; fewer completions -> weaker.
 	const rows = await ieltsDB.queryAll<{ category: TaskCategory; cnt: number }>`
 		SELECT category, COUNT(*)::int AS cnt
@@ -112,7 +112,7 @@ export function estimateMinutesFor(difficulty: TaskDifficulty): number {
 }
 
 export async function generateSuggestions(params: {
-	userId: number;
+	userId: string;
 	range: SummaryRange;
 	timeAvailableMinutes: number;
 	targetBand?: number;

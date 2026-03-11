@@ -404,11 +404,7 @@ class Task1ExplanationAgent:
             criterion=criterion,
             band=band,
             summary=f"Your score for this criterion is Band {band}. Detailed feedback is temporarily unavailable.",
-            what_you_did_well=[{
-                "label": "Essay submitted",
-                "quote": "Your essay was successfully analyzed.",
-                "comment": "The examiner has reviewed your work and assigned a score."
-            }],
+
             main_issues=[{
                 "label": "Feedback unavailable",
                 "why_it_matters": "Detailed analysis could not be generated at this time.",

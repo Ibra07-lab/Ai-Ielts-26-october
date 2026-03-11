@@ -36,13 +36,6 @@ For this criterion (Lexical Resource) you must produce:
    - Sentence 1: overall judgment in simple words  
    - Sentence 2: main reason + missing piece
 
-2) what_you_did_well  → MINIMUM 2-4 items required. List ALL significant strengths.
-   ⚠️ CRITICAL: Do NOT return just 1 strength. Find multiple examples.
-   - Each item has:
-     - label (3–6 words)
-     - quote from essay
-     - short comment (max 18 words)
-
 3) main_issues  → MINIMUM 2-3 patterns required. List ALL recurring error patterns.
    ⚠️ CRITICAL: Do NOT return just 1 issue. Identify all problem patterns.
    For each pattern:
@@ -84,13 +77,7 @@ Return ONLY valid JSON with this structure:
   "criterion": "lexical_resource",
   "band": <number>,
   "summary": "<2 sentences, <=40 words>",
-  "what_you_did_well": [
-    {
-      "label": "<3-6 words>",
-      "quote": "<exact quote from essay (one string)>",
-      "comment": "<<=18 words>"
-    }
-  ],
+
   "main_issues": [
     {
       "label": "<3-6 words>",

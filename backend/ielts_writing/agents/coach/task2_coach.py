@@ -92,32 +92,16 @@ class Task2Coach:
         else:
             user_content = build_coach_user_prompt(examiner_dict, explainer_dict)
 
-        # Call LLM based on model type
-        if self.model.startswith("openai/") or self.model.startswith("anthropic/"):
-             response_text = self.client.call_openrouter(
-                model=self.model,
-                system_prompt=COACH_SYSTEM_PROMPT,
-                user_prompt=user_content,
-                temperature=0.3,
-                max_tokens=8000
-            )
-        elif "gpt" in self.model.lower():
-            response_text = self.client.call_openai(
-                model=self.model,
-                system_prompt=COACH_SYSTEM_PROMPT,
-                user_prompt=user_content,
-                temperature=0.3,
-                max_tokens=8000
-            )
-        else:
-            response_text = self.client.call_anthropic(
-                model=self.model,
-                system_prompt=COACH_SYSTEM_PROMPT,
-                user_prompt=user_content,
-                temperature=0.3,
-                max_tokens=8000,
-                image_data=None
-            )
+        # Use GPT-4.1 via OpenRouter for speed and reliability
+        coach_model = os.getenv("COACH_MODEL", "openai/gpt-4.1")
+        
+        response_text = self.client.call_openrouter(
+            model=coach_model,
+            system_prompt=COACH_SYSTEM_PROMPT,
+            user_prompt=user_content,
+            temperature=0.3,
+            max_tokens=8000
+        )
 
         # Parse JSON response
         return self._parse_response(response_text)

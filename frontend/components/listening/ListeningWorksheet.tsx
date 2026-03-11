@@ -178,8 +178,8 @@ const ListeningWorksheet: React.FC<ListeningWorksheetProps> = ({
                     <p className="font-medium text-lg leading-relaxed font-serif">{question.question}</p>
                 </div>
                 <div className="ml-10 space-y-3">
-                    {question.options.map((option: string) => {
-                        const letter = option.charAt(0);
+                    {question.options.map((option: string, index: number) => {
+                        const letter = /^[A-Z][\.\)\s:]/.test(option) ? option.charAt(0) : String.fromCharCode(65 + index);
                         const isSelected = answers[question.id] === letter;
 
                         let optionClass = "flex items-center gap-3 p-3 rounded-lg cursor-pointer border transition-all hover:bg-slate-50";
@@ -211,10 +211,11 @@ const ListeningWorksheet: React.FC<ListeningWorksheetProps> = ({
     // 2. Matching Questions
     // 2. Matching Questions
     const renderMatching = (questions: any[], options: any[], title: string, instruction: string, questionsTitle?: string) => {
+        if (!questions || questions.length === 0) return null;
         return (
             <div className="mb-12">
                 <div className="flex items-baseline justify-between mb-4">
-                    <span className="italic text-lg font-medium">Questions {questions[0].questionNumber}–{questions[questions.length - 1].questionNumber}</span>
+                    <span className="italic text-lg font-medium">Questions {questions[0]?.questionNumber}–{questions[questions.length - 1]?.questionNumber}</span>
                 </div>
                 {instruction.split('\n').map((line, i) => (
                     <p key={i} className="mb-4">{line}</p>
@@ -385,6 +386,278 @@ const ListeningWorksheet: React.FC<ListeningWorksheetProps> = ({
                             <h2 className="text-xl font-bold mr-4">PART 1</h2>
                             <span className="italic text-lg">Questions 1–10</span>
                         </div>
+
+                        {/* Test 20 Part 1 */}
+                        {test.id === 20 && (
+                            <div className="animate-in fade-in duration-300">
+                                <p className="italic mb-2">Complete the notes below.</p>
+                                <p className="italic mb-6">Write <strong>ONE WORD</strong> for each answer.</p>
+
+                                <div className="border border-black p-8 bg-white max-w-4xl mx-auto shadow-sm">
+                                    <h3 className="text-2xl font-bold text-center mb-8 border-b-2 border-slate-800 pb-4">Easy Life Cleaning Services</h3>
+
+                                    <div className="space-y-8 ml-4">
+                                        <div className="mb-4">
+                                            <h4 className="font-bold text-lg mb-4 text-slate-800 border-b border-slate-200 pb-1">Basic cleaning package offered</h4>
+                                            <ul className="list-disc pl-8 space-y-4">
+                                                <li>Cleaning all surfaces</li>
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>Cleaning the</span>
+                                                        {renderBlank(1, "w-48")}
+                                                        <span>throughout the apartment</span>
+                                                    </div>
+                                                </li>
+                                                <li>Cleaning shower, sinks, toilet etc.</li>
+                                            </ul>
+                                        </div>
+
+                                        <div className="mb-4">
+                                            <h4 className="font-bold text-lg mb-4 text-slate-800 border-b border-slate-200 pb-1">Additional services agreed</h4>
+                                            <ul className="list-disc pl-8 space-y-4">
+                                                <li>Every week
+                                                    <ul className="list-none mt-2 space-y-3 pl-6">
+                                                        <li>
+                                                            <div className="flex items-baseline gap-2">
+                                                                <span className="text-slate-500 font-bold">–</span>
+                                                                <div className="flex flex-wrap items-baseline gap-1">
+                                                                    <span>Cleaning the</span>
+                                                                    {renderBlank(2, "w-48")}
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div className="flex items-baseline gap-2">
+                                                                <span className="text-slate-500 font-bold">–</span>
+                                                                <div className="flex flex-wrap items-baseline gap-1">
+                                                                    <span>Ironing clothes –</span>
+                                                                    {renderBlank(3, "w-48")}
+                                                                    <span>only</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li>Every month
+                                                    <ul className="list-none mt-2 space-y-3 pl-6">
+                                                        <li>
+                                                            <div className="flex items-baseline gap-2">
+                                                                <span className="text-slate-500 font-bold">–</span>
+                                                                <div className="flex flex-wrap items-baseline gap-1">
+                                                                    <span>Cleaning all the</span>
+                                                                    {renderBlank(4, "w-48")}
+                                                                    <span>from the inside</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div className="flex items-baseline gap-2">
+                                                                <span className="text-slate-500 font-bold">–</span>
+                                                                <div className="flex flex-wrap items-baseline gap-1">
+                                                                    <span>Washing down the</span>
+                                                                    {renderBlank(5, "w-48")}
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div className="mb-4">
+                                            <h4 className="font-bold text-lg mb-4 text-slate-800 border-b border-slate-200 pb-1">Other possibilities</h4>
+                                            <ul className="list-disc pl-8 space-y-4">
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>They can organise a plumber or an</span>
+                                                        {renderBlank(6, "w-48")}
+                                                        <span>if necessary.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>A special cleaning service is available for customers who are allergic to</span>
+                                                        {renderBlank(7, "w-48")}
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div className="mb-4">
+                                            <h4 className="font-bold text-lg mb-4 text-slate-800 border-b border-slate-200 pb-1">Information on the cleaners</h4>
+                                            <ul className="list-disc pl-8 space-y-4">
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>Before being hired, all cleaners have a background check carried out by the</span>
+                                                        {renderBlank(8, "w-48")}
+                                                    </div>
+                                                </li>
+                                                <li>References are required.</li>
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>All cleaners are given</span>
+                                                        {renderBlank(9, "w-48")}
+                                                        <span>for two weeks.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>Customers send a</span>
+                                                        {renderBlank(10, "w-48")}
+                                                        <span>after each visit.</span>
+                                                    </div>
+                                                </li>
+                                                <li>Usually, each customer has one regular cleaner.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Test 19 Part 1 */}
+                        {test.id === 19 && (
+                            <div className="animate-in fade-in duration-300">
+                                <p className="italic mb-2">Complete the notes below.</p>
+                                <p className="italic mb-6">Write <strong>ONE WORD AND/OR A NUMBER</strong> for each answer.</p>
+
+                                <div className="border border-black p-8 bg-white max-w-4xl mx-auto shadow-sm">
+                                    <h3 className="text-2xl font-bold text-center mb-8 border-b-2 border-slate-800 pb-4 uppercase tracking-wider">Advice on surfing holidays</h3>
+
+                                    <div className="space-y-8 ml-4">
+                                        <div className="mb-4">
+                                            <h4 className="font-bold text-lg mb-2 text-slate-900">Jack's advice</h4>
+                                            <ul className="list-disc pl-8 space-y-4 text-lg">
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>Recommends surfing for</span>
+                                                        {renderBlank(1, "w-40")}
+                                                        <span>holidays in the summer</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>Need to be quite</span>
+                                                        {renderBlank(2, "w-40")}
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div className="mb-4">
+                                            <h4 className="font-bold text-lg mb-2 text-slate-900">Irish surfing locations</h4>
+                                            <ul className="list-disc pl-8 mt-2 space-y-2 text-lg">
+                                                <li>
+                                                    <span>County Clare</span>
+                                                    <ul className="list-none pl-6 mt-2 space-y-2">
+                                                        <li>
+                                                            <div className="flex items-baseline gap-2">
+                                                                <span className="text-slate-500 font-bold">–</span>
+                                                                <div className="flex flex-wrap items-baseline gap-1">
+                                                                    <span>Lahinch has some good quality</span>
+                                                                    {renderBlank(3, "w-40")}
+                                                                    <span>and surf schools</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div className="flex items-baseline gap-2">
+                                                                <span className="text-slate-500 font-bold">–</span>
+                                                                <span>There are famous cliffs nearby</span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li className="mt-4">
+                                                    <span>County Mayo</span>
+                                                    <ul className="list-none pl-6 mt-2 space-y-2">
+                                                        <li>
+                                                            <div className="flex items-baseline gap-2">
+                                                                <span className="text-slate-500 font-bold">–</span>
+                                                                <div className="flex flex-wrap items-baseline gap-1">
+                                                                    <span>Good surf school at</span>
+                                                                    {renderBlank(4, "w-40")}
+                                                                    <span>beach</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div className="flex items-baseline gap-2">
+                                                                <span className="text-slate-500 font-bold">–</span>
+                                                                <div className="flex flex-wrap items-baseline gap-1">
+                                                                    <span>Surf camp lasts for one</span>
+                                                                    {renderBlank(5, "w-40")}
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div className="flex items-baseline gap-2">
+                                                                <span className="text-slate-500 font-bold">–</span>
+                                                                <div className="flex flex-wrap items-baseline gap-1">
+                                                                    <span>Can also explore the local</span>
+                                                                    {renderBlank(6, "w-40")}
+                                                                    <span>by kayak</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div className="mb-4">
+                                            <h4 className="font-bold text-lg mb-2 text-slate-900">Weather</h4>
+                                            <ul className="list-disc pl-8 space-y-4 text-lg">
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>Best month to go:</span>
+                                                        {renderBlank(7, "w-40")}
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>Average temperature in summer: approx.</span>
+                                                        {renderBlank(8, "w-32")}
+                                                        <span>degrees</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div className="mb-4">
+                                            <h4 className="font-bold text-lg mb-2 text-slate-900">Costs</h4>
+                                            <ul className="list-disc pl-8 space-y-4 text-lg">
+                                                <li>
+                                                    <span>Equipment</span>
+                                                    <ul className="list-none pl-6 mt-2 space-y-2 text-lg">
+                                                        <li>
+                                                            <div className="flex items-baseline gap-2">
+                                                                <span className="text-slate-500 font-bold">–</span>
+                                                                <div className="flex flex-wrap items-baseline gap-1">
+                                                                    <span>Wetsuit and surfboard:</span>
+                                                                    {renderBlank(9, "w-40")}
+                                                                    <span>euros per day</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div className="flex items-baseline gap-2">
+                                                                <span className="text-slate-500 font-bold">–</span>
+                                                                <div className="flex flex-wrap items-baseline gap-1">
+                                                                    <span>Also advisable to hire</span>
+                                                                    {renderBlank(10, "w-40")}
+                                                                    <span>for warmth</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
 
                         {/* Test 10 Part 1 */}
                         {test.id === 10 && (
@@ -1099,6 +1372,246 @@ const ListeningWorksheet: React.FC<ListeningWorksheetProps> = ({
                                                 </li>
                                             </ul>
                                         </section>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Test 17 Part 1 */}
+                        {test.id === 17 && (
+                            <div className="animate-in fade-in duration-300">
+                                <p className="italic mb-2">Complete the notes below.</p>
+                                <p className="italic mb-6">Write <strong>ONE WORD AND/OR A NUMBER</strong> for each answer.</p>
+
+                                <div className="border border-black p-8 bg-white text-slate-900 font-serif max-w-4xl mx-auto shadow-sm">
+                                    <h3 className="text-2xl font-bold text-center mb-6 border-b-2 border-slate-800 pb-4">Buckworth Conservation Group</h3>
+
+                                    <div className="space-y-8">
+                                        {/* Regular activities */}
+                                        <section>
+                                            <h4 className="text-xl font-bold mb-4">Regular activities</h4>
+
+                                            <div className="mb-4">
+                                                <h5 className="font-bold text-lg mb-2">Beach</h5>
+                                                <ul className="list-disc pl-8 space-y-3">
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1 text-lg">
+                                                            <span>making sure the beach does not have</span>
+                                                            {renderBlank(1, "w-40")}
+                                                            <span>on it</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1 text-lg">
+                                                            <span>no</span>
+                                                            {renderBlank(2, "w-40")}
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div>
+                                                <h5 className="font-bold text-lg mb-2">Nature reserve</h5>
+                                                <ul className="list-disc pl-8 space-y-3 text-lg">
+                                                    <li>maintaining paths</li>
+                                                    <li>nesting boxes for birds installed</li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>next task is taking action to attract</span>
+                                                            {renderBlank(3, "w-40")}
+                                                            <span>to the place</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>identifying types of</span>
+                                                            {renderBlank(4, "w-40")}
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>building a new</span>
+                                                            {renderBlank(5, "w-40")}
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </section>
+
+                                        {/* Forthcoming events */}
+                                        <section className="pt-6 border-t border-slate-200">
+                                            <h4 className="text-xl font-bold mb-4">Forthcoming events</h4>
+
+                                            <div className="mb-4">
+                                                <h5 className="font-bold text-lg mb-2">Saturday</h5>
+                                                <ul className="list-disc pl-8 space-y-3 text-lg">
+                                                    <li>meet at Dunsmore Beach car park</li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>walk across the sands and reach the</span>
+                                                            {renderBlank(6, "w-40")}
+                                                        </div>
+                                                    </li>
+                                                    <li>take a picnic</li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>wear appropriate</span>
+                                                            {renderBlank(7, "w-40")}
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div>
+                                                <h5 className="font-bold text-lg mb-2">Woodwork session</h5>
+                                                <ul className="list-disc pl-8 space-y-3 text-lg">
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>suitable for</span>
+                                                            {renderBlank(8, "w-40")}
+                                                            <span>to participate in</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>making</span>
+                                                            {renderBlank(9, "w-40")}
+                                                            <span>out of wood</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>17th, from 10 a.m. to 3 p.m.</li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>cost of session (no camping): £</span>
+                                                            {renderBlank(10, "w-32")}
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Test 18 Part 1 */}
+                        {test.id === 18 && (
+                            <div className="animate-in fade-in duration-300">
+                                <p className="italic mb-2">Questions 1–7</p>
+                                <p className="italic mb-2">Complete the notes below.</p>
+                                <p className="italic mb-6">Write <strong>ONE WORD ONLY</strong> for each answer.</p>
+
+                                <div className="border border-black p-8 bg-white text-slate-900 font-serif max-w-4xl mx-auto shadow-sm mb-8">
+                                    <h3 className="text-2xl font-bold text-center mb-6 border-b-2 border-slate-800 pb-4">Opportunities for voluntary work in Southoe village</h3>
+
+                                    <div className="space-y-6">
+                                        <section>
+                                            <h4 className="font-bold text-lg mb-2">Library</h4>
+                                            <ul className="list-disc pl-8 space-y-3">
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>Help with</span>
+                                                        {renderBlank(1, "w-40")}
+                                                        <span>books (times to be arranged)</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>Help needed to keep</span>
+                                                        {renderBlank(2, "w-40")}
+                                                        <span>of books up to date</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>Library is in the</span>
+                                                        {renderBlank(3, "w-40")}
+                                                        <span>Room in the village hall</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </section>
+
+                                        <section>
+                                            <h4 className="font-bold text-lg mb-2">Lunch club</h4>
+                                            <ul className="list-disc pl-8 space-y-3">
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>Help by providing</span>
+                                                        {renderBlank(4, "w-40")}
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>Help with hobbies such as</span>
+                                                        {renderBlank(5, "w-40")}
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </section>
+
+                                        <section>
+                                            <h4 className="font-bold text-lg mb-2">Help for individuals needed next week</h4>
+                                            <ul className="list-disc pl-8 space-y-3">
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>Taking Mrs Carroll to</span>
+                                                        {renderBlank(6, "w-40")}
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                        <span>Work in the</span>
+                                                        {renderBlank(7, "w-40")}
+                                                        <span>at Mr Selsbury's house</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </section>
+                                    </div>
+                                </div>
+
+                                <p className="italic mb-2">Questions 8–10</p>
+                                <p className="italic mb-2">Complete the table below.</p>
+                                <p className="italic mb-6">Write <strong>ONE WORD ONLY</strong> for each answer.</p>
+
+                                <div className="max-w-4xl mx-auto border-x border-t border-slate-950 mb-12 font-serif">
+                                    <div className="bg-white">
+                                        <div className="border-b border-slate-950 p-3 text-center font-bold text-xl">
+                                            Village social events
+                                        </div>
+                                        <div className="grid grid-cols-[100px_1fr_1fr_1fr] font-bold bg-slate-100 border-b border-slate-950">
+                                            <div className="p-3 border-r border-slate-950 text-center">Date</div>
+                                            <div className="p-3 border-r border-slate-950 text-center">Event</div>
+                                            <div className="p-3 border-r border-slate-950 text-center">Location</div>
+                                            <div className="p-3 text-center">Help needed</div>
+                                        </div>
+                                        <div className="grid grid-cols-[100px_1fr_1fr_1fr] border-b border-slate-950">
+                                            <div className="p-3 border-r border-slate-950">19 Oct</div>
+                                            <div className="p-3 border-r border-slate-950">
+                                                {renderBlank(8, "w-40", false)}
+                                            </div>
+                                            <div className="p-3 border-r border-slate-950">Village hall</div>
+                                            <div className="p-3">providing refreshments</div>
+                                        </div>
+                                        <div className="grid grid-cols-[100px_1fr_1fr_1fr] border-b border-slate-950">
+                                            <div className="p-3 border-r border-slate-950">18 Nov</div>
+                                            <div className="p-3 border-r border-slate-950">dance</div>
+                                            <div className="p-3 border-r border-slate-950">Village hall</div>
+                                            <div className="p-3 flex flex-wrap items-baseline gap-1">
+                                                <span>checking</span>
+                                                {renderBlank(9, "w-40", false)}
+                                            </div>
+                                        </div>
+                                        <div className="grid grid-cols-[100px_1fr_1fr_1fr] border-b border-slate-950">
+                                            <div className="p-3 border-r border-slate-950">31 Dec</div>
+                                            <div className="p-3 border-r border-slate-950">New Year's Eve party</div>
+                                            <div className="p-3 border-r border-slate-950">Mountfort Hotel</div>
+                                            <div className="p-3 flex flex-wrap items-baseline gap-1">
+                                                <span>designing the</span>
+                                                {renderBlank(10, "w-40", false)}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -2496,7 +3009,157 @@ const ListeningWorksheet: React.FC<ListeningWorksheetProps> = ({
 
 
 
-                            {test.id === 16 ? (
+                            {test.id === 20 ? (
+                                <div className="animate-in fade-in duration-300">
+                                    {/* Questions 11-14 */}
+                                    <div className="mb-12">
+                                        <p className="italic mb-2">Questions 11–14</p>
+                                        <p className="italic mb-6 text-slate-700">Choose the correct letter, <strong>A, B or C</strong>.</p>
+                                        <div className="space-y-8">
+                                            {[11, 12, 13, 14].map(id => {
+                                                const q = test.questions.find((q: any) => q.id === id);
+                                                return q ? renderMultipleChoice(q) : null;
+                                            })}
+                                        </div>
+                                    </div>
+
+                                    {/* Questions 15-20 */}
+                                    <div className="mb-12 pt-8 border-t border-slate-200">
+                                        <p className="italic mb-2">Questions 15–20</p>
+                                        {renderMatching(
+                                            [15, 16, 17, 18, 19, 20].map(id => test.questions.find((q: any) => q.id === id)).filter(Boolean),
+                                            [
+                                                { letter: "A", text: "improving relationships and teamwork" },
+                                                { letter: "B", text: "offering incentives and financial benefits" },
+                                                { letter: "C", text: "providing career opportunities" }
+                                            ],
+                                            "Ways of reducing staff turnover",
+                                            "Which way of reducing staff turnover was used in each of the following hotels?\nWrite the correct letter, A, B or C, next to Questions 15–20.",
+                                            "Hotels"
+                                        )}
+                                    </div>
+                                </div>
+                            ) : test.id === 19 ? (
+                                <div className="animate-in fade-in duration-300">
+                                    {/* Questions 11 and 12 */}
+                                    <div className="mb-12">
+                                        <p className="italic mb-6 text-slate-700">Choose <strong>TWO</strong> letters, <strong>A–E</strong>.</p>
+                                        {renderPickTwo(
+                                            test.questions.find((q: any) => q.id === 11),
+                                            test.questions.find((q: any) => q.id === 12)
+                                        )}
+                                    </div>
+
+                                    {/* Questions 13-15 */}
+                                    <div className="mb-12 pt-8 border-t border-slate-200">
+                                        <p className="italic mb-2">Questions 13–15</p>
+                                        <p className="italic mb-6 text-slate-700">Choose the correct letter, <strong>A</strong>, <strong>B</strong> or <strong>C</strong>.</p>
+                                        <div className="space-y-8">
+                                            {test.questions.filter((q: any) => q.id >= 13 && q.id <= 15).map((q: any) => renderMultipleChoice(q))}
+                                        </div>
+                                    </div>
+
+                                    {/* Questions 16-20 */}
+                                    <div className="pt-8 border-t border-slate-200">
+                                        <p className="italic mb-2">Questions 16–20</p>
+                                        <p className="italic mb-6 text-slate-700">What information is given about each of the following activities on offer?</p>
+                                        <p className="italic mb-8 font-serif leading-relaxed text-slate-800">Choose <strong>FIVE</strong> answers from the box and write the correct letter, <strong>A–G</strong>, next to Questions 16–20.</p>
+
+                                        {renderMatching(
+                                            [16, 17, 18, 19, 20].map(id => test.questions.find((q: any) => q.id === id)).filter(Boolean),
+                                            [
+                                                { letter: "A", text: "has limited availability" },
+                                                { letter: "B", text: "is no longer available" },
+                                                { letter: "C", text: "is for over 8s only" },
+                                                { letter: "D", text: "requires help from parents" },
+                                                { letter: "E", text: "involves an additional fee" },
+                                                { letter: "F", text: "is a new activity" },
+                                                { letter: "G", text: "was requested by children" }
+                                            ],
+                                            "Information",
+                                            "",
+                                            "Activities"
+                                        )}
+                                    </div>
+                                </div>
+                            ) : test.id === 18 ? (
+                                <div className="animate-in fade-in duration-300">
+                                    <h3 className="text-xl font-bold mb-6 text-slate-800 border-b border-slate-200 pb-2">Oniton Hall</h3>
+
+                                    {/* Questions 11-14 */}
+                                    <div className="mb-12">
+                                        <p className="italic mb-2">Questions 11–14</p>
+                                        <p className="italic mb-6 text-slate-600">Choose the correct letter, <strong>A, B</strong> or <strong>C</strong>.</p>
+                                        <div className="space-y-4">
+                                            {test.questions.filter((q: any) => q.id >= 11 && q.id <= 14).map((q: any) => renderMultipleChoice(q))}
+                                        </div>
+                                    </div>
+
+                                    {/* Questions 15-20 */}
+                                    <div className="pt-8 border-t border-slate-200">
+                                        <p className="italic mb-2">Questions 15–20</p>
+                                        <p className="italic mb-6 text-slate-600">Which activity is offered at each of the following locations on the farm?</p>
+                                        <p className="italic mb-8 font-serif leading-relaxed text-slate-700">Choose <strong>SIX</strong> answers from the box and write the correct letter, <strong>A–H</strong>, next to Questions 15–20.</p>
+
+                                        {renderMatching(
+                                            [15, 16, 17, 18, 19, 20].map(id => test.questions.find((q: any) => q.id === id)).filter(Boolean),
+                                            [
+                                                { letter: "A", text: "shopping" },
+                                                { letter: "B", text: "watching cows being milked" },
+                                                { letter: "C", text: "seeing old farming equipment" },
+                                                { letter: "D", text: "eating and drinking" },
+                                                { letter: "E", text: "starting a trip" },
+                                                { letter: "F", text: "seeing rare breeds of animals" },
+                                                { letter: "G", text: "helping to look after animals" },
+                                                { letter: "H", text: "using farming tools" }
+                                            ],
+                                            "Activities",
+                                            "",
+                                            "Locations on the farm"
+                                        )}
+                                    </div>
+                                </div>
+                            ) : test.id === 17 ? (
+                                <div className="animate-in fade-in duration-300">
+                                    <h3 className="text-xl font-bold mb-6 text-slate-800 border-b border-slate-200 pb-2">Boat trip round Tasmania</h3>
+
+                                    {/* Questions 11-14 */}
+                                    <div className="mb-12">
+                                        <p className="italic mb-2">Questions 11–14</p>
+                                        <p className="italic mb-6 text-slate-600">Choose the correct letter, <strong>A</strong>, <strong>B</strong> or <strong>C</strong>.</p>
+                                        <div className="space-y-8">
+                                            {test.questions.filter((q: any) => q.id >= 11 && q.id <= 14).map((q: any) => renderMultipleChoice(q))}
+                                        </div>
+                                    </div>
+
+                                    {/* Questions 15-16 */}
+                                    <div className="mb-12 pt-8 border-t border-slate-200">
+                                        <p className="italic mb-6">Choose <strong>TWO</strong> letters, <strong>A–E</strong>.</p>
+                                        {renderPickTwo(
+                                            test.questions.find((q: any) => q.id === 15),
+                                            test.questions.find((q: any) => q.id === 16)
+                                        )}
+                                    </div>
+
+                                    {/* Questions 17-18 */}
+                                    <div className="mb-12 pt-8 border-t border-slate-200">
+                                        <p className="italic mb-6">Choose <strong>TWO</strong> letters, <strong>A–E</strong>.</p>
+                                        {renderPickTwo(
+                                            test.questions.find((q: any) => q.id === 17),
+                                            test.questions.find((q: any) => q.id === 18)
+                                        )}
+                                    </div>
+
+                                    {/* Questions 19-20 */}
+                                    <div className="mb-12 pt-8 border-t border-slate-200">
+                                        <p className="italic mb-6">Choose <strong>TWO</strong> letters, <strong>A–E</strong>.</p>
+                                        {renderPickTwo(
+                                            test.questions.find((q: any) => q.id === 19),
+                                            test.questions.find((q: any) => q.id === 20)
+                                        )}
+                                    </div>
+                                </div>
+                            ) : test.id === 16 ? (
                                 <div className="animate-in fade-in duration-300">
                                     <h3 className="text-xl font-bold mb-6 text-slate-800 border-b border-slate-200 pb-2">Local council report on traffic and highways</h3>
 
@@ -3295,6 +3958,62 @@ const ListeningWorksheet: React.FC<ListeningWorksheetProps> = ({
                             </div>
 
 
+
+                            {test.id === 18 && (
+                                <div className="animate-in fade-in duration-300">
+                                    {/* Questions 21-22 */}
+                                    <div className="mb-12">
+                                        <div className="mb-4">
+                                            <span className="italic text-lg">Questions 21 and 22</span>
+                                        </div>
+                                        <p className="italic mb-6">Choose <strong>TWO</strong> letters, <strong>A–E</strong>.</p>
+                                        <p className="font-bold mb-6">Which TWO things do the students agree they need to include in their reviews of Romeo and Juliet?</p>
+                                        {renderPickTwo(
+                                            test.questions.find((q: any) => q.id === 21),
+                                            test.questions.find((q: any) => q.id === 22)
+                                        )}
+                                    </div>
+
+                                    {/* Questions 23-27 */}
+                                    <div className="mt-12 pt-8 border-t border-slate-200">
+                                        <div className="mb-4">
+                                            <span className="italic text-lg">Questions 23–27</span>
+                                        </div>
+                                        <p className="italic mb-6">Which opinion do the speakers give about each of the following aspects of The Emporium&apos;s production of Romeo and Juliet?</p>
+                                        <p className="italic mb-8 font-serif leading-relaxed text-slate-700">Choose <strong>FIVE</strong> answers from the box and write the correct letter, <strong>A–G</strong>, next to Questions 23–27.</p>
+
+                                        {renderMatching(
+                                            [23, 24, 25, 26, 27].map(id => test.questions.find((q: any) => q.id === id)).filter(Boolean),
+                                            [
+                                                { letter: "A", text: "They both expected this to be more traditional." },
+                                                { letter: "B", text: "They both thought this was original." },
+                                                { letter: "C", text: "They agree this created the right atmosphere." },
+                                                { letter: "D", text: "They agree this was a major strength." },
+                                                { letter: "E", text: "They were both disappointed by this." },
+                                                { letter: "F", text: "They disagree about why this was an issue." },
+                                                { letter: "G", text: "They disagree about how this could be improved." }
+                                            ],
+                                            "Opinions",
+                                            "",
+                                            "Aspects of the production"
+                                        )}
+                                    </div>
+
+                                    {/* Questions 28-30 */}
+                                    <div className="mt-12 pt-8 border-t border-slate-200">
+                                        <div className="mb-4">
+                                            <span className="italic text-lg">Questions 28–30</span>
+                                        </div>
+                                        <p className="italic mb-6">Choose the correct letter, <strong>A, B or C</strong>.</p>
+                                        <div className="space-y-8">
+                                            {[28, 29, 30].map(id => {
+                                                const q = test.questions.find((q: any) => q.id === id);
+                                                return q ? renderMultipleChoice(q) : null;
+                                            })}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
 
                             {test.id === 13 && (
                                 <div className="animate-in fade-in duration-300">
@@ -4195,8 +4914,142 @@ const ListeningWorksheet: React.FC<ListeningWorksheetProps> = ({
                     )
                 }
 
+                {/* Part 3 Content */}
+                {
+                    activePart === 3 && (
+                        <div className="bg-white p-6 animate-in fade-in duration-300">
+                            <div className="flex items-baseline mb-6">
+                                <h2 className="text-xl font-bold mr-4">PART 3</h2>
+                                <span className="italic text-lg">Questions 21–30</span>
+                            </div>
 
+                            {test.id === 20 ? (
+                                <div className="animate-in fade-in duration-300">
+                                    {/* Questions 21-22 */}
+                                    <div className="mb-12">
+                                        <p className="italic mb-2">Questions 21–22</p>
+                                        <p className="italic mb-6 text-slate-700">Choose <strong>TWO</strong> letters, <strong>A–E</strong>.</p>
+                                        {renderPickTwo(
+                                            test.questions.find((q: any) => q.id === 21),
+                                            test.questions.find((q: any) => q.id === 22)
+                                        )}
+                                    </div>
 
+                                    {/* Questions 23-24 */}
+                                    <div className="mb-12 pt-8 border-t border-slate-200">
+                                        <p className="italic mb-2">Questions 23 and 24</p>
+                                        <p className="italic mb-6 text-slate-700">Choose <strong>TWO</strong> letters, <strong>A–E</strong>.</p>
+                                        {renderPickTwo(
+                                            test.questions.find((q: any) => q.id === 23),
+                                            test.questions.find((q: any) => q.id === 24)
+                                        )}
+                                    </div>
+
+                                    {/* Questions 25-30 */}
+                                    <div className="mb-12 pt-8 border-t border-slate-200">
+                                        <p className="italic mb-2">Questions 25–30</p>
+                                        {renderMatching(
+                                            [25, 26, 27, 28, 29, 30].map(id => test.questions.find((q: any) => q.id === id)).filter(Boolean),
+                                            [
+                                                { letter: "A", text: "It could cause excessive sweating." },
+                                                { letter: "B", text: "The material was being mass produced for another purpose." },
+                                                { letter: "C", text: "People often needed to make their own." },
+                                                { letter: "D", text: "It often had to be replaced." },
+                                                { letter: "E", text: "The material was expensive." },
+                                                { letter: "F", text: "It was unpopular among spectators." },
+                                                { letter: "G", text: "It caused injuries." },
+                                                { letter: "H", text: "No one using it liked it at first." }
+                                            ],
+                                            "Comments about the development of the equipment",
+                                            "What comment do the students make about the development of each of the following items of sporting equipment?\nChoose SIX answers from the box and write the correct letter, A–H, next to Questions 25–30.",
+                                            "Items of sporting equipment"
+                                        )}
+                                    </div>
+                                </div>
+                            ) : test.id === 19 ? (
+                                <div className="animate-in fade-in duration-300">
+                                    <h3 className="text-xl font-bold mb-6 text-slate-800 border-b border-slate-200 pb-2">Holly's Work Placement Tutorial</h3>
+
+                                    {/* Questions 21-24 */}
+                                    <div className="mb-12">
+                                        <div className="mb-4">
+                                            <span className="italic text-lg">Questions 21–24</span>
+                                        </div>
+                                        <p className="italic mb-6 text-slate-600">Choose the correct letter, <strong>A, B</strong> or <strong>C</strong>.</p>
+                                        <div className="space-y-4">
+                                            {test.questions.filter((q: any) => q.id >= 21 && q.id <= 24).map((q: any) => renderMultipleChoice(q))}
+                                        </div>
+                                    </div>
+
+                                    {/* Questions 25-30 */}
+                                    <div className="mb-12 pt-8 border-t border-slate-200">
+                                        <div className="mb-4">
+                                            <span className="italic text-lg">Questions 25–30</span>
+                                        </div>
+                                        <p className="italic mb-6 text-slate-700">What do Holly and her tutor agree is an important aspect of each of the following events management skills?</p>
+                                        <p className="italic mb-8 font-serif leading-relaxed text-slate-800">Choose <strong>SIX</strong> answers from the box and write the correct letter, <strong>A–H</strong>, next to Questions 25–30.</p>
+
+                                        {renderMatching(
+                                            [25, 26, 27, 28, 29, 30].map(id => test.questions.find((q: any) => q.id === id)).filter(Boolean),
+                                            [
+                                                { letter: "A", text: "being flexible" },
+                                                { letter: "B", text: "focusing on details" },
+                                                { letter: "C", text: "having a smart appearance" },
+                                                { letter: "D", text: "hiding your emotions" },
+                                                { letter: "E", text: "relying on experts" },
+                                                { letter: "F", text: "trusting your own views" },
+                                                { letter: "G", text: "doing one thing at a time" },
+                                                { letter: "H", text: "thinking of the future" }
+                                            ],
+                                            "Important aspects",
+                                            "",
+                                            "Events management skills"
+                                        )}
+                                    </div>
+                                </div>
+                            ) : test.id === 17 && (
+                                <div className="animate-in fade-in duration-300">
+                                    <h3 className="text-xl font-bold mb-6 text-slate-800 border-b border-slate-200 pb-2">Work experience for veterinary science students</h3>
+
+                                    {/* Questions 21-26 */}
+                                    <div className="mb-12">
+                                        <div className="mb-4">
+                                            <span className="italic text-lg">Questions 21–26</span>
+                                        </div>
+                                        <p className="italic mb-6 text-slate-600">Choose the correct letter, <strong>A</strong>, <strong>B</strong> or <strong>C</strong>.</p>
+                                        <div className="space-y-8">
+                                            {test.questions.filter((q: any) => q.id >= 21 && q.id <= 26).map((q: any) => renderMultipleChoice(q))}
+                                        </div>
+                                    </div>
+
+                                    {/* Questions 27-30 */}
+                                    <div className="mt-12 pt-8 border-t border-slate-200">
+                                        <div className="mb-4">
+                                            <span className="italic text-lg">Questions 27–30</span>
+                                        </div>
+                                        <p className="italic mb-6">What opinion do the students give about each of the following modules on their veterinary science course?</p>
+                                        <p className="italic mb-8 font-serif leading-relaxed">Choose <strong>FOUR</strong> answers from the box and write the correct letter, <strong>A–F</strong>, next to questions 27–30.</p>
+
+                                        {renderMatching(
+                                            [27, 28, 29, 30].map(id => test.questions.find((q: any) => q.id === id)).filter(Boolean),
+                                            [
+                                                { letter: "A", text: "Tim found this easier than expected." },
+                                                { letter: "B", text: "Tim thought this was not very clearly organised." },
+                                                { letter: "C", text: "Diana may do some further study on this." },
+                                                { letter: "D", text: "They both found the reading required for this was difficult." },
+                                                { letter: "E", text: "Tim was shocked at something he learned on this module." },
+                                                { letter: "F", text: "They were both surprised how little is known about some aspects of this." }
+                                            ],
+                                            "Opinions",
+                                            "",
+                                            "Modules on Veterinary Science course"
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )
+                }
 
                 {/* Part 4 Content */}
                 {
@@ -4206,6 +5059,522 @@ const ListeningWorksheet: React.FC<ListeningWorksheetProps> = ({
                                 <h2 className="text-xl font-bold mr-4">PART 4</h2>
                                 <span className="italic text-lg">Questions 31–40</span>
                             </div>
+
+                            {test.id === 20 ? (
+                                <div className="animate-in fade-in duration-300">
+                                    <p className="italic mb-2">Complete the notes below.</p>
+                                    <p className="italic mb-6">Write <strong>ONE WORD ONLY</strong> for each answer.</p>
+
+                                    <div className="border border-black p-8 bg-white max-w-4xl mx-auto shadow-sm">
+                                        <h3 className="text-2xl font-bold text-center mb-8 border-b-2 border-slate-800 pb-4">Maple syrup</h3>
+
+                                        <div className="space-y-8">
+                                            {/* What is maple syrup? */}
+                                            <section>
+                                                <h4 className="text-lg font-bold mb-4 text-slate-800">What is maple syrup?</h4>
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                    <ul className="list-disc pl-8 space-y-4">
+                                                        <li>made from the sap of the maple tree</li>
+                                                        <li>added to food or used in cooking</li>
+                                                    </ul>
+                                                    <ul className="list-disc pl-8 space-y-4">
+                                                        <li>
+                                                            <div className="flex flex-wrap items-baseline gap-1">
+                                                                <span>colour described as</span>
+                                                                {renderBlank(31, "w-40")}
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div className="flex flex-wrap items-baseline gap-1">
+                                                                <span>very</span>
+                                                                {renderBlank(32, "w-40")}
+                                                                <span>compared to refined sugar</span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </section>
+
+                                            <hr className="border-t border-slate-300" />
+
+                                            {/* The maple tree */}
+                                            <section>
+                                                <h4 className="text-lg font-bold mb-4 text-slate-800">The maple tree</h4>
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                    <ul className="list-disc pl-8 space-y-4">
+                                                        <li>has many species</li>
+                                                        <li>needs sunny days and cool nights</li>
+                                                        <li>maple leaf has been on the Canadian flag since 1964</li>
+                                                    </ul>
+                                                    <ul className="list-disc pl-8 space-y-4">
+                                                        <li>needs moist soil but does not need fertiliser as well</li>
+                                                        <li>
+                                                            <div className="flex flex-wrap items-baseline gap-1">
+                                                                <span>best growing conditions and</span>
+                                                                {renderBlank(33, "w-40")}
+                                                                <span>are in Canada and North America</span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </section>
+
+                                            <hr className="border-t border-slate-300" />
+
+                                            {/* Early maple sugar producers */}
+                                            <section>
+                                                <h4 className="text-lg font-bold mb-4 text-slate-800">Early maple sugar producers</h4>
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                    <ul className="list-disc pl-8 space-y-4">
+                                                        <li>made holes in the tree trunks</li>
+                                                        <li>
+                                                            <div className="flex flex-wrap items-baseline gap-1">
+                                                                <span>used hot</span>
+                                                                {renderBlank(34, "w-40")}
+                                                                <span>to heat the sap</span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <ul className="list-disc pl-8 space-y-4">
+                                                        <li>used tree bark to make containers for collection</li>
+                                                        <li>sweetened food and drink with sugar</li>
+                                                    </ul>
+                                                </div>
+                                            </section>
+
+                                            <hr className="border-t border-slate-300" />
+
+                                            {/* Today's maple syrup */}
+                                            <section>
+                                                <h4 className="text-xl font-bold mb-4 text-slate-900 border-b border-slate-200 pb-2">Today's maple syrup</h4>
+
+                                                <h5 className="italic text-lg mb-2">The trees</h5>
+                                                <ul className="list-disc pl-8 space-y-4 mb-6">
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>Tree trunks may not have the correct</span>
+                                                            {renderBlank(35, "w-40")}
+                                                            <span>until they have been growing for 40 years.</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>The changing temperature and movement of water within the tree produces the sap.</li>
+                                                </ul>
+
+                                                <h5 className="italic text-lg mb-2">The production</h5>
+                                                <ul className="list-disc pl-8 space-y-4">
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>A tap is drilled into the trunk and a</span>
+                                                            {renderBlank(36, "w-40")}
+                                                            <span>carries the sap into a bucket.</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>Large pans of sap called evaporators are heated by means of a</span>
+                                                            {renderBlank(37, "w-40")}
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>A lot of</span>
+                                                            {renderBlank(38, "w-40")}
+                                                            <span>is produced during the evaporation process.</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>'Sugar sand' is removed because it makes the syrup look</span>
+                                                            {renderBlank(39, "w-40")}
+                                                            <span>and affects the taste.</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>The syrup is ready for use.</li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>A huge quantity of sap is needed to make a</span>
+                                                            {renderBlank(40, "w-40")}
+                                                            <span>of maple syrup.</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </section>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : test.id === 19 ? (
+                                <div className="animate-in fade-in duration-300">
+                                    <p className="italic mb-2">Complete the notes below.</p>
+                                    <p className="italic mb-6">Write <strong>ONE WORD ONLY</strong> for each answer.</p>
+
+                                    <div className="border border-black p-8 bg-white max-w-4xl mx-auto shadow-sm">
+                                        <h3 className="text-2xl font-bold text-center mb-8 border-b-2 border-slate-800 pb-4 uppercase tracking-wider">Bird Migration Theory</h3>
+                                        <p className="mb-6 font-medium text-lg text-slate-700">Most birds are believed to migrate seasonally.</p>
+
+                                        <div className="space-y-8">
+                                            {/* Hibernation theory */}
+                                            <section>
+                                                <h4 className="text-xl font-bold mb-4 text-slate-900 border-b border-slate-200 pb-2">Hibernation theory</h4>
+                                                <ul className="list-disc pl-8 space-y-4 text-lg">
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>It was believed that birds hibernated underwater or buried themselves in</span>
+                                                            {renderBlank(31, "w-40")}
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>This theory was later disproved by experiments on caged birds.</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </section>
+
+                                            {/* Transmutation theory */}
+                                            <section>
+                                                <h4 className="text-xl font-bold mb-4 text-slate-900 border-b border-slate-200 pb-2">Transmutation theory</h4>
+                                                <ul className="list-disc pl-8 space-y-4 text-lg">
+                                                    <li>Aristotle believed birds changed from one species into another in summer and winter.
+                                                        <ul className="list-none mt-2 space-y-3 pl-6">
+                                                            <li>
+                                                                <div className="flex items-baseline gap-2">
+                                                                    <span className="text-slate-500 font-bold">–</span>
+                                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                                        <span>In autumn he observed that redstarts experience the loss of</span>
+                                                                        {renderBlank(32, "w-40")}
+                                                                        <span>and thought they then turned into robins.</span>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div className="flex items-baseline gap-2">
+                                                                    <span className="text-slate-500 font-bold">–</span>
+                                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                                        <span>Aristotle's assumptions were logical because the two species of birds had a similar</span>
+                                                                        {renderBlank(33, "w-40")}
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </section>
+
+                                            {/* 17th century */}
+                                            <section>
+                                                <h4 className="text-xl font-bold mb-4 text-slate-900 border-b border-slate-200 pb-2">17th century</h4>
+                                                <ul className="list-disc pl-8 space-y-4 text-lg">
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>Charles Morton popularised the idea that birds fly to the</span>
+                                                            {renderBlank(34, "w-40")}
+                                                            <span>in winter.</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </section>
+
+                                            {/* Scientific developments */}
+                                            <section>
+                                                <h4 className="text-xl font-bold mb-4 text-slate-900 border-b border-slate-200 pb-2">Scientific developments</h4>
+                                                <ul className="list-disc pl-8 space-y-4 text-lg">
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>In 1822, a stork was killed in Germany which had an African spear in its</span>
+                                                            {renderBlank(35, "w-40")}
+                                                        </div>
+                                                        <ul className="list-none mt-2 space-y-3 pl-6">
+                                                            <li>
+                                                                <div className="flex items-baseline gap-2">
+                                                                    <span className="text-slate-500 font-bold">–</span>
+                                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                                        <span>previously there had been no</span>
+                                                                        {renderBlank(36, "w-40")}
+                                                                        <span>that storks migrate to Africa</span>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>Little was known about the</span>
+                                                            {renderBlank(37, "w-40")}
+                                                            <span>and journeys of migrating birds until the practice of ringing was established.</span>
+                                                        </div>
+                                                        <ul className="list-none mt-2 space-y-3 pl-6">
+                                                            <li>
+                                                                <div className="flex items-baseline gap-2">
+                                                                    <span className="text-slate-500 font-bold">–</span>
+                                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                                        <span>It was thought large birds carried small birds on some journeys because they were considered incapable of travelling across huge</span>
+                                                                        {renderBlank(38, "w-40")}
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div className="flex items-baseline gap-2">
+                                                                    <span className="text-slate-500 font-bold">–</span>
+                                                                    <div className="flex flex-wrap items-baseline gap-1">
+                                                                        <span>Ringing depended on what is called the</span>
+                                                                        {renderBlank(39, "w-40", false, "line")}
+                                                                        <span>of dead birds.</span>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>In 1931, the first</span>
+                                                            {renderBlank(40, "w-40")}
+                                                            <span>to show the migration of European birds was printed.</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : test.id === 18 && (
+                                <div className="animate-in fade-in duration-300">
+                                    <p className="italic mb-2">Complete the notes below.</p>
+                                    <p className="italic mb-6">Write <strong>ONE WORD AND/OR A NUMBER</strong> for each answer.</p>
+
+                                    <div className="border border-black p-8 bg-white text-slate-900 font-serif max-w-4xl mx-auto shadow-sm">
+                                        <h3 className="text-2xl font-bold text-center mb-6 border-b-2 border-slate-800 pb-4 uppercase tracking-wider">The impact of digital technology on the Icelandic language</h3>
+
+                                        <div className="space-y-8">
+                                            {/* The Icelandic language */}
+                                            <section>
+                                                <h4 className="text-xl font-bold mb-4">The Icelandic language</h4>
+                                                <ul className="list-disc pl-8 space-y-4 text-lg">
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1 text-lg">
+                                                            <span>has approximately</span>
+                                                            {renderBlank(31, "w-32")}
+                                                            <span>speakers</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1 text-lg">
+                                                            <span>has a</span>
+                                                            {renderBlank(32, "w-48")}
+                                                            <span>that is still growing</span>
+                                                        </div>
+                                                    </li>
+                                                    <li className="text-lg leading-relaxed">has not changed a lot over the last thousand years</li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1 text-lg">
+                                                            <span>has its own words for computer-based concepts, such as web browser and</span>
+                                                            {renderBlank(33, "w-48")}
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </section>
+
+                                            {/* Young speakers */}
+                                            <section className="pt-6 border-t border-slate-200">
+                                                <h4 className="text-xl font-bold mb-4">Young speakers</h4>
+                                                <ul className="list-disc pl-8 space-y-4 text-lg">
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1 text-lg">
+                                                            <span>are big users of digital technology, such as</span>
+                                                            {renderBlank(34, "w-48")}
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1 text-lg">
+                                                            <span>are becoming</span>
+                                                            {renderBlank(35, "w-48")}
+                                                            <span>very quickly</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1 text-lg">
+                                                            <span>are having discussions using only English while they are in the</span>
+                                                            {renderBlank(36, "w-48")}
+                                                            <span>at school</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1 text-lg">
+                                                            <span>are better able to identify the content of a</span>
+                                                            {renderBlank(37, "w-48")}
+                                                            <span>in English than Icelandic</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </section>
+
+                                            {/* Technology and internet companies */}
+                                            <section className="pt-6 border-t border-slate-200">
+                                                <h4 className="text-xl font-bold mb-4">Technology and internet companies</h4>
+                                                <ul className="list-disc pl-8 space-y-4 text-lg">
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1 text-lg">
+                                                            <span>write very little in Icelandic because of the small number of speakers and because of how complicated its</span>
+                                                            {renderBlank(38, "w-48")}
+                                                            <span>is</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </section>
+
+                                            {/* The Icelandic government */}
+                                            <section className="pt-6 border-t border-slate-200">
+                                                <h4 className="text-xl font-bold mb-4">The Icelandic government</h4>
+                                                <ul className="list-disc pl-8 space-y-4 text-lg">
+                                                    <li className="text-lg leading-relaxed">has set up a fund to support the production of more digital content in the language</li>
+                                                    <li className="text-lg leading-relaxed">believes that Icelandic has a secure future</li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1 text-lg">
+                                                            <span>is worried that young Icelanders may lose their</span>
+                                                            {renderBlank(39, "w-48")}
+                                                            <span>as Icelanders</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1 text-lg">
+                                                            <span>is worried about the consequences of children not being</span>
+                                                            {renderBlank(40, "w-48")}
+                                                            <span>in either Icelandic or English</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {test.id === 17 && (
+                                <div className="animate-in fade-in duration-300">
+                                    <p className="italic mb-2">Complete the notes below.</p>
+                                    <p className="italic mb-6">Write <strong>ONE WORD ONLY</strong> for each answer.</p>
+
+                                    <div className="border border-black p-8 bg-white text-slate-900 font-serif max-w-4xl mx-auto shadow-sm">
+                                        <h3 className="text-2xl font-bold text-center mb-6 border-b-2 border-slate-800 pb-4 uppercase tracking-wider">Labyrinths</h3>
+
+                                        <div className="space-y-8">
+                                            {/* Definition */}
+                                            <section>
+                                                <h4 className="text-xl font-bold mb-4 underline decoration-1 underline-offset-4">Definition</h4>
+                                                <ul className="list-disc pl-8 space-y-3 text-lg">
+                                                    <li>a winding spiral path leading to a central area</li>
+                                                </ul>
+                                            </section>
+
+                                            {/* Labyrinths compared with mazes */}
+                                            <section>
+                                                <h4 className="text-xl font-bold mb-4 underline decoration-1 underline-offset-4">Labyrinths compared with mazes</h4>
+                                                <ul className="list-disc pl-8 space-y-3 text-lg">
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>Mazes are a type of</span>
+                                                            {renderBlank(31, "w-40")}
+                                                        </div>
+                                                        <ul className="list-none pl-8 mt-2 space-y-2 relative before:absolute before:left-3 before:top-2 before:bottom-2 before:w-px before:bg-slate-300">
+                                                            <li className="relative before:absolute before:-left-5 before:top-3.5 before:w-3 before:h-px before:bg-slate-300">
+                                                                <div className="flex flex-wrap items-baseline gap-1">
+                                                                    {renderBlank(32, "w-40")}
+                                                                    <span>is needed to navigate through a maze</span>
+                                                                </div>
+                                                            </li>
+                                                            <li className="relative before:absolute before:-left-5 before:top-3.5 before:w-3 before:h-px before:bg-slate-300">
+                                                                <div className="flex flex-wrap items-baseline gap-1">
+                                                                    <span>the word 'maze' is derived from a word meaning a feeling of</span>
+                                                                    {renderBlank(33, "w-40")}
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        Labyrinths represent a journey through life
+                                                        <ul className="list-none pl-8 mt-2 space-y-2 relative before:absolute before:left-3 before:top-2 before:bottom-2 before:w-px before:bg-slate-300">
+                                                            <li className="relative before:absolute before:-left-5 before:top-3.5 before:w-3 before:h-px before:bg-slate-300">
+                                                                <div className="flex flex-wrap items-baseline gap-1">
+                                                                    <span>they have frequently been used in</span>
+                                                                    {renderBlank(34, "w-40")}
+                                                                    <span>and prayer</span>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </section>
+
+                                            {/* Early examples of the labyrinth spiral */}
+                                            <section>
+                                                <h4 className="text-xl font-bold mb-4 underline decoration-1 underline-offset-4">Early examples of the labyrinth spiral</h4>
+                                                <ul className="list-disc pl-8 space-y-3 text-lg">
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>Ancient carvings on</span>
+                                                            {renderBlank(35, "w-40")}
+                                                            <span>have been found across many cultures</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>The Pima, a Native American tribe, wove the symbol on baskets</li>
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>Ancient Greeks used the symbol on</span>
+                                                            {renderBlank(36, "w-40")}
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </section>
+
+                                            {/* Walking labyrinths */}
+                                            <section>
+                                                <h4 className="text-xl font-bold mb-4 underline decoration-1 underline-offset-4">Walking labyrinths</h4>
+                                                <ul className="list-disc pl-8 space-y-3 text-lg">
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>The largest surviving example of a turf labyrinth once had a big</span>
+                                                            {renderBlank(37, "w-40")}
+                                                            <span>at its centre</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </section>
+
+                                            {/* Labyrinths nowadays */}
+                                            <section>
+                                                <h4 className="text-xl font-bold mb-4 underline decoration-1 underline-offset-4">Labyrinths nowadays</h4>
+                                                <ul className="list-disc pl-8 space-y-3 text-lg">
+                                                    <li>
+                                                        <div className="flex flex-wrap items-baseline gap-1">
+                                                            <span>Believed to have a beneficial impact on mental and physical health, e.g., walking a maze can reduce a person's</span>
+                                                            {renderBlank(38, "w-40")}
+                                                            <span>rate</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>Used in medical and health and fitness settings and also prisons</li>
+                                                    <li>
+                                                        Popular with patients, visitors and staff in hospitals
+                                                        <ul className="list-none pl-8 mt-2 space-y-2 relative before:absolute before:left-3 before:top-2 before:bottom-2 before:w-px before:bg-slate-300">
+                                                            <li className="relative before:absolute before:-left-5 before:top-3.5 before:w-3 before:h-px before:bg-slate-300">
+                                                                <div className="flex flex-wrap items-baseline gap-1">
+                                                                    <span>patients who can't walk can use 'finger labyrinths' made from</span>
+                                                                    {renderBlank(39, "w-40")}
+                                                                </div>
+                                                            </li>
+                                                            <li className="relative before:absolute before:-left-5 before:top-3.5 before:w-3 before:h-px before:bg-slate-300">
+                                                                <div className="flex flex-wrap items-baseline gap-1">
+                                                                    <span>research has shown that Alzheimer's sufferers experience less</span>
+                                                                    {renderBlank(40, "w-40")}
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
 
                             {test.id === 16 && (
                                 <div className="animate-in fade-in duration-300">
@@ -6521,7 +7890,7 @@ const ListeningWorksheet: React.FC<ListeningWorksheetProps> = ({
                     </button>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

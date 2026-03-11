@@ -38,7 +38,7 @@ export const getWordsByTopicId = (topicId: number) => {
 
 export const getExercisesByTopicId = (topicId: number) => {
     const topic = getTopicById(topicId);
-    return topic?.exercises || { synonymSwap: [], contextTetris: [], speakToUnlock: [] };
+    return topic?.exercises || { synonymSwap: [], writingSynonymSwap: [], contextTetris: [], speakToUnlock: [] };
 };
 
 // Export types for convenience

@@ -124,9 +124,6 @@ class TutorFeedback(BaseModel):
     # Priority action plan (max 3)
     action_plan: List[str] # Priority action plan (max 3)
     
-    # What student did well
-    strengths: List[str] = Field(default_factory=list)
-    
     # Areas to improve
     weaknesses: List[str] = Field(default_factory=list)
     
@@ -152,8 +149,7 @@ class TutorFeedback(BaseModel):
     # Targeted practice
     micro_tasks: List[MicroTask] = Field(default_factory=list)
     
-    # Encouragement (LEGACY - use strengths/weaknesses instead)
-    strengths_summary: Optional[str] = None
+    # Encouragement (LEGACY - use weaknesses instead)
     next_focus: Optional[str] = None
     
     # Store raw output for flexible frontend rendering (e.g. Strategic Focus cards)

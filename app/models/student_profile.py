@@ -236,6 +236,16 @@ class ConversationMemory(BaseModel):
     suggested_practice_focus: Optional[str] = None
     suggested_module_id: Optional[str] = None
     
+    # Training session state (multi-phase skill training)
+    training_mode: bool = False  # Is this a training session?
+    training_system_prompt: Optional[str] = None  # Full combined prompt (persisted across turns)
+    training_skill: Optional[str] = None  # "tfng", "matching_headings", etc.
+    training_phase: int = 0  # 0=not started, 1=diagnose, 2=drill, 3=simulate, 4=done
+    training_questions_in_phase: int = 0
+    training_scores: Dict[str, List[bool]] = Field(default_factory=dict)  # {"diagnostic": [T,F], "drill": [...]}
+    training_mistake_pattern: Optional[str] = None
+    training_context_payload: Optional[Dict[str, Any]] = None
+    
     def add_follow_up(self, item: str, trigger_after: int = 3) -> None:
         """Add something to follow up on after n exchanges."""
         self.follow_up_items.append({

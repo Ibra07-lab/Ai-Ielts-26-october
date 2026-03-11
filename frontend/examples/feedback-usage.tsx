@@ -87,11 +87,6 @@ export const MOCK_BACKEND_RESPONSE: RawBackendFeedback = {
             "Add more cohesive devices between paragraphs (Furthermore, Moreover, In contrast)",
             "Vary sentence structures by using more complex sentences with subordinate clauses",
         ],
-        strengths: [
-            "Clear topic sentences in each paragraph",
-            "Good use of examples to support main points",
-            "Appropriate essay structure with introduction and conclusion",
-        ],
         weaknesses: [
             "Limited range of vocabulary - too many basic words",
             "Some paragraphs lack clear transitions",
@@ -204,7 +199,6 @@ function HighlightedText({ text, highlight }: { text: string; highlight: Highlig
         grammar: "bg-red-100 border-red-300",
         vocabulary: "bg-blue-100 border-blue-300",
         coherence: "bg-yellow-100 border-yellow-300",
-        strength: "bg-green-100 border-green-300",
     };
 
     return (
@@ -232,7 +226,6 @@ export function HighlightStatsPanel({ highlights }: { highlights: Highlight[] })
                 <StatItem label="Grammar Issues" count={stats.grammar} color="red" />
                 <StatItem label="Vocabulary" count={stats.vocabulary} color="blue" />
                 <StatItem label="Coherence" count={stats.coherence} color="yellow" />
-                <StatItem label="Strengths" count={stats.strength} color="green" />
             </div>
         </div>
     );
@@ -256,7 +249,7 @@ export function FilteredHighlightsList({
     activeFilter,
 }: {
     highlights: Highlight[];
-    activeFilter: "all" | "grammar" | "vocabulary" | "coherence" | "strength";
+    activeFilter: "all" | "grammar" | "vocabulary" | "coherence";
 }) {
     const grouped = groupHighlightsByType(highlights);
 

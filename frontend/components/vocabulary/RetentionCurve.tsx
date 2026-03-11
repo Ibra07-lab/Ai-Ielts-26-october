@@ -77,7 +77,13 @@ function pointsToFillPath(points: CurvePoint[]): string {
 export default function RetentionCurve({ data, className, studyList = [], topics = [] }: RetentionCurveProps) {
     const [hoveredMarker, setHoveredMarker] = useState<number | null>(null);
 
-    const curveData = useMemo(() => data || generateDemoCurveData(), [data]);
+    const curveData = useMemo(() => data || {
+        curveSegments: [],
+        reviewMarkers: [],
+        currentRetention: 0,
+        stability: 1.0,
+        totalReviews: 0
+    }, [data]);
 
     // Flatten all segments into one continuous set for the fill
     const allPoints = useMemo(() => {

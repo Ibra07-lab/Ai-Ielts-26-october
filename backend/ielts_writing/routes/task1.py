@@ -7,13 +7,14 @@ Key changes:
 3. Timing info in response
 """
 
-from fastapi import APIRouter, HTTPException, BackgroundTasks
+from fastapi import APIRouter, HTTPException, BackgroundTasks, Depends
 from pydantic import BaseModel
 from typing import Optional, List
 import asyncio
 import logging
 
 from ..pipelines.task1_pipeline import Task1Pipeline
+from ..auth import get_current_user
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/task1", tags=["IELTS Writing Task 1"])
@@ -36,7 +37,7 @@ class Task1EvaluationRequest(BaseModel):
 
 
 @router.post("/evaluate")
-async def evaluate_task1(request: Task1EvaluationRequest):
+async def evaluate_task1(request: Task1EvaluationRequest, user_id: str | None = Depends(get_current_user)):
     """
     Full Task 1 evaluation.
     
@@ -75,6 +76,38 @@ async def evaluate_task1(request: Task1EvaluationRequest):
                     "message": "Evaluation failed. Please try again."
                 }
             )
+        
+        # ── Save to Supabase ──
+        try:
+            from ..supabase_client import get_supabase
+            import time as _time
+            supabase = get_supabase()
+            
+            # Extract band scores from result
+            scores = result.get("scores", {})
+            save_data = {
+                "user_id": user_id or "anonymous",
+                "task_type": "task1",
+                "question": request.question,
+                "essay": request.essay,
+                "overall_band": scores.get("overall"),
+                "task_response_band": scores.get("task_achievement") or scores.get("task_response"),
+                "coherence_cohesion_band": scores.get("coherence_cohesion"),
+                "lexical_resource_band": scores.get("lexical_resource"),
+                "grammar_band": scores.get("grammatical_range_accuracy"),
+                "evaluation_json": result.get("scores"),
+                "explanation_json": result.get("teacher_feedback"),
+                "coaching_json": None,
+                "total_seconds": result.get("timing", {}).get("total_seconds"),
+                "student_name": request.student_name,
+            }
+            save_result = supabase.table("writing_evaluations").insert(save_data).execute()
+            saved_id = save_result.data[0]["id"] if save_result.data else None
+            result["saved_id"] = saved_id
+            logger.info(f"[API] ✅ Task 1 evaluation saved to Supabase (id={saved_id})")
+        except Exception as db_err:
+            logger.warning(f"[API] ⚠️ Failed to save Task 1 to Supabase: {db_err}")
+            result["saved_id"] = None
         
         return result
         

@@ -424,8 +424,8 @@ function SummaryCompletion({
                     tabIndex={0}
                     disabled={!!result}
                     className={isNotes
-                      ? "bg-transparent border-t-0 border-l-0 border-r-0 border-b-2 border-dotted border-slate-400 focus:border-blue-500 focus:border-solid transition-all focus:outline-none w-32 px-1"
-                      : `px-2 py-1 border rounded text-xs w-28 bg-white dark:bg-gray-900 focus:ring-2 relative z-20 pointer-events-auto focus:outline-none ${exceeded || hasInvalidNumber ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'}`
+                      ? "bg-transparent border-t-0 border-l-0 border-r-0 border-b-2 border-dotted border-slate-400 focus:border-blue-500 focus:border-solid transition-all focus:outline-none w-32 px-1 text-base"
+                      : `px-2 py-1 border rounded text-sm w-32 bg-white dark:bg-gray-900 focus:ring-2 relative z-20 pointer-events-auto focus:outline-none ${exceeded || hasInvalidNumber ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'}`
                     }
                     style={isNotes ? { borderRadius: 0, paddingBottom: 2 } : {}}
                     value={value}
@@ -878,6 +878,14 @@ function FlowChartCompletion({
   );
 }
 
+type TextSizeOption = 'regular' | 'large' | 'extra-large';
+const TEXT_SIZE_LABELS: Record<TextSizeOption, string> = { regular: 'Regular', large: 'Large', 'extra-large': 'Extra large' };
+const TEXT_SIZE_CLASSES: Record<TextSizeOption, string> = {
+  regular: 'prose prose-lg max-w-none dark:prose-invert leading-relaxed',
+  large: 'prose prose-xl max-w-none dark:prose-invert leading-relaxed [&_p]:text-xl [&_p]:leading-[1.9]',
+  'extra-large': 'prose prose-2xl max-w-none dark:prose-invert leading-relaxed [&_p]:text-2xl [&_p]:leading-[2]',
+};
+
 export default function ReadingPractice() {
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [startTime, setStartTime] = useState<number | null>(null);
@@ -891,6 +899,62 @@ export default function ReadingPractice() {
   const [aiFeedback, setAIFeedback] = useState<Record<number, any>>({});
   const [loadingFeedback, setLoadingFeedback] = useState<Set<number>>(new Set());
   const [showEvidenceHighlights, setShowEvidenceHighlights] = useState(true);
+
+  // Text size preference (persisted to localStorage)
+  const [textSize, setTextSize] = useState<TextSizeOption>(() => {
+    const saved = localStorage.getItem('reading-text-size');
+    return (saved === 'large' || saved === 'extra-large') ? saved : 'regular';
+  });
+  const [showTextSizeMenu, setShowTextSizeMenu] = useState(false);
+  const textSizeRef = useRef<HTMLDivElement>(null);
+
+  // Persist text size and close menu on outside click
+  useEffect(() => {
+    localStorage.setItem('reading-text-size', textSize);
+  }, [textSize]);
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (textSizeRef.current && !textSizeRef.current.contains(e.target as Node)) {
+        setShowTextSizeMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Draggable split panel ratio (persisted to localStorage)
+  const [splitRatio, setSplitRatio] = useState<number>(() => {
+    const saved = parseFloat(localStorage.getItem('reading-split-ratio') || '');
+    return (saved >= 25 && saved <= 75) ? saved : 50;
+  });
+  const [isDragging, setIsDragging] = useState(false);
+  const splitContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    localStorage.setItem('reading-split-ratio', String(splitRatio));
+  }, [splitRatio]);
+
+  useEffect(() => {
+    if (!isDragging) return;
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!splitContainerRef.current) return;
+      const rect = splitContainerRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const pct = Math.min(75, Math.max(25, (x / rect.width) * 100));
+      setSplitRatio(pct);
+    };
+    const handleMouseUp = () => setIsDragging(false);
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    };
+  }, [isDragging]);
   const { user } = useUser();
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -980,7 +1044,7 @@ export default function ReadingPractice() {
   // Fetch specific test
   const { data: testData, isLoading, isError, error, refetch: refetchPassage } = useQuery({
     queryKey: ["reading-test", selectedTestId],
-    queryFn: () => backend.ielts.getReadingTestById({ testId: selectedTestId as number }),
+    queryFn: () => backend.ielts.getReadingTestById(selectedTestId as number),
     enabled: selectedTestId != null,
   });
 
@@ -1108,7 +1172,7 @@ export default function ReadingPractice() {
   // Load highlights for the current passage
   const { data: highlightsData } = useQuery<{ highlights: Highlight[] }>({
     queryKey: ["readingHighlights", user?.id, passage?.title],
-    queryFn: () => user && passage ? backend.ielts.getHighlights({ userId: user.id, passageTitle: passage.title }) : Promise.resolve({ highlights: [] }),
+    queryFn: () => user && passage ? backend.ielts.getHighlights(user.id, passage.title) : Promise.resolve({ highlights: [] }),
     enabled: !!user && !!passage,
   });
 
@@ -2085,16 +2149,58 @@ export default function ReadingPractice() {
 
             {/* Split View Mode - Full Width Professional Layout */}
             {
-              <div className="fixed inset-x-0 top-[140px] bottom-0 flex bg-white dark:bg-gray-900">
+              <div ref={splitContainerRef} className="fixed inset-x-0 top-[140px] bottom-0 flex bg-white dark:bg-gray-900">
                 {/* Left Pane - Reading Passage */}
-                <div className="w-1/2 h-full flex flex-col border-r border-gray-200 dark:border-gray-700">
+                <div style={{ width: `${splitRatio}%` }} className="h-full flex flex-col">
                   {/* Header */}
                   <div className="flex-shrink-0 px-6 py-3 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900">
-                    <h2 className="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
-                      <BookOpen className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                      {passage.title}
-                    </h2>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <div className="flex items-center justify-between">
+                      <h2 className="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
+                        <BookOpen className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                        {passage.title}
+                      </h2>
+                      {/* Text size selector */}
+                      <div ref={textSizeRef} className="relative">
+                        <button
+                          onClick={() => setShowTextSizeMenu(!showTextSizeMenu)}
+                          className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg
+                                   bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300
+                                   hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors border border-gray-200 dark:border-gray-700"
+                          title="Text size"
+                        >
+                          <span className="text-base font-bold">Aa</span>
+                          <span className="hidden sm:inline">{TEXT_SIZE_LABELS[textSize]}</span>
+                        </button>
+                        {showTextSizeMenu && (
+                          <div className="absolute right-0 top-full mt-1 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 z-50 overflow-hidden">
+                            <div className="px-4 py-2.5 border-b border-gray-100 dark:border-gray-700">
+                              <span className="text-sm font-semibold text-gray-900 dark:text-white">Text size</span>
+                            </div>
+                            {(['regular', 'large', 'extra-large'] as TextSizeOption[]).map((option) => (
+                              <button
+                                key={option}
+                                onClick={() => { setTextSize(option); setShowTextSizeMenu(false); }}
+                                className={`w-full flex items-center justify-between px-4 py-3 text-sm transition-colors
+                                  ${textSize === option
+                                    ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-semibold'
+                                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                                  }`}
+                              >
+                                <span className={option === 'large' ? 'text-base' : option === 'extra-large' ? 'text-lg' : 'text-sm'}>
+                                  {TEXT_SIZE_LABELS[option]}
+                                </span>
+                                {textSize === option && (
+                                  <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                  </svg>
+                                )}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                       Select text to highlight, translate, or add to vocabulary.
                     </p>
                     {result && evidenceQuotes.length > 0 && (
@@ -2114,7 +2220,7 @@ export default function ReadingPractice() {
                   </div>
                   {/* Scrollable Content */}
                   <div className="flex-1 overflow-y-auto px-8 py-6">
-                    <div className="prose prose-sm max-w-none dark:prose-invert leading-relaxed">
+                    <div className={TEXT_SIZE_CLASSES[textSize]}>
                       <TextHighlighter
                         content={passage.paragraphs?.map((p: { text: string }) => p.text).join('\n\n') || ''}
                         passageTitle={passage.title}
@@ -2127,8 +2233,21 @@ export default function ReadingPractice() {
                   </div>
                 </div>
 
+                {/* Draggable Divider */}
+                <div
+                  onMouseDown={() => setIsDragging(true)}
+                  className={`relative flex-shrink-0 w-[2px] cursor-col-resize group z-30
+                    ${isDragging
+                      ? 'bg-blue-500 dark:bg-blue-400'
+                      : 'bg-gray-200 dark:bg-gray-700 hover:bg-blue-400 dark:hover:bg-blue-500'
+                    } transition-colors`}
+                >
+                  {/* Invisible wider hit area for easier grabbing */}
+                  <div className="absolute inset-y-0 -left-2 -right-2" />
+                </div>
+
                 {/* Right Pane - Questions / Results */}
-                <div className="w-1/2 h-full flex flex-col bg-white dark:bg-gray-900">
+                <div style={{ width: `${100 - splitRatio}%` }} className="h-full flex flex-col bg-white dark:bg-gray-900">
                   {/* Header */}
                   <div className="flex-shrink-0 px-6 py-3 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900">
                     <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{result ? 'Test Results' : 'Questions'}</h2>
@@ -2190,10 +2309,10 @@ export default function ReadingPractice() {
                       <>
                         {Array.isArray(passage?.questions) ? (
                           passage!.questions.map((questionGroup: any, groupIdx: number) => (
-                            <div key={`${activeSlideIndex}-${groupIdx}-${questionGroup.id}`} className="space-y-3 pb-4 border-b last:border-b-0">
+                            <div key={`${activeSlideIndex}-${groupIdx}-${questionGroup.id}`} className="space-y-4 pb-6 border-b last:border-b-0">
                               <div className="pb-2">
-                                <h3 className="text-base font-semibold">{questionGroup.title}</h3>
-                                <p className="text-sm text-gray-600 dark:text-gray-300">{questionGroup.instructions}</p>
+                                <h3 className="text-lg font-bold text-gray-900 dark:text-white">{questionGroup.title}</h3>
+                                <p className="text-[15px] text-gray-700 dark:text-gray-300 leading-relaxed">{questionGroup.instructions}</p>
 
                                 {/* Add explanation for TRUE/FALSE/NOT GIVEN question types */}
                                 {questionGroup.type === 'true-false-not-given' && (
@@ -2264,9 +2383,9 @@ export default function ReadingPractice() {
                                                   />
                                                   <Label
                                                     htmlFor={`split-q${question.id}-${index}`}
-                                                    className={`text-sm leading-normal ${isUsedElsewhere ? 'text-red-500 line-through opacity-50' : ''}`}
+                                                    className={`text-base leading-relaxed ${isUsedElsewhere ? 'text-red-500 line-through opacity-50' : ''}`}
                                                   >
-                                                    {toRomanNumeral(index + 1)}. {optionText}
+                                                    <strong>{toRomanNumeral(index + 1)}.</strong> {optionText}
                                                   </Label>
                                                 </div>
                                               );

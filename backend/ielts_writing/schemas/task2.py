@@ -355,9 +355,8 @@ class CriterionFeedback(BaseModel):
     summary: str = Field(..., description="Short verdict e.g. 'Mostly slips'")
     why_score_is_here: str = Field(..., description="Explanation of the score level")
     weak_spots: List[str] = Field(default_factory=list, description="Specific weaknesses")
-    strengths: List[str] = Field(default_factory=list, description="Specific strengths")
 
-    @field_validator("weak_spots", "strengths", mode="before")
+    @field_validator("weak_spots", mode="before")
     @classmethod
     def ensure_list(cls, v):
         if isinstance(v, str):

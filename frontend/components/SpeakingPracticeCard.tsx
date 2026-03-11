@@ -8,7 +8,7 @@ const SpeakingPracticeCard = () => {
     return (
         <div className="relative group w-full mx-auto h-full">
             {/* Container */}
-            <div className="relative overflow-hidden rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 shadow-xl h-full flex flex-col opacity-75 grayscale-[0.3]">
+            <div className="relative overflow-hidden rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-4 xl:p-5 shadow-xl h-full flex flex-col opacity-75 grayscale-[0.3]">
 
                 {/* Hover Gradient Effect */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-rose-500/20 via-transparent to-transparent rounded-2xl pointer-events-none" />
@@ -41,29 +41,26 @@ const SpeakingPracticeCard = () => {
                 <div className="relative z-10 flex flex-col h-full">
 
                     {/* Header */}
-                    <div className="flex justify-between items-start mb-6">
+                    <div className="flex justify-between items-start mb-4">
                         {/* Icon Box */}
-                        <div className="w-12 h-12 rounded-2xl bg-rose-100 dark:bg-rose-900/50 flex items-center justify-center border border-rose-100 dark:border-rose-800/50 text-rose-600 dark:text-rose-400 group-hover:scale-110 transition-transform duration-300">
-                            <Mic className="w-6 h-6" />
+                        <div className="w-10 h-10 rounded-2xl bg-rose-100 dark:bg-rose-900/50 flex items-center justify-center border border-rose-100 dark:border-rose-800/50 text-rose-600 dark:text-rose-400 group-hover:scale-110 transition-transform duration-300">
+                            <Mic className="w-5 h-5" />
                         </div>
 
                     </div>
 
                     {/* Typography */}
-                    <div className="mb-8">
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 tracking-tight group-hover:text-slate-800 dark:group-hover:text-white/90 transition-colors">
+                    <div className="mb-4">
+                        <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1.5 tracking-tight group-hover:text-slate-800 dark:group-hover:text-white/90 transition-colors line-clamp-1">
                             Speaking Practice
                         </h3>
-                        <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
-                            Practice with AI-powered speaking exercises to improve responsiveness and fluency.
-                        </p>
                     </div>
 
                     {/* Buttons */}
                     <div className="mt-auto space-y-3">
                         <button
                             disabled
-                            className="w-full py-3 px-4 bg-slate-100 dark:bg-slate-800/50 text-slate-400 dark:text-slate-500 rounded-xl font-medium cursor-not-allowed border border-slate-200 dark:border-slate-700 flex items-center justify-center gap-2"
+                            className="w-full py-2.5 px-3 bg-slate-100 dark:bg-slate-800/50 text-slate-400 dark:text-slate-500 rounded-xl font-medium cursor-not-allowed border border-slate-200 dark:border-slate-700 flex items-center justify-center gap-2 text-xs sm:text-sm"
                         >
                             <span className="relative flex h-2 w-2 mr-1">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>

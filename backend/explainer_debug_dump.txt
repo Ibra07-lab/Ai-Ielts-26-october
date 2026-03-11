@@ -1,1 +1,322 @@
-totally invalid response lol
+{
+  "essay_word_count": 254,
+  "current_overall_band": 7.0,
+  "target_band_demonstrated": 8.0,
+  "priority_summary": [
+    {
+      "rank": 1,
+      "area": "Cohesion / Mechanical Linker Overuse",
+      "current_problem": "Mechanical linker ratio of 0.36 signals Band 6-7 ceiling for Coherence & Cohesion",
+      "score_impact": "Prevents Band 8.0+ in CC despite strong logical structure",
+      "action_step": "Replace mechanical linkers with demonstrative reference, lexical cohesion, or thematic progression",
+      "where_to_look": "cohesion_fixes section"
+    },
+    {
+      "rank": 2,
+      "area": "Task Response / Idea Development",
+      "current_problem": "Final supporting point about 'new jobs created' is mentioned but not developed with concrete examples",
+      "score_impact": "Caps TR at 7.0 instead of 8.0 due to incomplete extension of ideas",
+      "action_step": "Add specific examples of AI-generated jobs (data scientists, AI ethics consultants, machine learning engineers)",
+      "where_to_look": "macro_feedback section and idea_development.alternative_ideas"
+    },
+    {
+      "rank": 3,
+      "area": "Lexical Resource / Formulaic Language",
+      "current_problem": "Essay opens with Tier 2 cliché 'It is often argued that'",
+      "score_impact": "Minor LR penalty; signals memorized language rather than natural expression",
+      "action_step": "Replace with direct, engaging opening that introduces the debate naturally",
+      "where_to_look": "vocabulary_feedback.cliche_replacements"
+    },
+    {
+      "rank": 4,
+      "area": "Lexical Resource / Vocabulary Precision",
+      "current_problem": "Some basic vocabulary choices reduce sophistication ('feelings', 'properly', 'simple')",
+      "score_impact": "Prevents LR from reaching 7.5-8.0 range",
+      "action_step": "Upgrade basic words to more precise academic alternatives",
+      "where_to_look": "vocabulary_feedback.word_upgrades and lexical_breakdown.vocab_drills"
+    }
+  ],
+  "macro_feedback": [
+    {
+      "paragraph_index": 3,
+      "issue_identified": "partially_developed",
+      "original_paragraph": "However, I believe that many jobs will still need humans in the future. First, jobs that require creativity and emotional intelligence cannot be done by AI. For instance, teachers need to understand their students' feelings and adapt their lessons accordingly, which machines cannot do properly. Second, professions like doctors and lawyers involve complex decision-making and ethical judgments that require human experience and moral understanding. Finally, new types of jobs will be created by AI technology itself, such as programming and maintaining these systems, which means employment opportunities will shift rather than disappear completely.",
+      "logic_diagnosis": "This paragraph presents three distinct arguments but develops them unevenly. The first two points (creativity/emotional intelligence, complex decision-making) are well-supported with specific examples (teachers, doctors, lawyers). However, the third point about 'new jobs created' is merely asserted without concrete examples. The phrase 'such as programming and maintaining these systems' is too vague to be persuasive. This imbalance weakens the overall argument.",
+      "student_intended_point": "The student argues that AI will create new employment opportunities rather than eliminate jobs entirely, but needs to demonstrate this with specific, real-world examples of emerging AI-related professions.",
+      "improved_paragraph": "However, I believe that many jobs will still need humans in the future. First, roles requiring creativity and emotional intelligence remain beyond AI's capabilities. Teachers, for instance, must interpret students' emotional states and adjust pedagogical approaches accordingly—a nuanced skill that algorithms cannot replicate. Second, professions like medicine and law demand complex ethical reasoning rooted in human experience; a doctor's decision to prioritize quality of life over aggressive treatment, for example, involves moral judgments that transcend data analysis. Finally, AI technology itself generates entirely new employment sectors. The rise of machine learning has created demand for data scientists who train algorithms, AI ethics consultants who ensure responsible deployment, and user experience designers who make AI interfaces accessible—roles that did not exist a decade ago but now employ millions globally.",
+      "peel_breakdown": {
+        "point": "However, I believe that many jobs will still need humans in the future.",
+        "explain": "First, roles requiring creativity and emotional intelligence remain beyond AI's capabilities. Teachers, for instance, must interpret students' emotional states and adjust pedagogical approaches accordingly—a nuanced skill that algorithms cannot replicate. Second, professions like medicine and law demand complex ethical reasoning rooted in human experience; a doctor's decision to prioritize quality of life over aggressive treatment, for example, involves moral judgments that transcend data analysis.",
+        "example": "Finally, AI technology itself generates entirely new employment sectors. The rise of machine learning has created demand for data scientists who train algorithms, AI ethics consultants who ensure responsible deployment, and user experience designers who make AI interfaces accessible—roles that did not exist a decade ago but now employ millions globally.",
+        "link": "This demonstrates that employment opportunities will shift rather than disappear completely."
+      },
+      "key_changes_made": [
+        "Replaced vague 'feelings' with precise 'emotional states' and 'pedagogical approaches'",
+        "Added concrete medical ethics example (quality of life vs aggressive treatment) to illustrate complex decision-making",
+        "Transformed generic 'programming and maintaining systems' into three specific AI-generated professions with clear functions",
+        "Added quantitative context ('millions globally') to strengthen the 'new jobs' claim",
+        "Elevated vocabulary: 'nuanced skill', 'transcend data analysis', 'responsible deployment'"
+      ],
+      "word_count_original": 107,
+      "word_count_improved": 119,
+      "priority": "P1_critical"
+    }
+  ],
+  "micro_feedback": [
+    {
+      "original_sentence": "For instance, teachers need to understand their students' feelings and adapt their lessons accordingly, which machines cannot do properly.",
+      "corrected_sentence": "Teachers, for instance, must interpret students' emotional states and adjust pedagogical approaches accordingly—a nuanced skill that algorithms cannot replicate.",
+      "error_type": "vocabulary",
+      "specific_error": "imprecise_word_choice",
+      "explanation": "'Feelings' is too informal for academic writing; 'emotional states' is more precise. 'Properly' is vague; 'replicate' specifically describes AI's limitation. 'Pedagogical approaches' is more sophisticated than 'lessons'.",
+      "priority": "P2_important",
+      "paragraph_location": 3
+    }
+  ],
+  "cohesion_fixes": [
+    {
+      "original_sentence": "Similarly, in supermarkets, self-checkout machines mean that fewer cashiers are needed.",
+      "mechanical_linker_used": "Similarly",
+      "improved_sentence": "The retail sector demonstrates the same pattern: self-checkout machines in supermarkets have reduced demand for cashiers.",
+      "technique_used": "lexical_cohesion",
+      "technique_explanation": "Instead of the mechanical 'Similarly', lexical cohesion is achieved through 'The retail sector demonstrates the same pattern', which explicitly names the industry and uses 'same pattern' to reference the previous factory example. This creates a more sophisticated connection between ideas."
+    }
+  ],
+  "vocabulary_feedback": {
+    "cliche_replacements": [
+      {
+        "cliche_found": "It is often argued that",
+        "lazy_meaning": "A generic way to introduce a debated topic without taking a stance",
+        "essay_context": "Introducing the debate about AI replacing human jobs",
+        "alternatives": [
+          "The prospect of artificial intelligence displacing human workers has become a central concern in workforce planning",
+          "As automation accelerates, the question of whether AI will dominate employment markets grows increasingly urgent",
+          "Technological unemployment—the replacement of human labor by machines—now extends beyond manufacturing into knowledge work"
+        ],
+        "original_sentence": "It is often argued that artificial intelligence will take over most jobs that people currently do.",
+        "improved_sentence": "The prospect of artificial intelligence displacing most human workers has become a defining concern of the 21st-century labor market.",
+        "why_better": "This opening immediately establishes the essay's topic with precise vocabulary ('displacing', '21st-century labor market') and creates a more authoritative tone than the formulaic 'It is often argued that'. It signals original thinking rather than memorized phrases."
+      }
+    ],
+    "word_upgrades": [
+      {
+        "basic_word": "feelings",
+        "context_in_essay": "teachers need to understand their students' feelings",
+        "upgraded_alternatives": [
+          "emotional states",
+          "psychological needs",
+          "affective responses"
+        ],
+        "why_upgrade": "'Feelings' is too informal and vague for academic writing. 'Emotional states' is more precise and appropriate for discussing educational psychology.",
+        "rewritten_sentence": "Teachers need to interpret their students' emotional states and adjust instruction accordingly."
+      },
+      {
+        "basic_word": "properly",
+        "context_in_essay": "which machines cannot do properly",
+        "upgraded_alternatives": [
+          "effectively",
+          "with the necessary nuance",
+          "replicate authentically"
+        ],
+        "why_upgrade": "'Properly' is vague and doesn't specify what aspect of the task AI fails at. 'Replicate' or 'with necessary nuance' is more precise.",
+        "rewritten_sentence": "This nuanced skill remains beyond what algorithms can replicate."
+      },
+      {
+        "basic_word": "simple",
+        "context_in_essay": "jobs which involve simple, routine tasks",
+        "upgraded_alternatives": [
+          "repetitive",
+          "procedural",
+          "algorithmic"
+        ],
+        "why_upgrade": "'Simple' is subjective and imprecise. 'Procedural' or 'algorithmic' specifically describes tasks that follow fixed rules—the type AI can automate.",
+        "rewritten_sentence": "Jobs involving procedural, rule-based tasks are most vulnerable to automation."
+      }
+    ],
+    "topic_specific_vocabulary": [
+      {
+        "term": "automation",
+        "definition": "The use of technology to perform tasks without human intervention",
+        "example": "Factory automation has eliminated millions of manufacturing jobs over the past three decades.",
+        "usage_note": "More precise than 'AI replacing jobs' when discussing mechanical/repetitive tasks"
+      },
+      {
+        "term": "technological unemployment",
+        "definition": "Job loss caused by technological change rather than economic cycles",
+        "example": "Economists debate whether technological unemployment is temporary or permanent as AI advances.",
+        "usage_note": "Academic term for the phenomenon the essay discusses"
+      },
+      {
+        "term": "augment",
+        "definition": "To enhance or supplement human capabilities rather than replace them",
+        "example": "AI diagnostic tools augment doctors' abilities rather than replacing medical expertise.",
+        "usage_note": "Useful for nuanced arguments about AI-human collaboration"
+      },
+      {
+        "term": "cognitive tasks",
+        "definition": "Work requiring mental processes like reasoning, problem-solving, or creativity",
+        "example": "While AI excels at data processing, complex cognitive tasks still require human judgment.",
+        "usage_note": "Contrasts with 'routine tasks' to distinguish what AI can/cannot do"
+      },
+      {
+        "term": "labor displacement",
+        "definition": "The process of workers losing jobs due to technological or economic changes",
+        "example": "Labor displacement from AI will likely affect white-collar workers more than previous technological shifts.",
+        "usage_note": "More formal than 'job loss' or 'replacing workers'"
+      }
+    ]
+  },
+  "grammar_feedback": {
+    "pattern_lessons": [
+      {
+        "error_pattern": "sentence_variety",
+        "pattern_name_friendly": "Sentence Opening Variety",
+        "examples_from_essay": [
+          {
+            "original": "For example, in factories, robots can now do repetitive tasks like assembling cars faster and more accurately than humans.",
+            "corrected": "In factories, for example, robots now perform repetitive tasks like car assembly with greater speed and accuracy than human workers.",
+            "error_highlighted": "Moved 'for example' to mid-sentence position for variety"
+          },
+          {
+            "original": "Similarly, in supermarkets, self-checkout machines mean that fewer cashiers are needed.",
+            "corrected": "Self-checkout machines in supermarkets have likewise reduced demand for cashiers.",
+            "error_highlighted": "Started with subject rather than transition word"
+          }
+        ],
+        "the_rule": "While your sentence structures are grammatically correct, varying how sentences begin (with subjects, prepositional phrases, or subordinate clauses) creates more sophisticated prose.",
+        "memory_trick": "Check if three consecutive sentences start the same way (e.g., all with transition words). If so, reorder one.",
+        "practice_tip": "Read your paragraph aloud. If it sounds repetitive or predictable, experiment with moving phrases to different positions."
+      }
+    ],
+    "complexity_suggestions": [
+      {
+        "simple_sentences": [
+          "These examples show that jobs which involve simple, routine tasks are at risk of being automated.",
+          "This trend will probably continue as technology becomes cheaper and more advanced."
+        ],
+        "complex_version": "These examples illustrate how jobs involving procedural, rule-based tasks face automation risk—a trend likely to accelerate as technological costs decline and capabilities expand.",
+        "structures_demonstrated": [
+          "Noun phrase with embedded participial phrase ('jobs involving...')",
+          "Em-dash for explanatory clause",
+          "Nominalization ('technological costs' rather than 'technology becomes cheaper')"
+        ],
+        "explanation": "Combining these sentences eliminates redundancy ('these examples show' + 'this trend') and uses nominalization to create more concise, academic prose. The em-dash elegantly connects the observation to its implication."
+      }
+    ],
+    "grammar_priority": "polish"
+  },
+  "score_projections": [
+    {
+      "criterion": "Task Response",
+      "current_score": 7.0,
+      "achievable_score": 8.0,
+      "key_changes_needed": [
+        "Develop the 'new jobs created by AI' argument with specific examples (data scientists, AI ethics consultants, UX designers)",
+        "Add quantitative or authoritative support to strengthen claims (e.g., 'millions employed in AI-related fields')",
+        "Explore one counterargument more deeply (e.g., what about creative jobs like graphic design that AI is starting to automate?)"
+      ]
+    },
+    {
+      "criterion": "Coherence & Cohesion",
+      "current_score": 7.5,
+      "achievable_score": 8.5,
+      "key_changes_needed": [
+        "Replace mechanical linkers ('Similarly', 'For example') with lexical cohesion or demonstrative reference",
+        "Use more sophisticated referencing devices (e.g., 'This displacement pattern', 'Such technological shifts')",
+        "Vary transition techniques across paragraphs to demonstrate full range"
+      ]
+    },
+    {
+      "criterion": "Lexical Resource",
+      "current_score": 7.0,
+      "achievable_score": 8.0,
+      "key_changes_needed": [
+        "Replace formulaic opening 'It is often argued that' with direct, engaging introduction",
+        "Upgrade basic vocabulary ('feelings' → 'emotional states', 'properly' → 'effectively', 'simple' → 'procedural')",
+        "Incorporate topic-specific academic terms ('technological unemployment', 'labor displacement', 'augment')"
+      ]
+    },
+    {
+      "criterion": "Grammatical Range & Accuracy",
+      "current_score": 7.5,
+      "achievable_score": 8.5,
+      "key_changes_needed": [
+        "Vary sentence openings (not all starting with subjects or transition words)",
+        "Use more nominalization to create concise academic style ('technological advancement' vs 'technology becomes advanced')",
+        "Incorporate sophisticated punctuation (em-dashes, semicolons) to show full grammatical control"
+      ]
+    }
+  ],
+  "criterion_strengths": [
+    {
+      "criterion": "task_response",
+      "title": "Nuanced Thesis with Clear Position",
+      "description": "Your thesis demonstrates sophisticated task management by acknowledging both sides of the debate while maintaining a definite stance: 'While I agree that AI will replace some types of work, I disagree that it will eliminate most human employment.' This balanced approach shows you understand the complexity of the issue rather than taking an extreme position. The concession-rebuttal structure (paragraph 2 acknowledges AI's impact, paragraph 3 argues why most jobs remain safe) is exactly what Band 7+ essays require.",
+      "evidence_from_essay": "While I agree that AI will replace some types of work, I disagree that it will eliminate most human employment because many jobs require human skills that machines cannot copy."
+    },
+    {
+      "criterion": "coherence_cohesion",
+      "title": "Strong Logical Progression",
+      "description": "Your essay follows a clear, logical structure that guides the reader effortlessly from introduction through arguments to conclusion. Each body paragraph has a distinct function (concession vs. main argument) with clear topic sentences. You effectively use referencing devices like 'These examples show' and 'This trend will probably continue' to connect ideas within paragraphs. The progression from acknowledging AI's current impact to explaining human irreplaceability creates a persuasive flow.",
+      "evidence_from_essay": "These examples show that jobs which involve simple, routine tasks are at risk of being automated. This trend will probably continue as technology becomes cheaper and more advanced."
+    },
+    {
+      "criterion": "lexical_resource",
+      "title": "Effective Paraphrasing and Collocations",
+      "description": "You demonstrate lexical awareness through consistent paraphrasing of key concepts: 'replace'/'take over'/'eliminate' for job loss, and 'jobs'/'work'/'employment' for the labor market. Your collocations are natural and topic-appropriate: 'repetitive tasks', 'complex decision-making', 'ethical judgments', 'moral understanding'. Terms like 'automated', 'assembling', and 'employment opportunities' show you can use topic-specific vocabulary accurately without forcing it.",
+      "evidence_from_essay": "professions like doctors and lawyers involve complex decision-making and ethical judgments that require human experience and moral understanding"
+    },
+    {
+      "criterion": "grammatical_range_accuracy",
+      "title": "Complex Structures with Consistent Control",
+      "description": "Your grammar is a genuine strength. You handle complex sentences with multiple clauses accurately throughout: 'While I agree that AI will replace some types of work, I disagree that it will eliminate most human employment because many jobs require human skills that machines cannot copy.' Relative clauses ('jobs which involve'), subordinate clauses, and modal verbs are used correctly and naturally. Subject-verb agreement and tense control are consistent, with very few errors across the entire essay.",
+      "evidence_from_essay": "For instance, teachers need to understand their students' feelings and adapt their lessons accordingly, which machines cannot do properly."
+    }
+  ],
+  "one_thing_done_well": "Your concession-rebuttal structure is excellent. By acknowledging AI's impact in paragraph 2 before presenting your main argument in paragraph 3, you show intellectual maturity and make your position more persuasive. This is exactly the kind of sophisticated task management that distinguishes Band 7+ essays.",
+  "immediate_focus": "Develop your third supporting point with concrete examples. When you mention 'new types of jobs will be created by AI technology itself, such as programming and maintaining these systems,' name specific roles: data scientists who train algorithms, AI ethics consultants who ensure responsible deployment, UX designers who make AI interfaces accessible. This single change would elevate your Task Response from 7.0 to 8.0.",
+  "practice_suggestion": "Before your next essay, create a 'PEEL checklist' for each body paragraph: Point (topic sentence), Explain (reasoning), Example (specific, concrete), Link (back to thesis). After writing, verify each paragraph has all four elements with equal depth. This will prevent the uneven development that currently limits your score.",
+  "idea_development": {
+    "essay_thesis": "AI will replace some types of work, but will not eliminate most human employment because many jobs require human skills that machines cannot replicate",
+    "thesis_clarity": "clear",
+    "idea_map": [
+      {
+        "paragraph_index": 2,
+        "idea_summary": "AI is already replacing workers in industries involving simple, routine tasks like manufacturing and retail",
+        "development_level": "well_developed",
+        "development_details": "This paragraph effectively uses PEEL structure: states the point (AI replacing certain jobs), explains why (routine tasks can be automated), provides two concrete examples (factory robots assembling cars, self-checkout machines), and links to the broader trend (automation will continue as technology advances).",
+        "evidence_used": "Factory robots assembling cars; self-checkout machines in supermarkets",
+        "missing_elements": []
+      },
+      {
+        "paragraph_index": 3,
+        "idea_summary": "Many jobs will still need humans because they require creativity, emotional intelligence, complex decision-making, and AI will create new employment opportunities",
+        "development_level": "partially_developed",
+        "development_details": "This paragraph presents three distinct arguments but develops them unevenly. The first two points (creativity/emotional intelligence with teachers example, complex decision-making with doctors/lawyers example) are well-supported. However, the third point about 'new jobs created' is merely asserted without concrete examples. The phrase 'such as programming and maintaining these systems' is too vague to be persuasive.",
+        "evidence_used": "Teachers understanding students' feelings; doctors and lawyers making ethical judgments; vague reference to 'programming and maintaining systems'",
+        "missing_elements": [
+          "Specific examples of AI-generated professions (data scientists, AI ethics consultants, machine learning engineers)",
+          "Quantitative or authoritative support for the 'new jobs' claim",
+          "Explanation of how these new roles differ from displaced jobs"
+        ]
+      }
+    ],
+    "alternative_ideas": [
+      {
+        "idea": "The human-AI collaboration model: AI augments rather than replaces human capabilities in many fields",
+        "why_strong": "This addresses a nuanced middle ground between 'AI replaces everything' and 'humans are irreplaceable.' It's particularly relevant to knowledge work where AI assists professionals (doctors using diagnostic AI, lawyers using legal research AI) rather than replacing them entirely.",
+        "example_sentence": "Rather than wholesale replacement, the more likely scenario involves AI augmenting human capabilities—radiologists using AI to detect anomalies they might miss, or architects employing generative design software to explore options beyond human imagination.",
+        "topic_relevance": "Directly addresses the 'extent' aspect of the question by proposing a third option beyond binary replacement/non-replacement"
+      },
+      {
+        "idea": "The retraining challenge: Even if new jobs emerge, displaced workers may lack the skills to transition",
+        "why_strong": "This adds depth by acknowledging that 'new jobs will be created' isn't automatically a solution. A 50-year-old factory worker can't easily become a data scientist. This counterargument strengthens your essay by showing you've considered implementation challenges.",
+        "example_sentence": "While AI may generate new employment sectors, the transition poses significant challenges: a displaced retail worker cannot seamlessly retrain as a machine learning engineer, creating a skills gap that could leave millions unemployed during the transition period.",
+        "topic_relevance": "Complicates the 'new jobs created' argument you already introduced, making your analysis more sophisticated"
+      },
+      {
+        "idea": "The economic incentive factor: Companies will automate whenever it's cheaper, regardless of capability",
+        "why_strong": "This shifts the debate from 'can AI do the job?' to 'will companies choose AI for cost reasons?' Even if humans are better at certain tasks, economic pressure may drive automation anyway. This is a more cynical but realistic perspective.",
+        "example_sentence": "The automation decision ultimately hinges on economics rather than capability: even in fields requiring human judgment, companies may deploy AI systems if they reduce labor costs by 30%, accepting lower quality as an acceptable trade-off for profitability.",
+        "topic_relevance": "Provides a counterargument to your 'human skills are irreplaceable' point, showing that irreplaceability doesn't guarantee job security"
+      }

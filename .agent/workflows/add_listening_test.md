@@ -38,6 +38,7 @@ This workflow guides you through adding a new listening test to the platform. Th
 
 2.  **Use the correct Schema**:
     -   **CRITICAL**: You MUST use `question` (NOT `text`) and `correctAnswer` (NOT `answer`).
+    -   **CRITICAL**: The `transcripts` array MUST contain objects with a `title` (e.g. "Part 1") and an array of `lines`. Each line MUST be an object with `speaker` and `text` keys. **Do NOT paste the audioscript as a single raw string.**
     -   **Structure**:
         ```json
         {

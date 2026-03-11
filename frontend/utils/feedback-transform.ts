@@ -226,47 +226,6 @@ function transformCoherenceIssues(
 }
 
 /**
- * Transforms strengths into highlights
- */
-function transformStrengths(
-    essay: string,
-    strengths: string[]
-): Highlight[] {
-    const highlights: Highlight[] = [];
-
-    // For strengths, we'll try to identify key phrases from the strength descriptions
-    // This is more heuristic since strengths are general comments
-    strengths.forEach((strength, index) => {
-        // Extract potential phrases from strength description
-        // Look for quoted text or specific examples
-        const quotedMatch = strength.match(/"([^"]+)"/);
-        const exampleMatch = strength.match(/such as "([^"]+)"/);
-        const phraseMatch = quotedMatch || exampleMatch;
-
-        if (phraseMatch && phraseMatch[1]) {
-            const position = findTextPosition(essay, phraseMatch[1]);
-
-            if (position) {
-                highlights.push({
-                    id: generateHighlightId("strength", index),
-                    start: position.start,
-                    end: position.end,
-                    type: "strength",
-                    original: phraseMatch[1],
-                    // No corrected field for strengths
-                    reason: strength,
-                    tip: "Keep doing this!",
-                    justification: strength, // Map strength description to justification
-                    improvement_tip: "This is a strong element of your writing. Maintain this quality in future essays.",
-                });
-            }
-        }
-    });
-
-    return highlights;
-}
-
-/**
  * Transforms micro_feedback from Explainer into highlights
  * These are sentence-level errors that should be highlighted in red
  */
@@ -319,6 +278,114 @@ function transformMicroFeedback(
 // ----------------------------------------------------------------------------
 
 /**
+ * Transforms macro_feedback (paragraph rewrites) into highlights
+ */
+function transformMacroFeedback(
+    essay: string,
+    macroFeedback: any[]
+): Highlight[] {
+    const highlights: Highlight[] = [];
+    let searchOffset = 0;
+
+    macroFeedback.forEach((item, index) => {
+        if (!item.original_paragraph) return;
+
+        const position = findTextPosition(essay, item.original_paragraph, searchOffset);
+
+        if (position) {
+            highlights.push({
+                id: generateHighlightId("coherence", index + 900), // High index to avoid collision
+                start: position.start,
+                end: position.end,
+                type: "coherence",
+                original: item.original_paragraph,
+                corrected: item.improved_paragraph,
+                reason: item.logic_diagnosis,
+                tip: "Paragraph-level logic improvement",
+                justification: item.logic_diagnosis,
+                improvement_tip: "Review the PEEL structure in the improved paragraph.",
+            });
+
+            searchOffset = position.end;
+        }
+    });
+
+    return highlights;
+}
+
+/**
+ * Transforms cohesion_fixes into highlights
+ */
+function transformCohesionFixes(
+    essay: string,
+    cohesionFixes: any[]
+): Highlight[] {
+    const highlights: Highlight[] = [];
+    let searchOffset = 0;
+
+    cohesionFixes.forEach((item, index) => {
+        if (!item.original_sentence) return;
+
+        const position = findTextPosition(essay, item.original_sentence, searchOffset);
+
+        if (position) {
+            highlights.push({
+                id: generateHighlightId("coherence", index + 800),
+                start: position.start,
+                end: position.end,
+                type: "coherence",
+                original: item.original_sentence,
+                corrected: item.improved_sentence,
+                reason: item.technique_explanation,
+                tip: `Using ${item.technique_used}`,
+                justification: item.technique_explanation,
+                improvement_tip: "Avoid mechanical linkers; use thematic progression instead.",
+            });
+
+            searchOffset = position.end;
+        }
+    });
+
+    return highlights;
+}
+
+/**
+ * Transforms vocabulary_feedback.cliche_replacements into highlights
+ */
+function transformClicheReplacements(
+    essay: string,
+    clicheReplacements: any[]
+): Highlight[] {
+    const highlights: Highlight[] = [];
+    let searchOffset = 0;
+
+    clicheReplacements.forEach((item, index) => {
+        if (!item.original_sentence) return;
+
+        const position = findTextPosition(essay, item.original_sentence, searchOffset);
+
+        if (position) {
+            highlights.push({
+                id: generateHighlightId("vocabulary", index + 700),
+                start: position.start,
+                end: position.end,
+                type: "vocabulary",
+                original: item.original_sentence,
+                corrected: item.improved_sentence,
+                reason: item.why_better,
+                tip: `Avoid cliche: "${item.cliche_found}"`,
+                justification: item.why_better,
+                improvement_tip: `Use more precise alternatives: ${item.alternatives.join(", ")}`,
+            });
+
+            searchOffset = position.end;
+        }
+    });
+
+    return highlights;
+}
+
+/**
  * Transforms backend coaching result into an array of highlights
  * @param essay - The original essay text
  * @param coaching - The coaching result from backend
@@ -330,16 +397,26 @@ export function transformToHighlights(
 ): Highlight[] {
     const highlights: Highlight[] = [];
 
-    // Transform each type of feedback
+    // 1. Transform basic coaching items
     highlights.push(...transformGrammarErrors(essay, coaching.grammar_errors));
     highlights.push(...transformVocabularySuggestions(essay, coaching.vocabulary_suggestions));
     highlights.push(...transformCoherenceIssues(essay, coaching.coherence_issues));
-    highlights.push(...transformStrengths(essay, coaching.strengths));
 
-    // Also transform micro_feedback from Explainer if available
+    // 2. Transform Explainer-specific feedback if available
     const explainerData = coaching.raw_explainer_output;
-    if (explainerData?.micro_feedback) {
-        highlights.push(...transformMicroFeedback(essay, explainerData.micro_feedback));
+    if (explainerData) {
+        if (explainerData.micro_feedback) {
+            highlights.push(...transformMicroFeedback(essay, explainerData.micro_feedback));
+        }
+        if (explainerData.macro_feedback) {
+            highlights.push(...transformMacroFeedback(essay, explainerData.macro_feedback));
+        }
+        if (explainerData.cohesion_fixes) {
+            highlights.push(...transformCohesionFixes(essay, explainerData.cohesion_fixes));
+        }
+        if (explainerData.vocabulary_feedback?.cliche_replacements) {
+            highlights.push(...transformClicheReplacements(essay, explainerData.vocabulary_feedback.cliche_replacements));
+        }
     }
 
     // Sort highlights by position for easier rendering
@@ -374,8 +451,8 @@ export function mergeOverlappingHighlights(highlights: Highlight[]): Highlight[]
         const last = merged[merged.length - 1];
 
         if (highlightsOverlap(current, last)) {
-            // Priority: grammar > vocabulary > coherence > strength
-            const priority = { grammar: 4, vocabulary: 3, coherence: 2, strength: 1 };
+            // Priority: grammar > vocabulary > coherence
+            const priority: Record<HighlightType, number> = { grammar: 3, vocabulary: 2, coherence: 1 };
             if (priority[current.type] > priority[last.type]) {
                 merged[merged.length - 1] = current;
             }
@@ -411,6 +488,5 @@ export function getHighlightStats(highlights: Highlight[]) {
         grammar: grouped.grammar?.length || 0,
         vocabulary: grouped.vocabulary?.length || 0,
         coherence: grouped.coherence?.length || 0,
-        strength: grouped.strength?.length || 0,
     };
 }

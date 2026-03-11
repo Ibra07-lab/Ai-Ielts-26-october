@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Literal
+from typing import Literal, Optional, List, Dict, Any
 
 
 # This file will contain all models related to chat interactions.
@@ -24,3 +24,27 @@ class DeeperFeedbackRequest(BaseModel):
     question_id: str
     student_answer: str
 
+
+class RecentError(BaseModel):
+    """A recent wrong answer for training context."""
+    question: str
+    correct_answer: str
+    student_answer: str
+    passage_statement: Optional[str] = None
+
+
+class TrainingStartRequest(BaseModel):
+    """Request body for starting a training session."""
+    session_id: str
+    skill: str  # e.g. "tfng"
+    student_id: str
+    accuracy: float  # e.g. 30.0
+    total_attempted: int
+    correct: int
+    recent_errors: List[RecentError] = []
+
+
+class TrainingStartResponse(BaseModel):
+    """Response from starting a training session."""
+    session_id: str
+    first_message: str

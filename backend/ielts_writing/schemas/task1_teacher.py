@@ -83,12 +83,7 @@ class CriterionScore(BaseModel):
     status: StatusLevel
     
 
-class StrengthItem(BaseModel):
-    """A specific strength with quoted evidence."""
-    category: str  # e.g., "Overview", "Data Selection", "Vocabulary"
-    quote: str     # Exact quote from essay
-    explanation: str  # Why this is effective
-    
+
 
 class ErrorExample(BaseModel):
     """An error with original and corrected versions."""
@@ -197,12 +192,7 @@ class TaskAchievementFeedback(BaseModel):
     
     # General feedback components
     what_it_measures: List[str]
-    strengths: List[StrengthItem] = Field(
-        ...,
-        min_length=2,
-        max_length=5,
-        description="2-5 specific strengths with exact quotes from the essay"
-    )
+
     weakness_patterns: List[WeaknessPattern] = Field(
         ...,
         min_length=2,
@@ -230,12 +220,7 @@ class CoherenceCohesionFeedback(BaseModel):
     logical_data_grouping: bool   # Did they group data logically?
     
     what_it_measures: List[str]
-    strengths: List[StrengthItem] = Field(
-        ...,
-        min_length=2,
-        max_length=5,
-        description="2-5 specific strengths with exact quotes from the essay"
-    )
+
     weakness_patterns: List[WeaknessPattern] = Field(
         ...,
         min_length=2,
@@ -265,12 +250,7 @@ class LexicalResourceFeedback(BaseModel):
     spelling_issues: List[str]  # List of misspelled words
     
     what_it_measures: List[str]
-    strengths: List[StrengthItem] = Field(
-        ...,
-        min_length=2,
-        max_length=5,
-        description="2-5 specific strengths with exact quotes from the essay"
-    )
+
     weakness_patterns: List[WeaknessPattern] = Field(
         ...,
         min_length=2,
@@ -300,12 +280,7 @@ class GrammaticalRangeFeedback(BaseModel):
     sentence_variety: Literal["excellent", "good", "adequate", "limited"]
     
     what_it_measures: List[str]
-    strengths: List[StrengthItem] = Field(
-        ...,
-        min_length=2,
-        max_length=5,
-        description="2-5 specific strengths with exact quotes from the essay"
-    )
+
     weakness_patterns: List[WeaknessPattern] = Field(
         ...,
         min_length=2,

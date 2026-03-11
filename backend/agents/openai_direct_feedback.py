@@ -105,7 +105,7 @@ Please provide detailed, structured feedback in the JSON format described in the
 
     # Step 3: Call OpenAI
     response = client.chat.completions.create(
-        model="gpt-4-turbo-preview",
+        model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": user_message},

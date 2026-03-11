@@ -21,3 +21,7 @@ cachetools>=5.0.0
 
 # Optional (for production)
 gunicorn>=21.2.0
+
+# Database
+supabase>=2.0.0
+PyJWT>=2.8.0

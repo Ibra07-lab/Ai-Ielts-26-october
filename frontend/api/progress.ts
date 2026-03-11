@@ -4,7 +4,7 @@ export type SummaryRange = "daily" | "weekly" | "monthly";
 
 export interface Task {
 	id: string;
-	userId: number;
+	userId: string;
 	name: string;
 	category: TaskCategory;
 	difficulty: TaskDifficulty;
@@ -38,7 +38,7 @@ export interface TaskSuggestion {
 // In dev, set VITE_BACKEND_BASE_URL=http://localhost:4000 to call Encore directly.
 const API_ORIGIN = (import.meta as any).env?.VITE_BACKEND_BASE_URL || window.location.origin;
 
-export async function getSummary(userId: number, range: SummaryRange = "weekly"): Promise<ProgressSummary> {
+export async function getSummary(userId: string, range: SummaryRange = "weekly"): Promise<ProgressSummary> {
 	const url = new URL(`/progress/summary`, API_ORIGIN);
 	url.searchParams.set("userId", String(userId));
 	url.searchParams.set("range", range);
@@ -47,7 +47,7 @@ export async function getSummary(userId: number, range: SummaryRange = "weekly")
 	return await resp.json();
 }
 
-export async function listTasks(userId: number, range: "daily" | "weekly" | "monthly" = "weekly", status: "all" | "planned" | "in-progress" | "completed" = "all"): Promise<{ tasks: Task[] }> {
+export async function listTasks(userId: string, range: "daily" | "weekly" | "monthly" = "weekly", status: "all" | "planned" | "in-progress" | "completed" = "all"): Promise<{ tasks: Task[] }> {
 	const url = new URL(`/progress/tasks`, API_ORIGIN);
 	url.searchParams.set("userId", String(userId));
 	url.searchParams.set("range", range);
@@ -58,7 +58,7 @@ export async function listTasks(userId: number, range: "daily" | "weekly" | "mon
 }
 
 export async function createTask(task: {
-	userId: number;
+	userId: string;
 	name: string;
 	category: TaskCategory;
 	difficulty: TaskDifficulty;
@@ -94,7 +94,7 @@ export async function deleteTask(id: string): Promise<void> {
 	if (!resp.ok) throw new Error(`Failed to delete task: ${resp.status}`);
 }
 
-export async function generateSuggestions(params: { userId: number; range: SummaryRange; timeAvailableMinutes: number; targetBand?: number }): Promise<{ suggestions: TaskSuggestion[] }> {
+export async function generateSuggestions(params: { userId: string; range: SummaryRange; timeAvailableMinutes: number; targetBand?: number }): Promise<{ suggestions: TaskSuggestion[] }> {
 	const resp = await fetch(`${API_ORIGIN}/progress/ai/generate`, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
@@ -105,7 +105,7 @@ export async function generateSuggestions(params: { userId: number; range: Summa
 	return await resp.json();
 }
 
-export async function acceptSuggestions(params: { userId: number; suggestions: TaskSuggestion[] }): Promise<{ tasks: Task[] }> {
+export async function acceptSuggestions(params: { userId: string; suggestions: TaskSuggestion[] }): Promise<{ tasks: Task[] }> {
 	const resp = await fetch(`${API_ORIGIN}/progress/ai/accept`, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },

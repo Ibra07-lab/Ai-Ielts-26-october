@@ -5,9 +5,11 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { UserProvider } from "./contexts/UserContext";
 import { VocabularyProvider } from "./contexts/VocabularyContext";
 import Layout from "./components/Layout";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import SpeakingPractice from "./pages/SpeakingPractice";
 import WritingTask from "./pages/WritingTask";
+import WritingFeedbackHistory from "./pages/WritingFeedbackHistory";
 import ReadingPractice from "./pages/ReadingPractice";
 import ReadingTheory from "./pages/ReadingTheory";
 import ListeningPractice from "./pages/ListeningPractice";
@@ -17,10 +19,12 @@ import ProgressTracker from "./pages/ProgressTracker";
 import Settings from "./pages/Settings";
 import AICoach from "./pages/AICoach";
 import Subscription from "./pages/Subscription";
+import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ReadingTFNGQuiz from "./pages/ReadingTFNGQuiz";
 import MatchingHeadingsQuiz from "./pages/MatchingHeadingsQuiz";
 import ReadingTutor from "./pages/ReadingTutor";
+import VideoLesson from "./pages/VideoLesson";
 import FeedbackSummaryDemo from "./pages/FeedbackSummaryDemo";
 import ErrorBoundary from "./components/ErrorBoundary";
 
@@ -38,27 +42,33 @@ function AppInner() {
     <Router>
       <Layout>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/speaking" element={<SpeakingPractice />} />
-          <Route path="/writing" element={<WritingTask />} />
-          <Route path="/writing/task-1" element={<WritingTask defaultTab="task-1" />} />
-          <Route path="/writing/task-2" element={<WritingTask defaultTab="task-2" />} />
-          <Route path="/writing/feedback-demo" element={<FeedbackSummaryDemo />} />
-          <Route path="/reading" element={<ReadingPractice />} />
-          <Route path="/reading/quiz-tfng" element={<ReadingTFNGQuiz />} />
-          <Route path="/reading/quiz-matching-headings" element={<MatchingHeadingsQuiz />} />
-          <Route path="/reading/theory" element={<ReadingTheory />} />
-          <Route path="/reading/tutor-chat" element={<ReadingTutor />} />
-          <Route path="/tutor" element={<ReadingTutor />} />
-          <Route path="/listening" element={<ListeningPractice />} />
-          <Route path="/vocabulary" element={<VocabularyBuilder />} />
-          <Route path="/progress" element={<Progress />} />
-          <Route path="/progress-tracker" element={<ProgressTracker />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/coach" element={<AICoach />} />
-          <Route path="/subscription" element={<Subscription />} />
+          {/* Public routes */}
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+
+          {/* Protected routes */}
+          <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/speaking" element={<ProtectedRoute><SpeakingPractice /></ProtectedRoute>} />
+          <Route path="/writing" element={<ProtectedRoute><WritingTask /></ProtectedRoute>} />
+          <Route path="/writing/task-1" element={<ProtectedRoute><WritingTask defaultTab="task-1" /></ProtectedRoute>} />
+          <Route path="/writing/task-2" element={<ProtectedRoute><WritingTask defaultTab="task-2" /></ProtectedRoute>} />
+          <Route path="/writing/feedback-demo" element={<ProtectedRoute><FeedbackSummaryDemo /></ProtectedRoute>} />
+          <Route path="/writing/feedback/:id" element={<ProtectedRoute><WritingFeedbackHistory /></ProtectedRoute>} />
+          <Route path="/reading" element={<ProtectedRoute><ReadingPractice /></ProtectedRoute>} />
+          <Route path="/reading/quiz-tfng" element={<ProtectedRoute><ReadingTFNGQuiz /></ProtectedRoute>} />
+          <Route path="/reading/quiz-matching-headings" element={<ProtectedRoute><MatchingHeadingsQuiz /></ProtectedRoute>} />
+          <Route path="/reading/theory" element={<ProtectedRoute><ReadingTheory /></ProtectedRoute>} />
+          <Route path="/reading/tutor-chat" element={<ProtectedRoute><ReadingTutor /></ProtectedRoute>} />
+          <Route path="/tutor" element={<ProtectedRoute><ReadingTutor /></ProtectedRoute>} />
+          <Route path="/listening" element={<ProtectedRoute><ListeningPractice /></ProtectedRoute>} />
+          <Route path="/vocabulary" element={<ProtectedRoute><VocabularyBuilder /></ProtectedRoute>} />
+          <Route path="/progress" element={<ProtectedRoute><Progress /></ProtectedRoute>} />
+          <Route path="/progress-tracker" element={<ProtectedRoute><ProgressTracker /></ProtectedRoute>} />
+          <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+          <Route path="/coach" element={<ProtectedRoute><AICoach /></ProtectedRoute>} />
+          <Route path="/subscription" element={<ProtectedRoute><Subscription /></ProtectedRoute>} />
+          <Route path="/video-lesson/:id" element={<ProtectedRoute><VideoLesson /></ProtectedRoute>} />
         </Routes>
       </Layout>
     </Router>

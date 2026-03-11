@@ -18,7 +18,7 @@ export interface ChatResponse {
 export interface EssayAnalysisRequest {
   essay: string;
   taskType: number; // 1 or 2
-  userId: number;
+  userId: string;
 }
 
 export interface EssayAnalysisResponse {
@@ -36,7 +36,7 @@ export interface SpeakingAnalysisRequest {
   transcription: string;
   question: string;
   part: number;
-  userId: number;
+  userId: string;
 }
 
 export interface SpeakingAnalysisResponse {
@@ -98,7 +98,7 @@ export const chatWithCoach = api<ChatRequest, ChatResponse>(
 );
 
 // Enhanced chat with conversation memory
-export const chatWithCoachMemory = api<ChatRequest & { userId: number }, ChatResponse>(
+export const chatWithCoachMemory = api<ChatRequest & { userId: string }, ChatResponse>(
   { expose: true, method: "POST", path: "/ai/chat-memory" },
   async (req) => {
     const prompt = ChatPromptTemplate.fromMessages([
@@ -113,10 +113,10 @@ export const chatWithCoachMemory = api<ChatRequest & { userId: number }, ChatRes
     });
 
     const chain = prompt.pipe(model).pipe(new StringOutputParser());
-    
+
     // Simple in-memory conversation storage (in production, use persistent storage)
     const messageHistory = new ChatMessageHistory();
-    
+
     const chainWithHistory = new RunnableWithMessageHistory({
       runnable: chain,
       getMessageHistory: () => messageHistory,
@@ -169,19 +169,19 @@ SUGGESTIONS:
     });
 
     const chain = analysisPrompt.pipe(model).pipe(new StringOutputParser());
-    
+
     const analysis = await chain.invoke({ essay: req.essay });
-    
+
     // Parse the AI response (simplified parsing - in production, use more robust parsing)
     const taskResponse = extractScore(analysis, "TASK_RESPONSE") || 6.0;
     const coherenceCohesion = extractScore(analysis, "COHERENCE_COHESION") || 6.0;
     const lexicalResource = extractScore(analysis, "LEXICAL_RESOURCE") || 6.0;
     const grammaticalRange = extractScore(analysis, "GRAMMATICAL_RANGE") || 6.0;
-    const overallScore = extractScore(analysis, "OVERALL_SCORE") || 
+    const overallScore = extractScore(analysis, "OVERALL_SCORE") ||
       Math.round(((taskResponse + coherenceCohesion + lexicalResource + grammaticalRange) / 4) * 10) / 10;
-    
+
     const suggestions = extractSuggestions(analysis);
-    
+
     return {
       overallScore,
       taskResponse,
@@ -236,7 +236,7 @@ IMPROVEMENTS:
     });
 
     const chain = speakingPrompt.pipe(model).pipe(new StringOutputParser());
-    
+
     const analysis = await chain.invoke({
       question: req.question,
       transcription: req.transcription
@@ -247,7 +247,7 @@ IMPROVEMENTS:
     const lexicalResource = extractScore(analysis, "LEXICAL_RESOURCE") || 6.0;
     const grammaticalRange = extractScore(analysis, "GRAMMATICAL_RANGE") || 6.0;
     const pronunciation = extractScore(analysis, "PRONUNCIATION") || 6.0;
-    const overallBand = extractScore(analysis, "OVERALL_BAND") || 
+    const overallBand = extractScore(analysis, "OVERALL_BAND") ||
       Math.round(((fluencyCoherence + lexicalResource + grammaticalRange + pronunciation) / 4) * 10) / 10;
 
     const strengths = extractListItems(analysis, "STRENGTHS");
@@ -307,15 +307,15 @@ DIFFICULTY: [level]`],
     });
 
     const chain = vocabPrompt.pipe(model).pipe(new StringOutputParser());
-    
+
     const response = await chain.invoke({ word });
-    
+
     // Parse response
     const examples = extractListItems(response, "EXAMPLES");
     const synonyms = extractListItems(response, "SYNONYMS");
     const collocations = extractListItems(response, "COLLOCATIONS");
     const difficulty = extractField(response, "DIFFICULTY") || "Intermediate";
-    
+
     return {
       examples: examples.length > 0 ? examples : [
         `The ${word} was evident in the analysis.`,
@@ -346,7 +346,7 @@ function extractListItems(text: string, sectionName: string): string[] {
   const regex = new RegExp(`${sectionName}:[\\s\\S]*?(?=\\n[A-Z_]+:|$)`, 'i');
   const section = text.match(regex);
   if (!section) return [];
-  
+
   const items = section[0].match(/- (.+)/g);
   return items ? items.map(item => item.replace(/^- /, '').trim()) : [];
 }
@@ -355,7 +355,7 @@ function extractSuggestions(text: string): string[] {
   const suggestions = extractListItems(text, "SUGGESTIONS");
   return suggestions.length > 0 ? suggestions : [
     "Use more complex sentence structures",
-    "Include more topic-specific vocabulary", 
+    "Include more topic-specific vocabulary",
     "Improve paragraph transitions"
   ];
 }

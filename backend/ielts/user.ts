@@ -2,7 +2,7 @@ import { api, APIError } from "encore.dev/api";
 import { ieltsDB } from "./db";
 
 export interface User {
-  id: number;
+  id: string;
   name: string;
   targetBand: number;
   examDate?: string;
@@ -13,6 +13,7 @@ export interface User {
 }
 
 export interface CreateUserRequest {
+  id: string; // Supabase UUID
   name: string;
   targetBand: number;
   examDate?: string;
@@ -21,7 +22,7 @@ export interface CreateUserRequest {
 }
 
 export interface UpdateUserRequest {
-  id: number;
+  id: string;
   name?: string;
   targetBand?: number;
   examDate?: string;
@@ -34,22 +35,22 @@ export const createUser = api<CreateUserRequest, User>(
   { expose: true, method: "POST", path: "/users" },
   async (req) => {
     const user = await ieltsDB.queryRow<User>`
-      INSERT INTO users (name, target_band, exam_date, language, theme)
-      VALUES (${req.name}, ${req.targetBand}, ${req.examDate || null}, ${req.language || 'en'}, ${req.theme || 'light'})
+      INSERT INTO users (id, name, target_band, exam_date, language, theme)
+      VALUES (${req.id}, ${req.name}, ${req.targetBand}, ${req.examDate || null}, ${req.language || 'en'}, ${req.theme || 'light'})
       RETURNING id, name, target_band as "targetBand", exam_date as "examDate", language, theme, 
                 created_at as "createdAt", updated_at as "updatedAt"
     `;
-    
+
     if (!user) {
       throw APIError.internal("Failed to create user");
     }
-    
+
     return user;
   }
 );
 
 // Retrieves a user by ID.
-export const getUser = api<{ id: number }, User>(
+export const getUser = api<{ id: string }, User>(
   { expose: true, method: "GET", path: "/users/:id" },
   async ({ id }) => {
     const user = await ieltsDB.queryRow<User>`
@@ -57,11 +58,11 @@ export const getUser = api<{ id: number }, User>(
              created_at as "createdAt", updated_at as "updatedAt"
       FROM users WHERE id = ${id}
     `;
-    
+
     if (!user) {
       throw APIError.notFound("User not found");
     }
-    
+
     return user;
   }
 );
@@ -72,7 +73,7 @@ export const updateUser = api<UpdateUserRequest, User>(
   async (req) => {
     const updates: string[] = [];
     const values: any[] = [];
-    
+
     if (req.name !== undefined) {
       updates.push(`name = $${values.length + 1}`);
       values.push(req.name);
@@ -93,14 +94,14 @@ export const updateUser = api<UpdateUserRequest, User>(
       updates.push(`theme = $${values.length + 1}`);
       values.push(req.theme);
     }
-    
+
     if (updates.length === 0) {
       throw APIError.invalidArgument("No fields to update");
     }
-    
+
     updates.push(`updated_at = NOW()`);
     values.push(req.id);
-    
+
     const query = `
       UPDATE users 
       SET ${updates.join(', ')}
@@ -108,13 +109,13 @@ export const updateUser = api<UpdateUserRequest, User>(
       RETURNING id, name, target_band as "targetBand", exam_date as "examDate", language, theme,
                 created_at as "createdAt", updated_at as "updatedAt"
     `;
-    
+
     const user = await ieltsDB.rawQueryRow<User>(query, ...values);
-    
+
     if (!user) {
       throw APIError.notFound("User not found");
     }
-    
+
     return user;
   }
 );

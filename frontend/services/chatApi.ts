@@ -118,3 +118,54 @@ export function generateSessionId(): string {
   return `session_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
 }
 
+
+// ============================================================
+// Training Session API
+// ============================================================
+
+export interface RecentError {
+  question: string;
+  correct_answer: string;
+  student_answer: string;
+  passage_statement?: string;
+}
+
+export interface TrainingStartRequest {
+  session_id: string;
+  skill: string;
+  student_id: string;
+  accuracy: number;
+  total_attempted: number;
+  correct: number;
+  recent_errors: RecentError[];
+}
+
+export interface TrainingStartResponse {
+  session_id: string;
+  first_message: string;
+}
+
+// Start a multi-phase training session
+export async function startTrainingSession(
+  request: TrainingStartRequest
+): Promise<TrainingStartResponse> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/training/start`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(request),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error starting training session:', error);
+    throw error;
+  }
+}

@@ -17,7 +17,7 @@ export type Criterion =
     | "lexical_resource"
     | "grammatical_range_accuracy";
 
-export type HighlightType = "grammar" | "vocabulary" | "coherence" | "strength";
+export type HighlightType = "grammar" | "vocabulary" | "coherence";
 
 // ----------------------------------------------------------------------------
 // Score Explanation (Teacher Output)
@@ -119,7 +119,6 @@ export interface CriterionFeedback {
     summary: string;
     why_score_is_here: string;
     weak_spots: string[];
-    strengths: string[];
 }
 
 export interface DetailedFeedback {
@@ -127,6 +126,69 @@ export interface DetailedFeedback {
     coherence: CriterionFeedback;
     lexical: CriterionFeedback;
     grammar: CriterionFeedback;
+}
+
+// ----------------------------------------------------------------------------
+// Idea Development Analysis (from Explainer)
+// ----------------------------------------------------------------------------
+
+export interface IdeaNode {
+    paragraph_index: number;
+    idea_summary: string;
+    development_level: 'well_developed' | 'partially_developed' | 'underdeveloped' | 'missing';
+    development_details: string;
+    evidence_used?: string;
+    missing_elements: string[];
+}
+
+export interface AlternativeIdea {
+    idea: string;
+    why_strong: string;
+    example_sentence: string;
+    topic_relevance: string;
+}
+
+export interface IdeaDevelopmentAnalysis {
+    essay_thesis: string;
+    thesis_clarity: 'clear' | 'vague' | 'missing';
+    idea_map: IdeaNode[];
+    alternative_ideas: AlternativeIdea[];
+    overall_assessment: string;
+}
+
+// ----------------------------------------------------------------------------
+// Lexical Resource Breakdown (from Explainer)
+// ----------------------------------------------------------------------------
+
+export interface VocabDrill {
+    drill_name: string;
+    weakness_targeted: string;
+    instructions: string;
+    practice_items: string[];
+    example_before?: string;
+    example_after?: string;
+}
+
+export interface TopicWordBankItem {
+    term: string;
+    definition?: string;
+    example_sentence: string;
+}
+
+export interface TopicWordBank {
+    topic: string;
+    words: TopicWordBankItem[];
+    collocations: TopicWordBankItem[];
+}
+
+export interface LexicalBreakdown {
+    range_score: 'wide' | 'sufficient' | 'adequate' | 'limited';
+    range_details: string;
+    accuracy_score: 'precise' | 'generally_accurate' | 'some_errors' | 'frequent_errors';
+    accuracy_details: string;
+    vocab_drills: VocabDrill[];
+    topic_word_bank?: TopicWordBank;
+    overall_lr_assessment?: string;
 }
 
 // ----------------------------------------------------------------------------
@@ -179,9 +241,104 @@ export interface CoherenceAdvice {
     example: string;
 }
 
+export interface RootCauseAnalysis {
+    root_cause_type: string;
+    coaching_priority: string;
+    blocking_criterion: string;
+    score_cap_explanation: string;
+    evidence_from_essay: string;
+}
+
+export interface DiagnosisSummary {
+    strength_acknowledged: string;
+    core_limitation: string;
+    full_summary: string;
+}
+
+export interface TheOneBigChange {
+    change_statement: string;
+    why_this_matters_most: string;
+    what_to_stop_doing: string;
+    what_to_start_doing: string;
+    visual_reminder: string;
+}
+
+export interface BannedItem {
+    banned_element: string;
+    why_banned: string;
+    alternative_to_use: string;
+    example_transformation: string;
+}
+
+export interface RequiredElement {
+    required_technique: string;
+    minimum_instances: number;
+    how_to_implement: string;
+    example: string;
+}
+
+export interface PatternBreaker {
+    habit_identified: string;
+    habit_frequency: string;
+    banned_list: BannedItem[];
+    required_list: RequiredElement[];
+}
+
+export interface SuccessCriterion {
+    criterion: string;
+    how_to_check: string;
+}
+
+export interface MicroDrill {
+    drill_type: string;
+    drill_name: string;
+    time_limit_minutes: number;
+    purpose: string;
+    instructions: string;
+    practice_content: string;
+    success_criteria: SuccessCriterion[];
+    variation_for_tomorrow: string;
+    alternative_drill?: string;
+}
+
+export interface EssayConstraint {
+    constraint_id: number;
+    category: string;
+    rule: string;
+    rationale: string;
+    how_to_verify: string;
+}
+
+export interface NextEssayPlan {
+    recommended_prompt?: string;
+    prompt_type_to_practice: string;
+    rewrite_original: boolean;
+    constraints: EssayConstraint[];
+    pre_writing_checklist: string[];
+    target_word_count: number;
+    time_allocation: any; // Dict
+}
+
+export interface Motivation {
+    current_level_context: string;
+    specific_progress_marker: string;
+    achievable_next_milestone: string;
+    closing_message: string;
+}
+
+export interface ScoreContext {
+    current_overall: number;
+    lowest_criterion: string;
+    lowest_score: number;
+    highest_criterion: string;
+    highest_score: number;
+    realistic_next_target: number;
+    if_change_implemented: number;
+    improvement_timeline: string;
+}
+
 export interface CoachingResult {
     action_plan: string[]; // Array of 3 priority fixes
-    strengths: string[]; // Things done well
     weaknesses: string[]; // Areas to improve
     topic_analysis?: TopicAnalysis[]; // NEW
     topic_vocabulary?: TopicVocabulary; // NEW - Topic Word Bank
@@ -189,6 +346,17 @@ export interface CoachingResult {
     grammar_errors: GrammarError[];
     vocabulary_suggestions: VocabularySuggestion[];
     coherence_issues: CoherenceIssue[];
+
+    // Advanced Coaching
+    score_context?: ScoreContext;
+    root_cause_analysis?: RootCauseAnalysis;
+    diagnosis_summary?: DiagnosisSummary;
+    the_one_big_change?: TheOneBigChange;
+    pattern_breaker?: PatternBreaker;
+    micro_drill?: MicroDrill;
+    next_essay_plan?: NextEssayPlan;
+    motivation?: Motivation;
+
     raw_coach_output?: any; // Pass through full backend response
     raw_explainer_output?: any; // Pass through full explainer response (rewrites, etc)
 }
@@ -203,7 +371,7 @@ export interface Highlight {
     start: number; // Character position in essay
     end: number; // Character position in essay
     original: string;
-    corrected?: string; // Optional, not present for "strength" type
+    corrected?: string; // Optional
     reason: string;
     tip?: string;
     justification: string;
@@ -238,7 +406,6 @@ export interface RawBackendFeedback {
     };
     coaching: {
         action_plan: string[];
-        strengths: string[];
         weaknesses: string[];
         grammar_errors: GrammarError[];
         vocabulary_suggestions: VocabularySuggestion[];

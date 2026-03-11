@@ -1,50 +1,102 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import type { User } from "~backend/ielts/user";
+import { supabase } from "../lib/supabase";
+import type { User as SupabaseUser, Session } from "@supabase/supabase-js";
+
+interface AppUser {
+  id: string;        // Supabase UUID
+  email: string;
+  name: string;
+  targetBand: number;
+  examDate?: string;
+  language: string;
+  theme: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 interface UserContextType {
-  user: User | null;
-  setUser: (user: User | null) => void;
+  user: AppUser | null;
+  session: Session | null;
+  setUser: (user: AppUser | null) => void;
   isLoading: boolean;
+  signIn: (email: string, password: string) => Promise<{ error: string | null }>;
+  signUp: (email: string, password: string, name?: string) => Promise<{ error: string | null }>;
+  signOut: () => Promise<void>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
+function supabaseUserToAppUser(supabaseUser: SupabaseUser): AppUser {
+  return {
+    id: supabaseUser.id,
+    email: supabaseUser.email || "",
+    name: supabaseUser.user_metadata?.name || supabaseUser.email?.split("@")[0] || "Student",
+    targetBand: supabaseUser.user_metadata?.targetBand || 7.0,
+    examDate: supabaseUser.user_metadata?.examDate,
+    language: supabaseUser.user_metadata?.language || "en",
+    theme: supabaseUser.user_metadata?.theme || "light",
+    createdAt: supabaseUser.created_at,
+    updatedAt: supabaseUser.updated_at || supabaseUser.created_at,
+  };
+}
+
 export function UserProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AppUser | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check for existing user in localStorage
-    const savedUserId = localStorage.getItem("userId");
-    if (savedUserId) {
-      // In a real app, you would fetch the user data here
-      // For now, we'll create a mock user
-      const mockUser: User = {
-        id: parseInt(savedUserId),
-        name: "John Doe",
-        targetBand: 7.5,
-        examDate: "2024-06-15",
-        language: "en",
-        theme: "light",
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      };
-      setUser(mockUser);
-    }
-    setIsLoading(false);
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      if (session?.user) {
+        setUser(supabaseUserToAppUser(session.user));
+      }
+      setIsLoading(false);
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setSession(session);
+        if (session?.user) {
+          setUser(supabaseUserToAppUser(session.user));
+        } else {
+          setUser(null);
+        }
+        setIsLoading(false);
+      }
+    );
+
+    return () => subscription.unsubscribe();
   }, []);
 
-  const updateUser = (newUser: User | null) => {
-    setUser(newUser);
-    if (newUser) {
-      localStorage.setItem("userId", newUser.id.toString());
-    } else {
-      localStorage.removeItem("userId");
-    }
+  const signIn = async (email: string, password: string) => {
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    return { error: error?.message || null };
+  };
+
+  const signUp = async (email: string, password: string, name?: string) => {
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { name: name || email.split("@")[0] },
+      },
+    });
+    return { error: error?.message || null };
+  };
+
+  const signOut = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+    setSession(null);
   };
 
   return (
-    <UserContext.Provider value={{ user, setUser: updateUser, isLoading }}>
+    <UserContext.Provider
+      value={{ user, session, setUser, isLoading, signIn, signUp, signOut }}
+    >
       {children}
     </UserContext.Provider>
   );

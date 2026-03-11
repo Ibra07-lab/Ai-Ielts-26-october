@@ -1,0 +1,4 @@
+agents/INTEGRATION_EXAMPLE.ts(280,11): error TS7034: Variable 'results' implicitly has type 'any[]' in some locations where its type cannot be determined.
+agents/INTEGRATION_EXAMPLE.ts(283,30): error TS7005: Variable 'results' implicitly has an 'any[]' type.
+agents/INTEGRATION_EXAMPLE.ts(310,23): error TS7005: Variable 'results' implicitly has an 'any[]' type.
+agents/INTEGRATION_EXAMPLE.ts(311,7): error TS7005: Variable 'results' implicitly has an 'any[]' type.

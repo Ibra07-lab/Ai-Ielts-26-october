@@ -8,7 +8,7 @@ const WritingPracticeCard = () => {
     return (
         <div className="relative group w-full mx-auto h-full">
             {/* Container */}
-            <div className="relative overflow-hidden rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 shadow-xl transition-all duration-300 hover:shadow-2xl hover:border-blue-500/50 h-full flex flex-col group-hover:shadow-blue-500/20">
+            <div className="relative overflow-hidden rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-4 xl:p-5 shadow-xl transition-all duration-300 hover:shadow-2xl hover:border-blue-500/50 h-full flex flex-col group-hover:shadow-blue-500/20">
 
                 {/* Hover Gradient Effect */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-blue-500/20 via-transparent to-transparent rounded-2xl pointer-events-none" />
@@ -41,22 +41,19 @@ const WritingPracticeCard = () => {
                 <div className="relative z-10 flex flex-col h-full">
 
                     {/* Header */}
-                    <div className="flex justify-between items-start mb-6">
+                    <div className="flex justify-between items-start mb-4">
                         {/* Icon Box */}
-                        <div className="w-12 h-12 rounded-2xl bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center border border-blue-100 dark:border-blue-800/50 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform duration-300">
-                            <PenTool className="w-6 h-6" />
+                        <div className="w-10 h-10 rounded-2xl bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center border border-blue-100 dark:border-blue-800/50 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform duration-300">
+                            <PenTool className="w-5 h-5" />
                         </div>
 
                     </div>
 
                     {/* Typography */}
-                    <div className="mb-8">
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 tracking-tight group-hover:text-slate-800 dark:group-hover:text-white/90 transition-colors">
+                    <div className="mb-4">
+                        <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1.5 tracking-tight group-hover:text-slate-800 dark:group-hover:text-white/90 transition-colors line-clamp-1">
                             Writing Tasks
                         </h3>
-                        <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
-                            Improve your writing with instant feedback on grammar, vocabulary, and structure.
-                        </p>
                     </div>
 
                     {/* Buttons */}
@@ -64,38 +61,38 @@ const WritingPracticeCard = () => {
                         {/* Task 1 Button */}
                         <button
                             onClick={() => navigate('/writing/task-1')}
-                            className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white rounded-xl font-medium transition-all shadow-lg shadow-blue-900/20 group/btn1 relative overflow-hidden text-left"
+                            className="w-full py-2.5 px-3 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white rounded-xl font-medium transition-all shadow-lg shadow-blue-900/20 group/btn1 relative overflow-hidden text-left"
                         >
                             <div className="flex items-center justify-between relative z-10">
                                 <div className="flex flex-col">
-                                    <span className="text-sm font-bold flex items-center gap-2">
+                                    <span className="text-xs sm:text-sm font-bold flex items-center gap-1.5">
                                         Start Task 1
-                                        <svg className="w-4 h-4 opacity-0 -ml-2 group-hover/btn1:opacity-100 group-hover/btn1:ml-0 transition-all text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg className="w-3 h-3 sm:w-4 sm:h-4 opacity-0 -ml-2 group-hover/btn1:opacity-100 group-hover/btn1:ml-0 transition-all text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                         </svg>
                                     </span>
-                                    <span className="text-xs text-blue-100/80 font-normal">Reports & Letters</span>
+                                    <span className="text-[10px] text-blue-100/80 font-normal">Reports & Letters</span>
                                 </div>
-                                <FileText className="w-5 h-5 text-blue-200 opacity-60 group-hover/btn1:opacity-100 group-hover/btn1:rotate-[-5deg] transition-all" />
+                                <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-blue-200 opacity-60 group-hover/btn1:opacity-100 group-hover/btn1:rotate-[-5deg] transition-all" />
                             </div>
                         </button>
 
                         {/* Task 2 Button */}
                         <button
                             onClick={() => navigate('/writing/task-2')}
-                            className="w-full py-3 px-4 bg-transparent hover:bg-blue-50 border-2 border-blue-500/30 hover:border-blue-500 text-blue-600 hover:text-blue-700 rounded-xl font-medium transition-all group/btn2 text-left"
+                            className="w-full py-2.5 px-3 bg-transparent hover:bg-blue-50 border-2 border-blue-500/30 hover:border-blue-500 text-blue-600 hover:text-blue-700 rounded-xl font-medium transition-all group/btn2 text-left"
                         >
                             <div className="flex items-center justify-between">
                                 <div className="flex flex-col">
-                                    <span className="text-sm font-bold flex items-center gap-2">
+                                    <span className="text-xs sm:text-sm font-bold flex items-center gap-1.5">
                                         Start Task 2
-                                        <svg className="w-4 h-4 opacity-0 -ml-2 group-hover/btn2:opacity-100 group-hover/btn2:ml-0 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg className="w-3 h-3 sm:w-4 sm:h-4 opacity-0 -ml-2 group-hover/btn2:opacity-100 group-hover/btn2:ml-0 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                         </svg>
                                     </span>
-                                    <span className="text-xs text-slate-500 group-hover/btn2:text-blue-600/80 font-normal transition-colors">Essay Writing</span>
+                                    <span className="text-[10px] text-slate-500 group-hover/btn2:text-blue-600/80 font-normal transition-colors">Essay Writing</span>
                                 </div>
-                                <Edit3 className="w-5 h-5 text-slate-400 group-hover/btn2:text-blue-500 transition-colors" />
+                                <Edit3 className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 group-hover/btn2:text-blue-500 transition-colors" />
                             </div>
                         </button>
                     </div>

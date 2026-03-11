@@ -10,7 +10,7 @@ const ListeningPracticeCard = () => {
             {/* Container */}
             <div
                 onClick={() => navigate('/listening')}
-                className="relative overflow-hidden rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 shadow-xl h-full flex flex-col cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-4 xl:p-5 shadow-xl h-full flex flex-col cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all duration-300"
             >
 
                 {/* Hover Gradient Effect */}
@@ -44,28 +44,25 @@ const ListeningPracticeCard = () => {
                 <div className="relative z-10 flex flex-col h-full">
 
                     {/* Header */}
-                    <div className="flex justify-between items-start mb-6">
+                    <div className="flex justify-between items-start mb-4">
                         {/* Icon Box */}
-                        <div className="w-12 h-12 rounded-2xl bg-violet-100 dark:bg-violet-900/50 flex items-center justify-center border border-violet-100 dark:border-violet-800/50 text-violet-600 dark:text-violet-400 group-hover:scale-110 transition-transform duration-300">
-                            <Headphones className="w-6 h-6" />
+                        <div className="w-10 h-10 rounded-2xl bg-violet-100 dark:bg-violet-900/50 flex items-center justify-center border border-violet-100 dark:border-violet-800/50 text-violet-600 dark:text-violet-400 group-hover:scale-110 transition-transform duration-300">
+                            <Headphones className="w-5 h-5" />
                         </div>
 
                     </div>
 
                     {/* Typography */}
-                    <div className="mb-8">
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 tracking-tight group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
+                    <div className="mb-4">
+                        <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1.5 tracking-tight group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors line-clamp-1">
                             Listening Practice
                         </h3>
-                        <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
-                            Sharpen your listening skills with diverse audio clips, transcripts, and comprehension questions.
-                        </p>
                     </div>
 
                     {/* Buttons */}
                     <div className="mt-auto space-y-3">
                         <button
-                            className="w-full py-3 px-4 bg-violet-600 hover:bg-violet-700 text-white rounded-xl font-medium border border-violet-500 flex items-center justify-center gap-2 transition-colors"
+                            className="w-full py-2.5 px-3 bg-violet-600 hover:bg-violet-700 text-white rounded-xl font-medium border border-violet-500 flex items-center justify-center gap-2 transition-colors text-xs sm:text-sm"
                         >
                             Start Practice
                             <ArrowRight className="w-4 h-4" />

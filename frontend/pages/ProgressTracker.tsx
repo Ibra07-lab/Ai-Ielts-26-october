@@ -30,12 +30,12 @@ export default function ProgressTracker() {
 	const { data: dailyGoal } = useQuery({
 		queryKey: ["daily-goal", user?.id],
 		enabled: !!user,
-		queryFn: () => backend.ielts.getDailyGoal({ userId: user!.id }),
+		queryFn: () => backend.ielts.getDailyGoal(user!.id),
 	});
 	const { data: overview } = useQuery({
 		queryKey: ["progress-overview", user?.id],
 		enabled: !!user,
-		queryFn: () => backend.ielts.getProgress({ userId: user!.id }),
+		queryFn: () => backend.ielts.getProgress(user!.id),
 	});
 
 	const { data: summary } = useQuery({

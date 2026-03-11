@@ -28,37 +28,56 @@ export default function Progress() {
 
   const { data: progress } = useQuery({
     queryKey: ["progress", user?.id],
-    queryFn: () => (user ? backend.ielts.getProgress({ userId: user.id }) : null),
+    queryFn: () => (user ? backend.ielts.getProgress(user.id) : null),
     enabled: !!user,
   });
 
   const { data: speakingSessions } = useQuery({
     queryKey: ["speakingSessions", user?.id],
-    queryFn: () => (user ? backend.ielts.getSpeakingSessions({ userId: user.id }) : null),
+    queryFn: () => (user ? backend.ielts.getSpeakingSessions(user.id) : null),
     enabled: !!user,
   });
 
   const { data: writingSessions } = useQuery({
     queryKey: ["writingSessions", user?.id],
-    queryFn: () => (user ? backend.ielts.getWritingSessions({ userId: user.id }) : null),
+    queryFn: async () => {
+      if (!user) return null;
+      try {
+        const response = await fetch(`http://localhost:8002/writing/history/${user.id}`);
+        if (!response.ok) throw new Error("Failed to fetch history");
+        const data = await response.json();
+        const mappedSessions = (data.sessions || []).map((s: any) => ({
+          id: s.id,
+          taskType: s.task_type === 'task1' ? 1 : 2,
+          createdAt: s.created_at,
+          bandScore: s.overall_band,
+          content: s.essay,
+          prompt: s.question,
+        }));
+        return { sessions: mappedSessions };
+      } catch (error) {
+        console.error("Error fetching writing history:", error);
+        return { sessions: [] };
+      }
+    },
     enabled: !!user,
   });
 
   const { data: readingSessions } = useQuery({
     queryKey: ["readingSessions", user?.id],
-    queryFn: () => (user ? backend.ielts.getReadingSessions({ userId: user.id }) : null),
+    queryFn: () => (user ? backend.ielts.getReadingSessions(user.id) : null),
     enabled: !!user,
   });
 
   const { data: listeningSessions } = useQuery({
     queryKey: ["listeningSessions", user?.id],
-    queryFn: () => (user ? backend.ielts.getListeningSessions({ userId: user.id }) : null),
+    queryFn: () => (user ? backend.ielts.getListeningSessions(user.id) : null),
     enabled: !!user,
   });
 
   const { data: vocabularyProgress } = useQuery({
     queryKey: ["vocabularyProgress", user?.id],
-    queryFn: () => (user ? backend.ielts.getVocabularyProgress({ userId: user.id }) : null),
+    queryFn: () => (user ? backend.ielts.getVocabularyProgress(user.id) : null),
     enabled: !!user,
   });
 
@@ -156,17 +175,7 @@ export default function Progress() {
     (listeningSessions?.sessions?.length || 0) +
     (speakingSessions?.sessions?.length || 0);
 
-  const currentStreak = (() => {
-    let streak = 0;
-    const now = new Date();
-    for (let i = 0; i < dailyData.length; i++) {
-      const dayData = dailyData[dailyData.length - 1 - i];
-      if (i === 0 && dayData.total === 0) continue; // Today might not have activity yet
-      if (dayData.total > 0) streak++;
-      else break;
-    }
-    return streak;
-  })();
+
 
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 py-8 px-6 sm:px-8 lg:px-12 max-w-7xl mx-auto font-sans">
@@ -181,7 +190,7 @@ export default function Progress() {
             <h1 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">
               Your Progress
             </h1>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-slate-500 dark:text-slate-300 font-medium">
               Track your IELTS preparation journey
             </p>
           </div>
@@ -191,10 +200,10 @@ export default function Progress() {
       {/* ═══ QUICK STATS ROW ═══ */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
         <StatCard
-          icon={<Flame className="w-4 h-4" />}
-          iconBg="from-orange-400 to-red-500"
-          label="Current Streak"
-          value={`${currentStreak} day${currentStreak !== 1 ? "s" : ""}`}
+          icon={<BookOpen className="w-4 h-4" />}
+          iconBg="from-amber-400 to-orange-500"
+          label="Reading Tests"
+          value={(readingSessions?.sessions?.length || 0).toString()}
         />
         <StatCard
           icon={<CalendarDays className="w-4 h-4" />}
@@ -217,7 +226,7 @@ export default function Progress() {
       </div>
 
       {/* ═══ ACTIVITY CHART ═══ */}
-      <div className="mb-10 rounded-2xl border border-border/60 bg-white/80 dark:bg-white/[0.04] overflow-hidden shadow-sm backdrop-blur-sm">
+      <div className="mb-10 rounded-2xl border border-border/60 bg-white/80 dark:bg-white/5 overflow-hidden shadow-sm backdrop-blur-sm">
         <div className="flex items-center justify-between px-6 sm:px-8 pt-6">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
@@ -225,12 +234,12 @@ export default function Progress() {
             </div>
             <div>
               <h3 className="text-base font-bold text-foreground">Daily Activity</h3>
-              <p className="text-xs text-muted-foreground">Practice sessions per day</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Practice sessions per day</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-[11px] font-medium text-muted-foreground">Live</span>
+            <span className="text-[11px] font-bold text-slate-600 dark:text-slate-300">Live</span>
           </div>
         </div>
         <div className="h-[420px]">
@@ -244,7 +253,7 @@ export default function Progress() {
       </div>
 
       {/* ═══ SESSION ARCHIVES ═══ */}
-      <div className="rounded-2xl border border-border/60 bg-white/80 dark:bg-white/[0.04] overflow-hidden backdrop-blur-sm">
+      <div className="rounded-2xl border border-border/60 bg-white/80 dark:bg-white/5 overflow-hidden backdrop-blur-sm">
         <div className="px-6 sm:px-8 pt-6 pb-4">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-slate-600 to-slate-800 dark:from-slate-500 dark:to-slate-700 flex items-center justify-center">
@@ -257,7 +266,7 @@ export default function Progress() {
           </div>
 
           <Tabs defaultValue="writing" className="w-full">
-            <TabsList className="bg-slate-100 dark:bg-white/[0.06] rounded-xl p-1 h-auto w-auto inline-flex gap-1">
+            <TabsList className="bg-slate-100 dark:bg-white/10 rounded-xl p-1 h-auto w-auto inline-flex gap-1 border border-slate-200 dark:border-white/5">
               {[
                 { value: "writing", label: "Writing", icon: <PenTool className="w-3.5 h-3.5" /> },
                 { value: "reading", label: "Reading", icon: <BookOpen className="w-3.5 h-3.5" /> },
@@ -311,7 +320,7 @@ export default function Progress() {
                       score={`${session.score}/${session.totalQuestions}`}
                       scoreLabel="Score"
                       accentColor="from-emerald-400 to-teal-500"
-                      onClick={() => navigate(`/reading/feedback/${session.id}`)}
+
                     />
                   )}
                 />
@@ -378,7 +387,7 @@ function StatCard({
         {icon}
       </div>
       <div>
-        <p className="text-xs text-muted-foreground font-medium mb-0.5">{label}</p>
+        <p className="text-xs text-slate-500 dark:text-slate-400 font-bold mb-0.5">{label}</p>
         <p className="text-xl font-bold text-foreground tabular-nums tracking-tight">{value}</p>
       </div>
     </div>
@@ -409,10 +418,10 @@ function SessionRow({
       <div className="flex items-center gap-4 min-w-0 flex-1">
         <div className={`w-2 h-10 rounded-full bg-gradient-to-b ${accentColor} opacity-60 group-hover:opacity-100 transition-opacity flex-shrink-0`} />
         <div className="min-w-0">
-          <p className="text-sm font-semibold text-foreground truncate group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+          <p className="text-sm font-bold text-slate-900 dark:text-slate-100 truncate group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
             {label}
           </p>
-          <p className="text-[11px] text-muted-foreground mt-0.5">
+          <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium mt-0.5">
             {new Date(date).toLocaleDateString("en-GB", {
               day: "numeric",
               month: "short",
@@ -423,8 +432,8 @@ function SessionRow({
       </div>
       <div className="flex items-center gap-3 flex-shrink-0">
         <div className="text-right">
-          <p className="text-base font-bold text-foreground tabular-nums">{score}</p>
-          <p className="text-[10px] text-muted-foreground font-medium">{scoreLabel}</p>
+          <p className="text-base font-bold text-slate-900 dark:text-white tabular-nums">{score}</p>
+          <p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold">{scoreLabel}</p>
         </div>
         <ChevronRight className="w-4 h-4 text-muted-foreground/40 group-hover:text-blue-500 transition-all transform group-hover:translate-x-0.5" />
       </div>

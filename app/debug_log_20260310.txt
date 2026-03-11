@@ -1,0 +1,174 @@
+2026-03-10 06:43:19,729 - INFO - [THEORY] Successfully loaded theory data from C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\data\reading-theory.json
+2026-03-10 06:43:19,729 - INFO - [THEORY] Successfully loaded theory data from C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\data\reading-theory.json
+2026-03-10 06:43:19,731 - INFO - [MODULES] Loaded tfng-struggle-modules.json for category 'tfng'
+2026-03-10 06:43:19,732 - INFO - [MODULES] Loaded tfng-struggle-modules.json for category 'tfng'
+2026-03-10 06:43:19,732 - INFO - [MODULES] Loaded matching-headings-modules.json for category 'headings'
+2026-03-10 06:43:19,733 - INFO - [MODULES] Loaded matching-headings-modules.json for category 'headings'
+2026-03-10 06:43:19,735 - INFO - [MODULES] Loaded matching-features-modules.json for category 'features'
+2026-03-10 06:43:19,735 - INFO - [MODULES] Loaded matching-features-modules.json for category 'features'
+2026-03-10 06:43:19,736 - INFO - [MODULES] Loaded mcq-modules.json for category 'mcq'
+2026-03-10 06:43:19,736 - INFO - [MODULES] Loaded mcq-modules.json for category 'mcq'
+2026-03-10 06:43:19,737 - INFO - [MODULES] Loaded completion-modules.json for category 'completion'
+2026-03-10 06:43:19,737 - INFO - [MODULES] Loaded completion-modules.json for category 'completion'
+2026-03-10 06:43:19,738 - INFO - [MODULES] Loaded timing-modules.json for category 'timing'
+2026-03-10 06:43:19,738 - INFO - [MODULES] Loaded timing-modules.json for category 'timing'
+2026-03-10 06:43:19,738 - INFO - [MODULES] Successfully loaded 6 module categories
+2026-03-10 06:43:19,739 - INFO - [MODULES] Successfully loaded 6 module categories
+2026-03-10 06:43:19,742 - INFO - [TRAINING] Starting training session: skill=tfng, session=session_1773106997866_rv4bn32
+2026-03-10 06:43:19,745 - INFO - [TRAINING] Starting training session: skill=tfng, session=session_1773106997866_rv4bn32
+2026-03-10 06:43:19,900 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2026-03-10 06:43:19,900 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2026-03-10 06:43:19,904 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2026-03-10 06:43:19,904 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2026-03-10 06:43:20,213 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001155DA7DA90>
+2026-03-10 06:43:20,214 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001155C31ED50> server_hostname='api.openai.com' timeout=None
+2026-03-10 06:43:20,215 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001155D91BD90>
+2026-03-10 06:43:20,215 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001155C17CF50> server_hostname='api.openai.com' timeout=None
+2026-03-10 06:43:20,369 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001155D91B610>
+2026-03-10 06:43:20,369 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-10 06:43:20,373 - DEBUG - send_request_headers.complete
+2026-03-10 06:43:20,373 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-10 06:43:20,374 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001155D8FBBB0>
+2026-03-10 06:43:20,374 - DEBUG - send_request_body.complete
+2026-03-10 06:43:20,374 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-10 06:43:20,374 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-10 06:43:20,375 - DEBUG - send_request_headers.complete
+2026-03-10 06:43:20,375 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-10 06:43:20,375 - DEBUG - send_request_body.complete
+2026-03-10 06:43:20,375 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-10 06:43:23,565 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Tue, 10 Mar 2026 01:43:23 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9d9ea0c03fec65bc-FRA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'ielts-agent'), (b'openai-processing-ms', b'2294'), (b'openai-project', b'proj_p2TG3sHr67NTFigiOV4yQBrK'), (b'openai-version', b'2020-10-01'), (b'x-openai-proxy-wasm', b'v0.1'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'200000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'198757'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'372ms'), (b'x-request-id', b'req_aba0168f9cb74a188d25ddaeea3ae408'), (b'set-cookie', b'__cf_bm=5FtyzYSduZrsuI_E9QzhE4qzKQsxBLNSEtL8p3EWM_U-1773107000.3531032-1.0.1.1-jIINH_Fu7EGbNkUgp3kgqHU6c_.VvQsVQ0cMd3gIxDxA8f.15mNMbxzDSXji0OD40moFoY.h4gChZRwmptqhXtTBEE4zFov.OmjvG.ZxJeedQEgi6VN_.hbuaEduBPcz; HttpOnly; Secure; Path=/; Domain=api.openai.com; Expires=Tue, 10 Mar 2026 02:13:23 GMT'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-10 06:43:23,566 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-10 06:43:23,567 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-10 06:43:23,570 - DEBUG - receive_response_body.complete
+2026-03-10 06:43:23,570 - DEBUG - response_closed.started
+2026-03-10 06:43:23,570 - DEBUG - response_closed.complete
+2026-03-10 06:43:23,570 - DEBUG - HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers({'date': 'Tue, 10 Mar 2026 01:43:23 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'cf-ray': '9d9ea0c03fec65bc-FRA', 'cf-cache-status': 'DYNAMIC', 'server': 'cloudflare', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'access-control-expose-headers': 'X-Request-ID', 'openai-organization': 'ielts-agent', 'openai-processing-ms': '2294', 'openai-project': 'proj_p2TG3sHr67NTFigiOV4yQBrK', 'openai-version': '2020-10-01', 'x-openai-proxy-wasm': 'v0.1', 'x-ratelimit-limit-requests': '10000', 'x-ratelimit-limit-tokens': '200000', 'x-ratelimit-remaining-requests': '9999', 'x-ratelimit-remaining-tokens': '198757', 'x-ratelimit-reset-requests': '8.64s', 'x-ratelimit-reset-tokens': '372ms', 'x-request-id': 'req_aba0168f9cb74a188d25ddaeea3ae408', 'set-cookie': '__cf_bm=5FtyzYSduZrsuI_E9QzhE4qzKQsxBLNSEtL8p3EWM_U-1773107000.3531032-1.0.1.1-jIINH_Fu7EGbNkUgp3kgqHU6c_.VvQsVQ0cMd3gIxDxA8f.15mNMbxzDSXji0OD40moFoY.h4gChZRwmptqhXtTBEE4zFov.OmjvG.ZxJeedQEgi6VN_.hbuaEduBPcz; HttpOnly; Secure; Path=/; Domain=api.openai.com; Expires=Tue, 10 Mar 2026 02:13:23 GMT', 'content-encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'})
+2026-03-10 06:43:23,571 - DEBUG - request_id: req_aba0168f9cb74a188d25ddaeea3ae408
+2026-03-10 06:43:23,580 - INFO - [TRAINING] Session started, Phase 1 diagnostic begun
+2026-03-10 06:43:24,069 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Tue, 10 Mar 2026 01:43:23 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9d9ea0c04a233a80-FRA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'ielts-agent'), (b'openai-processing-ms', b'2324'), (b'openai-project', b'proj_p2TG3sHr67NTFigiOV4yQBrK'), (b'openai-version', b'2020-10-01'), (b'x-openai-proxy-wasm', b'v0.1'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'200000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'198757'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'372ms'), (b'x-request-id', b'req_a1f16b47fdff4c518e0d581bb82912b2'), (b'set-cookie', b'__cf_bm=lMPueH32tEBTPRoLvNcUu4xCjXSg5nDxcFUvMNdJ1Ng-1773107000.3625028-1.0.1.1-Mky7oHrl1XuBdxyekAZxHr00p7P.N2UOrCn6ZREVcNLG9n2R2qtCamk2lg1gEK9uB8I8x6dwiPv_UDFp72ohHjZvunV8KJ5dRoaXkFJYu9o6pSQeI6vIavdlD0Ue91.e; HttpOnly; Secure; Path=/; Domain=api.openai.com; Expires=Tue, 10 Mar 2026 02:13:23 GMT'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-10 06:43:24,070 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-10 06:43:24,070 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-10 06:43:24,071 - DEBUG - receive_response_body.complete
+2026-03-10 06:43:24,071 - DEBUG - response_closed.started
+2026-03-10 06:43:24,071 - DEBUG - response_closed.complete
+2026-03-10 06:43:24,071 - DEBUG - HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers({'date': 'Tue, 10 Mar 2026 01:43:23 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'cf-ray': '9d9ea0c04a233a80-FRA', 'cf-cache-status': 'DYNAMIC', 'server': 'cloudflare', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'access-control-expose-headers': 'X-Request-ID', 'openai-organization': 'ielts-agent', 'openai-processing-ms': '2324', 'openai-project': 'proj_p2TG3sHr67NTFigiOV4yQBrK', 'openai-version': '2020-10-01', 'x-openai-proxy-wasm': 'v0.1', 'x-ratelimit-limit-requests': '10000', 'x-ratelimit-limit-tokens': '200000', 'x-ratelimit-remaining-requests': '9999', 'x-ratelimit-remaining-tokens': '198757', 'x-ratelimit-reset-requests': '8.64s', 'x-ratelimit-reset-tokens': '372ms', 'x-request-id': 'req_a1f16b47fdff4c518e0d581bb82912b2', 'set-cookie': '__cf_bm=lMPueH32tEBTPRoLvNcUu4xCjXSg5nDxcFUvMNdJ1Ng-1773107000.3625028-1.0.1.1-Mky7oHrl1XuBdxyekAZxHr00p7P.N2UOrCn6ZREVcNLG9n2R2qtCamk2lg1gEK9uB8I8x6dwiPv_UDFp72ohHjZvunV8KJ5dRoaXkFJYu9o6pSQeI6vIavdlD0Ue91.e; HttpOnly; Secure; Path=/; Domain=api.openai.com; Expires=Tue, 10 Mar 2026 02:13:23 GMT', 'content-encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'})
+2026-03-10 06:43:24,072 - DEBUG - request_id: req_a1f16b47fdff4c518e0d581bb82912b2
+2026-03-10 06:43:24,073 - INFO - [TRAINING] Session started, Phase 1 diagnostic begun
+2026-03-10 06:51:47,733 - INFO - [TRAINING] Starting training session: skill=tfng, session=session_1773107507399_mq9gc7t
+2026-03-10 06:51:47,740 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2026-03-10 06:51:47,740 - DEBUG - close.started
+2026-03-10 06:51:47,741 - INFO - [TRAINING] Starting training session: skill=tfng, session=session_1773107507399_mq9gc7t
+2026-03-10 06:51:47,741 - DEBUG - close.complete
+2026-03-10 06:51:47,746 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2026-03-10 06:51:47,746 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2026-03-10 06:51:47,746 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2026-03-10 06:51:48,071 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001155D9AC180>
+2026-03-10 06:51:48,072 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001155C17CF50> server_hostname='api.openai.com' timeout=None
+2026-03-10 06:51:48,073 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001155D8B9C70>
+2026-03-10 06:51:48,073 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001155C17CF50> server_hostname='api.openai.com' timeout=None
+2026-03-10 06:51:48,201 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001155DA4C160>
+2026-03-10 06:51:48,206 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-10 06:51:48,207 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001155DA4C8D0>
+2026-03-10 06:51:48,207 - DEBUG - send_request_headers.complete
+2026-03-10 06:51:48,207 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-10 06:51:48,208 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-10 06:51:48,208 - DEBUG - send_request_body.complete
+2026-03-10 06:51:48,208 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-10 06:51:48,208 - DEBUG - send_request_headers.complete
+2026-03-10 06:51:48,208 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-10 06:51:48,209 - DEBUG - send_request_body.complete
+2026-03-10 06:51:48,209 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-10 06:51:51,885 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Tue, 10 Mar 2026 01:51:51 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9d9ead25fff6f16a-FRA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'ielts-agent'), (b'openai-processing-ms', b'2294'), (b'openai-project', b'proj_p2TG3sHr67NTFigiOV4yQBrK'), (b'openai-version', b'2020-10-01'), (b'x-openai-proxy-wasm', b'v0.1'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'200000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'198757'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'372ms'), (b'x-request-id', b'req_7ba672a9cc66448ebf150f464202bd66'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-10 06:51:51,886 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-10 06:51:51,886 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-10 06:51:51,886 - DEBUG - receive_response_body.complete
+2026-03-10 06:51:51,886 - DEBUG - response_closed.started
+2026-03-10 06:51:51,887 - DEBUG - response_closed.complete
+2026-03-10 06:51:51,887 - DEBUG - HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers({'date': 'Tue, 10 Mar 2026 01:51:51 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'cf-ray': '9d9ead25fff6f16a-FRA', 'cf-cache-status': 'DYNAMIC', 'server': 'cloudflare', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'access-control-expose-headers': 'X-Request-ID', 'openai-organization': 'ielts-agent', 'openai-processing-ms': '2294', 'openai-project': 'proj_p2TG3sHr67NTFigiOV4yQBrK', 'openai-version': '2020-10-01', 'x-openai-proxy-wasm': 'v0.1', 'x-ratelimit-limit-requests': '10000', 'x-ratelimit-limit-tokens': '200000', 'x-ratelimit-remaining-requests': '9999', 'x-ratelimit-remaining-tokens': '198757', 'x-ratelimit-reset-requests': '8.64s', 'x-ratelimit-reset-tokens': '372ms', 'x-request-id': 'req_7ba672a9cc66448ebf150f464202bd66', 'content-encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'})
+2026-03-10 06:51:51,887 - DEBUG - request_id: req_7ba672a9cc66448ebf150f464202bd66
+2026-03-10 06:51:51,889 - INFO - [TRAINING] Session started, Phase 1 diagnostic begun
+2026-03-10 06:51:52,203 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Tue, 10 Mar 2026 01:51:52 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9d9ead262e273736-FRA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'ielts-agent'), (b'openai-processing-ms', b'2304'), (b'openai-project', b'proj_p2TG3sHr67NTFigiOV4yQBrK'), (b'openai-version', b'2020-10-01'), (b'x-openai-proxy-wasm', b'v0.1'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'200000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'198757'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'372ms'), (b'x-request-id', b'req_47c249dec47d4c0c8317bb7174cb5628'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-10 06:51:52,204 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-10 06:51:52,204 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-10 06:51:52,215 - DEBUG - receive_response_body.complete
+2026-03-10 06:51:52,215 - DEBUG - response_closed.started
+2026-03-10 06:51:52,215 - DEBUG - response_closed.complete
+2026-03-10 06:51:52,216 - DEBUG - HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers({'date': 'Tue, 10 Mar 2026 01:51:52 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'cf-ray': '9d9ead262e273736-FRA', 'cf-cache-status': 'DYNAMIC', 'server': 'cloudflare', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'access-control-expose-headers': 'X-Request-ID', 'openai-organization': 'ielts-agent', 'openai-processing-ms': '2304', 'openai-project': 'proj_p2TG3sHr67NTFigiOV4yQBrK', 'openai-version': '2020-10-01', 'x-openai-proxy-wasm': 'v0.1', 'x-ratelimit-limit-requests': '10000', 'x-ratelimit-limit-tokens': '200000', 'x-ratelimit-remaining-requests': '9999', 'x-ratelimit-remaining-tokens': '198757', 'x-ratelimit-reset-requests': '8.64s', 'x-ratelimit-reset-tokens': '372ms', 'x-request-id': 'req_47c249dec47d4c0c8317bb7174cb5628', 'content-encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'})
+2026-03-10 06:51:52,216 - DEBUG - request_id: req_47c249dec47d4c0c8317bb7174cb5628
+2026-03-10 06:51:52,217 - INFO - [TRAINING] Session started, Phase 1 diagnostic begun
+2026-03-10 06:56:12,013 - INFO - [TRAINING] Starting training session: skill=tfng, session=session_1773107771659_7an6ww1
+2026-03-10 06:56:12,017 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2026-03-10 06:56:12,018 - DEBUG - close.started
+2026-03-10 06:56:12,018 - INFO - [TRAINING] Starting training session: skill=tfng, session=session_1773107771659_7an6ww1
+2026-03-10 06:56:12,019 - DEBUG - close.complete
+2026-03-10 06:56:12,019 - DEBUG - close.started
+2026-03-10 06:56:12,024 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2026-03-10 06:56:12,024 - DEBUG - close.complete
+2026-03-10 06:56:12,024 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2026-03-10 06:56:12,024 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2026-03-10 06:56:12,198 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001155D971550>
+2026-03-10 06:56:12,198 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001155C17CF50> server_hostname='api.openai.com' timeout=None
+2026-03-10 06:56:12,199 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001155D971150>
+2026-03-10 06:56:12,199 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001155C17CF50> server_hostname='api.openai.com' timeout=None
+2026-03-10 06:56:12,335 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001155D968D70>
+2026-03-10 06:56:12,339 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-10 06:56:12,340 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001155C133890>
+2026-03-10 06:56:12,340 - DEBUG - send_request_headers.complete
+2026-03-10 06:56:12,341 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-10 06:56:12,341 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-10 06:56:12,341 - DEBUG - send_request_body.complete
+2026-03-10 06:56:12,342 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-10 06:56:12,342 - DEBUG - send_request_headers.complete
+2026-03-10 06:56:12,342 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-10 06:56:12,342 - DEBUG - send_request_body.complete
+2026-03-10 06:56:12,343 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-10 06:56:15,135 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Tue, 10 Mar 2026 01:56:14 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9d9eb398c8ce7d53-FRA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'ielts-agent'), (b'openai-processing-ms', b'2489'), (b'openai-project', b'proj_p2TG3sHr67NTFigiOV4yQBrK'), (b'openai-version', b'2020-10-01'), (b'x-openai-proxy-wasm', b'v0.1'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'200000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'198757'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'372ms'), (b'x-request-id', b'req_73e710124de347bd86ccddcaba5b8231'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-10 06:56:15,135 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-10 06:56:15,136 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-10 06:56:15,140 - DEBUG - receive_response_body.complete
+2026-03-10 06:56:15,141 - DEBUG - response_closed.started
+2026-03-10 06:56:15,141 - DEBUG - response_closed.complete
+2026-03-10 06:56:15,141 - DEBUG - HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers({'date': 'Tue, 10 Mar 2026 01:56:14 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'cf-ray': '9d9eb398c8ce7d53-FRA', 'cf-cache-status': 'DYNAMIC', 'server': 'cloudflare', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'access-control-expose-headers': 'X-Request-ID', 'openai-organization': 'ielts-agent', 'openai-processing-ms': '2489', 'openai-project': 'proj_p2TG3sHr67NTFigiOV4yQBrK', 'openai-version': '2020-10-01', 'x-openai-proxy-wasm': 'v0.1', 'x-ratelimit-limit-requests': '10000', 'x-ratelimit-limit-tokens': '200000', 'x-ratelimit-remaining-requests': '9999', 'x-ratelimit-remaining-tokens': '198757', 'x-ratelimit-reset-requests': '8.64s', 'x-ratelimit-reset-tokens': '372ms', 'x-request-id': 'req_73e710124de347bd86ccddcaba5b8231', 'content-encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'})
+2026-03-10 06:56:15,141 - DEBUG - request_id: req_73e710124de347bd86ccddcaba5b8231
+2026-03-10 06:56:15,143 - INFO - [TRAINING] Session started, Phase 1 diagnostic begun
+2026-03-10 06:56:16,022 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Tue, 10 Mar 2026 01:56:15 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9d9eb398dbecd275-FRA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'ielts-agent'), (b'openai-processing-ms', b'2526'), (b'openai-project', b'proj_p2TG3sHr67NTFigiOV4yQBrK'), (b'openai-version', b'2020-10-01'), (b'x-openai-proxy-wasm', b'v0.1'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'200000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'198757'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'372ms'), (b'x-request-id', b'req_3cbbc60d0b5c4b64bd0ee012deea7ecd'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-10 06:56:16,023 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-10 06:56:16,023 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-10 06:56:16,023 - DEBUG - receive_response_body.complete
+2026-03-10 06:56:16,024 - DEBUG - response_closed.started
+2026-03-10 06:56:16,024 - DEBUG - response_closed.complete
+2026-03-10 06:56:16,024 - DEBUG - HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers({'date': 'Tue, 10 Mar 2026 01:56:15 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'cf-ray': '9d9eb398dbecd275-FRA', 'cf-cache-status': 'DYNAMIC', 'server': 'cloudflare', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'access-control-expose-headers': 'X-Request-ID', 'openai-organization': 'ielts-agent', 'openai-processing-ms': '2526', 'openai-project': 'proj_p2TG3sHr67NTFigiOV4yQBrK', 'openai-version': '2020-10-01', 'x-openai-proxy-wasm': 'v0.1', 'x-ratelimit-limit-requests': '10000', 'x-ratelimit-limit-tokens': '200000', 'x-ratelimit-remaining-requests': '9999', 'x-ratelimit-remaining-tokens': '198757', 'x-ratelimit-reset-requests': '8.64s', 'x-ratelimit-reset-tokens': '372ms', 'x-request-id': 'req_3cbbc60d0b5c4b64bd0ee012deea7ecd', 'content-encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'})
+2026-03-10 06:56:16,025 - DEBUG - request_id: req_3cbbc60d0b5c4b64bd0ee012deea7ecd
+2026-03-10 06:56:16,026 - INFO - [TRAINING] Session started, Phase 1 diagnostic begun
+2026-03-10 06:56:20,106 - INFO - [TRAINING] Starting training session: skill=tfng, session=session_1773107780085_ers3q67
+2026-03-10 06:56:20,111 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2026-03-10 06:56:20,112 - INFO - [TRAINING] Starting training session: skill=tfng, session=session_1773107780085_ers3q67
+2026-03-10 06:56:20,117 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2026-03-10 06:56:20,117 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-10 06:56:20,118 - DEBUG - send_request_headers.complete
+2026-03-10 06:56:20,118 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-10 06:56:20,118 - DEBUG - send_request_body.complete
+2026-03-10 06:56:20,119 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-10 06:56:20,119 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-10 06:56:20,119 - DEBUG - send_request_headers.complete
+2026-03-10 06:56:20,120 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-10 06:56:20,120 - DEBUG - send_request_body.complete
+2026-03-10 06:56:20,120 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-10 06:56:23,030 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Tue, 10 Mar 2026 01:56:22 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9d9eb3c969de7d53-FRA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'ielts-agent'), (b'openai-processing-ms', b'2625'), (b'openai-project', b'proj_p2TG3sHr67NTFigiOV4yQBrK'), (b'openai-version', b'2020-10-01'), (b'x-openai-proxy-wasm', b'v0.1'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'200000'), (b'x-ratelimit-remaining-requests', b'9997'), (b'x-ratelimit-remaining-tokens', b'198757'), (b'x-ratelimit-reset-requests', b'18.143s'), (b'x-ratelimit-reset-tokens', b'372ms'), (b'x-request-id', b'req_d25a1c644f5143b8b643a5ba62448e94'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-10 06:56:23,031 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-10 06:56:23,031 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-10 06:56:23,032 - DEBUG - receive_response_body.complete
+2026-03-10 06:56:23,032 - DEBUG - response_closed.started
+2026-03-10 06:56:23,032 - DEBUG - response_closed.complete
+2026-03-10 06:56:23,033 - DEBUG - HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers({'date': 'Tue, 10 Mar 2026 01:56:22 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'cf-ray': '9d9eb3c969de7d53-FRA', 'cf-cache-status': 'DYNAMIC', 'server': 'cloudflare', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'access-control-expose-headers': 'X-Request-ID', 'openai-organization': 'ielts-agent', 'openai-processing-ms': '2625', 'openai-project': 'proj_p2TG3sHr67NTFigiOV4yQBrK', 'openai-version': '2020-10-01', 'x-openai-proxy-wasm': 'v0.1', 'x-ratelimit-limit-requests': '10000', 'x-ratelimit-limit-tokens': '200000', 'x-ratelimit-remaining-requests': '9997', 'x-ratelimit-remaining-tokens': '198757', 'x-ratelimit-reset-requests': '18.143s', 'x-ratelimit-reset-tokens': '372ms', 'x-request-id': 'req_d25a1c644f5143b8b643a5ba62448e94', 'content-encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'})
+2026-03-10 06:56:23,034 - DEBUG - request_id: req_d25a1c644f5143b8b643a5ba62448e94
+2026-03-10 06:56:23,036 - INFO - [TRAINING] Session started, Phase 1 diagnostic begun
+2026-03-10 06:56:23,135 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Tue, 10 Mar 2026 01:56:22 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9d9eb3c96e32d275-FRA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'ielts-agent'), (b'openai-processing-ms', b'2726'), (b'openai-project', b'proj_p2TG3sHr67NTFigiOV4yQBrK'), (b'openai-version', b'2020-10-01'), (b'x-openai-proxy-wasm', b'v0.1'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'200000'), (b'x-ratelimit-remaining-requests', b'9997'), (b'x-ratelimit-remaining-tokens', b'198757'), (b'x-ratelimit-reset-requests', b'18.999s'), (b'x-ratelimit-reset-tokens', b'372ms'), (b'x-request-id', b'req_729ccb3ff9ce472ebfd6045d0a66605d'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-10 06:56:23,136 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-10 06:56:23,137 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-10 06:56:23,139 - DEBUG - receive_response_body.complete
+2026-03-10 06:56:23,140 - DEBUG - response_closed.started
+2026-03-10 06:56:23,140 - DEBUG - response_closed.complete
+2026-03-10 06:56:23,140 - DEBUG - HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers({'date': 'Tue, 10 Mar 2026 01:56:22 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'cf-ray': '9d9eb3c96e32d275-FRA', 'cf-cache-status': 'DYNAMIC', 'server': 'cloudflare', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'access-control-expose-headers': 'X-Request-ID', 'openai-organization': 'ielts-agent', 'openai-processing-ms': '2726', 'openai-project': 'proj_p2TG3sHr67NTFigiOV4yQBrK', 'openai-version': '2020-10-01', 'x-openai-proxy-wasm': 'v0.1', 'x-ratelimit-limit-requests': '10000', 'x-ratelimit-limit-tokens': '200000', 'x-ratelimit-remaining-requests': '9997', 'x-ratelimit-remaining-tokens': '198757', 'x-ratelimit-reset-requests': '18.999s', 'x-ratelimit-reset-tokens': '372ms', 'x-request-id': 'req_729ccb3ff9ce472ebfd6045d0a66605d', 'content-encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'})
+2026-03-10 06:56:23,140 - DEBUG - request_id: req_729ccb3ff9ce472ebfd6045d0a66605d
+2026-03-10 06:56:23,141 - INFO - [TRAINING] Session started, Phase 1 diagnostic begun

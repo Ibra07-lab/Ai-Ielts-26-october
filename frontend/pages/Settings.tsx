@@ -36,7 +36,7 @@ export default function Settings() {
   const createUserMutation = useMutation({
     mutationFn: backend.ielts.createUser,
     onSuccess: (data) => {
-      setUser(data);
+      setUser(data as any); // Encore User → AppUser bridge
       queryClient.invalidateQueries({ queryKey: ["progress"] });
       toast({
         title: "Profile created successfully!",
@@ -55,10 +55,10 @@ export default function Settings() {
   });
 
   const updateUserMutation = useMutation({
-    mutationFn: ({ id, ...params }: { id: number } & Omit<UpdateUserRequest, "id">) =>
-      backend.ielts.updateUser({ id, ...params }),
+    mutationFn: ({ id, ...params }: { id: string } & Omit<UpdateUserRequest, "id">) =>
+      backend.ielts.updateUser(id, params as any),
     onSuccess: (data) => {
-      setUser(data);
+      setUser(data as any); // Encore User → AppUser bridge
       queryClient.invalidateQueries({ queryKey: ["progress"] });
       toast({
         title: "Profile updated successfully!",
@@ -100,7 +100,7 @@ export default function Settings() {
         ...submissionData,
       });
     } else {
-      createUserMutation.mutate(submissionData);
+      createUserMutation.mutate({ id: user!.id, ...submissionData });
     }
   };
 

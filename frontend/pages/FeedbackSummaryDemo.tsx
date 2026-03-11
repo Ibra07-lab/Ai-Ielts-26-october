@@ -51,10 +51,6 @@ const SAMPLE_COACHING: CoachingResult = {
         "Expand vocabulary for specific topics",
         "Use more formal linking words"
     ],
-    strengths: [
-        "Clear main idea presented in the introduction",
-        "Good use of cohesive devices such as \"in fact\" and \"However\""
-    ],
     weaknesses: [
         "Some repetitive vocabulary in the second paragraph",
         "Minor punctuation errors with compound sentences"

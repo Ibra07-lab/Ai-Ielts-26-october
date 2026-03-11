@@ -112,6 +112,7 @@ app = FastAPI(
 from ielts_writing.service import router as writing_router  # DEPRECATED — legacy 2-agent pipeline
 from ielts_writing.routes.task1 import router as task1_router
 from ielts_writing.routes.task2 import router as task2_router
+from ielts_writing.routes.history import router as history_router
 
 # Configure CORS - allow all origins for development
 # Using "*" ensures no CORS issues between frontend (5173) and backend (8002)
@@ -129,6 +130,7 @@ app.add_middleware(
 app.include_router(writing_router)
 app.include_router(task1_router)
 app.include_router(task2_router)
+app.include_router(history_router)
 
 
 # Health check models

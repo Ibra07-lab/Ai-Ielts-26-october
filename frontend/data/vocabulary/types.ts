@@ -104,6 +104,7 @@ export interface TopicData {
     words: WordData[];
     exercises: {
         synonymSwap: SynonymSwapExercise[];
+        writingSynonymSwap?: SynonymSwapExercise[];
         contextTetris: ContextTetrisExercise[];
         speakToUnlock: SpeakToUnlockExercise[];
     };

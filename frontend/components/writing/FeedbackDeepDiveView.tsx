@@ -1,6 +1,7 @@
-import { useState, useMemo } from 'react';
+﻿import { useState, useMemo } from 'react';
+import { diffWords } from 'diff';
 import { motion } from "framer-motion";
-import { ArrowLeft, CheckCircle2, AlertTriangle, BookOpen, PenTool, Layout, Scale, AlignLeft, AlertCircle, ArrowRight, Info, Target, FileText, Sparkles } from "lucide-react";
+import { ArrowLeft, CheckCircle2, AlertTriangle, BookOpen, PenTool, Layout, Scale, AlignLeft, AlertCircle, ArrowRight, Info, Target, FileText, Sparkles, Merge, Activity, ShieldAlert, Dumbbell, Clock, ListChecks, Lightbulb, Map, Compass, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HighlightedEssay, Correction } from "./HighlightedEssay";
 import { EvaluationResult, CoachingResult, Criterion, Highlight } from "@/types/writing-feedback";
@@ -82,43 +83,15 @@ export function FeedbackDeepDiveView({
 
     // Helper to get specific feedback items for the Right Column
     const getFeedbackItems = (criterion: Criterion) => {
-        const items: { type: 'strength' | 'weakness' | 'info', title: string, content: string }[] = [];
-
-        // Helper to get AI-generated strength for a criterion
-        const getAIStrength = (criterionKey: string) => {
-            return coaching.raw_explainer_output?.criterion_strengths?.find(
-                (s: any) => s.criterion === criterionKey
-            );
-        };
+        const items: { type: 'weakness' | 'info', title: string, content: string }[] = [];
 
         if (criterion === 'task_response' || criterion === 'task_achievement') {
-            coaching.strengths.forEach(s => items.push({ type: 'strength', title: 'Strength', content: s }));
             coaching.weaknesses.forEach(w => items.push({ type: 'weakness', title: 'Improvement Area', content: w }));
             if (coaching.action_plan) {
                 items.push({ type: 'info', title: 'Action Plan', content: coaching.action_plan[0] });
             }
         } else if (criterion === 'coherence_cohesion') {
             const ccScore = evaluation.criterion_scores.find(s => s.criterion === 'coherence_cohesion')?.band || 0;
-            const aiStrength = getAIStrength('coherence_cohesion');
-
-            if (aiStrength) {
-                items.push({
-                    type: 'strength',
-                    title: aiStrength.title,
-                    content: aiStrength.description + (aiStrength.evidence_from_essay ? ` For example: "${aiStrength.evidence_from_essay}"` : '')
-                });
-            } else {
-                // Fallback templates
-                if (ccScore >= 8) {
-                    items.push({ type: 'strength', title: 'Masterful Essay Flow', content: "Your essay demonstrates exceptional coherence with ideas flowing naturally from one to the next. Paragraph transitions are seamless, and you use sophisticated referencing techniques (this, such, these) to connect ideas." });
-                } else if (ccScore >= 7) {
-                    items.push({ type: 'strength', title: 'Strong Logical Organization', content: "Your ideas are well-organized with clear logical progression throughout the essay. Each paragraph builds upon the previous one, and your use of cohesive devices generally helps guide the reader." });
-                } else if (ccScore >= 6) {
-                    items.push({ type: 'strength', title: 'Clear Essay Structure', content: "Your essay has a recognizable structure with an introduction, body paragraphs, and conclusion. Paragraphing is logical, and each paragraph generally focuses on one main idea." });
-                } else if (ccScore >= 5) {
-                    items.push({ type: 'strength', title: 'Basic Organization Present', content: "You've made an effort to organize your ideas into paragraphs, which shows understanding of essay structure. Building on this foundation will significantly boost your coherence score." });
-                }
-            }
 
             coaching.coherence_issues.forEach(i => items.push({
                 type: 'weakness',
@@ -135,26 +108,6 @@ export function FeedbackDeepDiveView({
             }
         } else if (criterion === 'lexical_resource') {
             const lrScore = evaluation.criterion_scores.find(s => s.criterion === 'lexical_resource')?.band || 0;
-            const aiStrength = getAIStrength('lexical_resource');
-
-            if (aiStrength) {
-                items.push({
-                    type: 'strength',
-                    title: aiStrength.title,
-                    content: aiStrength.description + (aiStrength.evidence_from_essay ? ` For example: "${aiStrength.evidence_from_essay}"` : '')
-                });
-            } else {
-                // Fallback templates
-                if (lrScore >= 8) {
-                    items.push({ type: 'strength', title: 'Sophisticated Word Choice', content: "Your vocabulary demonstrates sophistication and precision throughout the essay. You use less common words naturally and accurately, showing awareness of collocations and subtle word meanings." });
-                } else if (lrScore >= 7) {
-                    items.push({ type: 'strength', title: 'Good Vocabulary Range', content: "You show a solid range of vocabulary with some less common words used appropriately. Your word choices are generally accurate and contribute to the clarity of your argument." });
-                } else if (lrScore >= 6) {
-                    items.push({ type: 'strength', title: 'Adequate Vocabulary', content: "Your vocabulary is sufficient for the task, and you've attempted to use some less common words. You can express your ideas clearly, which is the foundation for good vocabulary use." });
-                } else if (lrScore >= 5) {
-                    items.push({ type: 'strength', title: 'Basic Vocabulary Present', content: "You have basic vocabulary to express your main ideas. While some word choices may be limited, you're able to communicate your position." });
-                }
-            }
 
             coaching.vocabulary_suggestions.forEach(v => items.push({
                 type: 'weakness',
@@ -171,26 +124,6 @@ export function FeedbackDeepDiveView({
             }
         } else if (criterion === 'grammatical_range_accuracy') {
             const grScore = evaluation.criterion_scores.find(s => s.criterion === 'grammatical_range_accuracy')?.band || 0;
-            const aiStrength = getAIStrength('grammatical_range_accuracy');
-
-            if (aiStrength) {
-                items.push({
-                    type: 'strength',
-                    title: aiStrength.title,
-                    content: aiStrength.description + (aiStrength.evidence_from_essay ? ` For example: "${aiStrength.evidence_from_essay}"` : '')
-                });
-            } else {
-                // Fallback templates
-                if (grScore >= 8) {
-                    items.push({ type: 'strength', title: 'Excellent Grammar Control', content: "Your essay demonstrates excellent grammatical control with a wide range of complex structures used accurately. Any errors are rare and do not impede communication." });
-                } else if (grScore >= 7) {
-                    items.push({ type: 'strength', title: 'Good Grammatical Range', content: "You use a variety of sentence structures including complex sentences with reasonable accuracy. Your grammar generally supports clear communication." });
-                } else if (grScore >= 6) {
-                    items.push({ type: 'strength', title: 'Adequate Grammar', content: "Your grammar is generally understandable with a mix of simple and complex sentences. While errors occur, they don't significantly impair meaning." });
-                } else if (grScore >= 5) {
-                    items.push({ type: 'strength', title: 'Basic Structures Present', content: "You can form basic sentences that communicate your meaning. While errors are noticeable, core ideas come through." });
-                }
-            }
 
             coaching.grammar_errors.forEach(g => items.push({
                 type: 'weakness',
@@ -211,7 +144,7 @@ export function FeedbackDeepDiveView({
     };
 
     // Tab State
-    const [activeTab, setActiveTab] = useState<'report' | 'strengths' | 'issues' | 'summary'>('report');
+    const [activeTab, setActiveTab] = useState<'report' | 'issues' | 'summary'>('report');
 
     // Essay View Mode: 'original' or 'improved'
     const [essayViewMode, setEssayViewMode] = useState<'original' | 'improved'>('original');
@@ -225,7 +158,7 @@ export function FeedbackDeepDiveView({
     const corrections: Correction[] = useMemo(() => {
         const result: Correction[] = [];
 
-        // Grammar errors
+        // 1. Grammar errors
         if (coaching.grammar_errors) {
             for (const err of coaching.grammar_errors) {
                 if (err.original && err.corrected) {
@@ -240,7 +173,7 @@ export function FeedbackDeepDiveView({
             }
         }
 
-        // Vocabulary suggestions 
+        // 2. Vocabulary suggestions 
         if (coaching.vocabulary_suggestions) {
             for (const sug of coaching.vocabulary_suggestions) {
                 if (sug.original && sug.better_options && sug.better_options.length > 0) {
@@ -254,7 +187,7 @@ export function FeedbackDeepDiveView({
             }
         }
 
-        // Coherence issues
+        // 3. Coherence issues
         if (coaching.coherence_issues) {
             for (const issue of coaching.coherence_issues) {
                 const corrected = issue.corrected || issue.suggestion;
@@ -269,6 +202,49 @@ export function FeedbackDeepDiveView({
             }
         }
 
+        // 4. Macro Feedback (Paragraph Rewrites)
+        const explainer = coaching.raw_explainer_output;
+        if (explainer?.macro_feedback) {
+            for (const macro of explainer.macro_feedback) {
+                if (macro.original_paragraph && macro.improved_paragraph) {
+                    result.push({
+                        original: macro.original_paragraph,
+                        corrected: macro.improved_paragraph,
+                        explanation: macro.logic_diagnosis || 'Structural logic improvement',
+                        type: 'coherence'
+                    });
+                }
+            }
+        }
+
+        // 5. Cohesion Fixes
+        if (explainer?.cohesion_fixes) {
+            for (const fix of explainer.cohesion_fixes) {
+                if (fix.original_sentence && fix.improved_sentence) {
+                    result.push({
+                        original: fix.original_sentence,
+                        corrected: fix.improved_sentence,
+                        explanation: fix.technique_explanation || 'Improved cohesion and flow',
+                        type: 'coherence'
+                    });
+                }
+            }
+        }
+
+        // 6. Cliche Replacements
+        if (explainer?.vocabulary_feedback?.cliche_replacements) {
+            for (const rel of explainer.vocabulary_feedback.cliche_replacements) {
+                if (rel.original_sentence && rel.improved_sentence) {
+                    result.push({
+                        original: rel.original_sentence,
+                        corrected: rel.improved_sentence,
+                        explanation: rel.why_better || 'Better lexical choice',
+                        type: 'vocabulary'
+                    });
+                }
+            }
+        }
+
         return result;
     }, [coaching]);
 
@@ -277,213 +253,199 @@ export function FeedbackDeepDiveView({
     const currentScore = evaluation.criterion_scores.find(s => s.criterion === currentCriterion)?.band || 0;
 
     // Filter items for tabs
-    const strengthItems = feedbackItems.filter(i => i.type === 'strength');
     const issueItems = feedbackItems.filter(i => i.type === 'weakness' || (i.type === 'info' && i.title !== 'Action Plan' && i.title !== 'To Reach Band 8'));
     const actionItems = feedbackItems.filter(i => i.title === 'Action Plan' || i.title === 'To Reach Band 8');
 
     return (
-        <div className="flex flex-col h-full bg-[#0f172a] text-slate-100 overflow-hidden">
+        <div className="flex flex-col h-full bg-white dark:bg-[#0f172a] text-slate-900 dark:text-slate-100 overflow-hidden">
 
             {/* TOP BAR: Scores & Criteria Selection */}
-            <div className="h-14 shrink-0 bg-[#0f172a] border-b border-slate-800 flex items-center px-4 justify-between z-30">
-                {/* Left: Back Button + Overall Score */}
-                <div className="flex items-center gap-3">
-                    <Button
-                        variant="ghost"
-                        onClick={onBack}
-                        className="gap-2 text-slate-400 hover:text-white hover:bg-slate-800 h-8 px-3 text-xs"
-                    >
-                        <ArrowLeft className="w-3.5 h-3.5" />
-                        Back
-                    </Button>
+            <div className="shrink-0 pt-1.5 px-3 md:px-5 w-full mx-auto z-[100] relative">
+                <div className="bg-white dark:bg-[#0f172a] rounded-lg border border-slate-200/80 dark:border-slate-800/80 flex items-center px-3 justify-between shadow-sm flex-wrap gap-3 py-2 md:h-11 md:py-0">
+                    {/* Left: Back Button + Overall Score */}
+                    <div className="flex items-center gap-3 shrink-0">
+                        <Button
+                            variant="ghost"
+                            onClick={onBack}
+                            className="gap-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 h-7 px-2.5 text-xs"
+                        >
+                            <ArrowLeft className="w-3.5 h-3.5" />
+                            Back
+                        </Button>
 
-                    <div className="h-7 w-px bg-slate-800" />
+                        <div className="h-6 w-px bg-slate-100 dark:bg-slate-800" />
 
-                    <div className="flex items-baseline gap-2">
-                        <span className="text-base font-black text-white tracking-tight">Band {evaluation.overall_band}</span>
-                        <span className="text-[10px] font-medium text-slate-500 bg-slate-800/50 px-2 py-0.5 rounded-full border border-slate-700">{evaluation.word_count}w</span>
+                        <div className="flex items-baseline gap-2">
+                            <span className="text-sm font-black text-slate-900 dark:text-white tracking-tight">Band {evaluation.overall_band}</span>
+                            <span className="text-[10px] font-medium text-slate-600 dark:text-slate-500 bg-slate-100/80 dark:bg-slate-800/50 px-2 py-0.5 rounded-full border border-slate-300 dark:border-slate-700">{evaluation.word_count}w</span>
+                        </div>
                     </div>
 
-                    <div className="h-7 w-px bg-slate-800" />
-
-                    {/* Criteria Tabs - Horizontal */}
-                    <div className="flex items-center gap-1">
+                    {/* Right: Criteria Selection */}
+                    <div className="flex items-center gap-1.5 overflow-x-auto hide-scrollbar w-full md:w-auto pb-1 md:pb-0">
                         {ORDERED_CRITERIA.map(crit => {
                             const config = CRITERIA_CONFIG[crit];
-                            const score = evaluation.criterion_scores.find(s => s.criterion === crit);
+                            const score = evaluation.criterion_scores.find(s => s.criterion === crit)?.band || 0;
                             const isActive = currentCriterion === crit;
-                            const scoreVal = score?.band || 0;
 
-                            let scoreColor = "text-rose-400";
-                            if (scoreVal >= 7) scoreColor = "text-emerald-400";
-                            else if (scoreVal >= 6) scoreColor = "text-amber-400";
+                            let scoreColor = "text-rose-600 bg-rose-50 dark:text-rose-400 dark:bg-rose-500/10";
+                            if (score >= 7) scoreColor = "text-emerald-700 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-500/10";
+                            else if (score >= 6) scoreColor = "text-amber-600 bg-amber-50 dark:text-amber-400 dark:bg-amber-500/10";
 
                             return (
                                 <button
                                     key={crit}
                                     onClick={() => onCriterionChange(crit)}
                                     className={cn(
-                                        "flex items-center gap-2 px-3 py-1.5 rounded-md border transition-all duration-200",
+                                        "flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-all shrink-0 border",
                                         isActive
-                                            ? "bg-slate-800 border-slate-600 shadow-md"
-                                            : "bg-transparent border-transparent hover:bg-slate-800/50"
+                                            ? "bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm text-slate-900 dark:text-white"
+                                            : "border-transparent text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-300"
                                     )}
                                 >
-                                    <span className={cn("text-[11px] font-bold whitespace-nowrap", isActive ? "text-white" : "text-slate-400")}>
-                                        {config.label}
-                                    </span>
-                                    <span className={cn("text-xs font-mono font-black", scoreColor)}>
-                                        {scoreVal}
+                                    <config.icon className="w-3.5 h-3.5" />
+                                    <span>{config.label.split(' ')[0]}</span>
+                                    <span className={cn("px-1.5 py-0.5 rounded text-[10px] leading-none", scoreColor)}>
+                                        {score}
                                     </span>
                                 </button>
                             );
                         })}
                     </div>
                 </div>
-
-                {/* Right: Legend */}
-                <div className="flex gap-3 text-[10px] font-bold uppercase tracking-widest pl-4 border-l border-slate-800 items-center">
-                    <span className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> Strength</span>
-                    <span className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-red-500" /> Weakness</span>
-                </div>
             </div>
 
-            {/* MAIN CONTENT AREA: 2 Columns */}
-            <div className="flex-1 flex min-h-0 overflow-hidden">
-                {/* COLUMN 1: LEFT ESSAY (40%) */}
-                <div className="w-[40%] flex flex-col bg-[#0f172a] relative border-r border-slate-800/50 min-h-0 overflow-hidden">
-                    {/* Toggle Buttons */}
-                    <div className="shrink-0 px-6 py-3 border-b border-slate-800/50 bg-slate-900/50">
-                        <div className="flex bg-slate-800/50 p-1 rounded-lg border border-slate-700 w-fit">
-                            <button
-                                onClick={() => setEssayViewMode('original')}
-                                className={cn(
-                                    "px-4 py-2 rounded-md text-xs font-bold transition-all flex items-center gap-2",
-                                    essayViewMode === 'original'
-                                        ? "bg-slate-700 text-white shadow-lg"
-                                        : "text-slate-400 hover:text-slate-200 hover:bg-slate-700/50"
-                                )}
-                            >
-                                <FileText className="w-3.5 h-3.5" />
-                                Original
-                            </button>
-                            <button
-                                onClick={() => setEssayViewMode('improved')}
-                                className={cn(
-                                    "px-4 py-2 rounded-md text-xs font-bold transition-all flex items-center gap-2",
-                                    essayViewMode === 'improved'
-                                        ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/25"
-                                        : "text-slate-400 hover:text-emerald-300 hover:bg-emerald-500/20"
-                                )}
-                            >
-                                <Sparkles className="w-3.5 h-3.5" />
-                                Improved
-                            </button>
+            {/* MAIN CONTENT */}
+            <div className="flex-1 w-full mx-auto overflow-y-auto custom-scrollbar scroll-smooth relative flex flex-col lg:flex-row gap-6 items-start md:px-6 pt-2 pb-4">
+
+                {/* SECTION 1: TOP ESSAY (Left side on desktop) */}
+                <div className="relative flex flex-col shrink-0 bg-slate-50 dark:bg-[#0B1120] rounded-xl md:border border-slate-200/60 dark:border-slate-800/80 md:shadow-[0_2px_20px_rgb(0,0,0,0.02)] w-full lg:w-[40%] lg:max-w-none" id="essay-top">
+
+
+
+                    {/* SECTION 1: TOP ESSAY (Full height) */}
+                    <div className="flex flex-col relative w-full">
+                        {/* Toggle Buttons */}
+                        <div className="shrink-0 px-6 py-4 bg-transparent z-10 flex flex-col items-center justify-center">
+                            <div className="flex bg-white dark:bg-slate-900/80 p-1.5 rounded-full shadow-[0_2px_10px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100 dark:border-slate-800 w-fit">
+                                <button
+                                    onClick={() => setEssayViewMode('original')}
+                                    className={cn(
+                                        "px-4 py-2 rounded-md text-xs font-bold transition-all flex items-center gap-2",
+                                        essayViewMode === 'original'
+                                            ? "bg-slate-200 dark:bg-slate-700 text-white shadow-lg"
+                                            : "text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:text-slate-200 hover:bg-slate-700/50"
+                                    )}
+                                >
+                                    <FileText className="w-3.5 h-3.5" />
+                                    Original
+                                </button>
+                                <button
+                                    onClick={() => setEssayViewMode('improved')}
+                                    className={cn(
+                                        "px-4 py-2 rounded-md text-xs font-bold transition-all flex items-center gap-2",
+                                        essayViewMode === 'improved'
+                                            ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/25"
+                                            : "text-slate-500 dark:text-slate-400 hover:text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500/20"
+                                    )}
+                                >
+                                    <Sparkles className="w-3.5 h-3.5" />
+                                    Improved
+                                </button>
+                            </div>
+
                         </div>
-                        <p className="text-[10px] text-slate-500 mt-2">
-                            {essayViewMode === 'original'
-                                ? "🔍 Hover over underlined text to see corrections"
-                                : "✨ Showing essay with all corrections applied"}
-                        </p>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto custom-scrollbar px-5 py-4">
-                        <div className="leading-relaxed text-lg text-slate-200 font-serif">
+                    <div className="px-5 pb-8 mx-auto w-full">
+                        <div className="leading-relaxed text-lg text-slate-800 dark:text-slate-200 font-serif">
                             <HighlightedEssay
                                 essayText={essay}
                                 highlights={highlights
-                                    .filter(h => {
-                                        if (activeTab === 'strengths') return h.type === 'strength';
-                                        if (activeTab === 'issues') return h.type !== 'strength';
-                                        return true;
-                                    })
                                     .map(h => ({
                                         text: h.original,
-                                        type: h.type === 'strength' ? 'strength' : 'weakness'
+                                        type: 'weakness' as const
                                     }))}
                                 corrections={corrections}
                                 viewMode={essayViewMode}
                             />
                         </div>
-                        <div className="h-20" /> {/* Bottom padding */}
+                        <div className="h-8" /> {/* Bottom padding */}
                     </div>
+
+                    {/* Floating Action Button (Mobile/Small Screens) */}
+                    <motion.div
+                        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 md:hidden"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.5 }}
+                    >
+                        <Button
+                            className="bg-indigo-500 hover:bg-indigo-600 shadow-lg shadow-indigo-500/25 rounded-full px-6 flex items-center gap-2"
+                            onClick={() => {
+                                document.getElementById('feedback-section')?.scrollIntoView({ behavior: 'smooth' });
+                            }}
+                        >
+                            View Feedback <ArrowRight className="w-4 h-4" />
+                        </Button>
+                    </motion.div>
                 </div>
 
-                {/* COLUMN 2: RIGHT FEEDBACK (60%) */}
-                <div className="w-[60%] bg-[#111827] flex flex-col min-h-0 overflow-hidden relative">
-                    {/* Feedback Header - compact */}
-                    <div className="px-5 py-2.5 border-b border-slate-800 bg-[#1e293b]/30 shrink-0 z-20 flex items-center justify-between gap-4">
-                        {/* Left: Criterion label + score badge */}
-                        <div className="flex items-center gap-3 min-w-0">
-                            {Icon && <Icon className="w-4 h-4 text-slate-400 shrink-0" />}
-                            <div className="min-w-0">
-                                <div className="flex items-center gap-2">
-                                    <h3 className="font-black text-white text-sm leading-tight">{CRITERIA_CONFIG[currentCriterion].label}</h3>
-                                    <div className={cn(
-                                        "px-2 py-0.5 rounded text-xs font-black shrink-0",
-                                        currentScore >= 7 ? "bg-emerald-500/15 text-emerald-400" :
-                                            currentScore >= 6 ? "bg-amber-500/15 text-amber-400" :
-                                                "bg-rose-500/15 text-rose-400"
-                                    )}>
-                                        B{currentScore}
-                                    </div>
-                                </div>
-                                <p className="text-[10px] text-slate-500 leading-tight truncate">{CRITERIA_CONFIG[currentCriterion].description}</p>
+                {/* SECTION 2: BOTTOM FEEDBACK (Right side on desktop) */}
+                <div className="relative flex flex-col shrink-0 bg-slate-50 dark:bg-[#0B1120] rounded-xl border-t md:border border-slate-200/60 dark:border-slate-800/80 md:shadow-[0_2px_20px_rgb(0,0,0,0.02)] p-4 md:p-6 w-full flex-1 lg:max-w-[60%] lg:sticky lg:top-4 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto hide-scrollbar" id="feedback-section">
+                    {/* Header Banner - Floating Tabs Style */}
+                    <div className="sticky top-0 z-20 w-full mx-auto mb-2 pt-1 pb-2 bg-slate-50 dark:bg-[#0B1120]">
+                        <div className="bg-white dark:bg-slate-900 rounded-xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] dark:shadow-none border border-slate-200/60 dark:border-slate-800/80 px-3 py-1.5 flex flex-col items-start gap-1">
+                            {/* Top: Criterion label + score badge */}
+                            <div className="flex items-center gap-2 min-w-0 w-full">
+                                {Icon && <Icon className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />}
+                                <h2 className="text-[13px] font-black text-slate-900 dark:text-white uppercase tracking-wider truncate flex-1">
+                                    {CRITERIA_CONFIG[currentCriterion].label}
+                                </h2>
                             </div>
-                        </div>
 
-                        {/* Right: Tabs */}
-                        <div className="flex bg-slate-900/60 p-0.5 rounded-lg border border-slate-800 shrink-0">
-                            <button
-                                onClick={() => setActiveTab('report')}
-                                className={cn(
-                                    "px-3 py-1 rounded-md text-[11px] font-bold transition-all flex items-center gap-1.5",
-                                    activeTab === 'report'
-                                        ? "bg-indigo-500 text-white shadow-md"
-                                        : "text-slate-400 hover:text-slate-200 hover:bg-slate-800"
-                                )}
-                            >
-                                <Layout className="w-3 h-3" /> Report
-                            </button>
-                            <button
-                                onClick={() => setActiveTab('strengths')}
-                                className={cn(
-                                    "px-3 py-1 rounded-md text-[11px] font-bold transition-all flex items-center gap-1.5",
-                                    activeTab === 'strengths'
-                                        ? "bg-emerald-500 text-white shadow-md"
-                                        : "text-slate-400 hover:text-slate-200 hover:bg-slate-800"
-                                )}
-                            >
-                                <CheckCircle2 className="w-3 h-3" /> Strengths
-                                <span className="bg-white/10 px-1 py-px rounded text-[9px]">{strengthItems.length}</span>
-                            </button>
-                            <button
-                                onClick={() => setActiveTab('issues')}
-                                className={cn(
-                                    "px-3 py-1 rounded-md text-[11px] font-bold transition-all flex items-center gap-1.5",
-                                    activeTab === 'issues'
-                                        ? "bg-rose-500 text-white shadow-md"
-                                        : "text-slate-400 hover:text-slate-200 hover:bg-slate-800"
-                                )}
-                            >
-                                <AlertTriangle className="w-3 h-3" /> Issues
-                                <span className="bg-white/10 px-1 py-px rounded text-[9px]">{issueItems.length}</span>
-                            </button>
-                            <button
-                                onClick={() => setActiveTab('summary')}
-                                className={cn(
-                                    "px-3 py-1 rounded-md text-[11px] font-bold transition-all flex items-center gap-1.5",
-                                    activeTab === 'summary'
-                                        ? "bg-amber-500 text-white shadow-md"
-                                        : "text-slate-400 hover:text-slate-200 hover:bg-slate-800"
-                                )}
-                            >
-                                <Target className="w-3 h-3" /> Topics
-                            </button>
+                            {/* Middle: Tabs */}
+                            <div className="flex bg-slate-100 dark:bg-slate-950 p-1 rounded-lg w-full">
+                                <button
+                                    onClick={() => setActiveTab('report')}
+                                    className={cn(
+                                        "flex-1 py-1 rounded-md text-[10px] font-bold transition-all flex justify-center items-center gap-1.5",
+                                        activeTab === 'report'
+                                            ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm"
+                                            : "text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
+                                    )}
+                                >
+                                    <Layout className="w-3 h-3" /> Report
+                                </button>
+                                <button
+                                    onClick={() => setActiveTab('issues')}
+                                    className={cn(
+                                        "flex-1 py-1 rounded-md text-[10px] font-bold transition-all flex justify-center items-center gap-1.5",
+                                        activeTab === 'issues'
+                                            ? "bg-white dark:bg-slate-800 text-rose-600 dark:text-rose-400 shadow-sm"
+                                            : "text-slate-500 hover:text-rose-600 dark:text-slate-400 dark:hover:text-rose-400"
+                                    )}
+                                >
+                                    <AlertTriangle className="w-3 h-3" /> Issues
+                                    <span className="bg-rose-100 text-rose-700 dark:bg-rose-900/50 dark:text-rose-300 px-1 py-0.5 rounded text-[8px] leading-none">{issueItems.length}</span>
+                                </button>
+                                <button
+                                    onClick={() => setActiveTab('summary')}
+                                    className={cn(
+                                        "flex-1 py-1 rounded-md text-[10px] font-bold transition-all flex justify-center items-center gap-1.5",
+                                        activeTab === 'summary'
+                                            ? "bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 shadow-sm"
+                                            : "text-slate-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400"
+                                    )}
+                                >
+                                    <Target className="w-3 h-3" /> Plan
+                                </button>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto custom-scrollbar p-4 space-y-4 h-0">
+                    {/* Scrollable Content */}
+                    <div className="flex flex-col relative p-4 md:p-6 mx-auto space-y-8 w-full">
 
                         {/* TAB: REPORT */}
                         {activeTab === 'report' && (
@@ -496,38 +458,38 @@ export function FeedbackDeepDiveView({
                                     const score = criterionScore?.band || 0;
 
                                     return justification && (
-                                        <div className="rounded-xl border border-slate-700 bg-slate-800/30 overflow-hidden">
-                                            <div className="bg-slate-800/50 p-4 border-b border-slate-700 flex items-center justify-between">
-                                                <div className="flex items-center gap-2">
+                                        <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100/50 dark:border-slate-800/80 overflow-hidden">
+                                            <div className="p-5 border-b border-slate-50 dark:border-slate-800/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                                <div className="flex items-center gap-3">
                                                     <div className={cn(
-                                                        "p-1.5 rounded text-white",
-                                                        score >= 7 ? "bg-emerald-500" : score >= 6 ? "bg-amber-500" : "bg-rose-500"
+                                                        "p-2 rounded-xl text-white shadow-sm",
+                                                        score >= 7 ? "bg-emerald-500 shadow-emerald-500/20" : score >= 6 ? "bg-amber-500 shadow-amber-500/20" : "bg-rose-500 shadow-rose-500/20"
                                                     )}>
-                                                        <BookOpen className="w-4 h-4" />
+                                                        <BookOpen className="w-5 h-5" />
                                                     </div>
-                                                    <span className="text-sm font-bold text-slate-300 uppercase tracking-wider">Score Overview</span>
+                                                    <span className="text-sm font-extrabold text-slate-800 dark:text-slate-200 uppercase tracking-widest">Score Overview</span>
                                                 </div>
                                                 <span className={cn(
-                                                    "text-sm font-bold px-3 py-1 rounded-full",
-                                                    score >= 7 ? "bg-emerald-500/20 text-emerald-400" : score >= 6 ? "bg-amber-500/20 text-amber-400" : "bg-rose-500/20 text-rose-400"
+                                                    "text-lg font-black px-4 py-1.5 rounded-xl border",
+                                                    score >= 7 ? "bg-emerald-50 text-emerald-600 border-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20" : score >= 6 ? "bg-amber-50 text-amber-600 border-amber-100 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20" : "bg-rose-50 text-rose-600 border-rose-100 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/20"
                                                 )}>
                                                     Band {score}
                                                 </span>
                                             </div>
-                                            <div className="p-5 space-y-4">
+                                            <div className="p-5 sm:p-6">
                                                 {/* Highlight penalty messages in justification */}
-                                                <p className="text-sm text-slate-300 leading-relaxed">
+                                                <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
                                                     {justification.split(/(Score capped at Band \d|capped at Band \d|-\d band|Band \d MAX)/gi).map((part, i) => {
                                                         const isPenalty = /Score capped|capped at Band|-\d band|Band \d MAX/i.test(part);
                                                         return isPenalty ? (
-                                                            <span key={i} className="bg-rose-500/20 text-rose-300 px-1.5 py-0.5 rounded font-medium border border-rose-500/30">
+                                                            <span key={i} className="bg-rose-500/20 text-rose-700 dark:text-rose-300 px-1.5 py-0.5 rounded font-medium border border-rose-500/30">
                                                                 ⚠️ {part}
                                                             </span>
                                                         ) : (
                                                             <span key={i}>
                                                                 {part.split(/(\*\*.*?\*\*)/g).map((subPart, j) =>
                                                                     subPart.startsWith('**') && subPart.endsWith('**') ? (
-                                                                        <strong key={j} className="text-white font-bold bg-indigo-500/10 px-1 rounded">{subPart.slice(2, -2)}</strong>
+                                                                        <strong key={j} className="text-indigo-900 dark:text-white font-bold bg-indigo-50 dark:bg-indigo-500/10 px-1 rounded">{subPart.slice(2, -2)}</strong>
                                                                     ) : subPart
                                                                 )}
                                                             </span>
@@ -540,11 +502,17 @@ export function FeedbackDeepDiveView({
                                                     const details = getDetailedFeedback(currentCriterion);
                                                     if (details?.why_score_is_here) {
                                                         return (
-                                                            <div className="mt-4 p-4 rounded-lg bg-slate-900/50 border border-slate-700/50">
-                                                                <h4 className="text-xs font-bold text-slate-400 uppercase mb-2 flex items-center gap-2">
-                                                                    <Info className="w-3 h-3" /> Examiner's Verdict
+                                                            <div className="mt-6 relative px-6 py-5 rounded-r-xl bg-gradient-to-br from-indigo-50/50 to-white dark:from-indigo-950/30 dark:to-[#0B1120] border-y border-r border-slate-200/50 dark:border-slate-800/80 border-l-[3px] border-l-indigo-500 shadow-sm">
+                                                                {/* Large Background Quote */}
+                                                                <span className="absolute -top-1 right-4 text-7xl text-indigo-500/10 dark:text-indigo-400/5 font-serif leading-none select-none pointer-events-none">
+                                                                    "
+                                                                </span>
+
+                                                                <h4 className="text-[13px] font-black tracking-widest text-indigo-600 dark:text-indigo-400 uppercase mb-3 flex items-center gap-2">
+                                                                    <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                                                                    Examiner's Verdict
                                                                 </h4>
-                                                                <p className="text-sm text-slate-200 italic leading-relaxed">
+                                                                <p className="text-[17px] text-slate-700 dark:text-slate-300 leading-relaxed font-serif italic relative z-10">
                                                                     "{details.why_score_is_here}"
                                                                 </p>
                                                             </div>
@@ -555,14 +523,14 @@ export function FeedbackDeepDiveView({
 
                                                 {/* Improvement tip section for scores below 8 */}
                                                 {score < 8 && (
-                                                    <div className="pt-3 border-t border-slate-700">
+                                                    <div className="mt-5 pt-4 border-t border-slate-700/70">
                                                         <div className="flex items-center gap-2 mb-2">
-                                                            <ArrowRight className="w-4 h-4 text-indigo-400" />
-                                                            <span className="text-xs font-bold text-indigo-400 uppercase tracking-wider">
+                                                            <ArrowRight className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                                                            <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">
                                                                 To reach Band {Math.min(score + 1, 9)}
                                                             </span>
                                                         </div>
-                                                        <p className="text-xs text-slate-400 leading-relaxed">
+                                                        <p className="text-[15px] text-slate-500 dark:text-slate-400 leading-relaxed">
                                                             {currentCriterion === 'task_response' && score < 7 && "Develop your position more fully with specific examples, concrete evidence, and deeper analysis of the issue."}
                                                             {currentCriterion === 'task_response' && score >= 7 && "Add more nuanced reasoning with sophisticated examples. Show deeper critical thinking and address potential counterarguments."}
                                                             {currentCriterion === 'coherence_cohesion' && score < 7 && "Vary your cohesive devices - avoid mechanical patterns like 'Firstly, Secondly'. Improve paragraph transitions and logical flow."}
@@ -599,45 +567,27 @@ export function FeedbackDeepDiveView({
                                     if (!details) return null;
 
                                     const hasWeakSpots = details.weak_spots && details.weak_spots.length > 0;
-                                    const hasStrengths = details.strengths && details.strengths.length > 0;
 
-                                    if (!hasWeakSpots && !hasStrengths) return null;
+                                    if (!hasWeakSpots) return null;
 
                                     return (
-                                        <div className="rounded-xl overflow-hidden border border-slate-700 bg-slate-800/20 shadow-lg">
-                                            <div className="bg-slate-800/40 p-4 border-b border-slate-700 flex items-center gap-2">
-                                                <div className="p-1.5 bg-slate-700 rounded text-slate-300"><FileText className="w-4 h-4" /></div>
-                                                <span className="text-sm font-bold text-slate-300 uppercase tracking-wider">Detailed Analysis</span>
+                                        <div className="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/20 shadow-lg">
+                                            <div className="bg-slate-100 dark:bg-slate-800/40 p-4 border-b border-slate-200 dark:border-slate-700 flex items-center gap-2">
+                                                <div className="p-1.5 bg-slate-200 dark:bg-slate-700 rounded text-slate-700 dark:text-slate-300"><FileText className="w-4 h-4" /></div>
+                                                <span className="text-[16px] font-bold text-slate-800 dark:text-slate-300 uppercase tracking-wider">Detailed Analysis</span>
                                             </div>
                                             <div className="p-3 grid grid-cols-1 md:grid-cols-2 gap-3">
                                                 {/* Weak Spots */}
                                                 {hasWeakSpots && (
-                                                    <div className="space-y-3">
-                                                        <h4 className="text-xs font-bold text-rose-400 uppercase flex items-center gap-2">
+                                                    <div className="space-y-3 md:col-span-2">
+                                                        <h4 className="text-sm font-bold text-rose-600 dark:text-rose-400 uppercase flex items-center gap-2">
                                                             <AlertCircle className="w-3.5 h-3.5" /> Weak Points
                                                         </h4>
                                                         <ul className="space-y-2">
                                                             {details.weak_spots.map((spot, idx) => (
-                                                                <li key={idx} className="text-sm text-slate-300 bg-rose-950/10 p-2.5 rounded border border-rose-900/20 flex items-start gap-2">
+                                                                <li key={idx} className="text-[16px] text-slate-700 dark:text-slate-300 bg-rose-50 dark:bg-rose-950/10 p-2.5 rounded border border-rose-200 dark:border-rose-900/20 flex items-start gap-2">
                                                                     <span className="text-rose-500 mt-0.5">•</span>
                                                                     <span>{spot}</span>
-                                                                </li>
-                                                            ))}
-                                                        </ul>
-                                                    </div>
-                                                )}
-
-                                                {/* Strengths */}
-                                                {hasStrengths && (
-                                                    <div className="space-y-3">
-                                                        <h4 className="text-xs font-bold text-emerald-400 uppercase flex items-center gap-2">
-                                                            <CheckCircle2 className="w-3.5 h-3.5" /> Key Strengths
-                                                        </h4>
-                                                        <ul className="space-y-2">
-                                                            {details.strengths.map((strength, idx) => (
-                                                                <li key={idx} className="text-sm text-slate-300 bg-emerald-950/10 p-2.5 rounded border border-emerald-900/20 flex items-start gap-2">
-                                                                    <span className="text-emerald-500 mt-0.5">•</span>
-                                                                    <span>{strength}</span>
                                                                 </li>
                                                             ))}
                                                         </ul>
@@ -648,30 +598,104 @@ export function FeedbackDeepDiveView({
                                     );
                                 })()}
 
+                                {/* SCORE PROJECTIONS CARD */}
+                                {coaching.raw_explainer_output?.score_projections?.length > 0 && (
+                                    <div className="rounded-2xl bg-white dark:bg-slate-900 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100/50 dark:border-slate-800/80 overflow-hidden mt-6">
+                                        <div className="bg-gradient-to-r from-slate-50 to-white dark:from-slate-800/40 dark:to-slate-900/40 p-5 pl-6 border-b border-slate-50 dark:border-slate-800/50 flex items-center gap-3">
+                                            <div className="p-2 bg-indigo-50 dark:bg-indigo-500/10 rounded-xl text-indigo-600 dark:text-indigo-400 shadow-sm">
+                                                <TrendingUp className="w-5 h-5" />
+                                            </div>
+                                            <span className="text-[16px] font-black text-slate-800 dark:text-slate-200 uppercase tracking-widest">Score Projections</span>
+                                            <span className="text-xs font-bold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full ml-auto shadow-sm border border-slate-200/50 dark:border-slate-700/50">If feedback applied</span>
+                                        </div>
+                                        <div className="p-5 sm:p-6 space-y-8">
+                                            {coaching.raw_explainer_output.score_projections
+                                                .filter((proj: any) => {
+                                                    const critMap: Record<string, string> = {
+                                                        task_response: "TASK RESPONSE",
+                                                        task_achievement: "TASK RESPONSE",
+                                                        coherence_cohesion: "COHERENCE & COHESION",
+                                                        lexical_resource: "LEXICAL RESOURCE",
+                                                        grammatical_range_accuracy: "GRAMMATICAL RANGE & ACCURACY"
+                                                    };
+                                                    return proj.criterion?.toUpperCase() === critMap[currentCriterion];
+                                                })
+                                                .map((proj: any, idx: number) => {
+                                                    const current = proj.current_score || 0;
+                                                    const achievable = proj.achievable_score || 0;
+                                                    const improvement = achievable - current;
+                                                    const barWidth = (current / 9) * 100;
+                                                    const projWidth = (achievable / 9) * 100;
+
+                                                    return (
+                                                        <div key={`proj-${idx}`} className="space-y-3">
+                                                            <div className="flex items-center justify-between">
+                                                                <span className="text-[14px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">{proj.criterion}</span>
+                                                                <div className="flex items-center gap-2">
+                                                                    <span className="text-[17px] font-black text-slate-500 dark:text-slate-400">{current}</span>
+                                                                    <ArrowRight className="w-4 h-4 text-indigo-400 shrink-0" />
+                                                                    <span className="text-[17px] font-black text-indigo-600 dark:text-indigo-300">{achievable}</span>
+                                                                    {improvement > 0 && (
+                                                                        <span className="text-xs font-black text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-200 dark:border-emerald-500/20 shadow-sm ml-1">+{improvement}</span>
+                                                                    )}
+                                                                </div>
+                                                            </div>
+                                                            {/* Progress bar */}
+                                                            <div className="relative h-4 bg-slate-100 dark:bg-slate-800/80 rounded-full overflow-hidden shadow-inner flex items-center">
+                                                                <div
+                                                                    className="absolute inset-y-0 left-0 bg-indigo-100 dark:bg-indigo-900/30 rounded-full transition-all"
+                                                                    style={{ width: `${projWidth}%` }}
+                                                                />
+                                                                <div
+                                                                    className="absolute inset-y-0 left-0 bg-gradient-to-r from-indigo-500 to-indigo-400 dark:from-indigo-600 dark:to-indigo-500 rounded-full transition-all shadow-[0_0_10px_rgba(99,102,241,0.3)]"
+                                                                    style={{ width: `${barWidth}%` }}
+                                                                />
+                                                            </div>
+                                                            {/* Key changes */}
+                                                            {proj.key_changes_needed?.length > 0 && (
+                                                                <div className="flex flex-col gap-2 pt-2">
+                                                                    {proj.key_changes_needed.map((change: string, i: number) => (
+                                                                        <div key={i} className="text-[14px] font-medium text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-800/80 px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm leading-relaxed">
+                                                                            {change}
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    );
+                                                })}
+                                        </div>
+                                    </div>
+                                )}
+
                                 {/* STRATEGIC FOCUS CARDS - Different data for each criterion */}
 
                                 {/* 1. STRATEGY CARD - Task Response */}
                                 {currentCriterion === 'task_response' && coaching.raw_coach_output?.the_one_big_change && (
-                                    <div className="rounded-xl overflow-hidden border border-indigo-500/30 bg-gradient-to-br from-indigo-900/20 to-purple-900/20 shadow-xl">
-                                        <div className="bg-indigo-500/10 p-4 border-b border-indigo-500/20 flex items-center gap-2">
-                                            <div className="p-1.5 bg-indigo-500 rounded text-white"><Layout className="w-4 h-4" /></div>
-                                            <span className="text-sm font-bold text-indigo-300 uppercase tracking-wider">Strategic Focus</span>
+                                    <div className="rounded-2xl bg-white dark:bg-slate-900 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100/50 dark:border-slate-800/80 overflow-hidden mt-6">
+                                        <div className="bg-white dark:bg-slate-800/40 p-5 pl-6 border-b border-slate-50 dark:border-slate-800/50 flex items-center gap-3">
+                                            <div className="p-2 bg-indigo-50 dark:bg-indigo-500/10 rounded-xl text-indigo-600 dark:text-indigo-400"><Layout className="w-5 h-5" /></div>
+                                            <span className="text-sm font-extrabold text-slate-800 dark:text-slate-200 uppercase tracking-widest">Strategic Focus</span>
                                         </div>
-                                        <div className="p-4 grid grid-cols-2 gap-4">
-                                            <div className="space-y-3 col-span-2">
-                                                <p className="text-sm text-indigo-200/80 italic border-l-2 border-indigo-500/50 pl-3">
+                                        <div className="p-5 sm:p-6 grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                            <div className="space-y-3 col-span-1 sm:col-span-2 mb-2">
+                                                <p className="text-[17px] font-medium text-slate-700 dark:text-slate-300 leading-relaxed border-l-4 border-indigo-200 dark:border-indigo-500/50 pl-4">
                                                     "{coaching.raw_coach_output.the_one_big_change.why_this_matters_most}"
                                                 </p>
                                             </div>
-                                            <div className="col-span-1 space-y-2">
-                                                <div className="text-[10px] font-bold text-rose-400 uppercase flex items-center gap-1"><AlertCircle className="w-3 h-3" /> Stop Doing</div>
-                                                <p className="text-sm text-slate-300 bg-rose-950/20 p-3 rounded border border-rose-900/30 h-full">
+                                            <div className="col-span-1 space-y-3">
+                                                <div className="text-[13px] font-black tracking-widest text-slate-400 dark:text-slate-500 uppercase flex items-center gap-2">
+                                                    <div className="text-rose-500 bg-rose-50 dark:bg-rose-500/10 p-1 rounded-md"><AlertCircle className="w-4 h-4" /></div> Stop Doing
+                                                </div>
+                                                <p className="text-[16px] text-slate-700 dark:text-slate-300 bg-transparent h-full pt-1">
                                                     {coaching.raw_coach_output.the_one_big_change.what_to_stop_doing}
                                                 </p>
                                             </div>
-                                            <div className="col-span-1 space-y-2">
-                                                <div className="text-[10px] font-bold text-emerald-400 uppercase flex items-center gap-1"><CheckCircle2 className="w-3 h-3" /> Start Doing</div>
-                                                <p className="text-sm text-slate-300 bg-emerald-950/20 p-3 rounded border border-emerald-900/30 h-full">
+                                            <div className="col-span-1 space-y-3">
+                                                <div className="text-[13px] font-black tracking-widest text-slate-400 dark:text-slate-500 uppercase flex items-center gap-2">
+                                                    <div className="text-emerald-500 bg-emerald-50 dark:bg-emerald-500/10 p-1 rounded-md"><CheckCircle2 className="w-4 h-4" /></div> Start Doing
+                                                </div>
+                                                <p className="text-[16px] text-slate-700 dark:text-slate-300 bg-transparent h-full pt-1">
                                                     {coaching.raw_coach_output.the_one_big_change.what_to_start_doing}
                                                 </p>
                                             </div>
@@ -681,38 +705,42 @@ export function FeedbackDeepDiveView({
 
                                 {/* 2. STRATEGY CARD - Coherence & Cohesion */}
                                 {currentCriterion === 'coherence_cohesion' && (coaching.coherence_issues?.length > 0 || coaching.raw_explainer_output?.cohesion_fixes?.length > 0) && (
-                                    <div className="rounded-xl overflow-hidden border border-amber-500/30 bg-gradient-to-br from-amber-900/20 to-orange-900/20 shadow-xl">
-                                        <div className="bg-amber-500/10 p-4 border-b border-amber-500/20 flex items-center gap-2">
-                                            <div className="p-1.5 bg-amber-500 rounded text-white"><Layout className="w-4 h-4" /></div>
-                                            <span className="text-sm font-bold text-amber-300 uppercase tracking-wider">Cohesion Improvements</span>
+                                    <div className="rounded-2xl bg-white dark:bg-slate-900 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100/50 dark:border-slate-800/80 overflow-hidden mt-6">
+                                        <div className="bg-white dark:bg-slate-800/40 p-5 pl-6 border-b border-slate-50 dark:border-slate-800/50 flex items-center gap-3">
+                                            <div className="p-2 bg-amber-50 dark:bg-amber-500/10 rounded-xl text-amber-600 dark:text-amber-400"><Layout className="w-5 h-5" /></div>
+                                            <span className="text-sm font-extrabold text-slate-800 dark:text-slate-200 uppercase tracking-widest">Cohesion Improvements</span>
                                         </div>
-                                        <div className="p-4 space-y-3">
+                                        <div className="p-5 sm:p-6 space-y-6">
                                             {coaching.coherence_issues?.slice(0, 2).map((issue: any, idx: number) => (
-                                                <div key={`coh-${idx}`} className="grid grid-cols-2 gap-4">
+                                                <div key={`coh-${idx}`} className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 relative">
                                                     <div className="space-y-2">
-                                                        <div className="text-[10px] font-bold text-rose-400 uppercase">Original</div>
-                                                        <p className="text-sm text-slate-400 line-through decoration-rose-500/50 bg-rose-950/20 p-3 rounded border border-rose-900/30">
+                                                        <div className="text-[13px] font-black tracking-widest text-slate-400 dark:text-slate-500 uppercase flex items-center gap-2">
+                                                            <div className="text-rose-400"><AlertCircle className="w-3.5 h-3.5" /></div> Original
+                                                        </div>
+                                                        <p className="text-[16px] text-slate-500 dark:text-slate-400 line-through decoration-rose-400/50 pl-2 border-l-2 border-slate-200 dark:border-slate-700 leading-relaxed">
                                                             "{issue.text}"
                                                         </p>
                                                     </div>
                                                     <div className="space-y-2">
-                                                        <div className="text-[10px] font-bold text-emerald-400 uppercase">Improved</div>
-                                                        <p className="text-sm text-emerald-100 bg-emerald-950/20 p-3 rounded border border-emerald-900/30">
+                                                        <div className="text-[13px] font-black tracking-widest text-slate-400 dark:text-slate-500 uppercase flex items-center gap-2">
+                                                            <div className="text-emerald-500"><Sparkles className="w-3.5 h-3.5" /></div> Improved
+                                                        </div>
+                                                        <p className="text-[16px] font-semibold text-slate-800 dark:text-slate-200 pl-2 border-l-2 border-emerald-400 dark:border-emerald-500/50 leading-relaxed">
                                                             "{issue.suggestion}"
                                                         </p>
                                                     </div>
                                                     {issue.reason && (
-                                                        <div className="col-span-2 text-xs text-slate-400 bg-slate-800/50 p-2 rounded">
-                                                            <span className="text-amber-400 font-bold">Why: </span>{issue.reason}
+                                                        <div className="col-span-2 text-[14px] text-slate-500 dark:text-slate-400 bg-slate-100/80 dark:bg-slate-800/50 p-2.5 rounded">
+                                                            <span className="text-amber-600 dark:text-amber-400 font-bold">Why: </span>{issue.reason}
                                                         </div>
                                                     )}
                                                 </div>
                                             ))}
                                             {coaching.coherence_issues?.length === 0 && coaching.raw_explainer_output?.cohesion_fixes?.slice(0, 2).map((fix: any, idx: number) => (
                                                 <div key={`fix-${idx}`} className="space-y-3">
-                                                    <div className="bg-amber-950/30 p-3 rounded border border-amber-900/30">
-                                                        <div className="text-[10px] font-bold text-amber-400 mb-1">Technique: {fix.technique_explanation}</div>
-                                                        <p className="text-sm text-slate-300">"{fix.improved_sentence}"</p>
+                                                    <div className="bg-amber-50 dark:bg-amber-950/30 p-3 rounded border border-amber-200 dark:border-amber-900/30">
+                                                        <div className="text-[10px] font-bold text-amber-600 dark:text-amber-400 mb-1">Technique: {fix.technique_explanation}</div>
+                                                        <p className="text-sm text-slate-700 dark:text-slate-300">"{fix.improved_sentence}"</p>
                                                     </div>
                                                 </div>
                                             ))}
@@ -722,26 +750,26 @@ export function FeedbackDeepDiveView({
 
                                 {/* 3. STRATEGY CARD - Lexical Resource */}
                                 {currentCriterion === 'lexical_resource' && coaching.vocabulary_suggestions?.length > 0 && (
-                                    <div className="rounded-xl overflow-hidden border border-cyan-500/30 bg-gradient-to-br from-cyan-900/20 to-blue-900/20 shadow-xl">
-                                        <div className="bg-cyan-500/10 p-4 border-b border-cyan-500/20 flex items-center gap-2">
-                                            <div className="p-1.5 bg-cyan-500 rounded text-white"><Layout className="w-4 h-4" /></div>
-                                            <span className="text-sm font-bold text-cyan-300 uppercase tracking-wider">Vocabulary Upgrades</span>
+                                    <div className="rounded-2xl bg-white dark:bg-slate-900 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100/50 dark:border-slate-800/80 overflow-hidden mt-6">
+                                        <div className="bg-white dark:bg-slate-800/40 p-5 pl-6 border-b border-slate-50 dark:border-slate-800/50 flex items-center gap-3">
+                                            <div className="p-2 bg-cyan-50 dark:bg-cyan-500/10 rounded-xl text-cyan-600 dark:text-cyan-400"><Layout className="w-5 h-5" /></div>
+                                            <span className="text-sm font-extrabold text-slate-800 dark:text-slate-200 uppercase tracking-widest">Vocabulary Upgrades</span>
                                         </div>
-                                        <div className="p-6 space-y-4">
+                                        <div className="p-5 sm:p-6 space-y-5">
                                             {coaching.vocabulary_suggestions.slice(0, 3).map((vocab: any, idx: number) => (
-                                                <div key={`vocab-${idx}`} className="flex items-center gap-4 bg-slate-800/30 p-4 rounded-lg border border-slate-700/50">
+                                                <div key={`vocab-${idx}`} className="flex items-center gap-4 bg-slate-100/50 dark:bg-slate-800/30 p-4 rounded-lg border border-slate-200 dark:border-slate-700/50">
                                                     <div className="flex-1">
-                                                        <span className="text-sm text-rose-300 line-through decoration-rose-500/50">"{vocab.original}"</span>
+                                                        <span className="text-sm text-rose-700 dark:text-rose-300 line-through decoration-rose-500/50">"{vocab.original}"</span>
                                                     </div>
                                                     <ArrowRight className="w-4 h-4 text-cyan-500 shrink-0" />
                                                     <div className="flex-1">
-                                                        <div className="text-[10px] font-bold text-cyan-400 uppercase mb-1.5 flex items-center gap-2">
+                                                        <div className="text-xs font-bold text-cyan-700 dark:text-cyan-400 uppercase mb-1.5 flex items-center gap-2">
                                                             Band Booster
-                                                            <span className="bg-cyan-500/20 px-1.5 py-0.5 rounded text-[9px] text-cyan-300 border border-cyan-500/30">Level +1.0</span>
+                                                            <span className="bg-cyan-100 dark:bg-cyan-500/20 px-1.5 py-0.5 rounded text-[10px] text-cyan-800 dark:text-cyan-300 border border-cyan-300 dark:border-cyan-500/30">Level +1.0</span>
                                                         </div>
                                                         <div className="flex flex-wrap gap-2">
                                                             {vocab.better_options.map((opt: string, i: number) => (
-                                                                <span key={i} className="px-2 py-1 bg-cyan-500/20 text-cyan-200 text-sm rounded-lg border border-cyan-500/30">
+                                                                <span key={i} className="px-2 py-1 bg-cyan-100 dark:bg-cyan-500/20 text-cyan-900 dark:text-cyan-200 text-sm rounded-lg border border-cyan-300 dark:border-cyan-500/30">
                                                                     {opt}
                                                                 </span>
                                                             ))}
@@ -750,97 +778,338 @@ export function FeedbackDeepDiveView({
                                                 </div>
                                             ))}
                                             {coaching.vocabulary_suggestions.length > 0 && coaching.vocabulary_suggestions[0].context && (
-                                                <div className="text-xs text-slate-400 bg-slate-800/50 p-3 rounded border border-slate-700/50">
-                                                    <span className="text-cyan-400 font-bold">Tip: </span>{coaching.vocabulary_suggestions[0].context}
+                                                <div className="text-[14px] text-slate-500 dark:text-slate-400 bg-slate-100/80 dark:bg-slate-800/50 p-3.5 rounded border border-slate-200 dark:border-slate-700/50">
+                                                    <span className="text-cyan-700 dark:text-cyan-400 font-bold">Tip: </span>{coaching.vocabulary_suggestions[0].context}
                                                 </div>
                                             )}
                                         </div>
                                     </div>
                                 )}
 
-                                {/* 4a. GRAMMAR PATTERN LESSONS — Grouped error patterns with examples from the essay */}
-                                {currentCriterion === 'grammatical_range_accuracy' && coaching.raw_explainer_output?.grammar_feedback?.pattern_lessons?.length > 0 && (
-                                    <div className="rounded-xl overflow-hidden border border-violet-500/30 bg-gradient-to-br from-violet-900/20 to-purple-900/20 shadow-xl">
-                                        <div className="bg-violet-500/10 p-4 border-b border-violet-500/20 flex items-center gap-2">
-                                            <div className="p-1.5 bg-violet-500 rounded text-white"><PenTool className="w-4 h-4" /></div>
-                                            <span className="text-sm font-bold text-violet-300 uppercase tracking-wider">Grammar Lessons from Your Essay</span>
-                                        </div>
-                                        <div className="p-6 space-y-6">
-                                            {coaching.raw_explainer_output.grammar_feedback.pattern_lessons.map((lesson: any, idx: number) => (
-                                                <div key={`lesson-${idx}`} className="space-y-4">
-                                                    {/* Pattern Header */}
-                                                    <div className="flex items-center gap-3">
-                                                        <span className="bg-violet-500/20 text-violet-300 px-2.5 py-1 rounded-full text-xs font-bold border border-violet-500/30">
-                                                            Pattern {idx + 1}
-                                                        </span>
-                                                        <h4 className="text-sm font-bold text-white">
-                                                            {lesson.pattern_name_friendly || lesson.error_pattern || 'Grammar Pattern'}
-                                                        </h4>
+                                {/* LEXICAL RESOURCE BREAKDOWN (LR criterion only) */}
+                                {currentCriterion === 'lexical_resource' && coaching.raw_explainer_output?.lexical_breakdown && (() => {
+                                    const lr = coaching.raw_explainer_output.lexical_breakdown;
+                                    const rangeConfig: Record<string, { label: string; color: string; width: string }> = {
+                                        wide: { label: 'Wide', color: 'emerald', width: 'w-full' },
+                                        sufficient: { label: 'Sufficient', color: 'sky', width: 'w-3/4' },
+                                        adequate: { label: 'Adequate', color: 'amber', width: 'w-1/2' },
+                                        limited: { label: 'Limited', color: 'rose', width: 'w-1/4' },
+                                    };
+                                    const accuracyConfig: Record<string, { label: string; color: string; width: string }> = {
+                                        precise: { label: 'Precise', color: 'emerald', width: 'w-full' },
+                                        generally_accurate: { label: 'Generally Accurate', color: 'sky', width: 'w-3/4' },
+                                        some_errors: { label: 'Some Errors', color: 'amber', width: 'w-1/2' },
+                                        frequent_errors: { label: 'Frequent Errors', color: 'rose', width: 'w-1/4' },
+                                    };
+                                    const range = rangeConfig[lr.range_score] || rangeConfig.adequate;
+                                    const accuracy = accuracyConfig[lr.accuracy_score] || accuracyConfig.some_errors;
+
+                                    return (
+                                        <div className="rounded-2xl bg-white dark:bg-slate-900 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100/50 dark:border-slate-800/80 overflow-hidden mt-6">
+                                            {/* Header */}
+                                            <div className="p-5 pl-6 border-b border-slate-50 dark:border-slate-800/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="p-2 bg-purple-50 dark:bg-purple-500/10 rounded-xl text-purple-600 dark:text-purple-400">
+                                                        <BookOpen className="w-5 h-5" />
+                                                    </div>
+                                                    <span className="text-sm font-extrabold text-slate-800 dark:text-slate-200 uppercase tracking-widest">Lexical Resource Breakdown</span>
+                                                </div>
+                                            </div>
+
+                                            <div className="p-5 sm:p-6 space-y-6">
+                                                {/* Range vs Accuracy Bars */}
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                    {/* Range */}
+                                                    <div>
+                                                        <div className="flex items-center justify-between mb-2">
+                                                            <span className="text-[13px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">Vocabulary Range</span>
+                                                            <span className={cn(
+                                                                "text-[12px] font-bold uppercase px-2 py-0.5 rounded-full",
+                                                                range.color === 'emerald' && "text-emerald-700 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-500/10",
+                                                                range.color === 'sky' && "text-sky-700 bg-sky-50 dark:text-sky-400 dark:bg-sky-500/10",
+                                                                range.color === 'amber' && "text-amber-700 bg-amber-50 dark:text-amber-400 dark:bg-amber-500/10",
+                                                                range.color === 'rose' && "text-rose-700 bg-rose-50 dark:text-rose-400 dark:bg-rose-500/10",
+                                                            )}>{range.label}</span>
+                                                        </div>
+                                                        <div className="h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                                                            <div className={cn(
+                                                                "h-full rounded-full transition-all duration-500",
+                                                                range.width,
+                                                                range.color === 'emerald' && "bg-gradient-to-r from-emerald-400 to-emerald-500",
+                                                                range.color === 'sky' && "bg-gradient-to-r from-sky-400 to-sky-500",
+                                                                range.color === 'amber' && "bg-gradient-to-r from-amber-400 to-amber-500",
+                                                                range.color === 'rose' && "bg-gradient-to-r from-rose-400 to-rose-500",
+                                                            )} />
+                                                        </div>
+                                                        <p className="text-[14px] text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">{lr.range_details}</p>
                                                     </div>
 
-                                                    {/* The Rule */}
-                                                    {lesson.the_rule && (
-                                                        <div className="bg-indigo-950/30 border border-indigo-500/20 rounded-lg p-4">
-                                                            <div className="text-[10px] font-bold text-indigo-400 uppercase mb-2 flex items-center gap-1.5">
-                                                                <BookOpen className="w-3 h-3" /> The Rule
-                                                            </div>
-                                                            <p className="text-sm text-slate-200 leading-relaxed">{lesson.the_rule}</p>
+                                                    {/* Accuracy */}
+                                                    <div>
+                                                        <div className="flex items-center justify-between mb-2">
+                                                            <span className="text-[13px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">Vocabulary Accuracy</span>
+                                                            <span className={cn(
+                                                                "text-[12px] font-bold uppercase px-2 py-0.5 rounded-full",
+                                                                accuracy.color === 'emerald' && "text-emerald-700 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-500/10",
+                                                                accuracy.color === 'sky' && "text-sky-700 bg-sky-50 dark:text-sky-400 dark:bg-sky-500/10",
+                                                                accuracy.color === 'amber' && "text-amber-700 bg-amber-50 dark:text-amber-400 dark:bg-amber-500/10",
+                                                                accuracy.color === 'rose' && "text-rose-700 bg-rose-50 dark:text-rose-400 dark:bg-rose-500/10",
+                                                            )}>{accuracy.label}</span>
                                                         </div>
-                                                    )}
+                                                        <div className="h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                                                            <div className={cn(
+                                                                "h-full rounded-full transition-all duration-500",
+                                                                accuracy.width,
+                                                                accuracy.color === 'emerald' && "bg-gradient-to-r from-emerald-400 to-emerald-500",
+                                                                accuracy.color === 'sky' && "bg-gradient-to-r from-sky-400 to-sky-500",
+                                                                accuracy.color === 'amber' && "bg-gradient-to-r from-amber-400 to-amber-500",
+                                                                accuracy.color === 'rose' && "bg-gradient-to-r from-rose-400 to-rose-500",
+                                                            )} />
+                                                        </div>
+                                                        <p className="text-[14px] text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">{lr.accuracy_details}</p>
+                                                    </div>
+                                                </div>
 
-                                                    {/* Examples from the essay */}
-                                                    {lesson.examples_from_essay?.length > 0 && (
-                                                        <div className="space-y-3">
-                                                            <div className="text-[10px] font-bold text-slate-400 uppercase">From Your Essay:</div>
-                                                            {lesson.examples_from_essay.map((ex: any, exIdx: number) => (
-                                                                <div key={`ex-${idx}-${exIdx}`} className="grid grid-cols-2 gap-3">
-                                                                    <div className="space-y-1">
-                                                                        <div className="text-[10px] font-bold text-rose-400 uppercase">Your Version</div>
-                                                                        <p className="text-sm text-rose-200/80 bg-rose-950/20 p-3 rounded border border-rose-900/30">
-                                                                            {ex.error_highlighted ? (
-                                                                                <>
-                                                                                    {ex.original?.split(ex.error_highlighted).map((part: string, pi: number, arr: string[]) => (
-                                                                                        <span key={pi}>
-                                                                                            {part}
-                                                                                            {pi < arr.length - 1 && (
-                                                                                                <span className="bg-rose-500/30 text-rose-200 px-1 rounded font-bold underline decoration-wavy decoration-rose-500">
-                                                                                                    {ex.error_highlighted}
-                                                                                                </span>
-                                                                                            )}
-                                                                                        </span>
-                                                                                    ))}
-                                                                                </>
-                                                                            ) : (
-                                                                                <span className="line-through decoration-rose-500/50">"{ex.original}"</span>
+                                                {/* Vocabulary Drills */}
+                                                {lr.vocab_drills?.length > 0 && (
+                                                    <div className="border-t border-slate-100 dark:border-slate-800/50 pt-5">
+                                                        <div className="text-[13px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-4 flex items-center gap-2">
+                                                            <Dumbbell className="w-4 h-4" /> Vocabulary Drills
+                                                        </div>
+                                                        <div className="space-y-4">
+                                                            {lr.vocab_drills.map((drill: any, idx: number) => (
+                                                                <div key={idx} className="bg-gradient-to-br from-purple-50/40 to-white dark:from-purple-950/20 dark:to-slate-900 rounded-xl border border-purple-100/60 dark:border-purple-500/10 p-4 sm:p-5">
+                                                                    <div className="flex items-center gap-2 mb-2">
+                                                                        <span className="w-6 h-6 rounded-full bg-purple-100 dark:bg-purple-500/10 flex items-center justify-center text-purple-600 dark:text-purple-400 text-xs font-black">{idx + 1}</span>
+                                                                        <h5 className="text-sm font-bold text-slate-800 dark:text-slate-200">{drill.drill_name}</h5>
+                                                                        <span className="text-[11px] font-medium text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-500/10 px-2 py-0.5 rounded-full ml-auto">{drill.weakness_targeted}</span>
+                                                                    </div>
+                                                                    <p className="text-[14px] text-slate-600 dark:text-slate-400 mb-3">{drill.instructions}</p>
+
+                                                                    {/* Practice items */}
+                                                                    {drill.practice_items?.length > 0 && (
+                                                                        <div className="flex flex-wrap gap-2 mb-3">
+                                                                            {drill.practice_items.map((item: string, i: number) => (
+                                                                                <span key={i} className="text-[11px] font-medium text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 px-2.5 py-1 rounded-lg">
+                                                                                    {item}
+                                                                                </span>
+                                                                            ))}
+                                                                        </div>
+                                                                    )}
+
+                                                                    {/* Before/After example */}
+                                                                    {(drill.example_before || drill.example_after) && (
+                                                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+                                                                            {drill.example_before && (
+                                                                                <div className="bg-rose-50/50 dark:bg-rose-950/10 border border-rose-100 dark:border-rose-500/10 rounded-lg px-3 py-2">
+                                                                                    <div className="text-[9px] font-bold uppercase text-rose-500 mb-1">Before</div>
+                                                                                    <p className="text-xs text-slate-600 dark:text-slate-400 line-through decoration-rose-400/50">{drill.example_before}</p>
+                                                                                </div>
                                                                             )}
-                                                                        </p>
-                                                                    </div>
-                                                                    <div className="space-y-1">
-                                                                        <div className="text-[10px] font-bold text-emerald-400 uppercase">Correct Version</div>
-                                                                        <p className="text-sm text-emerald-100 bg-emerald-950/20 p-3 rounded border border-emerald-900/30">
-                                                                            "{ex.corrected}"
-                                                                        </p>
-                                                                    </div>
+                                                                            {drill.example_after && (
+                                                                                <div className="bg-emerald-50/50 dark:bg-emerald-950/10 border border-emerald-100 dark:border-emerald-500/10 rounded-lg px-3 py-2">
+                                                                                    <div className="text-[9px] font-bold uppercase text-emerald-500 mb-1">After</div>
+                                                                                    <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">{drill.example_after}</p>
+                                                                                </div>
+                                                                            )}
+                                                                        </div>
+                                                                    )}
                                                                 </div>
                                                             ))}
                                                         </div>
-                                                    )}
+                                                    </div>
+                                                )}
 
-                                                    {/* Memory Trick */}
-                                                    {lesson.memory_trick && (
-                                                        <div className="flex items-start gap-2 bg-amber-950/20 border border-amber-500/20 rounded-lg p-3">
-                                                            <Sparkles className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                                                            <div>
-                                                                <div className="text-[10px] font-bold text-amber-400 uppercase mb-1">Memory Trick</div>
-                                                                <p className="text-xs text-amber-100/80">{lesson.memory_trick}</p>
-                                                            </div>
+                                                {/* Topic Word Bank */}
+                                                {lr.topic_word_bank && (
+                                                    <div className="border-t border-slate-100 dark:border-slate-800/50 pt-5">
+                                                        <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1 flex items-center gap-2">
+                                                            <FileText className="w-3.5 h-3.5" /> Topic Word Bank
                                                         </div>
-                                                    )}
+                                                        <p className="text-xs text-purple-600 dark:text-purple-400 font-medium mb-4">{lr.topic_word_bank.topic}</p>
 
-                                                    {/* Divider between lessons */}
-                                                    {idx < coaching.raw_explainer_output.grammar_feedback.pattern_lessons.length - 1 && (
-                                                        <div className="border-t border-slate-700/50 pt-2" />
-                                                    )}
+                                                        {/* Words grid */}
+                                                        {lr.topic_word_bank.words?.length > 0 && (
+                                                            <div className="mb-6">
+                                                                <div className="text-[9px] font-bold uppercase text-slate-400 dark:text-slate-500 mb-3 tracking-widest pl-1">Key Words</div>
+                                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                                    {lr.topic_word_bank.words.map((w: any, idx: number) => (
+                                                                        <div key={idx} className="bg-slate-50/50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-700/50 rounded-xl p-4 flex flex-col justify-between hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                                                                            <div className="mb-2">
+                                                                                <span className="text-sm font-extrabold text-purple-700 dark:text-purple-400 mr-2">{w.term}</span>
+                                                                                {w.definition && <span className="text-[11px] text-slate-500 dark:text-slate-400 border-l border-slate-200 dark:border-slate-700 pl-2">— {w.definition}</span>}
+                                                                            </div>
+                                                                            <p className="text-[12px] text-slate-600 dark:text-slate-400 italic bg-white dark:bg-slate-900/50 px-3 py-2 rounded-lg border border-slate-100 dark:border-slate-800/50 leading-relaxed mt-auto shadow-sm">"{w.example_sentence}"</p>
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+                                                        )}
+
+                                                        {/* Collocations flex wrap */}
+                                                        {lr.topic_word_bank.collocations?.length > 0 && (
+                                                            <div className="relative">
+                                                                <div className="text-[9px] font-bold uppercase text-slate-400 dark:text-slate-500 mb-3 tracking-widest pl-1">Useful Collocations</div>
+                                                                <div className="flex flex-wrap gap-2.5">
+                                                                    {lr.topic_word_bank.collocations.map((c: any, idx: number) => (
+                                                                        <div key={`colloc-${idx}`} className="group relative">
+                                                                            <div className="bg-white dark:bg-purple-950/20 border border-purple-100 dark:border-purple-500/20 rounded-full px-4 py-2 hover:bg-purple-50 dark:hover:bg-purple-900/40 hover:border-purple-200 dark:hover:border-purple-500/40 transition-all cursor-crosshair shadow-sm hover:shadow-md">
+                                                                                <span className="text-sm font-bold text-purple-700 dark:text-purple-300 tracking-tight">{c.term}</span>
+                                                                            </div>
+                                                                            {/* Tooltip on hover */}
+                                                                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max max-w-[250px] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
+                                                                                <div className="bg-slate-800 text-white text-xs p-2.5 rounded-lg shadow-xl border border-slate-700 text-center font-medium italic relative">
+                                                                                    "{c.example_sentence}"
+                                                                                    <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-800"></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                )}
+
+                                                {/* Overall Assessment */}
+                                                {lr.overall_lr_assessment && (
+                                                    <div className="border-t border-slate-100 dark:border-slate-800/50 pt-4">
+                                                        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{lr.overall_lr_assessment}</p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    );
+                                })()}
+
+                                {/* 4a. GRAMMAR PATTERN LESSONS — Grouped error patterns with examples from the essay */}
+                                {currentCriterion === 'grammatical_range_accuracy' && coaching.raw_explainer_output?.grammar_feedback?.pattern_lessons?.length > 0 && (
+                                    <div className="rounded-2xl bg-white dark:bg-slate-900 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100/50 dark:border-slate-800/80 overflow-hidden mt-6">
+                                        <div className="bg-white dark:bg-slate-800/40 p-5 pl-6 border-b border-slate-50 dark:border-slate-800/50 flex items-center gap-3">
+                                            <div className="p-2 bg-violet-50 dark:bg-violet-500/10 rounded-xl text-violet-600 dark:text-violet-400"><PenTool className="w-5 h-5" /></div>
+                                            <span className="text-sm font-extrabold text-slate-800 dark:text-slate-200 uppercase tracking-widest">Grammar Lessons</span>
+                                        </div>
+                                        <div className="p-5 sm:p-6 space-y-12">
+                                            {coaching.raw_explainer_output.grammar_feedback.pattern_lessons.map((lesson: any, idx: number) => (
+                                                <div key={`lesson-${idx}`} className="relative">
+                                                    {/* Left Accent Bar connected to content */}
+                                                    <div className="absolute left-0 top-1 bottom-0 w-8 flex flex-col items-center">
+                                                        <div className="w-8 h-8 rounded-full bg-violet-100 dark:bg-violet-900/30 border-2 border-white dark:border-slate-900 flex items-center justify-center z-10 shadow-sm">
+                                                            <span className="text-violet-600 dark:text-violet-400 font-black text-[12px]">{idx + 1}</span>
+                                                        </div>
+                                                        {idx < coaching.raw_explainer_output.grammar_feedback.pattern_lessons.length - 1 && (
+                                                            <div className="w-0.5 h-full bg-slate-100 dark:bg-slate-800/80 -mt-2"></div>
+                                                        )}
+                                                    </div>
+
+                                                    <div className="pl-12 space-y-5 pb-2">
+                                                        {/* Pattern Header */}
+                                                        <div className="pt-1">
+                                                            <h4 className="text-[16px] font-extrabold text-slate-800 dark:text-slate-100 tracking-tight">
+                                                                {lesson.pattern_name_friendly || lesson.error_pattern || 'Grammar Pattern'}
+                                                            </h4>
+                                                        </div>
+
+                                                        {/* The Rule */}
+                                                        {lesson.the_rule && (
+                                                            <div className="bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800/50 rounded-xl p-5 relative overflow-hidden group">
+                                                                <div className="absolute left-0 top-0 bottom-0 w-1 bg-violet-400 dark:bg-violet-500 rounded-l-xl opacity-50 group-hover:opacity-100 transition-opacity" />
+                                                                <div className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-3 flex items-center gap-2">
+                                                                    <BookOpen className="w-4 h-4 text-violet-500" /> The Rule
+                                                                </div>
+                                                                <p className="text-[17px] text-slate-700 dark:text-slate-300 leading-relaxed font-medium">{lesson.the_rule}</p>
+                                                            </div>
+                                                        )}
+
+                                                        {/* Examples from the essay */}
+                                                        {lesson.examples_from_essay?.length > 0 && (
+                                                            <div className="space-y-4 pt-2">
+                                                                <div className="text-[11px] font-black tracking-widest text-slate-400 dark:text-slate-500 uppercase">Examples from your essay:</div>
+                                                                {lesson.examples_from_essay.map((ex: any, exIdx: number) => {
+                                                                    const isIdentical = ex.original?.trim() === ex.corrected?.trim();
+                                                                    return (
+                                                                        <div key={`ex-${idx}-${exIdx}`} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-xl p-4 sm:p-5 shadow-sm">
+                                                                            {isIdentical ? (
+                                                                                <div className="space-y-2">
+                                                                                    <div className="flex items-center gap-2">
+                                                                                        <div className="w-2 h-2 rounded-full bg-emerald-400" />
+                                                                                        <div className="text-[11px] font-black tracking-widest text-emerald-500 uppercase">Excellent Usage</div>
+                                                                                    </div>
+                                                                                    <p className="text-[17px] font-medium text-slate-700 dark:text-slate-300 leading-relaxed italic">
+                                                                                        "{ex.original}"
+                                                                                    </p>
+                                                                                </div>
+                                                                            ) : (
+                                                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-8">
+                                                                                    {(() => {
+                                                                                        const diffs = diffWords(ex.original || '', ex.corrected || '');
+                                                                                        return (
+                                                                                            <>
+                                                                                                <div className="space-y-3">
+                                                                                                    <div className="text-[11px] font-black tracking-widest text-slate-400 dark:text-slate-500 uppercase flex items-center gap-2">
+                                                                                                        <div className="w-5 h-5 rounded bg-rose-50 dark:bg-rose-500/10 flex items-center justify-center text-rose-500"><AlertCircle className="w-3.5 h-3.5" /></div> Original
+                                                                                                    </div>
+                                                                                                    <div className="text-[16px] text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                                                                                                        {ex.error_highlighted ? (
+                                                                                                            <>
+                                                                                                                {ex.original?.split(ex.error_highlighted).map((part: string, pi: number, arr: string[]) => (
+                                                                                                                    <span key={pi}>
+                                                                                                                        {part}
+                                                                                                                        {pi < arr.length - 1 && (
+                                                                                                                            <span className="text-rose-600 dark:text-rose-400 font-extrabold bg-rose-50 dark:bg-rose-500/10 px-1 rounded-sm border-b-2 border-rose-300 dark:border-rose-500/50">
+                                                                                                                                {ex.error_highlighted}
+                                                                                                                            </span>
+                                                                                                                        )}
+                                                                                                                    </span>
+                                                                                                                ))}
+                                                                                                            </>
+                                                                                                        ) : (
+                                                                                                            <>
+                                                                                                                "{diffs.map((part: any, i: number) => (
+                                                                                                                    <span key={i} className={part.added ? "hidden" : part.removed ? "text-rose-600 dark:text-rose-400 font-extrabold bg-rose-50 dark:bg-rose-500/10 px-1 rounded-sm border-b-2 border-rose-300 dark:border-rose-500/50" : ""}>
+                                                                                                                        {!part.added && part.value}
+                                                                                                                    </span>
+                                                                                                                ))}"
+                                                                                                            </>
+                                                                                                        )}
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div className="space-y-3">
+                                                                                                    <div className="text-[11px] font-black tracking-widest text-slate-400 dark:text-slate-500 uppercase flex items-center gap-2">
+                                                                                                        <div className="w-5 h-5 rounded bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center text-emerald-500"><Sparkles className="w-3.5 h-3.5" /></div> Corrected
+                                                                                                    </div>
+                                                                                                    <div className="text-[16px] text-slate-800 dark:text-slate-200 font-semibold leading-relaxed">
+                                                                                                        "{diffs.map((part: any, i: number) => (
+                                                                                                            <span key={i} className={part.removed ? "hidden" : part.added ? "text-emerald-700 dark:text-emerald-300 font-extrabold bg-emerald-50 dark:bg-emerald-500/20 px-1.5 py-0.5 rounded-md border-b-2 border-emerald-300 dark:border-emerald-500/50" : ""}>
+                                                                                                                {!part.removed && part.value}
+                                                                                                            </span>
+                                                                                                        ))}"
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </>
+                                                                                        );
+                                                                                    })()}
+                                                                                </div>
+                                                                            )}
+                                                                        </div>
+                                                                    );
+                                                                })}
+                                                            </div>
+                                                        )}
+
+                                                        {/* Memory Trick */}
+                                                        {lesson.memory_trick && (
+                                                            <div className="flex items-start gap-4 bg-amber-50 dark:bg-amber-500/5 border border-amber-100 dark:border-amber-500/20 rounded-xl p-4 mt-6">
+                                                                <div className="p-2 bg-amber-100 dark:bg-amber-500/20 rounded-lg text-amber-600 dark:text-amber-400 shrink-0 mt-0.5">
+                                                                    <Lightbulb className="w-4 h-4" />
+                                                                </div>
+                                                                <div>
+                                                                    <div className="text-[11px] font-black tracking-widest text-amber-600 dark:text-amber-500 uppercase mb-1">Memory Trick</div>
+                                                                    <p className="text-[14px] font-medium text-amber-900/80 dark:text-amber-200/90 leading-relaxed">{lesson.memory_trick}</p>
+                                                                </div>
+                                                            </div>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             ))}
                                         </div>
@@ -849,61 +1118,60 @@ export function FeedbackDeepDiveView({
 
                                 {/* 4b. SENTENCE COMPLEXITY UPGRADES */}
                                 {currentCriterion === 'grammatical_range_accuracy' && coaching.raw_explainer_output?.grammar_feedback?.complexity_suggestions?.length > 0 && (
-                                    <div className="rounded-xl overflow-hidden border border-cyan-500/30 bg-gradient-to-br from-cyan-900/20 to-blue-900/20 shadow-xl">
-                                        <div className="bg-cyan-500/10 p-4 border-b border-cyan-500/20 flex items-center gap-2">
-                                            <div className="p-1.5 bg-cyan-500 rounded text-white"><ArrowRight className="w-4 h-4" /></div>
-                                            <span className="text-sm font-bold text-cyan-300 uppercase tracking-wider">Sentence Complexity Upgrades</span>
-                                            <span className="text-[10px] text-cyan-400/60 ml-auto">Combine simple sentences → Band 7+ structures</span>
+                                    <div className="rounded-2xl bg-white dark:bg-slate-900 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100/50 dark:border-slate-800/80 overflow-hidden mt-6">
+                                        <div className="bg-white dark:bg-slate-800/40 p-5 pl-6 border-b border-slate-50 dark:border-slate-800/50 flex items-center gap-3">
+                                            <div className="p-2 bg-cyan-50 dark:bg-cyan-500/10 rounded-xl text-cyan-600 dark:text-cyan-400"><ArrowRight className="w-5 h-5" /></div>
+                                            <span className="text-sm font-extrabold text-slate-800 dark:text-slate-200 uppercase tracking-widest">Sentence Complexity Upgrades</span>
+                                            <span className="text-[10px] text-slate-400 dark:text-slate-500 ml-auto hidden sm:block tracking-widest font-black uppercase">Combine simple sentences</span>
                                         </div>
-                                        <div className="p-6 space-y-5">
+                                        <div className="p-5 sm:p-6 space-y-6">
                                             {coaching.raw_explainer_output.grammar_feedback.complexity_suggestions.map((sug: any, idx: number) => (
-                                                <div key={`comp-${idx}`} className="space-y-3 bg-slate-800/20 p-4 rounded-lg border border-slate-700/50">
-                                                    {/* Simple sentences */}
-                                                    <div className="space-y-2">
-                                                        <div className="text-[10px] font-bold text-rose-400 uppercase">Your Simple Sentences</div>
-                                                        {sug.simple_sentences?.map((s: string, si: number) => (
-                                                            <p key={si} className="text-sm text-rose-200/70 bg-rose-950/20 p-2.5 rounded border border-rose-900/20">
-                                                                "{s}"
-                                                            </p>
-                                                        ))}
-                                                    </div>
-
-                                                    {/* Arrow */}
-                                                    <div className="flex justify-center">
-                                                        <div className="flex items-center gap-2 text-cyan-400">
-                                                            <div className="h-px w-8 bg-cyan-500/50" />
-                                                            <ArrowRight className="w-4 h-4" />
-                                                            <span className="text-[10px] font-bold uppercase">Combined</span>
-                                                            <div className="h-px w-8 bg-cyan-500/50" />
-                                                        </div>
-                                                    </div>
-
-                                                    {/* Complex version */}
-                                                    <div className="space-y-1">
-                                                        <div className="text-[10px] font-bold text-emerald-400 uppercase">Band 7+ Version</div>
-                                                        <p className="text-sm text-emerald-100 bg-emerald-950/20 p-3 rounded border border-emerald-900/30 leading-relaxed">
-                                                            "{sug.complex_version}"
-                                                        </p>
-                                                    </div>
-
-                                                    {/* Structures used */}
-                                                    {sug.structures_demonstrated?.length > 0 && (
-                                                        <div className="flex flex-wrap gap-2 mt-1">
-                                                            {sug.structures_demonstrated.map((struct: string, si: number) => (
-                                                                <span key={si} className="px-2 py-1 bg-cyan-500/15 text-cyan-300 text-[11px] rounded-full border border-cyan-500/25 font-medium">
-                                                                    {struct}
-                                                                </span>
+                                                <div key={`comp-${idx}`} className="flex flex-col bg-slate-50/80 dark:bg-slate-900/50 rounded-lg border border-slate-200 dark:border-slate-700/50 overflow-hidden">
+                                                    {/* Top: Simple sentences */}
+                                                    <div className="p-4 bg-slate-100/50 dark:bg-slate-800/30 border-b border-slate-200 dark:border-slate-700/50 relative">
+                                                        <div className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Your Simple Sentences</div>
+                                                        <div className="space-y-1.5 relative z-10">
+                                                            {sug.simple_sentences?.map((s: string, si: number) => (
+                                                                <p key={si} className="text-sm text-slate-700 dark:text-slate-300">
+                                                                    "{s}"
+                                                                </p>
                                                             ))}
                                                         </div>
-                                                    )}
+                                                    </div>
 
-                                                    {/* Explanation */}
-                                                    {sug.explanation && (
-                                                        <div className="text-xs text-slate-400 flex gap-2 mt-1">
-                                                            <Info className="w-3.5 h-3.5 shrink-0 text-cyan-400 mt-0.5" />
-                                                            <span>{sug.explanation}</span>
+                                                    {/* Visual Merge Connector */}
+                                                    <div className="flex justify-center -my-3.5 relative z-20">
+                                                        <div className="bg-slate-100 dark:bg-slate-800 border border-slate-600 rounded-full p-1 shadow-md flex items-center justify-center">
+                                                            <Merge className="w-4 h-4 text-cyan-700 dark:text-cyan-400" />
                                                         </div>
-                                                    )}
+                                                    </div>
+
+                                                    {/* Bottom: Complex version */}
+                                                    <div className="p-4 pt-5 bg-emerald-500/5 relative">
+                                                        <div className="text-[10px] font-bold text-emerald-400 uppercase mb-2">Band 7+ Version</div>
+                                                        <p className="text-sm text-emerald-800 dark:text-emerald-100 leading-relaxed font-medium">
+                                                            "{sug.complex_version}"
+                                                        </p>
+
+                                                        {/* Structures used */}
+                                                        {sug.structures_demonstrated?.length > 0 && (
+                                                            <div className="flex flex-wrap gap-2 mt-3">
+                                                                {sug.structures_demonstrated.map((struct: string, si: number) => (
+                                                                    <span key={si} className="px-2 py-1 bg-cyan-500/10 text-cyan-800 dark:text-cyan-300 text-[11px] rounded-full border border-cyan-500/20 font-medium">
+                                                                        {struct}
+                                                                    </span>
+                                                                ))}
+                                                            </div>
+                                                        )}
+
+                                                        {/* Explanation */}
+                                                        {sug.explanation && (
+                                                            <div className="text-xs text-slate-500 dark:text-slate-400 flex gap-2 mt-3">
+                                                                <Info className="w-3.5 h-3.5 shrink-0 text-cyan-700 dark:text-cyan-400 mt-0.5" />
+                                                                <span>{sug.explanation}</span>
+                                                            </div>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             ))}
                                         </div>
@@ -912,29 +1180,33 @@ export function FeedbackDeepDiveView({
 
                                 {/* 4c. STRATEGY CARD - Grammar Corrections (micro_feedback fallback) */}
                                 {currentCriterion === 'grammatical_range_accuracy' && coaching.grammar_errors?.length > 0 && (
-                                    <div className="rounded-xl overflow-hidden border border-violet-500/30 bg-gradient-to-br from-violet-900/20 to-purple-900/20 shadow-xl">
-                                        <div className="bg-violet-500/10 p-4 border-b border-violet-500/20 flex items-center gap-2">
-                                            <div className="p-1.5 bg-violet-500 rounded text-white"><Layout className="w-4 h-4" /></div>
-                                            <span className="text-sm font-bold text-violet-300 uppercase tracking-wider">Sentence-Level Corrections</span>
+                                    <div className="rounded-2xl bg-white dark:bg-slate-900 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100/50 dark:border-slate-800/80 overflow-hidden mt-6">
+                                        <div className="bg-white dark:bg-slate-800/40 p-5 pl-6 border-b border-slate-50 dark:border-slate-800/50 flex items-center gap-3">
+                                            <div className="p-2 bg-violet-50 dark:bg-violet-500/10 rounded-xl text-violet-600 dark:text-violet-400"><Layout className="w-5 h-5" /></div>
+                                            <span className="text-sm font-extrabold text-slate-800 dark:text-slate-200 uppercase tracking-widest">Sentence-Level Corrections</span>
                                         </div>
-                                        <div className="p-6 space-y-4">
+                                        <div className="p-5 sm:p-6 space-y-6">
                                             {coaching.grammar_errors.slice(0, 5).map((err: any, idx: number) => (
-                                                <div key={`gram-${idx}`} className="space-y-3 bg-slate-800/30 p-4 rounded-lg border border-slate-700/50">
-                                                    <div className="grid grid-cols-2 gap-4">
-                                                        <div className="space-y-1">
-                                                            <div className="text-[10px] font-bold text-rose-400 uppercase">Original</div>
-                                                            <p className="text-sm text-rose-200/80 line-through decoration-rose-500/50 bg-rose-950/20 p-3 rounded border border-rose-900/30">
+                                                <div key={`gram-${idx}`} className="space-y-4 relative">
+                                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6">
+                                                        <div className="space-y-2">
+                                                            <div className="text-[13px] font-black tracking-widest text-slate-400 dark:text-slate-500 uppercase flex items-center gap-2">
+                                                                <div className="text-rose-400"><AlertCircle className="w-4 h-4" /></div> Original
+                                                            </div>
+                                                            <p className="text-[14px] text-slate-500 dark:text-slate-400 line-through decoration-rose-400/50 pl-2 border-l-2 border-slate-200 dark:border-slate-700 leading-relaxed">
                                                                 "{err.original}"
                                                             </p>
                                                         </div>
-                                                        <div className="space-y-1">
-                                                            <div className="text-[10px] font-bold text-emerald-400 uppercase">Corrected</div>
-                                                            <p className="text-sm text-emerald-100 bg-emerald-950/20 p-3 rounded border border-emerald-900/30">
+                                                        <div className="space-y-2">
+                                                            <div className="text-[13px] font-black tracking-widest text-slate-400 dark:text-slate-500 uppercase flex items-center gap-2">
+                                                                <div className="text-emerald-500"><Sparkles className="w-4 h-4" /></div> Corrected
+                                                            </div>
+                                                            <p className="text-[14px] font-medium text-slate-800 dark:text-slate-200 pl-2 border-l-2 border-emerald-400 dark:border-emerald-500/50 leading-relaxed">
                                                                 "{err.corrected}"
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <div className="text-xs text-slate-400 flex gap-2">
+                                                    <div className="flex gap-2 text-[14px] text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-900/50 p-3.5 rounded-lg border border-slate-100 dark:border-slate-800">
                                                         <Info className="w-3.5 h-3.5 shrink-0 text-violet-400 mt-0.5" />
                                                         <span>{err.explanation}</span>
                                                     </div>
@@ -946,18 +1218,19 @@ export function FeedbackDeepDiveView({
 
                                 {/* ACTION PLAN ITEMS (from feedback items) */}
                                 {actionItems.length > 0 && (
-                                    <div className="space-y-3">
-                                        <h4 className="text-xs font-bold text-blue-400 uppercase tracking-widest flex items-center gap-2">
+                                    <div className="space-y-4">
+                                        <h4 className="text-[14px] font-black text-blue-500 dark:text-blue-400 uppercase tracking-widest flex items-center gap-2 mt-8">
                                             <Layout className="w-4 h-4" /> Action Plan
                                         </h4>
-                                        <div className="grid gap-3">
+                                        <div className="grid gap-4">
                                             {actionItems.map((item, idx) => (
-                                                <div key={`act-${idx}`} className="p-4 rounded-xl border border-blue-900/30 bg-blue-950/10">
-                                                    <div className="font-bold text-xs uppercase text-blue-400 mb-1">{item.title}</div>
-                                                    <div className="text-slate-300 text-sm leading-relaxed">
+                                                <div key={`act-${idx}`} className="p-5 rounded-2xl bg-white dark:bg-slate-900 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100/50 dark:border-slate-800/80 relative overflow-hidden group">
+                                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-400 to-indigo-500" />
+                                                    <div className="font-extrabold text-[16px] uppercase text-slate-800 dark:text-slate-200 mb-2 pl-2 flex items-center gap-2">{item.title}</div>
+                                                    <div className="text-slate-600 dark:text-slate-400 text-[17px] leading-relaxed pl-2 font-medium">
                                                         {item.content.split(/(\*\*.*?\*\*)/g).map((part, pIdx) =>
                                                             part.startsWith('**') && part.endsWith('**') ? (
-                                                                <strong key={pIdx} className="text-blue-200 font-bold bg-blue-500/10 px-1 rounded">{part.slice(2, -2)}</strong>
+                                                                <strong key={pIdx} className="text-blue-600 dark:text-blue-400 font-bold">{part.slice(2, -2)}</strong>
                                                             ) : (
                                                                 <span key={pIdx}>{part}</span>
                                                             )
@@ -973,17 +1246,17 @@ export function FeedbackDeepDiveView({
                                 {currentCriterion === 'task_response' && coaching.raw_coach_output?.micro_drill && (
                                     <div className="rounded-xl border border-blue-500/30 bg-blue-950/10 overflow-hidden mt-6">
                                         <div className="bg-blue-900/20 p-3 border-b border-blue-500/20 flex items-center justify-between">
-                                            <span className="text-xs font-bold text-blue-300 uppercase tracking-wider">Training Drill</span>
-                                            <span className="text-[10px] bg-blue-500 text-white px-2 py-0.5 rounded-full shadow-lg shadow-blue-500/20">{coaching.raw_coach_output.micro_drill.time_limit_minutes} min</span>
+                                            <span className="text-[13px] font-bold text-blue-300 uppercase tracking-wider">Training Drill</span>
+                                            <span className="text-xs bg-blue-500 text-white px-2.5 py-1 rounded-full shadow-lg shadow-blue-500/20">{coaching.raw_coach_output.micro_drill.time_limit_minutes} min</span>
                                         </div>
-                                        <div className="p-5 flex gap-6">
+                                        <div className="p-4 flex flex-col sm:flex-row gap-5">
                                             <div className="flex-1 space-y-2">
                                                 <h4 className="font-bold text-white text-lg">{coaching.raw_coach_output.micro_drill.drill_name}</h4>
-                                                <p className="text-sm text-slate-300 leading-relaxed">{coaching.raw_coach_output.micro_drill.instructions}</p>
+                                                <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{coaching.raw_coach_output.micro_drill.instructions}</p>
                                             </div>
                                             <div className="w-48 shrink-0">
                                                 <div className="text-xs text-blue-300 font-mono bg-blue-950/50 p-3 rounded border border-blue-900/50 h-full">
-                                                    <div className="uppercase text-[10px] text-blue-500 font-bold mb-1">Goal</div>
+                                                    <div className="uppercase text-xs text-blue-500 font-bold mb-1">Goal</div>
                                                     {coaching.raw_coach_output.micro_drill.purpose}
                                                 </div>
                                             </div>
@@ -998,35 +1271,50 @@ export function FeedbackDeepDiveView({
                                     const targetBand = Math.min(trScore + 1, 8);
 
                                     return (
-                                        <div key={`macro-${idx}`} className="rounded-xl border border-amber-500/30 bg-gradient-to-br from-amber-950/20 to-slate-900/50 overflow-hidden shadow-lg">
-                                            <div className="bg-amber-900/20 p-4 border-b border-amber-500/20 flex items-center justify-between">
-                                                <span className="text-sm font-bold text-amber-400 uppercase tracking-wider">Logic Repair: Paragraph {macro.paragraph_index}</span>
+                                        <div key={`macro-${idx}`} className="rounded-2xl bg-white dark:bg-slate-900 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100/50 dark:border-slate-800/80 overflow-hidden mt-6">
+                                            <div className="bg-white dark:bg-slate-800/40 p-5 pl-6 border-b border-slate-50 dark:border-slate-800/50 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="p-2 bg-amber-50 dark:bg-amber-500/10 rounded-xl text-amber-600 dark:text-amber-400">
+                                                        <Lightbulb className="w-5 h-5" />
+                                                    </div>
+                                                    <span className="text-[16px] font-extrabold text-slate-800 dark:text-slate-200 uppercase tracking-widest">Logic Repair</span>
+                                                </div>
                                                 <div className="flex items-center gap-2">
-                                                    <span className="text-[10px] uppercase font-bold text-amber-500/70 bg-amber-950/40 px-2 py-1 rounded">{macro.issue_identified?.replace(/_/g, ' ')}</span>
-                                                    <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/20 px-2 py-1 rounded">Target: Band {targetBand}</span>
+                                                    <span className="text-xs uppercase font-black tracking-widest text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10 px-2.5 py-1.5 rounded-lg border border-amber-100 dark:border-amber-500/20">{macro.issue_identified?.replace(/_/g, ' ')}</span>
+                                                    <span className="text-xs font-black tracking-widest text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2.5 py-1.5 rounded-lg uppercase border border-emerald-100 dark:border-emerald-500/20">Target: Band {targetBand}</span>
                                                 </div>
                                             </div>
-                                            <div className="p-5 space-y-4">
-                                                <div className="text-sm text-slate-300 italic border-l-2 border-amber-500/40 pl-3">"{macro.logic_diagnosis}"</div>
-                                                <div className="grid grid-cols-2 gap-4 pt-2">
-                                                    <div className="space-y-2">
-                                                        <div className="text-[10px] uppercase text-slate-500 font-bold">Original</div>
-                                                        <p className="text-sm text-slate-400 line-through decoration-rose-500/50 decoration-2 bg-slate-900/50 p-3 rounded leading-relaxed max-h-32 overflow-y-auto custom-scrollbar">{macro.original_paragraph}</p>
-                                                    </div>
-                                                    <div className="space-y-2">
-                                                        <div className="text-[10px] uppercase text-emerald-500 font-bold flex items-center gap-2">
-                                                            Band {targetBand} Rewrite
-                                                            <span className="text-amber-400/70">({macro.improved_paragraph?.split(/\s+/).length || 0} words)</span>
+                                            <div className="p-5 sm:p-6 space-y-6">
+                                                <div className="text-[15px] text-slate-700 dark:text-slate-300 italic font-medium border-l-2 border-amber-400/50 dark:border-amber-500/40 pl-4 py-1 leading-relaxed">"{macro.logic_diagnosis}"</div>
+
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
+                                                    <div className="flex flex-col space-y-3 h-full">
+                                                        <div className="text-[13px] uppercase font-black tracking-widest text-slate-400 dark:text-slate-500 shrink-0 flex items-center gap-2">
+                                                            <div className="w-5 h-5 rounded bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500"><AlertCircle className="w-4 h-4" /></div> Original
                                                         </div>
-                                                        <p className="text-sm text-slate-200 bg-emerald-950/10 border border-emerald-900/30 p-3 rounded leading-relaxed max-h-48 overflow-y-auto custom-scrollbar">{macro.improved_paragraph}</p>
+                                                        <p className="text-[16px] text-slate-500 dark:text-slate-400 line-through decoration-rose-400/50 decoration-2 bg-slate-50 dark:bg-slate-900/50 p-5 rounded-xl border border-slate-100 dark:border-slate-800/50 leading-relaxed overflow-y-auto custom-scrollbar flex-1">{macro.original_paragraph}</p>
+                                                    </div>
+                                                    <div className="flex flex-col space-y-3 h-full">
+                                                        <div className="text-[13px] uppercase font-black tracking-widest text-emerald-500 flex items-center gap-2 shrink-0">
+                                                            <div className="w-5 h-5 rounded bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center text-emerald-500"><Sparkles className="w-4 h-4" /></div>
+                                                            Band {targetBand} Rewrite
+                                                            <span className="text-amber-500 dark:text-amber-400/70 lowercase font-medium">({macro.improved_paragraph?.split(/\s+/).length || 0} words)</span>
+                                                        </div>
+                                                        <p className="text-[16px] font-semibold text-slate-800 dark:text-slate-200 bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/30 p-5 rounded-xl leading-relaxed overflow-y-auto custom-scrollbar flex-1 shadow-inner">{macro.improved_paragraph}</p>
                                                     </div>
                                                 </div>
+
                                                 {macro.key_changes_made?.length > 0 && (
-                                                    <div className="text-xs text-slate-400 bg-slate-800/50 p-3 rounded space-y-1">
-                                                        <div className="font-bold text-amber-400 uppercase text-[10px]">Key Changes</div>
-                                                        <ul className="list-disc list-inside space-y-0.5">
+                                                    <div className="border-t border-slate-100 dark:border-slate-800/50 pt-5 mt-4">
+                                                        <div className="text-[13px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 flex items-center gap-2 mb-3">
+                                                            <CheckCircle2 className="w-4 h-4 text-amber-500" /> Key Changes Log
+                                                        </div>
+                                                        <ul className="space-y-3 pl-1">
                                                             {macro.key_changes_made.map((change: string, i: number) => (
-                                                                <li key={i} className="text-slate-300">{change}</li>
+                                                                <li key={i} className="flex gap-3 text-[16px] text-slate-700 dark:text-slate-300 font-medium items-start">
+                                                                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0 mt-2 shadow-[0_0_8px_rgba(251,191,36,0.5)]"></div>
+                                                                    <span className="leading-relaxed">{change}</span>
+                                                                </li>
                                                             ))}
                                                         </ul>
                                                     </div>
@@ -1036,61 +1324,165 @@ export function FeedbackDeepDiveView({
                                     );
                                 })}
 
-                                {currentCriterion === 'task_response' && !coaching.raw_coach_output?.the_one_big_change && actionItems.length === 0 && (
-                                    <div className="p-8 text-center border-2 border-dashed border-slate-800 rounded-xl">
-                                        <p className="text-slate-500">No high-level report items for this criterion.</p>
-                                    </div>
-                                )}
-                            </div>
-                        )}
+                                {/* IDEA DEVELOPMENT ANALYSIS (Task Response only) */}
+                                {currentCriterion === 'task_response' && coaching.raw_explainer_output?.idea_development && (() => {
+                                    const ideaDev = coaching.raw_explainer_output.idea_development;
+                                    const clarityConfig: Record<string, { label: string; color: string; icon: string }> = {
+                                        clear: { label: 'Clear', color: 'emerald', icon: '✅' },
+                                        vague: { label: 'Vague', color: 'amber', icon: '⚠️' },
+                                        missing: { label: 'Missing', color: 'rose', icon: '❌' },
+                                    };
+                                    const levelConfig: Record<string, { label: string; color: string; dot: string }> = {
+                                        well_developed: { label: 'Well Developed', color: 'emerald', dot: 'bg-emerald-500' },
+                                        partially_developed: { label: 'Partially Developed', color: 'amber', dot: 'bg-amber-500' },
+                                        underdeveloped: { label: 'Underdeveloped', color: 'rose', dot: 'bg-rose-500' },
+                                        missing: { label: 'Missing', color: 'slate', dot: 'bg-slate-400' },
+                                    };
+                                    const clarity = clarityConfig[ideaDev.thesis_clarity] || clarityConfig.vague;
 
-                        {/* TAB: STRENGTHS */}
-                        {activeTab === 'strengths' && (
-                            <div className="space-y-3 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                                {strengthItems.length > 0 ? strengthItems.map((item, idx) => (
-                                    <div key={`str-${idx}`} className="p-4 rounded-xl border border-emerald-500/20 bg-gradient-to-br from-emerald-950/20 to-slate-900/50 relative overflow-hidden group hover:border-emerald-500/40 transition-colors shadow-lg shadow-emerald-900/5">
-                                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-emerald-500 to-emerald-600" />
-                                        <div className="pl-4">
-                                            <div className="font-bold text-xs uppercase text-emerald-400 mb-2 flex items-center gap-2 tracking-wide">
-                                                <CheckCircle2 className="w-4 h-4 text-emerald-500" /> {item.title}
+                                    return (
+                                        <div className="rounded-2xl bg-white dark:bg-slate-900 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100/50 dark:border-slate-800/80 overflow-hidden mt-6">
+                                            {/* Header */}
+                                            <div className="p-5 pl-6 border-b border-slate-50 dark:border-slate-800/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="p-2 bg-indigo-50 dark:bg-indigo-500/10 rounded-xl text-indigo-600 dark:text-indigo-400">
+                                                        <Map className="w-5 h-5" />
+                                                    </div>
+                                                    <span className="text-sm font-extrabold text-slate-800 dark:text-slate-200 uppercase tracking-widest">Idea Development</span>
+                                                </div>
                                             </div>
-                                            <div className="text-slate-300 text-sm leading-relaxed opacity-90">{item.content}</div>
+
+                                            <div className="p-5 sm:p-6 space-y-6">
+                                                {/* Thesis Assessment */}
+                                                <div className="flex flex-col sm:flex-row gap-4 sm:items-start">
+                                                    <div className="flex-1">
+                                                        <div className="text-[13px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-2 flex items-center gap-2">
+                                                            <Target className="w-4 h-4" /> Your Thesis
+                                                        </div>
+                                                        <p className="text-[15px] text-slate-700 dark:text-slate-300 leading-relaxed font-medium italic border-l-2 border-indigo-400/50 dark:border-indigo-500/40 pl-4">
+                                                            "{ideaDev.essay_thesis}"
+                                                        </p>
+                                                    </div>
+                                                    <span className={cn(
+                                                        "text-[12px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg border shrink-0",
+                                                        clarity.color === 'emerald' && "text-emerald-600 bg-emerald-50 border-emerald-100 dark:text-emerald-400 dark:bg-emerald-500/10 dark:border-emerald-500/20",
+                                                        clarity.color === 'amber' && "text-amber-600 bg-amber-50 border-amber-100 dark:text-amber-400 dark:bg-amber-500/10 dark:border-amber-500/20",
+                                                        clarity.color === 'rose' && "text-rose-600 bg-rose-50 border-rose-100 dark:text-rose-400 dark:bg-rose-500/10 dark:border-rose-500/20",
+                                                    )}>
+                                                        {clarity.icon} {clarity.label}
+                                                    </span>
+                                                </div>
+
+                                                {/* Argument Map Timeline */}
+                                                {ideaDev.idea_map?.length > 0 && (
+                                                    <div className="border-t border-slate-100 dark:border-slate-800/50 pt-5">
+                                                        <div className="text-[13px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-4 flex items-center gap-2">
+                                                            <AlignLeft className="w-4 h-4" /> Argument Map
+                                                        </div>
+                                                        <div className="relative space-y-0">
+                                                            {/* Timeline connector line */}
+                                                            <div className="absolute left-[11px] top-3 bottom-3 w-px bg-gradient-to-b from-indigo-300 via-slate-200 to-slate-200 dark:from-indigo-600 dark:via-slate-700 dark:to-slate-700" />
+
+                                                            {ideaDev.idea_map.map((node: any, idx: number) => {
+                                                                const level = levelConfig[node.development_level] || levelConfig.underdeveloped;
+                                                                return (
+                                                                    <div key={idx} className="relative flex gap-4 py-3">
+                                                                        {/* Timeline dot */}
+                                                                        <div className={cn("w-[23px] h-[23px] rounded-full border-[3px] border-white dark:border-slate-900 shrink-0 z-10 shadow-sm", level.dot)} />
+
+                                                                        <div className="flex-1 -mt-0.5">
+                                                                            <div className="flex items-center gap-2 mb-1">
+                                                                                <span className={cn(
+                                                                                    "text-[11px] font-bold uppercase px-2 py-0.5 rounded-full",
+                                                                                    level.color === 'emerald' && "text-emerald-700 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-500/10",
+                                                                                    level.color === 'amber' && "text-amber-700 bg-amber-50 dark:text-amber-400 dark:bg-amber-500/10",
+                                                                                    level.color === 'rose' && "text-rose-700 bg-rose-50 dark:text-rose-400 dark:bg-rose-500/10",
+                                                                                    level.color === 'slate' && "text-slate-500 bg-slate-100 dark:text-slate-400 dark:bg-slate-800",
+                                                                                )}>
+                                                                                    {level.label}
+                                                                                </span>
+                                                                            </div>
+                                                                            <p className="text-[16px] text-slate-700 dark:text-slate-200 leading-relaxed font-bold">{node.idea_summary}</p>
+                                                                            <p className="text-[14px] text-slate-500 dark:text-slate-400 mt-1">{node.development_details}</p>
+
+                                                                            {node.evidence_used && (
+                                                                                <div className="mt-2 text-[14px] text-emerald-600 dark:text-emerald-400 bg-emerald-50/60 dark:bg-emerald-500/5 px-3 py-1.5 rounded-lg border border-emerald-100 dark:border-emerald-500/10 inline-block">
+                                                                                    <strong>Evidence:</strong> {node.evidence_used}
+                                                                                </div>
+                                                                            )}
+
+                                                                            {node.missing_elements?.length > 0 && (
+                                                                                <div className="flex flex-wrap gap-1.5 mt-2">
+                                                                                    {node.missing_elements.map((el: string, i: number) => (
+                                                                                        <span key={i} className="text-[12px] font-medium text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-500/10 px-2 py-0.5 rounded-full border border-rose-100 dark:border-rose-500/20">
+                                                                                            ✗ {el}
+                                                                                        </span>
+                                                                                    ))}
+                                                                                </div>
+                                                                            )}
+                                                                        </div>
+                                                                    </div>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {/* Alternative Ideas */}
+                                                {ideaDev.alternative_ideas?.length > 0 && (
+                                                    <div className="border-t border-slate-100 dark:border-slate-800/50 pt-5">
+                                                        <div className="text-[13px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-4 flex items-center gap-2">
+                                                            <Compass className="w-4 h-4" /> Alternative Arguments You Could Explore
+                                                        </div>
+                                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                                            {ideaDev.alternative_ideas.map((alt: any, idx: number) => (
+                                                                <div key={idx} className="group relative bg-gradient-to-br from-indigo-50/40 to-white dark:from-indigo-950/20 dark:to-slate-900 rounded-xl border border-indigo-100/60 dark:border-indigo-500/10 p-4 hover:shadow-md transition-all duration-200 hover:border-indigo-200 dark:hover:border-indigo-500/20">
+                                                                    <div className="flex items-start gap-2 mb-2">
+                                                                        <div className="w-5 h-5 rounded-full bg-indigo-100 dark:bg-indigo-500/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400 shrink-0 mt-0.5 text-xs font-black">{idx + 1}</div>
+                                                                        <h5 className="text-[14px] font-bold text-slate-800 dark:text-slate-200 leading-snug">{alt.idea}</h5>
+                                                                    </div>
+                                                                    <p className="text-[13px] text-slate-500 dark:text-slate-400 mb-2 leading-relaxed">{alt.why_strong}</p>
+                                                                    <div className="bg-white dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/50 rounded-lg px-3.5 py-2.5 text-[14px] text-indigo-700 dark:text-indigo-300 italic font-medium">
+                                                                        "{alt.example_sentence}"
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {/* Overall Assessment */}
+                                                {ideaDev.overall_assessment && (
+                                                    <div className="border-t border-slate-100 dark:border-slate-800/50 pt-4">
+                                                        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{ideaDev.overall_assessment}</p>
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
-                                    </div>
-                                )) : (
-                                    <div className="p-8 text-center border-2 border-dashed border-slate-800 rounded-xl">
-                                        <p className="text-slate-500">No specific strengths listed for this criterion.</p>
+                                    );
+                                })()}
+
+                                {currentCriterion === 'task_response' && !coaching.raw_coach_output?.the_one_big_change && actionItems.length === 0 && (
+                                    <div className="p-8 text-center border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-xl">
+                                        <p className="text-slate-600 dark:text-slate-500">No high-level report items for this criterion.</p>
                                     </div>
                                 )}
-
-                                {/* Pattern Breaker - Required Items */}
-                                {currentCriterion === 'task_response' && coaching.raw_coach_output?.pattern_breaker?.required_list.map((item: any, i: number) => (
-                                    <div key={`req-${i}`} className="p-4 bg-emerald-950/5 space-y-2 border border-emerald-900/30 rounded-xl">
-                                        <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold uppercase">
-                                            <CheckCircle2 className="w-3.5 h-3.5" /> Required Technique
-                                        </div>
-                                        <div className="font-mono text-sm text-emerald-200">{item.required_technique}</div>
-                                        <div className="text-xs text-slate-400">{item.how_to_implement}</div>
-                                    </div>
-                                ))}
                             </div>
                         )}
+
+
+
 
                         {/* TAB: ISSUES */}
                         {activeTab === 'issues' && (
-                            <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                            <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300 relative z-10 max-w-4xl mx-auto py-4">
                                 {issueItems.length > 0 ? issueItems.map((item, idx) => (
-                                    <div key={`imp-${idx}`} className="rounded-xl border border-rose-500/20 bg-gradient-to-br from-rose-950/20 to-slate-900/50 overflow-hidden group hover:border-rose-500/40 transition-all shadow-lg shadow-rose-900/5">
-
-                                        {/* Header */}
-                                        <div className="flex items-center gap-2 p-3 border-b border-rose-500/10 bg-rose-500/5">
-                                            <div className="p-1 rounded-md bg-rose-500/20 text-rose-400">
-                                                <AlertTriangle className="w-3.5 h-3.5" />
+                                    <div key={`imp-${idx}`} className="rounded-2xl bg-white dark:bg-slate-900 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100/50 dark:border-slate-800/80 relative overflow-hidden group">
+                                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-rose-400 to-rose-500" />
+                                        <div className="p-5 sm:p-6 pl-6">
+                                            <div className="font-extrabold text-[14px] uppercase text-slate-400 dark:text-slate-500 mb-4 flex items-center gap-2 tracking-widest">
+                                                <AlertTriangle className="w-4 h-4 text-rose-500 shrink-0" /> {item.title}
                                             </div>
-                                            <span className="font-bold text-xs uppercase text-rose-300 tracking-wide">{item.title}</span>
-                                        </div>
-
-                                        <div className="p-5 space-y-4">
                                             {/* Structured - Cohesion Issue */}
                                             {item.title === 'Cohesion Issue' && item.content.includes('->') ? (() => {
                                                 // ... (keep existing parsing logic for Cohesion Issue) ...
@@ -1103,276 +1495,468 @@ export function FeedbackDeepDiveView({
 
                                                 return (
                                                     <div className="space-y-4">
-                                                        <div className="bg-rose-950/30 rounded-lg p-4 border border-rose-500/20 relative">
-                                                            <div className="absolute top-0 right-0 px-2 py-1 bg-rose-500/20 text-[10px] font-bold text-rose-300 rounded-bl-lg">ORIGINAL</div>
-                                                            <div className="text-slate-300 text-sm italic font-serif opacity-90 leading-relaxed">"{problem}"</div>
-                                                        </div>
-
-                                                        <div className="flex justify-center -my-2 relative z-10">
-                                                            <div className="bg-slate-900 rounded-full p-1.5 border border-slate-700 text-emerald-500 shadow-sm">
-                                                                <ArrowRight className="w-4 h-4" />
+                                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6">
+                                                            <div className="space-y-2">
+                                                                <div className="text-[11px] font-black tracking-widest text-slate-400 dark:text-slate-500 uppercase flex items-center gap-2">
+                                                                    <div className="text-rose-400"><AlertCircle className="w-3.5 h-3.5" /></div> Original
+                                                                </div>
+                                                                <p className="text-[16px] text-slate-500 dark:text-slate-400 line-through decoration-rose-400/50 pl-2 border-l-2 border-slate-200 dark:border-slate-700 leading-relaxed italic">
+                                                                    "{problem}"
+                                                                </p>
+                                                            </div>
+                                                            <div className="space-y-2">
+                                                                <div className="text-[11px] font-black tracking-widest text-slate-400 dark:text-slate-500 uppercase flex items-center gap-2">
+                                                                    <div className="text-emerald-500"><Sparkles className="w-3.5 h-3.5" /></div> Improved
+                                                                </div>
+                                                                <p className="text-[16px] font-semibold text-slate-800 dark:text-slate-200 pl-2 border-l-2 border-emerald-400 dark:border-emerald-500/50 leading-relaxed">
+                                                                    "{fix}"
+                                                                </p>
                                                             </div>
                                                         </div>
-
-                                                        <div className="bg-emerald-950/20 rounded-lg p-4 border border-emerald-500/20 relative">
-                                                            <div className="absolute top-0 right-0 px-2 py-1 bg-emerald-500/20 text-[10px] font-bold text-emerald-300 rounded-bl-lg">IMPROVED</div>
-                                                            <div className="text-emerald-100/90 text-sm font-medium leading-relaxed">"{fix}"</div>
-                                                        </div>
-
-                                                        <div className="flex gap-3 items-start text-xs text-slate-400 bg-slate-800/50 p-3 rounded-lg border border-slate-700/50">
-                                                            <Info className="w-4 h-4 mt-0.5 shrink-0 text-indigo-400" />
-                                                            <span className="leading-relaxed"><span className="text-indigo-300 font-bold">Why:</span> {reason}</span>
+                                                        <div className="flex gap-2 text-[14px] text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-100 dark:border-slate-800 mt-2">
+                                                            <Info className="w-3.5 h-3.5 shrink-0 text-indigo-400 mt-0.5" />
+                                                            <span><span className="font-bold text-slate-600 dark:text-slate-300">Why:</span> {reason}</span>
                                                         </div>
                                                     </div>
                                                 );
                                             })() : (
                                                 /* Standard Text Content with Markdown Parsing */
-                                                <div className="text-slate-300 text-sm leading-7">
+                                                <div className="text-[17px] font-medium text-slate-800 dark:text-slate-200 leading-relaxed">
                                                     {item.content.split(/(\*\*.*?\*\*)/).map((part, i) => {
                                                         if (part.startsWith('**') && part.endsWith('**')) {
-                                                            return <strong key={i} className="font-bold text-rose-200">{part.slice(2, -2)}</strong>;
+                                                            return <strong key={i} className="font-extrabold text-rose-600 dark:text-rose-400">{part.slice(2, -2)}</strong>;
                                                         }
-                                                        return <span key={i}>{part}</span>;
+                                                        return <span key={i} className="opacity-90">{part}</span>;
                                                     })}
                                                 </div>
                                             )}
                                         </div>
                                     </div>
                                 )) : (
-                                    <div className="p-8 text-center border-2 border-dashed border-slate-800 rounded-xl">
-                                        <p className="text-slate-500">No specific issues detected! Great job.</p>
+                                    <div className="p-8 text-center border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-xl">
+                                        <p className="text-slate-600 dark:text-slate-500">No specific issues detected! Great job.</p>
                                     </div>
                                 )}
 
                                 {/* Pattern Breaker - Banned Items */}
                                 {currentCriterion === 'task_response' && coaching.raw_coach_output?.pattern_breaker?.banned_list.map((item: any, i: number) => (
-                                    <div key={`ban-${i}`} className="p-4 bg-rose-950/5 space-y-2 border border-rose-900/30 rounded-xl">
+                                    <div key={`ban-${i}`} className="p-4 bg-rose-950/5 space-y-2 border border-rose-200 dark:border-rose-900/30 rounded-xl">
                                         <div className="flex items-center gap-2 text-rose-400 text-xs font-bold uppercase">
                                             <AlertTriangle className="w-3.5 h-3.5" /> Avoid This
                                         </div>
                                         <div className="font-mono text-sm text-rose-200">"{item.banned_element}"</div>
-                                        <div className="text-xs text-slate-400">{item.why_banned}</div>
+                                        <div className="text-[14px] text-slate-500 dark:text-slate-400">{item.why_banned}</div>
                                     </div>
                                 ))}
                             </div>
                         )}
 
-                        {/* TAB: SUMMARY (Topics) */}
+                        {/* TAB: ACTION PLAN (Summary) */}
                         {activeTab === 'summary' && (
-                            <div className="space-y-3 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                                <div className="flex items-center gap-2 pb-1 border-b border-slate-800/60">
-                                    <Target className="w-3.5 h-3.5 text-amber-400" />
-                                    <h3 className="text-[11px] font-black text-slate-300 uppercase tracking-widest">Priority Study Areas</h3>
-                                </div>
+                            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300 relative z-10 max-w-4xl mx-auto py-4">
 
-                                <div className="grid grid-cols-1 gap-3">
-                                    {/* 1. AGENT-GENERATED TOPICS */}
-                                    {coaching.topic_analysis && coaching.topic_analysis.length > 0 && (
-                                        <div className="space-y-3">
-                                            {coaching.topic_analysis.map((topic, i) => (
-                                                <div key={i} className="flex flex-col gap-2 p-3 bg-[#1e293b]/50 border border-slate-800 rounded-lg hover:border-slate-700 transition-colors">
-                                                    {/* Header: Score + Title + Category */}
-                                                    <div className="flex items-center justify-between">
-                                                        <div className="flex items-center gap-3">
-                                                            <div className={cn(
-                                                                "w-7 h-7 rounded-md flex items-center justify-center font-black text-[11px]",
-                                                                topic.category === 'Grammar' ? "bg-indigo-500/20 text-indigo-400" :
-                                                                    topic.category === 'Vocabulary' ? "bg-emerald-500/20 text-emerald-400" :
-                                                                        "bg-amber-500/20 text-amber-400"
-                                                            )}>
-                                                                {topic.count}
-                                                            </div>
-                                                            <div>
-                                                                <div className="font-bold text-sm text-slate-200">{topic.topic}</div>
-                                                                <div className="text-[10px] text-slate-500 uppercase tracking-wider">{topic.category}</div>
-                                                            </div>
-                                                        </div>
-                                                        <span className={cn(
-                                                            "text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded",
-                                                            topic.category === 'Grammar' ? "bg-indigo-500/10 text-indigo-400" :
-                                                                topic.category === 'Vocabulary' ? "bg-emerald-500/10 text-emerald-400" :
-                                                                    "bg-amber-500/10 text-amber-400"
-                                                        )}>{topic.category}</span>
+                                {/* 1. SCORE CONTEXT & DIAGNOSIS */}
+                                {coaching.score_context && coaching.diagnosis_summary && (
+                                    <div className="rounded-2xl bg-white dark:bg-slate-900 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100/50 dark:border-slate-800/80 overflow-hidden">
+                                        <div className="bg-white dark:bg-slate-800/40 p-5 pl-6 border-b border-slate-50 dark:border-slate-800/50 flex items-center justify-between">
+                                            <div className="flex items-center gap-3">
+                                                <div className="p-2 bg-indigo-50 dark:bg-indigo-500/10 rounded-xl text-indigo-600 dark:text-indigo-400">
+                                                    <Activity className="w-5 h-5" />
+                                                </div>
+                                                <span className="text-sm font-extrabold text-slate-800 dark:text-slate-200 uppercase tracking-widest">The Diagnosis</span>
+                                            </div>
+                                            <span className="text-[11px] font-black tracking-widest px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 uppercase">
+                                                Target: Band {coaching.score_context.realistic_next_target}
+                                            </span>
+                                        </div>
+                                        <div className="p-5 sm:p-6 space-y-6">
+                                            <div className="flex gap-4 items-start">
+                                                <div className="w-1.5 h-1.5 mt-2 bg-emerald-400 rounded-full shrink-0 shadow-[0_0_8px_rgba(52,211,153,0.5)]"></div>
+                                                <p className="text-[15px] text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
+                                                    <span className="text-slate-400 dark:text-slate-500 uppercase text-[11px] tracking-widest font-black block mb-1">Strength</span>
+                                                    {coaching.diagnosis_summary.strength_acknowledged}
+                                                </p>
+                                            </div>
+                                            <div className="flex gap-4 items-start">
+                                                <div className="w-1.5 h-1.5 mt-2 bg-rose-400 rounded-full shrink-0 shadow-[0_0_8px_rgba(251,113,133,0.5)]"></div>
+                                                <p className="text-[15px] text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
+                                                    <span className="text-slate-400 dark:text-slate-500 uppercase text-[11px] tracking-widest font-black block mb-1">Core Limitation</span>
+                                                    {coaching.diagnosis_summary.core_limitation}
+                                                </p>
+                                            </div>
+                                            {coaching.motivation && (
+                                                <div className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800/50 text-center">
+                                                    <p className="text-[15px] text-indigo-400 dark:text-indigo-300/80 italic font-serif opacity-90 leading-relaxed tracking-wide">"{coaching.motivation.closing_message}"</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* 2. THE ONE BIG CHANGE */}
+                                {coaching.the_one_big_change && (
+                                    <div className="bg-amber-50 dark:bg-amber-950/20 rounded-xl border border-amber-200 dark:border-amber-500/30 overflow-hidden shadow-lg dark:shadow-amber-900/5 relative">
+                                        <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 blur-3xl -mr-16 -mt-16 rounded-full"></div>
+                                        <div className="p-6 relative z-10">
+                                            <div className="flex items-center justify-between mb-4">
+                                                <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-black uppercase tracking-wider">
+                                                    <Target className="w-5 h-5" /> The One Big Change
+                                                </div>
+                                                {coaching.the_one_big_change.visual_reminder && (
+                                                    <span className="px-3 py-1 bg-amber-200 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300 text-[10px] font-bold uppercase rounded border border-amber-300 dark:border-amber-500/30">
+                                                        {coaching.the_one_big_change.visual_reminder}
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <p className="text-lg font-medium text-slate-800 dark:text-slate-200 mb-6 leading-relaxed">
+                                                {coaching.the_one_big_change.change_statement}
+                                            </p>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <div className="bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-500/20 p-4 rounded-lg">
+                                                    <div className="text-[10px] font-bold text-rose-700 dark:text-rose-400 uppercase mb-2 flex items-center gap-1.5"><AlertTriangle className="w-3 h-3" /> Stop Doing</div>
+                                                    <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{coaching.the_one_big_change.what_to_stop_doing}</p>
+                                                </div>
+                                                <div className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-500/20 p-4 rounded-lg">
+                                                    <div className="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 uppercase mb-2 flex items-center gap-1.5"><CheckCircle2 className="w-3 h-3" /> Start Doing</div>
+                                                    <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{coaching.the_one_big_change.what_to_start_doing}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* 3. PATTERN BREAKER */}
+                                {coaching.pattern_breaker && coaching.pattern_breaker.banned_list.length > 0 && (
+                                    <div className="space-y-3">
+                                        <div className="flex items-center gap-2 pb-1 border-b border-slate-200 dark:border-slate-800/60 mt-8">
+                                            <ShieldAlert className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
+                                            <h3 className="text-[11px] font-black text-slate-700 dark:text-slate-300 uppercase tracking-widest">Crucial Constraints</h3>
+                                        </div>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            {coaching.pattern_breaker.banned_list.map((ban, i) => (
+                                                <div key={`ban-${i}`} className="bg-slate-100/50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 p-4 rounded-lg flex flex-col items-start pt-3 shadow hover:border-slate-600 transition-colors">
+                                                    <div className="flex items-center gap-2 w-full mb-3">
+                                                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-100 dark:bg-rose-500/20 text-rose-700 dark:text-rose-400 border border-rose-300 dark:border-rose-500/30 uppercase shrink-0">Banned</span>
+                                                        <span className="font-mono text-[13px] text-slate-800 dark:text-slate-300 truncate">"{ban.banned_element}"</span>
                                                     </div>
-
-                                                    {/* Rich Details: Description + Why It Matters + Evidence */}
-                                                    {(topic.description || topic.why_it_matters || topic.evidence_from_essay) && (
-                                                        <div className="pl-10 space-y-1.5">
-                                                            {topic.description && (
-                                                                <p className="text-sm text-slate-300">
-                                                                    {topic.description}
-                                                                </p>
-                                                            )}
-                                                            {topic.why_it_matters && (
-                                                                <div className="flex items-start gap-2 text-xs text-indigo-300/80 bg-indigo-500/5 p-2 rounded border border-indigo-500/10">
-                                                                    <div className="shrink-0 mt-0.5">💡</div>
-                                                                    <span><strong>Why it matters:</strong> {topic.why_it_matters}</span>
-                                                                </div>
-                                                            )}
-                                                            {topic.evidence_from_essay && (
-                                                                <div className="flex items-start gap-2 text-xs text-amber-300/80 bg-amber-500/5 p-2.5 rounded border border-amber-500/15">
-                                                                    <div className="shrink-0 mt-0.5">📝</div>
-                                                                    <div>
-                                                                        <strong className="text-amber-400">From your essay:</strong>
-                                                                        <p className="mt-1 italic text-amber-200/70">"{topic.evidence_from_essay}"</p>
-                                                                    </div>
-                                                                </div>
-                                                            )}
-                                                        </div>
-                                                    )}
+                                                    <p className="text-xs text-slate-500 dark:text-slate-400 mb-4 leading-relaxed line-clamp-2">{ban.why_banned}</p>
+                                                    <div className="bg-slate-50/80 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-200 dark:border-slate-800 w-full mt-auto">
+                                                        <div className="text-[10px] text-emerald-700 dark:text-emerald-400/80 uppercase font-bold mb-1.5 tracking-wider">Use Instead</div>
+                                                        <p className="text-sm font-medium text-emerald-800 dark:text-emerald-300 leading-relaxed">"{ban.alternative_to_use}"</p>
+                                                    </div>
                                                 </div>
                                             ))}
                                         </div>
-                                    )}
+                                    </div>
+                                )}
 
-                                    {/* 2. TOPIC VOCABULARY TOOLKIT (Always show if available) */}
-                                    {coaching.topic_vocabulary && (
-                                        <div className="bg-emerald-950/10 border border-emerald-500/20 rounded-xl overflow-hidden mb-6">
-                                            <div className="bg-emerald-500/10 p-4 border-b border-emerald-500/20 flex items-center justify-between">
-                                                <div className="flex items-center gap-2 text-emerald-400 font-bold uppercase text-xs tracking-wider">
-                                                    <BookOpen className="w-4 h-4" /> Word Bank: {coaching.topic_vocabulary.topic}
+                                {/* 4. MICRO-DRILL */}
+                                {coaching.micro_drill && (
+                                    <div className="rounded-2xl bg-white dark:bg-slate-900 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100/50 dark:border-slate-800/80 overflow-hidden mt-8">
+                                        <div className="bg-white dark:bg-slate-800/40 p-5 pl-6 border-b border-slate-50 dark:border-slate-800/50 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                            <div className="flex items-center gap-3">
+                                                <div className="p-2 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">
+                                                    <Dumbbell className="w-5 h-5" />
                                                 </div>
-                                                <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded border border-emerald-500/30">Band 9.0 Lexis</span>
+                                                <div>
+                                                    <h3 className="text-sm font-extrabold text-slate-800 dark:text-slate-200 uppercase tracking-widest">{coaching.micro_drill.drill_name}</h3>
+                                                    <p className="text-[11px] font-black tracking-widest text-slate-400 dark:text-slate-500 uppercase mt-0.5">{coaching.micro_drill.purpose}</p>
+                                                </div>
                                             </div>
-                                            <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                {/* Essential Words */}
-                                                <div className="space-y-3">
-                                                    <div className="text-[10px] font-bold text-slate-500 uppercase flex items-center gap-2">
-                                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> Essential Terms
-                                                    </div>
-                                                    <div className="space-y-2">
-                                                        {coaching.topic_vocabulary.useful_words?.slice(0, 5).map((w: any, idx: number) => (
-                                                            <div key={`cw-${idx}`} className="text-sm">
-                                                                <span className="font-bold text-emerald-300">{w.word}</span>
-                                                                <div className="text-xs text-slate-400 italic">"{w.example}"</div>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                                {/* Collocations */}
-                                                <div className="space-y-3">
-                                                    <div className="text-[10px] font-bold text-slate-500 uppercase flex items-center gap-2">
-                                                        <div className="w-1.5 h-1.5 rounded-full bg-cyan-500" /> Power Collocations
-                                                    </div>
-                                                    <div className="space-y-2">
-                                                        {coaching.topic_vocabulary.useful_collocations?.slice(0, 5).map((w: any, idx: number) => (
-                                                            <div key={`cc-${idx}`} className="text-sm">
-                                                                <span className="font-bold text-cyan-300">{w.word}</span>
-                                                                <div className="text-xs text-slate-400 italic">"{w.example}"</div>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                </div>
+                                            <div className="flex items-center justify-center gap-2 text-[11px] font-black tracking-widest text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-100 dark:border-slate-700 uppercase">
+                                                <Clock className="w-3.5 h-3.5 text-indigo-500" /> {coaching.micro_drill.time_limit_minutes} Mins
                                             </div>
                                         </div>
-                                    )}
-
-                                    {/* 3. COHERENCE STRATEGY (Always show if available) */}
-                                    {coaching.coherence_advice && (
-                                        <div className="bg-indigo-950/10 border border-indigo-500/20 rounded-xl overflow-hidden mb-6">
-                                            <div className="bg-indigo-500/10 p-4 border-b border-indigo-500/20 flex items-center justify-between">
-                                                <div className="flex items-center gap-2 text-indigo-400 font-bold uppercase text-xs tracking-wider">
-                                                    <Layout className="w-4 h-4" /> Strategic Flow Advice
+                                        <div className="p-5 sm:p-6 space-y-6">
+                                            <div className="space-y-3">
+                                                <h4 className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                                                    <Info className="w-3.5 h-3.5 text-indigo-400" /> Instructions
+                                                </h4>
+                                                <div className="bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800/50 rounded-xl p-5">
+                                                    <p className="text-[15px] text-slate-700 dark:text-slate-300 leading-relaxed font-medium whitespace-pre-wrap">{coaching.micro_drill.instructions}</p>
                                                 </div>
-                                                <span className="text-[10px] bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded border border-indigo-500/30">Structure</span>
-                                            </div>
-                                            <div className="p-4 space-y-4">
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                    <div className="space-y-2">
-                                                        <div className="text-[10px] font-bold text-slate-500 uppercase">Core Strategy</div>
-                                                        <p className="text-sm text-indigo-200 font-medium">{coaching.coherence_advice.strategy}</p>
-                                                    </div>
-                                                    <div className="space-y-2">
-                                                        <div className="text-[10px] font-bold text-slate-500 uppercase">Specific Direction</div>
-                                                        <p className="text-sm text-slate-300">{coaching.coherence_advice.specific_direction}</p>
-                                                    </div>
-                                                </div>
-                                                <div className="bg-indigo-500/5 p-3 rounded border border-indigo-500/10">
-                                                    <div className="text-[10px] font-bold text-indigo-400 uppercase mb-1">Example Transition</div>
-                                                    <p className="text-sm text-slate-400 italic">"{coaching.coherence_advice.example}"</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    {/* 4. FALLBACK: General Focus Areas (Only if no agent topics) */}
-                                    {(!coaching.topic_analysis || coaching.topic_analysis.length === 0) && (
-                                        <div className="space-y-6">
-                                            <div className="text-center py-4 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-indigo-500/10 rounded-xl border border-indigo-500/20">
-                                                <BookOpen className="w-8 h-8 mx-auto text-indigo-400 mb-2" />
-                                                <p className="text-slate-200 text-sm font-medium">
-                                                    Personalized Study Plan
-                                                </p>
-                                                <p className="text-slate-400 text-xs mt-1">
-                                                    Focus on these areas to improve your band score:
-                                                </p>
                                             </div>
                                             <div className="space-y-3">
-                                                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
-                                                    <BookOpen className="w-4 h-4" />
-                                                    Recommended Study Areas
+                                                <h4 className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                                                    <PenTool className="w-3.5 h-3.5 text-indigo-400" /> Practice Material
                                                 </h4>
-                                                {evaluation.criterion_scores
-                                                    .sort((a, b) => a.band - b.band)
-                                                    .slice(0, 4)
-                                                    .map((score, i) => {
-                                                        const focusInfo: Record<string, { topic: string; description: string; color: string }> = {
-                                                            task_response: {
-                                                                topic: "Task Response & Thesis Development",
-                                                                description: "Strengthen your position with specific examples and deeper analysis",
-                                                                color: "amber"
-                                                            },
-                                                            coherence_cohesion: {
-                                                                topic: "Coherence & Paragraph Structure",
-                                                                description: "Improve logical flow, transitions, and referencing",
-                                                                color: "indigo"
-                                                            },
-                                                            lexical_resource: {
-                                                                topic: "Vocabulary Range & Accuracy",
-                                                                description: "Expand academic vocabulary and learn natural collocations",
-                                                                color: "emerald"
-                                                            },
-                                                            grammatical_range_accuracy: {
-                                                                topic: "Grammar Range & Accuracy",
-                                                                description: "Practice complex structures and reduce common errors",
-                                                                color: "rose"
-                                                            },
-                                                        };
-                                                        const info = focusInfo[score.criterion];
-                                                        if (!info) return null;
-
-                                                        const colorClass = {
-                                                            amber: "bg-amber-500/20 text-amber-400 border-amber-500/30",
-                                                            indigo: "bg-indigo-500/20 text-indigo-400 border-indigo-500/30",
-                                                            emerald: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
-                                                            rose: "bg-rose-500/20 text-rose-400 border-rose-500/30",
-                                                        }[info.color];
-
-                                                        return (
-                                                            <div key={i} className={cn(
-                                                                "p-4 rounded-xl border flex items-start gap-4",
-                                                                colorClass?.replace('text-', 'border-').replace('/20', '/30') || "border-slate-700 bg-slate-800/30"
-                                                            )}>
-                                                                <div className={cn(
-                                                                    "w-10 h-10 rounded-lg flex items-center justify-center font-bold text-sm shrink-0",
-                                                                    colorClass
-                                                                )}>
-                                                                    {score.band}
-                                                                </div>
-                                                                <div className="flex-1">
-                                                                    <div className="font-bold text-slate-200">{info.topic}</div>
-                                                                    <div className="text-xs text-slate-400 mt-1">{info.description}</div>
-                                                                </div>
-                                                                <div className="text-xs font-medium text-slate-500 bg-slate-800/50 px-2 py-1 rounded">
-                                                                    Band {score.band}
-                                                                </div>
-                                                            </div>
-                                                        );
-                                                    })}
+                                                <div className="bg-slate-100/50 dark:bg-slate-800/30 p-5 rounded-xl border border-slate-200/50 dark:border-slate-700/50">
+                                                    <pre className="text-[14px] text-slate-800 dark:text-slate-200 whitespace-pre-wrap font-sans leading-relaxed">{coaching.micro_drill.practice_content}</pre>
+                                                </div>
                                             </div>
                                         </div>
-                                    )}
-                                </div>
+                                    </div>
+                                )}
+
+                                {/* 5. NEXT ESSAY PLAN */}
+                                {coaching.next_essay_plan && (
+                                    <div className="space-y-6 mt-10">
+                                        <div className="flex items-center gap-3 border-b border-slate-100 dark:border-slate-800/60 pb-3">
+                                            <div className="p-1.5 bg-emerald-50 dark:bg-emerald-500/10 rounded-lg text-emerald-600 dark:text-emerald-400"><ListChecks className="w-4 h-4" /></div>
+                                            <h3 className="text-sm font-extrabold text-slate-800 dark:text-slate-200 uppercase tracking-widest">Next Essay Checklist</h3>
+                                        </div>
+                                        <div className="rounded-2xl bg-white dark:bg-slate-900 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100/50 dark:border-slate-800/80 p-5 sm:p-6 relative overflow-hidden group">
+                                            <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-emerald-400 to-emerald-500" />
+
+                                            <div className="mb-6 flex flex-col md:flex-row md:items-center gap-4 pl-2">
+                                                <span className="px-3 py-1.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[11px] font-black uppercase tracking-widest rounded-lg border border-emerald-100 dark:border-emerald-500/20 inline-block w-fit">
+                                                    Target: {coaching.next_essay_plan.target_word_count} words
+                                                </span>
+                                                <span className="text-[15px] text-slate-700 dark:text-slate-300 font-medium">
+                                                    {coaching.next_essay_plan.rewrite_original ? "Rewrite this exact essay applying the feedback." : `Write a new essay focusing on: ${coaching.next_essay_plan.prompt_type_to_practice}`}
+                                                </span>
+                                            </div>
+
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10 pl-2">
+                                                <div className="space-y-4">
+                                                    <h4 className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                                        Before Writing <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
+                                                    </h4>
+                                                    <ul className="space-y-4">
+                                                        {coaching.next_essay_plan.pre_writing_checklist.map((item, i) => (
+                                                            <li key={`pre-${i}`} className="flex gap-3 text-[14px] text-slate-700 dark:text-slate-300 font-medium items-start group">
+                                                                <div className="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600 shrink-0 mt-1.5 group-hover:bg-emerald-400 transition-colors" />
+                                                                <span className="leading-relaxed group-hover:text-slate-800 dark:text-slate-200 transition-colors">{item}</span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+
+                                                <div className="space-y-4">
+                                                    <h4 className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                                        While Writing <Scale className="w-3.5 h-3.5 text-slate-400" />
+                                                    </h4>
+                                                    <ul className="space-y-4">
+                                                        {coaching.next_essay_plan.constraints.map((constraint, i) => (
+                                                            <li key={`c-${i}`} className="flex flex-col gap-1 bg-slate-50/50 dark:bg-slate-900/30 p-4 rounded-xl border border-slate-100 dark:border-slate-800/60">
+                                                                <span className="font-bold text-rose-600 dark:text-rose-400 text-[14px] leading-relaxed flex items-center gap-2">
+                                                                    <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                                                                    {constraint.rule}
+                                                                </span>
+                                                                <span className="text-[12px] text-slate-500 dark:text-slate-400 font-medium pl-5 mt-1">
+                                                                    Why: {constraint.rationale}
+                                                                </span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* ORIGINAL TOPICS / VOCAB / COHERENCE (Fallback to bottom) */}
+                                {/* We keep these sections from the old summary tab but moved them below the heavy coaching features */}
+
+                                {((coaching.topic_analysis?.length ?? 0) > 0 || coaching.topic_vocabulary || coaching.coherence_advice) && (
+                                    <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800/50 space-y-6">
+                                        <div className="flex items-center gap-2 pb-1 border-b border-slate-800/60">
+                                            <BookOpen className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
+                                            <h3 className="text-[11px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">Additional Study Material</h3>
+                                        </div>
+
+                                        {/* Topic Vocabulary from previous activeTab==='summary' code */}
+                                        {coaching.topic_vocabulary && (
+                                            <div className="bg-emerald-50 dark:bg-emerald-950/10 border border-emerald-500/20 rounded-xl overflow-hidden mb-6">
+                                                <div className="bg-emerald-500/10 p-4 border-b border-emerald-500/20 flex items-center justify-between">
+                                                    <div className="flex items-center gap-2 text-emerald-400 font-bold uppercase text-xs tracking-wider">
+                                                        <BookOpen className="w-4 h-4" /> Word Bank: {coaching.topic_vocabulary.topic}
+                                                    </div>
+                                                    <span className="text-[10px] bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 px-2 py-0.5 rounded border border-emerald-500/30">Band 9.0 Lexis</span>
+                                                </div>
+                                                <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                    {/* Essential Words */}
+                                                    <div className="space-y-3">
+                                                        <div className="text-[10px] font-bold text-slate-600 dark:text-slate-500 uppercase flex items-center gap-2">
+                                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> Essential Terms
+                                                        </div>
+                                                        <div className="space-y-2">
+                                                            {coaching.topic_vocabulary.useful_words?.slice(0, 5).map((w: any, idx: number) => (
+                                                                <div key={`cw-${idx}`} className="text-sm">
+                                                                    <span className="font-bold text-emerald-700 dark:text-emerald-300">{w.word}</span>
+                                                                    <div className="text-xs text-slate-500 dark:text-slate-400 italic">"{w.example}"</div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                    {/* Collocations */}
+                                                    <div className="space-y-3">
+                                                        <div className="text-[10px] font-bold text-slate-600 dark:text-slate-500 uppercase flex items-center gap-2">
+                                                            <div className="w-1.5 h-1.5 rounded-full bg-cyan-500" /> Power Collocations
+                                                        </div>
+                                                        <div className="space-y-2">
+                                                            {coaching.topic_vocabulary.useful_collocations?.slice(0, 5).map((w: any, idx: number) => (
+                                                                <div key={`cc-${idx}`} className="text-sm">
+                                                                    <span className="font-bold text-cyan-800 dark:text-cyan-300">{w.word}</span>
+                                                                    <div className="text-xs text-slate-500 dark:text-slate-400 italic">"{w.example}"</div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* COHERENCE STRATEGY */}
+                                        {coaching.coherence_advice && (
+                                            <div className="bg-indigo-950/10 border border-indigo-500/20 rounded-xl overflow-hidden mb-6">
+                                                <div className="bg-indigo-500/10 p-4 border-b border-indigo-500/20 flex items-center justify-between">
+                                                    <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold uppercase text-xs tracking-wider">
+                                                        <Layout className="w-4 h-4" /> Strategic Flow Advice
+                                                    </div>
+                                                    <span className="text-[10px] bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded border border-indigo-500/30">Structure</span>
+                                                </div>
+                                                <div className="p-4 space-y-4">
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                        <div className="space-y-2">
+                                                            <div className="text-[10px] font-bold text-slate-600 dark:text-slate-500 uppercase">Core Strategy</div>
+                                                            <p className="text-sm text-indigo-200 font-medium">{coaching.coherence_advice.strategy}</p>
+                                                        </div>
+                                                        <div className="space-y-2">
+                                                            <div className="text-[10px] font-bold text-slate-600 dark:text-slate-500 uppercase">Specific Direction</div>
+                                                            <p className="text-sm text-slate-700 dark:text-slate-300">{coaching.coherence_advice.specific_direction}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="bg-indigo-500/5 p-3 rounded border border-indigo-500/10">
+                                                        <div className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase mb-1">Example Transition</div>
+                                                        <p className="text-sm text-slate-500 dark:text-slate-400 italic">"{coaching.coherence_advice.example}"</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* 1. AGENT-GENERATED TOPICS */}
+                                        {coaching.topic_analysis && coaching.topic_analysis.length > 0 && (
+                                            <div className="space-y-3 mt-6">
+                                                {coaching.topic_analysis.map((topic, i) => (
+                                                    <div key={i} className="flex flex-col gap-2 p-3 bg-[#1e293b]/50 border border-slate-200 dark:border-slate-800 rounded-lg hover:border-slate-300 dark:border-slate-700 transition-colors">
+                                                        {/* Header: Score + Title + Category */}
+                                                        <div className="flex items-center justify-between">
+                                                            <div className="flex items-center gap-3">
+                                                                <div className={cn(
+                                                                    "w-7 h-7 rounded-md flex items-center justify-center font-black text-[11px]",
+                                                                    topic.category === 'Grammar' ? "bg-indigo-500/20 text-indigo-600 dark:text-indigo-400" :
+                                                                        topic.category === 'Vocabulary' ? "bg-emerald-500/20 text-emerald-400" :
+                                                                            "bg-amber-500/20 text-amber-600 dark:text-amber-400"
+                                                                )}>
+                                                                    {topic.count}
+                                                                </div>
+                                                                <div>
+                                                                    <div className="font-bold text-sm text-slate-800 dark:text-slate-200">{topic.topic}</div>
+                                                                    <div className="text-[10px] text-slate-600 dark:text-slate-500 uppercase tracking-wider">{topic.category}</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        {/* Rich Details: Description + Why It Matters + Evidence */}
+                                                        {(topic.description || topic.why_it_matters || topic.evidence_from_essay) && (
+                                                            <div className="pl-10 space-y-1.5">
+                                                                {topic.description && (
+                                                                    <p className="text-sm text-slate-700 dark:text-slate-300">
+                                                                        {topic.description}
+                                                                    </p>
+                                                                )}
+                                                                {topic.why_it_matters && (
+                                                                    <div className="flex items-start gap-2 text-xs text-indigo-300/80 bg-indigo-500/5 p-2 rounded border border-indigo-500/10">
+                                                                        <div className="shrink-0 mt-0.5">💡</div>
+                                                                        <span><strong>Why it matters:</strong> {topic.why_it_matters}</span>
+                                                                    </div>
+                                                                )}
+                                                                {topic.evidence_from_essay && (
+                                                                    <div className="flex items-start gap-2 text-xs text-amber-300/80 bg-amber-500/5 p-2.5 rounded border border-amber-500/15">
+                                                                        <div className="shrink-0 mt-0.5">📝</div>
+                                                                        <div>
+                                                                            <strong className="text-amber-600 dark:text-amber-400">From your essay:</strong>
+                                                                            <p className="mt-1 italic text-amber-200/70">"{topic.evidence_from_essay}"</p>
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+
+                                    </div>
+                                )}
+
+                                {/* 6. FALLBACK: General Focus Areas (Only if no agent coaching at all) */}
+                                {(!coaching.root_cause_analysis && (!coaching.topic_analysis || coaching.topic_analysis.length === 0)) && (
+                                    <div className="space-y-6">
+                                        <div className="text-center py-4 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-indigo-500/10 rounded-xl border border-indigo-500/20">
+                                            <BookOpen className="w-8 h-8 mx-auto text-indigo-600 dark:text-indigo-400 mb-2" />
+                                            <p className="text-slate-800 dark:text-slate-200 text-sm font-medium">
+                                                Personalized Study Plan
+                                            </p>
+                                            <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">
+                                                Focus on these areas to improve your band score:
+                                            </p>
+                                        </div>
+                                        <div className="space-y-3">
+                                            <h4 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                                                <BookOpen className="w-4 h-4" />
+                                                Recommended Study Areas
+                                            </h4>
+                                            {evaluation.criterion_scores
+                                                .sort((a, b) => a.band - b.band)
+                                                .slice(0, 4)
+                                                .map((score, i) => {
+                                                    const focusInfo: Record<string, { topic: string; description: string; color: string }> = {
+                                                        task_response: {
+                                                            topic: "Task Response & Thesis Development",
+                                                            description: "Strengthen your position with specific examples and deeper analysis",
+                                                            color: "amber"
+                                                        },
+                                                        coherence_cohesion: {
+                                                            topic: "Coherence & Paragraph Structure",
+                                                            description: "Improve logical flow, transitions, and referencing",
+                                                            color: "indigo"
+                                                        },
+                                                        lexical_resource: {
+                                                            topic: "Vocabulary Range & Accuracy",
+                                                            description: "Expand academic vocabulary and learn natural collocations",
+                                                            color: "emerald"
+                                                        },
+                                                        grammatical_range_accuracy: {
+                                                            topic: "Grammar Range & Accuracy",
+                                                            description: "Practice complex structures and reduce common errors",
+                                                            color: "rose"
+                                                        },
+                                                    };
+                                                    const info = focusInfo[score.criterion];
+                                                    if (!info) return null;
+
+                                                    const colorClass = {
+                                                        amber: "bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-500/30",
+                                                        indigo: "bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
+                                                        emerald: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+                                                        rose: "bg-rose-500/20 text-rose-400 border-rose-500/30",
+                                                    }[info.color];
+
+                                                    return (
+                                                        <div key={i} className={cn(
+                                                            "p-4 rounded-xl border flex items-start gap-4",
+                                                            colorClass?.replace('text-', 'border-').replace('/20', '/30') || "border-slate-300 dark:border-slate-700 bg-slate-100/50 dark:bg-slate-800/30"
+                                                        )}>
+                                                            <div className={cn(
+                                                                "w-10 h-10 rounded-lg flex items-center justify-center font-bold text-sm shrink-0",
+                                                                colorClass
+                                                            )}>
+                                                                {score.band}
+                                                            </div>
+                                                            <div className="flex-1">
+                                                                <div className="font-bold text-slate-800 dark:text-slate-200">{info.topic}</div>
+                                                                <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">{info.description}</div>
+                                                            </div>
+                                                            <div className="text-xs font-medium text-slate-600 dark:text-slate-500 bg-slate-100/80 dark:bg-slate-800/50 px-2 py-1 rounded">
+                                                                Band {score.band}
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         )}
 
@@ -1380,7 +1964,6 @@ export function FeedbackDeepDiveView({
                         <div className="h-24 w-full" />
                     </div>
                 </div>
-
             </div>
         </div>
     );

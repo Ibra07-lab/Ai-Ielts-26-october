@@ -36,12 +36,6 @@ class ErrorPattern(BaseModel):
     fix: Optional[str] = None
 
 
-class StrengthItem(BaseModel):
-    """Represents a specific strength."""
-    category: str
-    quote: str
-    explanation: str
-
 
 class MicroTask(BaseModel):
     """A short practice task."""

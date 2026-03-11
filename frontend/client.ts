@@ -4,7 +4,6 @@
 /* eslint-disable */
 /* jshint ignore:start */
 /*jslint-disable*/
-import type { CookieWithOptions } from "encore.dev/api";
 
 /**
  * BaseURL is the base URL for calling the Encore application's API.
@@ -32,7 +31,9 @@ const BROWSER = typeof globalThis === "object" && ("window" in globalThis);
 /**
  * Client is an API client for the ai-ielts-app-ybri Encore application.
  */
-export class Client {
+export default class Client {
+    public readonly agents: agents.ServiceClient
+    public readonly frontend: frontend.ServiceClient
     public readonly ielts: ielts.ServiceClient
     private readonly options: ClientOptions
     private readonly target: string
@@ -48,6 +49,8 @@ export class Client {
         this.target = target
         this.options = options ?? {}
         const base = new BaseClient(this.target, this.options)
+        this.agents = new agents.ServiceClient(base)
+        this.frontend = new frontend.ServiceClient(base)
         this.ielts = new ielts.ServiceClient(base)
     }
 
@@ -79,76 +82,1031 @@ export interface ClientOptions {
     requestInit?: Omit<RequestInit, "headers"> & { headers?: Record<string, string> }
 }
 
-/**
- * Import the endpoint handlers to derive the types for the client.
- */
-import {
-    analyzeEssay as api_ielts_ai_analyzeEssay,
-    analyzeSpeaking as api_ielts_ai_analyzeSpeaking,
-    chatWithCoach as api_ielts_ai_chatWithCoach,
-    chatWithCoachMemory as api_ielts_ai_chatWithCoachMemory,
-    getVocabularyEnhancement as api_ielts_ai_getVocabularyEnhancement
-} from "../backend/ielts/ai";
-import {
-    getListeningAudio as api_ielts_listening_getListeningAudio,
-    getListeningSessions as api_ielts_listening_getListeningSessions,
-    submitListening as api_ielts_listening_submitListening,
-    getListeningTests as api_ielts_listening_getListeningTests,
-    getListeningTest as api_ielts_listening_getListeningTest,
-    getListeningTranscript as api_ielts_listening_getListeningTranscript
-} from "../backend/ielts/listening";
-import {
-    getDailyGoal as api_ielts_progress_getDailyGoal,
-    getProgress as api_ielts_progress_getProgress,
-    updateDailyGoal as api_ielts_progress_updateDailyGoal,
-    updateProgress as api_ielts_progress_updateProgress
-} from "../backend/ielts/progress";
-import {
-    addToVocabulary as api_ielts_reading_addToVocabulary,
-    createHighlight as api_ielts_reading_createHighlight,
-    createReadingPassage as api_ielts_reading_createReadingPassage,
-    deleteHighlight as api_ielts_reading_deleteHighlight,
-    getHighlights as api_ielts_reading_getHighlights,
-    getReadingPassage as api_ielts_reading_getReadingPassage,
-    getReadingPassageById as api_ielts_reading_getReadingPassageById,
-    getReadingPassages as api_ielts_reading_getReadingPassages,
-    getReadingSessions as api_ielts_reading_getReadingSessions,
-    getReadingTheoryById as api_ielts_reading_getReadingTheoryById,
-    getReadingTheoryList as api_ielts_reading_getReadingTheoryList,
-    getReadingTestById as api_ielts_reading_getReadingTestById,
-    getReadingTests as api_ielts_reading_getReadingTests,
-    submitReading as api_ielts_reading_submitReading,
-    translateText as api_ielts_reading_translateText
-} from "../backend/ielts/reading";
-import {
-    getSpeakingQuestion as api_ielts_speaking_getSpeakingQuestion,
-    getSpeakingSessions as api_ielts_speaking_getSpeakingSessions,
-    submitSpeaking as api_ielts_speaking_submitSpeaking
-} from "../backend/ielts/speaking";
-import {
-    createUser as api_ielts_user_createUser,
-    getUser as api_ielts_user_getUser,
-    updateUser as api_ielts_user_updateUser
-} from "../backend/ielts/user";
-import {
-    getVocabularyProgress as api_ielts_vocabulary_getVocabularyProgress,
-    getVocabularyTopics as api_ielts_vocabulary_getVocabularyTopics,
-    getVocabularyWords as api_ielts_vocabulary_getVocabularyWords,
-    updateVocabularyStatus as api_ielts_vocabulary_updateVocabularyStatus
-} from "../backend/ielts/vocabulary";
-import {
-    getWritingPrompt as api_ielts_writing_getWritingPrompt,
-    getWritingSessions as api_ielts_writing_getWritingSessions,
-    submitWriting as api_ielts_writing_submitWriting
-} from "../backend/ielts/writing";
+export namespace agents {
+    export interface BatchFeedbackRequest {
+        feedbacks: FeedbackRequest[]
+    }
 
-export namespace ielts {
+    export interface BatchFeedbackResponse {
+        results: {
+            index: number
+            status: "success" | "error"
+            feedback?: FeedbackResponse
+            error?: string
+        }[]
+        total: number
+        successful: number
+        failed: number
+    }
+
+    export interface FeedbackRequest {
+        passage: string
+        question: string
+        questionType: string
+        correctAnswer: string
+        studentAnswer: string
+    }
+
+    export interface FeedbackRequest {
+        passage: string
+        question: string
+        questionType: string
+        correctAnswer: string
+        studentAnswer: string
+    }
+
+    export interface FeedbackResponse {
+        "is_correct": boolean
+        feedback: string
+        reasoning: string
+        "strategy_tip": string
+        "passage_reference": string
+        confidence?: string
+    }
 
     export class ServiceClient {
         private baseClient: BaseClient
 
         constructor(baseClient: BaseClient) {
             this.baseClient = baseClient
+            this.checkAIFeedbackHealth = this.checkAIFeedbackHealth.bind(this)
+            this.getReadingAIFeedback = this.getReadingAIFeedback.bind(this)
+            this.getReadingAIFeedbackBatch = this.getReadingAIFeedbackBatch.bind(this)
+            this.submitReadingWithAIFeedback = this.submitReadingWithAIFeedback.bind(this)
+        }
+
+        /**
+         * Check if the AI Feedback service is healthy and responsive.
+         * 
+         * @example
+         * const health = await backend.ielts.checkAIFeedbackHealth();
+         * console.log(`Service status: ${health.status}`);
+         */
+        public async checkAIFeedbackHealth(): Promise<{
+    status: string
+    version: string
+    model: string
+}> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("GET", `/reading/ai-feedback/health`)
+            return await resp.json() as {
+    status: string
+    version: string
+    model: string
+}
+        }
+
+        /**
+         * Get AI-powered feedback for a single IELTS Reading answer.
+         * 
+         * This endpoint calls the Python LangChain feedback service and returns
+         * intelligent, educational feedback based on the passage content.
+         * 
+         * @example
+         * const feedback = await backend.ielts.getReadingAIFeedback({
+         * passage: "The Industrial Revolution...",
+         * question: "When did it begin?",
+         * questionType: "Short Answer Questions",
+         * correctAnswer: "late 18th century",
+         * studentAnswer: "late 1700s"
+         * });
+         */
+        public async getReadingAIFeedback(params: FeedbackRequest): Promise<FeedbackResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("POST", `/reading/ai-feedback`, JSON.stringify(params))
+            return await resp.json() as FeedbackResponse
+        }
+
+        /**
+         * Get AI-powered feedback for multiple IELTS Reading answers.
+         * 
+         * Useful for processing a complete test (up to 40 questions) at once.
+         * 
+         * @example
+         * const batchResult = await backend.ielts.getReadingAIFeedbackBatch({
+         * feedbacks: [
+         * { passage: "...", question: "...", ... },
+         * { passage: "...", question: "...", ... },
+         * ]
+         * });
+         */
+        public async getReadingAIFeedbackBatch(params: BatchFeedbackRequest): Promise<BatchFeedbackResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("POST", `/reading/ai-feedback/batch`, JSON.stringify(params))
+            return await resp.json() as BatchFeedbackResponse
+        }
+
+        /**
+         * Enhanced version of submitReading that includes AI feedback.
+         * 
+         * This extends your existing submitReading endpoint to automatically
+         * generate AI feedback for each incorrect answer.
+         */
+        public async submitReadingWithAIFeedback(params: {
+    testId: number
+    passageId: number
+    answers: { [key: number]: string }
+}): Promise<{
+    score: number
+    totalQuestions: number
+    correctAnswers: number
+    results: {
+        questionId: number
+        isCorrect: boolean
+        correctAnswer: string
+        studentAnswer: string
+        aiFeedback?: FeedbackResponse
+    }[]
+}> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("POST", `/reading/submit-with-ai`, JSON.stringify(params))
+            return await resp.json() as {
+    score: number
+    totalQuestions: number
+    correctAnswers: number
+    results: {
+        questionId: number
+        isCorrect: boolean
+        correctAnswer: string
+        studentAnswer: string
+        aiFeedback?: FeedbackResponse
+    }[]
+}
+        }
+    }
+}
+
+export namespace frontend {
+
+    export class ServiceClient {
+        private baseClient: BaseClient
+
+        constructor(baseClient: BaseClient) {
+            this.baseClient = baseClient
+            this.assets = this.assets.bind(this)
+        }
+
+        public async assets(path: string[]): Promise<void> {
+            await this.baseClient.callTypedAPI("HEAD", `/frontend/${path.map(encodeURIComponent).join("/")}`)
+        }
+    }
+}
+
+export namespace ielts {
+    export interface ActivityEvent {
+        id: string
+        type: "reading" | "listening" | "writing" | "speaking" | "video"
+        title: string
+        score: string
+        bandScore?: number
+        timestamp: string
+        feedbackUrl?: string
+    }
+
+    export interface AddToVocabularyRequest {
+        userId: string
+        text: string
+        definition: string
+        translation: string
+        targetLanguage: string
+        exampleSentence: string
+        topic?: string
+    }
+
+    export interface AdvancedTip {
+        title: string
+        description: string
+        application?: string
+    }
+
+    export interface AttitudeIndicatorEntry {
+        words?: string[]
+        example?: string
+    }
+
+    export interface AttitudeIndicators {
+        positive?: AttitudeIndicatorEntry
+        negative?: AttitudeIndicatorEntry
+        neutral?: AttitudeIndicatorEntry
+        cautious?: AttitudeIndicatorEntry
+        certain?: AttitudeIndicatorEntry
+        critical?: AttitudeIndicatorEntry
+    }
+
+    export interface ChatRequest {
+        message: string
+        context?: string
+    }
+
+    export interface ChatResponse {
+        reply: string
+    }
+
+    export interface CreateHighlightRequest {
+        userId: string
+        passageTitle: string
+        highlightedText: string
+        startPosition: number
+        endPosition: number
+        highlightType: string
+        highlightColor?: string
+    }
+
+    export interface CreateUserRequest {
+        id: string
+        name: string
+        targetBand: number
+        examDate?: string
+        language?: string
+        theme?: string
+    }
+
+    export interface DailyGoal {
+        goalDate: string
+        targetMinutes: number
+        completedMinutes: number
+        activitiesCompleted: number
+        targetActivities: number
+    }
+
+    export interface DeeperFeedbackResponse {
+        verdict: string
+        correctAnswer: string
+        whyStudentIsWrong: {
+            reason: string
+            studentMistakePattern: string
+        }
+        evidence: {
+            quote: string
+            analysis: string
+        }
+        strategyTip: {
+            name: string
+            steps: string[]
+        }
+        personalizedAdvice: string
+    }
+
+    export interface DifficultyExamples {
+        easy?: {
+            characteristics?: string
+            example?: DifficultyQAExample
+        }
+        medium?: {
+            characteristics?: string
+            example?: DifficultyQAExample
+        }
+        hard?: {
+            characteristics?: string
+            example?: DifficultyQAExample
+        }
+    }
+
+    export interface DifficultyQAExample {
+        passage: string
+        question: string
+        options: string[]
+        correctAnswer: string
+        whyEasy?: string
+        whyMedium?: string
+        whyHard?: string
+    }
+
+    export interface DosAndDonts {
+        dos?: string[]
+        donts?: string[]
+    }
+
+    export interface EmergencyStrategy {
+        whenRunningOutOfTime?: string[]
+        "guessing Strategy"?: string[]
+        confidenceBooster?: string
+    }
+
+    export interface EssayAnalysisRequest {
+        essay: string
+        taskType: number
+        userId: string
+    }
+
+    export interface EssayAnalysisResponse {
+        overallScore: number
+        taskResponse: number
+        coherenceCohesion: number
+        lexicalResource: number
+        grammaticalRange: number
+        feedback: string
+        suggestions: string[]
+    }
+
+    export interface FlowChartConnection {
+        from: string
+        to: string
+        label?: string
+        style?: "solid" | "dashed"
+    }
+
+    export interface FlowChartNode {
+        id: string
+        type: "stage" | "gap" | "decision"
+        content?: string
+        gapNumber?: number
+        correctAnswer?: string
+        position?: number
+    }
+
+    export interface FlowChartStructure {
+        title: string
+        orientation: "vertical" | "horizontal"
+        nodes: FlowChartNode[]
+        connections: FlowChartConnection[]
+    }
+
+    export type KeyTechniques = { [key: string]: string }
+
+    export interface LearningPath {
+        phase1?: LearningPathPhase
+        phase2?: LearningPathPhase
+        phase3?: LearningPathPhase
+        phase4?: LearningPathPhase
+    }
+
+    export interface LearningPathPhase {
+        name?: string
+        focus?: string[]
+        duration?: string
+        sections?: string[]
+    }
+
+    export interface ListeningQuestion {
+        id: number
+        type: "multiple-choice" | "fill-in-blank" | "matching" | "pick-two"
+        questionNumber: number
+        question: string
+        options?: string[]
+        correctAnswer: string | string[]
+        alternativeAnswers?: string[]
+        explanation?: string
+    }
+
+    export interface ListeningResult {
+        id: number
+        score: number
+        totalQuestions: number
+        correctAnswers: { [key: number]: string | string[] }
+        userAnswers: { [key: number]: string }
+        explanations: { [key: number]: string }
+        bandScore: number
+    }
+
+    export interface ListeningSession {
+        id: number
+        testId: number
+        testTitle: string
+        score: number
+        totalQuestions: number
+        bandScore: number
+        timeTaken?: number
+        createdAt: string
+    }
+
+    export interface ListeningSubmission {
+        userId: string
+        testId: number
+        userAnswers: { [key: number]: string }
+        timeTaken?: number
+    }
+
+    export interface ListeningTest {
+        id: number
+        title: string
+        section: number
+        difficulty: "easy" | "medium" | "hard"
+        audioFile: string
+        duration: number
+        instructions?: string
+        transcript?: ListeningTranscriptLine[]
+        transcripts?: ListeningTranscriptSection[]
+        questions: ListeningQuestion[]
+    }
+
+    export interface ListeningTestMeta {
+        id: number
+        title: string
+        section: number
+        difficulty: string
+        questionCount: number
+        duration: number
+    }
+
+    export interface ListeningTranscriptLine {
+        speaker: string
+        timestamp?: string
+        text: string
+    }
+
+    export interface ListeningTranscriptSection {
+        title: string
+        lines: ListeningTranscriptLine[]
+    }
+
+    export interface MCQuestionTypeEntry {
+        type: string
+        difficulty?: string
+        signals?: string[]
+        whatToLookFor?: string
+        strategy?: string
+    }
+
+    export interface ModuleCollection {
+        category: string
+        modules: StruggleModule[]
+    }
+
+    export interface MultipleAnswerExample {
+        passage?: string
+        question?: string
+        options?: string[]
+        correctAnswers?: string[]
+        thinkingProcess?: string
+        eliminationProcess?: { [key: string]: string }
+        explanation?: string
+        commonMistake?: string
+    }
+
+    export interface MultipleAnswerQuestions {
+        scoringRule?: string
+        howToRecognize?: string
+        strategy?: string[]
+        example?: MultipleAnswerExample
+    }
+
+    export interface ParaphrasingPattern {
+        type: string
+        passageExample?: string
+        optionExamples?: string[]
+        tip?: string
+    }
+
+    export interface ParaphrasingPatterns {
+        description?: string
+        commonPatterns?: ParaphrasingPattern[]
+    }
+
+    export interface PassageParagraph {
+        id: string
+        text: string
+    }
+
+    export interface PracticalQuiz {
+        passage?: { [key: string]: string }
+        headings?: string[]
+        questions: PracticalQuizQuestion[]
+        miniPractice?: {
+            paragraph: string
+            headings: string[]
+            correctAnswer: string
+            explanation?: string
+        }
+    }
+
+    export interface PracticalQuizQuestion {
+        id: number
+        type: "matching-headings" | "true-false-not-given" | "multiple-choice" | "short-answer" | "gap-fill"
+        text: string
+        options?: string[]
+        correctAnswer: string | string[]
+        explanation?: string
+    }
+
+    export interface ProgressOverview {
+        overall: UserProgress[]
+        weeklyActivity: number
+        studyStreak: number
+        totalPracticeTime: number
+    }
+
+    export interface ProgressSummary {
+        percent: number
+        totals: {
+            planned: number
+            completed: number
+            points: {
+                easy: number
+                medium: number
+                hard: number
+            }
+        }
+    }
+
+    export interface QuickRecognition {
+        identifiers?: string[]
+        variants?: string[]
+    }
+
+    export interface QuickStartGuide {
+        title?: string
+        essentials?: string[]
+        commonTrap?: string
+    }
+
+    export interface ReadingHighlight {
+        id: number
+        highlightedText: string
+        startPosition: number
+        endPosition: number
+        highlightType: string
+        highlightColor: string
+        createdAt: string
+    }
+
+    export interface ReadingPassage {
+        id: number
+        title: string
+        content: string
+        paragraphs: PassageParagraph[]
+        questions: ReadingQuestionGroup[]
+        level: string
+        estimatedTime: number
+        createdAt?: string
+    }
+
+    export interface ReadingPassage {
+        id: number
+        title: string
+        content: string
+        paragraphs: PassageParagraph[]
+        questions: ReadingQuestionGroup[]
+        level: string
+        estimatedTime: number
+        createdAt?: string
+    }
+
+    export interface ReadingQuestion {
+        id: number
+        type?: string
+        questionText: string
+        options?: string[]
+        correctAnswer: string | string[]
+        explanation?: string
+        answerType?: "single" | "multiple"
+        "gap_number"?: number
+        context?: string
+        "evidence_quote"?: string
+        "evidence_location"?: string
+        "answer_type"?: string | "adjective" | "number" | "date"
+    }
+
+    export interface ReadingQuestionGroup {
+        id: number
+        type: "matching-headings" | "true-false-not-given" | "gap-fill" | "multiple-choice" | "short-answer" | "sentence-completion" | "matching-features" | "summary-completion" | "note-completion" | "table-completion" | "flow-chart-completion" | "matching-information" | "matching-sentence-endings"
+        title: string
+        instructions: string
+        questions: ReadingQuestion[]
+        "completion_type"?: "summary" | "notes" | "table" | "flow-chart"
+        "word_limit"?: string
+        structure?: string
+        "sentence_beginnings"?: string[]
+        "sentence_endings"?: {
+            letter: string
+            text: string
+        }[]
+        "flow_chart"?: FlowChartStructure
+    }
+
+    export interface ReadingResult {
+        id: number
+        score: number
+        totalQuestions: number
+        correctAnswers: { [key: number]: string }
+        explanations: { [key: number]: string }
+    }
+
+    export interface ReadingSession {
+        id: number
+        passageTitle: string
+        score: number
+        totalQuestions: number
+        timeTaken?: number
+        createdAt: string
+    }
+
+    export interface ReadingSkill {
+        type: string
+        total: number
+        correct: number
+        accuracy: number
+    }
+
+    export interface ReadingSubmission {
+        userId: string
+        passageTitle: string
+        passageContent: string
+        questions: ReadingQuestion[]
+        userAnswers: { [key: number]: string }
+        timeTaken?: number
+    }
+
+    export interface ReadingTestMeta {
+        testId: number
+        testName: string
+        totalQuestions: number
+    }
+
+    export interface ReadingTestResponse {
+        testId: number
+        testName: string
+        passages: ReadingPassage[]
+    }
+
+    export interface SpeakingAnalysisRequest {
+        transcription: string
+        question: string
+        part: number
+        userId: string
+    }
+
+    export interface SpeakingAnalysisResponse {
+        fluencyCoherence: number
+        lexicalResource: number
+        grammaticalRange: number
+        pronunciation: number
+        overallBand: number
+        feedback: string
+        strengths: string[]
+        improvements: string[]
+    }
+
+    export interface SpeakingFeedback {
+        id: number
+        bandScore: number
+        fluencyScore: number
+        grammarScore: number
+        pronunciationScore: number
+        coherenceScore: number
+        feedback: string
+        transcription?: string
+    }
+
+    export interface SpeakingQuestion {
+        part: number
+        question: string
+    }
+
+    export interface SpeakingSession {
+        id: number
+        part: number
+        question: string
+        transcription?: string
+        audioUrl?: string
+        bandScore?: number
+        fluencyScore?: number
+        grammarScore?: number
+        pronunciationScore?: number
+        coherenceScore?: number
+        feedback?: string
+        createdAt: string
+    }
+
+    export interface SpeakingSubmission {
+        userId: string
+        part: number
+        question: string
+        transcription?: string
+        audioUrl?: string
+    }
+
+    export interface StrategyTip {
+        step: number
+        title: string
+        description: string
+    }
+
+    export interface StruggleModule {
+        moduleId: string
+        moduleName: string
+        targetQuestionTypes: string[]
+        triggerConditions: {
+            mistakePatterns: string[]
+            contextKeywords: string[]
+        }
+        content: {
+            explanation: string
+            visualExample: {
+                passage: string
+                statement: string
+                analysis: string
+            }
+            checkpointQuestions: string[]
+        }
+        officialSource: string
+    }
+
+    export interface SubtleDifferenceExample {
+        passage: string
+        question: string
+        optionA: string
+        optionB: string
+        correctAnswer: string
+        keyDifference: string
+        explanation: string
+    }
+
+    export interface SubtleDifferences {
+        description?: string
+        example1?: SubtleDifferenceExample
+        example2?: SubtleDifferenceExample
+        example3?: SubtleDifferenceExample
+    }
+
+    export type SummaryRange = "daily" | "weekly" | "monthly"
+
+    export interface Task {
+        id: string
+        userId: string
+        name: string
+        category: TaskCategory
+        difficulty: TaskDifficulty
+        status: "planned" | "in_progress" | "completed"
+        estimatedMinutes: number
+        progress: number
+        dueAt?: string
+        createdAt: string
+        updatedAt: string
+        completedAt?: string | null
+    }
+
+    export type TaskCategory = "reading" | "writing" | "speaking" | "listening" | "vocabulary" | "grammar"
+
+    export type TaskDifficulty = "easy" | "medium" | "hard"
+
+    export interface TaskSuggestion {
+        name: string
+        category: TaskCategory
+        difficulty: TaskDifficulty
+        estimatedMinutes: number
+        dueAt?: string
+    }
+
+    export interface TheoryContent {
+        id: string
+        name: string
+        category: string
+        whatIsIt: TheoryWhatIsIt
+        example: TheoryExample
+        commonMistakes: TheoryMistake[]
+        strategyTips: StrategyTip[]
+        timeManagement: TimeManagement
+        quiz?: TheoryQuiz
+        theoryQuiz?: TheoryQuiz
+        practicalQuiz?: PracticalQuiz
+        scoring?: TheoryScoring
+        /**
+         * Optional extended fields for Multiple Choice theory
+         */
+        frequency?: string
+
+        quickStartGuide?: QuickStartGuide
+        learningPath?: LearningPath
+        quickRecognition?: QuickRecognition
+        questionTypes?: MCQuestionTypeEntry[]
+        attitudeIndicators?: AttitudeIndicators
+        paraphrasingPatterns?: ParaphrasingPatterns
+        examples?: WorkedExamples
+        multipleAnswerQuestions?: MultipleAnswerQuestions
+        subtleDifferences?: SubtleDifferences
+        difficultyExamples?: DifficultyExamples
+        trapPatterns?: TrapPattern[]
+        warningSign?: string
+        dosAndDonts?: DosAndDonts
+        advancedTips?: AdvancedTip[]
+        emergencyStrategy?: EmergencyStrategy
+        keyTechniques?: KeyTechniques
+    }
+
+    export interface TheoryExample {
+        passage: string | { [key: string]: string }
+        headings?: string[]
+        questions: TheoryExampleQuestion[]
+    }
+
+    export interface TheoryExampleQuestion {
+        id: number
+        text: string
+        options?: string[]
+        correctAnswer: string
+        explanation: string
+    }
+
+    export interface TheoryListItem {
+        id: string
+        name: string
+        category: string
+    }
+
+    export interface TheoryMistake {
+        title: string
+        description: string
+        example?: any
+        qualifyingWords?: {
+            absolute?: string[]
+            qualified?: string[]
+            caution?: string
+        }
+        howToAvoid?: string
+    }
+
+    export interface TheoryQuiz {
+        passage?: string
+        questions: TheoryQuizQuestion[]
+    }
+
+    export interface TheoryQuizQuestion {
+        id: number
+        type: TheoryQuizQuestionType
+        text: string
+        options?: string[]
+        correctAnswer: string | string[]
+        explanation?: string
+    }
+
+    export type TheoryQuizQuestionType = "true-false-not-given" | "multiple-choice" | "matching-headings" | "short-answer" | "gap-fill"
+
+    export interface TheoryScoring {
+        excellent?: {
+            range: string
+            message: string
+        }
+        good?: {
+            range: string
+            message: string
+        }
+        needsReview?: {
+            range: string
+            message: string
+        }
+        needsStudy?: {
+            range: string
+            message: string
+        }
+    }
+
+    export interface TheoryWhatIsIt {
+        description: string
+        skillTested: string
+    }
+
+    export interface TimeManagement {
+        timePerQuestion: string
+        tip: string
+        timePerMultipleAnswer?: string
+        totalTime?: string
+        allocation?: {
+            reading?: string
+            analyzing?: string
+            deciding?: string
+        }
+    }
+
+    export interface TranslationRequest {
+        text: string
+        targetLanguage: string
+    }
+
+    export interface TranslationResponse {
+        originalText: string
+        translatedText: string
+        targetLanguage: string
+        definition?: string
+        exampleSentence?: string
+        audioUrl?: string
+    }
+
+    export interface TrapPattern {
+        type: string
+        description?: string
+        example?: string
+        redFlag?: string
+    }
+
+    export interface UpdateUserRequest {
+        name?: string
+        targetBand?: number
+        examDate?: string
+        language?: string
+        theme?: string
+    }
+
+    export interface User {
+        id: string
+        name: string
+        targetBand: number
+        examDate?: string
+        language: string
+        theme: string
+        createdAt: string
+        updatedAt: string
+    }
+
+    export interface UserProgress {
+        skill: string
+        estimatedBand?: number
+        practiceCount: number
+        lastPracticeDate?: string
+    }
+
+    export interface VocabularyProgress {
+        totalWords: number
+        knownWords: number
+        learningWords: number
+        reviewWords: number
+    }
+
+    export interface VocabularyResponse {
+        examples: string[]
+        synonyms: string[]
+        collocations: string[]
+        difficulty: string
+    }
+
+    export interface VocabularyWord {
+        id: number
+        word: string
+        definition: string
+        exampleSentence: string
+        topic: string
+        difficultyLevel: number
+        audioUrl?: string
+        status?: string
+        nextReviewDate?: string
+        reviewCount?: number
+    }
+
+    export interface WorkedExample {
+        difficulty?: string
+        passage?: string
+        question?: string
+        options?: string[]
+        correctAnswer?: string
+        thinkingProcess?: string
+        eliminationProcess?: { [key: string]: string }
+        explanation?: string
+        attitudeClues?: string[]
+    }
+
+    export interface WorkedExamples {
+        detailQuestion?: WorkedExample
+        inferenceQuestion?: WorkedExample
+        opinionQuestion?: WorkedExample
+        purposeQuestion?: WorkedExample
+    }
+
+    export interface WritingFeedback {
+        id: number
+        bandScore: number
+        grammarFeedback: string
+        vocabularyFeedback: string
+        structureFeedback: string
+        coherenceFeedback: string
+    }
+
+    export interface WritingPrompt {
+        taskType: number
+        prompt: string
+        chartMetadata?: string
+    }
+
+    export interface WritingSession {
+        id: number
+        taskType: number
+        prompt: string
+        content: string
+        bandScore?: number
+        grammarFeedback?: string
+        vocabularyFeedback?: string
+        structureFeedback?: string
+        coherenceFeedback?: string
+        createdAt: string
+    }
+
+    export interface WritingSubmission {
+        userId: string
+        taskType: number
+        prompt: string
+        content: string
+        bandScore?: number
+        grammarFeedback?: string
+        vocabularyFeedback?: string
+        structureFeedback?: string
+        coherenceFeedback?: string
+    }
+
+    export class ServiceClient {
+        private baseClient: BaseClient
+
+        constructor(baseClient: BaseClient) {
+            this.baseClient = baseClient
+            this.acceptTaskSuggestions = this.acceptTaskSuggestions.bind(this)
             this.addToVocabulary = this.addToVocabulary.bind(this)
             this.analyzeEssay = this.analyzeEssay.bind(this)
             this.analyzeSpeaking = this.analyzeSpeaking.bind(this)
@@ -156,33 +1114,44 @@ export namespace ielts {
             this.chatWithCoachMemory = this.chatWithCoachMemory.bind(this)
             this.createHighlight = this.createHighlight.bind(this)
             this.createReadingPassage = this.createReadingPassage.bind(this)
+            this.createTask = this.createTask.bind(this)
             this.createUser = this.createUser.bind(this)
             this.deleteHighlight = this.deleteHighlight.bind(this)
+            this.deleteTask = this.deleteTask.bind(this)
+            this.generateTaskSuggestions = this.generateTaskSuggestions.bind(this)
             this.getDailyGoal = this.getDailyGoal.bind(this)
             this.getHighlights = this.getHighlights.bind(this)
+            this.getLatestReadingSession = this.getLatestReadingSession.bind(this)
             this.getListeningAudio = this.getListeningAudio.bind(this)
             this.getListeningSessions = this.getListeningSessions.bind(this)
-            this.getListeningTests = this.getListeningTests.bind(this)
             this.getListeningTest = this.getListeningTest.bind(this)
+            this.getListeningTests = this.getListeningTests.bind(this)
             this.getListeningTranscript = this.getListeningTranscript.bind(this)
             this.getProgress = this.getProgress.bind(this)
+            this.getProgressHistory = this.getProgressHistory.bind(this)
+            this.getProgressSummary = this.getProgressSummary.bind(this)
+            this.getReadingDeeperFeedback = this.getReadingDeeperFeedback.bind(this)
             this.getReadingPassage = this.getReadingPassage.bind(this)
             this.getReadingPassageById = this.getReadingPassageById.bind(this)
             this.getReadingPassages = this.getReadingPassages.bind(this)
             this.getReadingSessions = this.getReadingSessions.bind(this)
-            this.getReadingTheoryById = this.getReadingTheoryById.bind(this)
-            this.getReadingTheoryList = this.getReadingTheoryList.bind(this)
+            this.getReadingSkills = this.getReadingSkills.bind(this)
             this.getReadingTestById = this.getReadingTestById.bind(this)
             this.getReadingTests = this.getReadingTests.bind(this)
+            this.getReadingTheoryById = this.getReadingTheoryById.bind(this)
+            this.getReadingTheoryList = this.getReadingTheoryList.bind(this)
             this.getSpeakingQuestion = this.getSpeakingQuestion.bind(this)
             this.getSpeakingSessions = this.getSpeakingSessions.bind(this)
+            this.getStruggleModules = this.getStruggleModules.bind(this)
             this.getUser = this.getUser.bind(this)
             this.getVocabularyEnhancement = this.getVocabularyEnhancement.bind(this)
             this.getVocabularyProgress = this.getVocabularyProgress.bind(this)
             this.getVocabularyTopics = this.getVocabularyTopics.bind(this)
             this.getVocabularyWords = this.getVocabularyWords.bind(this)
             this.getWritingPrompt = this.getWritingPrompt.bind(this)
+            this.getWritingSessionById = this.getWritingSessionById.bind(this)
             this.getWritingSessions = this.getWritingSessions.bind(this)
+            this.listTasks = this.listTasks.bind(this)
             this.submitListening = this.submitListening.bind(this)
             this.submitReading = this.submitReading.bind(this)
             this.submitSpeaking = this.submitSpeaking.bind(this)
@@ -190,35 +1159,72 @@ export namespace ielts {
             this.translateText = this.translateText.bind(this)
             this.updateDailyGoal = this.updateDailyGoal.bind(this)
             this.updateProgress = this.updateProgress.bind(this)
+            this.updateTask = this.updateTask.bind(this)
             this.updateUser = this.updateUser.bind(this)
             this.updateVocabularyStatus = this.updateVocabularyStatus.bind(this)
         }
 
         /**
+         * POST /progress/ai/accept
+         */
+        public async acceptTaskSuggestions(params: {
+    userId: string
+    suggestions: TaskSuggestion[]
+}): Promise<{
+    tasks: Task[]
+}> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("POST", `/progress/ai/accept`, JSON.stringify(params))
+            return await resp.json() as {
+    tasks: Task[]
+}
+        }
+
+        /**
          * Adds highlighted text to user's vocabulary.
          */
-        public async addToVocabulary(params: RequestType<typeof api_ielts_reading_addToVocabulary>): Promise<ResponseType<typeof api_ielts_reading_addToVocabulary>> {
+        public async addToVocabulary(params: AddToVocabularyRequest): Promise<{
+    /**
+     * Adds highlighted text to user's vocabulary.
+     */
+    success: boolean
+
+    /**
+     * Adds highlighted text to user's vocabulary.
+     */
+    wordId: number
+}> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/add-to-vocabulary`, { method: "POST", body: JSON.stringify(params) })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_addToVocabulary>
+            const resp = await this.baseClient.callTypedAPI("POST", `/reading/add-to-vocabulary`, JSON.stringify(params))
+            return await resp.json() as {
+    /**
+     * Adds highlighted text to user's vocabulary.
+     */
+    success: boolean
+
+    /**
+     * Adds highlighted text to user's vocabulary.
+     */
+    wordId: number
+}
         }
 
         /**
          * Essay Analysis with LangChain
          */
-        public async analyzeEssay(params: RequestType<typeof api_ielts_ai_analyzeEssay>): Promise<ResponseType<typeof api_ielts_ai_analyzeEssay>> {
+        public async analyzeEssay(params: EssayAnalysisRequest): Promise<EssayAnalysisResponse> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/ai/analyze-essay`, { method: "POST", body: JSON.stringify(params) })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_ai_analyzeEssay>
+            const resp = await this.baseClient.callTypedAPI("POST", `/ai/analyze-essay`, JSON.stringify(params))
+            return await resp.json() as EssayAnalysisResponse
         }
 
         /**
          * Speaking Analysis with LangChain
          */
-        public async analyzeSpeaking(params: RequestType<typeof api_ielts_ai_analyzeSpeaking>): Promise<ResponseType<typeof api_ielts_ai_analyzeSpeaking>> {
+        public async analyzeSpeaking(params: SpeakingAnalysisRequest): Promise<SpeakingAnalysisResponse> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/ai/analyze-speaking`, { method: "POST", body: JSON.stringify(params) })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_ai_analyzeSpeaking>
+            const resp = await this.baseClient.callTypedAPI("POST", `/ai/analyze-speaking`, JSON.stringify(params))
+            return await resp.json() as SpeakingAnalysisResponse
         }
 
         /**
@@ -226,257 +1232,567 @@ export namespace ielts {
          * LangSmith tracing is automatically enabled via env vars:
          * LANGSMITH_TRACING, LANGSMITH_ENDPOINT, LANGSMITH_API_KEY, LANGSMITH_PROJECT
          */
-        public async chatWithCoach(params: RequestType<typeof api_ielts_ai_chatWithCoach>): Promise<ResponseType<typeof api_ielts_ai_chatWithCoach>> {
+        public async chatWithCoach(params: ChatRequest): Promise<ChatResponse> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/ai/chat`, { method: "POST", body: JSON.stringify(params) })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_ai_chatWithCoach>
+            const resp = await this.baseClient.callTypedAPI("POST", `/ai/chat`, JSON.stringify(params))
+            return await resp.json() as ChatResponse
         }
 
         /**
          * Enhanced chat with conversation memory
          */
-        public async chatWithCoachMemory(params: RequestType<typeof api_ielts_ai_chatWithCoachMemory>): Promise<ResponseType<typeof api_ielts_ai_chatWithCoachMemory>> {
+        public async chatWithCoachMemory(params: {
+    message: string
+    context?: string
+    /**
+     * Enhanced chat with conversation memory
+     */
+    userId: string
+}): Promise<ChatResponse> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/ai/chat-memory`, { method: "POST", body: JSON.stringify(params) })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_ai_chatWithCoachMemory>
+            const resp = await this.baseClient.callTypedAPI("POST", `/ai/chat-memory`, JSON.stringify(params))
+            return await resp.json() as ChatResponse
         }
 
         /**
          * Creates a new highlight for a reading passage.
          */
-        public async createHighlight(params: RequestType<typeof api_ielts_reading_createHighlight>): Promise<ResponseType<typeof api_ielts_reading_createHighlight>> {
+        public async createHighlight(params: CreateHighlightRequest): Promise<ReadingHighlight> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/highlights`, { method: "POST", body: JSON.stringify(params) })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_createHighlight>
+            const resp = await this.baseClient.callTypedAPI("POST", `/reading/highlights`, JSON.stringify(params))
+            return await resp.json() as ReadingHighlight
         }
 
         /**
          * API endpoint to create a new reading passage
          */
-        public async createReadingPassage(params: RequestType<typeof api_ielts_reading_createReadingPassage>): Promise<ResponseType<typeof api_ielts_reading_createReadingPassage>> {
+        public async createReadingPassage(params: ReadingPassage): Promise<{
+    /**
+     * API endpoint to create a new reading passage
+     */
+    id: number
+}> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/passages`, { method: "POST", body: JSON.stringify(params) })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_createReadingPassage>
+            const resp = await this.baseClient.callTypedAPI("POST", `/reading/passages`, JSON.stringify(params))
+            return await resp.json() as {
+    /**
+     * API endpoint to create a new reading passage
+     */
+    id: number
+}
+        }
+
+        /**
+         * POST /progress/tasks
+         */
+        public async createTask(params: {
+    userId: string
+    name: string
+    category: TaskCategory
+    difficulty: TaskDifficulty
+    estimatedMinutes?: number
+    dueAt?: string
+}): Promise<Task> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("POST", `/progress/tasks`, JSON.stringify(params))
+            return await resp.json() as Task
         }
 
         /**
          * Creates a new user profile.
          */
-        public async createUser(params: RequestType<typeof api_ielts_user_createUser>): Promise<ResponseType<typeof api_ielts_user_createUser>> {
+        public async createUser(params: CreateUserRequest): Promise<User> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users`, { method: "POST", body: JSON.stringify(params) })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_user_createUser>
+            const resp = await this.baseClient.callTypedAPI("POST", `/users`, JSON.stringify(params))
+            return await resp.json() as User
         }
 
         /**
          * Deletes a highlight.
          */
-        public async deleteHighlight(params: { userId: number, highlightId: number }): Promise<void> {
-            await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/reading/highlights/delete/${encodeURIComponent(params.highlightId)}`, { method: "DELETE", body: undefined })
+        public async deleteHighlight(userId: string, highlightId: number): Promise<void> {
+            await this.baseClient.callTypedAPI("DELETE", `/users/${encodeURIComponent(userId)}/reading/highlights/delete/${encodeURIComponent(highlightId)}`)
+        }
+
+        /**
+         * DELETE /progress/tasks/:id
+         */
+        public async deleteTask(id: string): Promise<void> {
+            await this.baseClient.callTypedAPI("DELETE", `/progress/tasks/${encodeURIComponent(id)}`)
+        }
+
+        /**
+         * POST /progress/ai/generate
+         */
+        public async generateTaskSuggestions(params: {
+    userId: string
+    range: SummaryRange
+    timeAvailableMinutes: number
+    targetBand?: number
+}): Promise<{
+    suggestions: TaskSuggestion[]
+}> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("POST", `/progress/ai/generate`, JSON.stringify(params))
+            return await resp.json() as {
+    suggestions: TaskSuggestion[]
+}
         }
 
         /**
          * Retrieves today's daily goal for a user.
          */
-        public async getDailyGoal(params: { userId: number }): Promise<ResponseType<typeof api_ielts_progress_getDailyGoal>> {
+        public async getDailyGoal(userId: string): Promise<DailyGoal> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/daily-goal`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_progress_getDailyGoal>
+            const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(userId)}/daily-goal`)
+            return await resp.json() as DailyGoal
         }
 
         /**
          * Retrieves highlights for a specific passage and user.
          */
-        public async getHighlights(params: { userId: number, passageTitle: string }): Promise<ResponseType<typeof api_ielts_reading_getHighlights>> {
+        public async getHighlights(userId: string, passageTitle: string): Promise<{
+    /**
+     * Retrieves highlights for a specific passage and user.
+     */
+    highlights: ReadingHighlight[]
+}> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/reading/highlights/${encodeURIComponent(params.passageTitle)}`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_getHighlights>
+            const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(userId)}/reading/highlights/${encodeURIComponent(passageTitle)}`)
+            return await resp.json() as {
+    /**
+     * Retrieves highlights for a specific passage and user.
+     */
+    highlights: ReadingHighlight[]
+}
         }
 
         /**
-         * Retrieves a random listening audio with questions.
+         * Retrieves the latest reading session for a specific test and passage.
          */
-        public async getListeningAudio(): Promise<ResponseType<typeof api_ielts_listening_getListeningAudio>> {
+        public async getLatestReadingSession(userId: string, params: {
+    testId: number
+    passageId: number
+}): Promise<{
+    id: number
+    userId: string
+    testId: number
+    passageId: number
+    userAnswers: { [key: number]: string }
+    correctAnswers: { [key: number]: string }
+    score: number
+    totalQuestions: number
+    createdAt: string
+}> {
+            // Convert our params into the objects we need for the request
+            const query = makeRecord<string, string | string[]>({
+                passageId: String(params.passageId),
+                testId:    String(params.testId),
+            })
+
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/listening/audio`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_listening_getListeningAudio>
+            const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(userId)}/reading/sessions/latest`, undefined, {query})
+            return await resp.json() as {
+    id: number
+    userId: string
+    testId: number
+    passageId: number
+    userAnswers: { [key: number]: string }
+    correctAnswers: { [key: number]: string }
+    score: number
+    totalQuestions: number
+    createdAt: string
+}
         }
 
         /**
-         * Retrieves user's listening session history.
+         * Legacy endpoint for backward compatibility
          */
-        public async getListeningSessions(params: { userId: number }): Promise<ResponseType<typeof api_ielts_listening_getListeningSessions>> {
+        public async getListeningAudio(): Promise<ListeningTest> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/listening/sessions`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_listening_getListeningSessions>
+            const resp = await this.baseClient.callTypedAPI("GET", `/listening/audio`)
+            return await resp.json() as ListeningTest
         }
 
         /**
-         * Get list of all available listening tests
+         * Get user's listening session history
          */
-        public async getListeningTests(): Promise<ResponseType<typeof api_ielts_listening_getListeningTests>> {
+        public async getListeningSessions(userId: string): Promise<{
+    /**
+     * Get user's listening session history
+     */
+    sessions: ListeningSession[]
+}> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/listening/tests`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_listening_getListeningTests>
+            const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(userId)}/listening/sessions`)
+            return await resp.json() as {
+    /**
+     * Get user's listening session history
+     */
+    sessions: ListeningSession[]
+}
         }
 
         /**
          * Get a specific listening test by ID (without correct answers for practice)
          */
-        public async getListeningTest(params: { testId: number }): Promise<ResponseType<typeof api_ielts_listening_getListeningTest>> {
+        public async getListeningTest(testId: number): Promise<ListeningTest> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/listening/tests/${encodeURIComponent(params.testId)}`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_listening_getListeningTest>
+            const resp = await this.baseClient.callTypedAPI("GET", `/listening/tests/${encodeURIComponent(testId)}`)
+            return await resp.json() as ListeningTest
+        }
+
+        /**
+         * Get list of all available listening tests
+         */
+        public async getListeningTests(): Promise<{
+    /**
+     * Get list of all available listening tests
+     */
+    tests: ListeningTestMeta[]
+}> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("GET", `/listening/tests`)
+            return await resp.json() as {
+    /**
+     * Get list of all available listening tests
+     */
+    tests: ListeningTestMeta[]
+}
         }
 
         /**
          * Get transcript for a test (can be shown after submission or during practice based on settings)
          */
-        public async getListeningTranscript(params: { testId: number }): Promise<ResponseType<typeof api_ielts_listening_getListeningTranscript>> {
+        public async getListeningTranscript(testId: number): Promise<{
+    /**
+     * Get transcript for a test (can be shown after submission or during practice based on settings)
+     */
+    transcript: ListeningTranscriptLine[]
+
+    /**
+     * Get transcript for a test (can be shown after submission or during practice based on settings)
+     */
+    transcripts?: ListeningTranscriptSection[]
+}> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/listening/tests/${encodeURIComponent(params.testId)}/transcript`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_listening_getListeningTranscript>
+            const resp = await this.baseClient.callTypedAPI("GET", `/listening/tests/${encodeURIComponent(testId)}/transcript`)
+            return await resp.json() as {
+    /**
+     * Get transcript for a test (can be shown after submission or during practice based on settings)
+     */
+    transcript: ListeningTranscriptLine[]
+
+    /**
+     * Get transcript for a test (can be shown after submission or during practice based on settings)
+     */
+    transcripts?: ListeningTranscriptSection[]
+}
         }
 
         /**
          * Retrieves user progress overview.
          */
-        public async getProgress(params: { userId: number }): Promise<ResponseType<typeof api_ielts_progress_getProgress>> {
+        public async getProgress(userId: string): Promise<ProgressOverview> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/progress`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_progress_getProgress>
+            const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(userId)}/progress`)
+            return await resp.json() as ProgressOverview
+        }
+
+        /**
+         * Retrieves aggregated progress history from all practice tables.
+         */
+        public async getProgressHistory(userId: string): Promise<{
+    /**
+     * Retrieves aggregated progress history from all practice tables.
+     */
+    history: ActivityEvent[]
+}> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(userId)}/progress/history`)
+            return await resp.json() as {
+    /**
+     * Retrieves aggregated progress history from all practice tables.
+     */
+    history: ActivityEvent[]
+}
+        }
+
+        /**
+         * GET /progress/summary
+         */
+        public async getProgressSummary(params: {
+    userId: string
+    range?: SummaryRange
+}): Promise<ProgressSummary> {
+            // Convert our params into the objects we need for the request
+            const query = makeRecord<string, string | string[]>({
+                range:  params.range === undefined ? undefined : String(params.range),
+                userId: params.userId,
+            })
+
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("GET", `/progress/summary`, undefined, {query})
+            return await resp.json() as ProgressSummary
+        }
+
+        /**
+         * Get deeper AI feedback for a specific question
+         */
+        public async getReadingDeeperFeedback(params: {
+    userId: string
+    testId: number
+    passageId: number
+    questionId: number
+}): Promise<DeeperFeedbackResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("POST", `/reading/deeper-feedback`, JSON.stringify(params))
+            return await resp.json() as DeeperFeedbackResponse
         }
 
         /**
          * Retrieves a random reading passage with questions.
          */
-        public async getReadingPassage(): Promise<ResponseType<typeof api_ielts_reading_getReadingPassage>> {
+        public async getReadingPassage(): Promise<ReadingPassage> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/passage`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_getReadingPassage>
+            const resp = await this.baseClient.callTypedAPI("GET", `/reading/passage`)
+            return await resp.json() as ReadingPassage
         }
 
         /**
          * API endpoint to get a specific reading passage by ID
          */
-        public async getReadingPassageById(params: { id: number }): Promise<ResponseType<typeof api_ielts_reading_getReadingPassageById>> {
+        public async getReadingPassageById(id: number): Promise<ReadingPassage> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/passages/${encodeURIComponent(params.id)}`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_getReadingPassageById>
+            const resp = await this.baseClient.callTypedAPI("GET", `/reading/passages/${encodeURIComponent(id)}`)
+            return await resp.json() as ReadingPassage
         }
 
         /**
          * API endpoint to get all reading passages
          */
-        public async getReadingPassages(): Promise<ResponseType<typeof api_ielts_reading_getReadingPassages>> {
+        public async getReadingPassages(): Promise<{
+    /**
+     * API endpoint to get all reading passages
+     */
+    passages: ReadingPassage[]
+}> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/passages`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_getReadingPassages>
+            const resp = await this.baseClient.callTypedAPI("GET", `/reading/passages`)
+            return await resp.json() as {
+    /**
+     * API endpoint to get all reading passages
+     */
+    passages: ReadingPassage[]
+}
         }
 
         /**
          * Retrieves user's reading session history.
          */
-        public async getReadingSessions(params: { userId: number }): Promise<ResponseType<typeof api_ielts_reading_getReadingSessions>> {
+        public async getReadingSessions(userId: string): Promise<{
+    /**
+     * Retrieves user's reading session history.
+     */
+    sessions: ReadingSession[]
+}> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/reading/sessions`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_getReadingSessions>
+            const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(userId)}/reading/sessions`)
+            return await resp.json() as {
+    /**
+     * Retrieves user's reading session history.
+     */
+    sessions: ReadingSession[]
+}
         }
 
         /**
-         * NEW: Get list of all theory question types
+         * Retrieves aggregated reading skills data.
          */
-        public async getReadingTheoryList(): Promise<ResponseType<typeof api_ielts_reading_getReadingTheoryList>> {
+        public async getReadingSkills(userId: string): Promise<{
+    /**
+     * Retrieves aggregated reading skills data.
+     */
+    skills: ReadingSkill[]
+}> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/theory`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_getReadingTheoryList>
-        }
-
-        /**
-         * NEW: Get theory content for a specific question type
-         */
-        public async getReadingTheoryById(params: { questionType: string }): Promise<ResponseType<typeof api_ielts_reading_getReadingTheoryById>> {
-            // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/theory/${encodeURIComponent(params.questionType)}`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_getReadingTheoryById>
+            const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(userId)}/reading/skills`)
+            return await resp.json() as {
+    /**
+     * Retrieves aggregated reading skills data.
+     */
+    skills: ReadingSkill[]
+}
         }
 
         /**
          * NEW: Get passages for a specific test
          */
-        public async getReadingTestById(params: { testId: number }): Promise<ResponseType<typeof api_ielts_reading_getReadingTestById>> {
+        public async getReadingTestById(testId: number): Promise<ReadingTestResponse> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/tests/${encodeURIComponent(params.testId)}`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_getReadingTestById>
+            const resp = await this.baseClient.callTypedAPI("GET", `/reading/tests/${encodeURIComponent(testId)}`)
+            return await resp.json() as ReadingTestResponse
         }
 
         /**
          * NEW: Get list of all tests
          */
-        public async getReadingTests(): Promise<ResponseType<typeof api_ielts_reading_getReadingTests>> {
+        public async getReadingTests(): Promise<{
+    /**
+     * NEW: Get list of all tests
+     */
+    tests: ReadingTestMeta[]
+}> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/tests`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_getReadingTests>
+            const resp = await this.baseClient.callTypedAPI("GET", `/reading/tests`)
+            return await resp.json() as {
+    /**
+     * NEW: Get list of all tests
+     */
+    tests: ReadingTestMeta[]
+}
+        }
+
+        /**
+         * NEW: Get theory content for a specific question type
+         */
+        public async getReadingTheoryById(questionType: string): Promise<TheoryContent> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("GET", `/reading/theory/${encodeURIComponent(questionType)}`)
+            return await resp.json() as TheoryContent
+        }
+
+        /**
+         * NEW: Get list of all theory question types
+         */
+        public async getReadingTheoryList(): Promise<{
+    /**
+     * NEW: Get list of all theory question types
+     */
+    theories: TheoryListItem[]
+}> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("GET", `/reading/theory`)
+            return await resp.json() as {
+    /**
+     * NEW: Get list of all theory question types
+     */
+    theories: TheoryListItem[]
+}
         }
 
         /**
          * Retrieves a random speaking question for a specific part.
          */
-        public async getSpeakingQuestion(params: { part: number }): Promise<ResponseType<typeof api_ielts_speaking_getSpeakingQuestion>> {
+        public async getSpeakingQuestion(part: number): Promise<SpeakingQuestion> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/speaking/question/${encodeURIComponent(params.part)}`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_speaking_getSpeakingQuestion>
+            const resp = await this.baseClient.callTypedAPI("GET", `/speaking/question/${encodeURIComponent(part)}`)
+            return await resp.json() as SpeakingQuestion
         }
 
         /**
          * Retrieves user's speaking session history.
          */
-        public async getSpeakingSessions(params: { userId: number }): Promise<ResponseType<typeof api_ielts_speaking_getSpeakingSessions>> {
+        public async getSpeakingSessions(userId: string): Promise<{
+    /**
+     * Retrieves user's speaking session history.
+     */
+    sessions: SpeakingSession[]
+}> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/speaking/sessions`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_speaking_getSpeakingSessions>
+            const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(userId)}/speaking/sessions`)
+            return await resp.json() as {
+    /**
+     * Retrieves user's speaking session history.
+     */
+    sessions: SpeakingSession[]
+}
+        }
+
+        /**
+         * NEW: Get all struggle modules
+         */
+        public async getStruggleModules(): Promise<{
+    /**
+     * NEW: Get all struggle modules
+     */
+    modules: { [key: string]: ModuleCollection }
+}> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("GET", `/reading/struggle-modules`)
+            return await resp.json() as {
+    /**
+     * NEW: Get all struggle modules
+     */
+    modules: { [key: string]: ModuleCollection }
+}
         }
 
         /**
          * Retrieves a user by ID.
          */
-        public async getUser(params: { id: number }): Promise<ResponseType<typeof api_ielts_user_getUser>> {
+        public async getUser(id: string): Promise<User> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.id)}`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_user_getUser>
+            const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(id)}`)
+            return await resp.json() as User
         }
 
         /**
          * Enhanced Vocabulary with LangChain
          */
-        public async getVocabularyEnhancement(params: { word: string }): Promise<ResponseType<typeof api_ielts_ai_getVocabularyEnhancement>> {
+        public async getVocabularyEnhancement(word: string): Promise<VocabularyResponse> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/ai/vocabulary/${encodeURIComponent(params.word)}/enhance`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_ai_getVocabularyEnhancement>
+            const resp = await this.baseClient.callTypedAPI("GET", `/ai/vocabulary/${encodeURIComponent(word)}/enhance`)
+            return await resp.json() as VocabularyResponse
         }
 
         /**
          * Retrieves vocabulary progress for a user.
          */
-        public async getVocabularyProgress(params: { userId: number }): Promise<ResponseType<typeof api_ielts_vocabulary_getVocabularyProgress>> {
+        public async getVocabularyProgress(userId: string): Promise<VocabularyProgress> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/vocabulary/progress`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_vocabulary_getVocabularyProgress>
+            const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(userId)}/vocabulary/progress`)
+            return await resp.json() as VocabularyProgress
         }
 
         /**
          * Retrieves vocabulary topics.
          */
-        public async getVocabularyTopics(): Promise<ResponseType<typeof api_ielts_vocabulary_getVocabularyTopics>> {
+        public async getVocabularyTopics(): Promise<{
+    /**
+     * Retrieves vocabulary topics.
+     */
+    topics: string[]
+}> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/vocabulary/topics`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_vocabulary_getVocabularyTopics>
+            const resp = await this.baseClient.callTypedAPI("GET", `/vocabulary/topics`)
+            return await resp.json() as {
+    /**
+     * Retrieves vocabulary topics.
+     */
+    topics: string[]
+}
         }
 
         /**
          * Retrieves vocabulary words for practice.
          */
-        public async getVocabularyWords(params: RequestType<typeof api_ielts_vocabulary_getVocabularyWords>): Promise<ResponseType<typeof api_ielts_vocabulary_getVocabularyWords>> {
+        public async getVocabularyWords(userId: string, params: {
+    /**
+     * Retrieves vocabulary words for practice.
+     */
+    topic?: string
+
+    /**
+     * Retrieves vocabulary words for practice.
+     */
+    limit?: number
+}): Promise<{
+    /**
+     * Retrieves vocabulary words for practice.
+     */
+    words: VocabularyWord[]
+}> {
             // Convert our params into the objects we need for the request
             const query = makeRecord<string, string | string[]>({
                 limit: params.limit === undefined ? undefined : String(params.limit),
@@ -484,170 +1800,206 @@ export namespace ielts {
             })
 
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/vocabulary`, { query, method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_vocabulary_getVocabularyWords>
+            const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(userId)}/vocabulary`, undefined, {query})
+            return await resp.json() as {
+    /**
+     * Retrieves vocabulary words for practice.
+     */
+    words: VocabularyWord[]
+}
         }
 
         /**
          * Retrieves a random writing prompt for a specific task type.
          */
-        public async getWritingPrompt(params: { taskType: number, test_id?: number }): Promise<ResponseType<typeof api_ielts_writing_getWritingPrompt>> {
-            // Convert params to query string for test_id
+        public async getWritingPrompt(taskType: number, params: {
+    /**
+     * Retrieves a random writing prompt for a specific task type.
+     */
+    "test_id"?: number
+}): Promise<WritingPrompt> {
+            // Convert our params into the objects we need for the request
             const query = makeRecord<string, string | string[]>({
-                test_id: params.test_id === undefined ? undefined : String(params.test_id),
+                "test_id": params["test_id"] === undefined ? undefined : String(params["test_id"]),
             })
 
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/writing/prompt/${encodeURIComponent(params.taskType)}`, { query, method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_writing_getWritingPrompt>
+            const resp = await this.baseClient.callTypedAPI("GET", `/writing/prompt/${encodeURIComponent(taskType)}`, undefined, {query})
+            return await resp.json() as WritingPrompt
+        }
+
+        public async getWritingSessionById(id: number): Promise<{
+    session: WritingSession | null
+}> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("GET", `/writing/sessions/${encodeURIComponent(id)}`)
+            return await resp.json() as {
+    session: WritingSession | null
+}
         }
 
         /**
          * Retrieves user's writing session history.
          */
-        public async getWritingSessions(params: { userId: number }): Promise<ResponseType<typeof api_ielts_writing_getWritingSessions>> {
+        public async getWritingSessions(userId: string): Promise<{
+    /**
+     * Retrieves user's writing session history.
+     */
+    sessions: WritingSession[]
+}> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/writing/sessions`, { method: "GET", body: undefined })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_writing_getWritingSessions>
+            const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(userId)}/writing/sessions`)
+            return await resp.json() as {
+    /**
+     * Retrieves user's writing session history.
+     */
+    sessions: WritingSession[]
+}
         }
 
         /**
-         * Submits listening answers for evaluation.
+         * GET /progress/tasks
          */
-        public async submitListening(params: RequestType<typeof api_ielts_listening_submitListening>): Promise<ResponseType<typeof api_ielts_listening_submitListening>> {
+        public async listTasks(params: {
+    userId: string
+    range?: "daily" | "weekly" | "monthly"
+    status?: "all" | "planned" | "in-progress" | "completed"
+}): Promise<{
+    tasks: Task[]
+}> {
+            // Convert our params into the objects we need for the request
+            const query = makeRecord<string, string | string[]>({
+                range:  params.range === undefined ? undefined : String(params.range),
+                status: params.status === undefined ? undefined : String(params.status),
+                userId: params.userId,
+            })
+
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/listening/submit`, { method: "POST", body: JSON.stringify(params) })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_listening_submitListening>
+            const resp = await this.baseClient.callTypedAPI("GET", `/progress/tasks`, undefined, {query})
+            return await resp.json() as {
+    tasks: Task[]
+}
+        }
+
+        /**
+         * Submit listening answers for evaluation
+         */
+        public async submitListening(params: ListeningSubmission): Promise<ListeningResult> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("POST", `/listening/submit`, JSON.stringify(params))
+            return await resp.json() as ListeningResult
         }
 
         /**
          * Submits reading answers for evaluation.
          */
-        public async submitReading(params: RequestType<typeof api_ielts_reading_submitReading>): Promise<ResponseType<typeof api_ielts_reading_submitReading>> {
+        public async submitReading(params: ReadingSubmission): Promise<ReadingResult> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/submit`, { method: "POST", body: JSON.stringify(params) })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_submitReading>
+            const resp = await this.baseClient.callTypedAPI("POST", `/reading/submit`, JSON.stringify(params))
+            return await resp.json() as ReadingResult
         }
 
         /**
          * Submits a speaking response for evaluation.
          */
-        public async submitSpeaking(params: RequestType<typeof api_ielts_speaking_submitSpeaking>): Promise<ResponseType<typeof api_ielts_speaking_submitSpeaking>> {
+        public async submitSpeaking(params: SpeakingSubmission): Promise<SpeakingFeedback> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/speaking/submit`, { method: "POST", body: JSON.stringify(params) })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_speaking_submitSpeaking>
+            const resp = await this.baseClient.callTypedAPI("POST", `/speaking/submit`, JSON.stringify(params))
+            return await resp.json() as SpeakingFeedback
         }
 
         /**
-         * Submits a writing task for evaluation.
+         * @DEPRECATED: This endpoint generates MOCK/RANDOM band scores and should NOT be used.
+         * Use the AI-powered evaluation endpoint at http://localhost:8001/ielts_writing/evaluate instead.
+         * This endpoint is kept only for backward compatibility with legacy code.
+         * It generates random scores between 5.0-8.0 with generic template feedback.
          */
-        public async submitWriting(params: RequestType<typeof api_ielts_writing_submitWriting>): Promise<ResponseType<typeof api_ielts_writing_submitWriting>> {
+        public async submitWriting(params: WritingSubmission): Promise<WritingFeedback> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/writing/submit`, { method: "POST", body: JSON.stringify(params) })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_writing_submitWriting>
+            const resp = await this.baseClient.callTypedAPI("POST", `/writing/submit`, JSON.stringify(params))
+            return await resp.json() as WritingFeedback
         }
 
         /**
          * Translates text to the target language.
          */
-        public async translateText(params: RequestType<typeof api_ielts_reading_translateText>): Promise<ResponseType<typeof api_ielts_reading_translateText>> {
+        public async translateText(params: TranslationRequest): Promise<TranslationResponse> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/reading/translate`, { method: "POST", body: JSON.stringify(params) })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_reading_translateText>
+            const resp = await this.baseClient.callTypedAPI("POST", `/reading/translate`, JSON.stringify(params))
+            return await resp.json() as TranslationResponse
         }
 
         /**
          * Updates daily goal progress.
          */
-        public async updateDailyGoal(params: RequestType<typeof api_ielts_progress_updateDailyGoal>): Promise<void> {
-            // Construct the body with only the fields which we want encoded within the body (excluding query string or header fields)
-            const body: Record<string, any> = {
-                activitiesCompleted: params.activitiesCompleted,
-                minutesCompleted: params.minutesCompleted,
-            }
+        public async updateDailyGoal(userId: string, params: {
+    /**
+     * Updates daily goal progress.
+     */
+    minutesCompleted: number
 
-            await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/daily-goal/update`, { method: "POST", body: JSON.stringify(body) })
+    /**
+     * Updates daily goal progress.
+     */
+    activitiesCompleted: number
+}): Promise<void> {
+            await this.baseClient.callTypedAPI("POST", `/users/${encodeURIComponent(userId)}/daily-goal/update`, JSON.stringify(params))
         }
 
         /**
          * Updates user progress for a specific skill.
          */
-        public async updateProgress(params: RequestType<typeof api_ielts_progress_updateProgress>): Promise<void> {
-            // Construct the body with only the fields which we want encoded within the body (excluding query string or header fields)
-            const body: Record<string, any> = {
-                estimatedBand: params.estimatedBand,
-            }
+        public async updateProgress(userId: string, skill: string, params: {
+    /**
+     * Updates user progress for a specific skill.
+     */
+    estimatedBand?: number
+}): Promise<void> {
+            await this.baseClient.callTypedAPI("POST", `/users/${encodeURIComponent(userId)}/progress/${encodeURIComponent(skill)}`, JSON.stringify(params))
+        }
 
-            await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/progress/${encodeURIComponent(params.skill)}`, { method: "POST", body: JSON.stringify(body) })
+        /**
+         * PATCH /progress/tasks/:id
+         */
+        public async updateTask(id: string, params: {
+    progress?: number
+    status?: "planned" | "in-progress" | "completed"
+    completedAt?: string
+}): Promise<Task> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("PATCH", `/progress/tasks/${encodeURIComponent(id)}`, JSON.stringify(params))
+            return await resp.json() as Task
         }
 
         /**
          * Updates a user profile.
          */
-        public async updateUser(params: RequestType<typeof api_ielts_user_updateUser>): Promise<ResponseType<typeof api_ielts_user_updateUser>> {
-            // Construct the body with only the fields which we want encoded within the body (excluding query string or header fields)
-            const body: Record<string, any> = {
-                examDate: params.examDate,
-                language: params.language,
-                name: params.name,
-                targetBand: params.targetBand,
-                theme: params.theme,
-            }
-
+        public async updateUser(id: string, params: UpdateUserRequest): Promise<User> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.id)}`, { method: "PUT", body: JSON.stringify(body) })
-            return JSON.parse(await resp.text(), dateReviver) as ResponseType<typeof api_ielts_user_updateUser>
+            const resp = await this.baseClient.callTypedAPI("PUT", `/users/${encodeURIComponent(id)}`, JSON.stringify(params))
+            return await resp.json() as User
         }
 
         /**
          * Updates user's vocabulary word status.
          */
-        public async updateVocabularyStatus(params: RequestType<typeof api_ielts_vocabulary_updateVocabularyStatus>): Promise<void> {
-            // Construct the body with only the fields which we want encoded within the body (excluding query string or header fields)
-            const body: Record<string, any> = {
-                status: params.status,
-            }
-
-            await this.baseClient.callTypedAPI(`/users/${encodeURIComponent(params.userId)}/vocabulary/${encodeURIComponent(params.wordId)}/status`, { method: "POST", body: JSON.stringify(body) })
+        public async updateVocabularyStatus(userId: string, wordId: number, params: {
+    /**
+     * Updates user's vocabulary word status.
+     */
+    status: string
+}): Promise<void> {
+            await this.baseClient.callTypedAPI("POST", `/users/${encodeURIComponent(userId)}/vocabulary/${encodeURIComponent(wordId)}/status`, JSON.stringify(params))
         }
     }
 }
 
-
-type PickMethods<Type> = Omit<CallParameters, "method"> & { method?: Type };
-
-// Helper type to omit all fields that are cookies.
-type OmitCookie<T> = {
-    [K in keyof T as T[K] extends CookieWithOptions<any> ? never : K]: T[K];
-};
-
-type RequestType<Type extends (...args: any[]) => any> =
-    Parameters<Type> extends [infer H, ...any[]]
-    ? OmitCookie<H>
-    : void;
-
-type ResponseType<Type extends (...args: any[]) => any> = OmitCookie<Awaited<ReturnType<Type>>>;
-
-function dateReviver(key: string, value: any): any {
-    if (
-        typeof value === "string" &&
-        value.length >= 10 &&
-        value.charCodeAt(0) >= 48 && // '0'
-        value.charCodeAt(0) <= 57 // '9'
-    ) {
-        const parsedDate = new Date(value);
-        if (!isNaN(parsedDate.getTime())) {
-            return parsedDate;
-        }
-    }
-    return value;
-}
 
 
 function encodeQuery(parts: Record<string, string | string[]>): string {
     const pairs: string[] = []
     for (const key in parts) {
-        const val = (Array.isArray(parts[key]) ? parts[key] : [parts[key]]) as string[]
+        const val = (Array.isArray(parts[key]) ?  parts[key] : [parts[key]]) as string[]
         for (const v of val) {
             pairs.push(`${key}=${encodeURIComponent(v)}`)
         }
@@ -667,33 +2019,12 @@ function makeRecord<K extends string | number | symbol, V>(record: Record<K, V |
     return record as Record<K, V>
 }
 
-import {
-    StreamInOutHandlerFn,
-    StreamInHandlerFn,
-    StreamOutHandlerFn,
-} from "encore.dev/api";
-
-type StreamRequest<Type> = Type extends
-    | StreamInOutHandlerFn<any, infer Req, any>
-    | StreamInHandlerFn<any, infer Req, any>
-    | StreamOutHandlerFn<any, any>
-    ? Req
-    : never;
-
-type StreamResponse<Type> = Type extends
-    | StreamInOutHandlerFn<any, any, infer Resp>
-    | StreamInHandlerFn<any, any, infer Resp>
-    | StreamOutHandlerFn<any, infer Resp>
-    ? Resp
-    : never;
-
-
 function encodeWebSocketHeaders(headers: Record<string, string>) {
     // url safe, no pad
     const base64encoded = btoa(JSON.stringify(headers))
-        .replaceAll("=", "")
-        .replaceAll("+", "-")
-        .replaceAll("/", "_");
+      .replaceAll("=", "")
+      .replaceAll("+", "-")
+      .replaceAll("/", "_");
     return "encore.dev.headers." + base64encoded;
 }
 
@@ -755,7 +2086,7 @@ export class StreamInOut<Request, Response> {
     constructor(url: string, headers?: Record<string, string>) {
         this.socket = new WebSocketConnection(url, headers);
         this.socket.on("message", (event: any) => {
-            this.buffer.push(JSON.parse(event.data, dateReviver));
+            this.buffer.push(JSON.parse(event.data));
             this.socket.resolveHasUpdateHandlers();
         });
     }
@@ -799,7 +2130,7 @@ export class StreamIn<Response> {
     constructor(url: string, headers?: Record<string, string>) {
         this.socket = new WebSocketConnection(url, headers);
         this.socket.on("message", (event: any) => {
-            this.buffer.push(JSON.parse(event.data, dateReviver));
+            this.buffer.push(JSON.parse(event.data));
             this.socket.resolveHasUpdateHandlers();
         });
     }
@@ -835,7 +2166,7 @@ export class StreamOut<Request, Response> {
 
         this.socket = new WebSocketConnection(url, headers);
         this.socket.on("message", (event: any) => {
-            responseResolver(JSON.parse(event.data, dateReviver))
+            responseResolver(JSON.parse(event.data))
         });
     }
 
@@ -859,7 +2190,7 @@ export class StreamOut<Request, Response> {
     }
 }
 // CallParameters is the type of the parameters to a method call, but require headers to be a Record type
-type CallParameters = Omit<RequestInit, "headers"> & {
+type CallParameters = Omit<RequestInit, "method" | "body" | "headers"> & {
     /** Headers to be sent with the request */
     headers?: Record<string, string>
 
@@ -913,10 +2244,10 @@ class BaseClient {
         // If we now have authentication data, add it to the request
         if (authData) {
             if (authData.query) {
-                query = { ...query, ...authData.query };
+                query = {...query, ...authData.query};
             }
             if (authData.headers) {
-                headers = { ...headers, ...authData.headers };
+                headers = {...headers, ...authData.headers};
             }
         }
 
@@ -934,10 +2265,10 @@ class BaseClient {
         // If we now have authentication data, add it to the request
         if (authData) {
             if (authData.query) {
-                query = { ...query, ...authData.query };
+                query = {...query, ...authData.query};
             }
             if (authData.headers) {
-                headers = { ...headers, ...authData.headers };
+                headers = {...headers, ...authData.headers};
             }
         }
 
@@ -955,10 +2286,10 @@ class BaseClient {
         // If we now have authentication data, add it to the request
         if (authData) {
             if (authData.query) {
-                query = { ...query, ...authData.query };
+                query = {...query, ...authData.query};
             }
             if (authData.headers) {
-                headers = { ...headers, ...authData.headers };
+                headers = {...headers, ...authData.headers};
             }
         }
 
@@ -967,23 +2298,25 @@ class BaseClient {
     }
 
     // callTypedAPI makes an API call, defaulting content type to "application/json"
-    public async callTypedAPI(path: string, params?: CallParameters): Promise<Response> {
-        return this.callAPI(path, {
+    public async callTypedAPI(method: string, path: string, body?: RequestInit["body"], params?: CallParameters): Promise<Response> {
+        return this.callAPI(method, path, body, {
             ...params,
             headers: { "Content-Type": "application/json", ...params?.headers }
         });
     }
 
     // callAPI is used by each generated API method to actually make the request
-    public async callAPI(path: string, params?: CallParameters): Promise<Response> {
+    public async callAPI(method: string, path: string, body?: RequestInit["body"], params?: CallParameters): Promise<Response> {
         let { query, headers, ...rest } = params ?? {}
         const init = {
             ...this.requestInit,
             ...rest,
+            method,
+            body: body ?? null,
         }
 
         // Merge our headers with any predefined headers
-        init.headers = { ...this.headers, ...init.headers, ...headers }
+        init.headers = {...this.headers, ...init.headers, ...headers}
 
         // Fetch auth data if there is any
         const authData = await this.getAuthData();
@@ -991,16 +2324,16 @@ class BaseClient {
         // If we now have authentication data, add it to the request
         if (authData) {
             if (authData.query) {
-                query = { ...query, ...authData.query };
+                query = {...query, ...authData.query};
             }
             if (authData.headers) {
-                init.headers = { ...init.headers, ...authData.headers };
+                init.headers = {...init.headers, ...authData.headers};
             }
         }
 
         // Make the actual request
         const queryString = query ? '?' + encodeQuery(query) : ''
-        const response = await this.fetcher(this.baseURL + path + queryString, init)
+        const response = await this.fetcher(this.baseURL+path+queryString, init)
 
         // handle any error responses
         if (!response.ok) {
@@ -1046,8 +2379,8 @@ function isAPIErrorResponse(err: any): err is APIErrorResponse {
     return (
         err !== undefined && err !== null &&
         isErrCode(err.code) &&
-        typeof (err.message) === "string" &&
-        (err.details === undefined || err.details === null || typeof (err.details) === "object")
+        typeof(err.message) === "string" &&
+        (err.details === undefined || err.details === null || typeof(err.details) === "object")
     )
 }
 
@@ -1081,8 +2414,8 @@ export class APIError extends Error {
         // set error name as constructor name, make it not enumerable to keep native Error behavior
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new.target#new.target_in_constructors
         Object.defineProperty(this, 'name', {
-            value: 'APIError',
-            enumerable: false,
+            value:        'APIError',
+            enumerable:   false,
             configurable: true,
         })
 
@@ -1305,6 +2638,3 @@ export enum ErrCode {
      */
     Unauthenticated = "unauthenticated",
 }
-
-const clientTarget: BaseURL = (import.meta as any).env?.VITE_CLIENT_TARGET || Local;
-export default new Client(clientTarget, { requestInit: { credentials: "include" } });

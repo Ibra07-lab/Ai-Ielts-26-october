@@ -20,6 +20,13 @@ from app.services.emotion_detector import emotion_detector, emotional_response_g
 from app.services.profile_service import profile_service
 from app.models.student_profile import ConversationMemory
 from app.services.answer_parser import parse_student_answers, extract_question_id_from_message
+from app.prompts.training_prompts import (
+    build_training_prompt,
+    build_phase_reminder,
+    should_transition_phase,
+    PHASE_LIMITS,
+    PHASE_NAMES,
+)
 from datetime import datetime
 import json
 
@@ -524,6 +531,14 @@ End."""),
         chat_history = messages[:-1]
         user_message = messages[-1].content
         router_decision: Optional[RouterOutput] = None
+        
+        # ========== TRAINING SESSION BRANCH ==========
+        # If this session is in training mode, bypass the router entirely
+        if session_id in self.active_sessions:
+            memory = self.active_sessions[session_id]
+            if memory.training_mode:
+                return await self._handle_training_turn(session_id, memory, user_message, chat_history)
+        # ========== END TRAINING BRANCH ==========
         
         # Parse and store student answers if present
         if session_id in self.active_sessions:
@@ -1199,6 +1214,19 @@ Be warm and supportive. Focus on fixing the misconception, not blaming them for 
         chat_history = messages[:-1]
         user_message = messages[-1].content
         router_decision: Optional[RouterOutput] = None
+        
+        # ========== TRAINING SESSION STREAMING BRANCH ==========
+        if session_id in self.active_sessions:
+            memory = self.active_sessions[session_id]
+            if memory.training_mode:
+                try:
+                    response = await self._handle_training_turn(session_id, memory, user_message, list(chat_history))
+                    yield response.content
+                except Exception as e:
+                    logger.error(f"[TRAINING STREAM] Error: {e}")
+                    yield "Sorry, I encountered an error during your training session. Please try again."
+                return
+        # ========== END TRAINING BRANCH ==========
 
         # Run the router (non-streaming) to decide the action
         try:
@@ -1257,6 +1285,124 @@ Be warm and supportive. Focus on fixing the misconception, not blaming them for 
             except Exception as e:
                 logger.error(f"[STREAM] Error in fallback path: {e}")
                 yield "\n\nSorry, I encountered an error. Please try again."
+
+    # ============================================================
+    # TRAINING SESSION METHODS
+    # ============================================================
+    
+    async def start_training_session(
+        self,
+        session_id: str,
+        skill: str,
+        context_payload: Dict[str, Any],
+    ) -> str:
+        """
+        Initialize a new training session and generate the first AI message.
+        
+        Args:
+            session_id: Unique session identifier
+            skill: Skill slug (e.g. "tfng")
+            context_payload: Student context with accuracy, recent_errors, etc.
+        
+        Returns:
+            The AI's first message (Phase 1 diagnostic start).
+        """
+        logger.info(f"[TRAINING] Starting training session: skill={skill}, session={session_id}")
+        
+        # Build the full training prompt
+        full_prompt = build_training_prompt(skill, context_payload)
+        
+        # Create training session memory
+        memory = ConversationMemory(
+            session_id=session_id,
+            student_id=context_payload.get("student_id", "unknown"),
+            training_mode=True,
+            training_system_prompt=full_prompt,
+            training_skill=skill,
+            training_phase=1,
+            training_questions_in_phase=0,
+            training_scores={"diagnostic": [], "drill": [], "simulation": []},
+            training_context_payload=context_payload,
+        )
+        self.active_sessions[session_id] = memory
+        
+        # Generate first AI message (Phase 1 start)
+        phase_reminder = build_phase_reminder(
+            phase=1,
+            questions_in_phase=0,
+            max_questions=PHASE_LIMITS[1],
+        )
+        
+        messages = [
+            SystemMessage(content=full_prompt),
+            SystemMessage(content=phase_reminder),
+            HumanMessage(content="Start the training session now."),
+        ]
+        
+        response = await self.quality_llm.ainvoke(messages)
+        first_message = response.content
+        
+        logger.info(f"[TRAINING] Session started, Phase 1 diagnostic begun")
+        return first_message
+    
+    async def _handle_training_turn(
+        self,
+        session_id: str,
+        memory: ConversationMemory,
+        user_message: str,
+        chat_history: list,
+    ) -> ChatMessage:
+        """
+        Handle a single turn within an active training session.
+        Bypasses the normal router. Injects the saved system prompt
+        and a phase reminder into every OpenAI call.
+        """
+        logger.info(f"[TRAINING] Turn in phase {memory.training_phase}, "
+                    f"question {memory.training_questions_in_phase} in phase")
+        
+        # Increment question count for current phase
+        memory.training_questions_in_phase += 1
+        
+        # Check for phase transition
+        current_phase = memory.training_phase
+        if current_phase in PHASE_LIMITS and should_transition_phase(current_phase, memory.training_questions_in_phase):
+            memory.training_phase += 1
+            memory.training_questions_in_phase = 0
+            logger.info(f"[TRAINING] Phase transition: {current_phase} -> {memory.training_phase}")
+        
+        # Build phase reminder
+        phase = memory.training_phase
+        max_q = PHASE_LIMITS.get(phase, 4)
+        phase_reminder = build_phase_reminder(
+            phase=phase,
+            questions_in_phase=memory.training_questions_in_phase,
+            max_questions=max_q,
+        )
+        
+        # Build message list with persisted system prompt
+        messages = [SystemMessage(content=memory.training_system_prompt)]
+        
+        # Add conversation history
+        for msg in chat_history:
+            if msg.role == "user":
+                messages.append(HumanMessage(content=msg.content))
+            elif msg.role == "assistant":
+                messages.append(AIMessage(content=msg.content))
+        
+        # Add phase reminder and current user message
+        messages.append(SystemMessage(content=phase_reminder))
+        messages.append(HumanMessage(content=user_message))
+        
+        # Call LLM
+        response = await self.quality_llm.ainvoke(messages)
+        response_content = response.content
+        
+        # Check if session is complete (Phase 4 — result block emitted)
+        if ":::SESSION_RESULT" in response_content:
+            memory.training_phase = 4
+            logger.info(f"[TRAINING] Session complete — result block detected")
+        
+        return ChatMessage(role="assistant", content=response_content)
 
     def _build_general_chain(
         self,

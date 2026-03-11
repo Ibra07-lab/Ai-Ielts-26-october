@@ -24,7 +24,7 @@ export default function SpeakingPractice() {
 
   const { data: question, refetch: getNewQuestion } = useQuery({
     queryKey: ["speakingQuestion", selectedPart],
-    queryFn: () => backend.ielts.getSpeakingQuestion({ part: selectedPart }),
+    queryFn: () => backend.ielts.getSpeakingQuestion(selectedPart),
     enabled: true,
   });
 

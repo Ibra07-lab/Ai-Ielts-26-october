@@ -8,7 +8,6 @@ from .base import (
     BandRange,
     CriterionScoreBase,
     ErrorPattern,
-    StrengthItem,
     MicroTask,
     ActionPlanDay,
 )
@@ -117,7 +116,6 @@ __all__ = [
     "BandRange",
     "CriterionScoreBase",
     "ErrorPattern",
-    "StrengthItem",
     "MicroTask",
     "ActionPlanDay",
     # Task 1

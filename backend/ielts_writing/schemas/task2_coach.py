@@ -180,6 +180,13 @@ class PatternBreaker(BaseModel):
         ...,
         description="How often this habit appeared (e.g., '6 out of 15 sentences')"
     )
+
+    @field_validator("habit_frequency", mode="before")
+    @classmethod
+    def cast_habit_frequency_to_str(cls, v):
+        if isinstance(v, int):
+            return str(v)
+        return v
     banned_list: List[BannedItem] = Field(
         ...,
         min_length=1,
@@ -244,8 +251,8 @@ class MicroDrill(BaseModel):
         ...,
         description="How to know if the drill was completed successfully"
     )
-    variation_for_tomorrow: str = Field(
-        ...,
+    variation_for_tomorrow: Optional[str] = Field(
+        None,
         description="How to do a similar drill tomorrow with different content"
     )
     alternative_drill: Optional[str] = Field(

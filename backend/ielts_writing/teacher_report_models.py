@@ -3,12 +3,6 @@ from typing import List, Optional, Union, Literal
 from .models import Criterion
 
 
-class Strength(BaseModel):
-    """A specific strength with quoted example from the essay."""
-    point: str  # The strength statement
-    quote: str  # Direct quote from essay demonstrating this strength
-
-
 class BandUpgrade(BaseModel):
     """Shows what a better version looks like."""
     current_band: str  # e.g., "6"
@@ -61,9 +55,6 @@ class CriterionFeedback(BaseModel):
     
     # What This Measures section
     measures: List[str]  # 3-4 bullet points explaining what this criterion assesses
-    
-    # What You Did Well
-    strengths: List[Strength] = Field(default_factory=list)
     
     # What's Holding You Back
     weaknesses: List[WeaknessPattern] = Field(default_factory=list)

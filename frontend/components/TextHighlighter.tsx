@@ -214,7 +214,7 @@ export default function TextHighlighter({
     if (!user) return;
 
     try {
-      await backend.ielts.deleteHighlight({ userId: user.id, highlightId });
+      await backend.ielts.deleteHighlight(user.id, highlightId);
 
       const newHighlights = currentHighlights.filter(h => h.id !== highlightId);
       setCurrentHighlights(newHighlights);
@@ -399,7 +399,7 @@ export default function TextHighlighter({
   return (
     <div
       ref={contentRef}
-      className="prose prose-sm max-w-none dark:prose-invert leading-relaxed select-text cursor-text relative"
+      className="prose prose-lg max-w-none dark:prose-invert leading-relaxed select-text cursor-text relative"
       onMouseUp={handleTextSelection}
       onTouchEnd={handleTextSelection}
     >
@@ -416,8 +416,8 @@ export default function TextHighlighter({
           const body = renderSegmentWithHighlights(clean, paraStart);
 
           return (
-            <p key={index} className="mb-4 text-gray-700 dark:text-gray-300">
-              {showLabels && <span className="mr-2 font-semibold">{label}</span>}
+            <p key={index} className="mb-6 text-gray-800 dark:text-gray-200 text-[17px]">
+              {showLabels && <span className="mr-3 font-bold text-gray-900 dark:text-white">{label}</span>}
               <span data-segment-start={paraStart}>{body}</span>
             </p>
           );

@@ -54,7 +54,7 @@ export interface ModuleCollection {
 
 // Get deeper AI feedback for a specific question
 export const getReadingDeeperFeedback = api<
-  { userId: number; testId: number; passageId: number; questionId: number },
+  { userId: string; testId: number; passageId: number; questionId: number },
   DeeperFeedbackResponse
 >(
   { expose: true, method: "POST", path: "/reading/deeper-feedback" },
@@ -618,7 +618,7 @@ export interface ReadingQuestion {
 }
 
 export interface ReadingSubmission {
-  userId: number;
+  userId: string;
   passageTitle: string;
   passageContent: string;
   questions: ReadingQuestion[];
@@ -654,7 +654,7 @@ export interface ReadingHighlight {
 }
 
 export interface CreateHighlightRequest {
-  userId: number;
+  userId: string;
   passageTitle: string;
   highlightedText: string;
   startPosition: number;
@@ -678,7 +678,7 @@ export interface TranslationResponse {
 }
 
 export interface AddToVocabularyRequest {
-  userId: number;
+  userId: string;
   text: string;
   definition: string;
   translation: string;
@@ -1109,7 +1109,7 @@ export const submitReading = api<ReadingSubmission, ReadingResult>(
 );
 
 // Retrieves user's reading session history.
-export const getReadingSessions = api<{ userId: number }, { sessions: ReadingSession[] }>(
+export const getReadingSessions = api<{ userId: string }, { sessions: ReadingSession[] }>(
   { expose: true, method: "GET", path: "/users/:userId/reading/sessions" },
   async ({ userId }) => {
     const sessions = await ieltsDB.queryAll<ReadingSession>`
@@ -1133,7 +1133,7 @@ export interface ReadingSkill {
 }
 
 // Retrieves aggregated reading skills data.
-export const getReadingSkills = api<{ userId: number }, { skills: ReadingSkill[] }>(
+export const getReadingSkills = api<{ userId: string }, { skills: ReadingSkill[] }>(
   { expose: true, method: "GET", path: "/users/:userId/reading/skills" },
   async ({ userId }) => {
     const sessions = await ieltsDB.queryAll<{ questions: string; score: number; total_questions: number; user_answers: string; correct_answers: string }>`
@@ -1194,10 +1194,10 @@ export const getReadingSkills = api<{ userId: number }, { skills: ReadingSkill[]
 
 // Retrieves the latest reading session for a specific test and passage.
 export const getLatestReadingSession = api<
-  { userId: number; testId: number; passageId: number },
+  { userId: string; testId: number; passageId: number },
   {
     id: number;
-    userId: number;
+    userId: string;
     testId: number;
     passageId: number;
     userAnswers: Record<number, string>;
@@ -1213,7 +1213,7 @@ export const getLatestReadingSession = api<
     // Note: Adjust the passage_title pattern based on how you store test/passage metadata
     const session = await ieltsDB.queryRow<{
       id: number;
-      userId: number;
+      userId: string;
       passageTitle: string;
       userAnswers: string;
       correctAnswers: string;
@@ -1278,7 +1278,7 @@ export const createHighlight = api<CreateHighlightRequest, ReadingHighlight>(
 );
 
 // Retrieves highlights for a specific passage and user.
-export const getHighlights = api<{ userId: number; passageTitle: string }, { highlights: ReadingHighlight[] }>(
+export const getHighlights = api<{ userId: string; passageTitle: string }, { highlights: ReadingHighlight[] }>(
   { expose: true, method: "GET", path: "/users/:userId/reading/highlights/:passageTitle" },
   async ({ userId, passageTitle }) => {
     const highlights = await ieltsDB.queryAll<ReadingHighlight>`
@@ -1295,7 +1295,7 @@ export const getHighlights = api<{ userId: number; passageTitle: string }, { hig
 );
 
 // Deletes a highlight.
-export const deleteHighlight = api<{ userId: number; highlightId: number }, void>(
+export const deleteHighlight = api<{ userId: string; highlightId: number }, void>(
   { expose: true, method: "DELETE", path: "/users/:userId/reading/highlights/delete/:highlightId" },
   async ({ userId, highlightId }) => {
     await ieltsDB.exec`
