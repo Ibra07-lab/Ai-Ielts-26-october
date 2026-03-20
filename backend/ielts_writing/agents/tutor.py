@@ -4,14 +4,14 @@ import re
 from datetime import datetime
 from typing import List, Optional
 
-from ..models import TutorFeedback, ExaminerEvaluation, BandGap, Criterion
-from ..prompts.tutor import TUTOR_SYSTEM_PROMPT, build_tutor_prompt
-from agents.direct_llm_client import DirectLLMClient
+from ..models import TutorFeedback, ExaminerEvaluation, BandGap, Criterion  # type: ignore[import-not-found]
+from ..prompts.tutor import TUTOR_SYSTEM_PROMPT, build_tutor_prompt  # type: ignore[import-not-found]
+from agents.direct_llm_client import DirectLLMClient  # type: ignore[import-not-found]
 
 class TutorAgent:
     """Coaching agent — provides actionable improvement steps."""
     
-    def __init__(self, model: str = None):
+    def __init__(self, model: str | None = None):
         # Default to environment variable or fallback to Claude Sonnet 4.5
         self.model = model or os.getenv("IELTS_WRITING_MODEL", "claude-sonnet-4-5-20250929")
         self.client = DirectLLMClient()
@@ -139,11 +139,7 @@ class TutorAgent:
             mt.setdefault("instruction", "")
             mt.setdefault("example", "")
         
-        if fallback_topics:
-            result["topic_analysis"] = fallback_topics
-        # The `fallback_topics` variable was not defined, removed this line.
-        # if fallback_topics:
-        #     result["topic_analysis"] = fallback_topics
+        # Fallback topic generation already handled above (line 117-120)
             
         # Ensure micro_drill exists (frontend expects singular, prompt gives plural)
         if "micro_tasks" in result and result["micro_tasks"] and "micro_drill" not in result:
@@ -170,7 +166,7 @@ class TutorAgent:
             if "{" in content and "}" in content:
                 start = content.find("{")
                 end = content.rfind("}") + 1
-                content = content[start:end]
+                content = content[start:end]  # type: ignore[index]
                 
             return json.loads(content)
         except (json.JSONDecodeError, IndexError) as e:
@@ -239,7 +235,7 @@ class TutorAgent:
         # Find the weakest criteria and generate topics based on them
         sorted_scores = sorted(evaluation.criterion_scores, key=lambda x: x.band)
         
-        for score in sorted_scores[:3]:  # Focus on 3 weakest criteria
+        for score in sorted_scores[:3]:  # type: ignore[index]  # Focus on 3 weakest criteria
             criterion_key = score.criterion.value if hasattr(score.criterion, 'value') else str(score.criterion)
             
             if criterion_key in topic_templates:
@@ -259,4 +255,4 @@ class TutorAgent:
                 {"topic": "Academic Writing Style", "count": 2, "category": "General"},
             ])
         
-        return topics[:6]  # Return max 6 topics
+        return topics[:6]  # type: ignore[index]  # Return max 6 topics

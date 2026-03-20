@@ -62,6 +62,7 @@ const ListeningPracticeCard = () => {
                     {/* Buttons */}
                     <div className="mt-auto space-y-3">
                         <button
+                            onClick={() => navigate('/listening')}
                             className="w-full py-2.5 px-3 bg-violet-600 hover:bg-violet-700 text-white rounded-xl font-medium border border-violet-500 flex items-center justify-center gap-2 transition-colors text-xs sm:text-sm"
                         >
                             Start Practice

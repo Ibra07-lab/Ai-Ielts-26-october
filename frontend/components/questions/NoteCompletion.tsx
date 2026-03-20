@@ -6,6 +6,7 @@ type NoteCompletionProps = {
   answers: Record<number, string>;
   result: any;
   onAnswerChange: (qid: number, value: string) => void;
+  textSize?: 'regular' | 'large' | 'extra-large';
 };
 
 // Render IELTS-style Note/Summary completion as bullet items with inline blanks
@@ -14,8 +15,21 @@ export default function NoteCompletion({
   answers,
   result,
   onAnswerChange,
+  textSize = 'regular',
 }: NoteCompletionProps) {
   const items = Array.isArray(group?.questions) ? group.questions : [];
+
+  const getFontSizeClass = () => {
+    if (textSize === 'large') return 'text-lg';
+    if (textSize === 'extra-large') return 'text-xl';
+    return 'text-sm';
+  };
+
+  const getInputSizeClass = () => {
+    if (textSize === 'large') return 'text-lg w-44';
+    if (textSize === 'extra-large') return 'text-xl w-52';
+    return 'text-base w-36';
+  };
 
   const renderInlineWithBlank = (text: string, qid: number) => {
     // Prefer pattern like "(12)_____"
@@ -25,7 +39,7 @@ export default function NoteCompletion({
       const [before, after] = text.split(whole);
       const labelNum = labeled[1];
       return (
-        <span className="leading-7">
+        <span className={`${getFontSizeClass()} leading-7`}>
           {before}
           <span className="inline-flex items-center gap-1 mx-1 align-baseline">
             <span className="text-[10px] text-gray-500">{labelNum})</span>
@@ -33,7 +47,7 @@ export default function NoteCompletion({
               aria-label={`Gap ${labelNum}`}
               type="text"
               disabled={!!result}
-              className="px-1 border-b-2 border-dotted border-slate-400 bg-transparent w-36 focus:outline-none focus:border-blue-500 focus:border-solid transition-all"
+              className={`px-1 border-b-2 border-dotted border-slate-400 bg-transparent ${getInputSizeClass()} focus:outline-none focus:border-blue-500 focus:border-solid transition-all`}
               value={answers[qid] || ""}
               onChange={(e) => onAnswerChange(qid, e.target.value)}
             />
@@ -50,13 +64,13 @@ export default function NoteCompletion({
       const before = text.slice(0, idx);
       const after = text.slice(idx + (unders[0]?.length || 0));
       return (
-        <span className="leading-7">
+        <span className={`${getFontSizeClass()} leading-7`}>
           {before}
           <input
             aria-label={`Gap ${qid}`}
             type="text"
             disabled={!!result}
-            className="px-1 border-b-2 border-dotted border-slate-400 bg-transparent w-36 focus:outline-none focus:border-blue-500 focus:border-solid transition-all mx-1"
+            className={`px-1 border-b-2 border-dotted border-slate-400 bg-transparent ${getInputSizeClass()} focus:outline-none focus:border-blue-500 focus:border-solid transition-all mx-1`}
             value={answers[qid] || ""}
             onChange={(e) => onAnswerChange(qid, e.target.value)}
           />
@@ -67,13 +81,13 @@ export default function NoteCompletion({
 
     // Otherwise, append an inline input at the end
     return (
-      <span className="leading-7">
+      <span className={`${getFontSizeClass()} leading-7`}>
         {text} —{" "}
         <input
           aria-label={`Gap ${qid}`}
           type="text"
           disabled={!!result}
-          className="px-1 border-b-2 border-dotted border-slate-400 bg-transparent w-36 focus:outline-none focus:border-blue-500 focus:border-solid transition-all"
+          className={`px-1 border-b-2 border-dotted border-slate-400 bg-transparent ${getInputSizeClass()} focus:outline-none focus:border-blue-500 focus:border-solid transition-all`}
           value={answers[qid] || ""}
           onChange={(e) => onAnswerChange(qid, e.target.value)}
         />
@@ -94,7 +108,7 @@ export default function NoteCompletion({
               (q?.questionText as string) ||
               "";
             return (
-              <li key={q.id} className="text-sm">
+              <li key={q.id} className={getFontSizeClass()}>
                 <Label className="sr-only">Gap {q.id}</Label>
                 {renderInlineWithBlank(context, q.id)}
               </li>

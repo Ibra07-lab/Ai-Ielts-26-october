@@ -3,7 +3,11 @@ import sys
 import os
 
 # Mimic the debug script's path setup
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+# Add the backend directory to the search path
+BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
+if BACKEND_DIR not in sys.path:
+    sys.path.insert(0, BACKEND_DIR)
+
 
 try:
     import ielts_writing

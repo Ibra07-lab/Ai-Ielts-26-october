@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Send, Bot, User, Sparkles } from 'lucide-react';
+import { Send, Bot, User, Sparkles, BookOpen, Target, CheckCircle2, HelpCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
@@ -37,6 +37,114 @@ I can help you with:
 • Practice and confidence-building  
 Drag a question here or tell me what you'd like to focus on today. 😊`;
   }
+};
+
+const ExerciseCard = ({ content, onAnswer }: { content: string, onAnswer: (ans: string) => void }) => {
+  const lines = content.split('\n');
+  let header = '';
+  let questionProgress = '';
+  let bodyLines: string[] = [];
+  let options: string[] = [];
+  
+  lines.forEach(line => {
+    const trimmed = line.trim();
+    if (!trimmed) return;
+    
+    // Check if it's an option: e.g. "A) ...", "- A) ...", "1. ..."
+    if (/^[A-F1-6][)\.]\s+/.test(trimmed) || /^[-*]\s*[A-F1-6][)\.]\s+/.test(trimmed)) {
+      options.push(trimmed.replace(/^[-*]\s*/, ''));
+    } else if (/phase/i.test(trimmed) && trimmed.length < 50) {
+      header = trimmed;
+    } else if (/(?:question|test)\s+\d+/i.test(trimmed) && trimmed.length < 50) {
+      questionProgress = trimmed;
+    } else {
+      bodyLines.push(trimmed);
+    }
+  });
+
+  return (
+    <div className="bg-white dark:bg-slate-900 border-2 border-indigo-100 dark:border-indigo-900/40 rounded-3xl shadow-xl overflow-hidden my-6 animate-in fade-in zoom-in-95 duration-300">
+      {/* Header */}
+      {(header || questionProgress) && (
+        <div className="bg-gradient-to-r from-indigo-50 to-blue-50/50 dark:from-indigo-900/20 dark:to-blue-900/10 px-6 py-4 border-b border-indigo-100/50 dark:border-indigo-900/40 flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <Target className="w-4 h-4 text-indigo-500" />
+            <span className="text-xs font-bold text-indigo-700 dark:text-indigo-400 uppercase tracking-wider">{header || 'Exercise'}</span>
+          </div>
+          {questionProgress && (
+            <span className="text-[13px] font-bold text-indigo-600 dark:text-indigo-300 bg-white/80 dark:bg-slate-800/80 px-3 py-1 rounded-full shadow-sm backdrop-blur-sm border border-indigo-100/50 dark:border-indigo-800/50">{questionProgress}</span>
+          )}
+        </div>
+      )}
+
+      {/* Body */}
+      <div className="p-6 md:p-8">
+        <div className="prose prose-slate dark:prose-invert prose-sm max-w-none text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
+          <ReactMarkdown>{bodyLines.join('\n\n')}</ReactMarkdown>
+        </div>
+        
+        {/* Options */}
+        {options.length > 0 && (
+          <div className="mt-8 flex flex-col gap-3">
+            {options.map((opt, i) => {
+              const match = opt.match(/^([A-F1-6])[)\.]\s+(.*)/);
+              const letter = match ? match[1] : '';
+              const text = match ? match[2] : opt;
+              
+              return (
+                <button 
+                  key={i} 
+                  onClick={() => onAnswer(opt)}
+                  className="group flex flex-row items-start text-left p-4 rounded-2xl border-2 border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-slate-900 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-900/20 hover:shadow-md transition-all duration-200 active:scale-[0.99]"
+                >
+                  {letter && (
+                    <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold flex items-center justify-center mr-4 group-hover:bg-indigo-100 group-hover:text-indigo-700 dark:group-hover:bg-indigo-900 dark:group-hover:text-indigo-300 transition-colors shadow-sm">
+                      {letter}
+                    </span>
+                  )}
+                  <span className="font-semibold text-slate-700 dark:text-slate-200 mt-1 leading-snug">{text}</span>
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const FeedbackCard = ({ content }: { content: string }) => {
+  const isCorrect = content.trim().startsWith('Correct.');
+  const borderColor = isCorrect ? 'border-emerald-500' : 'border-rose-500';
+  const bgColor = isCorrect ? 'bg-emerald-50 dark:bg-emerald-900/10' : 'bg-rose-50 dark:bg-rose-900/10';
+  const iconColor = isCorrect ? 'text-emerald-500' : 'text-rose-500';
+  
+  // Custom styling for the child markdown elements in feedback
+  const renderers = {
+    p: ({ children }: any) => <p className="mb-4 last:mb-0 leading-relaxed text-[15px]">{children}</p>,
+    strong: ({ children }: any) => {
+      const text = String(children);
+      // Give rule headers some pizzazz
+      if (text.toLowerCase().includes('wrong') || text.toLowerCase().includes('correct') || text.toLowerCase().includes('rule')) {
+        return <strong className="block text-sm uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-5 mb-1">{children}</strong>;
+      }
+      return <strong className="font-bold text-slate-900 dark:text-slate-100">{children}</strong>;
+    }
+  };
+
+  return (
+    <div className={`border-t-4 ${borderColor} ${bgColor} rounded-2xl p-6 shadow-sm my-5 animate-in slide-in-from-top-4 duration-500 flex flex-col gap-2`}>
+      <div className="flex items-center gap-2 mb-2">
+        {isCorrect ? <CheckCircle2 className={`w-5 h-5 ${iconColor}`} /> : <Target className={`w-5 h-5 ${iconColor}`} />}
+        <span className={`font-bold ${iconColor} uppercase tracking-wider text-[13px]`}>
+          {isCorrect ? 'Correct' : 'Incorrect'}
+        </span>
+      </div>
+      <div className="text-slate-800 dark:text-slate-200">
+         <ReactMarkdown components={renderers}>{content.replace(/^(In)?Correct\.?\s*\n*/i, '')}</ReactMarkdown>
+      </div>
+    </div>
+  );
 };
 
 interface ReadingTutorChatProps {
@@ -127,13 +235,14 @@ export default function ReadingTutorChat({ droppedQuestionId, streamingEnabled =
     }
   }, [droppedQuestionId, toast]);
 
-  const handleSend = async () => {
-    if (!input.trim() || isLoading) return;
+  const handleSend = async (overrideInput?: string) => {
+    const textToSend = typeof overrideInput === 'string' ? overrideInput : input.trim();
+    if (!textToSend || isLoading) return;
 
     const userMessage: ChatMessage & { id: string; timestamp: Date } = {
       id: Date.now().toString(),
       role: 'user',
-      content: input.trim(),
+      content: textToSend,
       timestamp: new Date(),
     };
 
@@ -282,7 +391,7 @@ export default function ReadingTutorChat({ droppedQuestionId, streamingEnabled =
 
       {/* Messages Area */}
       <div className="flex-1 overflow-y-auto p-4 sm:p-6 scroll-smooth custom-scrollbar bg-slate-50/50 dark:bg-slate-950/50">
-        <div className="max-w-3xl mx-auto space-y-3">
+        <div className="max-w-2xl mx-auto space-y-3">
           {messages.map((message) => (
             (message.role === 'user' || (message.role === 'assistant' && message.content.trim())) ? (
               <div
@@ -400,11 +509,28 @@ export default function ReadingTutorChat({ droppedQuestionId, streamingEnabled =
                             h2: ({ children }) => <h2 className="text-base font-bold mt-3 mb-1.5 text-slate-900 dark:text-slate-100">{children}</h2>,
                             h3: ({ children }) => <h3 className="text-sm font-bold mt-2 mb-1 text-slate-900 dark:text-slate-100 uppercase tracking-wide opacity-90">{children}</h3>,
                             h4: ({ children }) => <h4 className="text-sm font-bold mt-2 mb-1 text-slate-900 dark:text-slate-100">{children}</h4>,
-                            code: ({ children }) => (
-                              <code className="px-1.5 py-0.5 rounded text-[13px] font-bold bg-amber-100/60 dark:bg-amber-900/30 text-amber-700 dark:text-amber-200 border border-amber-200 dark:border-amber-800/50 font-mono shadow-sm mx-0.5">
-                                {children}
-                              </code>
-                            ),
+                            code: ({ className, children, ...props }: any) => {
+                              const match = /language-(\w+)/.exec(className || '');
+                              
+                              if (match && match[1] === 'exercise') {
+                                return (
+                                  <ExerciseCard 
+                                    content={String(children).replace(/\n$/, '')} 
+                                    onAnswer={(ans) => handleSend(ans)} 
+                                  />
+                                );
+                              }
+                              
+                              if (match && match[1] === 'feedback') {
+                                return <FeedbackCard content={String(children).replace(/\n$/, '')} />;
+                              }
+
+                              return (
+                                <code className="px-1.5 py-0.5 rounded text-[13px] font-bold bg-amber-100/60 dark:bg-amber-900/30 text-amber-700 dark:text-amber-200 border border-amber-200 dark:border-amber-800/50 font-mono shadow-sm mx-0.5" {...props}>
+                                  {children}
+                                </code>
+                              );
+                            },
                             blockquote: ({ children }) => {
                               const getNodeText = (node: any): string => {
                                 if (!node) return '';
@@ -529,7 +655,7 @@ export default function ReadingTutorChat({ droppedQuestionId, streamingEnabled =
             disabled={isLoading}
           />
           <Button
-            onClick={handleSend}
+            onClick={() => handleSend()}
             disabled={!input.trim() || isLoading}
             size="icon"
             className={`mb-1 mr-1 h-10 w-10 rounded-full transition-all duration-300 ${input.trim()

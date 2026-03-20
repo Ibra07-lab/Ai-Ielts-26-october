@@ -10,8 +10,9 @@
     "@langchain/community": "^0.3.53",
     "@langchain/core": "^0.3.72",
     "@langchain/openai": "^0.6.9",
+    "@supabase/supabase-js": "^2.99.2",
     "cheerio": "^1.1.2",
-    "encore.dev": "^1.48.12",
+    "encore.dev": "^1.56.0",
     "langsmith": "^0.3.63",
     "pdf-parse": "^1.1.1"
   },

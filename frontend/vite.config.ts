@@ -36,7 +36,7 @@ export default defineConfig(({ command }) => {
       },
     },
     build: {
-      minify: false,
+      minify: isBuild ? 'esbuild' : false,
       outDir: '../backend/frontend/dist',
     },
   }

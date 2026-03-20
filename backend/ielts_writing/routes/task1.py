@@ -14,7 +14,7 @@ import asyncio
 import logging
 
 from ..pipelines.task1_pipeline import Task1Pipeline
-from ..auth import get_current_user
+from ..auth import require_auth
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/task1", tags=["IELTS Writing Task 1"])
@@ -37,7 +37,7 @@ class Task1EvaluationRequest(BaseModel):
 
 
 @router.post("/evaluate")
-async def evaluate_task1(request: Task1EvaluationRequest, user_id: str | None = Depends(get_current_user)):
+async def evaluate_task1(request: Task1EvaluationRequest, auth: dict = Depends(require_auth)):
     """
     Full Task 1 evaluation.
     
@@ -86,7 +86,7 @@ async def evaluate_task1(request: Task1EvaluationRequest, user_id: str | None = 
             # Extract band scores from result
             scores = result.get("scores", {})
             save_data = {
-                "user_id": user_id or "anonymous",
+                "user_id": user_id,
                 "task_type": "task1",
                 "question": request.question,
                 "essay": request.essay,

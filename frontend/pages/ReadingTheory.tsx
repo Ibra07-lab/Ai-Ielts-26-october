@@ -1,3 +1,4 @@
+import { formatAndSanitize, sanitizeHtml } from '@/utils/sanitize';
 import { useState } from "react";
 import {
   BookOpen,
@@ -337,7 +338,7 @@ export default function ReadingTheory() {
         {/* Progress Bar */}
         <div className="space-y-2">
           <div className="flex justify-between text-sm font-medium text-slate-600 dark:text-slate-400">
-            <span>Question {currentQuestionIndex + 1} of {totalQuestions}</span>
+            <span>Exercise {currentQuestionIndex + 1} of {totalQuestions}</span>
             <span>{Math.round(((currentQuestionIndex + 1) / totalQuestions) * 100)}%</span>
           </div>
           <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
@@ -571,8 +572,8 @@ export default function ReadingTheory() {
                         {sub.title}
                       </h3>
 
-                      {sub.content && <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-lg max-w-[800px]"><span dangerouslySetInnerHTML={{ __html: sub.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>') }} /></p>}
-                      {sub.description && <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-lg max-w-[800px]"><span dangerouslySetInnerHTML={{ __html: sub.description.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>') }} /></p>}
+                      {sub.content && <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-lg max-w-[800px]"><span dangerouslySetInnerHTML={{ __html: formatAndSanitize(sub.content) }} /></p>}
+                      {sub.description && <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-lg max-w-[800px]"><span dangerouslySetInnerHTML={{ __html: formatAndSanitize(sub.description) }} /></p>}
 
                       {/* Analysis (List) - ENHANCED with Visual Anchors */}
                       {sub.analysis && Array.isArray(sub.analysis) && (
@@ -619,7 +620,7 @@ export default function ReadingTheory() {
                               </div>
                               <div className="text-sm text-slate-700 dark:text-slate-300">
                                 {typeof ex === 'string' ? (
-                                  <span dangerouslySetInnerHTML={{ __html: ex.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+                                  <span dangerouslySetInnerHTML={{ __html: formatAndSanitize(ex) }} />
                                 ) : (
                                   <div>
                                     {ex.statement && <div className="font-medium mb-1">{ex.statement}</div>}
@@ -668,7 +669,7 @@ export default function ReadingTheory() {
                                                   {cell}
                                                 </span>
                                               ) : (
-                                                <span dangerouslySetInnerHTML={{ __html: cell.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/(?<!\*)\*(?!\*)(.*?)(?<!\*)\*(?!\*)/g, '<em>$1</em>') }} />
+                                                <span dangerouslySetInnerHTML={{ __html: formatAndSanitize(cell) }} />
                                               )}
                                             </td>
                                           ))}
@@ -728,7 +729,7 @@ export default function ReadingTheory() {
                       {/* Criteria Lists */}
                       {sub.criteria && (
                         <ul className="space-y-1 ml-5 list-disc text-slate-700 dark:text-slate-300">
-                          {sub.criteria.map((c: string, i: number) => <li key={i} dangerouslySetInnerHTML={{ __html: c.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/(?<!\*)\*(?!\*)(.*?)(?<!\*)\*(?!\*)/g, '<em>$1</em>') }} />)}
+                          {sub.criteria.map((c: string, i: number) => <li key={i} dangerouslySetInnerHTML={{ __html: formatAndSanitize(c) }} />)}
                         </ul>
                       )}
 
@@ -755,7 +756,7 @@ export default function ReadingTheory() {
                                     {ruleItem.examples.map((ex: string, j: number) => (
                                       <li key={j} className="flex gap-2 text-sm text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/50 p-2 rounded">
                                         <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 flex-shrink-0" />
-                                        <span dangerouslySetInnerHTML={{ __html: ex.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+                                        <span dangerouslySetInnerHTML={{ __html: formatAndSanitize(ex) }} />
                                       </li>
                                     ))}
                                   </ul>
@@ -869,7 +870,7 @@ export default function ReadingTheory() {
                                     {step.actions.map((a: string, k: number) => (
                                       <li key={k} className="flex items-start gap-3 text-slate-700 dark:text-slate-300 text-lg leading-relaxed">
                                         <div className="w-2 h-2 rounded-full bg-indigo-400 mt-2.5 flex-shrink-0" />
-                                        <span dangerouslySetInnerHTML={{ __html: a.replace(/\*\*(.*?)\*\*/g, '<strong class="text-indigo-900 dark:text-indigo-100 font-bold">$1</strong>') }} />
+                                        <span dangerouslySetInnerHTML={{ __html: formatAndSanitize(a) }} />
                                       </li>
                                     ))}
                                   </ul>
@@ -880,7 +881,7 @@ export default function ReadingTheory() {
                                     {step.list.map((l: string, k: number) => (
                                       <div key={k} className="flex gap-2 mb-2 last:mb-0">
                                         <span className="text-indigo-400">•</span>
-                                        <span dangerouslySetInnerHTML={{ __html: l.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+                                        <span dangerouslySetInnerHTML={{ __html: formatAndSanitize(l) }} />
                                       </div>
                                     ))}
                                   </div>
@@ -941,7 +942,7 @@ export default function ReadingTheory() {
                               {typeItem.examples && Array.isArray(typeItem.examples) && (
                                 <ul className="list-disc ml-5 space-y-1 text-sm text-indigo-700 dark:text-indigo-300">
                                   {typeItem.examples.map((ex: string, j: number) => (
-                                    <li key={j} dangerouslySetInnerHTML={{ __html: ex.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/(?<!\*)\*(?!\*)(.*?)(?<!\*)\*(?!\*)/g, '<em>$1</em>') }} />
+                                    <li key={j} dangerouslySetInnerHTML={{ __html: formatAndSanitize(ex) }} />
                                   ))}
                                 </ul>
                               )}
@@ -988,7 +989,7 @@ export default function ReadingTheory() {
                       {/* Simple List */}
                       {sub.list && (
                         <ul className="list-disc ml-5 space-y-1 text-slate-700 dark:text-slate-300">
-                          {sub.list.map((item: string, i: number) => <li key={i}><span dangerouslySetInnerHTML={{ __html: item.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/(?<!\*)\*(?!\*)(.*?)(?<!\*)\*(?!\*)/g, '<em>$1</em>') }} /></li>)}
+                          {sub.list.map((item: string, i: number) => <li key={i}><span dangerouslySetInnerHTML={{ __html: formatAndSanitize(item) }} /></li>)}
                         </ul>
                       )}
 
@@ -1021,7 +1022,7 @@ export default function ReadingTheory() {
                                           <div key={idx} className="flex gap-2 ml-1">
                                             <span className="font-bold">•</span>
                                             <span dangerouslySetInnerHTML={{
-                                              __html: line.replace(/^[•-]\s*/, '').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                                              __html: sanitizeHtml(line.replace(/^[•-]\s*/, '').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'))
                                             }} />
                                           </div>
                                         );
@@ -1038,7 +1039,7 @@ export default function ReadingTheory() {
                                       if (line.trim() === '') return <br key={idx} />;
                                       return (
                                         <div key={idx} dangerouslySetInnerHTML={{
-                                          __html: line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                                          __html: sanitizeHtml(line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'))
                                         }} />
                                       );
                                     })}
@@ -1061,7 +1062,7 @@ export default function ReadingTheory() {
 
                             return (
                               <div key={i} className="bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm transition-all duration-300">
-                                {/* Header / Question */}
+                                {/* Header / Exercise */}
                                 <div className="p-6 border-b border-slate-100 dark:border-slate-700/50">
                                   <div className="flex items-start gap-4">
                                     <div className="flex-shrink-0 mt-1">
@@ -1198,7 +1199,7 @@ export default function ReadingTheory() {
                             {sub.checklist.map((item: string, i: number) => (
                               <label key={i} className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 cursor-pointer hover:border-emerald-400 dark:hover:border-emerald-600 transition-colors group">
                                 <input type="checkbox" className="mt-1 w-4 h-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" />
-                                <span className="text-slate-700 dark:text-slate-300 text-sm group-hover:text-emerald-900 dark:group-hover:text-emerald-100 transition-colors" dangerouslySetInnerHTML={{ __html: item.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }}></span>
+                                <span className="text-slate-700 dark:text-slate-300 text-sm group-hover:text-emerald-900 dark:group-hover:text-emerald-100 transition-colors" dangerouslySetInnerHTML={{ __html: formatAndSanitize(item) }}></span>
                               </label>
                             ))}
                           </div>
@@ -1560,7 +1561,7 @@ export default function ReadingTheory() {
                           {sub.examples.map((ex: any, i: number) => (
                             <div key={i} className="border border-slate-200 dark:border-slate-700 rounded-lg p-4 bg-white dark:bg-slate-900">
                               <div className="font-bold text-slate-900 dark:text-slate-100 mb-3">
-                                <span className="text-indigo-500 mr-2">Q{ex.questionNumber}.</span>
+                                <span className="text-indigo-500 mr-2">Exercise {ex.questionNumber}.</span>
                                 {ex.question}
                               </div>
                               <div className="space-y-2 mb-4">
@@ -1723,7 +1724,7 @@ export default function ReadingTheory() {
                                 <div className="flex items-start justify-between gap-3">
                                   <div className="flex-1">
                                     <div className="text-xs font-bold text-emerald-700 dark:text-emerald-300 uppercase mb-1">
-                                      Question {ex.questionNumber}
+                                      Exercise {ex.questionNumber}
                                     </div>
                                     <p className="font-semibold text-emerald-900 dark:text-emerald-100 mb-1">{ex.question}</p>
                                     {ex.instruction && (
@@ -1884,7 +1885,7 @@ export default function ReadingTheory() {
                       {normalizeExamples(section).map((ex: TheoryExample, i: number) => (
                         <div key={i} className="border border-slate-200 dark:border-slate-700 rounded-lg p-4 bg-white dark:bg-slate-900">
                           <div className="font-bold text-slate-900 dark:text-slate-100 mb-3">
-                            <span className="text-indigo-500 mr-2">{ex.questionNumber ? `Q${ex.questionNumber}.` : 'Q.'}</span>
+                            <span className="text-indigo-500 mr-2">{ex.questionNumber ? `Exercise ${ex.questionNumber}.` : 'Exercise.'}</span>
                             {ex.question}
                           </div>
                           <div className="space-y-2 mb-4">
@@ -1957,26 +1958,28 @@ export default function ReadingTheory() {
                                       </span>
                                     )}
                                     {q.type === 'mini-practice' && (
-                                      <>
-                                        <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wide mb-2 block">
+                                      <div className="space-y-4 w-full">
+                                        <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wide block">
                                           Mini Practice
                                         </span>
                                         {q.microText && (
-                                          <div className="p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg mb-3 italic text-slate-700 dark:text-slate-300 text-sm">
+                                          <div className="p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg italic text-slate-700 dark:text-slate-300 text-sm w-full block">
                                             "{q.microText}"
                                           </div>
                                         )}
                                         {q.statement && (
-                                          <div className="p-3 bg-amber-50 dark:bg-amber-900/10 border-l-4 border-amber-500 rounded-r-lg mb-3">
+                                          <div className="p-4 bg-amber-50 dark:bg-amber-900/10 border-l-4 border-amber-500 rounded-r-lg w-full block">
                                             <span className="text-xs font-bold text-amber-700 dark:text-amber-400 block mb-1">Statement:</span>
                                             <span className="text-slate-800 dark:text-slate-200 font-medium">{q.statement}</span>
                                           </div>
                                         )}
-                                      </>
+                                      </div>
                                     )}
-                                    <p className="text-slate-800 dark:text-slate-200 font-medium leading-relaxed">
-                                      {q.question}
-                                    </p>
+                                    <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-700">
+                                      <p className="text-slate-800 dark:text-slate-200 font-medium leading-relaxed">
+                                        {q.question}
+                                      </p>
+                                    </div>
                                   </div>
                                 </div>
 
@@ -2103,9 +2106,9 @@ export default function ReadingTheory() {
                   ) : null}
                 </div>
 
-                {/* Question Side */}
+                {/* Exercise Side */}
                 <div className="p-6 bg-white dark:bg-slate-900">
-                  <h3 className="text-sm font-bold text-slate-500 uppercase mb-4">Questions & Answers</h3>
+                  <h3 className="text-sm font-bold text-slate-500 uppercase mb-4">Exercises & Answers</h3>
 
                   {theoryContent.example.headings && (
                     <div className="mb-6 p-4 border border-slate-200 dark:border-slate-700 rounded-lg">

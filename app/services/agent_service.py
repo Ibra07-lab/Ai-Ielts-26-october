@@ -1382,8 +1382,14 @@ Be warm and supportive. Focus on fixing the misconception, not blaming them for 
         # Build message list with persisted system prompt
         messages = [SystemMessage(content=memory.training_system_prompt)]
         
+        # Trim conversation history to last 4 exchanges (8 messages)
+        # to reduce API input token costs (~30% savings).
+        # The system prompt already carries all training context.
+        MAX_HISTORY_MESSAGES = 8  # 4 exchanges × 2 (user + assistant)
+        trimmed_history = chat_history[-MAX_HISTORY_MESSAGES:] if len(chat_history) > MAX_HISTORY_MESSAGES else chat_history
+        
         # Add conversation history
-        for msg in chat_history:
+        for msg in trimmed_history:
             if msg.role == "user":
                 messages.append(HumanMessage(content=msg.content))
             elif msg.role == "assistant":

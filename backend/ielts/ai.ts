@@ -1,4 +1,6 @@
-import { api } from "encore.dev/api";
+import { api, APIError } from "encore.dev/api";
+import { getAuthData } from "~encore/auth";
+import { AuthData } from "./auth";
 import { ChatOpenAI } from "@langchain/openai";
 import { ChatPromptTemplate, MessagesPlaceholder } from "@langchain/core/prompts";
 import { StringOutputParser } from "@langchain/core/output_parsers";
@@ -31,25 +33,6 @@ export interface EssayAnalysisResponse {
   suggestions: string[];
 }
 
-// Speaking analysis interfaces
-export interface SpeakingAnalysisRequest {
-  transcription: string;
-  question: string;
-  part: number;
-  userId: string;
-}
-
-export interface SpeakingAnalysisResponse {
-  fluencyCoherence: number;
-  lexicalResource: number;
-  grammaticalRange: number;
-  pronunciation: number;
-  overallBand: number;
-  feedback: string;
-  strengths: string[];
-  improvements: string[];
-}
-
 // Vocabulary enhancement interfaces
 export interface VocabularyRequest {
   word: string;
@@ -62,81 +45,15 @@ export interface VocabularyResponse {
   difficulty: string;
 }
 
-// Simple AI chat endpoint backed by OpenAI via LangChain.
-// LangSmith tracing is automatically enabled via env vars:
-//   LANGSMITH_TRACING, LANGSMITH_ENDPOINT, LANGSMITH_API_KEY, LANGSMITH_PROJECT
-export const chatWithCoach = api<ChatRequest, ChatResponse>(
-  { expose: true, method: "POST", path: "/ai/chat" },
-  async (req) => {
-    const prompt = ChatPromptTemplate.fromMessages([
-      [
-        "system",
-        "You are an expert IELTS coach. Provide concise, actionable guidance. If the user asks about IELTS skills (writing, speaking, reading, listening), give tips, examples, and next steps. Keep responses under 180 words unless more detail is requested.",
-      ],
-      [
-        "user",
-        "Context (optional): {context}\n\nUser message: {message}",
-      ],
-    ]);
-
-    const model = new ChatOpenAI({
-      // Use a small, cost-effective model by default; override with env OPENAI_API_KEY.
-      model: process.env.OPENAI_MODEL || "gpt-4o-mini",
-      // temperature can be tuned later via query/body if desired
-      temperature: 0.3,
-    });
-
-    const chain = prompt.pipe(model).pipe(new StringOutputParser());
-
-    const reply = await chain.invoke({
-      message: req.message,
-      context: req.context ?? "",
-    });
-
-    return { reply };
-  }
-);
-
-// Enhanced chat with conversation memory
-export const chatWithCoachMemory = api<ChatRequest & { userId: string }, ChatResponse>(
-  { expose: true, method: "POST", path: "/ai/chat-memory" },
-  async (req) => {
-    const prompt = ChatPromptTemplate.fromMessages([
-      ["system", "You are an expert IELTS coach. Provide concise, actionable guidance. Remember our conversation context and build on previous discussions. Keep responses under 180 words unless more detail is requested."],
-      new MessagesPlaceholder("chat_history"),
-      ["human", "{input}"]
-    ]);
-
-    const model = new ChatOpenAI({
-      model: process.env.OPENAI_MODEL || "gpt-4o-mini",
-      temperature: 0.3,
-    });
-
-    const chain = prompt.pipe(model).pipe(new StringOutputParser());
-
-    // Simple in-memory conversation storage (in production, use persistent storage)
-    const messageHistory = new ChatMessageHistory();
-
-    const chainWithHistory = new RunnableWithMessageHistory({
-      runnable: chain,
-      getMessageHistory: () => messageHistory,
-      inputMessagesKey: "input",
-      historyMessagesKey: "chat_history",
-    });
-
-    const reply = await chainWithHistory.invoke(
-      { input: req.message },
-      { configurable: { sessionId: `user_${req.userId}` } }
-    );
-
-    return { reply };
-  }
-);
-
 // Essay Analysis with LangChain
 export const analyzeEssay = api<EssayAnalysisRequest, EssayAnalysisResponse>(
-  { expose: true, method: "POST", path: "/ai/analyze-essay" },
+  { expose: true, method: "POST", path: "/ai/analyze-essay", auth: true },
   async (req) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== req.userId) {
+      throw APIError.permissionDenied("You can only analyze essays for yourself");
+    }
+
     const analysisPrompt = ChatPromptTemplate.fromMessages([
       ["system", `You are an expert IELTS writing examiner. Analyze the following Task ${req.taskType} essay and provide detailed feedback.
 
@@ -194,81 +111,9 @@ SUGGESTIONS:
   }
 );
 
-// Speaking Analysis with LangChain
-export const analyzeSpeaking = api<SpeakingAnalysisRequest, SpeakingAnalysisResponse>(
-  { expose: true, method: "POST", path: "/ai/analyze-speaking" },
-  async (req) => {
-    const speakingPrompt = ChatPromptTemplate.fromMessages([
-      ["system", `You are an expert IELTS speaking examiner for Part ${req.part}.
-
-Analyze this speaking response and provide scores (0-9) for:
-- Fluency and Coherence
-- Lexical Resource
-- Grammatical Range and Accuracy  
-- Pronunciation (estimate from transcription quality)
-
-Question: {question}
-Response: {transcription}
-
-Format your response as:
-FLUENCY_COHERENCE: [score]
-LEXICAL_RESOURCE: [score]
-GRAMMATICAL_RANGE: [score]
-PRONUNCIATION: [score]
-OVERALL_BAND: [score]
-
-FEEDBACK:
-[detailed feedback]
-
-STRENGTHS:
-- [strength 1]
-- [strength 2]
-
-IMPROVEMENTS:
-- [improvement 1]
-- [improvement 2]`],
-      ["human", "Provide detailed analysis with scores and feedback."]
-    ]);
-
-    const model = new ChatOpenAI({
-      model: "gpt-4o-mini",
-      temperature: 0.2,
-    });
-
-    const chain = speakingPrompt.pipe(model).pipe(new StringOutputParser());
-
-    const analysis = await chain.invoke({
-      question: req.question,
-      transcription: req.transcription
-    });
-
-    // Parse scores from AI response
-    const fluencyCoherence = extractScore(analysis, "FLUENCY_COHERENCE") || 6.0;
-    const lexicalResource = extractScore(analysis, "LEXICAL_RESOURCE") || 6.0;
-    const grammaticalRange = extractScore(analysis, "GRAMMATICAL_RANGE") || 6.0;
-    const pronunciation = extractScore(analysis, "PRONUNCIATION") || 6.0;
-    const overallBand = extractScore(analysis, "OVERALL_BAND") ||
-      Math.round(((fluencyCoherence + lexicalResource + grammaticalRange + pronunciation) / 4) * 10) / 10;
-
-    const strengths = extractListItems(analysis, "STRENGTHS");
-    const improvements = extractListItems(analysis, "IMPROVEMENTS");
-
-    return {
-      fluencyCoherence,
-      lexicalResource,
-      grammaticalRange,
-      pronunciation,
-      overallBand,
-      feedback: analysis,
-      strengths,
-      improvements
-    };
-  }
-);
-
 // Enhanced Vocabulary with LangChain
 export const getVocabularyEnhancement = api<VocabularyRequest, VocabularyResponse>(
-  { expose: true, method: "GET", path: "/ai/vocabulary/:word/enhance" },
+  { expose: true, method: "GET", path: "/ai/vocabulary/:word/enhance", auth: true },
   async ({ word }) => {
     const vocabPrompt = ChatPromptTemplate.fromMessages([
       ["system", `Provide comprehensive vocabulary enhancement for IELTS preparation.
@@ -359,3 +204,4 @@ function extractSuggestions(text: string): string[] {
     "Improve paragraph transitions"
   ];
 }
+

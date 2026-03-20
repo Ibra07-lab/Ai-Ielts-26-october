@@ -1,4 +1,6 @@
 import { api, APIError } from "encore.dev/api";
+import { getAuthData } from "~encore/auth";
+import { AuthData } from "./auth";
 import { ieltsDB } from "./db";
 
 export interface User {
@@ -32,8 +34,13 @@ export interface UpdateUserRequest {
 
 // Creates a new user profile.
 export const createUser = api<CreateUserRequest, User>(
-  { expose: true, method: "POST", path: "/users" },
+  { expose: true, method: "POST", path: "/users", auth: true },
   async (req) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== req.id) {
+      throw APIError.permissionDenied("You can only create a profile for yourself");
+    }
+
     const user = await ieltsDB.queryRow<User>`
       INSERT INTO users (id, name, target_band, exam_date, language, theme)
       VALUES (${req.id}, ${req.name}, ${req.targetBand}, ${req.examDate || null}, ${req.language || 'en'}, ${req.theme || 'light'})
@@ -51,8 +58,13 @@ export const createUser = api<CreateUserRequest, User>(
 
 // Retrieves a user by ID.
 export const getUser = api<{ id: string }, User>(
-  { expose: true, method: "GET", path: "/users/:id" },
+  { expose: true, method: "GET", path: "/users/:id", auth: true },
   async ({ id }) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== id) {
+      throw APIError.permissionDenied("You can only access your own profile");
+    }
+
     const user = await ieltsDB.queryRow<User>`
       SELECT id, name, target_band as "targetBand", exam_date as "examDate", language, theme,
              created_at as "createdAt", updated_at as "updatedAt"
@@ -69,8 +81,13 @@ export const getUser = api<{ id: string }, User>(
 
 // Updates a user profile.
 export const updateUser = api<UpdateUserRequest, User>(
-  { expose: true, method: "PUT", path: "/users/:id" },
+  { expose: true, method: "PUT", path: "/users/:id", auth: true },
   async (req) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== req.id) {
+      throw APIError.permissionDenied("You can only update your own profile");
+    }
+
     const updates: string[] = [];
     const values: any[] = [];
 
@@ -119,3 +136,4 @@ export const updateUser = api<UpdateUserRequest, User>(
     return user;
   }
 );
+

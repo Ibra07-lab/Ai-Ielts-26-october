@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { Sparkles, Wand2, CheckCircle, Circle, CircleDot, Plus, Calendar, Target, Trash2, BookOpen, PenTool, Mic, Headphones, Book, AlignLeft } from "lucide-react";
+import { createPortal } from "react-dom";
+import { Sparkles, Wand2, CheckCircle, Circle, CircleDot, Plus, Calendar, Target, Trash2, BookOpen, PenTool, Mic, Headphones, Book, AlignLeft, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
@@ -8,6 +9,7 @@ import { useUser } from "@/contexts/UserContext";
 import * as progressApi from "@/api/progress";
 import AddTaskModal from "@/components/progress/AddTaskModal";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useNavigate } from "react-router-dom";
 
 type PlanType = "daily" | "weekly" | "custom";
 
@@ -120,8 +122,9 @@ export default function GlowingProgressCard({
   className,
 }: GlowingProgressCardProps) {
   const clamped = clampPercent(percent);
-  const { user } = useUser();
+  const { user, session } = useUser();
   const { theme } = useTheme();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   // Local persistent state when uncontrolled
@@ -182,14 +185,95 @@ export default function GlowingProgressCard({
     onEditDueDate?.(iso);
   };
 
-  // Fetch tasks when expanded; map planType -> range
+  // Fetch manual tasks when expanded; map planType -> range
   const apiRange = planType === "daily" ? "daily" : "weekly";
   const { data: tasksRes } = useQuery({
     queryKey: ["glow-tasks", user?.id, apiRange],
     queryFn: () => (user ? progressApi.listTasks(user.id, apiRange, "all") : Promise.resolve({ tasks: [] })),
     enabled: !!user,
   });
-  const tasks = tasksRes?.tasks ?? [];
+  const manualTasks = tasksRes?.tasks ?? [];
+
+  // ── Fetch today's Roadmap tasks from the study plan ──
+  const { data: studyPlan } = useQuery({
+    queryKey: ["study-plan-today", user?.id],
+    queryFn: async () => {
+      if (!user) return null;
+      const res = await fetch(`http://localhost:8002/api/onboarding/${user.id}`, {
+        headers: {
+          'Authorization': `Bearer ${session?.access_token || ''}`
+        }
+      });
+      if (!res.ok) return null;
+      return res.json();
+    },
+    enabled: !!user,
+    staleTime: 5 * 60 * 1000, // cache for 5 min
+  });
+
+  // Track roadmap task completion in localStorage
+  const ROADMAP_DONE_KEY = `roadmap_done_${user?.id || "anonymous"}`;
+  const [roadmapDone, setRoadmapDone] = useState<Set<string>>(new Set());
+
+  // Load from local storage once user id is known
+  useEffect(() => {
+    if (!user?.id) return;
+    const key = `roadmap_done_${user.id}`;
+    try {
+      const raw = localStorage.getItem(key);
+      if (raw) setRoadmapDone(new Set(JSON.parse(raw)));
+    } catch {}
+  }, [user?.id]);
+
+  const toggleRoadmapDone = (id: string) => {
+    setRoadmapDone(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      try { localStorage.setItem(`roadmap_done_${user?.id || "anonymous"}`, JSON.stringify([...next])); } catch {}
+      return next;
+    });
+  };
+
+  // Extract today's tasks from the study plan (week 1, grouped into days of ~3 tasks)
+  const roadmapTasks = useMemo(() => {
+    if (!studyPlan?.weeks?.length) return [];
+    const week1 = studyPlan.weeks[0];
+    if (!week1?.tasks?.length) return [];
+    
+    // Group tasks into days of 3 (same as Roadmap.tsx)
+    const allTasks = week1.tasks;
+    const tasksPerDay = 3;
+    const now = new Date();
+    const currentHour = now.getHours();
+    // After 12pm, show tomorrow's tasks
+    const effectiveDay = currentHour >= 12 ? (now.getDay() + 1) % 7 : now.getDay();
+    // Map to 0-indexed day (Mon=0, Tue=1, ..., Sun=6)
+    const dayIndex = effectiveDay === 0 ? 6 : effectiveDay - 1;
+    
+    const startIdx = dayIndex * tasksPerDay;
+    const todaySlice = allTasks.slice(startIdx, startIdx + tasksPerDay);
+    
+    // If no tasks for today (weekend or plan is short), fall back to first chunk
+    const displayTasks = todaySlice.length > 0 ? todaySlice : allTasks.slice(0, tasksPerDay);
+    
+    return displayTasks.map((t: any, i: number) => ({
+      id: `roadmap-${week1.week_number || 1}-d${dayIndex}-${i}`,
+      userId: user?.id || "",
+      name: t.title || t.description || "Study Task",
+      category: (t.skill || t.type || "reading") as any,
+      difficulty: "medium" as const,
+      status: roadmapDone.has(`roadmap-${week1.week_number || 1}-d${dayIndex}-${i}`) ? "completed" : "planned",
+      estimatedMinutes: t.duration || t.minutes || 20,
+      progress: 0,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      dueAt: new Date().toISOString(),
+      _isRoadmap: true,
+    }));
+  }, [studyPlan, roadmapDone, user?.id]);
+
+  // Merge: roadmap tasks first, then manual tasks
+  const tasks = [...roadmapTasks, ...manualTasks];
   const totalTasks = tasks.length;
   const doneTasks = tasks.filter((t) => t.status === "completed").length;
   const derivedPercent = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : clamped;
@@ -229,7 +313,6 @@ export default function GlowingProgressCard({
             </p>
           </div>
         </div>
-
 
       </div>
 
@@ -319,7 +402,6 @@ export default function GlowingProgressCard({
           </Button>
         </div>
 
-
       </div>
 
       {/* Expanded Task List Area */}
@@ -374,6 +456,12 @@ export default function GlowingProgressCard({
                         )}
                         onClick={async (e) => {
                           e.stopPropagation();
+                          e.preventDefault();
+                          // Roadmap tasks use localStorage, manual tasks use API
+                          if ((t as any)._isRoadmap) {
+                            toggleRoadmapDone(t.id);
+                            return;
+                          }
                           try {
                             const nextStatus = isDone ? "planned" : "completed";
                             // Optimistic Update
@@ -468,6 +556,7 @@ export default function GlowingProgressCard({
                         </div>
                       </div>
 
+                      {!(t as any)._isRoadmap && (
                       <button
                         type="button"
                         className={cn(
@@ -488,6 +577,7 @@ export default function GlowingProgressCard({
                       >
                         <Trash2 className="h-5 w-5" />
                       </button>
+                      )}
                     </div>
                   </li>
                 );
@@ -497,29 +587,32 @@ export default function GlowingProgressCard({
         </div>
       </div>
 
-      {/* Add Task Modal */}
-      <AddTaskModal
-        open={addOpen}
-        onClose={() => setAddOpen(false)}
-        defaultDueISO={toDateTimeLocal(dueISO)}
-        onSubmit={async (data) => {
-          if (!user) return;
-          try {
-            await progressApi.createTask({
-              userId: user.id,
-              name: data.name,
-              category: data.category,
-              difficulty: data.difficulty,
-              estimatedMinutes: data.estimatedMinutes,
-              dueAt: data.dueAt ? new Date(new Date(data.dueAt).setHours(0, 0, 0, 0)).toISOString() : new Date(new Date().setHours(0, 0, 0, 0)).toISOString(),
-            });
-            setAddOpen(false);
-            await queryClient.invalidateQueries({ queryKey: ["glow-tasks"] });
-          } catch (e) {
-            console.error("Failed to create task", e);
-          }
-        }}
-      />
+      {/* Add Task Modal via Portal to avoid CSS constraints */}
+      {typeof document !== 'undefined' && createPortal(
+        <AddTaskModal
+          open={addOpen}
+          onClose={() => setAddOpen(false)}
+          defaultDueISO={toDateTimeLocal(dueISO)}
+          onSubmit={async (data) => {
+            if (!user) return;
+            try {
+              await progressApi.createTask({
+                userId: user.id,
+                name: data.name,
+                category: data.category,
+                difficulty: data.difficulty,
+                estimatedMinutes: data.estimatedMinutes,
+                dueAt: data.dueAt ? new Date(new Date(data.dueAt).setHours(0, 0, 0, 0)).toISOString() : new Date(new Date().setHours(0, 0, 0, 0)).toISOString(),
+              });
+              setAddOpen(false);
+              await queryClient.invalidateQueries({ queryKey: ["glow-tasks"] });
+            } catch (e) {
+              console.error("Failed to create task", e);
+            }
+          }}
+        />,
+        document.body
+      )}
     </div>
   );
 }

@@ -89,7 +89,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const { user } = useUser();
+  const { user, session } = useUser();
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -338,9 +338,18 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
         include_markdown: true
       };
 
+      // Get auth token for backend
+      const { data: { session } } = await supabase.auth.getSession();
+      const authHeaders: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+      if (session?.access_token) {
+        authHeaders["Authorization"] = `Bearer ${session.access_token}`;
+      }
+
       const response = await fetch(endpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: authHeaders,
         body: JSON.stringify(requestBody),
       });
 

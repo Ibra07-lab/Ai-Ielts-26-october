@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useMotionValue, useTransform, motion, AnimatePresence } from "framer-motion";
 import { Volume2, RotateCcw, ArrowRight, Star, Sparkles, BookOpen, MessageSquare, Layers, Mic, PenTool, ArrowLeftRight, Link2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -20,6 +20,9 @@ export default function WordDeck({ word, onKnow, onDontKnow, onBack, remainingCo
     const [isFlipped, setIsFlipped] = useState(false);
     const [synonymLevel, setSynonymLevel] = useState(0);
     const [exitDirection, setExitDirection] = useState<"right" | "left" | null>(null);
+    const x = useMotionValue(0);
+    const opacityKnow = useTransform(x, [50, 150], [0, 1]);
+    const opacityDontKnow = useTransform(x, [-50, -150], [0, 1]);
 
     // Reset flip state when word changes
     useEffect(() => {
@@ -37,11 +40,11 @@ export default function WordDeck({ word, onKnow, onDontKnow, onBack, remainingCo
     const handleKnowClick = () => {
         console.log("Know clicked. Setting exit direction to right.");
         setExitDirection("right");
-        // Small delay to ensure state update is reflected and allow button animation
+        // Increased delay to allow the exit animation to play out (0.5s)
         setTimeout(() => {
             console.log("Calling onKnow");
             onKnow();
-        }, 50);
+        }, 500);
     };
 
     const handleDontKnowClick = () => {
@@ -50,7 +53,7 @@ export default function WordDeck({ word, onKnow, onDontKnow, onBack, remainingCo
         setTimeout(() => {
             console.log("Calling onDontKnow");
             onDontKnow();
-        }, 50);
+        }, 500);
     };
 
     console.log("Render WordDeck. ExitDirection:", exitDirection);
@@ -64,12 +67,13 @@ export default function WordDeck({ word, onKnow, onDontKnow, onBack, remainingCo
         { word: "Lucrative", level: "Band 9" }
     ];
 
-    const cardVariants = {
+    const cardVariants: any = {
         enter: (direction: "right" | "left" | null) => ({
-            x: direction === "left" ? 300 : 0, // If prev was left (dont know), enter from right
-            y: 0, // Always enter at y=0 (no slide from top)
+            x: direction === "left" ? 400 : direction === "right" ? -400 : 0,
+            y: direction === "left" ? 100 : 0,
             opacity: 0,
-            scale: direction === "right" ? 1 : 0.9, // Instant scale for "I Know"
+            scale: 0.8,
+            rotate: direction === "left" ? -10 : direction === "right" ? 10 : 0,
         }),
         center: {
             x: 0,
@@ -78,264 +82,260 @@ export default function WordDeck({ word, onKnow, onDontKnow, onBack, remainingCo
             scale: 1,
             rotate: 0,
             transition: {
-                duration: 0.4,
-                type: "spring" as const,
-                stiffness: 300,
-                damping: 25
+                duration: 0.6,
+                type: "spring",
+                stiffness: 260,
+                damping: 20
             }
         },
         exit: (direction: "right" | "left" | null) => {
-            console.log("EXIT ANIMATION. Direction:", direction);
             if (direction === "right") {
-                // "I Know" - Throw Right
+                // Success - Fly off top-right with rotation and glow
                 return {
                     x: 600,
-                    rotate: 8,
+                    y: -150,
+                    rotate: 25,
                     opacity: 0,
-                    transition: { duration: 0.3, ease: "easeIn" as const }
-                };
+                    scale: 1.1,
+                    transition: { 
+                        duration: 0.5, 
+                        ease: "easeOut" 
+                    }
+                } as any;
             } else {
-                // "I Don't Know" - Throw Left (Default)
+                // Failure - Drop down with a shake
                 return {
-                    x: -600,
-                    rotate: -8,
-                    opacity: 0,
-                    transition: { duration: 0.4, ease: "easeIn" as const }
+                    x: [0, -20, 20, -20, 0, -400],
+                    y: [0, 0, 0, 0, 0, 400],
+                    rotate: [0, -2, 2, -2, 0, -15],
+                    opacity: [1, 1, 1, 1, 1, 0],
+                    transition: { 
+                        times: [0, 0.1, 0.2, 0.3, 0.4, 1],
+                        duration: 0.6,
+                        ease: "easeInOut"
+                    }
                 };
             }
         }
     };
 
     const textVariants = {
-        center: { color: "transparent", textShadow: "none" }, // Reset
+        center: { color: "transparent", textShadow: "none" },
         exit: (direction: "right" | "left" | null) => ({
-            color: direction === "left" ? "#f97316" : "transparent", // Orange warning if left
+            color: direction === "left" ? "#f43f5e" : "transparent",
             textShadow: direction === "right"
-                ? "-20px 0 30px rgba(16, 185, 129, 0.8)" // Green trail if right
+                ? "0 0 40px rgba(16, 185, 129, 0.9)"
                 : "none",
-            transition: { duration: 0.2 }
+            transition: { duration: 0.3 }
         })
     };
 
     return (
-        <div className="max-w-2xl mx-auto space-y-6">
-            <div className="flex items-center justify-between">
-                <Button variant="ghost" onClick={onBack} className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
-                    <RotateCcw className="mr-2 h-4 w-4" /> Back to Topics
-                </Button>
-                <Badge variant="outline" className="border-sky-500/30 text-sky-600 dark:text-sky-400 bg-sky-100 dark:bg-sky-500/10">
-                    {remainingCount} words remaining
-                </Badge>
-            </div>
+        <div className="relative w-full h-full min-h-[600px] flex items-center justify-center overflow-hidden p-4 sm:p-8">
+            {/* Ambient Environment Blobs */}
+            <motion.div 
+                animate={{ 
+                    x: [0, 50, -50, 0],
+                    y: [0, -30, 30, 0],
+                    scale: [1, 1.1, 0.9, 1]
+                }}
+                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-500/10 blur-[130px] rounded-full" 
+            />
+            <motion.div 
+                animate={{ 
+                    x: [0, -40, 40, 0],
+                    y: [0, 40, -40, 0],
+                    scale: [1, 0.9, 1.1, 1]
+                }}
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-500/10 blur-[130px] rounded-full" 
+            />
 
-            <div className="relative h-[500px] w-full perspective-1000">
-                <AnimatePresence mode="popLayout" custom={exitDirection}>
-                    <motion.div
-                        key={word.id}
-                        custom={exitDirection}
-                        variants={cardVariants}
-                        initial="enter"
-                        animate="center"
-                        exit="exit"
-                        className="absolute inset-0 w-full h-full"
-                        style={{ transformStyle: "preserve-3d" }} // Ensure 3d works with motion
-                    >
-                        {/* Inner container for Flip Animation (CSS) */}
-                        <div
-                            className={cn(
-                                "w-full h-full transition-all duration-700 transform-style-3d cursor-pointer",
-                                isFlipped ? "rotate-y-180" : ""
-                            )}
+            <div className="max-w-2xl w-full mx-auto space-y-8 relative z-10">
+                <div className="flex items-center justify-between">
+                    <Button variant="ghost" onClick={onBack} className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white/10 backdrop-blur-sm">
+                        <RotateCcw className="mr-2 h-4 w-4" /> Back to Topics
+                    </Button>
+                    <Badge variant="outline" className="border-sky-500/30 text-sky-600 dark:text-sky-400 bg-sky-100/50 dark:bg-sky-500/10 backdrop-blur-md px-4 py-1.5 rounded-full">
+                        {remainingCount} words remaining
+                    </Badge>
+                </div>
+
+                <div className="relative h-[480px] w-full perspective-1000">
+                    <AnimatePresence mode="popLayout" custom={exitDirection}>
+                        <motion.div
+                            key={word.id}
+                            custom={exitDirection}
+                            variants={cardVariants}
+                            initial="enter"
+                            animate="center"
+                            exit="exit"
+                            drag="x"
+                            dragConstraints={{ left: 0, right: 0 }}
+                            style={{ x, transformStyle: "preserve-3d" }}
+                            whileHover={{ y: -8 }}
+                            onDragEnd={(_, info) => {
+                                const swipeThreshold = 100;
+                                if (info.offset.x > swipeThreshold) {
+                                    handleKnowClick();
+                                } else if (info.offset.x < -swipeThreshold) {
+                                    handleDontKnowClick();
+                                }
+                            }}
+                            className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing"
+                        >
+                        {/* Swipe Feedback Overlays */}
+                        <motion.div
+                            className="absolute inset-0 z-50 pointer-events-none rounded-3xl flex items-center justify-center border-4 border-emerald-500 bg-emerald-500/20"
+                            style={{ opacity: opacityKnow }}
+                        >
+                            <div className="bg-emerald-500 text-white px-6 py-3 rounded-full font-bold text-2xl shadow-lg transform rotate-12">
+                                I KNOW
+                            </div>
+                        </motion.div>
+                        <motion.div
+                            className="absolute inset-0 z-50 pointer-events-none rounded-3xl flex items-center justify-center border-4 border-rose-500 bg-rose-500/20"
+                            style={{ opacity: opacityDontKnow }}
+                        >
+                            <div className="bg-rose-500 text-white px-6 py-3 rounded-full font-bold text-2xl shadow-lg transform -rotate-12">
+                                NOT YET
+                            </div>
+                        </motion.div>
+                        
+                        {/* Springy Flip Container */}
+                        <motion.div
+                            className="w-full h-full transform-style-3d cursor-pointer relative"
+                            animate={{ 
+                                rotateY: isFlipped ? 180 : 0
+                            }}
+                            transition={{
+                                type: "spring",
+                                stiffness: 260,
+                                damping: 20,
+                                mass: 1,
+                                bounce: 0.4,
+                                duration: 0.8
+                            }}
                             onClick={handleFlip}
                         >
                             {/* Front of Card */}
-                            <Card className="absolute inset-0 w-full h-full backface-hidden bg-gradient-to-br from-white to-gray-50 dark:from-card dark:to-background border-gray-200 dark:border-white/10 shadow-xl dark:shadow-2xl flex flex-col items-center justify-center p-8 group hover:border-sky-500/30 transition-colors">
-                                <div className="absolute top-6 right-6">
+                            <Card className={cn(
+                                "absolute inset-0 w-full h-full backface-hidden bg-white/70 dark:bg-neutral-900/40 backdrop-blur-xl border-t-white/20 border-l-white/10 dark:border-t-white/10 border-gray-200 shadow-[0_20px_50px_rgba(0,0,0,0.4)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex flex-col items-center justify-center p-8 group transition-all rounded-[2.5rem]",
+                                isFlipped ? "z-0" : "z-10"
+                            )}>
+                                <div className="absolute top-8 right-8">
                                     <Star className="h-6 w-6 text-yellow-500/20 group-hover:text-yellow-500 transition-colors" />
                                 </div>
 
-                                <div className="text-center space-y-6">
-                                    <motion.h2
-                                        variants={textVariants}
-                                        className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-blue-600 dark:from-sky-400 dark:to-blue-600"
-                                    >
-                                        {word.word}
-                                    </motion.h2>
+                                <div className="text-center space-y-8">
+                                    <div className="space-y-2">
+                                        <motion.h2
+                                            variants={textVariants}
+                                            className="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-500 dark:from-sky-300 dark:to-blue-500 filter drop-shadow-[0_0_15px_rgba(0,150,255,0.3)] py-4"
+                                        >
+                                            {word.word}
+                                        </motion.h2>
+                                        <div className="h-1 w-24 mx-auto bg-gradient-to-r from-transparent via-sky-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    </div>
 
                                     <Button
                                         size="lg"
                                         variant="outline"
-                                        className="rounded-full h-16 w-16 p-0 border-gray-200 dark:border-white/10 hover:bg-gray-100 dark:hover:bg-white/5 hover:scale-110 transition-all"
+                                        className="rounded-full h-20 w-20 p-0 border-white/10 dark:border-white/5 bg-white/50 dark:bg-black/20 backdrop-blur-md shadow-lg hover:scale-110 active:scale-95 transition-all group/play"
                                         onClick={playAudio}
                                     >
-                                        <Volume2 className="h-8 w-8 text-sky-500 dark:text-sky-400" />
+                                        <Volume2 className="h-10 w-10 text-sky-500 dark:text-sky-400 group-hover/play:scale-110 transition-transform" />
                                     </Button>
 
-                                    <p className="text-gray-400 dark:text-gray-500 mt-8 animate-pulse">Click to flip</p>
+                                    <div className="flex flex-col items-center gap-2 mt-8 opacity-40 group-hover:opacity-100 transition-opacity">
+                                        <p className="text-gray-400 dark:text-gray-500 text-sm font-medium tracking-widest uppercase">Click to flip</p>
+                                        <RotateCcw className="h-4 w-4 text-gray-400 animate-spin-slow" />
+                                    </div>
                                 </div>
                             </Card>
 
                             {/* Back of Card */}
-                            <Card className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-white dark:bg-card border-gray-200 dark:border-white/10 shadow-xl dark:shadow-2xl overflow-y-auto custom-scrollbar">
-                                <CardContent className="p-8 space-y-6">
-                                    {/* Definition Section */}
-                                    <div className="space-y-2">
-                                        <div className="flex items-center gap-2 text-sky-600 dark:text-sky-400 mb-1">
-                                            <BookOpen className="h-4 w-4" />
-                                            <span className="text-xs font-bold uppercase tracking-wider">Definition</span>
-                                        </div>
-                                        <p className="text-xl font-medium text-gray-900 dark:text-white leading-relaxed">
-                                            {word.definition}
-                                        </p>
-                                    </div>
-
-                                    {/* Context Section */}
-                                    <div className="p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-500/20 space-y-2">
-                                        <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400 mb-1">
-                                            <Sparkles className="h-4 w-4" />
-                                            <span className="text-xs font-bold uppercase tracking-wider">IELTS Context</span>
-                                        </div>
-                                        <p className="text-gray-700 dark:text-gray-300 text-sm">
-                                            {context}
-                                        </p>
-                                    </div>
-
-                                    {/* Collocation Chain */}
-                                    <div className="space-y-3">
-                                        <div className="flex items-center gap-2 text-purple-600 dark:text-purple-400 mb-1">
-                                            <Layers className="h-4 w-4" />
-                                            <span className="text-xs font-bold uppercase tracking-wider">Collocation Chain</span>
-                                        </div>
-                                        <div className="flex flex-wrap gap-2">
-                                            {collocations.map((col, i) => (
-                                                <Badge key={i} variant="secondary" className="bg-purple-100 dark:bg-purple-500/10 text-purple-700 dark:text-purple-300 hover:bg-purple-200 dark:hover:bg-purple-500/20 border-purple-200 dark:border-purple-500/20 py-1.5 px-3">
-                                                    {col.split(" ").map((part, idx) =>
-                                                        part.toLowerCase().includes(word.word.toLowerCase())
-                                                            ? <span key={idx} className="font-bold text-purple-900 dark:text-white mx-1">{part}</span>
-                                                            : <span key={idx} className="mx-1">{part}</span>
-                                                    )}
-                                                </Badge>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    {/* Synonym Slider */}
-                                    <div className="space-y-4 pt-2">
-                                        <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 mb-1">
-                                            <MessageSquare className="h-4 w-4" />
-                                            <span className="text-xs font-bold uppercase tracking-wider">Synonym Ladder</span>
-                                        </div>
-
-                                        <div className="px-2">
-                                            <Slider
-                                                defaultValue={[2]}
-                                                max={2}
-                                                step={1}
-                                                className="py-4"
-                                                onValueChange={(vals) => setSynonymLevel(vals[0])}
-                                            />
-                                            <div className="flex justify-between mt-2">
-                                                {synonyms.map((syn, i) => (
-                                                    <div key={i} className={cn("text-center transition-opacity duration-300", synonymLevel === i ? "opacity-100 scale-110" : "opacity-40")}>
-                                                        <p className={cn("font-bold text-sm", synonymLevel === i ? "text-gray-900 dark:text-white" : "text-gray-500")}>{syn.word}</p>
-                                                        <p className="text-[10px] text-gray-500 uppercase">{syn.level}</p>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Speaking Example Section */}
-                                    {word.speakingExample && (
-                                        <div className="p-4 rounded-lg bg-teal-50 dark:bg-teal-900/20 border border-teal-100 dark:border-teal-500/20 space-y-2">
-                                            <div className="flex items-center gap-2 text-teal-600 dark:text-teal-400 mb-1">
-                                                <Mic className="h-4 w-4" />
-                                                <span className="text-xs font-bold uppercase tracking-wider">Speaking Example</span>
-                                            </div>
-                                            <p className="text-gray-700 dark:text-gray-300 text-sm italic">
-                                                "{word.speakingExample}"
-                                            </p>
-                                        </div>
-                                    )}
-
-                                    {/* Writing Example Section */}
-                                    {word.writingExample && (
-                                        <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-500/20 space-y-2">
-                                            <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 mb-1">
-                                                <PenTool className="h-4 w-4" />
-                                                <span className="text-xs font-bold uppercase tracking-wider">Writing Example</span>
-                                            </div>
-                                            <p className="text-gray-700 dark:text-gray-300 text-sm">
-                                                "{word.writingExample}"
-                                            </p>
-                                        </div>
-                                    )}
-
-                                    {/* Antonyms Section */}
-                                    {word.antonyms && word.antonyms.length > 0 && (
-                                        <div className="space-y-3">
-                                            <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400 mb-1">
-                                                <ArrowLeftRight className="h-4 w-4" />
-                                                <span className="text-xs font-bold uppercase tracking-wider">Antonyms</span>
-                                            </div>
-                                            <div className="flex flex-wrap gap-2">
-                                                {word.antonyms.map((ant, i) => (
-                                                    <Badge key={i} variant="secondary" className="bg-rose-100 dark:bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-500/20 py-1.5 px-3">
-                                                        {ant}
-                                                    </Badge>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    {/* Related Phrasal Verbs Section */}
-                                    {word.relatedPhrasalVerbs && word.relatedPhrasalVerbs.length > 0 && (
-                                        <div className="space-y-3">
-                                            <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 mb-1">
-                                                <Link2 className="h-4 w-4" />
-                                                <span className="text-xs font-bold uppercase tracking-wider">Related Phrasal Verbs</span>
-                                            </div>
-                                            <div className="flex flex-wrap gap-2">
-                                                {word.relatedPhrasalVerbs.map((pv, i) => (
-                                                    <Badge key={i} variant="secondary" className="bg-indigo-100 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-500/20 py-1.5 px-3">
-                                                        {pv}
-                                                    </Badge>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
+                            <Card 
+                                className={cn(
+                                    "absolute inset-0 w-full h-full backface-hidden bg-white/80 dark:bg-neutral-900/50 backdrop-blur-xl border-t-white/30 dark:border-t-white/10 border-gray-200 shadow-[0_20px_50px_rgba(0,0,0,0.4)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex flex-col items-center justify-center p-12 group transition-all rounded-[2.5rem]",
+                                    isFlipped ? "z-10" : "z-0"
+                                )}
+                                style={{ transform: "rotateY(180deg)", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
+                            >
+                                <CardContent className="p-0 flex flex-col items-center justify-center h-full text-center space-y-6">
+                                    <motion.div 
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={isFlipped ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                                        transition={{ delay: 0.3, duration: 0.4 }}
+                                        className="flex items-center gap-3 text-sky-500 dark:text-sky-400"
+                                    >
+                                        <BookOpen className="h-6 w-6" />
+                                        <span className="text-xs font-black uppercase tracking-[0.3em]">Definition</span>
+                                    </motion.div>
+                                    <motion.p 
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={isFlipped ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                                        transition={{ delay: 0.35, duration: 0.5 }}
+                                        className="text-3xl md:text-4xl font-serif font-medium text-gray-900 dark:text-white leading-[1.6] max-w-[90%] mx-auto"
+                                    >
+                                        {word.definition}
+                                    </motion.p>
+                                    <motion.div 
+                                        initial={{ width: 0 }}
+                                        animate={isFlipped ? { width: 48 } : { width: 0 }}
+                                        transition={{ delay: 0.6 }}
+                                        className="h-1 bg-sky-500/20 rounded-full mt-4" 
+                                    />
                                 </CardContent>
                             </Card>
-                        </div>
+                        </motion.div>
                     </motion.div>
                 </AnimatePresence>
             </div>
 
-            <div className="flex justify-center gap-4 pt-4">
-                <motion.button
-                    whileTap={{ scale: 1, backgroundColor: "#9f1239" }}
-                    transition={{ duration: 0.1 }}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        setIsFlipped(false);
-                        handleDontKnowClick();
-                    }}
-                    className="w-full md:w-40 h-11 rounded-md border border-rose-200 dark:border-rose-900/50 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 font-bold bg-transparent"
-                >
-                    I Don't Know
-                </motion.button>
+                <div className="flex items-center justify-center gap-6 pt-8">
+                    <motion.button
+                        whileHover={{ 
+                            scale: 1.05, 
+                            backgroundColor: "rgba(244, 63, 94, 0.05)",
+                            borderColor: "rgba(244, 63, 94, 0.6)"
+                        }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setIsFlipped(false);
+                            handleDontKnowClick();
+                        }}
+                        className="flex-1 max-w-[200px] h-14 rounded-full border-2 border-rose-500/30 text-rose-500 hover:border-rose-500 transition-all font-bold text-lg flex items-center justify-center gap-2 relative overflow-hidden group/btn"
+                    >
+                        <span className="relative z-10">Not Yet</span>
+                        <div className="absolute inset-0 bg-rose-500/5 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+                    </motion.button>
 
-                <motion.button
-                    whileTap={{ scale: 1.05, boxShadow: "0 0 20px 5px rgba(16, 185, 129, 0.5)" }}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        setIsFlipped(false);
-                        handleKnowClick();
-                    }}
-                    className="w-full md:w-40 h-11 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white font-bold"
-                >
-                    I Know
-                </motion.button>
+                    <motion.button
+                        whileHover={{ 
+                            scale: 1.05, 
+                            backgroundColor: "rgba(16, 185, 129, 0.1)",
+                            boxShadow: "0 20px 40px -10px rgba(16, 185, 129, 0.5)",
+                        }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setIsFlipped(false);
+                            handleKnowClick();
+                        }}
+                        className="flex-1 max-w-[200px] h-14 rounded-full bg-emerald-500 text-white font-bold text-lg shadow-[0_8px_20px_rgba(16,185,129,0.3)] transition-colors flex items-center justify-center gap-2 relative overflow-hidden group/btn-know"
+                    >
+                        <span className="relative z-10 transition-transform group-hover/btn-know:scale-110">I Know</span>
+                        {/* Ripple/Glow Effect Emulation */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn-know:translate-x-full transition-transform duration-1000 ease-in-out" />
+                        <motion.div 
+                            className="absolute inset-0 bg-white/30 rounded-full opacity-0"
+                            whileTap={{ opacity: 1, scale: 2, transition: { duration: 0.4 } }}
+                        />
+                    </motion.button>
+                </div>
             </div>
         </div>
     );

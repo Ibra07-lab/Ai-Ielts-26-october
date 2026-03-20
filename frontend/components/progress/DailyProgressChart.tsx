@@ -37,7 +37,6 @@ const CustomTooltip = ({ active, payload }: any) => {
             { key: 'listening', label: 'Listening' },
             { key: 'reading', label: 'Reading' },
             { key: 'writing', label: 'Writing' },
-            { key: 'speaking', label: 'Speaking' },
             { key: 'vocabulary', label: 'Vocabulary' },
             { key: 'grammar', label: 'Grammar' }
         ];

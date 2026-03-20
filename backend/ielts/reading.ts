@@ -1,4 +1,6 @@
-import { api } from "encore.dev/api";
+import { api, APIError } from "encore.dev/api";
+import { getAuthData } from "~encore/auth";
+import { AuthData } from "./auth";
 import { ieltsDB } from "./db";
 import * as fs from "node:fs";
 import * as path from "node:path";
@@ -57,8 +59,12 @@ export const getReadingDeeperFeedback = api<
   { userId: string; testId: number; passageId: number; questionId: number },
   DeeperFeedbackResponse
 >(
-  { expose: true, method: "POST", path: "/reading/deeper-feedback" },
+  { expose: true, method: "POST", path: "/reading/deeper-feedback", auth: true },
   async ({ userId, testId, passageId, questionId }) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== userId) {
+      throw APIError.permissionDenied("You can only request feedback for your own questions");
+    }
     // Path to the Python script (relative to project root)
     const scriptPath = path.join(__dirname, "../agents/openai_direct_feedback.py");
 
@@ -1056,8 +1062,12 @@ export const getReadingPassage = api<void, ReadingPassage>(
 
 // Submits reading answers for evaluation.
 export const submitReading = api<ReadingSubmission, ReadingResult>(
-  { expose: true, method: "POST", path: "/reading/submit" },
+  { expose: true, method: "POST", path: "/reading/submit", auth: true },
   async (req) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== req.userId) {
+      throw APIError.permissionDenied("You can only submit answers for yourself");
+    }
     let score = 0;
     const correctAnswers: Record<number, string> = {};
     const explanations: Record<number, string> = {};
@@ -1110,8 +1120,12 @@ export const submitReading = api<ReadingSubmission, ReadingResult>(
 
 // Retrieves user's reading session history.
 export const getReadingSessions = api<{ userId: string }, { sessions: ReadingSession[] }>(
-  { expose: true, method: "GET", path: "/users/:userId/reading/sessions" },
+  { expose: true, method: "GET", path: "/users/:userId/reading/sessions", auth: true },
   async ({ userId }) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== userId) {
+      throw APIError.permissionDenied("You can only access your own reading sessions");
+    }
     const sessions = await ieltsDB.queryAll<ReadingSession>`
       SELECT id, passage_title as "passageTitle", score, total_questions as "totalQuestions",
              time_taken as "timeTaken", created_at as "createdAt"
@@ -1134,8 +1148,12 @@ export interface ReadingSkill {
 
 // Retrieves aggregated reading skills data.
 export const getReadingSkills = api<{ userId: string }, { skills: ReadingSkill[] }>(
-  { expose: true, method: "GET", path: "/users/:userId/reading/skills" },
+  { expose: true, method: "GET", path: "/users/:userId/reading/skills", auth: true },
   async ({ userId }) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== userId) {
+      throw APIError.permissionDenied("You can only access your own reading skills");
+    }
     const sessions = await ieltsDB.queryAll<{ questions: string; score: number; total_questions: number; user_answers: string; correct_answers: string }>`
       SELECT questions, score, total_questions, user_answers, correct_answers
       FROM reading_sessions 
@@ -1207,8 +1225,12 @@ export const getLatestReadingSession = api<
     createdAt: string;
   }
 >(
-  { expose: true, method: "GET", path: "/users/:userId/reading/sessions/latest" },
+  { expose: true, method: "GET", path: "/users/:userId/reading/sessions/latest", auth: true },
   async ({ userId, testId, passageId }) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== userId) {
+      throw APIError.permissionDenied("You can only access your own reading sessions");
+    }
     // Query most recent session matching testId + passageId
     // Note: Adjust the passage_title pattern based on how you store test/passage metadata
     const session = await ieltsDB.queryRow<{
@@ -1251,8 +1273,12 @@ export const getLatestReadingSession = api<
 
 // Creates a new highlight for a reading passage.
 export const createHighlight = api<CreateHighlightRequest, ReadingHighlight>(
-  { expose: true, method: "POST", path: "/reading/highlights" },
+  { expose: true, method: "POST", path: "/reading/highlights", auth: true },
   async (req) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== req.userId) {
+      throw APIError.permissionDenied("You can only create highlights for yourself");
+    }
     const highlight = await ieltsDB.queryRow<ReadingHighlight>`
       INSERT INTO reading_highlights 
       (user_id, passage_title, highlighted_text, start_position, end_position, highlight_type, highlight_color)
@@ -1279,8 +1305,12 @@ export const createHighlight = api<CreateHighlightRequest, ReadingHighlight>(
 
 // Retrieves highlights for a specific passage and user.
 export const getHighlights = api<{ userId: string; passageTitle: string }, { highlights: ReadingHighlight[] }>(
-  { expose: true, method: "GET", path: "/users/:userId/reading/highlights/:passageTitle" },
+  { expose: true, method: "GET", path: "/users/:userId/reading/highlights/:passageTitle", auth: true },
   async ({ userId, passageTitle }) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== userId) {
+      throw APIError.permissionDenied("You can only access your own highlights");
+    }
     const highlights = await ieltsDB.queryAll<ReadingHighlight>`
       SELECT id, highlighted_text as "highlightedText", start_position as "startPosition",
              end_position as "endPosition", highlight_type as "highlightType",
@@ -1296,8 +1326,12 @@ export const getHighlights = api<{ userId: string; passageTitle: string }, { hig
 
 // Deletes a highlight.
 export const deleteHighlight = api<{ userId: string; highlightId: number }, void>(
-  { expose: true, method: "DELETE", path: "/users/:userId/reading/highlights/delete/:highlightId" },
+  { expose: true, method: "DELETE", path: "/users/:userId/reading/highlights/delete/:highlightId", auth: true },
   async ({ userId, highlightId }) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== userId) {
+      throw APIError.permissionDenied("You can only delete your own highlights");
+    }
     await ieltsDB.exec`
       DELETE FROM reading_highlights 
       WHERE id = ${highlightId} AND user_id = ${userId}
@@ -1473,8 +1507,12 @@ export const translateText = api<TranslationRequest, TranslationResponse>(
 
 // Adds highlighted text to user's vocabulary.
 export const addToVocabulary = api<AddToVocabularyRequest, { success: boolean; wordId: number }>(
-  { expose: true, method: "POST", path: "/reading/add-to-vocabulary" },
+  { expose: true, method: "POST", path: "/reading/add-to-vocabulary", auth: true },
   async (req) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== req.userId) {
+      throw APIError.permissionDenied("You can only add words to your own vocabulary");
+    }
     // First, check if the word already exists
     let word = await ieltsDB.queryRow<{ id: number }>`
       SELECT id FROM vocabulary_words WHERE LOWER(word) = LOWER(${req.text})

@@ -5,9 +5,11 @@ import { Loader2, ArrowLeft, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { FeedbackContainer } from '@/components/writing/FeedbackContainer';
 import type { EvaluationResult } from '@/types/writing-feedback';
+import { useUser } from '../contexts/UserContext';
 import backend from '@/backend';
 
 export default function WritingFeedbackHistory() {
+    const { session } = useUser();
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
 
@@ -16,7 +18,11 @@ export default function WritingFeedbackHistory() {
         queryFn: async () => {
             if (!id) throw new Error('Missing session ID');
 
-            const response = await fetch(`http://localhost:8002/writing/history/session/${id}`);
+            const response = await fetch(`http://localhost:8002/writing/history/session/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${session?.access_token || ''}`
+                }
+            });
             if (!response.ok) throw new Error('Failed to fetch session');
 
             const data = await response.json();

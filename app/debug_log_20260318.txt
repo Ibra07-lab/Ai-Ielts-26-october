@@ -1,0 +1,284 @@
+2026-03-18 16:12:10,885 - INFO - [THEORY] Successfully loaded theory data from C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\data\reading-theory.json
+2026-03-18 16:12:10,901 - INFO - [MODULES] Loaded tfng-struggle-modules.json for category 'tfng'
+2026-03-18 16:12:10,903 - INFO - [MODULES] Loaded matching-headings-modules.json for category 'headings'
+2026-03-18 16:12:10,904 - INFO - [MODULES] Loaded matching-features-modules.json for category 'features'
+2026-03-18 16:12:10,905 - INFO - [MODULES] Loaded mcq-modules.json for category 'mcq'
+2026-03-18 16:12:10,906 - INFO - [MODULES] Loaded completion-modules.json for category 'completion'
+2026-03-18 16:12:10,921 - INFO - [MODULES] Loaded timing-modules.json for category 'timing'
+2026-03-18 16:12:10,921 - INFO - [MODULES] Successfully loaded 6 module categories
+2026-03-18 16:12:10,928 - ERROR - [STREAM] Error in router, falling back to CHITCHAT: 'Input to ChatPromptTemplate is missing variables {\'"skip_socratic"\', \'"follow_up"\'}.  Expected: [\'"follow_up"\', \'"skip_socratic"\', \'chat_history\', \'user_message\'] Received: [\'chat_history\', \'user_message\']\nNote: if you intended {"skip_socratic"} to be part of the string and not a variable, please escape it with double curly braces like: \'{{"skip_socratic"}}\'.\nFor troubleshooting, visit: https://docs.langchain.com/oss/python/langchain/errors/INVALID_PROMPT_INPUT '
+2026-03-18 16:12:11,227 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2026-03-18 16:12:11,228 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2026-03-18 16:12:11,386 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001F06ED44050>
+2026-03-18 16:12:11,387 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001F06D328E10> server_hostname='api.openai.com' timeout=None
+2026-03-18 16:12:11,561 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001F06EA42FD0>
+2026-03-18 16:12:11,561 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-18 16:12:11,562 - DEBUG - send_request_headers.complete
+2026-03-18 16:12:11,563 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-18 16:12:11,563 - DEBUG - send_request_body.complete
+2026-03-18 16:12:11,563 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-18 16:12:14,100 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Wed, 18 Mar 2026 11:12:13 GMT'), (b'Content-Type', b'text/event-stream; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9de3cd051cee3a79-FRA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'ielts-agent'), (b'openai-processing-ms', b'1483'), (b'openai-project', b'proj_p2TG3sHr67NTFigiOV4yQBrK'), (b'openai-version', b'2020-10-01'), (b'x-openai-proxy-wasm', b'v0.1'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'200000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'194458'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'1.662s'), (b'x-request-id', b'req_6b76ff98c7eb4bcf939fb7100d3654ef'), (b'set-cookie', b'__cf_bm=cMjPBUxE24FIGjtnRd5YgxGG62U03aEheiGVrSOGsoc-1773832331.0620017-1.0.1.1-GEOMq9EW.0SCqDh9.LA0C5E9QWF.0kZrYCWAMETV9FFo0k_sQMLOFK8GCwsxNj8KfKXHm5qr4L7p6WLdJv7U4gto_T8WizSb8tHon6WRAHPEZ5CnhiJMKjwJ3MOBrdBr; HttpOnly; Secure; Path=/; Domain=api.openai.com; Expires=Wed, 18 Mar 2026 11:42:13 GMT'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-18 16:12:14,101 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-18 16:12:14,102 - DEBUG - HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers({'date': 'Wed, 18 Mar 2026 11:12:13 GMT', 'content-type': 'text/event-stream; charset=utf-8', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'cf-ray': '9de3cd051cee3a79-FRA', 'cf-cache-status': 'DYNAMIC', 'server': 'cloudflare', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'access-control-expose-headers': 'X-Request-ID', 'openai-organization': 'ielts-agent', 'openai-processing-ms': '1483', 'openai-project': 'proj_p2TG3sHr67NTFigiOV4yQBrK', 'openai-version': '2020-10-01', 'x-openai-proxy-wasm': 'v0.1', 'x-ratelimit-limit-requests': '10000', 'x-ratelimit-limit-tokens': '200000', 'x-ratelimit-remaining-requests': '9999', 'x-ratelimit-remaining-tokens': '194458', 'x-ratelimit-reset-requests': '8.64s', 'x-ratelimit-reset-tokens': '1.662s', 'x-request-id': 'req_6b76ff98c7eb4bcf939fb7100d3654ef', 'set-cookie': '__cf_bm=cMjPBUxE24FIGjtnRd5YgxGG62U03aEheiGVrSOGsoc-1773832331.0620017-1.0.1.1-GEOMq9EW.0SCqDh9.LA0C5E9QWF.0kZrYCWAMETV9FFo0k_sQMLOFK8GCwsxNj8KfKXHm5qr4L7p6WLdJv7U4gto_T8WizSb8tHon6WRAHPEZ5CnhiJMKjwJ3MOBrdBr; HttpOnly; Secure; Path=/; Domain=api.openai.com; Expires=Wed, 18 Mar 2026 11:42:13 GMT', 'alt-svc': 'h3=":443"; ma=86400'})
+2026-03-18 16:12:14,102 - DEBUG - request_id: req_6b76ff98c7eb4bcf939fb7100d3654ef
+2026-03-18 16:12:14,103 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-18 16:12:15,424 - DEBUG - response_closed.started
+2026-03-18 16:12:15,425 - DEBUG - response_closed.complete
+2026-03-18 16:12:15,429 - DEBUG - receive_response_body.failed exception=GeneratorExit()
+2026-03-18 16:12:30,754 - ERROR - [STREAM] Error in router, falling back to CHITCHAT: 'Input to ChatPromptTemplate is missing variables {\'"skip_socratic"\', \'"follow_up"\'}.  Expected: [\'"follow_up"\', \'"skip_socratic"\', \'chat_history\', \'user_message\'] Received: [\'chat_history\', \'user_message\']\nNote: if you intended {"skip_socratic"} to be part of the string and not a variable, please escape it with double curly braces like: \'{{"skip_socratic"}}\'.\nFor troubleshooting, visit: https://docs.langchain.com/oss/python/langchain/errors/INVALID_PROMPT_INPUT '
+2026-03-18 16:12:30,770 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2026-03-18 16:12:30,771 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2026-03-18 16:12:30,941 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001F06EA43ED0>
+2026-03-18 16:12:30,941 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001F06D328E10> server_hostname='api.openai.com' timeout=None
+2026-03-18 16:12:31,075 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001F06EB34D60>
+2026-03-18 16:12:31,076 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-18 16:12:31,077 - DEBUG - send_request_headers.complete
+2026-03-18 16:12:31,077 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-18 16:12:31,078 - DEBUG - send_request_body.complete
+2026-03-18 16:12:31,079 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-18 16:12:32,444 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Wed, 18 Mar 2026 11:12:31 GMT'), (b'Content-Type', b'text/event-stream; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9de3cd7f3b2e976a-FRA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'ielts-agent'), (b'openai-processing-ms', b'780'), (b'openai-project', b'proj_p2TG3sHr67NTFigiOV4yQBrK'), (b'openai-version', b'2020-10-01'), (b'x-openai-proxy-wasm', b'v0.1'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'200000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'194424'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'1.672s'), (b'x-request-id', b'req_dab7d48f991b4b1db4d86d1fbcc3dba8'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-18 16:12:32,444 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-18 16:12:32,445 - DEBUG - HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers({'date': 'Wed, 18 Mar 2026 11:12:31 GMT', 'content-type': 'text/event-stream; charset=utf-8', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'cf-ray': '9de3cd7f3b2e976a-FRA', 'cf-cache-status': 'DYNAMIC', 'server': 'cloudflare', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'access-control-expose-headers': 'X-Request-ID', 'openai-organization': 'ielts-agent', 'openai-processing-ms': '780', 'openai-project': 'proj_p2TG3sHr67NTFigiOV4yQBrK', 'openai-version': '2020-10-01', 'x-openai-proxy-wasm': 'v0.1', 'x-ratelimit-limit-requests': '10000', 'x-ratelimit-limit-tokens': '200000', 'x-ratelimit-remaining-requests': '9999', 'x-ratelimit-remaining-tokens': '194424', 'x-ratelimit-reset-requests': '8.64s', 'x-ratelimit-reset-tokens': '1.672s', 'x-request-id': 'req_dab7d48f991b4b1db4d86d1fbcc3dba8', 'alt-svc': 'h3=":443"; ma=86400'})
+2026-03-18 16:12:32,445 - DEBUG - request_id: req_dab7d48f991b4b1db4d86d1fbcc3dba8
+2026-03-18 16:12:32,446 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-18 16:12:33,403 - DEBUG - response_closed.started
+2026-03-18 16:12:33,403 - DEBUG - response_closed.complete
+2026-03-18 16:12:33,410 - DEBUG - receive_response_body.failed exception=GeneratorExit()
+2026-03-18 16:13:26,772 - INFO - [TRAINING] Starting training session: skill=multiple_choice, session=session_1773832406425_p0l4hiu
+2026-03-18 16:13:26,779 - INFO - [TRAINING] Starting training session: skill=multiple_choice, session=session_1773832406425_p0l4hiu
+2026-03-18 16:13:26,828 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2026-03-18 16:13:26,829 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2026-03-18 16:13:26,835 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2026-03-18 16:13:26,836 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2026-03-18 16:13:28,439 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001F06EB37820>
+2026-03-18 16:13:28,440 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001F06D328E10> server_hostname='api.openai.com' timeout=None
+2026-03-18 16:13:28,440 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001F06ED703B0>
+2026-03-18 16:13:28,441 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001F06D328E10> server_hostname='api.openai.com' timeout=None
+2026-03-18 16:13:32,804 - DEBUG - start_tls.failed exception=ConnectError(BrokenResourceError())
+2026-03-18 16:13:32,805 - DEBUG - Encountered Exception
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 101, in handle_async_request
+    raise exc
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 156, in _connect
+    stream = await stream.start_tls(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_backends\anyio.py", line 67, in start_tls
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\openai\_base_client.py", line 1532, in request
+    response = await self._client.send(
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError
+2026-03-18 16:13:33,022 - DEBUG - 2 retries left
+2026-03-18 16:13:33,022 - INFO - Retrying request to /chat/completions in 0.441719 seconds
+2026-03-18 16:13:33,476 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2026-03-18 16:13:33,477 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2026-03-18 16:13:33,555 - DEBUG - start_tls.failed exception=ConnectError(BrokenResourceError())
+2026-03-18 16:13:33,556 - DEBUG - Encountered Exception
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 101, in handle_async_request
+    raise exc
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_async\connection.py", line 156, in _connect
+    stream = await stream.start_tls(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_backends\anyio.py", line 67, in start_tls
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\openai\_base_client.py", line 1532, in request
+    response = await self._client.send(
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError
+2026-03-18 16:13:33,562 - DEBUG - 2 retries left
+2026-03-18 16:13:33,563 - INFO - Retrying request to /chat/completions in 0.439663 seconds
+2026-03-18 16:13:34,014 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2026-03-18 16:13:34,015 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2026-03-18 16:13:34,126 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001F06ED76360>
+2026-03-18 16:13:34,126 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001F06D328E10> server_hostname='api.openai.com' timeout=None
+2026-03-18 16:13:34,185 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001F06ED76250>
+2026-03-18 16:13:34,186 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001F06D328E10> server_hostname='api.openai.com' timeout=None
+2026-03-18 16:13:34,754 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001F06EB0FD50>
+2026-03-18 16:13:34,755 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-18 16:13:34,756 - DEBUG - send_request_headers.complete
+2026-03-18 16:13:34,756 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-18 16:13:34,757 - DEBUG - send_request_body.complete
+2026-03-18 16:13:34,757 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-18 16:13:37,394 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001F06EB0E850>
+2026-03-18 16:13:37,395 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-18 16:13:37,396 - DEBUG - send_request_headers.complete
+2026-03-18 16:13:37,396 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-18 16:13:37,396 - DEBUG - send_request_body.complete
+2026-03-18 16:13:37,397 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-18 16:13:42,942 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Wed, 18 Mar 2026 11:13:41 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9de3cf0d6a803a54-FRA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'ielts-agent'), (b'openai-processing-ms', b'6405'), (b'openai-project', b'proj_p2TG3sHr67NTFigiOV4yQBrK'), (b'openai-version', b'2020-10-01'), (b'x-openai-proxy-wasm', b'v0.1'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'200000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'197218'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'834ms'), (b'x-request-id', b'req_7186891bef3648c4965b90d5c9ba9f60'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-18 16:13:42,943 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-18 16:13:42,943 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-18 16:13:42,944 - DEBUG - receive_response_body.complete
+2026-03-18 16:13:42,945 - DEBUG - response_closed.started
+2026-03-18 16:13:42,945 - DEBUG - response_closed.complete
+2026-03-18 16:13:42,946 - DEBUG - HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers({'date': 'Wed, 18 Mar 2026 11:13:41 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'cf-ray': '9de3cf0d6a803a54-FRA', 'cf-cache-status': 'DYNAMIC', 'server': 'cloudflare', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'access-control-expose-headers': 'X-Request-ID', 'openai-organization': 'ielts-agent', 'openai-processing-ms': '6405', 'openai-project': 'proj_p2TG3sHr67NTFigiOV4yQBrK', 'openai-version': '2020-10-01', 'x-openai-proxy-wasm': 'v0.1', 'x-ratelimit-limit-requests': '10000', 'x-ratelimit-limit-tokens': '200000', 'x-ratelimit-remaining-requests': '9999', 'x-ratelimit-remaining-tokens': '197218', 'x-ratelimit-reset-requests': '8.64s', 'x-ratelimit-reset-tokens': '834ms', 'x-request-id': 'req_7186891bef3648c4965b90d5c9ba9f60', 'content-encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'})
+2026-03-18 16:13:42,946 - DEBUG - request_id: req_7186891bef3648c4965b90d5c9ba9f60
+2026-03-18 16:13:42,958 - INFO - [TRAINING] Session started, Phase 1 diagnostic begun
+2026-03-18 16:13:43,800 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Wed, 18 Mar 2026 11:13:43 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9de3cf1f4b99997b-FRA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'ielts-agent'), (b'openai-processing-ms', b'5726'), (b'openai-project', b'proj_p2TG3sHr67NTFigiOV4yQBrK'), (b'openai-version', b'2020-10-01'), (b'x-openai-proxy-wasm', b'v0.1'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'200000'), (b'x-ratelimit-remaining-requests', b'9998'), (b'x-ratelimit-remaining-tokens', b'197218'), (b'x-ratelimit-reset-requests', b'14.699s'), (b'x-ratelimit-reset-tokens', b'834ms'), (b'x-request-id', b'req_b6f93d487e0c4aa888bffeea36f1c341'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-18 16:13:43,801 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-18 16:13:43,801 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-18 16:13:43,802 - DEBUG - receive_response_body.complete
+2026-03-18 16:13:43,802 - DEBUG - response_closed.started
+2026-03-18 16:13:43,803 - DEBUG - response_closed.complete
+2026-03-18 16:13:43,803 - DEBUG - HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers({'date': 'Wed, 18 Mar 2026 11:13:43 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'cf-ray': '9de3cf1f4b99997b-FRA', 'cf-cache-status': 'DYNAMIC', 'server': 'cloudflare', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'access-control-expose-headers': 'X-Request-ID', 'openai-organization': 'ielts-agent', 'openai-processing-ms': '5726', 'openai-project': 'proj_p2TG3sHr67NTFigiOV4yQBrK', 'openai-version': '2020-10-01', 'x-openai-proxy-wasm': 'v0.1', 'x-ratelimit-limit-requests': '10000', 'x-ratelimit-limit-tokens': '200000', 'x-ratelimit-remaining-requests': '9998', 'x-ratelimit-remaining-tokens': '197218', 'x-ratelimit-reset-requests': '14.699s', 'x-ratelimit-reset-tokens': '834ms', 'x-request-id': 'req_b6f93d487e0c4aa888bffeea36f1c341', 'content-encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'})
+2026-03-18 16:13:43,803 - DEBUG - request_id: req_b6f93d487e0c4aa888bffeea36f1c341
+2026-03-18 16:13:43,805 - INFO - [TRAINING] Session started, Phase 1 diagnostic begun
+2026-03-19 11:31:33,925 - INFO - [TRAINING] Starting training session: skill=tfng, session=session_1773901893566_knbhqnc
+2026-03-19 11:31:33,953 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2026-03-19 11:31:33,957 - DEBUG - close.started
+2026-03-19 11:31:33,957 - INFO - [TRAINING] Starting training session: skill=tfng, session=session_1773901893566_knbhqnc
+2026-03-19 11:31:33,958 - DEBUG - close.complete
+2026-03-19 11:31:33,959 - DEBUG - close.started
+2026-03-19 11:31:33,965 - DEBUG - Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2026-03-19 11:31:33,966 - DEBUG - close.complete
+2026-03-19 11:31:33,967 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2026-03-19 11:31:33,968 - DEBUG - connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2026-03-19 11:31:34,170 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001F06ED427B0>
+2026-03-19 11:31:34,171 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001F06D328E10> server_hostname='api.openai.com' timeout=None
+2026-03-19 11:31:34,173 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001F06ED43020>
+2026-03-19 11:31:34,173 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001F06D328E10> server_hostname='api.openai.com' timeout=None
+2026-03-19 11:31:34,322 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001F06EB2C130>
+2026-03-19 11:31:34,323 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-19 11:31:34,325 - DEBUG - send_request_headers.complete
+2026-03-19 11:31:34,325 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-19 11:31:34,326 - DEBUG - send_request_body.complete
+2026-03-19 11:31:34,326 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-19 11:31:34,330 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001F06EB2F5B0>
+2026-03-19 11:31:34,330 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-19 11:31:34,331 - DEBUG - send_request_headers.complete
+2026-03-19 11:31:34,331 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-19 11:31:34,331 - DEBUG - send_request_body.complete
+2026-03-19 11:31:34,332 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-19 11:31:38,116 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Thu, 19 Mar 2026 06:31:37 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9dea6f5769b991dd-FRA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'ielts-agent'), (b'openai-processing-ms', b'2824'), (b'openai-project', b'proj_p2TG3sHr67NTFigiOV4yQBrK'), (b'openai-version', b'2020-10-01'), (b'x-openai-proxy-wasm', b'v0.1'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'200000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'197147'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'855ms'), (b'x-request-id', b'req_79c61ada62d04809ab9cc30fca2984a0'), (b'set-cookie', b'__cf_bm=E2m7csyRCBO5Fc5Vr4B5bZRQu6q.Qmj_GQnZMLqeprU-1773901894.3054857-1.0.1.1-T0CwgzMZc2D4WNsoivCANVy03yZlfse2LYrUfWEMzGmTBXgRbVYKfFhFdGJnm7ghj3xe2zNxaNnRdLi5SGnz5tb2uI_QqDScLad4RIrYjiAxhvzav3FpTwsfk2crTy8H; HttpOnly; Secure; Path=/; Domain=api.openai.com; Expires=Thu, 19 Mar 2026 07:01:37 GMT'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-19 11:31:38,117 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-19 11:31:38,118 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-19 11:31:38,119 - DEBUG - receive_response_body.complete
+2026-03-19 11:31:38,119 - DEBUG - response_closed.started
+2026-03-19 11:31:38,119 - DEBUG - response_closed.complete
+2026-03-19 11:31:38,120 - DEBUG - HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers({'date': 'Thu, 19 Mar 2026 06:31:37 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'cf-ray': '9dea6f5769b991dd-FRA', 'cf-cache-status': 'DYNAMIC', 'server': 'cloudflare', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'access-control-expose-headers': 'X-Request-ID', 'openai-organization': 'ielts-agent', 'openai-processing-ms': '2824', 'openai-project': 'proj_p2TG3sHr67NTFigiOV4yQBrK', 'openai-version': '2020-10-01', 'x-openai-proxy-wasm': 'v0.1', 'x-ratelimit-limit-requests': '10000', 'x-ratelimit-limit-tokens': '200000', 'x-ratelimit-remaining-requests': '9999', 'x-ratelimit-remaining-tokens': '197147', 'x-ratelimit-reset-requests': '8.64s', 'x-ratelimit-reset-tokens': '855ms', 'x-request-id': 'req_79c61ada62d04809ab9cc30fca2984a0', 'set-cookie': '__cf_bm=E2m7csyRCBO5Fc5Vr4B5bZRQu6q.Qmj_GQnZMLqeprU-1773901894.3054857-1.0.1.1-T0CwgzMZc2D4WNsoivCANVy03yZlfse2LYrUfWEMzGmTBXgRbVYKfFhFdGJnm7ghj3xe2zNxaNnRdLi5SGnz5tb2uI_QqDScLad4RIrYjiAxhvzav3FpTwsfk2crTy8H; HttpOnly; Secure; Path=/; Domain=api.openai.com; Expires=Thu, 19 Mar 2026 07:01:37 GMT', 'content-encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'})
+2026-03-19 11:31:38,120 - DEBUG - request_id: req_79c61ada62d04809ab9cc30fca2984a0
+2026-03-19 11:31:38,125 - INFO - [TRAINING] Session started, Phase 1 diagnostic begun
+2026-03-19 11:31:38,218 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Thu, 19 Mar 2026 06:31:37 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9dea6f57389f974b-FRA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'ielts-agent'), (b'openai-processing-ms', b'2818'), (b'openai-project', b'proj_p2TG3sHr67NTFigiOV4yQBrK'), (b'openai-version', b'2020-10-01'), (b'x-openai-proxy-wasm', b'v0.1'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'200000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'197147'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'855ms'), (b'x-request-id', b'req_e2d10d8ac34c4b62884e7185ba53f792'), (b'set-cookie', b'__cf_bm=dlWfHjQj52bcsI_xClRGH7h_z0QRgR6aVlGGkCw1VJI-1773901894.278183-1.0.1.1-Ln.Mwz6uG_JVPJoYit8xcLWAtRXuMdJzg7.njN1Bd05z5sKvGJ0NZCZCaBFBGsL3TPHkMCabByYBY7tdu4Raj2C4OUu.Zu7RY.SKqzFWnO1lN_a0V97rcnINr5j7TfcI; HttpOnly; Secure; Path=/; Domain=api.openai.com; Expires=Thu, 19 Mar 2026 07:01:37 GMT'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-19 11:31:38,219 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-19 11:31:38,220 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-19 11:31:38,221 - DEBUG - receive_response_body.complete
+2026-03-19 11:31:38,221 - DEBUG - response_closed.started
+2026-03-19 11:31:38,221 - DEBUG - response_closed.complete
+2026-03-19 11:31:38,221 - DEBUG - HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers({'date': 'Thu, 19 Mar 2026 06:31:37 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'cf-ray': '9dea6f57389f974b-FRA', 'cf-cache-status': 'DYNAMIC', 'server': 'cloudflare', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'access-control-expose-headers': 'X-Request-ID', 'openai-organization': 'ielts-agent', 'openai-processing-ms': '2818', 'openai-project': 'proj_p2TG3sHr67NTFigiOV4yQBrK', 'openai-version': '2020-10-01', 'x-openai-proxy-wasm': 'v0.1', 'x-ratelimit-limit-requests': '10000', 'x-ratelimit-limit-tokens': '200000', 'x-ratelimit-remaining-requests': '9999', 'x-ratelimit-remaining-tokens': '197147', 'x-ratelimit-reset-requests': '8.64s', 'x-ratelimit-reset-tokens': '855ms', 'x-request-id': 'req_e2d10d8ac34c4b62884e7185ba53f792', 'set-cookie': '__cf_bm=dlWfHjQj52bcsI_xClRGH7h_z0QRgR6aVlGGkCw1VJI-1773901894.278183-1.0.1.1-Ln.Mwz6uG_JVPJoYit8xcLWAtRXuMdJzg7.njN1Bd05z5sKvGJ0NZCZCaBFBGsL3TPHkMCabByYBY7tdu4Raj2C4OUu.Zu7RY.SKqzFWnO1lN_a0V97rcnINr5j7TfcI; HttpOnly; Secure; Path=/; Domain=api.openai.com; Expires=Thu, 19 Mar 2026 07:01:37 GMT', 'content-encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'})
+2026-03-19 11:31:38,222 - DEBUG - request_id: req_e2d10d8ac34c4b62884e7185ba53f792
+2026-03-19 11:31:38,223 - INFO - [TRAINING] Session started, Phase 1 diagnostic begun

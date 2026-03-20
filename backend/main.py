@@ -16,10 +16,13 @@ import logging
 from typing import Dict, Any
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, HTTPException, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ValidationError
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
 import uvicorn
 
 from agents.reading_feedback_agent import (
@@ -109,21 +112,28 @@ app = FastAPI(
     lifespan=lifespan
 )
 
+# Rate limiting — protect AI endpoints from abuse
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
 from ielts_writing.service import router as writing_router  # DEPRECATED — legacy 2-agent pipeline
 from ielts_writing.routes.task1 import router as task1_router
 from ielts_writing.routes.task2 import router as task2_router
 from ielts_writing.routes.history import router as history_router
+from ielts_writing.routes.podcast_summary import router as podcast_summary_router
+from ielts_writing.routes.onboarding import router as onboarding_router
 
-# Configure CORS - allow all origins for development
-# Using "*" ensures no CORS issues between frontend (5173) and backend (8002)
-# Note: Cannot use allow_credentials=True with allow_origins=["*"]
+# Configure CORS - restrict to known origins
+ALLOWED_ORIGINS = os.getenv("CORS_ORIGINS", "http://localhost:5173,http://localhost:4000,http://127.0.0.1:5173").split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for development
-    allow_credentials=False,  # Must be False when using wildcard origins
-    allow_methods=["*"],  # Allow all HTTP methods
-    allow_headers=["*"],  # Allow all headers
-    expose_headers=["*"],  # Expose all headers to the browser
+    allow_origins=ALLOWED_ORIGINS,
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization", "X-Requested-With"],
+    expose_headers=["Content-Length"],
 )
 
 # Include Routers
@@ -131,6 +141,8 @@ app.include_router(writing_router)
 app.include_router(task1_router)
 app.include_router(task2_router)
 app.include_router(history_router)
+app.include_router(podcast_summary_router)
+app.include_router(onboarding_router)
 
 
 # Health check models
@@ -216,7 +228,7 @@ async def health_check():
     return HealthResponse(
         status="healthy",
         version="1.0.0",
-        model=os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+        model=str(os.getenv("OPENAI_MODEL", "gpt-4o-mini"))
     )
 
 
@@ -226,10 +238,12 @@ async def health_check():
     status_code=status.HTTP_200_OK,
     responses={
         400: {"model": ErrorResponse, "description": "Invalid input"},
+        429: {"description": "Rate limit exceeded"},
         500: {"model": ErrorResponse, "description": "Internal server error"},
     }
 )
-async def generate_feedback(feedback_input: FeedbackInput):
+@limiter.limit("10/minute")
+async def generate_feedback(request: Request, feedback_input: FeedbackInput):
     """
     Generate intelligent feedback for an IELTS Reading answer.
     
@@ -290,12 +304,13 @@ async def generate_feedback(feedback_input: FeedbackInput):
         logger.error(f"Error generating feedback: {str(e)}", exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to generate feedback: {str(e)}"
+            detail="An internal error occurred while generating feedback. Please try again later."
         )
 
 
 @app.post("/api/feedback/batch", response_model=Dict[str, Any])
-async def generate_feedback_batch(feedback_inputs: list[FeedbackInput]):
+@limiter.limit("5/minute")
+async def generate_feedback_batch(request: Request, feedback_inputs: list[FeedbackInput]):
     """
     Generate feedback for multiple questions in batch.
     
@@ -330,10 +345,12 @@ async def generate_feedback_batch(feedback_inputs: list[FeedbackInput]):
         logger.info(f"Processing batch of {len(feedback_inputs)} questions")
         
         results = []
-        failed = 0
+        failed: int = 0
         
         for idx, feedback_input in enumerate(feedback_inputs):
             try:
+                if agent is None:
+                    raise Exception("Agent not initialized")
                 result = await agent.generate_feedback(feedback_input)
                 results.append({
                     "index": idx,
@@ -347,14 +364,14 @@ async def generate_feedback_batch(feedback_inputs: list[FeedbackInput]):
                     "status": "error",
                     "error": str(e)
                 })
-                failed += 1
+                failed = failed + 1
         
-        logger.info(f"Batch processing complete: {len(results) - failed} successful, {failed} failed")
+        logger.info(f"Batch processing complete: {len(results) - int(failed)} successful, {failed} failed")
         
         return {
             "results": results,
             "total": len(feedback_inputs),
-            "successful": len(results) - failed,
+            "successful": len(results) - int(failed),
             "failed": failed
         }
         
@@ -364,7 +381,7 @@ async def generate_feedback_batch(feedback_inputs: list[FeedbackInput]):
         logger.error(f"Batch processing error: {str(e)}", exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Batch processing failed: {str(e)}"
+            detail="Batch processing failed due to an internal error. Please try again later."
         )
 
 

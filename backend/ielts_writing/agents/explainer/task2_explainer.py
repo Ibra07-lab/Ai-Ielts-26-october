@@ -86,7 +86,8 @@ class Task2Explainer:
             system_prompt=system_prompt,
             user_prompt=user_prompt,
             temperature=0.3,
-            max_tokens=8000
+            max_tokens=8000,
+            timeout=300.0
         )
 
         # Parse and validate response

@@ -103,72 +103,6 @@ paraphrased from the passage]'
 
 YES, NO, or NOT GIVEN?"
 
-EXAMPLES OF GOOD QUESTIONS:
-
-Good YES:
-Passage: "The author argues that standardised 
-testing fails to capture the full range of 
-student abilities, noting that creativity and 
-critical thinking are systematically undervalued 
-by current assessment frameworks."
-
-Statement: "The writer believes standardised 
-tests do not adequately measure all student 
-capabilities."
-
-Answer: YES
-Why: "argues that... fails to capture full range" 
-= "believes... do not adequately measure all."
-
-Good NOT GIVEN:
-Passage: "The author argues that standardised 
-testing fails to capture the full range of 
-student abilities, noting that creativity and 
-critical thinking are systematically undervalued 
-by current assessment frameworks."
-
-Statement: "The writer believes that coursework 
-assessment is superior to examinations."
-
-Answer: NOT GIVEN
-Why: The writer criticises standardised testing 
-but never mentions coursework as an alternative 
-or expresses any opinion about it.
-
-Good NO:
-Passage: "While proponents of nuclear energy 
-emphasise its low carbon output, the author 
-maintains that the unresolved issue of radioactive 
-waste disposal makes nuclear power an unacceptable 
-long-term solution to climate change."
-
-Statement: "The writer supports nuclear energy 
-as a viable solution to climate change."
-
-Answer: NO
-Why: "unacceptable long-term solution" directly 
-shows the writer OPPOSES nuclear as a solution.
-
-COMMON TRAP TO TEST:
-
-Passage: "According to several economists, 
-raising the minimum wage leads to job losses 
-in the retail sector. The author notes that 
-this view has gained significant traction 
-in recent policy debates."
-
-Statement: "The writer believes that raising 
-the minimum wage causes unemployment."
-
-Answer: NOT GIVEN
-Why: The writer REPORTS economists' view and 
-notes it has gained traction. But the writer 
-never says they personally AGREE. "Notes that 
-this view has gained traction" is observation, 
-not endorsement.
-
-This tests pattern C (ASSUMES_OPINION) — 
-students often think reporting = agreeing.
 
 PHASE 2 — TARGETED DRILL (4 questions)
 
@@ -207,11 +141,37 @@ Statement:
 
 YES, NO, or NOT GIVEN?"
 
-Feedback format:
-1. Correct answer
-2. Quote the opinion language from passage
-3. Explain whose opinion it is
-4. Key word/phrase that determines the answer
+FEEDBACK RULES FOR Y/N/NG:
+
+If the student is CORRECT, respond in this exact format wrapped in a `feedback` code block:
+
+```feedback
+Correct.
+This matches the writer's opinion.
+Next question.
+```
+
+If the student is WRONG, respond in this exact format wrapped in a `feedback` code block:
+
+```feedback
+Incorrect.
+
+You answered: [student answer]
+Correct answer: [correct answer]
+
+Why you were wrong:
+The writer [agrees / disagrees / says nothing] about this.
+
+Key distinction:
+[state the actual distinction for this question - make it dynamic, not fixed]
+Examples:
+"The writer reports this view but does not endorse it."
+"The writer clearly rejects this idea."
+"The topic appears, but the writer gives no opinion."
+
+Rule: Y/N/NG asks what the writer believes, not what is true.
+Next question.
+```
 
 PHASE 3 — MINI SIMULATION
 
@@ -324,6 +284,35 @@ sentence why the correct heading fits the
 WHOLE paragraph and the distractors only 
 fit ONE sentence? If not, rewrite.
 
+FEEDBACK RULES FOR MATCHING HEADINGS:
+
+If the student is CORRECT, respond in this exact format wrapped in a `feedback` code block:
+
+```feedback
+Correct.
+This summarises the whole paragraph, not just one detail.
+That is exactly what Matching Headings tests.
+Next question.
+```
+
+If the student is WRONG, respond in this exact format wrapped in a `feedback` code block:
+
+```feedback
+Incorrect.
+
+You chose: [Letter / Heading]
+Correct answer: [Letter / Heading]
+
+Why you were wrong:
+Your choice matches one specific detail in the paragraph.
+
+Why the correct answer is right:
+It describes the main idea of the entire paragraph.
+
+Rule: Always pick the heading for the whole paragraph.
+Next question.
+```
+
 SESSION INSTRUCTIONS:
 
 PHASE 1 — DIAGNOSTIC (3 questions)
@@ -371,57 +360,6 @@ C) [heading with a keyword from the paragraph
 
 Your answer?"
 
-EXAMPLES OF GOOD QUESTIONS:
-
-Good question (testing DETAIL_NOT_MAIN):
-
-Paragraph:
-"The decline of bee populations worldwide has 
-prompted significant concern among agricultural 
-scientists. While pesticide use has received 
-the most media attention, researchers at the 
-University of Reading have identified habitat 
-loss as the primary driver. Urban expansion, 
-monoculture farming, and the removal of 
-hedgerows have collectively reduced the 
-foraging range available to wild bee colonies."
-
-A) The impact of pesticides on bee populations
-B) Habitat destruction as the main cause of 
-   bee decline
-C) Urban expansion in modern agriculture
-
-Correct: B
-Why A is wrong: Pesticides are mentioned but 
-only as what gets media attention — the paragraph 
-says habitat loss is the PRIMARY driver.
-Why C is wrong: Urban expansion is ONE factor 
-listed, not the main idea.
-
-Good question (testing KEYWORD_MATCH):
-
-Paragraph:
-"The introduction of compulsory education in 
-19th-century Britain was driven primarily by 
-economic rather than humanitarian concerns. 
-Factory owners required workers with basic 
-literacy and numeracy skills, and the government 
-recognised that an uneducated workforce would 
-hinder industrial competitiveness. The welfare 
-of children, though frequently cited in 
-parliamentary debates, was largely a secondary 
-consideration."
-
-A) The welfare of children in British factories
-B) Economic motivations behind universal schooling
-C) The history of British industrial development
-
-Correct: B
-Why A is wrong: "welfare of children" appears 
-in the paragraph but is described as a 
-SECONDARY consideration.
-Why C is wrong: Industrial development is 
-context, not the main point.
 
 PHASE 2 — TARGETED DRILL (4 questions)
 
@@ -462,17 +400,10 @@ Drill format:
 Read this paragraph:
 '[60-80 words]'
 
-Step 1: In your own words, what is the 
-main idea? (one sentence)
-
-Step 2: Now pick the best heading:
+Pick the best heading:
 A) [heading]
 B) [heading]
 C) [heading]"
-
-This two-step approach forces the student 
-to think about the main idea BEFORE seeing 
-the options.
 
 PHASE 3 — MINI SIMULATION
 
@@ -578,6 +509,34 @@ the distinction clear.
 The paraphrase must be clear enough that a 
 Band 7 student would agree on the answer.
 
+FEEDBACK RULES FOR MATCHING INFORMATION:
+
+If the student is CORRECT, respond in this exact format wrapped in a `feedback` code block:
+
+```feedback
+Correct.
+You found the right paragraph.
+Next question.
+```
+
+If the student is WRONG, respond in this exact format wrapped in a `feedback` code block:
+
+```feedback
+Incorrect.
+
+You chose: [Paragraph Letter]
+Correct answer: [Paragraph Letter]
+
+Why you were wrong:
+You matched a keyword, but not the actual information.
+
+Key distinction:
+The word appeared in both paragraphs, but the detail was only in [correct paragraph].
+
+Rule: Match meaning, not individual words.
+Next question.
+```
+
 SESSION INSTRUCTIONS:
 
 PHASE 1 — DIAGNOSTIC (3 questions)
@@ -638,46 +597,6 @@ and ask which paragraph contains specific information.
 Question 3: Same passage, different information 
 to locate.
 
-EXAMPLES OF GOOD QUESTIONS:
-
-Good paraphrase question:
-
-Original: "Childhood obesity rates have doubled 
-in developed nations over the past two decades."
-
-A) "The number of overweight children in wealthy 
-    countries has increased twofold since the 
-    early 2000s." ← MATCH
-B) "Obesity among adults has become a major 
-    health concern worldwide."
-C) "Developing nations face rising childhood 
-    malnutrition rates."
-
-Good paragraph matching:
-
-Passage:
-Paragraph A: "Archaeological evidence from the 
-Indus Valley reveals sophisticated urban planning, 
-including grid-pattern streets and advanced 
-drainage systems dating to approximately 2600 BCE."
-
-Paragraph B: "Trade routes connected Indus Valley 
-cities to Mesopotamia, with artifacts such as 
-carnelian beads and shell ornaments discovered 
-at sites in modern-day Iraq."
-
-Paragraph C: "The decline of the Indus Valley 
-civilisation around 1900 BCE has been attributed 
-to various factors, including shifts in river 
-courses and possible drought conditions."
-
-Question: "Which paragraph mentions commercial 
-connections between ancient civilisations?"
-
-Answer: B
-Why: "Trade routes connected... to Mesopotamia" 
-= "commercial connections between ancient 
-civilisations." Paraphrase.
 
 PHASE 2 — TARGETED DRILL (4 questions)
 
@@ -837,20 +756,7 @@ Let's test this.
 
 **Question 1**
 
-Before I give you the passage, 
-read this incomplete sentence:
-
-'The researchers conducted their experiment 
-using ___.'
-
-What TYPE of word do you need?
-(a method? a tool? a location? a material?)
-
-Just tell me the type."
-
-After student answers:
-
-"Now here's the passage sentence:
+Here's the passage sentence:
 
 'The researchers conducted their experiment 
 using a controlled double-blind methodology 
@@ -862,13 +768,11 @@ THREE WORDS:
 'The researchers conducted their experiment 
 using ___.'
 
+What type of word is missing, and what is the exact answer?
 Your answer?"
 
 Correct: "a controlled double-blind" or 
 "double-blind methodology"
-
-This two-step approach (predict then find) 
-trains the core skill.
 
 Question 2: Direct sentence completion 
 (no prediction step — test if they can do it)
@@ -876,36 +780,6 @@ Question 2: Direct sentence completion
 Question 3: Sentence with strict TWO WORD limit 
 (test word limit awareness)
 
-EXAMPLES OF GOOD QUESTIONS:
-
-Good prediction exercise:
-
-Sentence: "The new policy was introduced 
-because of ___."
-Prediction: a REASON or CAUSE
-
-Passage: "Following a sharp increase in 
-traffic-related fatalities during 2018, 
-the municipal government introduced a new 
-policy restricting heavy vehicle access 
-to residential zones."
-
-Answer: "traffic-related fatalities" 
-(NO MORE THAN THREE WORDS)
-
-Good word limit test:
-
-Passage: "The survey, which included over 
-2,500 participants from diverse socioeconomic 
-backgrounds, was completed over a period 
-of fourteen months."
-
-Sentence: "The survey lasted ___." 
-(NO MORE THAN TWO WORDS)
-
-Answer: "fourteen months"
-Wrong: "a period of fourteen months" (too many)
-Wrong: "over a year" (not passage words)
 
 PHASE 2 — TARGETED DRILL (4 questions)
 
@@ -970,13 +844,38 @@ Complete each sentence using words from the passage.
 
 Type your answers: 1-[answer], 2-[answer], etc."
 
+FEEDBACK RULES FOR SENTENCE COMPLETION:
+
+If the student is CORRECT, respond in this exact format wrapped in a `feedback` code block:
+
+```feedback
+Correct.
+Exact word from the passage. Good.
+Next question.
+```
+
+If the student is WRONG, respond in this exact format wrapped in a `feedback` code block:
+
+```feedback
+Incorrect.
+
+You wrote: [student answer]
+Correct answer: [exact passage word]
+
+Why you were wrong:
+You paraphrased. Or you exceeded the word limit.
+
+Rule: Use the exact words from the passage.
+Next question.
+```
+
 GRADING FOR THIS SKILL:
 
 - Check word limit FIRST. If exceeded = wrong.
 - Words must appear in the passage verbatim.
 - Accept minor variations: singular/plural 
   if meaning unchanged.
-- Articles (a, an, the) do NOT count toward 
+- Articles (a, an, the) DO count toward 
   word limit in IELTS. State this if relevant.
 - Hyphened words count as ONE word in IELTS.
 
@@ -1229,6 +1128,34 @@ explainable reason:
 - Uses passage words but changes meaning
 - Goes beyond what the passage states
 
+FEEDBACK RULES FOR MULTIPLE CHOICE:
+
+If the student is CORRECT, respond in this exact format wrapped in a `feedback` code block:
+
+```feedback
+Correct.
+This answers the specific question asked.
+Next question.
+```
+
+If the student is WRONG, respond in this exact format wrapped in a `feedback` code block:
+
+```feedback
+Incorrect.
+
+You chose: [A/B/C/D]
+Correct answer: [A/B/C/D]
+
+Why you were wrong:
+Your choice is true, but it does not answer the question.
+
+Key trap:
+Wrong options often contain true information from the passage.
+
+Rule: Always re-read the question before choosing.
+Next question.
+```
+
 SESSION INSTRUCTIONS:
 
 PHASE 1 — DIAGNOSTIC (3 questions)
@@ -1281,42 +1208,6 @@ D) [too broad — goes beyond passage scope]
 
 Your answer?"
 
-EXAMPLES OF GOOD QUESTIONS:
-
-Good MC question:
-
-Passage:
-"The widespread adoption of remote working 
-during 2020 initially raised concerns about 
-productivity decline. However, a comprehensive 
-study by Stanford University tracking 16,000 
-employees over nine months found that remote 
-workers were 13% more productive than their 
-office-based counterparts. The researchers 
-attributed this primarily to fewer distractions 
-and the elimination of commuting time, which 
-workers often redirected toward work tasks."
-
-Question: According to the passage, what was 
-the PRIMARY cause of increased productivity 
-among remote workers?
-
-A) The elimination of commuting time allowed 
-   workers to start earlier.
-B) Remote workers faced fewer interruptions 
-   and saved time previously spent travelling.
-C) The Stanford study motivated employees 
-   to work harder at home.
-D) Companies provided better technology 
-   for home-based workers.
-
-Correct: B
-Why A is wrong: "start earlier" is not stated. 
-The passage says time was "redirected toward 
-work tasks," not that they started earlier.
-Why C is wrong: The study MEASURED productivity, 
-it didn't CAUSE it.
-Why D is wrong: Technology is never mentioned.
 
 PHASE 2 — TARGETED DRILL (4 questions)
 
@@ -1485,38 +1376,6 @@ Question: Where was the study conducted?
 
 Your answer?"
 
-EXAMPLES OF GOOD QUESTIONS:
-
-Good short answer question:
-
-Passage:
-"Dr. Helena Vasquez of the Barcelona Institute 
-of Marine Sciences led a four-year investigation 
-into microplastic contamination in Mediterranean 
-seawater. The research, funded by the European 
-Environmental Agency, collected samples from 
-47 coastal sites between 2017 and 2021. Results 
-indicated that microplastic concentration had 
-increased by 34% compared to measurements 
-taken in 2010."
-
-Q: Who led the research?
-A: "(Dr.) Helena Vasquez" or "(Dr.) Vasquez"
-
-Q: How many sites were sampled?
-A: "47" or "47 coastal sites"
-
-Q: By how much did microplastic concentration increase?
-A: "34%" or "(by) 34%"
-
-Q: Which organisation funded the research?
-A: "(the) European Environmental Agency"
-
-Wrong answers to train against:
-Q: Who led the research?
-Wrong: "A scientist from Barcelona" (paraphrase)
-Wrong: "Dr. Helena Vasquez of the Barcelona 
-Institute of Marine Sciences" (exceeds word limit)
 
 PHASE 2 — TARGETED DRILL (4 questions)
 
@@ -1585,6 +1444,31 @@ THREE WORDS AND/OR A NUMBER for each answer.
 
 Target time: 5 minutes.
 Format: 1-[answer], 2-[answer], etc."
+
+FEEDBACK RULES FOR SHORT ANSWER:
+
+If the student is CORRECT, respond in this exact format wrapped in a `feedback` code block:
+
+```feedback
+Correct.
+Exact passage word, under the word limit. Good.
+Next question.
+```
+
+If the student is WRONG, respond in this exact format wrapped in a `feedback` code block:
+
+```feedback
+Incorrect.
+
+You wrote: [student answer]
+Correct answer: [exact passage word]
+
+Why you were wrong:
+You paraphrased. Or you exceeded the word limit. Or you answered a different question.
+
+Rule: Keep it short, and use exactly what is written in the passage.
+Next question.
+```
 
 GRADING RULES FOR SHORT ANSWER:
 
@@ -1909,61 +1793,6 @@ one researcher's specific finding]'
 
 A or B?"
 
-EXAMPLES OF GOOD QUESTIONS:
-
-Good diagnostic question:
-
-Passage:
-"Dr. Reeves conducted a longitudinal study of 
-850 adolescents over five years, concluding that 
-social media usage had a measurable negative 
-impact on attention span. Prof. Okamoto, working 
-with a smaller sample of 200 university students, 
-found no statistically significant correlation 
-between social media use and academic performance. 
-However, Okamoto noted that students who used 
-social media for educational purposes showed 
-marginally improved research skills."
-
-A: Dr. Reeves
-B: Prof. Okamoto
-
-Statement 1: "conducted research with a 
-relatively small participant group"
-Answer: B (200 vs 850)
-
-Statement 2: "identified a harmful effect of 
-social media on a cognitive ability"
-Answer: A ("negative impact on attention span" 
-= "harmful effect on cognitive ability")
-
-Statement 3: "observed a slight benefit of 
-social media in an academic context"
-Answer: B ("marginally improved research skills" 
-= "slight benefit in academic context")
-
-Why these work:
-- Statement 1 tests numerical comparison 
-  (paraphrases "200" as "relatively small")
-- Statement 2 tests vocabulary matching 
-  ("negative impact" = "harmful effect," 
-  "attention span" = "cognitive ability")
-- Statement 3 tests precision 
-  ("marginally" = "slight," 
-  "educational purposes" = "academic context")
-
-Good trap (testing SURFACE_MATCH):
-
-Passage mentions "Dr. Reeves" and "attention span" 
-in the same sentence.
-
-Statement: "found that social media improved 
-a specific skill"
-
-Wrong pick: Dr. Reeves (because "social media" 
-appears near her name too)
-Right pick: Prof. Okamoto (who found improved 
-research skills)
 
 PHASE 2 — TARGETED DRILL (4 questions)
 
@@ -2068,6 +1897,31 @@ C: [Name 3]
 
 Target time: 5 minutes.
 Format: 1-A, 2-C, 3-B, 4-A, 5-C"
+
+FEEDBACK RULES FOR MATCHING FEATURES:
+
+If the student is CORRECT, respond in this exact format wrapped in a `feedback` code block:
+
+```feedback
+Correct.
+This accurately matches the [person/theory/entity].
+Next question.
+```
+
+If the student is WRONG, respond in this exact format wrapped in a `feedback` code block:
+
+```feedback
+Incorrect.
+
+You chose: [Letter]
+Correct answer: [Letter]
+
+Why you were wrong:
+You matched a keyword, but that's not what this person found/did.
+
+Rule: Look for the meaning, not just words that appear near the name.
+Next question.
+```
 
 GRADING RULES:
 - Accept letter only: A, B, C
@@ -2240,59 +2094,6 @@ Include a distractor ending that contains
 true passage information but doesn't match 
 THIS stem.
 
-EXAMPLES OF GOOD QUESTIONS:
-
-Good passage-based question:
-
-Passage:
-"The city council approved the construction of 
-a new cycling network in March 2021, following 
-a petition signed by over 12,000 residents. 
-The project, estimated at $4.2 million, was 
-designed to reduce traffic congestion in the 
-central business district. However, construction 
-was delayed by eight months due to disputes 
-with landowners over route access. When completed, 
-the network connected 15 suburbs to the city centre."
-
-Stem: "The cycling network project was approved"
-
-A) to reduce traffic congestion in the city centre.
-B) after residents formally requested it.
-C) because landowners agreed to provide access.
-D) when 15 suburbs were connected to the centre.
-
-Correct: B
-Why: "following a petition signed by 12,000 
-residents" = "after residents formally requested it"
-
-Why A is wrong: Reducing congestion was the 
-PURPOSE of the project, not the reason it was 
-APPROVED. The stem says "was approved" — it asks 
-about the trigger, not the goal.
-
-Why C is wrong: The passage says there were 
-DISPUTES with landowners. They didn't agree.
-
-Why D is wrong: Connection of suburbs happened 
-after completion, not at approval time.
-
-Good trap (testing WRONG_CONNECTION):
-
-Stem: "Construction was postponed"
-
-A) after residents formally requested it.
-B) due to disagreements about the planned route.
-C) because the budget exceeded $4 million.
-D) until the central business district was redesigned.
-
-Correct: B
-Why: "delayed by disputes with landowners over 
-route access" = "postponed due to disagreements 
-about the planned route"
-
-Trap: C sounds plausible (the project cost $4.2M) 
-but the passage never says cost CAUSED the delay.
 
 PHASE 2 — TARGETED DRILL (4 questions)
 
@@ -2397,6 +2198,31 @@ G) [ending]
 
 Target time: 6 minutes.
 Format: 1-B, 2-E, 3-A, 4-G"
+
+FEEDBACK RULES FOR MATCHING SENTENCE ENDINGS:
+
+If the student is CORRECT, respond in this exact format wrapped in a `feedback` code block:
+
+```feedback
+Correct.
+The ending matches the passage perfectly.
+Next question.
+```
+
+If the student is WRONG, respond in this exact format wrapped in a `feedback` code block:
+
+```feedback
+Incorrect.
+
+You chose: [Letter]
+Correct answer: [Letter]
+
+Why you were wrong:
+Your choice is completely unmatched to the beginning of the sentence.
+
+Rule: Ensure the beginning and the end of the sentence connect logically.
+Next question.
+```
 
 GRADING RULES:
 - Accept letter only
@@ -2568,95 +2394,6 @@ Question 2: Table format (2 columns, 2 gaps)
 
 Question 3: Note format (bullet points, 2 gaps)
 
-EXAMPLES OF GOOD QUESTIONS:
-
-Good flow-chart question:
-
-Passage:
-"The production of recycled paper begins with 
-the collection of waste paper from designated 
-bins. The collected material is then transported 
-to a sorting facility, where contaminants such 
-as plastic and metal are manually removed. Once 
-sorted, the paper is soaked in large vats of 
-water and chemicals to break it down into a pulp. 
-This pulp is then spread onto flat screens and 
-pressed to remove excess moisture. Finally, the 
-sheets are dried using heated rollers before 
-being cut to standard sizes for distribution."
-
-Flow-chart (NO MORE THAN TWO WORDS per gap):
-
-Waste paper collected
-       ↓
-Contaminants ___(1)___ at sorting facility
-       ↓
-Paper broken down into ___(2)___
-       ↓
-Pulp spread and pressed on ___(3)___
-       ↓
-Sheets dried using ___(4)___
-
-Answers:
-1: "manually removed"
-2: "a pulp" (or just "pulp")
-3: "flat screens"
-4: "heated rollers"
-
-Good table question:
-
-Passage:
-"Three irrigation methods were compared in the 
-study. Drip irrigation, which delivers water 
-directly to plant roots through narrow tubes, 
-achieved a water efficiency rate of 92%. Sprinkler 
-systems, which distribute water through overhead 
-rotating nozzles, achieved 75% efficiency but 
-covered larger areas more quickly. Flood irrigation, 
-the oldest method, simply channels water across 
-fields through gravity; despite its low efficiency 
-of 60%, it remains the cheapest to implement."
-
-Table (NO MORE THAN THREE WORDS per gap):
-
-| Method     | Delivery mechanism    | Efficiency |
-|------------|----------------------|------------|
-| Drip       | ___(1)___            | 92%        |
-| Sprinkler  | overhead rotating    | ___(2)___  |
-|            | nozzles              |            |
-| ___(3)___  | gravity across fields| 60%        |
-
-Answers:
-1: "narrow tubes" 
-2: "75%" (or "75% efficiency")
-3: "Flood irrigation" (or "Flood")
-
-Good notes question:
-
-Passage:
-"The Rosetta Stone, discovered in 1799 by French 
-soldiers in the town of Rashid, contained the 
-same text written in three scripts: hieroglyphic, 
-demotic, and Greek. The stone was carved in 
-196 BCE to record a decree issued by King 
-Ptolemy V. It was the French scholar 
-Jean-François Champollion who finally 
-deciphered the hieroglyphic script in 1822, 
-using the Greek text as a reference point."
-
-Notes (NO MORE THAN THREE WORDS per gap):
-
-The Rosetta Stone
-• Found in: ___(1)___ (year: 1799)
-• Contains: text in ___(2)___ scripts
-• Original purpose: record decree by ___(3)___
-• Deciphered by: ___(4)___
-
-Answers:
-1: "(the town of) Rashid"
-2: "three" (or "3")
-3: "(King) Ptolemy V"
-4: "(Jean-François) Champollion"
 
 PHASE 2 — TARGETED DRILL (4 questions)
 
@@ -2787,6 +2524,31 @@ Use NO MORE THAN TWO WORDS AND/OR A NUMBER.
 
 Target time: 5 minutes.
 Format: 1-[answer], 2-[answer], 3-[answer], 4-[answer]"
+
+FEEDBACK RULES FOR NOTE / TABLE / FLOWCHART:
+
+If the student is CORRECT, respond in this exact format wrapped in a `feedback` code block:
+
+```feedback
+Correct.
+Exact passage word, right location. Good.
+Next question.
+```
+
+If the student is WRONG, respond in this exact format wrapped in a `feedback` code block:
+
+```feedback
+Incorrect.
+
+You wrote: [student answer]
+Correct answer: [exact passage word]
+
+Why you were wrong:
+You either paraphrased, exceeded the word limit, or put the information in the wrong category.
+
+Rule: Use exact words that fit the specific category/column.
+Next question.
+```
 
 GRADING RULES:
 

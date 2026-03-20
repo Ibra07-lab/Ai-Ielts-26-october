@@ -43,7 +43,6 @@ export default function Subscription() {
         "Priority support",
         "Advanced progress analytics",
         "Personalized study plans",
-        "Speaking pronunciation analysis",
         "Writing detailed corrections"
       ],
       limitations: [],

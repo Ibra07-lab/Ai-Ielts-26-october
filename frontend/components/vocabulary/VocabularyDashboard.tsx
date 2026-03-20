@@ -11,7 +11,6 @@ import { StatCard } from "./StatCard";
 import { WordOfDayCard } from "./WordOfDayCard";
 import { useVocabulary } from "@/contexts/VocabularyContext";
 import { generateAggregateCurveData } from "@/lib/vocabulary/forgetting-curve";
-import { seedDemoData, clearDemoData } from "@/lib/vocabulary/demo-seed";
 
 interface VocabularyDashboardProps {
     topics: Topic[];
@@ -138,15 +137,6 @@ export default function VocabularyDashboard({ topics, allWords, onTopicSelect }:
                             })()
                         )}
 
-                        {/* Demo Controls - Subtle */}
-                        <div className="flex items-center justify-center gap-4 pt-4 opacity-50 hover:opacity-100 transition-opacity">
-                            <button onClick={seedDemoData} className="text-[10px] font-bold text-slate-400 hover:text-sky-500 uppercase tracking-widest">
-                                Seed Demo
-                            </button>
-                            <button onClick={clearDemoData} className="text-[10px] font-bold text-slate-400 hover:text-rose-500 uppercase tracking-widest">
-                                Clear Data
-                            </button>
-                        </div>
                     </aside>
                 </div>
             </main >

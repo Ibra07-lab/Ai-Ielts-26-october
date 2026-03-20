@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getLessonById, VideoLesson as VideoLessonType, ComprehensionQuestion, VocabularyItem, VocabExercise } from '../data/videoLessons';
+import { supabase } from '../lib/supabase';
 
 // ─── Step Status Types ─────────────────────────────────────────────────
 type StepStatus = 'locked' | 'current' | 'completed';
@@ -344,10 +345,9 @@ function ComprehensionStep({ questions, onComplete, isCompleted }: { questions: 
                 {!submitted ? (
                     <button
                         onClick={handleSubmit}
-                        disabled={Object.keys(answers).length < questions.length}
-                        className="px-8 py-3 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-200 dark:disabled:bg-[#0F172A] disabled:text-slate-400 disabled:cursor-not-allowed text-white rounded-[12px] font-bold transition-colors"
+                        className="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-[12px] font-bold transition-colors"
                     >
-                        Check Answers ({Object.keys(answers).length}/{questions.length})
+                        Check Answers {Object.keys(answers).length > 0 && `(${Object.keys(answers).length}/${questions.length})`}
                     </button>
                 ) : (
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full">
@@ -450,16 +450,6 @@ function VocabularyStep({ vocabulary, onComplete, isCompleted }: { vocabulary: V
 
                         {(v.speakingExample || v.writingExample) && (
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-                                {v.speakingExample && (
-                                    <div className="p-6 rounded-[20px] bg-emerald-50/50 dark:bg-emerald-500/5 border border-emerald-100/50 dark:border-emerald-500/10">
-                                        <h4 className="text-[14px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-1.5">
-                                            <span>🗣️</span> Speaking Usage
-                                        </h4>
-                                        <p className="text-[16px] text-slate-700 dark:text-slate-200 leading-relaxed italic">
-                                            {v.speakingExample}
-                                        </p>
-                                    </div>
-                                )}
                                 {v.writingExample && (
                                     <div className="p-6 rounded-[20px] bg-amber-50/50 dark:bg-amber-500/5 border border-amber-100/50 dark:border-amber-500/10">
                                         <h4 className="text-[14px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-3 flex items-center gap-1.5">
@@ -507,7 +497,7 @@ function VocabularyStep({ vocabulary, onComplete, isCompleted }: { vocabulary: V
                                 <span className="text-2xl">💡</span>
                                 <div>
                                     <h4 className="text-[14px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
-                                        {v.tipType === 'speaking' ? 'Speaking Tip' : v.tipType === 'writing' ? 'Writing Tip' : 'Pro Tip'}
+                                        {v.tipType === 'writing' ? 'Writing Tip' : 'Pro Tip'}
                                     </h4>
                                     <p className="text-[16px] text-slate-700 dark:text-slate-200 leading-relaxed font-medium">
                                         {v.tip}
@@ -688,10 +678,9 @@ function VocabExercisesStep({ exercises, vocabulary, onComplete, isCompleted }: 
                 {!submitted ? (
                     <button
                         onClick={() => setSubmitted(true)}
-                        disabled={Object.keys(answers).length < exercises.length}
-                        className="px-8 py-3.5 bg-teal-600 hover:bg-teal-500 disabled:bg-slate-400 disabled:cursor-not-allowed text-white rounded-xl font-bold transition-all shadow-lg shadow-teal-600/25"
+                        className="px-8 py-3.5 bg-teal-600 hover:bg-teal-500 text-white rounded-xl font-bold transition-all shadow-lg shadow-teal-600/25"
                     >
-                        Check Answers ({Object.keys(answers).length}/{exercises.length})
+                        Check Answers {Object.keys(answers).length > 0 && `(${Object.keys(answers).length}/${exercises.length})`}
                     </button>
                 ) : (
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full">
@@ -720,78 +709,325 @@ function VocabExercisesStep({ exercises, vocabulary, onComplete, isCompleted }: 
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// STEP 5: Summary Writing
+// STEP 5: Summary Writing (AI-Powered Evaluation via Gemini 2.0 Flash)
 // ═══════════════════════════════════════════════════════════════════════
 function SummaryStep({ lesson, onComplete, isCompleted }: { lesson: VideoLessonType; onComplete: () => void; isCompleted: boolean }) {
     const [summary, setSummary] = useState('');
     const [submitted, setSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [evaluation, setEvaluation] = useState<any>(null);
 
     const wordCount = summary.trim().split(/\s+/).filter(Boolean).length;
     const meetsMinimum = wordCount >= lesson.summaryMinWords;
+    const maxWords = lesson.summaryMaxWords || 200;
 
-    function handleSubmit() {
-        setSubmitted(true);
-        onComplete();
+    async function handleSubmit() {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const { data: { session } } = await supabase.auth.getSession();
+            const authHeaders: Record<string, string> = {
+                'Content-Type': 'application/json',
+            };
+            if (session?.access_token) {
+                authHeaders['Authorization'] = `Bearer ${session.access_token}`;
+            }
+
+            const response = await fetch('http://localhost:8002/podcast-summary/evaluate', {
+                method: 'POST',
+                headers: authHeaders,
+                body: JSON.stringify({
+                    summary_text: summary,
+                    lesson_title: lesson.title,
+                    summary_prompt: lesson.summaryPrompt,
+                    vocabulary_words: lesson.vocabulary.map(v => v.word),
+                    summary_requirements: lesson.summaryRequirements || [],
+                    transcript_phrases: lesson.transcriptPhrases || [],
+                    full_transcript: lesson.fullTranscript || '',
+                    min_words: lesson.summaryMinWords,
+                    max_words: maxWords,
+                }),
+            });
+
+            if (!response.ok) {
+                const errData = await response.json().catch(() => ({}));
+                throw new Error(errData.detail?.message || errData.detail?.error || `Server error: ${response.status}`);
+            }
+
+            const result = await response.json();
+            setEvaluation(result);
+            setSubmitted(true);
+            onComplete();
+        } catch (err: any) {
+            setError(err.message || 'Failed to evaluate summary. Please try again.');
+        } finally {
+            setLoading(false);
+        }
     }
 
+    // ─── Score color helpers ─────────────────────────────────────────
+    function getScoreColor(score: number, max: number) {
+        const pct = (score / max) * 100;
+        if (pct >= 80) return { bg: 'bg-emerald-50 dark:bg-emerald-900/10', text: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-200 dark:border-emerald-500/20', ring: 'stroke-emerald-500' };
+        if (pct >= 60) return { bg: 'bg-blue-50 dark:bg-blue-900/10', text: 'text-blue-600 dark:text-blue-400', border: 'border-blue-200 dark:border-blue-500/20', ring: 'stroke-blue-500' };
+        if (pct >= 40) return { bg: 'bg-amber-50 dark:bg-amber-900/10', text: 'text-amber-600 dark:text-amber-400', border: 'border-amber-200 dark:border-amber-500/20', ring: 'stroke-amber-500' };
+        return { bg: 'bg-red-50 dark:bg-red-900/10', text: 'text-red-600 dark:text-red-400', border: 'border-red-200 dark:border-red-500/20', ring: 'stroke-red-500' };
+    }
+
+    function getLabelColor(label: string) {
+        const l = label?.toLowerCase() || '';
+        if (l === 'excellent' || l === 'outstanding') return 'text-emerald-500';
+        if (l === 'good' || l === 'very good') return 'text-blue-500';
+        if (l === 'fair' || l === 'average') return 'text-amber-500';
+        return 'text-red-500';
+    }
+
+    const categoryLabels: Record<string, string> = {
+        contentComprehension: '📖 Content & Comprehension',
+        vocabularyUse: '📝 Vocabulary Use',
+        ownWords: '✍️ Own Words',
+        languageAccuracy: '🔤 Language Accuracy',
+        structureFlow: '🔗 Structure & Flow',
+    };
+
+    // ─── Writing Phase ───────────────────────────────────────────────
+    if (!submitted || !evaluation) {
+        return (
+            <div className="text-gray-900 dark:text-[#F8FAFC]">
+                <div className="mb-6">
+                    <h2 className="text-[24px] font-bold text-gray-900 dark:text-white">Summary Writing</h2>
+                    <p className="text-[15px] text-slate-500 dark:text-[#94A3B8]">Write a summary of the video in your own words. AI will evaluate your writing.</p>
+                </div>
+
+                <div className="pb-4 mb-6 border-b border-gray-200 dark:border-[#1E293B]">
+                    <p className="text-[15px] text-gray-700 dark:text-[#F8FAFC] leading-relaxed whitespace-pre-line">{lesson.summaryPrompt}</p>
+                </div>
+
+                {/* Vocabulary reminder */}
+                <div className="bg-slate-50 dark:bg-[#0F172A]/50 border border-gray-200 dark:border-[#1E293B] rounded-[12px] p-4 mb-6">
+                    <p className="text-[14px] font-semibold text-slate-700 dark:text-[#F8FAFC] mb-3">Remember to use these vocabulary words:</p>
+                    <div className="flex flex-wrap gap-2">
+                        {lesson.vocabulary.map((v) => (
+                            <span key={v.id} className="px-3 py-1 bg-white dark:bg-[#0F172A] border border-gray-200 dark:border-[#1E293B] text-gray-700 dark:text-slate-300 rounded-[12px] text-[13px] font-medium">
+                                {v.word}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+
+                <textarea
+                    value={summary}
+                    onChange={(e) => setSummary(e.target.value)}
+                    disabled={loading}
+                    rows={10}
+                    placeholder="Write your summary here..."
+                    className="w-full px-5 py-4 rounded-[12px] border border-slate-300 dark:border-[#1E293B] bg-white dark:bg-[#0F172A] text-gray-900 dark:text-white text-[15px] leading-relaxed outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all resize-none disabled:opacity-60"
+                />
+
+                <div className="flex items-center justify-between mt-3 mb-6">
+                    <p className={`text-[14px] font-medium ${meetsMinimum ? 'text-blue-500' : 'text-slate-400'}`}>
+                        {wordCount} words {meetsMinimum ? '✓' : `(minimum ${lesson.summaryMinWords})`}
+                    </p>
+                </div>
+
+                {error && (
+                    <div className="mb-6 p-4 rounded-[12px] bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400 text-[14px]">
+                        <p className="font-semibold mb-1">⚠️ Evaluation Error</p>
+                        <p>{error}</p>
+                    </div>
+                )}
+
+                <button
+                    onClick={handleSubmit}
+                    disabled={loading}
+                    className={`px-8 py-3 rounded-[12px] font-bold transition-all flex items-center gap-3 ${!loading
+                        ? 'bg-blue-600 hover:bg-blue-500 text-white'
+                        : 'bg-slate-200 dark:bg-[#111827] text-slate-400 cursor-not-allowed'
+                    }`}
+                >
+                    {loading ? (
+                        <>
+                            <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Evaluating with AI...
+                        </>
+                    ) : (
+                        'Submit Summary for AI Evaluation'
+                    )}
+                </button>
+            </div>
+        );
+    }
+
+    // ─── Results Phase ───────────────────────────────────────────────
+    const totalColor = getScoreColor(evaluation.totalScore, 100);
+
     return (
-        <div className="text-gray-900 dark:text-[#F8FAFC]">
-            <div className="mb-6">
-                <h2 className="text-[24px] font-bold text-gray-900 dark:text-white">Summary Writing</h2>
-                <p className="text-[15px] text-slate-500 dark:text-[#94A3B8]">Write a summary of the video in your own words.</p>
-            </div>
-
-            <div className="pb-4 mb-6 border-b border-gray-200 dark:border-[#1E293B]">
-                <p className="text-[15px] text-gray-700 dark:text-[#F8FAFC] leading-relaxed whitespace-pre-line">{lesson.summaryPrompt}</p>
-            </div>
-
-            {/* Vocabulary reminder */}
-            <div className="bg-slate-50 dark:bg-[#0F172A]/50 border border-gray-200 dark:border-[#1E293B] rounded-[12px] p-4 mb-6">
-                <p className="text-[14px] font-semibold text-slate-700 dark:text-[#F8FAFC] mb-3">Remember to use these vocabulary words:</p>
-                <div className="flex flex-wrap gap-2">
-                    {lesson.vocabulary.map((v) => (
-                        <span key={v.id} className="px-3 py-1 bg-white dark:bg-[#0F172A] border border-gray-200 dark:border-[#1E293B] text-gray-700 dark:text-slate-300 rounded-[12px] text-[13px] font-medium">
-                            {v.word}
-                        </span>
-                    ))}
+        <div className="text-gray-900 dark:text-[#F8FAFC] space-y-6">
+            {/* ── Total Score Card ── */}
+            <div className={`relative overflow-hidden rounded-[16px] border ${totalColor.border} ${totalColor.bg} p-8 text-center`}>
+                <div className="relative">
+                    <div className="inline-flex items-center justify-center mb-4">
+                        <svg width="120" height="120" viewBox="0 0 120 120" className="-rotate-90">
+                            <circle cx="60" cy="60" r="52" fill="none" stroke="currentColor" strokeWidth="8" className="text-slate-200 dark:text-slate-700" />
+                            <circle
+                                cx="60" cy="60" r="52" fill="none" strokeWidth="8" strokeLinecap="round"
+                                className={totalColor.ring}
+                                strokeDasharray={`${(evaluation.totalScore / 100) * 327} 327`}
+                            />
+                        </svg>
+                        <div className="absolute flex flex-col items-center">
+                            <span className={`text-[36px] font-bold ${totalColor.text}`}>{evaluation.totalScore}</span>
+                            <span className="text-[13px] text-slate-400 font-medium">/100</span>
+                        </div>
+                    </div>
+                    <h3 className={`text-[22px] font-bold ${getLabelColor(evaluation.scoreLabel)}`}>{evaluation.scoreLabel}</h3>
+                    <p className="text-[14px] text-slate-500 dark:text-slate-400 mt-1">{evaluation.wordCount} words written</p>
                 </div>
             </div>
 
-            <textarea
-                value={summary}
-                onChange={(e) => !submitted && setSummary(e.target.value)}
-                disabled={submitted}
-                rows={10}
-                placeholder="Write your summary here..."
-                className="w-full px-5 py-4 rounded-[12px] border border-slate-300 dark:border-[#1E293B] bg-white dark:bg-[#0F172A] text-gray-900 dark:text-white text-[15px] leading-relaxed outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all resize-none disabled:opacity-60"
-            />
-
-            <div className="flex items-center justify-between mt-3 mb-6">
-                <p className={`text-[14px] font-medium ${meetsMinimum ? 'text-blue-500' : 'text-slate-400'}`}>
-                    {wordCount} words {meetsMinimum ? '✓' : `(minimum ${lesson.summaryMinWords})`}
-                </p>
+            {/* ── Category Scores ── */}
+            <div className="space-y-3">
+                <h3 className="text-[18px] font-bold text-gray-900 dark:text-white">Score Breakdown</h3>
+                {evaluation.scores && Object.entries(evaluation.scores).map(([key, cat]: [string, any]) => {
+                    const c = getScoreColor(cat.score, cat.maxScore);
+                    const pct = (cat.score / cat.maxScore) * 100;
+                    return (
+                        <div key={key} className={`rounded-[12px] border ${c.border} ${c.bg} p-4`}>
+                            <div className="flex items-center justify-between mb-2">
+                                <span className="text-[15px] font-semibold text-gray-900 dark:text-white">{categoryLabels[key] || key}</span>
+                                <span className={`text-[15px] font-bold ${c.text}`}>{cat.score}/{cat.maxScore}</span>
+                            </div>
+                            <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden mb-2">
+                                <div className={`h-full rounded-full transition-all duration-700 ${pct >= 80 ? 'bg-emerald-500' : pct >= 60 ? 'bg-blue-500' : pct >= 40 ? 'bg-amber-500' : 'bg-red-500'}`} style={{ width: `${pct}%` }} />
+                            </div>
+                            <p className="text-[13px] text-slate-600 dark:text-slate-300 leading-relaxed">{cat.comment}</p>
+                        </div>
+                    );
+                })}
             </div>
 
-            {!submitted && !isCompleted ? (
-                <button
-                    onClick={handleSubmit}
-                    disabled={!meetsMinimum}
-                    className={`px-8 py-3 rounded-[12px] font-bold transition-colors ${meetsMinimum
-                        ? 'bg-blue-600 hover:bg-blue-500 text-white'
-                        : 'bg-slate-200 dark:bg-[#111827] text-slate-400 cursor-not-allowed'
-                        }`}
-                >
-                    Submit Summary
-                </button>
-            ) : (
-                <div className="bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-200 dark:border-emerald-500/20 rounded-[12px] p-5">
-                    <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
-                        Summary submitted!
+            {/* ── Vocabulary Analysis ── */}
+            <div className="rounded-[12px] border border-gray-200 dark:border-[#1E293B] bg-white dark:bg-[#0F172A] p-5 space-y-4">
+                <h3 className="text-[18px] font-bold text-gray-900 dark:text-white">📝 Vocabulary Analysis</h3>
+
+                {evaluation.vocabularyUsed?.length > 0 && (
+                    <div>
+                        <p className="text-[13px] font-semibold text-emerald-600 dark:text-emerald-400 mb-2">✅ Used Correctly</p>
+                        <div className="flex flex-wrap gap-2">
+                            {evaluation.vocabularyUsed.map((w: string, i: number) => (
+                                <span key={i} className="px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-[13px] font-medium">{w}</span>
+                            ))}
+                        </div>
                     </div>
-                    <p className="text-[14px] text-emerald-600 dark:text-emerald-400">AI evaluation will be available in a future update. For now, well done on completing this lesson!</p>
+                )}
+
+                {evaluation.vocabularyMissed?.length > 0 && (
+                    <div>
+                        <p className="text-[13px] font-semibold text-amber-600 dark:text-amber-400 mb-2">⚠️ Not Used</p>
+                        <div className="flex flex-wrap gap-2">
+                            {evaluation.vocabularyMissed.map((w: string, i: number) => (
+                                <span key={i} className="px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400 text-[13px] font-medium">{w}</span>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {evaluation.vocabularyUsedIncorrectly?.length > 0 && (
+                    <div>
+                        <p className="text-[13px] font-semibold text-red-600 dark:text-red-400 mb-2">❌ Used Incorrectly</p>
+                        <div className="flex flex-wrap gap-2">
+                            {evaluation.vocabularyUsedIncorrectly.map((w: string, i: number) => (
+                                <span key={i} className="px-3 py-1 rounded-full bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400 text-[13px] font-medium">{w}</span>
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {/* ── Strengths ── */}
+            {evaluation.strengths?.length > 0 && (
+                <div className="rounded-[12px] border border-emerald-200 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-900/10 p-5">
+                    <h3 className="text-[18px] font-bold text-emerald-700 dark:text-emerald-400 mb-4">💪 What You Did Well</h3>
+                    <div className="space-y-3">
+                        {evaluation.strengths.map((s: string, i: number) => (
+                            <div key={i} className="flex items-start gap-3">
+                                <span className="text-emerald-500 mt-0.5 flex-shrink-0">✓</span>
+                                <p className="text-[14px] text-emerald-800 dark:text-emerald-300 leading-relaxed">{s}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* ── Improvements ── */}
+            {evaluation.improvements?.length > 0 && (
+                <div className="rounded-[12px] border border-amber-200 dark:border-amber-500/20 bg-amber-50 dark:bg-amber-900/10 p-5">
+                    <h3 className="text-[18px] font-bold text-amber-700 dark:text-amber-400 mb-4">🎯 Areas to Improve</h3>
+                    <div className="space-y-5">
+                        {evaluation.improvements.map((imp: any, i: number) => (
+                            <div key={i} className="bg-white dark:bg-[#0F172A] rounded-[12px] p-4 border border-amber-100 dark:border-amber-500/10">
+                                <p className="text-[14px] font-semibold text-amber-800 dark:text-amber-300 mb-3">{imp.issue}</p>
+                                <div className="space-y-2 text-[13px]">
+                                    <div className="flex items-start gap-2">
+                                        <span className="text-red-500 mt-0.5 flex-shrink-0">✗</span>
+                                        <p className="text-red-700 dark:text-red-400 line-through">{imp.originalSentence}</p>
+                                    </div>
+                                    <div className="flex items-start gap-2">
+                                        <span className="text-emerald-500 mt-0.5 flex-shrink-0">✓</span>
+                                        <p className="text-emerald-700 dark:text-emerald-400 font-medium">{imp.correctedSentence}</p>
+                                    </div>
+                                    <p className="text-slate-500 dark:text-slate-400 mt-2 pl-5 italic">{imp.explanation}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* ── Copied Phrases ── */}
+            {evaluation.copiedPhrases?.length > 0 && (
+                <div className="rounded-[12px] border border-violet-200 dark:border-violet-500/20 bg-violet-50 dark:bg-violet-900/10 p-5">
+                    <h3 className="text-[18px] font-bold text-violet-700 dark:text-violet-400 mb-4">📋 Phrases from the Podcast</h3>
+                    <p className="text-[13px] text-violet-600 dark:text-violet-400 mb-4">These phrases appear to be copied directly from the podcast. Try paraphrasing them:</p>
+                    <div className="space-y-4">
+                        {evaluation.copiedPhrases.map((cp: any, i: number) => (
+                            <div key={i} className="bg-white dark:bg-[#0F172A] rounded-[12px] p-4 border border-violet-100 dark:border-violet-500/10 space-y-2 text-[13px]">
+                                <div className="flex items-start gap-2">
+                                    <span className="text-violet-400 mt-0.5 flex-shrink-0">You wrote:</span>
+                                    <p className="text-violet-700 dark:text-violet-300 italic">"{cp.studentPhrase}"</p>
+                                </div>
+                                <div className="flex items-start gap-2">
+                                    <span className="text-slate-400 mt-0.5 flex-shrink-0">Original:</span>
+                                    <p className="text-slate-500 dark:text-slate-400 italic">"{cp.originalPhrase}"</p>
+                                </div>
+                                <div className="flex items-start gap-2">
+                                    <span className="text-emerald-500 mt-0.5 flex-shrink-0">Try this:</span>
+                                    <p className="text-emerald-700 dark:text-emerald-400 font-medium">"{cp.suggestedParaphrase}"</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* ── Overall Feedback ── */}
+            {evaluation.overallFeedback && (
+                <div className="rounded-[12px] border border-blue-200 dark:border-blue-500/20 bg-blue-50 dark:bg-blue-900/10 p-5">
+                    <div className="flex items-start gap-3">
+                        <span className="text-[24px]">🌟</span>
+                        <div>
+                            <h3 className="text-[16px] font-bold text-blue-700 dark:text-blue-400 mb-2">Overall Feedback</h3>
+                            <p className="text-[15px] text-blue-800 dark:text-blue-300 leading-relaxed">{evaluation.overallFeedback}</p>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
     );
 }
+

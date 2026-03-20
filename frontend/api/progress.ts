@@ -35,14 +35,29 @@ export interface TaskSuggestion {
 }
 
 // Base origin for backend API calls.
-// In dev, set VITE_BACKEND_BASE_URL=http://localhost:4000 to call Encore directly.
-const API_ORIGIN = (import.meta as any).env?.VITE_BACKEND_BASE_URL || window.location.origin;
+const API_ORIGIN = (import.meta as any).env?.VITE_BACKEND_BASE_URL || "http://localhost:4000";
+
+// Helper: get auth headers for Encore API calls
+import { supabase } from "../lib/supabase";
+
+async function getAuthHeaders(): Promise<Record<string, string>> {
+	try {
+		const { data: { session } } = await supabase.auth.getSession();
+		if (session?.access_token) {
+			return { "Authorization": `Bearer ${session.access_token}` };
+		}
+	} catch (e) {
+		console.warn("Failed to get auth session for progress API:", e);
+	}
+	return {};
+}
 
 export async function getSummary(userId: string, range: SummaryRange = "weekly"): Promise<ProgressSummary> {
 	const url = new URL(`/progress/summary`, API_ORIGIN);
 	url.searchParams.set("userId", String(userId));
 	url.searchParams.set("range", range);
-	const resp = await fetch(url.toString(), { credentials: "include" });
+	const authHeaders = await getAuthHeaders();
+	const resp = await fetch(url.toString(), { headers: authHeaders });
 	if (!resp.ok) throw new Error(`Failed to fetch summary: ${resp.status}`);
 	return await resp.json();
 }
@@ -52,7 +67,8 @@ export async function listTasks(userId: string, range: "daily" | "weekly" | "mon
 	url.searchParams.set("userId", String(userId));
 	url.searchParams.set("range", range);
 	url.searchParams.set("status", status);
-	const resp = await fetch(url.toString(), { credentials: "include" });
+	const authHeaders = await getAuthHeaders();
+	const resp = await fetch(url.toString(), { headers: authHeaders });
 	if (!resp.ok) throw new Error(`Failed to list tasks: ${resp.status}`);
 	return await resp.json();
 }
@@ -65,10 +81,10 @@ export async function createTask(task: {
 	estimatedMinutes?: number;
 	dueAt?: string;
 }): Promise<Task> {
+	const authHeaders = await getAuthHeaders();
 	const resp = await fetch(`${API_ORIGIN}/progress/tasks`, {
 		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		credentials: "include",
+		headers: { "Content-Type": "application/json", ...authHeaders },
 		body: JSON.stringify(task),
 	});
 	if (!resp.ok) throw new Error(`Failed to create task: ${resp.status}`);
@@ -76,10 +92,10 @@ export async function createTask(task: {
 }
 
 export async function updateTask(id: string, updates: { progress?: number; status?: "planned" | "in-progress" | "completed"; completedAt?: string }): Promise<Task> {
+	const authHeaders = await getAuthHeaders();
 	const resp = await fetch(`${API_ORIGIN}/progress/tasks/${encodeURIComponent(id)}`, {
 		method: "PATCH",
-		headers: { "Content-Type": "application/json" },
-		credentials: "include",
+		headers: { "Content-Type": "application/json", ...authHeaders },
 		body: JSON.stringify(updates),
 	});
 	if (!resp.ok) throw new Error(`Failed to update task: ${resp.status}`);
@@ -87,18 +103,19 @@ export async function updateTask(id: string, updates: { progress?: number; statu
 }
 
 export async function deleteTask(id: string): Promise<void> {
+	const authHeaders = await getAuthHeaders();
 	const resp = await fetch(`${API_ORIGIN}/progress/tasks/${encodeURIComponent(id)}`, {
 		method: "DELETE",
-		credentials: "include",
+		headers: authHeaders,
 	});
 	if (!resp.ok) throw new Error(`Failed to delete task: ${resp.status}`);
 }
 
 export async function generateSuggestions(params: { userId: string; range: SummaryRange; timeAvailableMinutes: number; targetBand?: number }): Promise<{ suggestions: TaskSuggestion[] }> {
+	const authHeaders = await getAuthHeaders();
 	const resp = await fetch(`${API_ORIGIN}/progress/ai/generate`, {
 		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		credentials: "include",
+		headers: { "Content-Type": "application/json", ...authHeaders },
 		body: JSON.stringify(params),
 	});
 	if (!resp.ok) throw new Error(`Failed to generate suggestions: ${resp.status}`);
@@ -106,14 +123,12 @@ export async function generateSuggestions(params: { userId: string; range: Summa
 }
 
 export async function acceptSuggestions(params: { userId: string; suggestions: TaskSuggestion[] }): Promise<{ tasks: Task[] }> {
+	const authHeaders = await getAuthHeaders();
 	const resp = await fetch(`${API_ORIGIN}/progress/ai/accept`, {
 		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		credentials: "include",
+		headers: { "Content-Type": "application/json", ...authHeaders },
 		body: JSON.stringify(params),
 	});
 	if (!resp.ok) throw new Error(`Failed to accept suggestions: ${resp.status}`);
 	return await resp.json();
 }
-
-

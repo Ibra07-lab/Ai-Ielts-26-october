@@ -109,8 +109,8 @@ class MicroFeedbackItem(BaseModel):
     )
     paragraph_location: Optional[int] = Field(
         default=None,
-        ge=1,
-        description="Which paragraph this sentence appears in (1-indexed)"
+        ge=0,
+        description="Which paragraph this sentence appears in (0 or 1-indexed)"
     )
 
 
@@ -173,8 +173,8 @@ class MacroFeedbackItem(BaseModel):
     
     paragraph_index: Optional[int] = Field(
         default=None,
-        ge=1,
-        description="Which paragraph is being addressed (1-indexed)"
+        ge=0,
+        description="Which paragraph is being addressed (0 or 1-indexed)"
     )
     issue_identified: Optional[str] = Field(
         default=None,
@@ -463,8 +463,8 @@ class IdeaNode(BaseModel):
     
     paragraph_index: int = Field(
         ...,
-        ge=1,
-        description="Which paragraph this idea appears in (1-indexed)"
+        ge=0,
+        description="Which paragraph this idea appears in (0 or 1-indexed)"
     )
     idea_summary: str = Field(
         ...,

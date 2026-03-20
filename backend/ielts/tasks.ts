@@ -1,4 +1,6 @@
-import { api } from "encore.dev/api";
+import { api, APIError } from "encore.dev/api";
+import { getAuthData } from "~encore/auth";
+import { AuthData } from "./auth";
 import { ieltsDB } from "./db";
 import { difficultyPoints, generateSuggestions, getRangeBounds, TaskSuggestion, TaskCategory, TaskDifficulty } from "./aiSuggest";
 
@@ -63,9 +65,13 @@ function mapStatusFilter(status: string | undefined): ("planned" | "in_progress"
 
 // GET /progress/summary
 export const getProgressSummary = api(
-	{ expose: true, method: "GET", path: "/progress/summary" },
+	{ expose: true, method: "GET", path: "/progress/summary", auth: true },
 	async (params: { userId: string; range?: SummaryRange }): Promise<ProgressSummary> => {
 		const { userId, range = "weekly" } = params;
+		const auth = getAuthData() as AuthData | null;
+		if (auth?.userID !== userId) {
+			throw APIError.permissionDenied("You can only access your own progress summary");
+		}
 		const { from, to } = getRangeBounds(range);
 
 		// planned tasks in range
@@ -137,9 +143,13 @@ export const getProgressSummary = api(
 
 // GET /progress/tasks
 export const listTasks = api(
-	{ expose: true, method: "GET", path: "/progress/tasks" },
+	{ expose: true, method: "GET", path: "/progress/tasks", auth: true },
 	async (params: { userId: string; range?: "daily" | "weekly" | "monthly"; status?: "all" | "planned" | "in-progress" | "completed" }): Promise<{ tasks: Task[] }> => {
 		const { userId, range = "weekly", status = "all" } = params;
+		const auth = getAuthData() as AuthData | null;
+		if (auth?.userID !== userId) {
+			throw APIError.permissionDenied("You can only list your own tasks");
+		}
 		const { from, to } = getRangeBounds(range);
 		const statusFilter = mapStatusFilter(status);
 		const filterStatus = statusFilter ? statusFilter[0] : null;
@@ -168,7 +178,7 @@ export const listTasks = api(
 
 // POST /progress/tasks
 export const createTask = api(
-	{ expose: true, method: "POST", path: "/progress/tasks" },
+	{ expose: true, method: "POST", path: "/progress/tasks", auth: true },
 	async (body: {
 		userId: string;
 		name: string;
@@ -178,6 +188,10 @@ export const createTask = api(
 		dueAt?: Date;
 	}): Promise<Task> => {
 		const { userId, name, category, difficulty } = body;
+		const auth = getAuthData() as AuthData | null;
+		if (auth?.userID !== userId) {
+			throw APIError.permissionDenied("You can only create tasks for yourself");
+		}
 		const estimatedMinutes = body.estimatedMinutes ?? 20;
 		const dueAt = normalizeToStartOfDay(body.dueAt);
 		const row = await ieltsDB.queryRow<any>`
@@ -191,8 +205,16 @@ RETURNING *
 
 // PATCH /progress/tasks/:id
 export const updateTask = api(
-	{ expose: true, method: "PATCH", path: "/progress/tasks/:id" },
+	{ expose: true, method: "PATCH", path: "/progress/tasks/:id", auth: true },
 	async (params: { id: string; progress?: number; status?: "planned" | "in-progress" | "completed"; completedAt?: Date }): Promise<Task> => {
+		const auth = getAuthData() as AuthData | null;
+		
+		// IDOR check: first check task ownership
+		const task = await ieltsDB.queryRow<{ user_id: string }>`SELECT user_id FROM tasks WHERE id = ${params.id}`;
+		if (task && task.user_id !== auth?.userID) {
+			throw APIError.permissionDenied("You can only update your own tasks");
+		}
+
 		const progress = params.progress ?? null;
 		const status = params.status === "in-progress" ? "in_progress" : params.status ?? null;
 
@@ -213,22 +235,32 @@ END,
 			WHERE id = ${params.id}
 RETURNING *
 	`;
+		if (!row) throw APIError.notFound("Task not found");
 		return mapRowToTask(row);
 	}
 );
 
 // DELETE /progress/tasks/:id
 export const deleteTask = api(
-	{ expose: true, method: "DELETE", path: "/progress/tasks/:id" },
+	{ expose: true, method: "DELETE", path: "/progress/tasks/:id", auth: true },
 	async (params: { id: string }): Promise<void> => {
+		const auth = getAuthData() as AuthData | null;
+		const task = await ieltsDB.queryRow<{ user_id: string }>`SELECT user_id FROM tasks WHERE id = ${params.id}`;
+		if (task && task.user_id !== auth?.userID) {
+			throw APIError.permissionDenied("You can only delete your own tasks");
+		}
 		await ieltsDB.exec`DELETE FROM tasks WHERE id = ${params.id} `;
 	}
 );
 
 // POST /progress/ai/generate
 export const generateTaskSuggestions = api(
-	{ expose: true, method: "POST", path: "/progress/ai/generate" },
+	{ expose: true, method: "POST", path: "/progress/ai/generate", auth: true },
 	async (body: { userId: string; range: SummaryRange; timeAvailableMinutes: number; targetBand?: number }): Promise<{ suggestions: TaskSuggestion[] }> => {
+		const auth = getAuthData() as AuthData | null;
+		if (auth?.userID !== body.userId) {
+			throw APIError.permissionDenied("You can only generate suggestions for yourself");
+		}
 		const suggestions = await generateSuggestions({
 			userId: body.userId,
 			range: body.range,
@@ -241,8 +273,12 @@ export const generateTaskSuggestions = api(
 
 // POST /progress/ai/accept
 export const acceptTaskSuggestions = api(
-	{ expose: true, method: "POST", path: "/progress/ai/accept" },
+	{ expose: true, method: "POST", path: "/progress/ai/accept", auth: true },
 	async (body: { userId: string; suggestions: TaskSuggestion[] }): Promise<{ tasks: Task[] }> => {
+		const auth = getAuthData() as AuthData | null;
+		if (auth?.userID !== body.userId) {
+			throw APIError.permissionDenied("You can only accept suggestions for yourself");
+		}
 		const tasks: Task[] = [];
 		for (const s of body.suggestions) {
 			const normalizedDueAt = normalizeToStartOfDay(s.dueAt);

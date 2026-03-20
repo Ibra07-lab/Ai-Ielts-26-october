@@ -1,4 +1,4 @@
-﻿import { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { diffWords } from 'diff';
 import { motion } from "framer-motion";
 import { ArrowLeft, CheckCircle2, AlertTriangle, BookOpen, PenTool, Layout, Scale, AlignLeft, AlertCircle, ArrowRight, Info, Target, FileText, Sparkles, Merge, Activity, ShieldAlert, Dumbbell, Clock, ListChecks, Lightbulb, Map, Compass, TrendingUp } from "lucide-react";
@@ -1244,9 +1244,9 @@ export function FeedbackDeepDiveView({
 
                                 {/* MICRO DRILL */}
                                 {currentCriterion === 'task_response' && coaching.raw_coach_output?.micro_drill && (
-                                    <div className="rounded-xl border border-blue-500/30 bg-blue-950/10 overflow-hidden mt-6">
-                                        <div className="bg-blue-900/20 p-3 border-b border-blue-500/20 flex items-center justify-between">
-                                            <span className="text-[13px] font-bold text-blue-300 uppercase tracking-wider">Training Drill</span>
+                                    <div className="rounded-xl border border-blue-500/30 bg-blue-50/50 dark:bg-blue-950/10 overflow-hidden mt-6">
+                                        <div className="bg-blue-100/50 dark:bg-blue-900/20 p-3 border-b border-blue-500/20 flex items-center justify-between">
+                                            <span className="text-[13px] font-bold text-blue-600 dark:text-blue-300 uppercase tracking-wider">Training Drill</span>
                                             <span className="text-xs bg-blue-500 text-white px-2.5 py-1 rounded-full shadow-lg shadow-blue-500/20">{coaching.raw_coach_output.micro_drill.time_limit_minutes} min</span>
                                         </div>
                                         <div className="p-4 flex flex-col sm:flex-row gap-5">
@@ -1255,8 +1255,8 @@ export function FeedbackDeepDiveView({
                                                 <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{coaching.raw_coach_output.micro_drill.instructions}</p>
                                             </div>
                                             <div className="w-48 shrink-0">
-                                                <div className="text-xs text-blue-300 font-mono bg-blue-950/50 p-3 rounded border border-blue-900/50 h-full">
-                                                    <div className="uppercase text-xs text-blue-500 font-bold mb-1">Goal</div>
+                                                <div className="text-xs text-blue-700 dark:text-blue-300 font-mono bg-blue-50 dark:bg-blue-950/50 p-3 rounded border border-blue-200 dark:border-blue-900/50 h-full">
+                                                    <div className="uppercase text-xs text-blue-600 dark:text-blue-500 font-bold mb-1">Goal</div>
                                                     {coaching.raw_coach_output.micro_drill.purpose}
                                                 </div>
                                             </div>
@@ -1540,12 +1540,12 @@ export function FeedbackDeepDiveView({
 
                                 {/* Pattern Breaker - Banned Items */}
                                 {currentCriterion === 'task_response' && coaching.raw_coach_output?.pattern_breaker?.banned_list.map((item: any, i: number) => (
-                                    <div key={`ban-${i}`} className="p-4 bg-rose-950/5 space-y-2 border border-rose-200 dark:border-rose-900/30 rounded-xl">
-                                        <div className="flex items-center gap-2 text-rose-400 text-xs font-bold uppercase">
+                                    <div key={`ban-${i}`} className="p-4 bg-rose-50/50 dark:bg-rose-950/5 space-y-2 border border-rose-200 dark:border-rose-900/30 rounded-xl">
+                                        <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400 text-xs font-bold uppercase">
                                             <AlertTriangle className="w-3.5 h-3.5" /> Avoid This
                                         </div>
-                                        <div className="font-mono text-sm text-rose-200">"{item.banned_element}"</div>
-                                        <div className="text-[14px] text-slate-500 dark:text-slate-400">{item.why_banned}</div>
+                                        <div className="font-mono text-sm text-rose-700 dark:text-rose-200">"{item.banned_element}"</div>
+                                        <div className="text-[14px] text-slate-600 dark:text-slate-400">{item.why_banned}</div>
                                     </div>
                                 ))}
                             </div>
@@ -1716,7 +1716,7 @@ export function FeedbackDeepDiveView({
                                                         {coaching.next_essay_plan.pre_writing_checklist.map((item, i) => (
                                                             <li key={`pre-${i}`} className="flex gap-3 text-[14px] text-slate-700 dark:text-slate-300 font-medium items-start group">
                                                                 <div className="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600 shrink-0 mt-1.5 group-hover:bg-emerald-400 transition-colors" />
-                                                                <span className="leading-relaxed group-hover:text-slate-800 dark:text-slate-200 transition-colors">{item}</span>
+                                                                <span className="leading-relaxed group-hover:text-slate-800 dark:text-slate-200 dark:group-hover:text-white transition-colors">{item}</span>
                                                             </li>
                                                         ))}
                                                     </ul>
@@ -1799,18 +1799,18 @@ export function FeedbackDeepDiveView({
 
                                         {/* COHERENCE STRATEGY */}
                                         {coaching.coherence_advice && (
-                                            <div className="bg-indigo-950/10 border border-indigo-500/20 rounded-xl overflow-hidden mb-6">
-                                                <div className="bg-indigo-500/10 p-4 border-b border-indigo-500/20 flex items-center justify-between">
-                                                    <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold uppercase text-xs tracking-wider">
+                                            <div className="bg-indigo-50/50 dark:bg-indigo-950/10 border border-indigo-500/20 rounded-xl overflow-hidden mb-6">
+                                                <div className="bg-indigo-100/50 dark:bg-indigo-500/10 p-4 border-b border-indigo-500/20 flex items-center justify-between">
+                                                    <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 font-bold uppercase text-xs tracking-wider">
                                                         <Layout className="w-4 h-4" /> Strategic Flow Advice
                                                     </div>
-                                                    <span className="text-[10px] bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded border border-indigo-500/30">Structure</span>
+                                                    <span className="text-[10px] bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 px-2 py-0.5 rounded border border-indigo-500/30">Structure</span>
                                                 </div>
                                                 <div className="p-4 space-y-4">
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                         <div className="space-y-2">
                                                             <div className="text-[10px] font-bold text-slate-600 dark:text-slate-500 uppercase">Core Strategy</div>
-                                                            <p className="text-sm text-indigo-200 font-medium">{coaching.coherence_advice.strategy}</p>
+                                                            <p className="text-sm text-indigo-700 dark:text-indigo-200 font-medium">{coaching.coherence_advice.strategy}</p>
                                                         </div>
                                                         <div className="space-y-2">
                                                             <div className="text-[10px] font-bold text-slate-600 dark:text-slate-500 uppercase">Specific Direction</div>
@@ -1829,7 +1829,7 @@ export function FeedbackDeepDiveView({
                                         {coaching.topic_analysis && coaching.topic_analysis.length > 0 && (
                                             <div className="space-y-3 mt-6">
                                                 {coaching.topic_analysis.map((topic, i) => (
-                                                    <div key={i} className="flex flex-col gap-2 p-3 bg-[#1e293b]/50 border border-slate-200 dark:border-slate-800 rounded-lg hover:border-slate-300 dark:border-slate-700 transition-colors">
+                                                    <div key={i} className="flex flex-col gap-2 p-3 bg-slate-50 dark:bg-[#1e293b]/50 border border-slate-200 dark:border-slate-800 rounded-lg hover:border-slate-300 dark:border-slate-700 transition-colors">
                                                         {/* Header: Score + Title + Category */}
                                                         <div className="flex items-center justify-between">
                                                             <div className="flex items-center gap-3">
@@ -1856,17 +1856,17 @@ export function FeedbackDeepDiveView({
                                                                     </p>
                                                                 )}
                                                                 {topic.why_it_matters && (
-                                                                    <div className="flex items-start gap-2 text-xs text-indigo-300/80 bg-indigo-500/5 p-2 rounded border border-indigo-500/10">
+                                                                    <div className="flex items-start gap-2 text-xs text-indigo-700 dark:text-indigo-300/80 bg-indigo-50/50 dark:bg-indigo-500/5 p-2 rounded border border-indigo-100 dark:border-indigo-500/10">
                                                                         <div className="shrink-0 mt-0.5">💡</div>
                                                                         <span><strong>Why it matters:</strong> {topic.why_it_matters}</span>
                                                                     </div>
                                                                 )}
                                                                 {topic.evidence_from_essay && (
-                                                                    <div className="flex items-start gap-2 text-xs text-amber-300/80 bg-amber-500/5 p-2.5 rounded border border-amber-500/15">
+                                                                    <div className="flex items-start gap-2 text-xs text-amber-700 dark:text-amber-300/80 bg-amber-50/50 dark:bg-amber-500/5 p-2.5 rounded border border-amber-100 dark:border-amber-500/15">
                                                                         <div className="shrink-0 mt-0.5">📝</div>
                                                                         <div>
-                                                                            <strong className="text-amber-600 dark:text-amber-400">From your essay:</strong>
-                                                                            <p className="mt-1 italic text-amber-200/70">"{topic.evidence_from_essay}"</p>
+                                                                            <strong className="text-amber-700 dark:text-amber-400">From your essay:</strong>
+                                                                            <p className="mt-1 italic text-amber-800/70 dark:text-amber-200/70">"{topic.evidence_from_essay}"</p>
                                                                         </div>
                                                                     </div>
                                                                 )}

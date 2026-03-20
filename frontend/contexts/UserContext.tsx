@@ -10,6 +10,7 @@ interface AppUser {
   examDate?: string;
   language: string;
   theme: string;
+  onboardingCompleted: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -35,6 +36,7 @@ function supabaseUserToAppUser(supabaseUser: SupabaseUser): AppUser {
     examDate: supabaseUser.user_metadata?.examDate,
     language: supabaseUser.user_metadata?.language || "en",
     theme: supabaseUser.user_metadata?.theme || "light",
+    onboardingCompleted: supabaseUser.user_metadata?.onboardingCompleted || false,
     createdAt: supabaseUser.created_at,
     updatedAt: supabaseUser.updated_at || supabaseUser.created_at,
   };

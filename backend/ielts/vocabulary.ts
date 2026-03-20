@@ -1,4 +1,6 @@
-import { api } from "encore.dev/api";
+import { api, APIError } from "encore.dev/api";
+import { getAuthData } from "~encore/auth";
+import { AuthData } from "./auth";
 import { ieltsDB } from "./db";
 
 export interface VocabularyWord {
@@ -23,8 +25,13 @@ export interface VocabularyProgress {
 
 // Retrieves vocabulary words for practice.
 export const getVocabularyWords = api<{ userId: string; topic?: string; limit?: number }, { words: VocabularyWord[] }>(
-  { expose: true, method: "GET", path: "/users/:userId/vocabulary" },
+  { expose: true, method: "GET", path: "/users/:userId/vocabulary", auth: true },
   async ({ userId, topic, limit = 10 }) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== userId) {
+      throw APIError.permissionDenied("You can only access your own vocabulary");
+    }
+
     let query = `
       SELECT v.id, v.word, v.definition, v.example_sentence as "exampleSentence", 
              v.topic, v.difficulty_level as "difficultyLevel", v.audio_url as "audioUrl",
@@ -51,8 +58,13 @@ export const getVocabularyWords = api<{ userId: string; topic?: string; limit?: 
 
 // Updates user's vocabulary word status.
 export const updateVocabularyStatus = api<{ userId: string; wordId: number; status: string }, void>(
-  { expose: true, method: "POST", path: "/users/:userId/vocabulary/:wordId/status" },
+  { expose: true, method: "POST", path: "/users/:userId/vocabulary/:wordId/status", auth: true },
   async ({ userId, wordId, status }) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== userId) {
+      throw APIError.permissionDenied("You can only update your own vocabulary status");
+    }
+
     const nextReviewDate = status === 'review'
       ? new Date(Date.now() + 24 * 60 * 60 * 1000) // Tomorrow
       : null;
@@ -72,8 +84,13 @@ export const updateVocabularyStatus = api<{ userId: string; wordId: number; stat
 
 // Retrieves vocabulary progress for a user.
 export const getVocabularyProgress = api<{ userId: string }, VocabularyProgress>(
-  { expose: true, method: "GET", path: "/users/:userId/vocabulary/progress" },
+  { expose: true, method: "GET", path: "/users/:userId/vocabulary/progress", auth: true },
   async ({ userId }) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== userId) {
+      throw APIError.permissionDenied("You can only access your own vocabulary progress");
+    }
+
     const progress = await ieltsDB.queryRow<VocabularyProgress>`
       SELECT 
         COUNT(*) as "totalWords",
@@ -99,3 +116,4 @@ export const getVocabularyTopics = api<void, { topics: string[] }>(
     return { topics: topics.map(t => t.topic) };
   }
 );
+

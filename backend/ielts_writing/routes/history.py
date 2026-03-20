@@ -6,18 +6,22 @@ Endpoints:
     GET /writing/history/session/{id}    — Single evaluation by ID
 """
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 import logging
+from ..auth import require_auth
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/writing", tags=["Writing History"])
 
 
 @router.get("/history/{user_id}")
-async def get_writing_history(user_id: str, limit: int = 20):
+async def get_writing_history(user_id: str, auth: dict = Depends(require_auth), limit: int = 20):
     """
     Get all writing evaluations for a user, ordered by most recent first.
     """
+    if user_id != auth["uid"]:
+        raise HTTPException(status_code=403, detail="You can only access your own history")
+        
     try:
         from ..supabase_client import get_supabase
         supabase = get_supabase()
@@ -40,9 +44,9 @@ async def get_writing_history(user_id: str, limit: int = 20):
 
 
 @router.get("/history/session/{session_id}")
-async def get_writing_session(session_id: int):
+async def get_writing_session(session_id: int, auth: dict = Depends(require_auth)):
     """
-    Get a single writing evaluation by its ID.
+    Get a single writing evaluation by its ID (with ownership check).
     """
     try:
         from ..supabase_client import get_supabase
@@ -56,6 +60,10 @@ async def get_writing_session(session_id: int):
         
         if not result.data:
             raise HTTPException(status_code=404, detail="Session not found")
+            
+        # IDOR check
+        if result.data.get("user_id") != auth["uid"]:
+            raise HTTPException(status_code=403, detail="Access denied to this session")
         
         return {
             "success": True,
@@ -69,10 +77,9 @@ async def get_writing_session(session_id: int):
 
 
 @router.get("/history/all")
-async def get_all_writing_history(limit: int = 50):
+async def get_all_writing_history(auth: dict = Depends(require_auth), limit: int = 50):
     """
-    Get all writing evaluations (no user filter), ordered by most recent.
-    Useful during development before auth is implemented.
+    Returns only the authenticated user's history (restricted for production).
     """
     try:
         from ..supabase_client import get_supabase
@@ -80,6 +87,7 @@ async def get_all_writing_history(limit: int = 50):
         
         result = supabase.table("writing_evaluations") \
             .select("id, user_id, task_type, overall_band, student_name, created_at, question") \
+            .eq("user_id", auth["uid"]) \
             .order("created_at", desc=True) \
             .limit(limit) \
             .execute()
@@ -90,5 +98,5 @@ async def get_all_writing_history(limit: int = 50):
             "count": len(result.data)
         }
     except Exception as e:
-        logger.error(f"[API] Error fetching all history: {e}")
+        logger.error(f"[API] Error fetching history: {e}")
         raise HTTPException(status_code=500, detail=str(e))

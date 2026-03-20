@@ -1,3 +1,4 @@
+import { sanitizeHtml } from '@/utils/sanitize';
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 
 interface ListeningWorksheetProps {
@@ -257,7 +258,7 @@ const ListeningWorksheet: React.FC<ListeningWorksheetProps> = ({
         return (
             <div className="mb-12 animate-in fade-in duration-300">
                 <p className="italic mb-2">{instruction.split('\n')[0]}</p>
-                {instruction.includes('\n') && <p className="italic mb-6" dangerouslySetInnerHTML={{ __html: instruction.split('\n')[1] }} />}
+                {instruction.includes('\n') && <p className="italic mb-6" dangerouslySetInnerHTML={{ __html: sanitizeHtml(instruction.split('\n')[1]) }} />}
 
                 <div className="border border-black p-8 bg-white shadow-sm">
                     {content}

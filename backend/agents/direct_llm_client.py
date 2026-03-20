@@ -42,8 +42,10 @@ class DirectLLMClient:
         self.openai_key = os.getenv("OPENAI_API_KEY")
         self.openrouter_key = os.getenv("OPENROUTER_API_KEY")  # Dedicated OpenRouter key
         
-    def _is_openrouter_key(self, api_key: str) -> bool:
-        return api_key and (api_key.startswith("sk-or-") or "openrouter" in os.getenv("ANTHROPIC_API_BASE", "").lower())
+    def _is_openrouter_key(self, api_key: Optional[str]) -> bool:
+        if not api_key:
+            return False
+        return api_key.startswith("sk-or-") or "openrouter" in os.getenv("ANTHROPIC_API_BASE", "").lower()
 
     def call_anthropic(
         self, 
@@ -54,7 +56,7 @@ class DirectLLMClient:
         max_tokens: int = 1024,
         image_data: Optional[str] = None,
         image_media_type: Optional[str] = None,
-        enable_caching: bool = None,  # None = use global toggle
+        enable_caching: Optional[bool] = None,  # None = use global toggle
         timeout: float = 120.0  # Per-call timeout in seconds
     ) -> str:
         """Call Anthropic API directly with optional prompt caching.
@@ -101,7 +103,7 @@ class DirectLLMClient:
             final_messages = [{"role": "user", "content": user_prompt}]
 
         # Build system prompt - always use list format for consistency
-        system_content = [
+        system_content: List[Dict[str, Any]] = [
             {
                 "type": "text",
                 "text": system_prompt
@@ -198,7 +200,9 @@ class DirectLLMClient:
         
         # All retries exhausted
         logger.error(f"[RETRY EXHAUSTED] Anthropic call failed after {MAX_RETRIES} attempts")
-        raise last_exception
+        if last_exception:
+            raise last_exception
+        raise RuntimeError("Anthropic call failed with unknown error")
 
     def call_openai(
         self, 
@@ -245,7 +249,8 @@ class DirectLLMClient:
         system_prompt: str,
         user_prompt: str,
         temperature: float = 0.3,
-        max_tokens: int = 2000
+        max_tokens: int = 2000,
+        timeout: float = 120.0
     ) -> str:
         """Call OpenRouter API."""
         
@@ -266,7 +271,7 @@ class DirectLLMClient:
             "temperature": temperature,
         }
 
-        with httpx.Client(timeout=120.0) as client:
+        with httpx.Client(timeout=timeout) as client:
             response = client.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data)
             response.raise_for_status()
             return response.json()["choices"][0]["message"]["content"]
@@ -282,7 +287,7 @@ class DirectLLMClient:
         max_tokens: int = 1024,
         image_data: Optional[str] = None,
         image_media_type: Optional[str] = None,
-        enable_caching: bool = None,  # None = use global toggle
+        enable_caching: Optional[bool] = None,  # None = use global toggle
         timeout: float = 120.0  # Per-call timeout in seconds
     ) -> str:
         """Async version of call_anthropic for parallel execution with prompt caching.
@@ -403,7 +408,9 @@ class DirectLLMClient:
         
         # All retries exhausted
         logger.error(f"[RETRY EXHAUSTED] Anthropic Async call failed after {MAX_RETRIES} attempts")
-        raise last_exception
+        if last_exception:
+            raise last_exception
+        raise RuntimeError("Async Anthropic call failed with unknown error")
 
     async def call_openai_async(
         self, 
@@ -447,6 +454,10 @@ class DirectLLMClient:
             logger.info(f"[TOKEN_USAGE] OpenAI Async | Model: {model} | Input: {input_tokens} | Output: {output_tokens} | Cost: ${cost:.4f}")
             
             return response_json["choices"][0]["message"]["content"]
+        
+        # This line should never be reached as response.raise_for_status() handles errors
+        # but satisfies Pyright's strict return path check
+        raise RuntimeError("OpenAI Async call failed to return content")
 
 
     async def call_openrouter_async(
@@ -455,7 +466,8 @@ class DirectLLMClient:
         system_prompt: str,
         user_prompt: str,
         temperature: float = 0.3,
-        max_tokens: int = 2000
+        max_tokens: int = 2000,
+        timeout: float = 120.0
     ) -> str:
         """Async version of call_openrouter for parallel execution."""
         
@@ -480,7 +492,7 @@ class DirectLLMClient:
             "temperature": temperature,
         }
 
-        async with httpx.AsyncClient(timeout=120.0) as client:
+        async with httpx.AsyncClient(timeout=timeout) as client:
             response = await client.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data)
             if response.status_code >= 400:
                 logger.error(f"OpenRouter API Error: {response.text}")
@@ -495,5 +507,8 @@ class DirectLLMClient:
             logger.info(f"[TOKEN_USAGE] OpenRouter Async | Model: {model} | Input: {input_tokens} | Output: {output_tokens} | Cost: ${cost:.4f}")
             
             return response_json["choices"][0]["message"]["content"]
+        
+        # Fallback raise to satisfy Pyright control flow check
+        raise RuntimeError("OpenRouter Async call failed to return content")
 
 

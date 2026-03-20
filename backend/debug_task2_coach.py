@@ -6,7 +6,11 @@ import json
 from datetime import datetime
 
 # Setup path so we can import backend modules
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+# Add the backend directory to the search path
+BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
+if BACKEND_DIR not in sys.path:
+    sys.path.insert(0, BACKEND_DIR)
+
 
 from ielts_writing.agents.coach.task2_coach import Task2Coach
 from ielts_writing.schemas.task2 import IELTSEvaluation, BandScores

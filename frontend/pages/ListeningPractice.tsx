@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Headphones, Play, Pause, RotateCcw, Send, Volume2, Sparkles, Clock,
@@ -111,6 +112,22 @@ export default function ListeningPractice() {
   });
 
   const listeningTests = testsData?.tests || [];
+  const { id: urlTestId } = useParams<{ id: string }>();
+
+  // Handle deep linking from URL
+  useEffect(() => {
+    if (urlTestId && listeningTests.length > 0) {
+      const testIdNum = parseInt(urlTestId, 10);
+      if (!isNaN(testIdNum)) {
+        const testExists = listeningTests.some((t: any) => t.id === testIdNum);
+        if (testExists && selectedTestId !== testIdNum) {
+          console.log("🔗 [DEBUG] Deep linking to test ID:", testIdNum);
+          setSelectedTestId(testIdNum);
+          setIsTestStarted(true);
+        }
+      }
+    }
+  }, [urlTestId, listeningTests, selectedTestId]);
 
   // Fetch selected test
   const { data: testData, refetch: refetchTest, isLoading: isLoadingTest, error: testError } = useQuery({

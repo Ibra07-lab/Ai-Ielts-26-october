@@ -1,4 +1,6 @@
-import { api } from "encore.dev/api";
+import { api, APIError } from "encore.dev/api";
+import { getAuthData } from "~encore/auth";
+import { AuthData } from "./auth";
 import { ieltsDB } from "./db";
 
 export interface WritingPrompt {
@@ -689,13 +691,14 @@ export const getWritingPrompt = api<{ taskType: number; test_id?: number }, Writ
   }
 );
 
-// @DEPRECATED: This endpoint generates MOCK/RANDOM band scores and should NOT be used.
-// Use the AI-powered evaluation endpoint at http://localhost:8001/ielts_writing/evaluate instead.
-// This endpoint is kept only for backward compatibility with legacy code.
-// It generates random scores between 5.0-8.0 with generic template feedback.
+// Submits writing answers for evaluation.
 export const submitWriting = api<WritingSubmission, WritingFeedback>(
-  { expose: true, method: "POST", path: "/writing/submit" },
+  { expose: true, method: "POST", path: "/writing/submit", auth: true },
   async (req) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== req.userId) {
+      throw APIError.permissionDenied("You can only submit for yourself");
+    }
     console.warn("⚠️  DEPRECATED: submitWriting endpoint called. This generates MOCK data. Use /ielts_writing/evaluate for real AI evaluation.");
 
     // Mock AI evaluation - in a real app, this would call an AI service
@@ -741,24 +744,33 @@ VALUES(${req.userId
 );
 
 export const getWritingSessionById = api<{ id: number }, { session: WritingSession | null }>(
-  { expose: true, method: "GET", path: "/writing/sessions/:id" },
+  { expose: true, method: "GET", path: "/writing/sessions/:id", auth: true },
   async ({ id }) => {
-    const session = await ieltsDB.queryRow<WritingSession>`
-      SELECT id, task_type as "taskType", prompt, content, band_score as "bandScore",
+    const auth = getAuthData() as AuthData | null;
+    const session = await ieltsDB.queryRow<WritingSession & { user_id: string }>`
+      SELECT id, user_id as "user_id", task_type as "taskType", prompt, content, band_score as "bandScore",
         grammar_feedback as "grammarFeedback", vocabulary_feedback as "vocabularyFeedback",
         structure_feedback as "structureFeedback", coherence_feedback as "coherenceFeedback",
         created_at as "createdAt"
       FROM writing_submissions
       WHERE id = ${id}
     `;
+
+    if (session && session.user_id !== auth?.userID) {
+      throw APIError.permissionDenied("You can only access your own writing sessions");
+    }
     return { session };
   }
 );
 
 // Retrieves user's writing session history.
 export const getWritingSessions = api<{ userId: string }, { sessions: WritingSession[] }>(
-  { expose: true, method: "GET", path: "/users/:userId/writing/sessions" },
+  { expose: true, method: "GET", path: "/users/:userId/writing/sessions", auth: true },
   async ({ userId }) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== userId) {
+      throw APIError.permissionDenied("You can only access your own writing sessions");
+    }
     const sessions = await ieltsDB.queryAll<WritingSession>`
       SELECT id, task_type as "taskType", prompt, content, band_score as "bandScore",
   grammar_feedback as "grammarFeedback", vocabulary_feedback as "vocabularyFeedback",

@@ -1,4 +1,6 @@
-import { api } from "encore.dev/api";
+import { api, APIError } from "encore.dev/api";
+import { getAuthData } from "~encore/auth";
+import { AuthData } from "./auth";
 import { ieltsDB } from "./db";
 import * as fs from "node:fs";
 import * as path from "node:path";
@@ -124,7 +126,6 @@ function loadListeningTestById(testId: number): ListeningTest | null {
 }
 
 // Calculate IELTS band score based on raw score (40 questions total)
-// Calculate IELTS band score based on raw score (40 questions total)
 function calculateBandScore(score: number, total: number): number {
   // Scale the score to be out of 40 (since real IELTS has 40 questions)
   const rawScore = Math.round((score / total) * 40);
@@ -209,8 +210,13 @@ export const getListeningTranscript = api<{ testId: number }, { transcript: List
 
 // Submit listening answers for evaluation
 export const submitListening = api<ListeningSubmission, ListeningResult>(
-  { expose: true, method: "POST", path: "/listening/submit" },
+  { expose: true, method: "POST", path: "/listening/submit", auth: true },
   async (req) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== req.userId) {
+      throw APIError.permissionDenied("You can only submit for yourself");
+    }
+
     const test = loadListeningTestById(req.testId);
     if (!test) {
       throw new Error(`Listening test ${req.testId} not found`);
@@ -228,10 +234,6 @@ export const submitListening = api<ListeningSubmission, ListeningResult>(
       let isCorrect = false;
 
       if (question.type === "pick-two" || Array.isArray(question.correctAnswer)) {
-        // Handle pick-two questions (e.g. Q14 & Q15 are a pair)
-        // Each question number expects ONE answer from the user
-        // User gets 1 mark if their single answer is in the correct answers pool
-        // Order doesn't matter - "B" for Q14 and "E" for Q15 is the same as "E" for Q14 and "B" for Q15
         const correctAnswer = question.correctAnswer;
         const correctParts = Array.isArray(correctAnswer)
           ? correctAnswer
@@ -240,8 +242,7 @@ export const submitListening = api<ListeningSubmission, ListeningResult>(
         const normalizedParts = correctParts.map(a => a.trim().toUpperCase());
         isCorrect = normalizedParts.includes(userAnswer.toUpperCase());
       } else {
-        // Handle single-answer questions
-        const correctAnswer = question.correctAnswer.toLowerCase().trim();
+        const correctAnswer = (question.correctAnswer as string).toLowerCase().trim();
         const alternatives = question.alternativeAnswers?.map(a => a.toLowerCase().trim()) || [];
         isCorrect = userAnswer.toLowerCase() === correctAnswer || alternatives.includes(userAnswer.toLowerCase());
       }
@@ -289,8 +290,13 @@ export const submitListening = api<ListeningSubmission, ListeningResult>(
 
 // Get user's listening session history
 export const getListeningSessions = api<{ userId: string }, { sessions: ListeningSession[] }>(
-  { expose: true, method: "GET", path: "/users/:userId/listening/sessions" },
+  { expose: true, method: "GET", path: "/users/:userId/listening/sessions", auth: true },
   async ({ userId }) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== userId) {
+      throw APIError.permissionDenied("You can only access your own listening sessions");
+    }
+
     const sessions = await ieltsDB.queryAll<ListeningSession>`
       SELECT id, test_id as "testId", audio_title as "testTitle", score, 
              total_questions as "totalQuestions", band_score as "bandScore",
@@ -317,3 +323,4 @@ export const getListeningAudio = api<void, ListeningTest>(
     return randomTest;
   }
 );
+

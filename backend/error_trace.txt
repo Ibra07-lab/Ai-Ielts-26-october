@@ -1,0 +1,53 @@
+Traceback (most recent call last):
+  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\agents\explainer\task2_explainer.py", line 237, in _parse_response
+    return ExplainerOutput(**data)
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\pydantic\main.py", line 250, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 2 validation errors for ExplainerOutput
+macro_feedback.0.paragraph_index
+  Input should be greater than or equal to 1 [type=greater_than_equal, input_value=0, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.12/v/greater_than_equal
+idea_development.idea_map.0.paragraph_index
+  Input should be greater than or equal to 1 [type=greater_than_equal, input_value=0, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.12/v/greater_than_equal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\routes\task2.py", line 73, in evaluate_task2
+    result = await pipeline.evaluate_essay(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+    )
+    ^
+  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\task2_pipeline.py", line 99, in evaluate_essay
+    explanation = await loop.run_in_executor(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        _executor, self.explainer.explain, essay, question, eval_dict
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Python313\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\agents\explainer\task2_explainer.py", line 94, in explain
+    output = self._parse_response(response_text)
+  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\agents\explainer\task2_explainer.py", line 280, in _parse_response
+    raise ValueError(f"JSON parsed but validation failed: {e}")
+ValueError: JSON parsed but validation failed: 2 validation errors for ExplainerOutput
+macro_feedback.0.paragraph_index
+  Input should be greater than or equal to 1 [type=greater_than_equal, input_value=0, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.12/v/greater_than_equal
+idea_development.idea_map.0.paragraph_index
+  Input should be greater than or equal to 1 [type=greater_than_equal, input_value=0, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.12/v/greater_than_equal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<string>", line 13, in main
+    await evaluate_task2(req, 'anonymous')
+  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\routes\task2.py", line 169, in evaluate_task2
+    raise HTTPException(
+    ...<5 lines>...
+    )
+fastapi.exceptions.HTTPException: 500: {'error': 'JSON parsed but validation failed: 2 validation errors for ExplainerOutput\nmacro_feedback.0.paragraph_index\n  Input should be greater than or equal to 1 [type=greater_than_equal, input_value=0, input_type=int]\n    For further information visit https://errors.pydantic.dev/2.12/v/greater_than_equal\nidea_development.idea_map.0.paragraph_index\n  Input should be greater than or equal to 1 [type=greater_than_equal, input_value=0, input_type=int]\n    For further information visit https://errors.pydantic.dev/2.12/v/greater_than_equal', 'message': 'An error occurred during evaluation. Please try again.'}

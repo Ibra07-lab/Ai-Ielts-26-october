@@ -1,4 +1,6 @@
-import { api } from "encore.dev/api";
+import { api, APIError } from "encore.dev/api";
+import { getAuthData } from "~encore/auth";
+import { AuthData } from "./auth";
 import { ieltsDB } from "./db";
 
 export interface UserProgress {
@@ -25,8 +27,13 @@ export interface DailyGoal {
 
 // Retrieves user progress overview.
 export const getProgress = api<{ userId: string }, ProgressOverview>(
-  { expose: true, method: "GET", path: "/users/:userId/progress" },
+  { expose: true, method: "GET", path: "/users/:userId/progress", auth: true },
   async ({ userId }) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== userId) {
+      throw APIError.permissionDenied("You can only access your own progress");
+    }
+
     const progress = await ieltsDB.queryAll<UserProgress>`
       SELECT skill, estimated_band as "estimatedBand", practice_count as "practiceCount", 
              last_practice_date as "lastPracticeDate"
@@ -55,8 +62,13 @@ export const getProgress = api<{ userId: string }, ProgressOverview>(
 
 // Updates user progress for a specific skill.
 export const updateProgress = api<{ userId: string; skill: string; estimatedBand?: number }, void>(
-  { expose: true, method: "POST", path: "/users/:userId/progress/:skill" },
+  { expose: true, method: "POST", path: "/users/:userId/progress/:skill", auth: true },
   async ({ userId, skill, estimatedBand }) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== userId) {
+      throw APIError.permissionDenied("You can only update your own progress");
+    }
+
     await ieltsDB.exec`
       INSERT INTO user_progress (user_id, skill, estimated_band, practice_count, last_practice_date)
       VALUES (${userId}, ${skill}, ${estimatedBand || null}, 1, CURRENT_DATE)
@@ -72,8 +84,13 @@ export const updateProgress = api<{ userId: string; skill: string; estimatedBand
 
 // Retrieves today's daily goal for a user.
 export const getDailyGoal = api<{ userId: string }, DailyGoal>(
-  { expose: true, method: "GET", path: "/users/:userId/daily-goal" },
+  { expose: true, method: "GET", path: "/users/:userId/daily-goal", auth: true },
   async ({ userId }) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== userId) {
+      throw APIError.permissionDenied("You can only access your own daily goals");
+    }
+
     // 1. Try fetching the existing goal for today
     const goal = await ieltsDB.queryRow<DailyGoal>`
       SELECT goal_date as "goalDate", target_minutes as "targetMinutes", 
@@ -99,7 +116,6 @@ export const getDailyGoal = api<{ userId: string }, DailyGoal>(
       return newGoal!;
     } catch (error: any) {
       // If it's a foreign key constraint violation (code 23503), the user doesn't exist in our table.
-      // Auto-create a minimal placeholder user since Supabase is the actual source of truth for auth.
       if (error?.code === "23503" || error?.message?.includes("foreign key constraint")) {
         await ieltsDB.exec`
           INSERT INTO users (id, name, target_band, language, theme)
@@ -124,8 +140,13 @@ export const getDailyGoal = api<{ userId: string }, DailyGoal>(
 
 // Updates daily goal progress.
 export const updateDailyGoal = api<{ userId: string; minutesCompleted: number; activitiesCompleted: number }, void>(
-  { expose: true, method: "POST", path: "/users/:userId/daily-goal/update" },
+  { expose: true, method: "POST", path: "/users/:userId/daily-goal/update", auth: true },
   async ({ userId, minutesCompleted, activitiesCompleted }) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== userId) {
+      throw APIError.permissionDenied("You can only update your own daily goals");
+    }
+
     await ieltsDB.exec`
       UPDATE daily_goals 
       SET completed_minutes = completed_minutes + ${minutesCompleted},
@@ -134,3 +155,4 @@ export const updateDailyGoal = api<{ userId: string; minutesCompleted: number; a
     `;
   }
 );
+

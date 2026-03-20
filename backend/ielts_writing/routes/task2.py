@@ -22,7 +22,7 @@ import logging
 import time
 
 from ..task2_pipeline import Task2Pipeline
-from ..auth import get_current_user
+from ..auth import require_auth
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/task2", tags=["IELTS Writing Task 2"])
@@ -43,7 +43,7 @@ class Task2QuickRequest(BaseModel):
 
 
 @router.post("/evaluate")
-async def evaluate_task2(request: Task2EvaluationRequest, user_id: str | None = Depends(get_current_user)):
+async def evaluate_task2(request: Task2EvaluationRequest, auth: dict = Depends(require_auth)):
     """
     Full Task 2 evaluation pipeline.
     
@@ -112,7 +112,7 @@ async def evaluate_task2(request: Task2EvaluationRequest, user_id: str | None = 
             
             band_scores = result["evaluation"].band_scores
             save_result = supabase.table("writing_evaluations").insert({
-                "user_id": user_id or "anonymous",
+                "user_id": user_id,
                 "task_type": "task2",
                 "question": request.question,
                 "essay": request.essay,
@@ -175,7 +175,7 @@ async def evaluate_task2(request: Task2EvaluationRequest, user_id: str | None = 
 
 
 @router.post("/score")
-async def score_task2_quick(request: Task2QuickRequest):
+async def score_task2_quick(request: Task2QuickRequest, auth: dict = Depends(require_auth)):
     """
     Quick Task 2 scoring only (Examiner only).
     

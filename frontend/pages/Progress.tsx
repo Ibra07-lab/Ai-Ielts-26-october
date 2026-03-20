@@ -22,7 +22,7 @@ import DailyProgressChart from "../components/progress/DailyProgressChart";
 import ReadingProgressTracker from "../components/progress/ReadingProgressTracker";
 
 export default function Progress() {
-  const { user } = useUser();
+  const { user, session } = useUser();
   const navigate = useNavigate();
   const [viewDays, setViewDays] = useState(14);
 
@@ -32,18 +32,16 @@ export default function Progress() {
     enabled: !!user,
   });
 
-  const { data: speakingSessions } = useQuery({
-    queryKey: ["speakingSessions", user?.id],
-    queryFn: () => (user ? backend.ielts.getSpeakingSessions(user.id) : null),
-    enabled: !!user,
-  });
-
   const { data: writingSessions } = useQuery({
     queryKey: ["writingSessions", user?.id],
     queryFn: async () => {
       if (!user) return null;
       try {
-        const response = await fetch(`http://localhost:8002/writing/history/${user.id}`);
+        const response = await fetch(`http://localhost:8002/writing/history/${user.id}`, {
+          headers: {
+            "Authorization": `Bearer ${session?.access_token || ""}`,
+          },
+        });
         if (!response.ok) throw new Error("Failed to fetch history");
         const data = await response.json();
         const mappedSessions = (data.sessions || []).map((s: any) => ({
@@ -117,7 +115,6 @@ export default function Progress() {
       const listeningSes = listeningSessions?.sessions.filter((s: any) => isSameDay(s.createdAt)).length || 0;
       const readingSes = readingSessions?.sessions.filter((s: any) => isSameDay(s.createdAt)).length || 0;
       const writingSes = writingSessions?.sessions.filter((s: any) => isSameDay(s.createdAt)).length || 0;
-      const speakingSes = speakingSessions?.sessions.filter((s: any) => isSameDay(s.createdAt)).length || 0;
 
       const dailyTasksAll = tasksData?.tasks || [];
       const dailyCompletedTasks = dailyTasksAll.filter((t) => {
@@ -139,14 +136,12 @@ export default function Progress() {
       const taskReading = dailyCompletedTasks.filter((t) => t.category === "reading").length;
       const taskWriting = dailyCompletedTasks.filter((t) => t.category === "writing").length;
       const taskListening = dailyCompletedTasks.filter((t) => t.category === "listening").length;
-      const taskSpeaking = dailyCompletedTasks.filter((t) => t.category === "speaking").length;
       const taskVocab = dailyCompletedTasks.filter((t) => t.category === "vocabulary").length;
       const taskGrammar = dailyCompletedTasks.filter((t) => t.category === "grammar").length;
 
       const listening = listeningSes + taskListening;
       const reading = readingSes + taskReading;
       const writing = writingSes + taskWriting;
-      const speaking = speakingSes + taskSpeaking;
       const vocabulary = taskVocab;
       const grammar = taskGrammar;
 
@@ -156,10 +151,10 @@ export default function Progress() {
         listening,
         reading,
         writing,
-        speaking,
+        speaking: 0,
         vocabulary,
         grammar,
-        total: listening + reading + writing + speaking + vocabulary + grammar,
+        total: listening + reading + writing + vocabulary + grammar,
         goal,
       });
     }
@@ -172,8 +167,7 @@ export default function Progress() {
   const totalSessions =
     (writingSessions?.sessions?.length || 0) +
     (readingSessions?.sessions?.length || 0) +
-    (listeningSessions?.sessions?.length || 0) +
-    (speakingSessions?.sessions?.length || 0);
+    (listeningSessions?.sessions?.length || 0);
 
 
 
@@ -271,7 +265,6 @@ export default function Progress() {
                 { value: "writing", label: "Writing", icon: <PenTool className="w-3.5 h-3.5" /> },
                 { value: "reading", label: "Reading", icon: <BookOpen className="w-3.5 h-3.5" /> },
                 { value: "listening", label: "Listening", icon: <Headphones className="w-3.5 h-3.5" /> },
-                { value: "speaking", label: "Speaking", icon: <Mic className="w-3.5 h-3.5" /> },
               ].map((tab) => (
                 <TabsTrigger
                   key={tab.value}
@@ -344,23 +337,6 @@ export default function Progress() {
                 />
               </TabsContent>
 
-              <TabsContent value="speaking" className="m-0 focus-visible:outline-none">
-                <SessionList
-                  data={speakingSessions?.sessions}
-                  emptyMsg="No speaking sessions yet"
-                  emptyHint="Complete a speaking practice to see your results here."
-                  renderRow={(session: any) => (
-                    <SessionRow
-                      key={session.id}
-                      label={session.topic || "Speaking Practice"}
-                      date={session.createdAt}
-                      score={session.bandScore || "—"}
-                      scoreLabel="Band"
-                      accentColor="from-orange-400 to-red-500"
-                    />
-                  )}
-                />
-              </TabsContent>
             </div>
           </Tabs>
         </div>

@@ -24,6 +24,7 @@ interface TextHighlighterProps {
   showLabels?: boolean;
   evidenceQuotes?: Array<{ quote: string; questionId: number }>;
   showEvidenceHighlights?: boolean;
+  className?: string;
 }
 
 interface PopupMenu {
@@ -35,15 +36,6 @@ interface PopupMenu {
   highlightType: string;
 }
 
-interface Translation {
-  originalText: string;
-  translatedText: string;
-  targetLanguage: string;
-  definition?: string;
-  exampleSentence?: string;
-  audioUrl?: string;
-}
-
 export default function TextHighlighter({
   content,
   passageTitle,
@@ -52,12 +44,10 @@ export default function TextHighlighter({
   showLabels = true,
   evidenceQuotes = [],
   showEvidenceHighlights = false,
+  className,
 }: TextHighlighterProps) {
   const [popupMenu, setPopupMenu] = useState<PopupMenu | null>(null);
   const [deletePopup, setDeletePopup] = useState<{ x: number; y: number; highlightId: number } | null>(null);
-  const [translation, setTranslation] = useState<Translation | null>(null);
-  const [isTranslating, setIsTranslating] = useState(false);
-  const [isAddingToVocab, setIsAddingToVocab] = useState(false);
   const [currentHighlights, setCurrentHighlights] = useState<Highlight[]>(highlights);
   const contentRef = useRef<HTMLDivElement>(null);
   const { user } = useUser();
@@ -134,52 +124,7 @@ export default function TextHighlighter({
     setDeletePopup(null);
   };
 
-  // Note: Translate action removed from selection popup per new minimalist UI
 
-  const handleAddToVocabulary = async (translationData?: Translation) => {
-    if (!popupMenu || !user) return;
-
-    setIsAddingToVocab(true);
-    try {
-      let definition = `Definition of "${popupMenu.selectedText}"`;
-      let translationText = popupMenu.selectedText;
-
-      if (translationData) {
-        definition = translationData.definition || definition;
-        translationText = translationData.translatedText;
-      }
-
-      await backend.ielts.addToVocabulary({
-        userId: user.id,
-        text: popupMenu.selectedText,
-        definition,
-        translation: translationText,
-        targetLanguage: user.language,
-        exampleSentence: `"${popupMenu.selectedText}" is used in this context.`,
-        topic: "Reading",
-      });
-
-      // Create highlight
-      await createHighlight();
-
-      toast({
-        title: "Added to Vocabulary!",
-        description: `"${popupMenu.selectedText}" has been saved to your vocabulary.`,
-      });
-
-      setPopupMenu(null);
-      setTranslation(null);
-    } catch (error) {
-      console.error("Failed to add to vocabulary:", error);
-      toast({
-        title: "Error",
-        description: "Failed to add to vocabulary. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsAddingToVocab(false);
-    }
-  };
 
   const createHighlight = async (color: 'yellow' | 'blue' | 'green' | 'orange' = 'yellow') => {
     if (!popupMenu || !user) return;
@@ -234,15 +179,6 @@ export default function TextHighlighter({
     }
   };
 
-  const playAudio = (audioUrl?: string) => {
-    if (audioUrl) {
-      // In a real app, this would play the actual audio
-      toast({
-        title: "🔊 Audio",
-        description: "Playing pronunciation...",
-      });
-    }
-  };
 
   const renderSegmentWithHighlights = (segmentText: string, segmentStart: number) => {
     const segmentEnd = segmentStart + segmentText.length;
@@ -368,7 +304,7 @@ export default function TextHighlighter({
         result.push(
           <span
             key={`highlight-${h.id}-${segmentStart}`}
-            className={`${highlightClass} cursor-pointer relative px-1 rounded transition-colors`}
+            className={`${highlightClass} cursor-pointer relative rounded transition-colors`}
             onClick={(e) => {
               e.stopPropagation();
               if (!contentRef.current) return;
@@ -399,7 +335,7 @@ export default function TextHighlighter({
   return (
     <div
       ref={contentRef}
-      className="prose prose-lg max-w-none dark:prose-invert leading-relaxed select-text cursor-text relative"
+      className={`${className || 'prose prose-lg max-w-none dark:prose-invert leading-relaxed'} select-text cursor-text relative`}
       onMouseUp={handleTextSelection}
       onTouchEnd={handleTextSelection}
     >
@@ -486,79 +422,6 @@ export default function TextHighlighter({
         </div>
       )}
 
-      {/* Translation Overlay */}
-      {translation && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <Card className="max-w-md w-full">
-            <CardContent className="p-6">
-              <div className="flex justify-between items-start mb-4">
-                <h3 className="text-lg font-semibold">Translation</h3>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => setTranslation(null)}
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <Badge variant="outline" className="mb-2">Original</Badge>
-                  <p className="text-sm font-medium">{translation?.originalText}</p>
-                </div>
-
-                <div>
-                  <Badge variant="outline" className="mb-2">Translation</Badge>
-                  <div className="flex items-center gap-2">
-                    <p className="text-sm text-blue-600 dark:text-blue-400 font-medium">
-                      {translation?.translatedText}
-                    </p>
-                    {translation?.audioUrl && (
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => playAudio(translation?.audioUrl)}
-                      >
-                        <Volume2 className="h-3 w-3" />
-                      </Button>
-                    )}
-                  </div>
-                </div>
-
-                {translation?.definition && (
-                  <div>
-                    <Badge variant="outline" className="mb-2">Definition</Badge>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
-                      {translation?.definition}
-                    </p>
-                  </div>
-                )}
-
-                {translation?.exampleSentence && (
-                  <div>
-                    <Badge variant="outline" className="mb-2">Example</Badge>
-                    <p className="text-sm text-gray-600 dark:text-gray-300 italic">
-                      {translation?.exampleSentence}
-                    </p>
-                  </div>
-                )}
-
-                <div className="flex gap-2 pt-4">
-                  <Button
-                    onClick={() => handleAddToVocabulary(translation || undefined)}
-                    disabled={isAddingToVocab}
-                    className="flex-1"
-                  >
-                    <BookMarked className="h-4 w-4 mr-2" />
-                    {isAddingToVocab ? "Adding..." : "Save to Vocabulary"}
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
     </div>
   );
 }

@@ -150,6 +150,8 @@ export default function Dashboard() {
       <div className="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-8">
         <div className="space-y-6 pb-32">
 
+
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
             {/* Left Column: Featured Video & Progress */}
@@ -196,42 +198,42 @@ export default function Dashboard() {
                     <div ref={scrollRef} className="flex overflow-x-auto gap-4 sm:gap-6 pb-6 pt-2 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pr-[20%]">
                       <Link to="/video-lesson/benefits-of-doing-nothing" className="shrink-0 w-[200px] sm:w-[240px] snap-start group cursor-pointer">
                         <div className="aspect-[16/10] flex items-center justify-center w-full rounded-xl overflow-hidden ring-1 ring-slate-200 dark:ring-white/10 shadow-md dark:shadow-lg bg-slate-50 dark:bg-[#0c0e14] relative z-10 transition-transform duration-500 group-hover:scale-[1.02]">
-                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/Y681hXWwhQY?si=FdjQAajOcGjPlTu4" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/Y681hXWwhQY?si=FdjQAajOcGjPlTu4" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin" allowFullScreen></iframe>
                         </div>
                         <h3 className="text-slate-900 dark:text-white font-bold mt-3 text-sm line-clamp-2 leading-tight group-hover:text-red-500 dark:group-hover:text-red-400 transition-colors">The benefits of doing nothing</h3>
                         <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Listening Practice • 6 mins</p>
                       </Link>
                       <Link to="/video-lesson/inflation-explained" className="shrink-0 w-[200px] sm:w-[240px] snap-start group cursor-pointer">
                         <div className="aspect-[16/10] flex items-center justify-center w-full rounded-xl overflow-hidden ring-1 ring-slate-200 dark:ring-white/10 shadow-md dark:shadow-lg bg-slate-50 dark:bg-[#0c0e14] relative z-10 transition-transform duration-500 group-hover:scale-[1.02]">
-                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/FKwmUNffu7M?si=vsIdP35yfvOW9ChB" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/FKwmUNffu7M?si=vsIdP35yfvOW9ChB" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin" allowFullScreen></iframe>
                         </div>
                         <h3 className="text-slate-900 dark:text-white font-bold mt-3 text-sm line-clamp-2 leading-tight group-hover:text-red-500 dark:group-hover:text-red-400 transition-colors">6 Minute English: Inflation</h3>
                         <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Listening Practice • 14 mins</p>
                       </Link>
                       <Link to="/video-lesson/following-your-dreams" className="shrink-0 w-[200px] sm:w-[240px] snap-start group cursor-pointer">
                         <div className="aspect-[16/10] flex items-center justify-center w-full rounded-xl overflow-hidden ring-1 ring-slate-200 dark:ring-white/10 shadow-md dark:shadow-lg bg-slate-50 dark:bg-[#0c0e14] relative z-10 transition-transform duration-500 group-hover:scale-[1.02]">
-                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/26PrgjTboVQ?si=6dCJb1_0crdo8zu1" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/26PrgjTboVQ?si=6dCJb1_0crdo8zu1" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin" allowFullScreen></iframe>
                         </div>
                         <h3 className="text-slate-900 dark:text-white font-bold mt-3 text-sm line-clamp-2 leading-tight group-hover:text-red-500 dark:group-hover:text-red-400 transition-colors">Are you following your dreams?</h3>
                         <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Listening Practice • 13 mins</p>
                       </Link>
                       <Link to="/video-lesson/social-media-health" className="shrink-0 w-[200px] sm:w-[240px] snap-start group cursor-pointer">
                         <div className="aspect-[16/10] flex items-center justify-center w-full rounded-xl overflow-hidden ring-1 ring-slate-200 dark:ring-white/10 shadow-md dark:shadow-lg bg-slate-50 dark:bg-[#0c0e14] relative z-10 transition-transform duration-500 group-hover:scale-[1.02]">
-                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/g8q-Nq-ajx8?si=Q_cngTG6MqqkJrZr" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/g8q-Nq-ajx8?si=Q_cngTG6MqqkJrZr" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin" allowFullScreen></iframe>
                         </div>
                         <h3 className="text-slate-900 dark:text-white font-bold mt-3 text-sm line-clamp-2 leading-tight group-hover:text-red-500 dark:group-hover:text-red-400 transition-colors">Social media and teenage health</h3>
                         <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Listening Practice • 6 mins</p>
                       </Link>
                       <Link to="/video-lesson/fast-fashion" className="shrink-0 w-[200px] sm:w-[240px] snap-start group cursor-pointer">
                         <div className="aspect-[16/10] flex items-center justify-center w-full rounded-xl overflow-hidden ring-1 ring-slate-200 dark:ring-white/10 shadow-md dark:shadow-lg bg-slate-50 dark:bg-[#0c0e14] relative z-10 transition-transform duration-500 group-hover:scale-[1.02]">
-                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/3-icphihD6Y?si=vUbZtotp6FSyG26I" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/3-icphihD6Y?si=vUbZtotp6FSyG26I" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin" allowFullScreen></iframe>
                         </div>
                         <h3 className="text-slate-900 dark:text-white font-bold mt-3 text-sm line-clamp-2 leading-tight group-hover:text-red-500 dark:group-hover:text-red-400 transition-colors">Could you give up fast fashion?</h3>
                         <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Listening Practice • 6 mins</p>
                       </Link>
                       <Link to="/video-lesson/cities-future" className="shrink-0 w-[200px] sm:w-[240px] snap-start group cursor-pointer">
                         <div className="aspect-[16/10] flex items-center justify-center w-full rounded-xl overflow-hidden ring-1 ring-slate-200 dark:ring-white/10 shadow-md dark:shadow-lg bg-slate-50 dark:bg-[#0c0e14] relative z-10 transition-transform duration-500 group-hover:scale-[1.02]">
-                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/3kS0cMziUJY?si=JvBm9-qF9eBPcxId" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/3kS0cMziUJY?si=JvBm9-qF9eBPcxId" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin" allowFullScreen></iframe>
                         </div>
                         <h3 className="text-slate-900 dark:text-white font-bold mt-3 text-sm line-clamp-2 leading-tight group-hover:text-red-500 dark:group-hover:text-red-400 transition-colors">Cities of the future</h3>
                         <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Listening Practice • 6 mins</p>
@@ -239,14 +241,14 @@ export default function Dashboard() {
 
                       <Link to="/video-lesson/university-worth" className="shrink-0 w-[200px] sm:w-[240px] snap-start group cursor-pointer">
                         <div className="aspect-[16/10] flex items-center justify-center w-full rounded-xl overflow-hidden ring-1 ring-slate-200 dark:ring-white/10 shadow-md dark:shadow-lg bg-slate-50 dark:bg-[#0c0e14] relative z-10 transition-transform duration-500 group-hover:scale-[1.02]">
-                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/_O48-ao5_40?si=6Y4ak03zak_e5KLj" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/_O48-ao5_40?si=6Y4ak03zak_e5KLj" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin" allowFullScreen></iframe>
                         </div>
                         <h3 className="text-slate-900 dark:text-white font-bold mt-3 text-sm line-clamp-2 leading-tight group-hover:text-red-500 dark:group-hover:text-red-400 transition-colors">Is it still worth going to university?</h3>
                         <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Economics • 7 mins</p>
                       </Link>
                       <Link to="/video-lesson/future-work" className="shrink-0 w-[200px] sm:w-[240px] snap-start group cursor-pointer">
                         <div className="aspect-[16/10] flex items-center justify-center w-full rounded-xl overflow-hidden ring-1 ring-slate-200 dark:ring-white/10 shadow-md dark:shadow-lg bg-slate-50 dark:bg-[#0c0e14] relative z-10 transition-transform duration-500 group-hover:scale-[1.02]">
-                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/s1HxJVusR2w?si=f-2lEo4fhOnFfULz" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/s1HxJVusR2w?si=f-2lEo4fhOnFfULz" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin" allowFullScreen></iframe>
                         </div>
                         <h3 className="text-slate-900 dark:text-white font-bold mt-3 text-sm line-clamp-2 leading-tight group-hover:text-red-500 dark:group-hover:text-red-400 transition-colors">What is the future of work?</h3>
                         <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Workplace • 6 mins</p>
@@ -422,6 +424,30 @@ export default function Dashboard() {
                   );
                 })}
               </div>
+
+              <div className="space-y-3">
+                {/* Personalized Plan Button */}
+                <Button
+                  onClick={() => navigate('/plan')}
+                  className="w-full h-14 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white border-0 font-bold text-base shadow-xl shadow-blue-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <Calendar className="h-5 w-5 mr-3" />
+                  My Personalized Plan
+                  <div className="px-2 py-0.5 ml-3 bg-white/20 rounded text-[10px] uppercase tracking-wider">New</div>
+                  <ArrowRight className="h-5 w-5 ml-auto opacity-80" />
+                </Button>
+
+                {/* Progress Roadmap Button */}
+                <Button
+                  onClick={() => navigate('/progress')}
+                  className="w-full h-12 rounded-2xl bg-slate-800 hover:bg-slate-900 dark:bg-slate-800/80 dark:hover:bg-slate-700 text-white dark:text-slate-300 border-0 font-bold text-sm shadow-lg shadow-slate-900/10 dark:shadow-none transition-all hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <TrendingUp className="h-4 w-4 mr-2" />
+                  View Analytics & Progress
+                  <ArrowRight className="h-4 w-4 ml-2 opacity-60" />
+                </Button>
+              </div>
+
             </div>
 
           </div>

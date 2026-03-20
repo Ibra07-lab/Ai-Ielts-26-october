@@ -76,8 +76,11 @@ async def get_current_user(
 
 async def require_auth(
     user_id: str | None = Depends(get_current_user),
-) -> str:
-    """Strict auth dependency — raises 401 if not authenticated."""
+) -> dict:
+    """Strict auth dependency — raises 401 if not authenticated.
+    
+    Returns a dict with 'uid' key for consistency with route handlers.
+    """
     if not user_id:
         raise HTTPException(status_code=401, detail="Authentication required")
-    return user_id
+    return {"uid": user_id}

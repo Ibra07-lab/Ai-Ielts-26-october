@@ -11,7 +11,7 @@ import { getAllTopics, getWordsByTopicId, getExercisesByTopicId } from "@/data/v
 import { shuffleArray } from "@/lib/utils";
 
 type ViewState = "dashboard" | "wordList" | "deck" | "exercise";
-type ExerciseType = "synonym" | "tetris" | "speak";
+type ExerciseType = "synonym" | "tetris" | "speak" | "flashcards";
 
 export default function VocabularyBuilder() {
   const [view, setView] = useState<ViewState>("dashboard");
@@ -66,6 +66,11 @@ export default function VocabularyBuilder() {
   };
 
   const handleStartExercise = (type: ExerciseType) => {
+    if (type === "flashcards") {
+      handleStartLearning();
+      return;
+    }
+
     let originalExercises: any[] = [];
     if (type === "synonym") {
       originalExercises = filterMode === "writing" && selectedExercises.writingSynonymSwap
@@ -145,7 +150,7 @@ export default function VocabularyBuilder() {
         )}
 
         {view === "wordList" && selectedTopic && (
-          <div className="p-6 sm:p-8 h-full">
+          <div className="p-4 sm:p-6 h-full">
             <TopicWordList
               topicName={selectedTopic.name + (filterMode !== "all" ? ` (${filterMode.charAt(0).toUpperCase() + filterMode.slice(1)})` : "")}
               words={filteredWords}

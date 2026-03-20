@@ -1,43 +1,27 @@
-ReadTimeout: The read operation timed out
+ValueError: JSON parsed but validation failed: 2 validation errors for ExplainerOutput
+macro_feedback.0.paragraph_index
+  Input should be greater than or equal to 1 [type=greater_than_equal, input_value=0, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.12/v/greater_than_equal
+idea_development.idea_map.0.paragraph_index
+  Input should be greater than or equal to 1 [type=greater_than_equal, input_value=0, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.12/v/greater_than_equal
 Traceback (most recent call last):
-  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 101, in map_httpcore_exceptions
-    yield
-  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 250, in handle_request
-    resp = self._pool.handle_request(req)
-  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_sync\connection_pool.py", line 256, in handle_request
-    raise exc from None
-  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_sync\connection_pool.py", line 236, in handle_request
-    response = connection.handle_request(
-        pool_request.request
-    )
-  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_sync\connection.py", line 103, in handle_request
-    return self._connection.handle_request(request)
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
-  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_sync\http11.py", line 136, in handle_request
-    raise exc
-  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_sync\http11.py", line 106, in handle_request
-    ) = self._receive_response_headers(**kwargs)
-        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
-  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_sync\http11.py", line 177, in _receive_response_headers
-    event = self._receive_event(timeout=timeout)
-  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_sync\http11.py", line 217, in _receive_event
-    data = self._network_stream.read(
-        self.READ_NUM_BYTES, timeout=timeout
-    )
-  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_backends\sync.py", line 126, in read
-    with map_exceptions(exc_map):
-         ~~~~~~~~~~~~~~^^^^^^^^^
-  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
-    self.gen.throw(value)
-    ~~~~~~~~~~~~~~^^^^^^^
-  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
-    raise to_exc(exc) from exc
-httpcore.ReadTimeout: The read operation timed out
+  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\agents\explainer\task2_explainer.py", line 237, in _parse_response
+    return ExplainerOutput(**data)
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\pydantic\main.py", line 250, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 2 validation errors for ExplainerOutput
+macro_feedback.0.paragraph_index
+  Input should be greater than or equal to 1 [type=greater_than_equal, input_value=0, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.12/v/greater_than_equal
+idea_development.idea_map.0.paragraph_index
+  Input should be greater than or equal to 1 [type=greater_than_equal, input_value=0, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.12/v/greater_than_equal
 
-The above exception was the direct cause of the following exception:
+During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
-  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\routes\task2.py", line 72, in evaluate_task2
+  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\routes\task2.py", line 73, in evaluate_task2
     result = await pipeline.evaluate_essay(
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     ...<2 lines>...
@@ -52,51 +36,14 @@ Traceback (most recent call last):
     ^
   File "C:\Python313\Lib\concurrent\futures\thread.py", line 59, in run
     result = self.fn(*self.args, **self.kwargs)
-  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\agents\explainer\task2_explainer.py", line 91, in explain
-    response_text = self.client.call_anthropic(
-        model=self.model,
-    ...<5 lines>...
-        timeout=300.0  # Explainer needs more time (generates most output)
-    )
-  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\agents\direct_llm_client.py", line 201, in call_anthropic
-    raise last_exception
-  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\agents\direct_llm_client.py", line 147, in call_anthropic
-    response = client.post("https://api.anthropic.com/v1/messages", headers=headers, json=data)
-  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1144, in post
-    return self.request(
-           ~~~~~~~~~~~~^
-        "POST",
-        ^^^^^^^
-    ...<11 lines>...
-        extensions=extensions,
-        ^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 825, in request
-    return self.send(request, auth=auth, follow_redirects=follow_redirects)
-           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 914, in send
-    response = self._send_handling_auth(
-        request,
-    ...<2 lines>...
-        history=[],
-    )
-  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 942, in _send_handling_auth
-    response = self._send_handling_redirects(
-        request,
-        follow_redirects=follow_redirects,
-        history=history,
-    )
-  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 979, in _send_handling_redirects
-    response = self._send_single_request(request)
-  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_client.py", line 1014, in _send_single_request
-    response = transport.handle_request(request)
-  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 249, in handle_request
-    with map_httpcore_exceptions():
-         ~~~~~~~~~~~~~~~~~~~~~~~^^
-  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
-    self.gen.throw(value)
-    ~~~~~~~~~~~~~~^^^^^^^
-  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions
-    raise mapped_exc(message) from exc
-httpx.ReadTimeout: The read operation timed out
+  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\agents\explainer\task2_explainer.py", line 94, in explain
+    output = self._parse_response(response_text)
+  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\agents\explainer\task2_explainer.py", line 280, in _parse_response
+    raise ValueError(f"JSON parsed but validation failed: {e}")
+ValueError: JSON parsed but validation failed: 2 validation errors for ExplainerOutput
+macro_feedback.0.paragraph_index
+  Input should be greater than or equal to 1 [type=greater_than_equal, input_value=0, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.12/v/greater_than_equal
+idea_development.idea_map.0.paragraph_index
+  Input should be greater than or equal to 1 [type=greater_than_equal, input_value=0, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.12/v/greater_than_equal

@@ -1,4 +1,6 @@
+import { sanitizeHtml } from '@/utils/sanitize';
 import React, { useState, useEffect, useRef, startTransition, useMemo } from "react";
+import { useParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { BookOpen, Clock, Send, RotateCcw, Highlighter, CheckCircle, XCircle, Lightbulb, AlertCircle, Sparkles, GraduationCap, Eye, EyeOff } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -61,7 +63,8 @@ function QuestionResult({
   explanation,
   aiFeedback,
   onGetAIFeedback,
-  isLoadingFeedback
+  isLoadingFeedback,
+  textSize = 'regular'
 }: {
   question: any;
   answer: string;
@@ -70,9 +73,16 @@ function QuestionResult({
   aiFeedback?: any;
   onGetAIFeedback?: () => void;
   isLoadingFeedback?: boolean;
+  textSize?: TextSizeOption;
 }) {
   const [expanded, setExpanded] = useState(false);
   const isCorrect = answer === correctAnswer;
+
+  const getFontSizeClass = () => {
+    if (textSize === 'large') return 'text-lg';
+    if (textSize === 'extra-large') return 'text-xl';
+    return 'text-base';
+  };
 
   return (
     <div
@@ -109,7 +119,7 @@ function QuestionResult({
           </div>
 
           {/* Answer Comparison - Simplified */}
-          <div className="space-y-4">
+          <div className={`space-y-4 ${getFontSizeClass()}`}>
             <div className="flex items-start gap-3 p-4 border-l-2 border-slate-300 dark:border-slate-600 bg-transparent">
               {isCorrect ? (
                 <CheckCircle className="w-4 h-4 text-emerald-600/80 dark:text-emerald-500/80 mt-0.5 flex-shrink-0" />
@@ -120,7 +130,7 @@ function QuestionResult({
                 <p className="text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
                   Your Answer
                 </p>
-                <p className="text-slate-700 dark:text-slate-300">
+                <p className="text-slate-700 dark:text-slate-300 font-medium">
                   {answer || "Not answered"}
                 </p>
               </div>
@@ -328,14 +338,26 @@ function SummaryCompletion({
   answers,
   result,
   handleAnswerChange,
-  summaryInputRefs
+  summaryInputRefs,
+  textSize = 'regular'
 }: {
   group: any;
   answers: Record<number, string>;
   result: any;
   handleAnswerChange: (qid: number, value: string) => void;
   summaryInputRefs: React.MutableRefObject<Record<number, HTMLInputElement | null>>;
+  textSize?: TextSizeOption;
 }) {
+  const getFontSizeClass = () => {
+    if (textSize === 'large') return 'text-lg';
+    if (textSize === 'extra-large') return 'text-xl';
+    return 'text-sm';
+  };
+  const getInputSizeClass = () => {
+    if (textSize === 'large') return 'text-lg w-44';
+    if (textSize === 'extra-large') return 'text-xl w-52';
+    return 'text-sm w-32';
+  };
   // Parse IELTS-style word limit rules
   const parseWordLimit = (ruleText: string | undefined) => {
     const text = (ruleText || "").toUpperCase();
@@ -401,7 +423,7 @@ function SummaryCompletion({
         <p className="text-xs italic text-gray-500">{group.word_limit}</p>
       )}
       <div className={`${isNotes ? 'completion-notes' : 'bg-gray-50 dark:bg-gray-800 p-3 rounded'} relative z-0`}>
-        <div className={`${isNotes ? '' : 'text-sm leading-6'}`}>
+        <div className={`${isNotes ? '' : `${getFontSizeClass()} leading-6`}`}>
           {parts.map((part: string, idx: number) => {
             const match = part.match(/^\((\d+)\)_____$/);
             if (match) {
@@ -424,8 +446,8 @@ function SummaryCompletion({
                     tabIndex={0}
                     disabled={!!result}
                     className={isNotes
-                      ? "bg-transparent border-t-0 border-l-0 border-r-0 border-b-2 border-dotted border-slate-400 focus:border-blue-500 focus:border-solid transition-all focus:outline-none w-32 px-1 text-base"
-                      : `px-2 py-1 border rounded text-sm w-32 bg-white dark:bg-gray-900 focus:ring-2 relative z-20 pointer-events-auto focus:outline-none ${exceeded || hasInvalidNumber ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'}`
+                      ? `bg-transparent border-t-0 border-l-0 border-r-0 border-b-2 border-dotted border-slate-400 focus:border-blue-500 focus:border-solid transition-all ${getInputSizeClass()} px-1`
+                      : `px-2 py-1 border rounded ${getFontSizeClass()} w-32 bg-white dark:bg-gray-900 focus:ring-2 relative z-20 pointer-events-auto focus:outline-none ${exceeded || hasInvalidNumber ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'}`
                     }
                     style={isNotes ? { borderRadius: 0, paddingBottom: 2 } : {}}
                     value={value}
@@ -470,7 +492,7 @@ function SummaryCompletion({
                 </span>
               );
             }
-            return <span key={`txt-${idx}`} dangerouslySetInnerHTML={{ __html: part }} />;
+            return <span key={`txt-${idx}`} dangerouslySetInnerHTML={{ __html: sanitizeHtml(part) }} />;
           })}
         </div>
       </div>
@@ -483,13 +505,20 @@ function TableCompletion({
   group,
   answers,
   result,
-  setAnswers
+  setAnswers,
+  textSize = 'regular'
 }: {
   group: TableCompletionQuestion;
   answers: Record<number, string>;
   result: any;
   setAnswers: (setter: (prev: Record<number, string>) => Record<number, string>) => void;
+  textSize?: TextSizeOption;
 }) {
+  const getFontSizeClass = () => {
+    if (textSize === 'large') return 'text-lg';
+    if (textSize === 'extra-large') return 'text-xl';
+    return 'text-sm';
+  };
   const wordLimit = parseInt(group.word_limit.match(/\d+/)?.[0] || "2");
 
   const countWords = (text: string) => {
@@ -529,7 +558,7 @@ function TableCompletion({
           <thead>
             <tr className="bg-gray-100 dark:bg-gray-800">
               {group.headers.map((header, idx) => (
-                <th key={idx} className="border border-gray-300 dark:border-gray-600 p-3 text-left font-semibold text-sm">
+                <th key={idx} className={`border border-gray-300 dark:border-gray-600 p-3 text-left font-semibold ${getFontSizeClass()}`}>
                   {header}
                 </th>
               ))}
@@ -543,7 +572,7 @@ function TableCompletion({
                 {row.cells.map((cell, cellIdx) => (
                   <td key={cellIdx} className="border border-gray-300 dark:border-gray-600 p-3">
                     {cell.type === 'text' ? (
-                      <span className="text-sm">{cell.content}</span>
+                      <span className={getFontSizeClass()}>{cell.content}</span>
                     ) : (
                       <div className="space-y-1">
                         <Input
@@ -636,13 +665,25 @@ function FlowChartCompletion({
   group,
   answers,
   result,
-  setAnswers
+  setAnswers,
+  textSize = 'regular'
 }: {
   group: FlowChartCompletionQuestion;
   answers: Record<number, string>;
   result: any;
   setAnswers: (setter: (prev: Record<number, string>) => Record<number, string>) => void;
+  textSize?: TextSizeOption;
 }) {
+  const getFontSizeClass = () => {
+    if (textSize === 'large') return 'text-lg';
+    if (textSize === 'extra-large') return 'text-xl';
+    return 'text-sm';
+  };
+  const getSmallFontSizeClass = () => {
+    if (textSize === 'large') return 'text-sm';
+    if (textSize === 'extra-large') return 'text-base';
+    return 'text-[10px]';
+  };
   const wordLimit = parseInt(group.word_limit.match(/\d+/)?.[0] || "2");
 
   const countWords = (text: string) => {
@@ -705,7 +746,7 @@ function FlowChartCompletion({
               {node.type === 'stage' ? (
                 // Stage Node - Filled box
                 <div className="w-full rounded-lg border border-gray-200 dark:border-gray-700/50 p-3 bg-gray-50/50 dark:bg-gray-800/50 shadow-sm">
-                  <p className="text-sm text-center text-gray-900 dark:text-white">
+                  <p className={`text-center text-gray-900 dark:text-white ${getFontSizeClass()}`}>
                     {node.content}
                   </p>
                 </div>
@@ -721,40 +762,38 @@ function FlowChartCompletion({
                     {node.content ? (
                       // If content exists, display it with inline gap
                       <div className="border border-gray-200 dark:border-gray-700/50 rounded-lg p-3 bg-gray-50/50 dark:bg-gray-800/50">
-                        <div className="text-sm text-gray-900 dark:text-white leading-relaxed">
+                        <div className={`${getFontSizeClass()} text-gray-900 dark:text-white leading-relaxed`}>
                           {node.content.split('__________').map((part, idx, arr) => (
-                            <>
-                              <React.Fragment key={`part-${idx}`}>
-                                {part}
-                                {idx < arr.length - 1 && (
-                                  <input
-                                    type="text"
-                                    value={answers[node.gapNumber!] || ""}
-                                    onChange={(e) => {
-                                      const newValue = e.target.value;
-                                      setAnswers(prev => ({
-                                        ...prev,
-                                        [node.gapNumber!]: newValue
-                                      }));
-                                    }}
-                                    disabled={!!result}
-                                    placeholder="..."
-                                    aria-label={`Question ${node.gapNumber}: Enter answer`}
-                                    className={`
-                                    inline-block w-28 h-6 px-1 mx-1 -translate-y-[1px] align-middle transition-all
-                                    bg-transparent border-t-0 border-l-0 border-r-0 border-b-2 border-dotted
-                                    ${getNodeState(node.gapNumber!) === 'empty' ? 'border-slate-400 dark:border-slate-500' : ''}
-                                    ${getNodeState(node.gapNumber!) === 'filled' ? 'border-green-500 bg-green-50/20' : ''}
-                                    ${getNodeState(node.gapNumber!) === 'exceeded' ? 'border-red-500 bg-red-50/20' : ''}
-                                    ${getNodeState(node.gapNumber!) === 'correct' ? 'border-green-600 bg-green-100/20' : ''}
-                                    ${getNodeState(node.gapNumber!) === 'incorrect' ? 'border-red-600 bg-red-100/20' : ''}
-                                    focus:border-blue-500 focus:border-solid focus:ring-0 focus:outline-none rounded-none
-                                    text-sm text-center
-                                  `}
-                                  />
-                                )}
-                              </React.Fragment>
-                            </>
+                            <React.Fragment key={`part-${idx}`}>
+                              {part}
+                              {idx < arr.length - 1 && (
+                                <input
+                                  type="text"
+                                  value={answers[node.gapNumber!] || ""}
+                                  onChange={(e) => {
+                                    const newValue = e.target.value;
+                                    setAnswers(prev => ({
+                                      ...prev,
+                                      [node.gapNumber!]: newValue
+                                    }));
+                                  }}
+                                  disabled={!!result}
+                                  placeholder="..."
+                                  aria-label={`Question ${node.gapNumber}: Enter answer`}
+                                  className={`
+                                  inline-block w-28 h-6 px-1 mx-1 -translate-y-[1px] align-middle transition-all
+                                  bg-transparent border-t-0 border-l-0 border-r-0 border-b-2 border-dotted
+                                  ${getNodeState(node.gapNumber!) === 'empty' ? 'border-slate-400 dark:border-slate-500' : ''}
+                                  ${getNodeState(node.gapNumber!) === 'filled' ? 'border-green-500 bg-green-50/20' : ''}
+                                  ${getNodeState(node.gapNumber!) === 'exceeded' ? 'border-red-500 bg-red-50/20' : ''}
+                                  ${getNodeState(node.gapNumber!) === 'correct' ? 'border-green-600 bg-green-100/20' : ''}
+                                  ${getNodeState(node.gapNumber!) === 'incorrect' ? 'border-red-600 bg-red-100/20' : ''}
+                                  focus:border-blue-500 focus:border-solid focus:ring-0 focus:outline-none rounded-none
+                                  ${getFontSizeClass()} text-center
+                                `}
+                                />
+                              )}
+                            </React.Fragment>
                           ))}
                         </div>
                       </div>
@@ -906,7 +945,38 @@ export default function ReadingPractice() {
     return (saved === 'large' || saved === 'extra-large') ? saved : 'regular';
   });
   const [showTextSizeMenu, setShowTextSizeMenu] = useState(false);
-  const textSizeRef = useRef<HTMLDivElement>(null);
+  const textSizeRefNormal = useRef<HTMLDivElement>(null);
+  const textSizeRefSplit = useRef<HTMLDivElement>(null);
+
+  const getQuestionTextSize = () => {
+    if (textSize === 'large') return 'text-xl font-medium leading-[1.8]';
+    if (textSize === 'extra-large') return 'text-2xl font-medium leading-[1.9]';
+    return 'text-lg font-medium leading-relaxed';
+  };
+
+  const getFontSizeClass = () => {
+    if (textSize === 'large') return 'text-lg';
+    if (textSize === 'extra-large') return 'text-xl';
+    return 'text-sm';
+  };
+
+  const getInputSizeClass = () => {
+    if (textSize === 'large') return 'text-lg w-44 h-10';
+    if (textSize === 'extra-large') return 'text-xl w-52 h-12';
+    return 'text-sm w-32 h-8';
+  };
+
+  const getLabelSizeClass = () => {
+    if (textSize === 'large') return 'text-lg font-medium leading-relaxed';
+    if (textSize === 'extra-large') return 'text-xl font-medium leading-relaxed';
+    return 'text-base font-medium leading-relaxed';
+  };
+
+  const getRadioSizeClass = () => {
+    if (textSize === 'large') return 'w-5 h-5';
+    if (textSize === 'extra-large') return 'w-6 h-6';
+    return 'w-4 h-4';
+  };
 
   // Persist text size and close menu on outside click
   useEffect(() => {
@@ -914,7 +984,9 @@ export default function ReadingPractice() {
   }, [textSize]);
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (textSizeRef.current && !textSizeRef.current.contains(e.target as Node)) {
+      const target = e.target as Node;
+      if (textSizeRefNormal.current && !textSizeRefNormal.current.contains(target) &&
+          textSizeRefSplit.current && !textSizeRefSplit.current.contains(target)) {
         setShowTextSizeMenu(false);
       }
     };
@@ -1031,15 +1103,44 @@ export default function ReadingPractice() {
     queryFn: () => backend.ielts.getReadingTests(),
   });
 
+  const { id: urlId } = useParams<{ id: string }>();
+
   // Selected test id (initialize after tests list loads)
   const [selectedTestId, setSelectedTestId] = useState<number | null>(null);
 
-  // When test list arrives, default to first available if none selected
+  // Use the enterTest helper which is defined later, but since it depends on state, we might need to inline its logic or move it.
+  // Actually, we can just set the states that enterTest sets.
+
+  // When test list arrives, handle deep linking or default selection
   useEffect(() => {
-    if (!selectedTestId && testsData?.tests && testsData.tests.length > 0) {
-      setSelectedTestId(testsData.tests[0].testId);
+    if (testsData?.tests && testsData.tests.length > 0) {
+      if (urlId) {
+        const testIdNum = parseInt(urlId, 10);
+        if (!isNaN(testIdNum)) {
+          const testIndex = testsData.tests.findIndex((t: any) => t.testId === testIdNum);
+          if (testIndex !== -1 && selectedTestId !== testIdNum) {
+            console.log("🔗 [DEBUG] Deep linking to reading test ID:", testIdNum);
+            setSelectedTestId(testIdNum);
+            // We need to trigger the test start logic. 
+            // enterTest(0) sets selectedTestIndex to 0.
+            setRemainingSeconds(60 * 60);
+            setStartTime(Date.now());
+            setSelectedTestIndex(0);
+            setActiveSlideIndex(0);
+            setAnswers({});
+            setResult(null);
+            setHighlights([]);
+            return;
+          }
+        }
+      }
+
+      // Default selection if nothing selected and no URL ID
+      if (!selectedTestId && !selectedTestIndex) {
+        setSelectedTestId(testsData.tests[0].testId);
+      }
     }
-  }, [testsData?.tests, selectedTestId]);
+  }, [testsData?.tests, selectedTestId, urlId]);
 
   // Fetch specific test
   const { data: testData, isLoading, isError, error, refetch: refetchPassage } = useQuery({
@@ -1358,7 +1459,7 @@ export default function ReadingPractice() {
               passageTitle={`${passage?.title || "Reading"} - Question`}
               highlights={getQHighlights(question.id)}
               onHighlightsChange={setQHighlightsFor(question.id)}
-              showLabels={false}
+              showLabels={false} className={getQuestionTextSize()}
             />
             <Select
               value={answers[question.id] || ""}
@@ -1404,7 +1505,7 @@ export default function ReadingPractice() {
               passageTitle={`${passage?.title || "Reading"} - Question`}
               highlights={getQHighlights(question.id)}
               onHighlightsChange={setQHighlightsFor(question.id)}
-              showLabels={false}
+              showLabels={false} className={getQuestionTextSize()}
             />
             <RadioGroup
               value={answers[question.id] || ""}
@@ -1416,15 +1517,17 @@ export default function ReadingPractice() {
                 return (
                   <div
                     key={index}
-                    className="flex items-center space-x-2 cursor-pointer"
+                    className="flex items-start space-x-3 cursor-pointer p-1"
                     onClick={() => {
                       if (answers[question.id] === optionValue) {
                         handleAnswerChange(question.id, "");
                       }
                     }}
                   >
-                    <RadioGroupItem value={optionValue} id={`q${question.id}-${index}`} />
-                    <Label htmlFor={`q${question.id}-${index}`} className="text-sm">
+                    <div className="pt-0.5">
+                      <RadioGroupItem value={optionValue} id={`q${question.id}-${index}`} className={getRadioSizeClass()} />
+                    </div>
+                    <Label htmlFor={`q${question.id}-${index}`} className={`${getLabelSizeClass()} cursor-pointer`}>
                       {optionText}
                     </Label>
                   </div>
@@ -1442,25 +1545,25 @@ export default function ReadingPractice() {
               passageTitle={`${passage?.title || "Reading"} - Question`}
               highlights={getQHighlights(question.id)}
               onHighlightsChange={setQHighlightsFor(question.id)}
-              showLabels={false}
+              showLabels={false} className={getQuestionTextSize()}
             />
             <RadioGroup
               value={answers[question.id] || ""}
               onValueChange={(value) => handleAnswerChange(question.id, value)}
-              className="inline-flex flex-wrap items-center gap-2"
+              className="inline-flex flex-wrap items-center gap-6 mt-2"
             >
               {question.options?.map((option: string) => (
                 <div
                   key={option}
-                  className="flex items-center space-x-2 cursor-pointer"
+                  className="flex items-center space-x-3 cursor-pointer p-1"
                   onClick={() => {
                     if (answers[question.id] === option) {
                       handleAnswerChange(question.id, "");
                     }
                   }}
                 >
-                  <RadioGroupItem value={option} id={`q${question.id}-${option}`} />
-                  <Label htmlFor={`q${question.id}-${option}`} className="text-sm">
+                  <RadioGroupItem value={option} id={`q${question.id}-${option}`} className={getRadioSizeClass()} />
+                  <Label htmlFor={`q${question.id}-${option}`} className={`${getLabelSizeClass()} cursor-pointer`}>
                     {option}
                   </Label>
                 </div>
@@ -1485,15 +1588,15 @@ export default function ReadingPractice() {
                   passageTitle={`${passage?.title || "Reading"} - Question`}
                   highlights={getQHighlights(question.id)}
                   onHighlightsChange={setQHighlightsFor(question.id)}
-                  showLabels={false}
+                  showLabels={false} className={getQuestionTextSize()}
                 />
-                <p className="text-sm">
+                <p className={getFontSizeClass()}>
                   {before}
                   <Input
                     placeholder={`Gap ${question.id}`}
                     value={answers[question.id] || ""}
                     onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                    className="inline-block w-40 h-8 align-baseline mx-1"
+                    className={`inline-block align-baseline mx-1 ${getInputSizeClass()}`}
                   />
                   {after}
                 </p>
@@ -1507,13 +1610,13 @@ export default function ReadingPractice() {
                 passageTitle={`${passage?.title || "Reading"} - Question`}
                 highlights={getQHighlights(question.id)}
                 onHighlightsChange={setQHighlightsFor(question.id)}
-                showLabels={false}
+                showLabels={false} className={getQuestionTextSize()}
               />
               <Input
                 placeholder="Type your answer..."
                 value={answers[question.id] || ""}
                 onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                className="max-w-md"
+                className={`max-w-md ${getInputSizeClass()}`}
               />
             </div>
           );
@@ -1527,13 +1630,13 @@ export default function ReadingPractice() {
               passageTitle={`${passage?.title || "Reading"} - Question`}
               highlights={getQHighlights(question.id)}
               onHighlightsChange={setQHighlightsFor(question.id)}
-              showLabels={false}
+              showLabels={false} className={getQuestionTextSize()}
             />
             <Input
               placeholder="Type your answer..."
               value={answers[question.id] || ""}
               onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-              className="max-w-md"
+              className={`max-w-md ${getInputSizeClass()}`}
             />
           </div>
         );
@@ -1554,7 +1657,7 @@ export default function ReadingPractice() {
               const { words, hasInvalidNumber } = countAnswerTokens(value, allowNumber);
               const exceeded = words > maxWords;
               return (
-                <div className="text-sm leading-6">
+                <div className={`${getFontSizeClass()} leading-6`}>
                   <span>{before}</span>
                   {hasGap ? (
                     <span className="inline-flex items-center gap-1 align-baseline">
@@ -1562,7 +1665,7 @@ export default function ReadingPractice() {
                         aria-label={`Gap ${question.id}`}
                         type="text"
                         disabled={!!result}
-                        className={`px-1 border-b bg-transparent w-40 focus:outline-none ${exceeded || hasInvalidNumber ? 'border-red-500' : 'border-gray-400 focus:border-gray-700'
+                        className={`px-1 border-b bg-transparent focus:outline-none ${getInputSizeClass()} ${exceeded || hasInvalidNumber ? 'border-red-500' : 'border-gray-400 focus:border-gray-700'
                           }`}
                         value={value}
                         onChange={(e) => handleAnswerChange(question.id, e.target.value)}
@@ -1576,7 +1679,7 @@ export default function ReadingPractice() {
                       placeholder="Type your answer..."
                       value={value}
                       onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                      className={`${(exceeded || hasInvalidNumber) ? 'border-red-500' : ''} max-w-md inline-block ml-2`}
+                      className={`${(exceeded || hasInvalidNumber) ? 'border-red-500' : ''} max-w-md inline-block ml-2 ${getInputSizeClass()}`}
                     />
                   )}
                   <span>{after}</span>
@@ -1593,15 +1696,17 @@ export default function ReadingPractice() {
                 {Object.entries(question.options).map(([key, value]: [string, any]) => (
                   <div
                     key={key}
-                    className="flex items-center space-x-2 cursor-pointer"
+                    className="flex items-start space-x-3 cursor-pointer p-1"
                     onClick={() => {
                       if (answers[question.id] === key) {
                         handleAnswerChange(question.id, "");
                       }
                     }}
                   >
-                    <RadioGroupItem value={key} id={`q${question.id}-${key}`} />
-                    <Label htmlFor={`q${question.id}-${key}`} className="text-sm">
+                    <div className="pt-0.5">
+                      <RadioGroupItem value={key} id={`q${question.id}-${key}`} className={getRadioSizeClass()} />
+                    </div>
+                    <Label htmlFor={`q${question.id}-${key}`} className={`${getLabelSizeClass()} font-medium cursor-pointer leading-relaxed`}>
                       <strong>{key}.</strong> {value}
                     </Label>
                   </div>
@@ -2105,6 +2210,43 @@ export default function ReadingPractice() {
               </div>
 
               <div className="flex items-center gap-2">
+                {/* Text size selector for Normal View */}
+                <div ref={textSizeRefNormal} className="relative">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setShowTextSizeMenu(!showTextSizeMenu)}
+                    className="flex items-center gap-1.5 h-9 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800"
+                    title="Text size"
+                  >
+                    <span className="text-base font-bold">Aa</span>
+                    <span className="hidden sm:inline">{TEXT_SIZE_LABELS[textSize]}</span>
+                  </Button>
+                  {showTextSizeMenu && (
+                    <div className="absolute right-0 top-full mt-1 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 z-50 overflow-hidden">
+                      <div className="px-4 py-2.5 border-b border-gray-100 dark:border-gray-700">
+                        <span className="text-sm font-semibold text-gray-900 dark:text-white">Text size</span>
+                      </div>
+                      {(['regular', 'large', 'extra-large'] as TextSizeOption[]).map((option) => (
+                        <button
+                          key={option}
+                          onClick={() => { setTextSize(option); setShowTextSizeMenu(false); }}
+                          className={`w-full flex items-center justify-between px-4 py-3 text-sm transition-colors
+                            ${textSize === option
+                              ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-semibold'
+                              : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                            }`}
+                        >
+                          <span className={option === 'extra-large' ? 'text-lg' : option === 'large' ? 'text-base' : 'text-sm'}>
+                            {TEXT_SIZE_LABELS[option]}
+                          </span>
+                          {textSize === option && <CheckCircle className="h-4 w-4" />}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
                 {tests && tests.length > 1 && (
                   <>
                     <div className="flex gap-1 mr-2" role="tablist" aria-label="Reading slides">
@@ -2148,7 +2290,6 @@ export default function ReadingPractice() {
             </div>
 
             {/* Split View Mode - Full Width Professional Layout */}
-            {
               <div ref={splitContainerRef} className="fixed inset-x-0 top-[140px] bottom-0 flex bg-white dark:bg-gray-900">
                 {/* Left Pane - Reading Passage */}
                 <div style={{ width: `${splitRatio}%` }} className="h-full flex flex-col">
@@ -2159,46 +2300,6 @@ export default function ReadingPractice() {
                         <BookOpen className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                         {passage.title}
                       </h2>
-                      {/* Text size selector */}
-                      <div ref={textSizeRef} className="relative">
-                        <button
-                          onClick={() => setShowTextSizeMenu(!showTextSizeMenu)}
-                          className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg
-                                   bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300
-                                   hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors border border-gray-200 dark:border-gray-700"
-                          title="Text size"
-                        >
-                          <span className="text-base font-bold">Aa</span>
-                          <span className="hidden sm:inline">{TEXT_SIZE_LABELS[textSize]}</span>
-                        </button>
-                        {showTextSizeMenu && (
-                          <div className="absolute right-0 top-full mt-1 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 z-50 overflow-hidden">
-                            <div className="px-4 py-2.5 border-b border-gray-100 dark:border-gray-700">
-                              <span className="text-sm font-semibold text-gray-900 dark:text-white">Text size</span>
-                            </div>
-                            {(['regular', 'large', 'extra-large'] as TextSizeOption[]).map((option) => (
-                              <button
-                                key={option}
-                                onClick={() => { setTextSize(option); setShowTextSizeMenu(false); }}
-                                className={`w-full flex items-center justify-between px-4 py-3 text-sm transition-colors
-                                  ${textSize === option
-                                    ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-semibold'
-                                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50'
-                                  }`}
-                              >
-                                <span className={option === 'large' ? 'text-base' : option === 'extra-large' ? 'text-lg' : 'text-sm'}>
-                                  {TEXT_SIZE_LABELS[option]}
-                                </span>
-                                {textSize === option && (
-                                  <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                                  </svg>
-                                )}
-                              </button>
-                            ))}
-                          </div>
-                        )}
-                      </div>
                     </div>
                     <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                       Select text to highlight, translate, or add to vocabulary.
@@ -2220,16 +2321,15 @@ export default function ReadingPractice() {
                   </div>
                   {/* Scrollable Content */}
                   <div className="flex-1 overflow-y-auto px-8 py-6">
-                    <div className={TEXT_SIZE_CLASSES[textSize]}>
-                      <TextHighlighter
-                        content={passage.paragraphs?.map((p: { text: string }) => p.text).join('\n\n') || ''}
-                        passageTitle={passage.title}
-                        highlights={highlights}
-                        onHighlightsChange={handleHighlightsChange}
-                        evidenceQuotes={evidenceQuotes}
-                        showEvidenceHighlights={showEvidenceHighlights}
-                      />
-                    </div>
+                    <TextHighlighter
+                      content={passage.paragraphs?.map((p: { text: string }) => p.text).join('\n\n') || ''}
+                      passageTitle={passage.title}
+                      highlights={highlights}
+                      onHighlightsChange={handleHighlightsChange}
+                      evidenceQuotes={evidenceQuotes}
+                      showEvidenceHighlights={showEvidenceHighlights}
+                      className={TEXT_SIZE_CLASSES[textSize]}
+                    />
                   </div>
                 </div>
 
@@ -2286,7 +2386,7 @@ export default function ReadingPractice() {
                                     <QuestionResult
                                       key={q.id}
                                       question={q}
-                                      answer={answers[q.id]}
+                                      answer={answers[q.id] || ""}
                                       correctAnswer={result.correctAnswers[q.id]}
                                       explanation={result.explanations[q.id]}
                                       aiFeedback={aiFeedback[q.id]}
@@ -2297,6 +2397,7 @@ export default function ReadingPractice() {
                                         result.correctAnswers[q.id]
                                       )}
                                       isLoadingFeedback={loadingFeedback.has(q.id)}
+                                      textSize={textSize}
                                     />
                                   ))
                                   : []
@@ -2354,7 +2455,7 @@ export default function ReadingPractice() {
                                             passageTitle={`${passage?.title || "Reading"} - Q${question.id}`}
                                             highlights={getQHighlights(question.id)}
                                             onHighlightsChange={setQHighlightsFor(question.id)}
-                                            showLabels={false}
+                                            showLabels={false} className={getQuestionTextSize()}
                                           />
                                           <RadioGroup
                                             value={selectedAnswer}
@@ -2368,22 +2469,24 @@ export default function ReadingPractice() {
                                               return (
                                                 <div
                                                   key={index}
-                                                  className="flex items-center space-x-2 cursor-pointer"
+                                                  className="flex items-start space-x-3 cursor-pointer p-1"
                                                   onClick={() => {
                                                     if (selectedAnswer === optionValue) {
                                                       handleAnswerChange(question.id, "");
                                                     }
                                                   }}
                                                 >
-                                                  <RadioGroupItem
-                                                    value={optionValue}
-                                                    id={`split-q${question.id}-${index}`}
-                                                    className="h-4 w-4"
-                                                    disabled={isUsedElsewhere}
-                                                  />
+                                                  <div className="pt-0.5">
+                                                    <RadioGroupItem
+                                                      value={optionValue}
+                                                      id={`split-q${question.id}-${index}`}
+                                                      className={getRadioSizeClass()}
+                                                      disabled={isUsedElsewhere}
+                                                    />
+                                                  </div>
                                                   <Label
                                                     htmlFor={`split-q${question.id}-${index}`}
-                                                    className={`text-base leading-relaxed ${isUsedElsewhere ? 'text-red-500 line-through opacity-50' : ''}`}
+                                                    className={`${getLabelSizeClass()} cursor-pointer ${isUsedElsewhere ? 'text-red-500 line-through opacity-50' : ''}`}
                                                   >
                                                     <strong>{toRomanNumeral(index + 1)}.</strong> {optionText}
                                                   </Label>
@@ -2401,7 +2504,7 @@ export default function ReadingPractice() {
                                       <h4 className="font-medium text-sm mb-2">List of People/Institutions:</h4>
                                       <div className="space-y-1">
                                         {questionGroup.features?.map((feature: any, idx: number) => (
-                                          <div key={idx} className="text-sm">
+                                          <div key={idx} className={getFontSizeClass()}>
                                             <strong>{feature.letter}.</strong> {feature.name}
                                           </div>
                                         ))}
@@ -2416,7 +2519,7 @@ export default function ReadingPractice() {
                                             passageTitle={`${passage?.title || "Reading"} - Q${question.id}`}
                                             highlights={getQHighlights(question.id)}
                                             onHighlightsChange={setQHighlightsFor(question.id)}
-                                            showLabels={false}
+                                            showLabels={false} className={getQuestionTextSize()}
                                           />
                                           <Input
                                             placeholder="Enter letter..."
@@ -2435,7 +2538,7 @@ export default function ReadingPractice() {
                                       <h4 className="font-medium text-sm mb-2">Possible Endings:</h4>
                                       <div className="space-y-1">
                                         {questionGroup.sentence_endings?.map((ending: any, idx: number) => (
-                                          <div key={idx} className="text-sm">
+                                          <div key={idx} className={getFontSizeClass()}>
                                             <strong>{ending.letter}.</strong> {ending.text}
                                           </div>
                                         ))}
@@ -2450,7 +2553,7 @@ export default function ReadingPractice() {
                                             passageTitle={`${passage?.title || "Reading"} - Q${question.id}`}
                                             highlights={getQHighlights(question.id)}
                                             onHighlightsChange={setQHighlightsFor(question.id)}
-                                            showLabels={false}
+                                            showLabels={false} className={getQuestionTextSize()}
                                           />
                                           <RadioGroup
                                             value={answers[question.id] || ""}
@@ -2460,15 +2563,17 @@ export default function ReadingPractice() {
                                             {questionGroup.sentence_endings?.map((ending: any) => (
                                               <div
                                                 key={ending.letter}
-                                                className="flex items-center space-x-2 cursor-pointer"
+                                                className="flex items-start space-x-3 cursor-pointer p-1"
                                                 onClick={() => {
                                                   if (answers[question.id] === ending.letter) {
                                                     handleAnswerChange(question.id, "");
                                                   }
                                                 }}
                                               >
-                                                <RadioGroupItem value={ending.letter} id={`split-q${question.id}-${ending.letter}`} className="h-4 w-4" />
-                                                <Label htmlFor={`split-q${question.id}-${ending.letter}`} className="text-sm leading-normal">
+                                                <div className="pt-0.5">
+                                                  <RadioGroupItem value={ending.letter} id={`split-q${question.id}-${ending.letter}`} className={getRadioSizeClass()} />
+                                                </div>
+                                                <Label htmlFor={`split-q${question.id}-${ending.letter}`} className={`${getLabelSizeClass()} cursor-pointer`}>
                                                   {ending.letter}
                                                 </Label>
                                               </div>
@@ -2485,6 +2590,7 @@ export default function ReadingPractice() {
                                     result={result}
                                     handleAnswerChange={handleAnswerChange}
                                     summaryInputRefs={summaryInputRefs}
+                                    textSize={textSize}
                                   />
                                 ) : questionGroup.type === "summary-completion" || (questionGroup.type === "note-completion" && questionGroup.structure) ? (
                                   <SummaryCompletion
@@ -2493,6 +2599,7 @@ export default function ReadingPractice() {
                                     result={result}
                                     handleAnswerChange={handleAnswerChange}
                                     summaryInputRefs={summaryInputRefs}
+                                    textSize={textSize}
                                   />
                                 ) : questionGroup.type === "note-completion" ? (
                                   <NoteCompletion
@@ -2500,6 +2607,7 @@ export default function ReadingPractice() {
                                     answers={answers}
                                     result={result}
                                     onAnswerChange={handleAnswerChange}
+                                    textSize={textSize}
                                   />
                                 ) : questionGroup.type === "table-completion" ? (
                                   <TableCompletion
@@ -2507,6 +2615,7 @@ export default function ReadingPractice() {
                                     answers={answers}
                                     result={result}
                                     setAnswers={setAnswers}
+                                    textSize={textSize}
                                   />
                                 ) : questionGroup.type === "flow-chart-completion" ? (
                                   <FlowChartCompletion
@@ -2514,44 +2623,45 @@ export default function ReadingPractice() {
                                     answers={answers}
                                     result={result}
                                     setAnswers={setAnswers}
+                                    textSize={textSize}
                                   />
                                 ) : questionGroup.type === "matching-information" ? (
                                   // Render matching-information questions (split view)
                                   <div className="space-y-3">
                                     {/* Paragraph Reference Box */}
-                                    {questionGroup.paragraphs_list && (
-                                      <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded border border-blue-200">
-                                        <h4 className="font-semibold text-sm text-blue-900 dark:text-blue-100 mb-1">
-                                          Paragraphs:
-                                        </h4>
-                                        <div className="flex gap-1 flex-wrap">
-                                          {questionGroup.paragraphs_list.map((para: string) => (
-                                            <span key={para} className="text-sm text-blue-800 dark:text-blue-200">
-                                              {para}
-                                            </span>
-                                          ))}
+                                      {questionGroup.paragraphs_list && (
+                                        <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded border border-blue-200">
+                                          <h4 className={`font-semibold text-blue-900 dark:text-blue-100 mb-1 ${getLabelSizeClass()}`}>
+                                            Paragraphs:
+                                          </h4>
+                                          <div className="flex gap-1 flex-wrap">
+                                            {questionGroup.paragraphs_list.map((para: string) => (
+                                              <span key={para} className={`${getFontSizeClass()} text-blue-800 dark:text-blue-200`}>
+                                                {para}
+                                              </span>
+                                            ))}
+                                          </div>
                                         </div>
-                                      </div>
-                                    )}
+                                      )}
 
                                     {/* Questions */}
                                     <div className="space-y-2">
                                       {questionGroup.questions?.map((q: any) => (
                                         <div key={q.id} className="flex items-start gap-2 p-2 border-l-2 border-gray-300">
-                                          <span className="font-medium text-sm min-w-[24px]">{q.id}.</span>
-                                          <div className="flex-1 text-sm">
+                                          <span className={`font-medium min-w-[24px] ${getFontSizeClass()}`}>{q.id}.</span>
+                                          <div className={`flex-1 ${getFontSizeClass()}`}>
                                             <TextHighlighter
                                               content={String(q.questionText || "")}
                                               passageTitle={`${passage?.title || "Reading"} - Q${q.id}`}
                                               highlights={getQHighlights(q.id)}
                                               onHighlightsChange={setQHighlightsFor(q.id)}
-                                              showLabels={false}
+                                              showLabels={false} className={getQuestionTextSize()}
                                             />
                                           </div>
                                           <select
                                             value={answers[q.id] || ""}
                                             onChange={(e) => handleAnswerChange(q.id, e.target.value)}
-                                            className="px-3 py-2 border rounded text-sm min-w-[100px] h-9"
+                                            className={`px-3 py-2 border rounded min-w-[100px] ${getInputSizeClass()}`}
                                           >
                                             <option value="">Select...</option>
                                             {questionGroup.paragraphs_list?.map((para: string) => (
@@ -2583,12 +2693,12 @@ export default function ReadingPractice() {
                                     <div className="space-y-3">
                                       {questionGroup.questions?.map((question: any) => (
                                         <div key={question.id} className="space-y-1.5">
-                                          <h4 className="font-medium text-sm">{question.id}. {question.questionText}</h4>
+                                          <h4 className={`font-medium ${getFontSizeClass()}`}>{question.id}. {question.questionText}</h4>
                                           <Input
                                             placeholder="Enter letter..."
                                             value={answers[question.id] || ""}
                                             onChange={(e) => handleAnswerChange(question.id, e.target.value.toUpperCase())}
-                                            className="h-8 text-sm"
+                                            className={`max-w-xs ${getInputSizeClass()}`}
                                             maxLength={1}
                                           />
                                         </div>
@@ -2619,7 +2729,7 @@ export default function ReadingPractice() {
                                               passageTitle={`${passage?.title || "Reading"} - Q${question.id}`}
                                               highlights={getQHighlights(question.id)}
                                               onHighlightsChange={setQHighlightsFor(question.id)}
-                                              showLabels={false}
+                                              showLabels={false} className={getQuestionTextSize()}
                                             />
                                             <RadioGroup
                                               value={answers[question.id] || ""}
@@ -2629,15 +2739,17 @@ export default function ReadingPractice() {
                                               {questionOptions?.map((option: string, index: number) => (
                                                 <div
                                                   key={index}
-                                                  className="flex items-center space-x-2 cursor-pointer"
+                                                  className="flex items-start space-x-3 cursor-pointer p-1"
                                                   onClick={() => {
                                                     if (answers[question.id] === option) {
                                                       handleAnswerChange(question.id, "");
                                                     }
                                                   }}
                                                 >
-                                                  <RadioGroupItem value={option} id={`split-q${question.id}-${index}`} className="h-4 w-4" />
-                                                  <Label htmlFor={`split-q${question.id}-${index}`} className="text-sm leading-normal">
+                                                  <div className="pt-0.5">
+                                                    <RadioGroupItem value={option} id={`split-q${question.id}-${index}`} className={getRadioSizeClass()} />
+                                                  </div>
+                                                  <Label htmlFor={`split-q${question.id}-${index}`} className={`${getLabelSizeClass()} cursor-pointer`}>
                                                     {String.fromCharCode(105 + index)}. {option}
                                                   </Label>
                                                 </div>
@@ -2654,7 +2766,7 @@ export default function ReadingPractice() {
                                               passageTitle={`${passage?.title || "Reading"} - Q${question.id}`}
                                               highlights={getQHighlights(question.id)}
                                               onHighlightsChange={setQHighlightsFor(question.id)}
-                                              showLabels={false}
+                                              showLabels={false} className={getQuestionTextSize()}
                                             />
                                             <RadioGroup
                                               value={answers[question.id] || ""}
@@ -2664,15 +2776,17 @@ export default function ReadingPractice() {
                                               {questionOptions?.map((option: string, index: number) => (
                                                 <div
                                                   key={index}
-                                                  className="flex items-center space-x-2 cursor-pointer"
+                                                  className="flex items-start space-x-3 cursor-pointer p-1"
                                                   onClick={() => {
                                                     if (answers[question.id] === option) {
                                                       handleAnswerChange(question.id, "");
                                                     }
                                                   }}
                                                 >
-                                                  <RadioGroupItem value={option} id={`split-q${question.id}-${index}`} className="h-4 w-4" />
-                                                  <Label htmlFor={`split-q${question.id}-${index}`} className="text-sm leading-normal">
+                                                  <div className="pt-0.5">
+                                                    <RadioGroupItem value={option} id={`split-q${question.id}-${index}`} className={getRadioSizeClass()} />
+                                                  </div>
+                                                  <Label htmlFor={`split-q${question.id}-${index}`} className={`${getLabelSizeClass()} cursor-pointer`}>
                                                     {option}
                                                   </Label>
                                                 </div>
@@ -2689,25 +2803,27 @@ export default function ReadingPractice() {
                                               passageTitle={`${passage?.title || "Reading"} - Q${question.id}`}
                                               highlights={getQHighlights(question.id)}
                                               onHighlightsChange={setQHighlightsFor(question.id)}
-                                              showLabels={false}
+                                              showLabels={false} className={getQuestionTextSize()}
                                             />
                                             <RadioGroup
                                               value={answers[question.id] || ""}
                                               onValueChange={(value) => handleAnswerChange(question.id, value)}
-                                              className="inline-flex flex-wrap items-center gap-2"
+                                              className="inline-flex flex-wrap items-center gap-4 mt-1"
                                             >
                                               {questionOptions?.map((option: string) => (
                                                 <div
                                                   key={option}
-                                                  className="flex items-center space-x-1.5 cursor-pointer"
+                                                  className="flex items-start space-x-3 cursor-pointer p-1"
                                                   onClick={() => {
                                                     if (answers[question.id] === option) {
                                                       handleAnswerChange(question.id, "");
                                                     }
                                                   }}
                                                 >
-                                                  <RadioGroupItem value={option} id={`split-q${question.id}-${option}`} className="h-3 w-3" />
-                                                  <Label htmlFor={`split-q${question.id}-${option}`} className="text-xs">
+                                                  <div className="pt-0.5">
+                                                    <RadioGroupItem value={option} id={`split-q${question.id}-${option}`} className={getRadioSizeClass()} />
+                                                  </div>
+                                                  <Label htmlFor={`split-q${question.id}-${option}`} className={`${getLabelSizeClass()} cursor-pointer`}>
                                                     {option}
                                                   </Label>
                                                 </div>
@@ -2732,15 +2848,15 @@ export default function ReadingPractice() {
                                                   passageTitle={`${passage?.title || "Reading"} - Q${question.id}`}
                                                   highlights={getQHighlights(question.id)}
                                                   onHighlightsChange={setQHighlightsFor(question.id)}
-                                                  showLabels={false}
+                                                  showLabels={false} className={getQuestionTextSize()}
                                                 />
-                                                <p className="text-xs">
+                                                <p className={getFontSizeClass()}>
                                                   {before}
                                                   <Input
                                                     placeholder={`Gap ${question.id}`}
                                                     value={answers[question.id] || ""}
                                                     onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                                                    className="inline-block h-7 w-28 align-baseline mx-1 text-xs"
+                                                    className={`inline-block align-baseline mx-1 ${getInputSizeClass()}`}
                                                   />
                                                   {after}
                                                 </p>
@@ -2754,13 +2870,13 @@ export default function ReadingPractice() {
                                                 passageTitle={`${passage?.title || "Reading"} - Q${question.id}`}
                                                 highlights={getQHighlights(question.id)}
                                                 onHighlightsChange={setQHighlightsFor(question.id)}
-                                                showLabels={false}
+                                                showLabels={false} className={getQuestionTextSize()}
                                               />
                                               <Input
                                                 placeholder="Type your answer..."
                                                 value={answers[question.id] || ""}
                                                 onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                                                className="h-8 text-sm"
+                                                className={`max-w-xs ${getInputSizeClass()}`}
                                               />
                                             </div>
                                           );
@@ -2773,13 +2889,13 @@ export default function ReadingPractice() {
                                               passageTitle={`${passage?.title || "Reading"} - Q${question.id}`}
                                               highlights={getQHighlights(question.id)}
                                               onHighlightsChange={setQHighlightsFor(question.id)}
-                                              showLabels={false}
+                                              showLabels={false} className={getQuestionTextSize()}
                                             />
                                             <Input
                                               placeholder="Type your answer..."
                                               value={answers[question.id] || ""}
                                               onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                                              className="h-8 text-sm"
+                                              className={`max-w-xs ${getInputSizeClass()}`}
                                             />
                                           </div>
                                         );
@@ -2799,7 +2915,7 @@ export default function ReadingPractice() {
                                               const { words, hasInvalidNumber } = countAnswerTokens(value, allowNumber);
                                               const exceeded = words > maxWords;
                                               return (
-                                                <div className="text-xs leading-6">
+                                                <div className={`${getFontSizeClass()} leading-6`}>
                                                   <span>{before}</span>
                                                   {hasGap ? (
                                                     <span className="inline-flex items-center gap-1 align-baseline">
@@ -2807,7 +2923,7 @@ export default function ReadingPractice() {
                                                         aria-label={`Gap ${question.id}`}
                                                         type="text"
                                                         disabled={!!result}
-                                                        className={`px-1 border-b bg-transparent w-36 focus:outline-none ${exceeded || hasInvalidNumber ? 'border-red-500' : 'border-gray-400 focus:border-gray-700'
+                                                        className={`px-1 border-b bg-transparent focus:outline-none ${getInputSizeClass()} ${exceeded || hasInvalidNumber ? 'border-red-500' : 'border-gray-400 focus:border-gray-700'
                                                           }`}
                                                         value={value}
                                                         onChange={(e) => handleAnswerChange(question.id, e.target.value)}
@@ -2821,7 +2937,7 @@ export default function ReadingPractice() {
                                                       placeholder="Type your answer..."
                                                       value={value}
                                                       onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                                                      className={`h-8 text-sm inline-block ml-2 ${exceeded || hasInvalidNumber ? 'border-red-500' : ''}`}
+                                                      className={`inline-block ml-2 ${getInputSizeClass()} ${exceeded || hasInvalidNumber ? 'border-red-500' : ''}`}
                                                     />
                                                   )}
                                                   <span>{after}</span>
@@ -2837,15 +2953,17 @@ export default function ReadingPractice() {
                                                 {Object.entries(question.options).map(([key, value]: [string, any]) => (
                                                   <div
                                                     key={key}
-                                                    className="flex items-center space-x-2 cursor-pointer"
+                                                    className="flex items-start space-x-3 cursor-pointer p-1"
                                                     onClick={() => {
                                                       if (answers[question.id] === key) {
                                                         handleAnswerChange(question.id, "");
                                                       }
                                                     }}
                                                   >
-                                                    <RadioGroupItem value={key} id={`split-q${question.id}-${key}`} className="h-3 w-3" />
-                                                    <Label htmlFor={`split-q${question.id}-${key}`} className="text-xs leading-tight">
+                                                    <div className="pt-0.5">
+                                                      <RadioGroupItem value={key} id={`split-q${question.id}-${key}`} className={getRadioSizeClass()} />
+                                                    </div>
+                                                    <Label htmlFor={`split-q${question.id}-${key}`} className={`${getLabelSizeClass()} cursor-pointer`}>
                                                       <strong>{key}.</strong> {value}
                                                     </Label>
                                                   </div>
@@ -2907,10 +3025,9 @@ export default function ReadingPractice() {
                   </div>
                 </div>
               </div>
-            }
           </div>
         )}
-      </div >
+      </div>
     </>
   );
 }

@@ -1,4 +1,6 @@
-import { api } from "encore.dev/api";
+import { api, APIError } from "encore.dev/api";
+import { getAuthData } from "~encore/auth";
+import { AuthData } from "./auth";
 import { ieltsDB } from "./db";
 
 export interface SpeakingQuestion {
@@ -79,8 +81,13 @@ export const getSpeakingQuestion = api<{ part: number }, SpeakingQuestion>(
 
 // Submits a speaking response for evaluation.
 export const submitSpeaking = api<SpeakingSubmission, SpeakingFeedback>(
-  { expose: true, method: "POST", path: "/speaking/submit" },
+  { expose: true, method: "POST", path: "/speaking/submit", auth: true },
   async (req) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== req.userId) {
+      throw APIError.permissionDenied("You can only submit for yourself");
+    }
+
     // Mock AI evaluation - in a real app, this would call an AI service
     const bandScore = Math.round((Math.random() * 3 + 5) * 10) / 10; // 5.0-8.0 range
     const fluencyScore = Math.round((Math.random() * 3 + 5) * 10) / 10;
@@ -115,8 +122,13 @@ export const submitSpeaking = api<SpeakingSubmission, SpeakingFeedback>(
 
 // Retrieves user's speaking session history.
 export const getSpeakingSessions = api<{ userId: string }, { sessions: SpeakingSession[] }>(
-  { expose: true, method: "GET", path: "/users/:userId/speaking/sessions" },
+  { expose: true, method: "GET", path: "/users/:userId/speaking/sessions", auth: true },
   async ({ userId }) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== userId) {
+      throw APIError.permissionDenied("You can only access your own speaking sessions");
+    }
+
     const sessions = await ieltsDB.queryAll<SpeakingSession>`
       SELECT id, part, question, transcription, audio_url as "audioUrl",
              band_score as "bandScore", fluency_score as "fluencyScore",
@@ -131,3 +143,4 @@ export const getSpeakingSessions = api<{ userId: string }, { sessions: SpeakingS
     return { sessions };
   }
 );
+

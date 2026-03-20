@@ -1,4 +1,4 @@
-﻿// Video Lesson Data
+// Video Lesson Data
 // Each lesson contains: video info, comprehension questions, vocabulary, exercises
 
 export interface ComprehensionQuestion {
@@ -48,6 +48,10 @@ export interface VideoLesson {
     vocabExercises: VocabExercise[];
     summaryPrompt: string;
     summaryMinWords: number;
+    summaryMaxWords?: number;
+    summaryRequirements?: string[];
+    transcriptPhrases?: string[];
+    fullTranscript?: string;
 }
 
 // в”Ђв”Ђв”Ђ Lesson 1: The Benefits of Doing Nothing в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
@@ -627,6 +631,22 @@ export const videoLessons: VideoLesson[] = [
         ],
         summaryPrompt: 'Summarise the video "6 Minute English: Inflation" in your own words. Discuss the causes of inflation mentioned, how it impacts ordinary people, and the ways governments try to control it.',
         summaryMinWords: 150,
+        summaryMaxWords: 250,
+        fullTranscript: `Hello. This is 6 Minute English from BBC Learning English. I’m Rob. And I’m Beth. In this programme, we’re talking about money - and Beth, as the old saying goes, money makes the world go round! You mean it’s very important and lots of things couldn’t happen without it. Well, we all need money – but have you noticed how our money doesn’t seem to buy so much these days? Yes, I have Beth.
+It seems like consumers like us are being hit in the pocket at the moment – and by that, I mean we have less money to spend. Now, I’m no economist, but I know this has a lot to do with inflation - the increase in prices of things over time. It’s a big problem globally, and Beth my question for you is about inflation. According to one report, what was the annual inflation rate in Venezuela between November 2017 and 2018? Was it: a) 130% b) 1,300% or c) 1,300,000%? I’ll say b) 1,300%.
+OK. We’ll find out if you’re right later on. But let’s talk more about money and inflation now. Around the world, prices of things are rising more than normal, and more worrying is that prices keep going up. Two things in particular are increasing in price – energy, like gas  and electricity, and food. These are things we need and depend on.
+So, what’s causing the rises? There seem to be two main reasons – the Covid pandemic and the war in Ukraine, which has reduced the supply in things we need. And when things are in short supply – available in limited quantities - prices go up. The BBC World Service programme The Real Story discussed this in much more detail.
+One expert, economist, writer and broadcaster, Linda Yueh, explained how price rises could be around for a while… Even if you take out some of these volatile items like food and energy, the sustained price increases we've had, it is actually getting passed through into how companies price their goods and services.
+and that's where it gets extremely worrying because that suggests that even if energy prices, food prices, come down, we could have inflation now in the system and I think that for advanced economies is worrying, for developing countries, that's hugely worrying. Linda Yueh used some interesting language there.
+She talked about food and energy being volatile items – something that is volatile is unpredictable and can change suddenly. And that’s what we’ve experienced with food and energy prices. Yes, and she said these price increases have been sustained – so, continuing at the same level for a long period of time.
+But Linda Yueh says that even if energy and food prices eventually come down, companies will pass on the extra costs they have already faced by charging more for their goods and services. And this could cause inflation – there’s that word again. Continuing price rises aren’t good for anyone but especially for people in developing economies – countries which have industry that’s less developed and have lower living standards.
+Another possible consequence of inflation is recession – this economic term describes a situation where a country’s production starts going down, people’s incomes go down and unemployment goes up. This all sounds like a very bleak economic outlook. So, what can be done? Well, that’s the million-dollar question, and economists are trying to work it out.
+Speaking on The Real Story programme, economist Vicky Pryce gave an overview of how to control inflation. One of them, something that is actually most effective, is by slowing down demand. And if you increase interest rates, what you do is you discourage people from borrowing, whether they are individuals or whether they are businesses - and of course the economy starts slowing down.
+So, she says what is most effective – meaning what works well and gets the best results – is slowing down demand. Increasing interest rates can do this because people will borrow less money. Interest rates are fees banks and financial institutions charge you for borrowing money. And if we borrow less money, we buy fewer things, which can reduce inflation.
+I think it makes sense now! And if you were in Venezuela in 2018, you would really want inflation to go down, wouldn’t you? Yes. Now, earlier I asked you what one report said the inflation rate was there between November 2017 and 2018. And I said a very high 1,300%. Well, it was even higher, Beth. According to a study by the opposition-controlled National Assembly, the annual inflation rate reached 1,300,000% in the 12 months to November 2018.
+This extreme financial situation was known as hyperinflation. That’s not good at all. In this programme, we have been talking about inflation – that’s the  increase in prices over time. Other vocabulary we used included the expression hit in the pocket – which means you have less money to spend. Volatile describes something that is unpredictable and can change suddenly.
+Something that is sustained continues at the same level for a long period of time. And something that is effective works well and gets the best results. And interest rates are fees banks and financial institutions charge you for borrowing money. Well, we hope you’ve found our brief lesson about the economy useful.
+Thanks for listening. Goodbye for now! Bye bye!`,
     },
     {
         id: 'following-your-dreams',
@@ -953,6 +973,21 @@ export const videoLessons: VideoLesson[] = [
         ],
         summaryPrompt: 'Summarise the video "Are you following your dreams?" in your own words. Discuss the different approaches to following dreams mentioned (Riverside community vs. Zapp family), the challenges they face, and what lesson Herman learned from his travels.',
         summaryMinWords: 150,
+        summaryMaxWords: 250,
+        fullTranscript: `Hello. This is 6 Minute English from BBC Learning English. I’m Neil. And I’m Beth. When I was a boy, I wanted to be a fireman when I grew up. How about you, Beth? Did you have any childhood dreams? I wanted to be an astronaut and fly to the Moon… When we’re young most of us have big dreams and plans for the future.
+Unfortunately, as we grow up these childhood dreams often get lost in the adult world of jobs, money, families and careers. But not for everyone… Daisy, from New Zealand, and, Herman, from Argentina are two people who decided to follow their childhood dreams. They wanted the world to become a utopia – a perfect, ideal society where everyone is happy and gets along with each other.
+In this programme, we’ll be hearing how Daisy and Herman made their dreams come true – not by changing the world, but by changing themselves. And, as usual, we’ll be learning some new vocabulary too. But before that I have a question for you, Beth. Following your dreams can be tough, but not following them can leave you regretting all the things you wanted to do but didn’t.
+In 2012, Australian nurse, Bronnie Ware, wrote her bestselling book, The Top Five Regrets of the Dying, after interviewing terminally ill patients about their life regrets. So, what do you think their top regret was? Was it: a) I wish I hadn’t worked so hard? b) I wish I had followed my dreams? or c) I wish I’d made more money? Well, I’ll guess it’s b) they wish they had followed their dreams.
+OK, Beth. I’ll reveal the correct answer at the end of the programme. The first dreamer we’re going to meet lives in Riverside, a peace-loving community in New Zealand where everyone shares everything. Riverside members work for the community’s businesses, including a farm, a hotel and a café. All the money they earn is collected and shared between everyone equally.
+Daisy, who was born in East Germany, joined Riverside in 2004. Here she explains her belief in sharing to BBC World Service programme, The Documentary. What I think I always believed in is that the sharing of resources can provide a group of people with quite a great advantage, but it doesn’t matter how many hours you work or what work you do, everyone is getting the same amount.
+And that is something that many people outside of Riverside struggle with, and where we’re often getting this ‘communism’ label attached to us, because it’s so… it seems so outlandish for people. Riverside isn’t a communist community. In fact, people with many different political views live there. But Daisy says that local people struggle with the idea that everything is shared.
+If you struggle with an idea, you find it difficult to accept or think about it. Daisy also says some local people call Riverside outlandish – strange and unusual. Our second group of dreamers are a family - the Zapps. In 2000, childhood sweethearts, Herman and Candelaria Zapp, bought a vintage car and set off from Argentina to travel around the world with less than 3.
+500 dollars in their pockets. Twenty-two years and three children later they have visited over a hundred countries, meeting with countless people and experiences on the way. Here, Herman Zapp explains to BBC World Service’s, The Documentary, how following his dream has changed him for the better. I am so happy with the Herman there is now, that I know now – not the one who wanted to conquer the world, but the one who was conquered by the world.
+I learn so much from people, and it’s amazing how the more you meet people, the more you know stories, how much more humble you become because you notice that you are a beautiful, tiny piece of sand, but a very important piece of sand like everyone is, right? After many years travelling, meeting new people and hearing their stories, Herman is more humble – not proud or arrogant.
+He no longer wants to conquer the world – to control it by force; rather, he has been conquered by his experiences. Herman compares himself to a beautiful but tiny piece of sand and uses the phrase 'a grain of sand' to describe things which are insignificant in themselves, but at the same time are an important part of the whole.
+Daisy and Herman are rare examples of dreamers who followed their dream and found a happy life, lived without regret – which reminds me of your question, Neil. Yes, I asked about Bronnie Ware’s book, The Top Five Regrets of the Dying. What do you think the number one regret was, Beth? I guessed it was b) not following your dreams.
+Which was the right answer! Not having the courage to follow your dreams was listed as the top life regret. At least we have people like Daisy and Herman to remind us dreams can come true! OK, let’s recap the vocabulary from this programme, starting with 'utopia' – a perfect world where everyone is happy. If you 'struggle with an idea', you find it difficult to accept.
+The adjective, outlandish, means strange and unusual. 'To conquer' something means to control it by force. Someone who is 'humble' is not proud or arrogant. And finally, the phrase 'a grain of sand' describes something which is both insignificant yet somehow important. Once again, our six minutes are up. Bye for now! Goodbye!`,
     },
     {
         id: 'social-media-health',
@@ -1293,7 +1328,23 @@ export const videoLessons: VideoLesson[] = [
             }
         ],
         summaryPrompt: 'Discuss the impact of social media on adolescent mental health as described in the video. Mention the role of algorithms and who bears the responsibility for addressing these issues.',
-        summaryMinWords: 150
+        summaryMinWords: 150,
+        summaryMaxWords: 250,
+        fullTranscript: `Hello. This is Six Minute English from BBC Learning English. I'm Neil. Beth? What are you doing? Get off your phone! Oh, sorry! And I'm Beth. Are you addicted to social media? It wouldn't be a surprise. With so many different apps out there, Snapchat, TikTok, and the latest, Threads, it's easy to spend a lot more time on your phone than ever before.
+Yes, I don't think I'm addicted, but I definitely spend more time on social media than I'd like to. However, there are plenty of studies out there looking at how social media affects mental health with some saying it can be as addictive as gambling. Research in the US has found that adolescents who spend more than three hours a day on social media have double the risk of developing depression and anxiety.
+An adolescent is someone aged ten to nineteen, between childhood and adulthood. With that in mind, it's no wonder parents are worried. To help with this, the US is currently in the process of regulating social media apps for teenagers. Some scientists think the UK should do the same. There has been growing agreement among health experts about the negative chronic health effects of social media use on teenagers.
+They have revealed in surveys that social media makes them feel worse about their body image and 64% of teens have said they are regularly exposed to hate-based content. In this programme, we'll be discussing how social media affects teenagers and, as usual, we'll be learning some useful new vocabulary as well.
+But first I have a question for you, Beth. The app Snapchat is a very common way that teenagers communicate these days. This is partly because messages and photos disappear after a certain time period. But what percentage of thirteen to twenty-four year olds use Snapchat? Is it: a) 70%, b) 80% or c) 90%. Hmm, I'll guess 80%.
+OK, Beth. I'll reveal the answer later in the programme. A lot of social media platforms, such as TikTok, work by showing and suggesting similar accounts and content to those someone has already searched for. Professor Devi Sridhar, the Chair of global public health at the University of Edinburgh, thinks this can be concerning, as she told BBC World Service Programme, Inside Science.
+And this is worrying, for example, with young girls and eating disorders, that they're being fed that in an addictive way and the algorithm saying, 'Oh, they like that content. We want to keep giving it to them because it keeps them on their phones and I think that's the really vital message here, of any of these apps, is that their revenue comes from advertising.
+Teenagers are being fed content in a way that is addictive. If you are fed something, it means you're given something. In this case, it refers to content, not food. The content is addictive because social media users algorithms. Algorithms are a complex set of rules and calculations that prioritise and personalise the content a user sees.
+But we need to remember that social media platforms use algorithms to keep users on the platforms for as long as possible because their revenue comes from advertising. Revenue is the money a company earns. They're paid by other companies to use the social media space to promote their products. This could be seen as social media platforms prioritising making money over the mental health of users – a worry for parents.
+Professor Debbie Sridhar talked about the challenges of having a teenager addicted to social media on BBC   World Service Programme, Inside Science. And so I think the challenge here, as a parent, listening to this is what you do about it. And I think the onus has been put on parents and concerned adults to find solutions on their own.
+And that means debates with your child over what are you are on, are you using this, but it's a losing battle because it's their entire social network. Professor Sridhar says that, when it comes to helping teenagers navigate social media, the onus has been put on parents to find solutions. The onus means the responsibility or duty.
+Parents need to be able to challenge their children when they need to, even if this is a losing battle, a fight they cannot win as teenagers have their entire life on social networks. OK Beth. I think it's time I reveal the answer to my question. I asked you what percentage of thirteen to twenty-four year olds use Snapchat.
+And I said it was 80%. And that was, I'm sorry to say, the wrong answer. Actually 90% of people aged between thirteen and twenty four use Snapchat – quite a lot. OK, let's recap the vocabulary we have learned from this programme, starting with adolescent – a person aged ten to nineteen, between childhood and adulthood.
+If you are fed content, you are given content. This is what the social media platform offers you automatically rather than what you search for yourself. Algorithms are a complex set of rules and calculations that prioritise and personalise the content a user sees. Revenue is the money a company earns which could come from sales or advertising.
+If the onus is on someone, it's their responsibility or duty. And finally, a losing battle is a fight you cannot win. Once again our six minutes are up. Join us again soon for more useful vocabulary here at Six Minute English. Goodbye for now. Bye.`,
     },
     {
         id: 'fast-fashion',
@@ -1649,7 +1700,26 @@ export const videoLessons: VideoLesson[] = [
             }
         ],
         summaryPrompt: 'Summarize the main arguments for and against fast fashion as discussed in the video. What are some ways consumers can become more sustainable?',
-        summaryMinWords: 150
+        summaryMinWords: 150,
+        summaryMaxWords: 250,
+        fullTranscript: `Hello. This is 6 Minute English from BBC Learning English. I'm Georgina... Neil: And I'm Neil. Georgina: In this programme, we're talking about buying clothes and only wearing them a few times before buying more clothes! Neil: This is something known as fast fashion - it's popular, it might make us feel good, but it's not great for the environment.
+Georgina: Which is why lots of people this year are pledging - or promising publicly - to buy no new clothes. Neil: I for one am wearing the same shirt I bought seven years ago. Georgina: You're certainly not a fashion victim, Neil! But first, let's test your knowledge of fast fashion with a question. Do you know how many items of clothing were sent to landfill in the UK in 2017? Was it...
+a) 23 million items, b) 234 million items or c) 2.3 billion items? What do you think, Neil? Neil: I'm sure it's lots, but not billions, so I'm going to say 23 million items. Georgina: I shall tell you if you're right at the end of the programme. Let's talk more about fast fashion, which is being blamed for contributing to global warming.
+Neil: And discarded clothes - that means ones that are thrown away - are also piling up in landfill sites, and fibre fragments are flowing into the sea when clothes are washed. Georgina: It's not great - and I've heard the average time someone wears something is just seven! So why is this, and what is driving our desire to keep buying more clothes? Neil: I think we should hear from fashion journalist Lauren Bravo, who's been speaking on the BBC Radio 4 programme, You and Yours.
+She explained that clothes today are relatively cheaper than those from her parents' days... Lauren Bravo: A lot of clothing production got outsourced - offshored over to the developing world, so countries like Indonesia, India, Bangladesh and China are now responsible for making the vast bulk of all the clothes that are sold in the UK.
+And with that, we've seen what we call 'chasing the cheapest needle' around the world, so the fashion industry constantly looking to undercut competitors, and with that clothes getting cheaper and cheaper and cheaper. Georgina: Right, so clothes - in the developed world at least - have become cheaper because they are produced in developing countries.
+These are countries which are trying to become more advanced economically and socially. Neil: So production is outsourced - that means work usually done in one company is given to another company to do, often because that company has the skills to do it. And in the case of fashion production, it can be done cheaper by another company based in a developing country.
+Georgina: Lauren used an interesting expression 'chasing the cheapest needle' - so the fashion industry is always looking to find the company which can make clothes cheaper - a company that can undercut another one means they can do the same job cheaper. Neil: Therefore the price of clothes gets cheaper for us.
+Georgina: OK, so it might be good to be able to buy cheaper clothes. But why do we have to buy more - and only wear items a few times? Neil: It's all about our obsession with shopping and fashion. It's something Lauren Bravo goes on to explain on the You and Yours radio programme. See if you can hear what she blames for this obsession...
+Lauren Bravo: Buying new things has almost become a trend in itself for certain generations. I think that feeling that you can't be seen in the same thing twice, it really stems from social media, particularly. And quite often people are buying those outfits to take a photo to put on Instagram. It sounds illogical, but I think when all of your friends are doing it there is this invisible pressure there.
+Georgina: Lauren makes some interesting points. Firstly, for some generations, there is just a trend for buying things. Neil: It does seem very wasteful, but, as Lauren says, some people don't like to be seen wearing the same thing twice. And this idea is caused by social media - she uses the expression 'stems from'.
+Georgina: She describes the social pressure of needing to be seen wearing new clothes on Instagram. And the availability of cheap clothes means it's possible to post new images of yourself wearing new clothes very regularly. Neil: Hmm, it sounds very wasteful and to me, illogical - not reasonable or sensible and more driven by emotions rather than any practical reason.
+Georgina: But, there is a bit of a backlash now - that's a strong negative reaction to what is happening. Some people are now promising to buy second-hand clothes, or 'vintage clothes', or make do with the clothes they have and mend the ones they need. It could be the start of a new fashion trend. Neil: Yes, and for once, I will be on trend! And it could reduce the amount of clothes sent to landfill that you mentioned earlier.
+Georgina: Yes, I asked if you knew how many items of clothing were sent to landfill in the UK in 2017? Was it... a) 23 million items, b) 234 million items or c) 2.3 billion items? What did you say, Neil? Neil: I said a) 23 million items. Georgina: And you're wrong. It's actually 234 million items - that's according to the Enviro Audit Committee.
+It also found that 1.2 billion tonnes of carbon emissions is released by the global fashion industry. Neil: Well, we're clearly throwing away too many clothes but perhaps we can recycle some of the vocabulary we've mentioned today? Georgina: I think we can, starting with pledging - that means publicly promising to do something.
+You can make a pledge to do something. Neil: When something is outsourced, it is given to another company to do, often because that company has the skills to do it or it can be done cheaper. Georgina: And if one company undercuts another, it charges less to do a job than its competitor. Neil: The expression stems from means 'is caused by' or 'a result of'.
+We mentioned that rise in fast fashion stems from sharing images on Instagram. Georgina: And we mentioned this being illogical. So it seems unreasonable - not sensible, and more driven by emotions rather than any practical reason. Neil: And a backlash is a strong negative reaction to what is happening. Georgina: And that brings us to the end of our discussion about fast fashion! Please join us again next time. Bye.
+Neil: Bye.`,
     },
     {
         id: 'cities-future',
@@ -2029,7 +2099,22 @@ export const videoLessons: VideoLesson[] = [
             }
         ],
         summaryPrompt: 'Describe how technology and sustainability might shape the cities of the future according to the video. What are the potential benefits and drawbacks?',
-        summaryMinWords: 150
+        summaryMinWords: 150,
+        summaryMaxWords: 250,
+        fullTranscript: `Hello and welcome to 6 Minute English. I'm Alice and I'm Neil. Have you ever played Sim City, Neil - the city-building computer game? Yes, but I wasn't very good at it. I didn't build enough houses which created a lot of homeless Sims - those are characters in the game - and then I didn't deal effectively with a flood. Really! Well, I suppose managing a city is quite a challenge, which is the subject of today's show: Cities of the Future.
+An important subject as so many of us now live in urban areas. I want to start with our quiz question: what is the percentage of the world's population that will be living in cities in 2050? We are dealing with approximates here. Is it: a) 10%, b) 50% or c) 70%? I think that it's a) 10%. Well, we'll find out if you're right or wrong later on in the show.
+Now, you've encountered a couple of issues that might face urban planners when designing a city, Neil. Housing and dealing with a flood. Can you think of any others? Yes, having decent cycle lanes, good transport networks are very important. Yes indeed. And if people could get around easily on foot or by bike or by public transport, roads would be less congested - or overcrowded - and less polluted.
+That sounds rather utopian to me though. A Utopia is an imaginary place where everything is perfect. But Copenhagen is pretty utopian, Alice. The air is clean, there are bike lanes everywhere. Oh that sounds fantastic! But what about somewhere like Beijing with its constant smog - or air pollution - hanging over the city? A lot of people ride bikes there too.
+So which city is going to be the model for the future? Maybe like the future Los Angeles in the movie Blade Runner... you know, glittering high-rises, gigantic neon billboards, flying cars. Well, today's Los Angeles has terrible urban sprawl and traffic problems. Urban sprawl is the way a city spreads into undeveloped land around it, often without planning permission.
+Dr Janice Perlman can explain why this happens. She is the founder and president of the Mega-Cities Project, a non-profit organization in Rio de Janeiro, and knows a lot about urban sprawl in Brazilian cities. People are coming massively into the cities which have no housing that's affordable to them. So they can't rent and they can't buy, and they end up building their own communities and houses on unoccupied land.
+And these communities are becoming in some places the majority, not the minority. And they're off the grid, so they're not often serviced by either the social services but also many of them don't have water, sanitation and electricity. People migrate - or move from the countryside to the city - to get better opportunities, but end up with nowhere to live, so they build their own housing on unoccupied land.
+These shanty towns - poor communities where the houses are built out of cheap materials like corrugated iron and plastic sheeting - are often off the grid, which means they don't have an electricity or water supply or access to healthcare and education. And these communities are growing, so the problem's getting bigger. So are there any solutions, Alice?
+Well, it's all about improving the infrastructure - that's the basic facilities a town or city needs, for example, communication, transport, water and electricity. But this shouldn't only mean improving housing conditions but also promoting education and employment among the inhabitants and building better communities. That sounds like a real headache for the urban planners!
+You're right there. And one thing urban planners are talking about at the moment is creating smart cities. John Rossant, founder and chairman of the non-profit organization New Cities Foundation, explains what it is. I think, you know, generally it's accepted that cloud computing, ubiquitous internet, robust 5G networks, etc., will transform our cities whether they're in the global south or the developed world.
+And technology is really a game changer, I think, in urbanization. John Rossant there. What's ubiquitous, Alice? It means available everywhere. So the idea behind smart cities is to use technology to collect large amounts of data about how a city is performing, and that will be a game changer - significantly affecting the way our cities function. Hope for the future, Alice!
+Fingers crossed. Now I think it's time for the answer to today's quiz question, Neil. I asked what is the percentage of the world's population that will be living in cities in 2050? And remember I said we're dealing with approximates here. Is it: a) 10%, b) 50% or c) 70%? And I said a) 10%. Yes, and you underestimated there, Neil. The right answer is actually c) 70%.
+This is according to a report by the United Nations. Today, 54% of the world's population lives in urban areas. A lot, really. Yeah. Well, I know we're running out of time so let me repeat the words we learned today. They were: congested, Utopia, smog, urban sprawl, migrate, shanty towns, off the grid, infrastructure, ubiquitous, game changer.
+Well, that's the end of this edition of 6 Minute English. Join us again soon. Meanwhile, visit our website bbclearningenglish.com where you'll find guides to grammar, exercises, videos and articles to read and improve your English. Bye! Bye-bye.`,
     },
     {
         id: 'university-worth',
@@ -2414,7 +2499,20 @@ export const videoLessons: VideoLesson[] = [
             }
         ],
         summaryPrompt: 'Based on the video, discuss whether you believe a university degree is still worth the investment in the modern era. Consider the impact of AI, the importance of soft skills and work experience, and the declining "graduate premium" in sectors like finance and law.',
-        summaryMinWords: 150
+        summaryMinWords: 150,
+        summaryMaxWords: 250,
+        fullTranscript: `Earning a degree used to lead to a steady job with a good salary. But today, young graduates in the West are finding fewer employment opportunities. So, is it still worth going to university? The unemployment rate of young graduates in America is now approaching the same rate for the age group as a whole. In 2010 there was around a six percentage-point difference in unemployment between young people and young graduates. But now there's just a one percentage-point difference between them.
+It's not just in America. In the European Union, the unemployment rate of young people with tertiary education is now approaching the overall rate for that age group. One theory for this is that universities are accepting less-talented applicants, and then they aren't teaching them very well. This could lead to employers not expecting much of a difference between the average graduate and then someone who didn't go to university.
+Another theory is that fewer jobs need graduate-level qualifications. For example, in the past you often needed to attend a university in order to understand how to use a computer. On the frontiers of science the strange world of the computer. But today almost everyone can use tech, regardless of whether or not they went to university. The number of jobs in graduate-friendly industries is also decreasing.
+Across the EU the number of 15-to-24-year olds who are employed in finance and insurance fell by 16% from 2009-2024. And, since 2016, the number of British twentysomethings in law and finance has fallen by 10%. It's tempting to blame AI for these waning opportunities. Yet the decline in graduate jobs started long before ChatGPT. What's more likely is that the industries that traditionally employed graduates have had a tough time lately.
+Since the global financial crisis of 2007-2009, the golden age of investment banking is over, so they're spending less money on hiring graduates. In America all this is affecting young people's decision on whether or not to attend college. The number of Americans enrolled in bachelor's programmes fell by 5% from 2013-2022, according to data from the OECD. Yet in most rich countries, where education is cheaper because the state plays a larger role, young people are still applying to universities in droves.
+Excluding America, enrolment across the OECD rose from 28m to 31m in the decade to 2022. Perhaps students simply aren't picking the right subjects. Arts, humanities and social sciences are still proving popular. Even, inexplicably, journalism. If these trends say anything about young people's ideas about the future of work, they truly are in trouble. So, in the age of AI what should you study at university?
+As technology improves, the future of work is changing, too. Many of the jobs that graduates will have don't even exist yet. Some young people worry that certain skills they learn might become outdated as technology changes. Coding, for example, is at risk of becoming obsolete within only a few years. According to one study the percentage of American and British IT professionals who worry that AI tools will make many of their day-to-day skills obsolete increased from 74% to 91% in just one year.
+There are some subjects which are likely to stay relevant. Robotics, for example, will help people maximise the benefits of technological change. And practical jobs, like plumbing and carpentry, are less likely to be taken over by AI and will remain valued by society. These professions often don't require a university qualification and can be learnt in other ways, like on apprenticeships.
+But arguably what's more important for students than studying a specific subject is to focus on learning soft skills instead. Things like communication, critical thinking and reliability, as well as empathy and being able to build relationships. All are transferable across multiple industries. OECD findings from 2019 demonstrate that people will need to rely on their currently unique human skills to succeed. Understanding how to learn will be key to developing new skills and adapting in changing times.
+The research also suggests that jobs with complex social interactions, such as care, will still need humans, so developing skills like negotiation and persuasion will be vital. Currently AI isn't very good at these soft skills. I understand emotions have a deep meaning, but I can't experience them like you can. So if workers can plug the gaps, while also being able to transition into emerging industries, then it will help humans to compete with machines.
+Nearly all degrees will allow you to gain these skills through group projects, presentations and extra-curricular activities. Ultimately it doesn't really matter which degree you choose to study. Perhaps what's even more important is that a student gains work experience or an internship. Research finds that those who graduated in 2022 and completed internships were 23% more likely to start a full-time position within six months of graduation.
+This gap increases further in certain fields, like oil, gas and mining, where it rose to 65%. Although it's hard to predict how improving technology will change the world of work over the coming decades, one thing is for sure: a student with a variety of skills, a lifelong desire to learn and a good attitude will go far.`,
     },
     {
         id: 'future-work',
@@ -2424,11 +2522,375 @@ export const videoLessons: VideoLesson[] = [
         category: 'Workplace',
         description: 'In this BBC 6 Minute English episode, Neil and Beth discuss the evolving landscape of the workplace, technological advancements, and the four-day working week trial.',
         embedUrl: 'https://www.youtube.com/embed/s1HxJVusR2w?si=f-2lEo4fhOnFfULz',
-        comprehensionQuestions: [],
-        vocabulary: [],
-        vocabExercises: [],
+        comprehensionQuestions: [
+            {
+                id: 'fw-cq1',
+                type: 'tfng',
+                question: 'The programme states that Elon Musk predicted artificial intelligence will eventually mean that nobody will need to work.',
+                correctAnswer: 'True',
+                explanation: 'The programme says: "tech billionaire Elon Musk, who recently predicted that artificial intelligence will eventually mean that no one will have to work." This matches the statement exactly.'
+            },
+            {
+                id: 'fw-cq2',
+                type: 'tfng',
+                question: 'According to Professor Burchell, predictions about dramatic changes to working time have generally been accurate throughout history.',
+                correctAnswer: 'False',
+                explanation: "Professor Burchell says the opposite: \"the track record for economists and other social scientists isn't good\" and \"those predictions of very, very large changes in working time just haven't come to pass.\" He clearly states that predictions have been inaccurate, not accurate."
+            },
+            {
+                id: 'fw-cq3',
+                type: 'tfng',
+                question: 'The programme states that the four-day working week trial in 2023 was only offered to technology companies.',
+                correctAnswer: 'Not Given',
+                explanation: 'The programme mentions that 60 companies took part in the trial but never specifies what type of companies they were. It does not say whether they were technology companies, service companies, or any other sector. This information is simply not discussed.'
+            },
+            {
+                id: 'fw-cq4',
+                type: 'tfng',
+                question: 'Andrew Palmer believes that AI will completely eliminate all human jobs in the near future.',
+                correctAnswer: 'False',
+                explanation: "Andrew Palmer says: \"I'm not a tech dystopian, I don't think that machines or AI are going to get rid of all jobs.\" He explicitly rejects the idea that AI will eliminate all jobs."
+            },
+            {
+                id: 'fw-cq5',
+                type: 'tfng',
+                question: 'Professor Burchell acknowledges that working hours have been reducing very gradually over time.',
+                correctAnswer: 'True',
+                explanation: 'Professor Burchell says: "although we\'re heading very gradually in that direction." He accepts the trend exists but emphasises it is happening much more slowly than predictions suggest.'
+            },
+            {
+                id: 'fw-cq6',
+                type: 'mcq',
+                question: 'What happened during the four-day working week trial in 2023?',
+                options: [
+                    '52% of companies continued with the shorter week',
+                    '72% of companies continued with the shorter week',
+                    '92% of companies continued with the shorter week',
+                    'All companies abandoned the idea and returned to five days'
+                ],
+                correctAnswer: '92% of companies continued with the shorter week',
+                explanation: 'Neil reveals: "a whopping 92% of the companies plan on keeping a four-day week because it was so popular, with bosses as well as workers!"'
+            },
+            {
+                id: 'fw-cq7',
+                type: 'mcq',
+                question: 'When Professor Burchell says predictions should be taken "with a pinch of salt," he means that people should:',
+                options: [
+                    'Add salt to their food while reading predictions',
+                    'Trust predictions completely because experts made them',
+                    'Not completely believe what they are told about the future',
+                    'Ignore all predictions entirely and stop thinking about the future'
+                ],
+                correctAnswer: 'Not completely believe what they are told about the future',
+                explanation: "The programme explains: \"To take something with a pinch of salt is an idiom meaning to doubt that what you've been told is accurate or likely to come true.\""
+            },
+            {
+                id: 'fw-cq8',
+                type: 'mcq',
+                question: "What is Andrew Palmer's main concern about AI and jobs?",
+                options: [
+                    'That AI will make all products more expensive',
+                    'That new jobs will appear at the same time as old ones disappear',
+                    'That there will be a timing gap between jobs being lost and new ones appearing',
+                    'That governments will ban AI in the workplace'
+                ],
+                correctAnswer: 'That there will be a timing gap between jobs being lost and new ones appearing',
+                explanation: "Andrew says he worries about \"a sequencing risk\" and that \"although economists like to say new jobs will crop up, they won't necessarily be aligned at the same time вЂ” there won't be coordination.\" His concern is about the GAP between job losses and new job creation, not that jobs will disappear forever."
+            },
+            {
+                id: 'fw-cq9',
+                type: 'mcq',
+                question: 'Which 1930s prediction mentioned at the start of the programme has NOT come true?',
+                options: [
+                    'People will watch television at home',
+                    'A miracle pill will cure all diseases',
+                    'People will work from home',
+                    'Robots will do factory work'
+                ],
+                correctAnswer: 'A miracle pill will cure all diseases',
+                explanation: 'The programme opens by mentioning "smell-o-vision" and "a miracle pill which cures all diseases" as 1930s predictions that "haven\'t come true."'
+            },
+            {
+                id: 'fw-cq10',
+                type: 'mcq',
+                question: 'Which prediction about work DID come true, according to the programme?',
+                options: [
+                    'Robots took over most jobs',
+                    'Everyone started working a four-day week',
+                    'Millions of people worked from home during Covid',
+                    'Artificial intelligence replaced all office workers'
+                ],
+                correctAnswer: 'Millions of people worked from home during Covid',
+                explanation: 'The programme says: "During Covid, one of these predictions came true. Millions were forced to work from home."'
+            }
+        ],
+        vocabulary: [
+            {
+                id: 'fw-v1',
+                word: 'take something with a pinch of salt',
+                partOfSpeech: 'idiom',
+                definition: 'To not completely believe what you have been told because you think it is unlikely to be true or accurate.',
+                example: 'When my friend told me he had been offered a job paying $200,000 a year, I took it with a pinch of salt because he tends to exaggerate.',
+                tip: 'Whenever I see headlines about technology completely replacing all human workers, I take it with a pinch of salt. People have been making those kinds of predictions for decades and they never quite come true.',
+                tipType: 'speaking',
+                collocations: ['take it with a pinch of salt', 'take predictions with a pinch of salt', 'should be taken with a pinch of salt', 'take claims with a pinch of salt'],
+                synonyms: ['be sceptical about', 'doubt', 'question', 'not fully believe', 'treat with caution']
+            },
+            {
+                id: 'fw-v2',
+                word: 'track record',
+                partOfSpeech: 'noun',
+                definition: 'All the achievements, successes, or failures that a person, organisation, or field has had in the past, used to judge how reliable or effective they are likely to be in the future.',
+                example: 'The company has an excellent track record of promoting employees from within rather than hiring externally.',
+                tip: 'When evaluating proposals for radical workplace reform, it is essential to consider the track record of similar initiatives in the past, as many ambitious predictions about the future of work have failed to materialise.',
+                tipType: 'writing',
+                collocations: ['good/bad/poor track record', 'proven track record', 'track record of success', 'impressive track record', 'track record in something'],
+                synonyms: ['past performance', 'history', 'reputation', 'record of achievement']
+            },
+            {
+                id: 'fw-v3',
+                word: 'come to pass',
+                partOfSpeech: 'phrase',
+                definition: 'To happen or take place, especially something that was predicted or expected.',
+                example: 'Many of the dramatic changes to working life that economists predicted in the 1970s never came to pass.',
+                tip: 'Despite numerous forecasts predicting the complete automation of manufacturing within two decades, such predictions have largely failed to come to pass.',
+                tipType: 'writing',
+                collocations: ['never came to pass', 'predictions that came to pass', 'unlikely to come to pass', 'eventually came to pass', 'if this comes to pass'],
+                synonyms: ['happen', 'occur', 'take place', 'materialise', 'become reality']
+            },
+            {
+                id: 'fw-v4',
+                word: 'dystopian',
+                partOfSpeech: 'adjective',
+                definition: 'Relating to an imagined future world where there is great suffering, injustice, and terrible living conditions.',
+                example: 'Some people have a dystopian view of artificial intelligence, imagining a future where machines control every aspect of human life.',
+                tip: "I don't really have a dystopian view of technology. I think technology has always created new opportunities alongside the problems it causes.",
+                tipType: 'speaking',
+                collocations: ['dystopian future', 'dystopian vision', 'dystopian world', 'dystopian scenario', 'dystopian view', 'tech dystopian'],
+                synonyms: ['nightmarish', 'bleak', 'apocalyptic', 'grim']
+            },
+            {
+                id: 'fw-v5',
+                word: 'get rid of',
+                partOfSpeech: 'phrasal verb',
+                definition: 'To remove something or someone that you no longer want or need. In the context of work, it means to eliminate jobs or make them unnecessary.',
+                example: 'The company got rid of 500 factory positions after installing automated machinery on the production line.',
+                tip: 'While automation has the capacity to eliminate a significant number of routine positions, it is unlikely to eradicate the need for human workers entirely.',
+                tipType: 'writing',
+                collocations: ['get rid of jobs', 'get rid of workers', 'get rid of old equipment', 'get rid of a problem', 'want to get rid of', 'need to get rid of'],
+                synonyms: ['eliminate', 'remove', 'dispose of', 'do away with', 'abolish']
+            },
+            {
+                id: 'fw-v6',
+                word: 'crop up',
+                partOfSpeech: 'phrasal verb',
+                definition: 'To appear or happen unexpectedly, without being planned.',
+                example: 'Although AI may replace some existing roles, economists believe that entirely new types of jobs will crop up in industries that we cannot yet imagine.',
+                tip: 'Thirty years ago nobody could have imagined jobs like YouTuber or drone operator. These things just crop up as technology changes.',
+                tipType: 'speaking',
+                collocations: ['new jobs crop up', 'problems crop up', 'opportunities crop up', 'issues crop up', 'things keep cropping up', 'something crops up unexpectedly'],
+                synonyms: ['appear', 'emerge', 'arise', 'come about', 'spring up', 'materialise']
+            }
+        ],
+        vocabExercises: [
+            {
+                id: 'fw-ex1',
+                type: 'fill-blank',
+                instruction: 'Complete the sentence with the correct vocabulary word or phrase from this lesson.',
+                question: 'Economists have a poor ___ ___ when it comes to predicting major changes in the way people work.',
+                correctAnswer: 'track record'
+            },
+            {
+                id: 'fw-ex2',
+                type: 'fill-blank',
+                instruction: 'Complete the sentence with the correct vocabulary word or phrase from this lesson.',
+                question: 'When someone tells you that robots will replace all human workers within five years, you should take it with a ___ ___ ___ ___ ___ ___ ___.',
+                correctAnswer: 'pinch of salt'
+            },
+            {
+                id: 'fw-ex3',
+                type: 'fill-blank',
+                instruction: 'Complete the sentence with the correct vocabulary word or phrase from this lesson.',
+                question: 'Andrew Palmer does not have a ___ view of AI. He believes it will create new opportunities, not just destroy existing ones.',
+                correctAnswer: 'dystopian'
+            },
+            {
+                id: 'fw-ex4',
+                type: 'fill-blank',
+                instruction: 'Complete the sentence with the correct vocabulary word or phrase from this lesson.',
+                question: 'Although AI may eliminate some current positions, new and unexpected types of work will ___ ___ to replace them.',
+                correctAnswer: 'crop up'
+            },
+            {
+                id: 'fw-ex5',
+                type: 'mcq',
+                question: 'Professor Burchell says predictions about working hours should be taken "with a pinch of salt." What does he mean?',
+                options: [
+                    'The predictions need more scientific research',
+                    'The predictions should not be completely believed because they have often been wrong',
+                    'The predictions are definitely going to come true eventually',
+                    'The predictions only apply to certain countries'
+                ],
+                correctAnswer: 'The predictions should not be completely believed because they have often been wrong',
+                explanation: 'To take something with a pinch of salt is an idiom meaning to doubt that what you’ve been told is accurate or likely to come true.'
+            },
+            {
+                id: 'fw-ex6',
+                type: 'mcq',
+                question: 'Andrew Palmer says he is "not a tech dystopian." What is he telling us about his views?',
+                options: [
+                    'He does not understand technology',
+                    'He does not imagine a nightmarish future where AI destroys all jobs',
+                    'He thinks technology is completely harmless',
+                    'He does not use any technology himself'
+                ],
+                correctAnswer: 'He does not imagine a nightmarish future where AI destroys all jobs',
+                explanation: 'A dystopian future is an imagined world where there is great suffering or injustice.'
+            },
+            {
+                id: 'fw-ex7',
+                type: 'mcq',
+                question: 'Which sentence uses "come to pass" CORRECTLY?',
+                options: [
+                    'The professor came to pass along the corridor on his way to the lecture.',
+                    'She came to pass her driving test on the third attempt.',
+                    'Many of the bold predictions made about flying cars in the 1960s never came to pass.',
+                    'He came to pass the ball to his teammate during the match.'
+                ],
+                correctAnswer: 'Many of the bold predictions made about flying cars in the 1960s never came to pass.',
+                explanation: '"Come to pass" means to happen or materialise, especially a prediction or expectation.'
+            },
+            {
+                id: 'fw-ex8',
+                type: 'mcq',
+                question: 'Andrew Palmer says new jobs will "crop up" as AI changes the workplace. What does he mean?',
+                options: [
+                    'New jobs will be carefully planned by governments',
+                    'New jobs will appear unexpectedly in ways nobody predicted',
+                    'New jobs will only be available in agriculture',
+                    'New jobs will disappear as quickly as they appear'
+                ],
+                correctAnswer: 'New jobs will appear unexpectedly in ways nobody predicted',
+                explanation: '"Crop up" means to appear or happen unexpectedly.'
+            },
+            {
+                id: 'fw-ex9',
+                type: 'mcq',
+                question: 'Complete the collocation: The company has a proven ___ ___ of delivering projects on time and within budget.',
+                options: [
+                    'come to pass',
+                    'track record',
+                    'pinch of salt',
+                    'crop up'
+                ],
+                correctAnswer: 'track record',
+                explanation: '"Track record" refers to a history of past performance.'
+            },
+            {
+                id: 'fw-ex10',
+                type: 'mcq',
+                question: 'Complete the collocation: The factory decided to ___ ___ ___ 200 workers and replace them with automated machines.',
+                options: [
+                    'crop up for',
+                    'come to pass',
+                    'get rid of',
+                    'take a pinch of'
+                ],
+                correctAnswer: 'get rid of',
+                explanation: '"Get rid of" means to eliminate or remove.'
+            },
+            {
+                id: 'fw-ex11-1',
+                type: 'matching',
+                instruction: 'Match each vocabulary word or phrase with its correct definition.',
+                question: 'To appear or happen unexpectedly',
+                correctAnswer: 'crop up'
+            },
+            {
+                id: 'fw-ex11-2',
+                type: 'matching',
+                instruction: 'Match each vocabulary word or phrase with its correct definition.',
+                question: 'To not completely believe what you have been told',
+                correctAnswer: 'take something with a pinch of salt'
+            },
+            {
+                id: 'fw-ex11-3',
+                type: 'matching',
+                instruction: 'Match each vocabulary word or phrase with its correct definition.',
+                question: 'To happen or take place, especially a prediction becoming reality',
+                correctAnswer: 'come to pass'
+            },
+            {
+                id: 'fw-ex11-4',
+                type: 'matching',
+                instruction: 'Match each vocabulary word or phrase with its correct definition.',
+                question: 'All the past achievements or failures of a person or organisation',
+                correctAnswer: 'track record'
+            },
+            {
+                id: 'fw-ex11-5',
+                type: 'matching',
+                instruction: 'Match each vocabulary word or phrase with its correct definition.',
+                question: 'Relating to a nightmarish imagined future of suffering',
+                correctAnswer: 'dystopian'
+            },
+            {
+                id: 'fw-ex11-6',
+                type: 'matching',
+                instruction: 'Match each vocabulary word or phrase with its correct definition.',
+                question: 'To remove something you no longer want or need',
+                correctAnswer: 'get rid of'
+            },
+            {
+                id: 'fw-ex12',
+                type: 'mcq',
+                question: 'Which sentence contains a vocabulary ERROR?',
+                options: [
+                    'Many experts\' predictions about the future of work have never come to pass.',
+                    'New career opportunities are likely to crop up as technology evolves.',
+                    'The company got rid of its oldest employees to save money.',
+                    'I always take weather forecasts with a pinch of sugar because they are often wrong.'
+                ],
+                correctAnswer: 'I always take weather forecasts with a pinch of sugar because they are often wrong.',
+                explanation: "The correct idiom is \"a pinch of salt,\" not \"a pinch of sugar.\" \"Take something with a pinch of salt\" means to not completely believe something."
+            },
+            {
+                id: 'fw-ex13',
+                type: 'mcq',
+                question: 'Which sentence contains a vocabulary ERROR?',
+                options: [
+                    'The politician has a strong track record of keeping his campaign promises.',
+                    'She has a very dystopian outlook on life, always expecting the worst to happen.',
+                    'Unexpected problems always seem to crop up at the worst possible moment.',
+                    'The team came to pass the ball very effectively during the match.'
+                ],
+                correctAnswer: 'The team came to pass the ball very effectively during the match.',
+                explanation: "\"Came to pass\" is being confused with \"passing\" a ball. \"Come to pass\" means to happen or take place, especially when something predicted becomes reality."
+            },
+            {
+                id: 'fw-ex14',
+                type: 'fill-blank',
+                instruction: 'Complete the sentence with the correct vocabulary word or phrase from this lesson.',
+                question: 'Although many people predicted that email would completely ___ ___ ___ traditional postal services, letters and packages are still delivered to millions of homes every day.',
+                correctAnswer: 'get rid of'
+            }
+        ],
         summaryPrompt: 'Based on the video, discuss the future of work. Consider the impact of technology and the possibility of a four-day working week.',
-        summaryMinWords: 150
+        summaryMinWords: 150,
+        summaryMaxWords: 250,
+        fullTranscript: `Hello. This is 6 Minute English from BBC Learning English. I'm Neil. And I'm Beth. Smell-o-vision, a television, which allows you to smell things as well as see them; and a miracle pill which cures all diseases. These predictions for the future were made in the 1930s, but so far they haven't come true.
+Making predictions for the future isn't easy. Just ask tech billionaire Elon Musk, who recently predicted that artificial intelligence will eventually mean that no one will have to work. In fact, there have been many predictions about the future of work. For example, that robots will take over most jobs, and that everyone will work from home.
+During Covid, one of these predictions came true. Millions were forced to work from home. So, what will work be like in the future? That's what we'll be discussing in this programme and, as usual, we'll be learning some useful new vocabulary too. But first I have a question for you, Beth. Another idea for the future is the 'four-day working week' where employees work four days for the same money as five.
+After Covid, many British companies gave the idea a go, but out of the 60 companies taking part in a four-day working week trial in 2023, how many said they plan to continue with a shorter work week? Was it: a) 52%?, b) 72%? or c) 92%?    Hmm, I guess 52% of the company's plan to continue with a four day week. OK, Beth.
+I'll reveal the answer later in the programme. Now, whatever Elon Musk thinks, as we've seen, it's difficult to make your predictions accurate. Here Shaun Ley, presenter of BBC World Service programme, The Real Story, asking University of Cambridge professor, Brendan Burchell, what he thinks about predictions for the future of work: Brendan Burchell, when you look at all the predictions that have been made, certainly in your working lifetime, do you take some of the things that are being predicted now with a large pinch of salt?
+I do. I think we have to be sceptical. I think the track record for economists and other social scientists isn't good when we look… you know, for hundreds of years, a hundred years now, people have been predicting that they'll be really quite dramatic reductions in working time, like Elon Musk has just made, and previously those predictions - although we're heading very gradually in that direction - those predictions of very, very large changes in working time just haven't come to pass.
+Shaun asks if we should take predictions with a pinch of salt. To take something with a pinch of salt is an idiom meaning to doubt that what you've been told is accurate or likely to come true. For example, if your friend always lies, you take what they say with a pinch of salt. Professor Burchell thinks predictions for the future of work have a bad track record.
+A track record means all the achievements or failures that someone has had in the past. When it comes to predicting the future of work, most predictions simply haven't come to pass, an old-fashioned way of saying saying ‘happened’ or ‘come true’. So, are predictions for a future of leisure, relaxing by the pool while robots do all the work just a dream? Let's hear from Andrew Palmer, business editor for The Economist magazine, talking to BBC World Service programme, The Real Story: I'm not a tech dystopian, I don't think that machines or AI are going to get rid of all jobs,
+but I do worry about a sequencing risk. So, there will be some disruption from AI. Some jobs, some professions are at risk. And, although economists like to say new jobs will crop up, they won't necessarily be aligned at the same time – there won't be coordination. Andrew is not a dystopian, someone who imagines a nightmarish future of suffering and injustice.
+He doesn't think AI will get rid of all jobs. To get rid of something means to remove it because you no longer want it. Andrew predicts that AI Will replace some jobs, and those workers will need support, but he also thinks new jobs will crop up, they will appear unexpectedly. And that's exactly the problem – the future is hard to predict because it's so unexpected! Anyway, I reckon a shorter working week is something we can all agree on, right Neil? Absolutely.
+I think it's time to reveal the answer to my question about the 60 companies trying out a shorter working week in 2023. I asked how many of them planned to continue a four-day week at the end of the trials. And I guessed 52%. So, was I right? That was...the wrong answer, I'm afraid, Beth! Actually, a whopping 92% of the companies plan on keeping a four-day week because it was so popular, with bosses as well as workers! Right, let's recap the vocabulary we've learned from this programme, starting with the idiom
+take it with a pinch of salt, meaning don't completely believe what you're told is true. A track record means the achievements or failures of someone's past performance. Come to pass is an old-fashioned way of saying take place or happen. A dystopian is someone who foresees a nightmarish future where there's great suffering and injustice in society.
+If you get rid of something, you remove something that you no longer want. And finally if something crops up, it appears or happens unexpectedly. Once again our six minutes are up. Join us again soon for more trending topics and useful vocabulary here at 6 Minute English. Goodbye for now! Goodbye!`
     }
 ];
 

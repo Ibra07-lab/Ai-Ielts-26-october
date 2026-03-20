@@ -70,9 +70,23 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
     // But try to keep selection if possible
     const activeWord = words.find(w => w.id === selectedWordId) || filteredWords[0];
 
+    const hasWritingWords = useMemo(() => words.some(w => !!w.writingExample), [words]);
+    const hasSpeakingWords = useMemo(() => words.some(w => !!w.speakingExample), [words]);
+
     return (
-        <div className="w-full h-full flex flex-col space-y-4">
-            <h1 className="text-4xl font-serif font-bold text-gray-900 dark:text-white">
+        <div className="w-full h-full flex flex-col space-y-2">
+            <div className="flex items-center">
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={onBack}
+                    className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white group -ml-2 h-8"
+                >
+                    <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+                    Back to Topics
+                </Button>
+            </div>
+            <h1 className="text-3xl font-serif font-bold text-gray-900 dark:text-white">
                 {topicName}
             </h1>
 
@@ -80,7 +94,7 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
             <div className="grid grid-cols-12 gap-8 h-full">
                 {/* Left Sidebar: Word List */}
                 <div className="col-span-4 flex flex-col bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-white/5 shadow-sm overflow-hidden">
-                    <div className="p-4 border-b border-gray-100 dark:border-white/5 sticky top-0 bg-white/95 dark:bg-card/95 backdrop-blur z-10 space-y-3">
+                    <div className="p-3 border-b border-gray-100 dark:border-white/5 sticky top-0 bg-white/95 dark:bg-card/95 backdrop-blur z-10 space-y-2">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-wider">
                                 <BookOpen className="h-4 w-4" /> Word List
@@ -90,23 +104,25 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
                             </Badge>
                         </div>
 
-                        {/* Filter Tabs */}
-                        <div className="flex p-1 bg-gray-100 dark:bg-white/5 rounded-lg">
-                            {(["all", "speaking", "writing"] as const).map((tab) => (
-                                <button
-                                    key={tab}
-                                    onClick={() => setFilterStatus(tab)}
-                                    className={cn(
-                                        "flex-1 py-1.5 text-xs font-medium rounded-md transition-all capitalize",
-                                        filterStatus === tab
-                                            ? "bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm"
-                                            : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                                    )}
-                                >
-                                    {tab}
-                                </button>
-                            ))}
-                        </div>
+                        {/* Filter Tabs - Only show if there's a mix of speaking and writing words */}
+                        {hasWritingWords && hasSpeakingWords && (
+                            <div className="flex p-1 bg-gray-100 dark:bg-white/5 rounded-lg">
+                                {(["all", "speaking", "writing"] as const).map((tab) => (
+                                    <button
+                                        key={tab}
+                                        onClick={() => setFilterStatus(tab)}
+                                        className={cn(
+                                            "flex-1 py-1.5 text-xs font-medium rounded-md transition-all capitalize",
+                                            filterStatus === tab
+                                                ? "bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm"
+                                                : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                                        )}
+                                    >
+                                        {tab}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
                     </div>
 
                     <div className="flex-1 overflow-y-auto p-3 space-y-2 custom-scrollbar">
@@ -298,6 +314,16 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
                                 </div>
                                 <div className="grid grid-cols-3 gap-4">
                                     <button
+                                        onClick={() => onStartExercise("flashcards" as any)}
+                                        className="flex flex-col items-center justify-center p-4 rounded-2xl bg-gray-50 dark:bg-white/5 hover:bg-amber-50 dark:hover:bg-amber-500/10 border border-transparent hover:border-amber-200 dark:hover:border-amber-500/20 transition-all group"
+                                    >
+                                        <div className="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-500/20 flex items-center justify-center text-amber-600 dark:text-amber-400 mb-2 group-hover:scale-110 transition-transform">
+                                            <Layers className="h-4 w-4" />
+                                        </div>
+                                        <span className="font-bold text-gray-900 dark:text-white mb-0.5 text-sm">Flashcards</span>
+                                        <span className="text-[10px] text-gray-500">Swipe to verify</span>
+                                    </button>
+                                    <button
                                         onClick={() => onStartExercise("synonym")}
                                         className="flex flex-col items-center justify-center p-4 rounded-2xl bg-gray-50 dark:bg-white/5 hover:bg-blue-50 dark:hover:bg-blue-500/10 border border-transparent hover:border-blue-200 dark:hover:border-blue-500/20 transition-all group"
                                     >
@@ -316,16 +342,6 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
                                         </div>
                                         <span className="font-bold text-gray-900 dark:text-white mb-0.5 text-sm">Usage Practice</span>
                                         <span className="text-[10px] text-gray-500">Fill in the blanks</span>
-                                    </button>
-                                    <button
-                                        onClick={() => onStartExercise("speak")}
-                                        className="flex flex-col items-center justify-center p-4 rounded-2xl bg-gray-50 dark:bg-white/5 hover:bg-orange-50 dark:hover:bg-orange-500/10 border border-transparent hover:border-orange-200 dark:hover:border-orange-500/20 transition-all group"
-                                    >
-                                        <div className="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center text-orange-600 dark:text-orange-400 mb-2 group-hover:scale-110 transition-transform">
-                                            <ArrowLeftRight className="h-4 w-4" />
-                                        </div>
-                                        <span className="font-bold text-gray-900 dark:text-white mb-0.5 text-sm">Spelling Bee</span>
-                                        <span className="text-[10px] text-gray-500">Test your spelling</span>
                                     </button>
                                 </div>
                             </div>

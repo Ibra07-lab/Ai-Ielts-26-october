@@ -102,7 +102,7 @@ def build_task1_lr_explanation_prompt(
     essay: str,
     question: str,
     band: float,
-    examiner_notes: dict = None
+    examiner_notes: dict | None = None
 ) -> str:
     """Build the user prompt for Lexical Resource explanation."""
     
