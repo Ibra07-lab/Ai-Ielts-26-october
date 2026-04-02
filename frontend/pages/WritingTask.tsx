@@ -19,7 +19,9 @@ import { TaskTypeIcon } from "@/components/writing/TaskTypeIcon";
 import TradeConferenceMap from "@/components/writing/TradeConferenceMap";
 import TownEvolutionMap from "@/components/writing/TownEvolutionMap";
 import CropYieldTable from "@/components/writing/CropYieldTable";
+import SecondarySchoolTable from "@/components/writing/SecondarySchoolTable";
 import { AnalysisLoader } from "@/components/ui/analysis-loader";
+import WritingSessionGuide from "@/components/writing/WritingSessionGuide";
 
 
 
@@ -46,6 +48,7 @@ const writingTests = [
   { id: 22, title: "Test 18", subtitle: "Rainwater Harvesting", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/rainwater_harvesting_diagram.png", chartType: "Process Diagram" },
   { id: 23, title: "Test 19", subtitle: "Coffee Production", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/coffee_production_simple.png", chartType: "Process Diagram" },
   { id: 24, title: "Test 20", subtitle: "Tech Access", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/tech_access_bar_chart.png", chartType: "Bar Chart" },
+  { id: 41, title: "Test 21", subtitle: "The Proportions of Pupils Attending Four Secondary School Types Between Between 2000 and 2009.", type: "Task 1", questions: 1, time: 20, taskType: 1, chartType: "Table", component: "SecondarySchoolTable" },
 
   // --- Task 2 Tests (20) ---
   { id: 2, title: "Test 1", subtitle: "Education: Homework", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
@@ -79,6 +82,7 @@ interface WritingTaskProps {
 export default function WritingTask({ defaultTab }: WritingTaskProps) {
   const [selectedTestId, setSelectedTestId] = useState<number | null>(null);
   const [isTestStarted, setIsTestStarted] = useState(false);
+  const [showSessionGuide, setShowSessionGuide] = useState(false);
   const [content, setContent] = useState("");
   const [aiAnalysis, setAiAnalysis] = useState<any>(null);
   // New State
@@ -92,6 +96,23 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
   const { user, session } = useUser();
   const { toast } = useToast();
   const queryClient = useQueryClient();
+
+  // ─── Essay limits ───────────────────────────────────────────────────────────
+  const { data: essayLimits, refetch: refetchLimits } = useQuery({
+    queryKey: ["essayLimits", user?.id],
+    queryFn: async () => {
+      if (!user?.id) return null;
+      // @ts-ignore
+      return backend.ielts.getEssayLimits(user.id); // pass string directly
+    },
+    enabled: !!user?.id,
+    staleTime: 0,
+  });
+
+  const limitRemaining  = essayLimits?.remaining  ?? null;
+  const limitPlan       = essayLimits?.plan       ?? "free";
+  const limitTotal      = essayLimits?.limit      ?? 2;
+  const limitUsed       = essayLimits?.essaysUsed ?? 0;
 
 
   const selectedTest = writingTests.find(t => t.id === selectedTestId);
@@ -123,9 +144,23 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
       return;
     }
 
+    // ─── Check & lock BEFORE touching the Python service ──────────────────
+    try {
+      // @ts-ignore
+      await backend.ielts.checkAndLockEssay();
+    } catch (lockErr: any) {
+      toast({
+        title: "Limit reached",
+        description: lockErr?.message ?? "Cannot start analysis.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsAnalyzing(true);
     setAiAnalysis(null);
 
+    let analysisSuccess = false;
     try {
       // Use evaluate endpoint for Task 1, legacy for Task 2
       const isTask1 = taskType === 1;
@@ -293,6 +328,9 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
       setAiAnalysis(result);
       setViewMode("feedback");
 
+      // Mark as success only if we got a real band score back
+      analysisSuccess = result !== null && result.evaluation?.overall_band !== undefined;
+
       // Evaluation saving now happens automatically via the Python pipeline API
 
       toast({ title: "Score Ready!", description: `Band ${result.evaluation?.overall_band}` });
@@ -300,6 +338,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
 
     } catch (error) {
       console.error(error);
+      analysisSuccess = false;
       toast({
         title: "Error",
         description: error instanceof Error ? error.message : "Analysis failed. Please try again.",
@@ -307,6 +346,12 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
       });
     } finally {
       setIsAnalyzing(false);
+      // ─── Always unlock, only charge on real success ────────────────────
+      try {
+        // @ts-ignore
+        await backend.ielts.completeEssayAnalysis({ success: analysisSuccess });
+        await refetchLimits();
+      } catch { /* swallow unlock errors — user is not permanently stuck */ }
     }
   };
 
@@ -459,24 +504,42 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
   };
 
   const handleStartTest = (testId?: number) => {
-    setIsTestStarted(true);
+    const targetTestId = testId || selectedTestId;
+    if (targetTestId) {
+      setSelectedTestId(targetTestId);
+    }
+    // Show session guide first, don't start writing yet
+    setShowSessionGuide(true);
     setContent("");
     setAiAnalysis(null);
+  };
 
-    // Determine which test to start (passed ID or currently selected)
-    const targetTestId = testId || selectedTestId;
-    const testToStart = writingTests.find(t => t.id === targetTestId);
+  const handleBeginWriting = () => {
+    setShowSessionGuide(false);
+    setIsTestStarted(true);
 
     // Start Timer
-    if (testToStart) {
-      setTimeLeft(testToStart.time * 60);
+    if (selectedTest) {
+      setTimeLeft(selectedTest.time * 60);
     }
   };
 
   const handleBackToMenu = () => {
     setIsTestStarted(false);
+    setShowSessionGuide(false);
     setSelectedTestId(null);
   };
+
+  // Session Guide: show before writing starts
+  if (showSessionGuide && !isTestStarted && selectedTest) {
+    return (
+      <WritingSessionGuide
+        taskType={selectedTest.taskType === 1 ? "task1" : "task2"}
+        taskTitle={`${selectedTest.title}: ${selectedTest.subtitle}`}
+        onStart={handleBeginWriting}
+      />
+    );
+  }
 
   return (
     <div className={isTestStarted ? cn("max-w-[95vw] mx-auto", viewMode === "feedback" ? "py-2" : "space-y-8 pb-32") : "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 pb-32"}>
@@ -659,7 +722,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                 </h2>
               </div>
 
-              {/* Stats (Timer & Word Count) - Always Visible */}
+              {/* Stats (Timer & Word Count & Essay Limit) - Always Visible */}
               <div className="flex items-center gap-4">
                 {/* Word Count Pill */}
                 <div className={`flex items-center gap-2 px-4 py-2 rounded-full border shadow-sm transition-colors ${wordCountColor}`}>
@@ -667,6 +730,21 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                   <span className="text-base font-mono font-bold leading-none">{wordCount}</span>
                   <span className="text-[10px] opacity-60 font-semibold">/ {minWords}</span>
                 </div>
+
+                {/* Essay Limit Pill */}
+                {limitRemaining !== null && (
+                  <div className={`flex items-center gap-2 px-4 py-2 rounded-full border shadow-sm font-bold text-xs ${
+                    limitRemaining === 0
+                      ? "bg-rose-50 border-rose-200 text-rose-600 dark:bg-rose-900/20 dark:border-rose-800 dark:text-rose-400"
+                      : limitRemaining === 1
+                        ? "bg-amber-50 border-amber-200 text-amber-600 dark:bg-amber-900/20 dark:border-amber-800 dark:text-amber-400"
+                        : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300"
+                  }`}>
+                    <span className="uppercase tracking-wider">Essays</span>
+                    <span className="font-mono text-base font-black leading-none">{limitUsed}</span>
+                    <span className="opacity-60">/ {limitTotal}</span>
+                  </div>
+                )}
 
                 {/* Timer Pill */}
                 <div className={`flex items-center gap-3 px-4 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm ${timeLeft < 300 ? "animate-pulse border-rose-200 dark:border-rose-900" : ""}`}>
@@ -763,6 +841,10 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                                 // @ts-ignore
                                 selectedTest.component === "CropYieldTable" && <CropYieldTable />
                               }
+                              {
+                                // @ts-ignore
+                                selectedTest.component === "SecondarySchoolTable" && <SecondarySchoolTable />
+                              }
                             </div>
                           </div>
                         )}
@@ -823,20 +905,44 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                           View Previous Feedback
                         </Button>
                       )}
-                      <Button
-                        onClick={handleQuickAnalysis}
-                        disabled={!content.trim() || isAnalyzing}
-                        aria-label="Analyze Essay"
-                        className="h-10 px-8 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white text-sm font-bold uppercase tracking-wide shadow-lg shadow-purple-500/20 rounded-lg transition-all transform hover:scale-[1.02]"
-                      >
-                        {isAnalyzing ? (
-                          <AnalysisLoader />
-                        ) : (
-                          <span className="flex items-center gap-2">
-                            <Sparkles className="w-4 h-4" /> Analyze Essay
-                          </span>
-                        )}
-                      </Button>
+
+                      {/* Last-essay warning */}
+                      {limitRemaining === 1 && (
+                        <span className="text-xs font-semibold text-amber-500 dark:text-amber-400 flex items-center gap-1">
+                          ⚠️ Last free analysis
+                        </span>
+                      )}
+
+                      {/* No essays left — show upgrade link instead of button */}
+                      {limitRemaining === 0 ? (
+                        <div className="flex flex-col items-end gap-1">
+                          <Button
+                            disabled
+                            aria-label="Upgrade to analyze more"
+                            className="h-10 px-8 bg-slate-300 dark:bg-slate-700 text-slate-500 dark:text-slate-400 text-sm font-bold uppercase tracking-wide rounded-lg cursor-not-allowed"
+                          >
+                            Upgrade to analyze more
+                          </Button>
+                          <a href="/subscription" className="text-[11px] text-indigo-400 hover:underline">
+                            View plans →
+                          </a>
+                        </div>
+                      ) : (
+                        <Button
+                          onClick={handleQuickAnalysis}
+                          disabled={!content.trim() || isAnalyzing}
+                          aria-label="Analyze Essay"
+                          className="h-10 px-8 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white text-sm font-bold uppercase tracking-wide shadow-lg shadow-purple-500/20 rounded-lg transition-all transform hover:scale-[1.02]"
+                        >
+                          {isAnalyzing ? (
+                            <AnalysisLoader />
+                          ) : (
+                            <span className="flex items-center gap-2">
+                              <Sparkles className="w-4 h-4" /> Analyze Essay
+                            </span>
+                          )}
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </Card>

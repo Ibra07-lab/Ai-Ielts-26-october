@@ -8,7 +8,6 @@ import {
   Menu,
   X,
   CreditCard,
-  GraduationCap,
   Sun,
   Moon,
   LogOut
@@ -17,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { useUser } from "../contexts/UserContext";
 import { useTheme } from "../contexts/ThemeContext";
 import SkeuomorphicToggle from "./ui/SkeuomorphicToggle";
+import { Logo } from "./ui/Logo";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: Home },
@@ -59,9 +59,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               
               {/* Left: Logo */}
               <Link to="/dashboard" className="flex items-center gap-2 group w-1/3">
-                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-indigo-600 dark:bg-indigo-500 text-white shadow-[0_2px_10px_-2px_rgba(79,70,229,0.3)] group-hover:scale-105 transition-transform">
-                  <GraduationCap className="h-5 w-5" />
-                </div>
+                <Logo className="w-9 h-9 text-indigo-600 dark:text-indigo-500 group-hover:scale-105 transition-transform" />
                 <span className="text-xl font-black tracking-tight text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors hidden sm:block">
                   NewBand
                 </span>

@@ -58,6 +58,13 @@ class Task:
     essay_type: Optional[str]   # "agree_disagree", etc.
     # Reading specific
     question_types: Optional[List[str]]
+    
+    # Internal Fallbacks (passed to enricher)
+    fallback_title: Optional[str] = None
+    fallback_desc: Optional[str] = None
+    
+    # Multi-step session (listening study sessions)
+    steps: Optional[List[dict]] = None
 
 
 @dataclass
@@ -261,7 +268,10 @@ def distribute_tasks_across_days(
     daily_minutes: int,
     week_number: int,
     current_bands: dict,
-    phase_focus: str
+    phase_focus: str,
+    target_sections: dict = None,
+    weeks_available: int = 12,
+    strategy_type: str = "balanced",
 ) -> List[Task]:
     """
     Takes weekly allocation percentages and produces
@@ -283,7 +293,13 @@ def distribute_tasks_across_days(
             skill_minutes[skill] = round(weekly_minutes * pct / 100)
     
     # Define task durations and counts per skill
-    task_specs = _get_task_specs(skill_minutes, phase_focus)
+    task_specs = _get_task_specs(
+        skill_minutes, phase_focus,
+        current_bands=current_bands,
+        target_sections=target_sections or {},
+        weeks_available=weeks_available,
+        strategy_type=strategy_type,
+    )
     
     # Distribute tasks across days
     task_specs.sort(key=lambda s: 0 if s["task_type"] == "writing_task2" else 1)
@@ -350,10 +366,13 @@ def distribute_tasks_across_days(
             duration_minutes=spec["duration"],
             difficulty_band=spec["difficulty"],
             content_id=None,    # Content DB fills this
-            status="locked" if week_number > 1 else "pending",
+            status="pending",
             chart_type=spec.get("chart_type"),
             essay_type=spec.get("essay_type"),
             question_types=spec.get("question_types"),
+            fallback_title=spec.get("fallback_title"),
+            fallback_desc=spec.get("fallback_desc"),
+            steps=spec.get("steps"),
         )
         
         tasks.append(task)
@@ -366,11 +385,242 @@ def distribute_tasks_across_days(
     return tasks
 
 
-def _get_task_specs(skill_minutes: dict, phase_focus: str) -> List[dict]:
+def _round_5(val: int) -> int:
+    """Round a duration to the nearest 5 minutes."""
+    return max(5, int(round(val / 5.0) * 5))
+
+
+# ═══════════════════════════════════════════════
+#  LISTENING SESSION STEP BUILDER
+# ═══════════════════════════════════════════════
+
+def _build_listening_steps(
+    current_L: float,
+    target_L: float,
+    allocated_minutes: int,
+    weeks_available: int,
+    strategy_type: str,
+    listening_section: int,
+) -> List[dict]:
+    """
+    Build a list of study session steps for a listening task.
+    Steps are selectively included based on student profile.
+    Returns steps that fit within allocated_minutes.
+    
+    Each step: {step_number, name, what, why, duration_minutes, speed?}
+    """
+    
+    gap = target_L - current_L
+    
+    # ── Define all possible steps ──────────────────────────────
+    
+    all_steps = []
+    
+    # Step 1: Full Listen (ALWAYS included)
+    all_steps.append({
+        "step_number": 1,
+        "name": "Full Listen",
+        "what": "Listen to the full audio without pausing or replaying. Answer all questions as you go, just like the real exam.",
+        "why": "This simulates real IELTS exam conditions. Your brain needs to practice processing speech at full speed without replaying. Every time you replay in practice, you train a habit that won't exist in the exam room.",
+        "duration_minutes": 30,
+        "required": True,
+    })
+    
+    # Step 2: Review Mistakes (ALWAYS included)
+    all_steps.append({
+        "step_number": 2,
+        "name": "Review Mistakes",
+        "what": "Check your answers. For every wrong answer, find the exact moment in the audio where the answer was said. Write down what you heard vs what was actually said.",
+        "why": "Most listening mistakes follow patterns — you miss numbers, you mishear similar sounds, or you lose focus after one wrong answer. Finding your specific error pattern is more valuable than just knowing you were wrong.",
+        "duration_minutes": 10,
+        "required": True,
+    })
+    
+    # Step 3: Vocabulary from Audio (for lower bands / big gaps)
+    include_vocab = current_L < 6.5 or gap >= 1.5
+    if include_vocab:
+        all_steps.append({
+            "step_number": 3,
+            "name": "Vocabulary from Audio",
+            "what": "Read the transcript. Highlight every word you didn't know or weren't sure about. Add 5-10 new words to your vocabulary list with example sentences from the audio.",
+            "why": "IELTS listening uses the same academic and topic-specific vocabulary repeatedly across tests. Every word you learn from a real audio is a word you might hear again. Reading the transcript also shows you how spoken English differs from written English.",
+            "duration_minutes": 15,
+            "required": False,
+        })
+    
+    # Step 4: Shadowing (for intermediate+ students pushing higher)
+    include_shadowing = (
+        current_L >= 5.5 and target_L >= 6.5
+        and strategy_type in ("compensatory", "receptive_specialist", "balanced")
+    )
+    if include_shadowing:
+        all_steps.append({
+            "step_number": 4,
+            "name": "Shadowing",
+            "what": "Play the audio and read the transcript out loud at the same time. Match the speaker's speed, rhythm, and pronunciation exactly. Do not pause or slow down.",
+            "why": "Shadowing trains your ear and mouth simultaneously. When you can reproduce the sounds yourself, your brain recognizes them faster when you hear them. This is the fastest proven method for improving listening comprehension and accent familiarity.",
+            "duration_minutes": 25,
+            "required": False,
+        })
+    
+    # Step 5: Speed Challenge (for advanced students or short prep time)
+    include_speed = (
+        (current_L >= 6.0 and target_L >= 7.5)
+        or (weeks_available <= 6 and gap >= 1.0)
+    )
+    if include_speed:
+        # Pick speed based on current level
+        if current_L >= 7.0:
+            speed = "1.75x"
+        elif current_L >= 6.5:
+            speed = "1.5x"
+        else:
+            speed = "1.25x"
+        
+        # Target the harder parts (3 or 4)
+        target_part = 4 if listening_section <= 2 else 3
+        
+        all_steps.append({
+            "step_number": 5,
+            "name": "Speed Challenge",
+            "what": f"Replay Part {target_part} at {speed} speed. Answer the questions again without looking at your previous answers. Then compare and analyze where the increased speed caused you to miss information.",
+            "why": f"If you can understand Part {target_part} at {speed}, normal speed will feel slow and easy. This trains your brain to process faster speech patterns, which directly improves your accuracy under exam conditions. Each IELTS part is ~7 min, so this is a focused, high-intensity drill.",
+            "duration_minutes": 15,
+            "speed": speed,
+            "target_part": target_part,
+            "required": False,
+        })
+    
+    # ── Select steps that fit within the time budget ──────────
+    
+    selected = []
+    time_remaining = allocated_minutes
+    
+    for step in all_steps:
+        if step.get("required"):
+            selected.append(step)
+            time_remaining -= step["duration_minutes"]
+        elif time_remaining >= step["duration_minutes"]:
+            selected.append(step)
+            time_remaining -= step["duration_minutes"]
+    
+    # Clean up internal keys before returning
+    for s in selected:
+        s.pop("required", None)
+    
+    return selected
+
+
+# ═══════════════════════════════════════════════
+#  READING SESSION STEP BUILDER
+# ═══════════════════════════════════════════════
+
+def _build_reading_steps(
+    current_R: float,
+    target_R: float,
+    allocated_minutes: int,
+    weeks_available: int,
+    question_types: List[str] = None,
+) -> List[dict]:
+    """
+    Build a list of study session steps for a reading task.
+    Steps are selectively included based on student profile.
+    Returns steps that fit within allocated_minutes.
+    """
+    
+    gap = target_R - current_R
+    q_label = " & ".join(t.replace("_", " ").title() for t in (question_types or ["mixed"]))
+    
+    all_steps = []
+    
+    # Step 1: Full Passage Read (ALWAYS included)
+    all_steps.append({
+        "step_number": 1,
+        "name": "Full Passage Read",
+        "what": f"Read the single passage and answer all questions ({q_label}) under strict 20-minute timed conditions. Do not look up words or re-read sections more than once.",
+        "why": "IELTS gives you 60 minutes for 3 passages, so you have exactly 20 minutes per passage. Training under this exact time pressure builds the speed and focus you need on exam day.",
+        "duration_minutes": 20,
+        "required": True,
+    })
+    
+    # Step 2: Review Answers & Analyze (ALWAYS included)
+    all_steps.append({
+        "step_number": 2,
+        "name": "Review Answers & Analyze",
+        "what": "Check each answer. Read the evidence shown for correct answers. For wrong answers, find the exact sentence in the passage that contains the answer.",
+        "why": "IELTS reading answers always come directly from the passage. Training yourself to locate evidence — not guess — is the single most important reading skill. Analyzing your mistakes deeply is where the real learning happens.",
+        "duration_minutes": 20,
+        "required": True,
+    })
+    
+    # Step 3: AI Explanation (for students with gap >= 1.0 or lower bands)
+    include_ai = current_R < 7.0 or gap >= 1.0
+    if include_ai:
+        all_steps.append({
+            "step_number": 3,
+            "name": "AI Explanation",
+            "what": "For any answer you still do not understand after reading the evidence, use the AI explanation. Ask it to clarify why that specific answer is correct.",
+            "why": "Sometimes the evidence is clear but the reasoning is not. The AI explains the logic behind the answer — why this word means that, why this option is wrong, why paraphrasing makes it tricky. Understanding the reasoning prevents the same mistake next time.",
+            "duration_minutes": 10,
+            "required": False,
+        })
+    
+    # Step 4: Skill Breakdown & Theory (for students below 7.5)
+    include_breakdown_theory = current_R < 7.5
+    if include_breakdown_theory:
+        all_steps.append({
+            "step_number": 4,
+            "name": "Skill Breakdown & Theory",
+            "what": "Open your reading skill breakdown. Find any question type where your accuracy is below 40% (or your lowest score). Go to the Theory section and read the strategy, tips, and common mistakes for that specific type.",
+            "why": "Most reading mistakes come from not knowing the specific strategy for a question type (like True/False/Not Given or Matching). Identifying your critical weak area (<40%) and learning its strategy fixes a pattern that costs you points.",
+            "duration_minutes": 15,
+            "required": False,
+        })
+    
+    # Step 5: Practice with Alex (for students targeting 6.5+ who benefit from AI tutoring)
+    include_alex = current_R >= 5.0 and target_R >= 6.5 and gap >= 1.0
+    if include_alex:
+        all_steps.append({
+            "step_number": 5,
+            "name": "Practice with Alex",
+            "what": "Open Alex. Tell him the weak area you just identified (<40%) and ask for 10 focused practice questions on that specific type to apply the theory you just learned.",
+            "why": "Random practice improves slowly. Targeted practice on your proven weak area improves fast. Alex gives you questions, explains mistakes in real time, and helps you apply the theory directly.",
+            "duration_minutes": 20,
+            "required": False,
+        })
+    
+    # Select steps that fit within the time budget
+    selected = []
+    time_remaining = allocated_minutes
+    
+    for step in all_steps:
+        if step.get("required"):
+            selected.append(step)
+            time_remaining -= step["duration_minutes"]
+        elif time_remaining >= step["duration_minutes"]:
+            selected.append(step)
+            time_remaining -= step["duration_minutes"]
+    
+    # Clean up internal keys
+    for s in selected:
+        s.pop("required", None)
+    
+    return selected
+
+def _get_task_specs(
+    skill_minutes: dict,
+    phase_focus: str,
+    current_bands: dict = None,
+    target_sections: dict = None,
+    weeks_available: int = 12,
+    strategy_type: str = "balanced",
+) -> List[dict]:
     """
     Convert allocated minutes per skill into concrete task specs.
     Each spec defines: skill, task_type, duration, difficulty, metadata.
     """
+    current_bands = current_bands or {}
+    target_sections = target_sections or {}
     
     specs: List[dict] = []
     
@@ -385,26 +635,56 @@ def _get_task_specs(skill_minutes: dict, phase_focus: str) -> List[dict]:
             continue
         
         if skill_key == "R":
-            # Reading: ~20-25 min per passage
-            num_tasks = max(1, round(minutes / 22))
+            # Reading: structured multi-step study sessions
+            current_R = current_bands.get("R", 5.5)
+            target_R = target_sections.get("R", 6.5)
+            
+            # Minimum session: 40 min (Full Read + Review)
+            min_session = 40
+            num_tasks = max(1, round(minutes / max(min_session, minutes)))
             per_task = minutes // num_tasks
             
             for i in range(num_tasks):
                 q_idx = (rotations["reading_q"] + i) % len(
                     READING_QUESTION_ROTATIONS
                 )
+                q_types = READING_QUESTION_ROTATIONS[q_idx]
+                q_label = " & ".join(t.replace("_", " ").title() for t in q_types)
+                
+                # Build study session steps based on student profile
+                steps = _build_reading_steps(
+                    current_R=current_R,
+                    target_R=target_R,
+                    allocated_minutes=per_task,
+                    weeks_available=weeks_available,
+                    question_types=q_types,
+                )
+                
+                # Total duration = sum of all selected steps
+                total_duration = sum(s["duration_minutes"] for s in steps)
+                step_names = " → ".join(s["name"] for s in steps)
+                
                 specs.append({
                     "skill": "reading",
                     "task_type": "reading_passage",
-                    "duration": max(15, min(25, per_task)),
-                    "difficulty": 6.0,  # adjusted per student later
-                    "question_types": READING_QUESTION_ROTATIONS[q_idx],
+                    "duration": total_duration,
+                    "difficulty": 6.0,
+                    "question_types": q_types,
+                    "steps": steps,
+                    "fallback_title": f"Reading Session: {q_label} Focus",
+                    "fallback_desc": f"Study session: {step_names}. Total {total_duration} min.",
                 })
             rotations["reading_q"] += num_tasks
             
         elif skill_key == "L":
-            # Listening: ~15-20 min per section
-            num_tasks = max(1, round(minutes / 18))
+            # Listening: structured multi-step study sessions
+            current_L = current_bands.get("L", 5.5)
+            target_L = target_sections.get("L", 6.5)
+            
+            # Each listening session is a full study block
+            # Minimum session: 40 min (Full Listen + Review)
+            min_session = 40
+            num_tasks = max(1, round(minutes / max(min_session, minutes)))
             per_task = minutes // num_tasks
             
             for i in range(num_tasks):
@@ -412,49 +692,75 @@ def _get_task_specs(skill_minutes: dict, phase_focus: str) -> List[dict]:
                     LISTENING_SECTIONS
                 )
                 sec = LISTENING_SECTIONS[sec_idx]
+                
+                # Build study session steps based on student profile
+                steps = _build_listening_steps(
+                    current_L=current_L,
+                    target_L=target_L,
+                    allocated_minutes=per_task,
+                    weeks_available=weeks_available,
+                    strategy_type=strategy_type,
+                    listening_section=sec["section"],
+                )
+                
+                # Total duration = sum of all selected steps
+                total_duration = sum(s["duration_minutes"] for s in steps)
+                step_names = " → ".join(s["name"] for s in steps)
+                
                 specs.append({
                     "skill": "listening",
                     "task_type": "listening_section",
-                    "duration": max(10, min(22, per_task)),
+                    "duration": total_duration,
                     "difficulty": 6.0,
                     "listening_section": sec["section"],
                     "listening_context": sec["context"],
+                    "steps": steps,
+                    "fallback_title": f"Listening Session: Section {sec['section']} ({sec['context'].title()} {sec['type'].title()})",
+                    "fallback_desc": f"Study session: {step_names}. Total {total_duration} min.",
                 })
             rotations["listening"] += num_tasks
             
         elif skill_key == "W_T2":
-            # Writing Task 2: 25-40 min per essay
-            num_tasks = max(1, round(minutes / 30))
+            # Writing Task 2: 30-50 min per essay
+            num_tasks = max(1, round(minutes / 35))
             per_task = minutes // num_tasks
             
             for i in range(num_tasks):
                 e_idx = (rotations["essay"] + i) % len(
                     ESSAY_TYPE_ROTATION
                 )
+                essay_label = ESSAY_TYPE_ROTATION[e_idx].replace("_", " ").title()
+                duration_val = _round_5(max(25, min(50, per_task)))
                 specs.append({
                     "skill": "writing",
                     "task_type": "writing_task2",
-                    "duration": max(25, min(40, per_task)),
+                    "duration": duration_val,
                     "difficulty": 6.0,
                     "essay_type": ESSAY_TYPE_ROTATION[e_idx],
+                    "fallback_title": f"Writing Task 2: {essay_label} Essay",
+                    "fallback_desc": f"Write a full Task 2 essay ({essay_label}). {duration_val} min timed.",
                 })
             rotations["essay"] += num_tasks
             
         elif skill_key == "W_T1":
-            # Writing Task 1: 15-25 min per report
-            num_tasks = max(1, round(minutes / 20))
+            # Writing Task 1: 15-30 min per report
+            num_tasks = max(1, round(minutes / 22))
             per_task = minutes // num_tasks
             
             for i in range(num_tasks):
                 c_idx = (rotations["chart"] + i) % len(
                     CHART_TYPE_ROTATION
                 )
+                chart_label = CHART_TYPE_ROTATION[c_idx].replace("_", " ").title()
+                duration_val = _round_5(max(15, min(30, per_task)))
                 specs.append({
                     "skill": "writing",
                     "task_type": "writing_task1",
-                    "duration": max(15, min(25, per_task)),
+                    "duration": duration_val,
                     "difficulty": 6.0,
                     "chart_type": CHART_TYPE_ROTATION[c_idx],
+                    "fallback_title": f"Writing Task 1: {chart_label} Report",
+                    "fallback_desc": f"Write a Task 1 report describing a {chart_label}. {duration_val} min.",
                 })
             rotations["chart"] += num_tasks
             
@@ -464,38 +770,47 @@ def _get_task_specs(skill_minutes: dict, phase_focus: str) -> List[dict]:
             per_task = minutes // num_tasks
             
             for i in range(num_tasks):
+                duration_val = _round_5(max(10, min(15, per_task)))
                 specs.append({
                     "skill": "vocabulary",
                     "task_type": "vocab_set",
-                    "duration": max(8, min(15, per_task)),
-                    "difficulty": 0,  # N/A for vocab
+                    "duration": duration_val,
+                    "difficulty": 0,
+                    "fallback_title": f"Academic Vocabulary Set",
+                    "fallback_desc": f"Learn and practice {duration_val} min of academic vocabulary.",
                 })
             rotations["vocab"] += num_tasks
             
         elif skill_key == "strategy":
             if minutes >= 8:
+                duration_val = _round_5(min(15, minutes))
                 specs.append({
                     "skill": "strategy",
                     "task_type": "strategy_lesson",
-                    "duration": min(15, minutes),
+                    "duration": duration_val,
                     "difficulty": 0,
+                    "fallback_title": "IELTS Strategy Lesson",
+                    "fallback_desc": f"Learn a key IELTS test-taking strategy ({duration_val} min).",
                 })
             
         elif skill_key == "podcast":
-            # Podcast Power Task: 45 min high-value multi-skill session
+            # Podcast Power Task: 30-50 min high-value multi-skill session
             num_tasks = max(1, round(minutes / 45))
             per_task = minutes // num_tasks
             
             for i in range(num_tasks):
+                duration_val = _round_5(max(30, min(50, per_task)))
                 specs.append({
                     "skill": "podcast",
                     "task_type": "podcast_power_task",
-                    "duration": max(30, min(50, per_task)),
+                    "duration": duration_val,
                     "difficulty": 0.0,
+                    "fallback_title": "Podcast Power Task (Multi-Skill)",
+                    "fallback_desc": f"BBC podcast session: listen, answer comprehension questions, and write a summary. {duration_val} min.",
                 })
             rotations["podcast"] = rotations.get("podcast", 0) + num_tasks
             
-        return specs
+    return specs
 
 
 # ═══════════════════════════════════════════════
@@ -606,7 +921,10 @@ def build_roadmap(profile: StudentProfile,
             daily_minutes=profile.daily_minutes,
             week_number=week_num,
             current_bands=expected,
-            phase_focus=phase["focus"] if phase else "push_primary"
+            phase_focus=phase["focus"] if phase else "push_primary",
+            target_sections=strategy.target_sections,
+            weeks_available=strategy.total_weeks - week_num + 1,
+            strategy_type=strategy.strategy_type,
         )
         
         # Update task difficulties based on skill
@@ -620,7 +938,7 @@ def build_roadmap(profile: StudentProfile,
         week_plan = WeekPlan(
             week_number=week_num,
             phase_name=phase["name"] if phase else "Study",
-            status="pending" if week_num == 1 else "locked",
+            status="in_progress",
             tasks_total=len(tasks),
             tasks_completed=0,
             progress_pct=0.0,

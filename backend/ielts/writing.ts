@@ -1,7 +1,7 @@
 import { api, APIError } from "encore.dev/api";
 import { getAuthData } from "~encore/auth";
-import { AuthData } from "./auth";
-import { ieltsDB } from "./db";
+import { AuthData } from "../auth/auth";
+import { supabaseAdmin } from "./db";
 
 export interface WritingPrompt {
   taskType: number;
@@ -664,6 +664,29 @@ Rain → Storage Tank → Pump → Filter → Household Use`
 2. Mobile phone access is more comparable, though Country A still leads (75% vs 60%).
 3. In Country A, internet access is slightly higher than mobile access.
 4. In Country B, the trend is reversed: mobile access (60%) is higher than internet access (45%).`
+  },
+  41: {
+    taskType: 1,
+    prompt: "The table below shows the proportions of pupils attending four different types of secondary schools in a particular city between 2000 and 2009. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.",
+    chartMetadata: `**Chart Type and Title**
+This is a table titled "The Proportions of Pupils Attending Four Secondary School Types Between Between 2000 and 2009". It shows the percentage of students in four types of schools: Specialist, Grammar, Voluntary-controlled, and Community schools.
+
+**Columns:**
+1. School Type
+2. 2000
+3. 2005
+4. 2009
+
+**Data Series Details (Percentages):**
+1. **Specialist Schools:** 12% (2000) -> 11% (2005) -> 10% (2009). (Slight but steady decline)
+2. **Grammar Schools:** 24% (2000) -> 19% (2005) -> 12% (2009). (Significant decline, halved over the period)
+3. **Voluntary-controlled Schools:** 52% (2000) -> 38% (2005) -> 20% (2009). (Sharpest decline, dropping from over half to just one-fifth)
+4. **Community Schools:** 12% (2000) -> 32% (2005) -> 58% (2009). (Dramatic increase, becoming the dominant school type by 2009)
+
+**Key Comparative Features:**
+1. **Shift in Dominance:** In 2000, Voluntary-controlled schools were the most popular (52%). By 2009, Community schools became the most popular (58%).
+2. **Opposite Trends:** Community schools showed a massive increase (from 12% to 58%), while all other school types experienced declines.
+3. **Convergence/Divergence:** Specialist and Community schools started at the same level in 2000 (12%), but diverged greatly by 2009 (10% vs 58%).`
   }
 };
 
@@ -721,25 +744,32 @@ export const submitWriting = api<WritingSubmission, WritingFeedback>(
       ? "Your response is too short. Aim for at least 150 words for Task 1 or 250 words for Task 2."
       : "Good coherence and cohesion. Use more linking words to improve flow between ideas.");
 
-    const session = await ieltsDB.queryRow<WritingFeedback>`
-      INSERT INTO writing_submissions
-      (user_id, task_type, prompt, content, band_score, grammar_feedback,
-        vocabulary_feedback, structure_feedback, coherence_feedback)
+    const { data: session, error } = await supabaseAdmin
+      .from("writing_submissions")
+      .insert({
+        user_id:              req.userId,
+        task_type:            req.taskType,
+        prompt:               req.prompt,
+        content:              req.content,
+        band_score:           bandScore,
+        grammar_feedback:     grammarFeedback,
+        vocabulary_feedback:  vocabularyFeedback,
+        structure_feedback:   structureFeedback,
+        coherence_feedback:   coherenceFeedback,
+      })
+      .select("id, band_score, grammar_feedback, vocabulary_feedback, structure_feedback, coherence_feedback")
+      .single();
 
-VALUES(${req.userId
-      }, ${req.taskType}, ${req.prompt}, ${req.content},
-  ${bandScore}, ${grammarFeedback}, ${vocabularyFeedback},
-  ${structureFeedback}, ${coherenceFeedback})
-  RETURNING id, band_score as "bandScore", grammar_feedback as "grammarFeedback",
-    vocabulary_feedback as "vocabularyFeedback", structure_feedback as "structureFeedback",
-    coherence_feedback as "coherenceFeedback"
-`;
+    if (error || !session) throw new Error("Failed to save writing submission");
 
-    if (!session) {
-      throw new Error("Failed to save writing submission");
-    }
-
-    return session;
+    return {
+      id:                  session.id,
+      bandScore:           session.band_score,
+      grammarFeedback:     session.grammar_feedback,
+      vocabularyFeedback:  session.vocabulary_feedback,
+      structureFeedback:   session.structure_feedback,
+      coherenceFeedback:   session.coherence_feedback,
+    };
   }
 );
 
@@ -747,19 +777,30 @@ export const getWritingSessionById = api<{ id: number }, { session: WritingSessi
   { expose: true, method: "GET", path: "/writing/sessions/:id", auth: true },
   async ({ id }) => {
     const auth = getAuthData() as AuthData | null;
-    const session = await ieltsDB.queryRow<WritingSession & { user_id: string }>`
-      SELECT id, user_id as "user_id", task_type as "taskType", prompt, content, band_score as "bandScore",
-        grammar_feedback as "grammarFeedback", vocabulary_feedback as "vocabularyFeedback",
-        structure_feedback as "structureFeedback", coherence_feedback as "coherenceFeedback",
-        created_at as "createdAt"
-      FROM writing_submissions
-      WHERE id = ${id}
-    `;
+    const { data: session } = await supabaseAdmin
+      .from("writing_submissions")
+      .select("id, user_id, task_type, prompt, content, band_score, grammar_feedback, vocabulary_feedback, structure_feedback, coherence_feedback, created_at")
+      .eq("id", id)
+      .maybeSingle();
 
     if (session && session.user_id !== auth?.userID) {
       throw APIError.permissionDenied("You can only access your own writing sessions");
     }
-    return { session };
+
+    const mapped = session ? {
+      id:                  session.id,
+      taskType:            session.task_type,
+      prompt:              session.prompt,
+      content:             session.content,
+      bandScore:           session.band_score ?? undefined,
+      grammarFeedback:     session.grammar_feedback ?? undefined,
+      vocabularyFeedback:  session.vocabulary_feedback ?? undefined,
+      structureFeedback:   session.structure_feedback ?? undefined,
+      coherenceFeedback:   session.coherence_feedback ?? undefined,
+      createdAt:           session.created_at,
+    } : null;
+
+    return { session: mapped };
   }
 );
 
@@ -771,16 +812,27 @@ export const getWritingSessions = api<{ userId: string }, { sessions: WritingSes
     if (auth?.userID !== userId) {
       throw APIError.permissionDenied("You can only access your own writing sessions");
     }
-    const sessions = await ieltsDB.queryAll<WritingSession>`
-      SELECT id, task_type as "taskType", prompt, content, band_score as "bandScore",
-  grammar_feedback as "grammarFeedback", vocabulary_feedback as "vocabularyFeedback",
-  structure_feedback as "structureFeedback", coherence_feedback as "coherenceFeedback",
-  created_at as "createdAt"
-      FROM writing_submissions 
-      WHERE user_id = ${userId}
-      ORDER BY created_at DESC
-      LIMIT 20
-  `;
+    const { data: rows, error } = await supabaseAdmin
+      .from("writing_submissions")
+      .select("id, task_type, prompt, content, band_score, grammar_feedback, vocabulary_feedback, structure_feedback, coherence_feedback, created_at")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(20);
+
+    if (error) throw APIError.internal(error.message);
+
+    const sessions: WritingSession[] = (rows || []).map((row: any) => ({
+      id:                  row.id,
+      taskType:            row.task_type,
+      prompt:              row.prompt,
+      content:             row.content,
+      bandScore:           row.band_score ?? undefined,
+      grammarFeedback:     row.grammar_feedback ?? undefined,
+      vocabularyFeedback:  row.vocabulary_feedback ?? undefined,
+      structureFeedback:   row.structure_feedback ?? undefined,
+      coherenceFeedback:   row.coherence_feedback ?? undefined,
+      createdAt:           row.created_at,
+    }));
 
     return { sessions };
   }

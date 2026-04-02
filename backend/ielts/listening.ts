@@ -1,7 +1,7 @@
 import { api, APIError } from "encore.dev/api";
 import { getAuthData } from "~encore/auth";
-import { AuthData } from "./auth";
-import { ieltsDB } from "./db";
+import { AuthData } from "../auth/auth";
+import { supabaseAdmin } from "./db";
 import * as fs from "node:fs";
 import * as path from "node:path";
 
@@ -261,20 +261,25 @@ export const submitListening = api<ListeningSubmission, ListeningResult>(
     const bandScore = calculateBandScore(score, test.questions.length);
 
     // Save session to database
-    const session = await ieltsDB.queryRow<{ id: number }>`
-      INSERT INTO listening_sessions 
-      (user_id, test_id, audio_title, audio_url, questions, user_answers, correct_answers, 
-       score, total_questions, band_score, time_taken)
-      VALUES (${req.userId}, ${test.id}, ${test.title}, ${test.audioFile}, 
-              ${JSON.stringify(test.questions)}, ${JSON.stringify(req.userAnswers)}, 
-              ${JSON.stringify(correctAnswers)}, ${score}, ${test.questions.length}, 
-              ${bandScore}, ${req.timeTaken || null})
-      RETURNING id
-    `;
+    const { data: session, error: sessionErr } = await supabaseAdmin
+      .from("listening_sessions")
+      .insert({
+        user_id:         req.userId,
+        test_id:         test.id,
+        audio_title:     test.title,
+        audio_url:       test.audioFile,
+        questions:       JSON.stringify(test.questions),
+        user_answers:    JSON.stringify(req.userAnswers),
+        correct_answers: JSON.stringify(correctAnswers),
+        score,
+        total_questions: test.questions.length,
+        band_score:      bandScore,
+        time_taken:      req.timeTaken || null,
+      })
+      .select("id")
+      .single();
 
-    if (!session) {
-      throw new Error("Failed to save listening session");
-    }
+    if (sessionErr || !session) throw new Error("Failed to save listening session");
 
     return {
       id: session.id,
@@ -297,15 +302,25 @@ export const getListeningSessions = api<{ userId: string }, { sessions: Listenin
       throw APIError.permissionDenied("You can only access your own listening sessions");
     }
 
-    const sessions = await ieltsDB.queryAll<ListeningSession>`
-      SELECT id, test_id as "testId", audio_title as "testTitle", score, 
-             total_questions as "totalQuestions", band_score as "bandScore",
-             time_taken as "timeTaken", created_at as "createdAt"
-      FROM listening_sessions 
-      WHERE user_id = ${userId}
-      ORDER BY created_at DESC
-      LIMIT 20
-    `;
+    const { data: rows, error } = await supabaseAdmin
+      .from("listening_sessions")
+      .select("id, test_id, audio_title, score, total_questions, band_score, time_taken, created_at")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(20);
+
+    if (error) throw APIError.internal(error.message);
+
+    const sessions: ListeningSession[] = (rows || []).map((row: any) => ({
+      id:             row.id,
+      testId:         row.test_id,
+      testTitle:      row.audio_title,
+      score:          row.score,
+      totalQuestions: row.total_questions,
+      bandScore:      row.band_score,
+      timeTaken:      row.time_taken ?? undefined,
+      createdAt:      row.created_at,
+    }));
 
     return { sessions };
   }

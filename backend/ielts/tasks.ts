@@ -1,15 +1,15 @@
 import { api, APIError } from "encore.dev/api";
 import { getAuthData } from "~encore/auth";
-import { AuthData } from "./auth";
-import { ieltsDB } from "./db";
+import { AuthData } from "../auth/auth";
+import { supabaseAdmin } from "./db";
 import { difficultyPoints, generateSuggestions, getRangeBounds, TaskSuggestion, TaskCategory, TaskDifficulty } from "./aiSuggest";
 
 /** Normalize a date to midnight local time so due_at represents a clean day boundary. */
-function normalizeToStartOfDay(d: Date | string | null | undefined): Date | null {
+function normalizeToStartOfDay(d: Date | string | null | undefined): string | null {
 	if (!d) return null;
 	const date = new Date(d);
 	date.setHours(0, 0, 0, 0);
-	return date;
+	return date.toISOString();
 }
 
 type SummaryRange = "daily" | "weekly" | "monthly";
@@ -55,12 +55,10 @@ function mapRowToTask(r: any): Task {
 	};
 }
 
-function mapStatusFilter(status: string | undefined): ("planned" | "in_progress" | "completed")[] | null {
+function mapStatusFilter(status: string | undefined): string | null {
 	if (!status || status === "all") return null;
-	if (status === "in-progress") return ["in_progress"];
-	if (status === "planned") return ["planned"];
-	if (status === "completed") return ["completed"];
-	return null;
+	if (status === "in-progress") return "in_progress";
+	return status;
 }
 
 // GET /progress/summary
@@ -73,68 +71,69 @@ export const getProgressSummary = api(
 			throw APIError.permissionDenied("You can only access your own progress summary");
 		}
 		const { from, to } = getRangeBounds(range);
+		const fromISO = from.toISOString();
+		const toISO = to.toISOString();
 
 		// planned tasks in range
-		const planned = await ieltsDB.queryRow<{ planned: number }>`
-			SELECT COUNT(*)::int AS planned
-			FROM tasks
-			WHERE user_id = ${userId}
-			  AND due_at IS NOT NULL
-			  AND due_at >= ${from}
-			  AND due_at <= ${to}
-		`;
+		const { count: plannedCount } = await supabaseAdmin
+			.from("tasks")
+			.select("id", { count: "exact", head: true })
+			.eq("user_id", userId)
+			.not("due_at", "is", null)
+			.gte("due_at", fromISO)
+			.lte("due_at", toISO);
 
 		// completed tasks in range
-		const completed = await ieltsDB.queryRow<{ completed: number }>`
-			SELECT COUNT(*)::int AS completed
-			FROM tasks
-			WHERE user_id = ${userId}
-			  AND status = 'completed'
-			  AND due_at IS NOT NULL
-			  AND due_at >= ${from}
-			  AND due_at <= ${to}
-		`;
+		const { count: completedCount } = await supabaseAdmin
+			.from("tasks")
+			.select("id", { count: "exact", head: true })
+			.eq("user_id", userId)
+			.eq("status", "completed")
+			.not("due_at", "is", null)
+			.gte("due_at", fromISO)
+			.lte("due_at", toISO);
 
-		// points by difficulty in planned window
-		const pointsRows = await ieltsDB.queryAll<{ difficulty: TaskDifficulty; cnt: number }>`
-			SELECT difficulty, COUNT(*)::int AS cnt
-			FROM tasks
-			WHERE user_id = ${userId}
-			  AND due_at IS NOT NULL
-			  AND due_at >= ${from}
-			  AND due_at <= ${to}
-			GROUP BY difficulty
-		`;
+		// points by difficulty (planned)
+		const { data: pointsRows } = await supabaseAdmin
+			.from("tasks")
+			.select("difficulty")
+			.eq("user_id", userId)
+			.not("due_at", "is", null)
+			.gte("due_at", fromISO)
+			.lte("due_at", toISO);
 
 		let plannedPoints = 0;
 		const points = { easy: 0, medium: 0, hard: 0 };
-		for (const r of pointsRows) {
-			const p = difficultyPoints(r.difficulty) * r.cnt;
-			plannedPoints += p;
-			points[r.difficulty] += p;
+		for (const r of (pointsRows || [])) {
+			const diff = r.difficulty as TaskDifficulty;
+			if (diff in points) {
+				const p = difficultyPoints(diff);
+				plannedPoints += p;
+				points[diff] += p;
+			}
 		}
 
-		const completedPointsRow = await ieltsDB.queryAll<{ difficulty: TaskDifficulty; cnt: number }>`
-			SELECT difficulty, COUNT(*)::int AS cnt
-			FROM tasks
-			WHERE user_id = ${userId}
-			  AND status = 'completed'
-			  AND due_at IS NOT NULL
-			  AND due_at >= ${from}
-			  AND due_at <= ${to}
-			GROUP BY difficulty
-		`;
+		// completed points
+		const { data: completedPointsRows } = await supabaseAdmin
+			.from("tasks")
+			.select("difficulty")
+			.eq("user_id", userId)
+			.eq("status", "completed")
+			.not("due_at", "is", null)
+			.gte("due_at", fromISO)
+			.lte("due_at", toISO);
+
 		let completedPoints = 0;
-		for (const r of completedPointsRow) {
-			completedPoints += difficultyPoints(r.difficulty) * r.cnt;
+		for (const r of (completedPointsRows || [])) {
+			completedPoints += difficultyPoints(r.difficulty as TaskDifficulty);
 		}
 
 		const percent = plannedPoints > 0 ? Math.max(0, Math.min(100, Math.round((completedPoints / plannedPoints) * 100))) : 0;
 		return {
 			percent,
 			totals: {
-				planned: planned?.planned ?? 0,
-				completed: completed?.completed ?? 0,
+				planned:   plannedCount ?? 0,
+				completed: completedCount ?? 0,
 				points,
 			},
 		};
@@ -151,28 +150,28 @@ export const listTasks = api(
 			throw APIError.permissionDenied("You can only list your own tasks");
 		}
 		const { from, to } = getRangeBounds(range);
+		const fromISO = from.toISOString();
+		const toISO = to.toISOString();
 		const statusFilter = mapStatusFilter(status);
-		const filterStatus = statusFilter ? statusFilter[0] : null;
 
-		let rows: any[];
-		rows = await ieltsDB.queryAll<any>`
-		SELECT *
-		FROM tasks
-		WHERE user_id = ${userId}
-		  AND (
-			(status = 'completed' AND completed_at >= ${from} AND completed_at <= ${to})
-			OR
-			(status != 'completed' AND (
-			  (due_at IS NOT NULL AND due_at >= ${from} AND due_at <= ${to})
-			  OR
-			  (due_at IS NULL AND created_at >= ${from} AND created_at <= ${to})
-			))
-		  )
-		  AND (status = ${filterStatus}::text OR ${filterStatus}::text IS NULL)
-		ORDER BY status = 'completed' ASC, COALESCE(completed_at, due_at, created_at) DESC
-	`;
+		let query = supabaseAdmin
+			.from("tasks")
+			.select("*")
+			.eq("user_id", userId);
 
-		return { tasks: rows.map(mapRowToTask) };
+		if (statusFilter) {
+			query = query.eq("status", statusFilter);
+		}
+
+		// Filter by date range
+		query = query.or(
+			`and(status.eq.completed,completed_at.gte.${fromISO},completed_at.lte.${toISO}),and(status.neq.completed,due_at.gte.${fromISO},due_at.lte.${toISO})`
+		);
+
+		const { data: rows, error } = await query.order("created_at", { ascending: false });
+		if (error) throw APIError.internal(error.message);
+
+		return { tasks: (rows || []).map(mapRowToTask) };
 	}
 );
 
@@ -194,11 +193,14 @@ export const createTask = api(
 		}
 		const estimatedMinutes = body.estimatedMinutes ?? 20;
 		const dueAt = normalizeToStartOfDay(body.dueAt);
-		const row = await ieltsDB.queryRow<any>`
-			INSERT INTO tasks(user_id, name, category, difficulty, estimated_minutes, due_at)
-VALUES(${userId}, ${name}, ${category}, ${difficulty}, ${estimatedMinutes}, ${dueAt})
-RETURNING *
-	`;
+
+		const { data: row, error } = await supabaseAdmin
+			.from("tasks")
+			.insert({ user_id: userId, name, category, difficulty, estimated_minutes: estimatedMinutes, due_at: dueAt })
+			.select("*")
+			.single();
+
+		if (error || !row) throw APIError.internal(error?.message ?? "Failed to create task");
 		return mapRowToTask(row);
 	}
 );
@@ -208,34 +210,31 @@ export const updateTask = api(
 	{ expose: true, method: "PATCH", path: "/progress/tasks/:id", auth: true },
 	async (params: { id: string; progress?: number; status?: "planned" | "in-progress" | "completed"; completedAt?: Date }): Promise<Task> => {
 		const auth = getAuthData() as AuthData | null;
-		
-		// IDOR check: first check task ownership
-		const task = await ieltsDB.queryRow<{ user_id: string }>`SELECT user_id FROM tasks WHERE id = ${params.id}`;
+
+		// IDOR check
+		const { data: task } = await supabaseAdmin
+			.from("tasks").select("user_id").eq("id", params.id).single();
 		if (task && task.user_id !== auth?.userID) {
 			throw APIError.permissionDenied("You can only update your own tasks");
 		}
 
-		const progress = params.progress ?? null;
 		const status = params.status === "in-progress" ? "in_progress" : params.status ?? null;
+		const updates: Record<string, any> = { updated_at: new Date().toISOString() };
 
-		// If status is becoming completed and no date provided, use NOW()
-		let completedAt = params.completedAt ? new Date(params.completedAt) : null;
+		if (params.progress !== undefined) updates.progress = params.progress;
+		if (status) {
+			updates.status = status;
+			if (status === "completed") {
+				updates.completed_at = params.completedAt ? new Date(params.completedAt).toISOString() : new Date().toISOString();
+			} else {
+				updates.completed_at = null;
+			}
+		}
 
-		const row = await ieltsDB.queryRow<any>`
-			UPDATE tasks
-SET
-progress = COALESCE(${progress}, progress),
-	status = COALESCE(${status}::text, status),
-	completed_at = CASE 
-					WHEN ${status}::text = 'completed' AND completed_at IS NULL THEN COALESCE(${completedAt}, NOW())
-					WHEN ${status}::text = 'planned' OR ${status}::text = 'in_progress' THEN NULL
-					ELSE COALESCE(${completedAt}, completed_at)
-END,
-	updated_at = NOW()
-			WHERE id = ${params.id}
-RETURNING *
-	`;
-		if (!row) throw APIError.notFound("Task not found");
+		const { data: row, error } = await supabaseAdmin
+			.from("tasks").update(updates).eq("id", params.id).select("*").single();
+
+		if (error || !row) throw APIError.notFound("Task not found");
 		return mapRowToTask(row);
 	}
 );
@@ -245,11 +244,12 @@ export const deleteTask = api(
 	{ expose: true, method: "DELETE", path: "/progress/tasks/:id", auth: true },
 	async (params: { id: string }): Promise<void> => {
 		const auth = getAuthData() as AuthData | null;
-		const task = await ieltsDB.queryRow<{ user_id: string }>`SELECT user_id FROM tasks WHERE id = ${params.id}`;
+		const { data: task } = await supabaseAdmin
+			.from("tasks").select("user_id").eq("id", params.id).single();
 		if (task && task.user_id !== auth?.userID) {
 			throw APIError.permissionDenied("You can only delete your own tasks");
 		}
-		await ieltsDB.exec`DELETE FROM tasks WHERE id = ${params.id} `;
+		await supabaseAdmin.from("tasks").delete().eq("id", params.id);
 	}
 );
 
@@ -279,18 +279,20 @@ export const acceptTaskSuggestions = api(
 		if (auth?.userID !== body.userId) {
 			throw APIError.permissionDenied("You can only accept suggestions for yourself");
 		}
-		const tasks: Task[] = [];
-		for (const s of body.suggestions) {
-			const normalizedDueAt = normalizeToStartOfDay(s.dueAt);
-			const row = await ieltsDB.queryRow<any>`
-				INSERT INTO tasks(user_id, name, category, difficulty, estimated_minutes, due_at)
-VALUES(${body.userId}, ${s.name}, ${s.category}, ${s.difficulty}, ${s.estimatedMinutes ?? 20}, ${normalizedDueAt})
-RETURNING *
-	`;
-			tasks.push(mapRowToTask(row));
-		}
-		return { tasks };
+
+		const inserts = body.suggestions.map(s => ({
+			user_id:           body.userId,
+			name:              s.name,
+			category:          s.category,
+			difficulty:        s.difficulty,
+			estimated_minutes: s.estimatedMinutes ?? 20,
+			due_at:            normalizeToStartOfDay(s.dueAt),
+		}));
+
+		const { data: rows, error } = await supabaseAdmin
+			.from("tasks").insert(inserts).select("*");
+
+		if (error) throw APIError.internal(error.message);
+		return { tasks: (rows || []).map(mapRowToTask) };
 	}
 );
-
-

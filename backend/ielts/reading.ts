@@ -1,7 +1,7 @@
 import { api, APIError } from "encore.dev/api";
 import { getAuthData } from "~encore/auth";
-import { AuthData } from "./auth";
-import { ieltsDB } from "./db";
+import { AuthData } from "../auth/auth";
+import { supabaseAdmin } from "./db";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { promisify } from "node:util";
@@ -1093,20 +1093,23 @@ export const submitReading = api<ReadingSubmission, ReadingResult>(
     });
 
     // Save session to database
-    const session = await ieltsDB.queryRow<{ id: number }>`
-      INSERT INTO reading_sessions 
-      (user_id, passage_title, passage_content, questions, user_answers, correct_answers, 
-       score, total_questions, time_taken)
-      VALUES (${req.userId}, ${req.passageTitle}, ${req.passageContent}, 
-              ${JSON.stringify(req.questions)}, ${JSON.stringify(req.userAnswers)}, 
-              ${JSON.stringify(correctAnswers)}, ${score}, ${req.questions.length}, 
-              ${req.timeTaken || null})
-      RETURNING id
-    `;
+    const { data: session, error: sessionErr } = await supabaseAdmin
+      .from("reading_sessions")
+      .insert({
+        user_id:         req.userId,
+        passage_title:   req.passageTitle,
+        passage_content: req.passageContent,
+        questions:       JSON.stringify(req.questions),
+        user_answers:    JSON.stringify(req.userAnswers),
+        correct_answers: JSON.stringify(correctAnswers),
+        score,
+        total_questions: req.questions.length,
+        time_taken:      req.timeTaken || null,
+      })
+      .select("id")
+      .single();
 
-    if (!session) {
-      throw new Error("Failed to save reading session");
-    }
+    if (sessionErr || !session) throw new Error("Failed to save reading session");
 
     return {
       id: session.id,
@@ -1126,14 +1129,23 @@ export const getReadingSessions = api<{ userId: string }, { sessions: ReadingSes
     if (auth?.userID !== userId) {
       throw APIError.permissionDenied("You can only access your own reading sessions");
     }
-    const sessions = await ieltsDB.queryAll<ReadingSession>`
-      SELECT id, passage_title as "passageTitle", score, total_questions as "totalQuestions",
-             time_taken as "timeTaken", created_at as "createdAt"
-      FROM reading_sessions 
-      WHERE user_id = ${userId}
-      ORDER BY created_at DESC
-      LIMIT 20
-    `;
+    const { data: rows, error } = await supabaseAdmin
+      .from("reading_sessions")
+      .select("id, passage_title, score, total_questions, time_taken, created_at")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(20);
+
+    if (error) throw APIError.internal(error.message);
+
+    const sessions: ReadingSession[] = (rows || []).map((row: any) => ({
+      id:             row.id,
+      passageTitle:   row.passage_title,
+      score:          row.score,
+      totalQuestions: row.total_questions,
+      timeTaken:      row.time_taken ?? undefined,
+      createdAt:      row.created_at,
+    }));
 
     return { sessions };
   }
@@ -1154,11 +1166,14 @@ export const getReadingSkills = api<{ userId: string }, { skills: ReadingSkill[]
     if (auth?.userID !== userId) {
       throw APIError.permissionDenied("You can only access your own reading skills");
     }
-    const sessions = await ieltsDB.queryAll<{ questions: string; score: number; total_questions: number; user_answers: string; correct_answers: string }>`
-      SELECT questions, score, total_questions, user_answers, correct_answers
-      FROM reading_sessions 
-      WHERE user_id = ${userId}
-    `;
+    const { data: rows, error: skillsErr } = await supabaseAdmin
+      .from("reading_sessions")
+      .select("questions, score, total_questions, user_answers, correct_answers")
+      .eq("user_id", userId);
+
+    if (skillsErr) throw APIError.internal(skillsErr.message);
+
+    const sessions = rows || [];
 
     const skillMap = new Map<string, { total: number; correct: number }>();
 
@@ -1233,40 +1248,28 @@ export const getLatestReadingSession = api<
     }
     // Query most recent session matching testId + passageId
     // Note: Adjust the passage_title pattern based on how you store test/passage metadata
-    const session = await ieltsDB.queryRow<{
-      id: number;
-      userId: string;
-      passageTitle: string;
-      userAnswers: string;
-      correctAnswers: string;
-      score: number;
-      totalQuestions: number;
-      createdAt: string;
-    }>`
-      SELECT id, user_id as "userId", passage_title as "passageTitle",
-             user_answers as "userAnswers", correct_answers as "correctAnswers",
-             score, total_questions as "totalQuestions", created_at as "createdAt"
-      FROM reading_sessions
-      WHERE user_id = ${userId} 
-        AND passage_title LIKE ${`%Test ${testId}%Passage ${passageId}%`}
-      ORDER BY created_at DESC
-      LIMIT 1
-    `;
+    const { data: session, error: sessionErr } = await supabaseAdmin
+      .from("reading_sessions")
+      .select("id, user_id, passage_title, user_answers, correct_answers, score, total_questions, created_at")
+      .eq("user_id", userId)
+      .ilike("passage_title", `%Test ${testId}%Passage ${passageId}%`)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
 
-    if (!session) {
-      throw new Error(`No session found for user ${userId}, test ${testId}, passage ${passageId}`);
-    }
+    if (sessionErr) throw APIError.internal(sessionErr.message);
+    if (!session) throw new Error(`No session found for user ${userId}, test ${testId}, passage ${passageId}`);
 
     return {
-      id: session.id,
-      userId: session.userId,
+      id:             session.id,
+      userId:         session.user_id,
       testId,
       passageId,
-      userAnswers: JSON.parse(session.userAnswers),
-      correctAnswers: JSON.parse(session.correctAnswers),
-      score: session.score,
-      totalQuestions: session.totalQuestions,
-      createdAt: session.createdAt
+      userAnswers:    JSON.parse(session.user_answers),
+      correctAnswers: JSON.parse(session.correct_answers),
+      score:          session.score,
+      totalQuestions: session.total_questions,
+      createdAt:      session.created_at,
     };
   }
 );
@@ -1279,27 +1282,34 @@ export const createHighlight = api<CreateHighlightRequest, ReadingHighlight>(
     if (auth?.userID !== req.userId) {
       throw APIError.permissionDenied("You can only create highlights for yourself");
     }
-    const highlight = await ieltsDB.queryRow<ReadingHighlight>`
-      INSERT INTO reading_highlights 
-      (user_id, passage_title, highlighted_text, start_position, end_position, highlight_type, highlight_color)
-      VALUES (${req.userId}, ${req.passageTitle}, ${req.highlightedText}, 
-              ${req.startPosition}, ${req.endPosition}, ${req.highlightType}, 
-              ${req.highlightColor || 'yellow'})
-      ON CONFLICT (user_id, passage_title, start_position, end_position)
-      DO UPDATE SET 
-        highlighted_text = ${req.highlightedText},
-        highlight_type = ${req.highlightType},
-        highlight_color = ${req.highlightColor || 'yellow'}
-      RETURNING id, highlighted_text as "highlightedText", start_position as "startPosition",
-                end_position as "endPosition", highlight_type as "highlightType",
-                highlight_color as "highlightColor", created_at as "createdAt"
-    `;
+    const { data: highlight, error } = await supabaseAdmin
+      .from("reading_highlights")
+      .upsert(
+        {
+          user_id:          req.userId,
+          passage_title:    req.passageTitle,
+          highlighted_text: req.highlightedText,
+          start_position:   req.startPosition,
+          end_position:     req.endPosition,
+          highlight_type:   req.highlightType,
+          highlight_color:  req.highlightColor || "yellow",
+        },
+        { onConflict: "user_id,passage_title,start_position,end_position" }
+      )
+      .select("id, highlighted_text, start_position, end_position, highlight_type, highlight_color, created_at")
+      .single();
 
-    if (!highlight) {
-      throw new Error("Failed to create highlight");
-    }
+    if (error || !highlight) throw new Error("Failed to create highlight");
 
-    return highlight;
+    return {
+      id:              highlight.id,
+      highlightedText: highlight.highlighted_text,
+      startPosition:   highlight.start_position,
+      endPosition:     highlight.end_position,
+      highlightType:   highlight.highlight_type,
+      highlightColor:  highlight.highlight_color,
+      createdAt:       highlight.created_at,
+    };
   }
 );
 
@@ -1311,14 +1321,24 @@ export const getHighlights = api<{ userId: string; passageTitle: string }, { hig
     if (auth?.userID !== userId) {
       throw APIError.permissionDenied("You can only access your own highlights");
     }
-    const highlights = await ieltsDB.queryAll<ReadingHighlight>`
-      SELECT id, highlighted_text as "highlightedText", start_position as "startPosition",
-             end_position as "endPosition", highlight_type as "highlightType",
-             highlight_color as "highlightColor", created_at as "createdAt"
-      FROM reading_highlights 
-      WHERE user_id = ${userId} AND passage_title = ${passageTitle}
-      ORDER BY start_position ASC
-    `;
+    const { data: rows, error } = await supabaseAdmin
+      .from("reading_highlights")
+      .select("id, highlighted_text, start_position, end_position, highlight_type, highlight_color, created_at")
+      .eq("user_id", userId)
+      .eq("passage_title", passageTitle)
+      .order("start_position", { ascending: true });
+
+    if (error) throw APIError.internal(error.message);
+
+    const highlights: ReadingHighlight[] = (rows || []).map((row: any) => ({
+      id:              row.id,
+      highlightedText: row.highlighted_text,
+      startPosition:   row.start_position,
+      endPosition:     row.end_position,
+      highlightType:   row.highlight_type,
+      highlightColor:  row.highlight_color,
+      createdAt:       row.created_at,
+    }));
 
     return { highlights };
   }
@@ -1332,10 +1352,11 @@ export const deleteHighlight = api<{ userId: string; highlightId: number }, void
     if (auth?.userID !== userId) {
       throw APIError.permissionDenied("You can only delete your own highlights");
     }
-    await ieltsDB.exec`
-      DELETE FROM reading_highlights 
-      WHERE id = ${highlightId} AND user_id = ${userId}
-    `;
+    await supabaseAdmin
+      .from("reading_highlights")
+      .delete()
+      .eq("id", highlightId)
+      .eq("user_id", userId);
   }
 );
 
@@ -1513,45 +1534,50 @@ export const addToVocabulary = api<AddToVocabularyRequest, { success: boolean; w
     if (auth?.userID !== req.userId) {
       throw APIError.permissionDenied("You can only add words to your own vocabulary");
     }
-    // First, check if the word already exists
-    let word = await ieltsDB.queryRow<{ id: number }>`
-      SELECT id FROM vocabulary_words WHERE LOWER(word) = LOWER(${req.text})
-    `;
+    // Check if the word already exists
+    const { data: existingWord } = await supabaseAdmin
+      .from("vocabulary_words")
+      .select("id")
+      .ilike("word", req.text)
+      .maybeSingle();
 
     let wordId: number;
 
-    if (!word) {
+    if (!existingWord) {
       // Create new vocabulary word
-      const newWord = await ieltsDB.queryRow<{ id: number }>`
-        INSERT INTO vocabulary_words (word, definition, example_sentence, topic, difficulty_level)
-        VALUES (${req.text}, ${req.definition}, ${req.exampleSentence}, ${req.topic || 'Reading'}, 2)
-        RETURNING id
-      `;
+      const { data: newWord, error: wordErr } = await supabaseAdmin
+        .from("vocabulary_words")
+        .insert({
+          word:             req.text,
+          definition:       req.definition,
+          example_sentence: req.exampleSentence,
+          topic:            req.topic || "Reading",
+          difficulty_level: 2,
+        })
+        .select("id")
+        .single();
 
-      if (!newWord) {
-        throw new Error("Failed to create vocabulary word");
-      }
-
+      if (wordErr || !newWord) throw new Error("Failed to create vocabulary word");
       wordId = newWord.id;
     } else {
-      wordId = word.id;
+      wordId = existingWord.id;
     }
 
     // Add translation
-    await ieltsDB.exec`
-      INSERT INTO vocabulary_translations (word_id, language, translation)
-      VALUES (${wordId}, ${req.targetLanguage}, ${req.translation})
-      ON CONFLICT (word_id, language)
-      DO UPDATE SET translation = ${req.translation}
-    `;
+    await supabaseAdmin
+      .from("vocabulary_translations")
+      .upsert(
+        { word_id: wordId, language: req.targetLanguage, translation: req.translation },
+        { onConflict: "word_id,language" }
+      );
 
     // Add to user's vocabulary
-    await ieltsDB.exec`
-      INSERT INTO user_vocabulary (user_id, word_id, status)
-      VALUES (${req.userId}, ${wordId}, 'learning')
-      ON CONFLICT (user_id, word_id)
-      DO NOTHING
-    `;
+    await supabaseAdmin
+      .from("user_vocabulary")
+      .upsert(
+        { user_id: req.userId, word_id: wordId, status: "learning" },
+        { onConflict: "user_id,word_id", ignoreDuplicates: true }
+      );
 
     return { success: true, wordId };
   }

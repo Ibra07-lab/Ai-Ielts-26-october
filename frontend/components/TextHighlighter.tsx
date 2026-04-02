@@ -79,6 +79,9 @@ export default function TextHighlighter({
 
     let startPosition = 0;
     let endPosition = 0;
+    const rawSelectedText = selection.toString();
+    if (!rawSelectedText) return;
+
     if (paragraphBody && paragraphBody.dataset.segmentStart) {
       const segmentStart = parseInt(paragraphBody.dataset.segmentStart, 10) || 0;
       const preCaretRange = range.cloneRange();
@@ -86,18 +89,43 @@ export default function TextHighlighter({
       preCaretRange.setEnd(range.startContainer, range.startOffset);
       const relStart = preCaretRange.toString().length;
       startPosition = segmentStart + relStart;
-      endPosition = startPosition + selectedText.length;
+      endPosition = startPosition + rawSelectedText.length;
     } else {
       // Fallback: calculate positions relative to entire content block (may be offset by labels)
       const preCaretRange = range.cloneRange();
       preCaretRange.selectNodeContents(contentElement);
       preCaretRange.setEnd(range.startContainer, range.startOffset);
       startPosition = preCaretRange.toString().length;
-      endPosition = startPosition + selectedText.length;
+      endPosition = startPosition + rawSelectedText.length;
     }
 
+    // --- SNAP TO WORD BOUNDARIES ---
+    if (content) {
+      // 1. Trim whitespace from selection bounds to avoid expanding from a trailing space
+      while (startPosition < endPosition && /\s/.test(content[startPosition])) {
+        startPosition++;
+      }
+      while (endPosition > startPosition && /\s/.test(content[endPosition - 1])) {
+        endPosition--;
+      }
+
+      // 2. Expand outwards to word boundaries
+      // Includes unicode letters, numbers, hyphens, and standard/smart apostrophes
+      const isWordChar = (char: string) => /^[\p{L}\p{N}\-''’]+$/u.test(char);
+      
+      while (startPosition > 0 && isWordChar(content[startPosition - 1])) {
+        startPosition--;
+      }
+      while (endPosition < content.length && isWordChar(content[endPosition])) {
+        endPosition++;
+      }
+    }
+
+    const finalSelectedText = content ? content.slice(startPosition, endPosition) : rawSelectedText.trim();
+    if (!finalSelectedText || !finalSelectedText.trim()) return;
+
     // Determine if it's a word or sentence
-    const isWord = !selectedText.includes(' ') || selectedText.split(' ').length <= 3;
+    const isWord = !finalSelectedText.includes(' ') || finalSelectedText.trim().split(/\s+/).length <= 3;
     const highlightType = isWord ? 'word' : 'sentence';
 
     // Get selection coordinates for popup positioning
@@ -113,7 +141,7 @@ export default function TextHighlighter({
     setPopupMenu({
       x: rect.left - containerRect.left + rect.width / 2,
       y: popupY,
-      selectedText,
+      selectedText: finalSelectedText,
       startPosition,
       endPosition,
       highlightType,
@@ -129,8 +157,31 @@ export default function TextHighlighter({
   const createHighlight = async (color: 'yellow' | 'blue' | 'green' | 'orange' = 'yellow') => {
     if (!popupMenu || !user) return;
 
+    // --- OPTIMISTIC UI FIX ---
+    // Generate a temporary negative ID so it doesn't collide with future DB IDs
+    const tempId = -Date.now();
+    
+    const optimisticHighlight: Highlight = {
+      id: tempId,
+      highlightedText: popupMenu.selectedText,
+      startPosition: popupMenu.startPosition,
+      endPosition: popupMenu.endPosition,
+      highlightType: popupMenu.highlightType,
+      highlightColor: color,
+    };
+
+    // Save previous state for rollback
+    const previousHighlights = [...currentHighlights];
+    
+    // Apply immediately to UI for instant feedback
+    const optimisticList = [...currentHighlights, optimisticHighlight];
+    setCurrentHighlights(optimisticList);
+    onHighlightsChange?.(optimisticList);
+    setPopupMenu(null);
+
     try {
-      const highlight = await backend.ielts.createHighlight({
+      // Send the real request in the background
+      const realHighlight = await backend.ielts.createHighlight({
         userId: user.id,
         passageTitle,
         highlightedText: popupMenu.selectedText,
@@ -140,30 +191,40 @@ export default function TextHighlighter({
         highlightColor: color,
       });
 
-      const newHighlights = [...currentHighlights, highlight];
-      setCurrentHighlights(newHighlights);
-      onHighlightsChange?.(newHighlights);
+      // Replace the placeholder shadow highlight with the real one silently
+      setCurrentHighlights(prev => {
+        const substituted = prev.map(h => (h.id === tempId ? realHighlight : h));
+        onHighlightsChange?.(substituted);
+        return substituted;
+      });
 
-      setPopupMenu(null);
     } catch (error) {
       console.error("Failed to create highlight:", error);
       toast({
         title: "Error",
-        description: "Failed to create highlight. Please try again.",
+        description: "Failed to create highlight. Reverting change.",
         variant: "destructive",
       });
+      // Rollback to previous state if the API fails
+      setCurrentHighlights(previousHighlights);
+      onHighlightsChange?.(previousHighlights);
     }
   };
 
   const deleteHighlight = async (highlightId: number) => {
     if (!user) return;
 
-    try {
-      await backend.ielts.deleteHighlight(user.id, highlightId);
+    // --- OPTIMISTIC UI FIX ---
+    const previousHighlights = [...currentHighlights];
+    const newHighlights = currentHighlights.filter(h => h.id !== highlightId);
+    
+    // Remove instantly from UI
+    setCurrentHighlights(newHighlights);
+    onHighlightsChange?.(newHighlights);
 
-      const newHighlights = currentHighlights.filter(h => h.id !== highlightId);
-      setCurrentHighlights(newHighlights);
-      onHighlightsChange?.(newHighlights);
+    try {
+      // Send real delete request in background
+      await backend.ielts.deleteHighlight(user.id, highlightId);
 
       toast({
         title: "Highlight Removed",
@@ -173,9 +234,12 @@ export default function TextHighlighter({
       console.error("Failed to delete highlight:", error);
       toast({
         title: "Error",
-        description: "Failed to remove highlight. Please try again.",
+        description: "Failed to remove highlight. Restoring it.",
         variant: "destructive",
       });
+      // Rollback on failure
+      setCurrentHighlights(previousHighlights);
+      onHighlightsChange?.(previousHighlights);
     }
   };
 
@@ -275,60 +339,80 @@ export default function TextHighlighter({
       allHighlights.push({ start: evidence.start, end: evidence.end, type: 'evidence', questionIds: evidence.questionIds });
     });
 
-    // Sort by start position
-    allHighlights.sort((a, b) => a.start - b.start);
+    // Extract unique break points to safely split text into disjoint chunks
+    const breakPoints = new Set<number>([0, segmentText.length]);
+    allHighlights.forEach(hl => {
+      breakPoints.add(Math.max(0, Math.min(hl.start, segmentText.length)));
+      breakPoints.add(Math.max(0, Math.min(hl.end, segmentText.length)));
+    });
+
+    const sortedBreaks = Array.from(breakPoints).sort((a, b) => a - b);
 
     let result: any[] = [];
-    let lastIndex = 0;
-    allHighlights.forEach((hl, idx) => {
-      if (hl.start > lastIndex) {
-        result.push(segmentText.slice(lastIndex, hl.start));
-      }
 
-      if (hl.type === 'evidence') {
-        result.push(
-          <React.Fragment key={`evidence-${segmentStart}-${hl.start}-${idx}`}>
-            <mark className="bg-green-200 dark:bg-green-800 text-inherit font-medium border-b-2 border-green-500 dark:border-green-600 rounded-sm">
-              {segmentText.slice(hl.start, hl.end)}
-            </mark>
-            {hl.questionIds && hl.questionIds.map((qId: number, i: number) => (
-              <span key={`q-${qId}`} className="ml-1 inline-flex items-center justify-center w-4 h-4 text-[10px] font-bold text-white bg-green-600 rounded-full align-top cursor-help" title={`Evidence for Q${qId}`}>
-                {qId}
-              </span>
-            ))}
-          </React.Fragment>
-        );
+    for (let i = 0; i < sortedBreaks.length - 1; i++) {
+      const chunkStart = sortedBreaks[i];
+      const chunkEnd = sortedBreaks[i + 1];
+      const chunkText = segmentText.slice(chunkStart, chunkEnd);
+
+      // Find which highlight applies to this chunk
+      // Priority: Evidence over User. If multiple of same type, shortest wins.
+      const activeHighlights = allHighlights.filter(hl => hl.start <= chunkStart && hl.end >= chunkEnd);
+
+      if (activeHighlights.length === 0) {
+        result.push(chunkText);
       } else {
-        const h = hl.data;
-        const highlightClass = colorClassMap[h.highlightColor] || 'bg-yellow-200 dark:bg-yellow-800';
-        result.push(
-          <span
-            key={`highlight-${h.id}-${segmentStart}`}
-            className={`${highlightClass} cursor-pointer relative rounded transition-colors`}
-            onClick={(e) => {
-              e.stopPropagation();
-              if (!contentRef.current) return;
-              const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
-              const containerRect = contentRef.current.getBoundingClientRect();
-              const topWithin = rect.top - containerRect.top;
-              let y = topWithin - 36;
-              if (y < 0) y = rect.bottom - containerRect.top + 8;
-              setDeletePopup({
-                x: rect.left - containerRect.left + rect.width / 2,
-                y,
-                highlightId: h.id,
-              });
-            }}
-          >
-            {segmentText.slice(hl.start, hl.end)}
-          </span>
-        );
+        // Sort active highlights to find the "winner" for this chunk
+        activeHighlights.sort((a, b) => {
+           if (a.type !== b.type) return a.type === 'evidence' ? -1 : 1;
+           return (a.end - a.start) - (b.end - b.start); // shortest wins
+        });
+
+        const winner = activeHighlights[0];
+        const isEndOfWinner = winner.end === chunkEnd;
+
+        if (winner.type === 'evidence') {
+          result.push(
+            <React.Fragment key={`evidence-${segmentStart}-${chunkStart}`}>
+              <mark className="bg-green-200 dark:bg-green-800 text-inherit font-medium border-b-2 border-green-500 dark:border-green-600 rounded-sm">
+                {chunkText}
+              </mark>
+              {isEndOfWinner && winner.questionIds && winner.questionIds.map((qId: number, i: number) => (
+                <span key={`q-${qId}`} className="ml-1 inline-flex items-center justify-center w-4 h-4 text-[10px] font-bold text-white bg-green-600 rounded-full align-top cursor-help" title={`Evidence for Q${qId}`}>
+                  {qId}
+                </span>
+              ))}
+            </React.Fragment>
+          );
+        } else {
+          const h = winner.data;
+          const highlightClass = colorClassMap[h.highlightColor] || 'bg-yellow-200 dark:bg-yellow-800';
+          result.push(
+            <span
+              key={`highlight-${h.id}-${segmentStart}-${chunkStart}`}
+              className={`${highlightClass} cursor-pointer relative rounded transition-colors`}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (!contentRef.current) return;
+                const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+                const containerRect = contentRef.current.getBoundingClientRect();
+                const topWithin = rect.top - containerRect.top;
+                let y = topWithin - 36;
+                if (y < 0) y = rect.bottom - containerRect.top + 8;
+                setDeletePopup({
+                  x: rect.left - containerRect.left + rect.width / 2,
+                  y,
+                  highlightId: h.id,
+                });
+              }}
+            >
+              {chunkText}
+            </span>
+          );
+        }
       }
-      lastIndex = hl.end;
-    });
-    if (lastIndex < segmentText.length) {
-      result.push(segmentText.slice(lastIndex));
     }
+
     return result;
   };
 

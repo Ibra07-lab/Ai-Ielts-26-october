@@ -2,10 +2,11 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../contexts/UserContext';
 import { supabase } from '../lib/supabase';
+import { calculateProbability } from '../utils/probabilityCalculator';
 import {
   ChevronRight, ChevronLeft, Target, CalendarDays, Award,
   BookOpen, GraduationCap, Clock, Calendar,
-  CheckCircle2, Headphones, PenTool, Search,
+  CheckCircle2, Headphones, PenTool, Search, Speech,
   Sparkles, Loader2
 } from 'lucide-react';
 
@@ -15,6 +16,7 @@ interface SkillScores {
   L: number;
   R: number;
   W: number;
+  S?: number; // Added Speaking
 }
 
 interface StrategyOption {
@@ -30,7 +32,7 @@ interface OnboardingData {
   target_overall: number | null;
   // Q2
   test_date: string | null;
-  test_date_type: 'exact' | 'within_2' | 'within_3' | 'within_4_6' | 'flexible' | null;
+  test_date_type: 'exact' | 'within_2' | 'within_3' | 'within_4' | null;
   weeks_available: number | null;
   // Q3
   has_previous_scores: boolean | null;
@@ -55,6 +57,7 @@ interface OnboardingData {
   // Strategy
   strategy_preference: 'balanced' | 'compensatory' | null;
   strategy_options: StrategyOption[] | null;
+  calculated_targets?: { L: number; R: number; W: number; S: number } | null;
 }
 
 const SELF_ASSESSMENT_SCORES: Record<string, SkillScores> = {
@@ -64,8 +67,8 @@ const SELF_ASSESSMENT_SCORES: Record<string, SkillScores> = {
   C1: { L: 7.0, R: 7.0, W: 6.5 },
 };
 
-const BAND_OPTIONS = [4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0];
-const TARGET_BAND_OPTIONS = [5.5, 6.0, 6.5, 7.0, 7.5, 8.0];
+const BAND_OPTIONS = [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0];
+const TARGET_BAND_OPTIONS = [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0];
 const DAILY_MINUTES_OPTIONS = [
   { value: 20, label: '20 minutes', tag: 'light' },
   { value: 30, label: '30 minutes', tag: '' },
@@ -116,16 +119,16 @@ const POPULAR_UNIVERSITIES = [
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function calcWeeksAvailable(data: OnboardingData): number {
+  const MAX_PLAN_WEEKS = 10;
   if (data.test_date_type === 'exact' && data.test_date) {
     const diff = new Date(data.test_date).getTime() - Date.now();
-    return Math.max(1, Math.floor(diff / (7 * 24 * 60 * 60 * 1000)));
+    return Math.min(MAX_PLAN_WEEKS, Math.max(1, Math.floor(diff / (7 * 24 * 60 * 60 * 1000))));
   }
   switch (data.test_date_type) {
     case 'within_2': return 8;
-    case 'within_3': return 12;
-    case 'within_4_6': return 20;
-    case 'flexible': return 16;
-    default: return 16;
+    case 'within_3': return 10;
+    case 'within_4': return 10; // capped at 10
+    default: return 10;
   }
 }
 
@@ -178,13 +181,11 @@ function OptionButton({ selected, onClick, children, tag, disabled }: {
         </span>
         <div className="flex items-center gap-2">
           {tag && (
-            <span className={`text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md ${
-              selected ? 'bg-blue-600 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400'
-            }`}>{tag}</span>
+            <span className={`text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md ${selected ? 'bg-blue-600 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400'
+              }`}>{tag}</span>
           )}
-          <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${
-            selected ? 'border-blue-600 dark:border-blue-500 bg-blue-600 dark:bg-blue-500' : 'border-slate-300 dark:border-slate-600'
-          }`}>
+          <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${selected ? 'border-blue-600 dark:border-blue-500 bg-blue-600 dark:bg-blue-500' : 'border-slate-300 dark:border-slate-600'
+            }`}>
             {selected && <CheckCircle2 className="w-3.5 h-3.5 text-white" />}
           </div>
         </div>
@@ -254,21 +255,25 @@ export default function Onboarding() {
     days_per_week: null,
     strategy_preference: null,
     strategy_options: null,
+    calculated_targets: null,
   });
+
+  // Calculate actual IELTS overall band
+  const calculateOverallBand = (scores: { L: number; R: number; W: number; S: number }) => {
+    const sum = scores.L + scores.R + scores.W + scores.S;
+    const avg = sum / 4;
+    const remainder = avg % 1;
+    if (remainder >= 0.75) return Math.floor(avg) + 1.0;
+    if (remainder >= 0.25) return Math.floor(avg) + 0.5;
+    return Math.floor(avg);
+  };
 
   // Step management: compute visible steps based on answers
   const stepKeys = useMemo(() => {
-    const steps: string[] = ['q1', 'q2', 'q3'];
-    if (data.has_previous_scores === false) {
-      steps.push('q4');
-    }
-    steps.push('q4_strategy');
-    steps.push('q5');
-    if (data.minimums_answer === 'yes') steps.push('q5a');
-    if (data.minimums_answer === 'not_sure') steps.push('q5b');
-    steps.push('q6', 'q7', 'q8', 'q9', 'summary');
+    const steps: string[] = ['q1', 'q2', 'q3_current_scores', 'q4_calculator'];
+    steps.push('q6', 'q8', 'q9', 'summary');
     return steps;
-  }, [data.has_previous_scores, data.minimums_answer]);
+  }, []);
 
   const [currentStepIdx, setCurrentStepIdx] = useState(0);
   const currentStep = stepKeys[currentStepIdx] || 'q1';
@@ -282,14 +287,12 @@ export default function Onboarding() {
     switch (currentStep) {
       case 'q1': return data.target_overall !== null;
       case 'q2': return data.test_date_type !== null && (data.test_date_type !== 'exact' || !!data.test_date);
-      case 'q3': return data.has_previous_scores !== null && (data.has_previous_scores === false || data.previous_scores !== null);
-      case 'q4': return data.self_assessment_level !== null;
-      case 'q4_strategy': return data.strategy_preference !== null;
-      case 'q5': return data.minimums_answer !== null;
-      case 'q5a': return data.min_sections !== null;
-      case 'q5b': return true; // can skip
+      case 'q3_current_scores': return data.current_scores !== null;
+      case 'q4_calculator':
+        return !!data.calculated_targets &&
+          data.target_overall !== null &&
+          calculateOverallBand(data.calculated_targets) >= data.target_overall;
       case 'q6': return data.weakest_skill !== null;
-      case 'q7': return data.specific_challenges.length > 0;
       case 'q8': return data.daily_minutes !== null;
       case 'q9': return data.days_per_week !== null;
       case 'summary': return true;
@@ -300,13 +303,12 @@ export default function Onboarding() {
   const goNext = () => {
     // Derive values before advancing
     if (currentStep === 'q2') {
-      setData(prev => ({ ...prev, weeks_available: calcWeeksAvailable(prev) }));
-    }
-    if (currentStep === 'q3' && data.has_previous_scores && data.previous_scores) {
-      setData(prev => ({ ...prev, current_scores: prev.previous_scores }));
-    }
-    if (currentStep === 'q4' && data.self_assessment_level) {
-      setData(prev => ({ ...prev, current_scores: SELF_ASSESSMENT_SCORES[prev.self_assessment_level!] }));
+      setData(prev => ({
+        ...prev,
+        weeks_available: calcWeeksAvailable(prev),
+        // Pre-populate current_scores with B2 defaults so q3 has values ready
+        current_scores: prev.current_scores || { L: 5.5, R: 5.5, W: 5.5, S: 5.5 }
+      }));
     }
 
     if (currentStepIdx < totalSteps - 1) {
@@ -327,16 +329,21 @@ export default function Onboarding() {
       test_date: data.test_date,
       weeks_available: data.weeks_available || calcWeeksAvailable(data),
       has_previous_scores: data.has_previous_scores,
-      current_scores: data.current_scores,
-      has_minimums: data.minimums_answer === 'yes',
-      min_sections: data.min_sections,
-      university_name: data.university_name,
+      current_scores: {
+        L: data.current_scores?.L ?? 5.5,
+        R: data.current_scores?.R ?? 5.5,
+        W: data.current_scores?.W ?? 5.5,
+      },
+      has_minimums: false,
+      min_sections: null,
+      university_name: null,
       weakest_skill: data.weakest_skill,
-      specific_challenges: data.specific_challenges,
+      specific_challenges: [],
       daily_minutes: data.daily_minutes,
       days_per_week: data.days_per_week,
       weekly_minutes: (data.daily_minutes || 0) * (data.days_per_week || 0),
-      strategy_preference: data.strategy_preference,
+      strategy_preference: data.strategy_preference || 'custom',
+      calculated_targets: data.calculated_targets,
     };
 
     try {
@@ -352,12 +359,16 @@ export default function Onboarding() {
           test_date: data.test_date,
           weeks_available: data.weeks_available || calcWeeksAvailable(data),
           has_previous_scores: !!data.has_previous_scores,
-          current_scores: data.current_scores,
-          has_minimums: data.minimums_answer === 'yes',
-          min_sections: data.min_sections,
-          university_name: data.university_name,
+          current_scores: {
+            L: data.current_scores?.L ?? 5.5,
+            R: data.current_scores?.R ?? 5.5,
+            W: data.current_scores?.W ?? 5.5,
+          },
+          has_minimums: false,
+          min_sections: null,
+          university_name: null,
           weakest_skill: data.weakest_skill,
-          specific_challenges: data.specific_challenges,
+          specific_challenges: [],
           daily_minutes: data.daily_minutes,
           days_per_week: data.days_per_week,
           l1_language: 'en',
@@ -373,15 +384,21 @@ export default function Onboarding() {
           authHeaders['Authorization'] = `Bearer ${session.access_token}`;
         }
 
-        await fetch('http://localhost:8002/api/onboarding/generate', {
+        const res = await fetch('http://localhost:8002/api/onboarding/generate', {
           method: 'POST',
           headers: authHeaders,
           body: JSON.stringify(payload)
         });
 
-        // Update auth metadatabase to clear the onboarding gate
+        if (!res.ok) {
+          const errText = await res.text().catch(() => 'Unknown error');
+          console.error('Roadmap generation failed:', res.status, errText);
+          throw new Error(`Roadmap generation failed: ${res.status}`);
+        }
+
+        // Update auth metadata to clear the onboarding gate + save target band
         await supabase.auth.updateUser({
-          data: { onboardingCompleted: true }
+          data: { onboardingCompleted: true, targetBand: data.target_overall }
         });
       }
 
@@ -390,7 +407,7 @@ export default function Onboarding() {
         navigate('/plan');
         // Force reload so ProtectedRoute and UserProvider sync immediately if context is stale
         window.location.reload();
-      }, 1500);
+      }, 2500);
     } catch {
       setIsSubmitting(false);
     }
@@ -444,13 +461,12 @@ export default function Onboarding() {
               )}
 
               <div className="pt-2">
-                <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 mb-3 pl-1">I haven't booked yet — when do you plan to take it?</p>
+
                 <div className="space-y-3">
                   {([
                     { key: 'within_2' as const, label: 'Within 2 months' },
                     { key: 'within_3' as const, label: 'Within 3 months' },
-                    { key: 'within_4_6' as const, label: 'Within 4–6 months' },
-                    { key: 'flexible' as const, label: 'No rush / flexible' },
+                    { key: 'within_4' as const, label: 'Within 4 months' },
                   ]).map(opt => (
                     <OptionButton
                       key={opt.key}
@@ -462,246 +478,149 @@ export default function Onboarding() {
                   ))}
                 </div>
               </div>
+
+              {/* Honest note about plan limits */}
+              <div className="mt-4 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700">
+                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                  We currently support study plans up to <span className="font-bold text-slate-800 dark:text-slate-200">10 weeks</span>.
+                  We are adding new materials every week.
+                </p>
+              </div>
             </div>
           </StepContainer>
         );
 
-      // ═══ Q3: Previous Scores ═══
-      case 'q3':
+      // ═══ Q3: Current Scores ═══
+      case 'q3_current_scores': {
+        const currentScores = data.current_scores || { L: 5.5, R: 5.5, W: 5.5, S: 5.5 };
+        const updateCurrent = (skill: keyof SkillScores, val: number) => {
+          setData(prev => ({
+            ...prev,
+            current_scores: { ...currentScores, [skill]: val }
+          }));
+        };
+
         return (
-          <StepContainer title="Have you taken IELTS before?" icon={<Award className="w-6 h-6" />}>
-            <div className="space-y-3">
-              <OptionButton
-                selected={data.has_previous_scores === true}
-                onClick={() => setData(prev => ({
-                  ...prev,
-                  has_previous_scores: true,
-                  previous_scores: prev.previous_scores || { L: 5.5, R: 5.5, W: 5.0 },
-                }))}
-              >
-                Yes, I have my scores
-              </OptionButton>
-              {data.has_previous_scores === true && data.previous_scores && (
-                <div className="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
-                  <BandSelect label="Listening" value={data.previous_scores.L} onChange={v => setData(prev => ({ ...prev, previous_scores: { ...prev.previous_scores!, L: v } }))} />
-                  <BandSelect label="Reading" value={data.previous_scores.R} onChange={v => setData(prev => ({ ...prev, previous_scores: { ...prev.previous_scores!, R: v } }))} />
-                  <BandSelect label="Writing" value={data.previous_scores.W} onChange={v => setData(prev => ({ ...prev, previous_scores: { ...prev.previous_scores!, W: v } }))} />
-                </div>
-              )}
-              <OptionButton
-                selected={data.has_previous_scores === false}
-                onClick={() => setData(prev => ({ ...prev, has_previous_scores: false, previous_scores: null }))}
-              >
-                No, first time
-              </OptionButton>
+          <StepContainer 
+            title="What are your current scores?" 
+            subtitle="Select your current or estimated band scores for each section."
+            icon={<Target className="w-6 h-6" />}
+          >
+            <div className="space-y-4 bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm animate-in fade-in slide-in-from-bottom-2 duration-300">
+              <BandSelect label="Listening" value={currentScores.L} onChange={v => updateCurrent('L', v)} />
+              <BandSelect label="Reading" value={currentScores.R} onChange={v => updateCurrent('R', v)} />
+              <BandSelect label="Writing" value={currentScores.W} onChange={v => updateCurrent('W', v)} />
+              <BandSelect label="Speaking" value={currentScores.S || 5.5} onChange={v => updateCurrent('S', v)} />
             </div>
           </StepContainer>
         );
+      }
 
-      // ═══ Q4: Self Assessment (only if no previous scores) ═══
-      case 'q4':
-        return (
-          <StepContainer title="How would you describe your English level?" icon={<GraduationCap className="w-6 h-6" />} subtitle="We'll use this to estimate your starting point">
-            <div className="space-y-3">
-              {([
-                { level: 'A2' as const, label: 'Elementary (A2)', desc: 'I can handle simple everyday conversations and read short texts.' },
-                { level: 'B1' as const, label: 'Intermediate (B1)', desc: 'I can understand main points of clear speech and write simple connected text.' },
-                { level: 'B2' as const, label: 'Upper Intermediate (B2)', desc: 'I can understand complex texts and interact with fluency.' },
-                { level: 'C1' as const, label: 'Advanced (C1)', desc: 'I can understand demanding texts and express ideas fluently.' },
-              ]).map(opt => (
-                <button
-                  key={opt.level}
-                  type="button"
-                  onClick={() => setData(prev => ({ ...prev, self_assessment_level: opt.level }))}
-                  className={`w-full text-left p-5 rounded-2xl border-2 transition-all outline-none ${
-                    data.self_assessment_level === opt.level
-                      ? 'border-blue-600 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-sm'
-                      : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-600'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <span className={`font-bold text-[15px] ${data.self_assessment_level === opt.level ? 'text-blue-900 dark:text-blue-100' : 'text-slate-800 dark:text-slate-200'}`}>
-                      {opt.label}
-                    </span>
-                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                      data.self_assessment_level === opt.level ? 'border-blue-600 bg-blue-600' : 'border-slate-300 dark:border-slate-600'
-                    }`}>
-                      {data.self_assessment_level === opt.level && <CheckCircle2 className="w-3.5 h-3.5 text-white" />}
-                    </div>
-                  </div>
-                  <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">{opt.desc}</p>
-                </button>
-              ))}
-            </div>
-          </StepContainer>
-        );
+      // ═══ Q4_CALCULATOR: Interactive Path Builder ═══
+      case 'q4_calculator': {
+        const startScores = data.current_scores || { L: 5.5, R: 5.5, W: 5.5, S: 5.5 };
+        const targetOverall = data.target_overall || 7.0;
 
-      // ═══ Q4_STRATEGY: Strategy Options ═══
-      case 'q4_strategy':
-        // Lazy fetch using useEffect equivalent inline logic via render block:
-        // (React 18 safe: we use a protective state check to avoid loops)
-        if (!data.strategy_options && data.target_overall && data.current_scores) {
-          fetch('http://localhost:8002/api/onboarding/strategy-options', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              target_overall: data.target_overall,
-              current_scores: data.current_scores,
-              weeks_available: data.weeks_available || calcWeeksAvailable(data)
-            })
-          }).then(res => res.json()).then(opts => {
-            setData(prev => ({ ...prev, strategy_options: opts }));
-          }).catch(err => console.error("Strategy options fetch err", err));
+        // Initialize sliders on first mount of this step
+        if (!data.calculated_targets) {
+          setTimeout(() => setData(prev => ({ ...prev, calculated_targets: { ...startScores, S: startScores.S || 5.5 } })), 0);
+          return null; // wait for next tick
         }
 
-        return (
-          <StepContainer title="How do you want to reach your Target Band?" icon={<Target className="w-6 h-6" />} subtitle={`Based on your current scores, here are the fastest paths to reach ${data.target_overall?.toFixed(1)}:`}>
-            {!data.strategy_options ? (
-              <div className="flex flex-col items-center justify-center p-12 space-y-4">
-                <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
-                <p className="text-sm font-medium text-slate-500">Calculating optimal paths...</p>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {data.strategy_options.map(opt => (
-                  <button
-                    key={opt.id}
-                    type="button"
-                    onClick={() => setData(prev => ({ ...prev, strategy_preference: opt.id }))}
-                    className={`w-full text-left p-5 rounded-2xl border-2 transition-all outline-none ${
-                      data.strategy_preference === opt.id
-                        ? 'border-blue-600 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-sm'
-                        : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-600'
-                    }`}
-                  >
-                    <div className="flex items-start justify-between mb-2">
-                      <div>
-                        <span className={`font-bold text-[16px] flex items-center gap-2 ${data.strategy_preference === opt.id ? 'text-blue-900 dark:text-blue-100' : 'text-slate-800 dark:text-slate-200'}`}>
-                          {opt.title}
-                          {opt.id === 'compensatory' && <Sparkles className="w-4 h-4 text-emerald-500" />}
-                        </span>
-                        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">{opt.description}</p>
-                      </div>
-                      <div className={`w-5 h-5 mt-1 shrink-0 rounded-full border-2 flex items-center justify-center ${
-                        data.strategy_preference === opt.id ? 'border-blue-600 bg-blue-600' : 'border-slate-300 dark:border-slate-600'
-                      }`}>
-                        {data.strategy_preference === opt.id && <CheckCircle2 className="w-3.5 h-3.5 text-white" />}
-                      </div>
-                    </div>
-                    
-                    <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/50 flex gap-4">
-                      <div className="flex-1 bg-white/50 dark:bg-slate-900/50 rounded-lg p-3 text-center border border-slate-100 dark:border-slate-700">
-                        <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Target List.</span>
-                        <span className="text-lg font-black text-slate-800 dark:text-white">{opt.targets.L.toFixed(1)}</span>
-                      </div>
-                      <div className="flex-1 bg-white/50 dark:bg-slate-900/50 rounded-lg p-3 text-center border border-slate-100 dark:border-slate-700">
-                        <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Target Read.</span>
-                        <span className="text-lg font-black text-slate-800 dark:text-white">{opt.targets.R.toFixed(1)}</span>
-                      </div>
-                      <div className="flex-1 bg-white/50 dark:bg-slate-900/50 rounded-lg p-3 text-center border border-slate-100 dark:border-slate-700">
-                        <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Target Writ.</span>
-                        <span className="text-lg font-black text-slate-800 dark:text-white">{opt.targets.W.toFixed(1)}</span>
-                      </div>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            )}
-          </StepContainer>
-        );
+        const currentT = data.calculated_targets;
+        const sum = currentT.L + currentT.R + currentT.W + currentT.S;
+        const currentOverallResult = calculateOverallBand(currentT);
+        const reached = currentOverallResult >= targetOverall;
 
-      // ═══ Q5: Section Minimums ═══
-      case 'q5':
-        return (
-          <StepContainer title="Do you need a minimum score in each section?" icon={<Target className="w-6 h-6" />} subtitle="Many universities require a minimum band in EACH section (e.g., 'no section below 6.0')">
+        // Target * 4 is approximate strict sum needed before rounding kicks in. 
+        // e.g., for 7.5, need sum >= 29 (29/4 = 7.25 -> 7.5).
+        // Let's dynamically calculate how much sum is needed practically based on the current sliders.
+        let neededSum = targetOverall * 4;
+        if (targetOverall % 1 === 0.5) neededSum -= 1; // e.g. 7.5 requires sum 29 (29/4=7.25 -> 7.5)
+        else if (targetOverall % 1 === 0) neededSum -= 1; // e.g. 7.0 requires sum 27 (27/4=6.75 -> 7.0)
+
+        const gapPoints = Math.max(0, neededSum - sum);
+        const startSum = startScores.L + startScores.R + startScores.W + (startScores.S || 5.5);
+        const totalPointsToGrow = Math.max(0, sum - startSum);
+        // Estimate approx 1 month per 2 total points of growth across all skills (0.5 gap average)
+        const estMonths = Math.max(1, Math.round(totalPointsToGrow / 2));
+
+        const updateTarget = (skill: 'L' | 'R' | 'W' | 'S', val: number) => {
+          setData(prev => ({
+            ...prev,
+            calculated_targets: { ...prev.calculated_targets!, [skill]: val }
+          }));
+        };
+
+        const renderSlider = (label: string, skill: 'L' | 'R' | 'W' | 'S', currentVal: number) => {
+          const val = currentT[skill];
+          return (
             <div className="space-y-3">
-              <OptionButton
-                selected={data.minimums_answer === 'yes'}
-                onClick={() => setData(prev => ({ ...prev, minimums_answer: 'yes', has_minimums: true }))}
-              >
-                Yes, I have minimum requirements
-              </OptionButton>
-              <OptionButton
-                selected={data.minimums_answer === 'no'}
-                onClick={() => setData(prev => ({ ...prev, minimums_answer: 'no', has_minimums: false, min_sections: null }))}
-              >
-                No, I only need an overall band
-              </OptionButton>
-              <OptionButton
-                selected={data.minimums_answer === 'not_sure'}
-                onClick={() => setData(prev => ({ ...prev, minimums_answer: 'not_sure' }))}
-              >
-                I'm not sure
-              </OptionButton>
-            </div>
-          </StepContainer>
-        );
-
-      // ═══ Q5a: Enter minimums ═══
-      case 'q5a':
-        return (
-          <StepContainer title="Enter your minimum requirements" icon={<Target className="w-6 h-6" />}>
-            <div className="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 space-y-4">
-              {(() => {
-                const mins = data.min_sections || { L: 6.0, R: 6.0, W: 6.0 };
-                if (!data.min_sections) {
-                  setTimeout(() => setData(prev => ({ ...prev, min_sections: { L: 6.0, R: 6.0, W: 6.0 } })), 0);
-                }
-                return (
-                  <>
-                    <BandSelect label="Listening" value={mins.L} onChange={v => setData(prev => ({ ...prev, min_sections: { ...(prev.min_sections || { L: 6, R: 6, W: 6 }), L: v } }))} />
-                    <BandSelect label="Reading" value={mins.R} onChange={v => setData(prev => ({ ...prev, min_sections: { ...(prev.min_sections || { L: 6, R: 6, W: 6 }), R: v } }))} />
-                    <BandSelect label="Writing" value={mins.W} onChange={v => setData(prev => ({ ...prev, min_sections: { ...(prev.min_sections || { L: 6, R: 6, W: 6 }), W: v } }))} />
-                  </>
-                );
-              })()}
-            </div>
-          </StepContainer>
-        );
-
-      // ═══ Q5b: University search ═══
-      case 'q5b':
-        return (
-          <StepContainer title="Which university are you applying to?" icon={<GraduationCap className="w-6 h-6" />} subtitle="We'll try to find the requirements for you">
-            <div className="space-y-4">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                <input
-                  type="text"
-                  value={universitySearch}
-                  onChange={e => setUniversitySearch(e.target.value)}
-                  placeholder="Search university..."
-                  className="w-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl pl-11 pr-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-200 outline-none focus:border-blue-600 dark:focus:border-blue-500 transition-colors placeholder:text-slate-400"
-                />
+              <div className="flex justify-between items-center text-sm">
+                <span className="font-bold text-slate-700 dark:text-slate-300 w-20">{label}</span>
+                <span className="font-black text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/40 px-3 py-1 rounded-full">{val.toFixed(1)}</span>
               </div>
+              <input
+                type="range"
+                min={1.0} // IELTS scores start at 1.0
+                max={9.0}
+                step={0.5}
+                value={val}
+                onChange={e => {
+                  const newVal = parseFloat(e.target.value);
+                  updateTarget(skill, newVal);
+                }}
+                className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-600 focus:outline-none"
+              />
+              <div className="flex justify-between text-[10px] font-bold text-slate-400">
+                <span>Baseline: {currentVal.toFixed(1)}</span>
+                <span>Max: 9.0</span>
+              </div>
+            </div>
+          );
+        };
 
-              <div>
-                <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3 pl-1">Popular</p>
-                <div className="space-y-2">
-                  {POPULAR_UNIVERSITIES
-                    .filter(u => !universitySearch || u.toLowerCase().includes(universitySearch.toLowerCase()))
-                    .map(uni => (
-                      <OptionButton
-                        key={uni}
-                        selected={data.university_name === uni}
-                        onClick={() => setData(prev => ({ ...prev, university_name: uni }))}
-                      >
-                        {uni}
-                      </OptionButton>
-                    ))}
+        return (
+          <StepContainer title={`Build your path to ${targetOverall.toFixed(1)}`} icon={<Target className="w-6 h-6" />}>
+            <div className="space-y-8 bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm animate-in fade-in slide-in-from-bottom-2 duration-300">
+
+              {renderSlider('Listening', 'L', startScores.L)}
+              {renderSlider('Reading', 'R', startScores.R)}
+              {renderSlider('Writing', 'W', startScores.W)}
+              {renderSlider('Speaking', 'S', startScores.S || 5.5)}
+
+              {/* Status Box */}
+              <div className={`p-5 rounded-2xl border-2 transition-colors ${reached
+                  ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800/50'
+                  : 'bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700'
+                }`}>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-bold text-slate-500 dark:text-slate-400">Current Setup:</span>
+                  {reached ? (
+                    <span className="text-sm font-bold text-emerald-600 flex items-center gap-1"><CheckCircle2 className="w-4 h-4" /> Target reached!</span>
+                  ) : (
+                    <span className="text-sm font-bold text-rose-500">{gapPoints.toFixed(1)} more points needed</span>
+                  )}
+                </div>
+
+                <div className="flex items-end gap-3 mb-1">
+                  <span className={`text-4xl font-black ${reached ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-800 dark:text-white'}`}>
+                    {currentOverallResult.toFixed(1)}
+                  </span>
+                  <span className="text-sm font-semibold text-slate-400 pb-1">Overall Band</span>
+                </div>
+
+                <div className="text-sm font-medium text-slate-500 mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/50 flex justify-between">
+                  <span>Total sum: {sum.toFixed(1)}</span>
                 </div>
               </div>
 
-              <button
-                type="button"
-                onClick={() => setData(prev => ({ ...prev, university_name: null }))}
-                className="w-full text-center py-3 text-sm font-bold text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
-              >
-                Skip — I'll check later
-              </button>
+
             </div>
           </StepContainer>
         );
+      }
+
 
       // ═══ Q6: Weakest Skill ═══
       case 'q6':
@@ -717,15 +636,13 @@ export default function Onboarding() {
                   key={skill.key}
                   type="button"
                   onClick={() => setData(prev => ({ ...prev, weakest_skill: skill.key, specific_challenges: [] }))}
-                  className={`w-full text-left p-4 rounded-2xl border-2 transition-all outline-none flex items-center gap-4 ${
-                    data.weakest_skill === skill.key
+                  className={`w-full text-left p-4 rounded-2xl border-2 transition-all outline-none flex items-center gap-4 ${data.weakest_skill === skill.key
                       ? 'border-blue-600 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-sm'
                       : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-600'
-                  }`}
+                    }`}
                 >
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
-                    data.weakest_skill === skill.key ? 'bg-blue-600 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400'
-                  }`}>
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${data.weakest_skill === skill.key ? 'bg-blue-600 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400'
+                    }`}>
                     {skill.icon}
                   </div>
                   <span className={`font-semibold text-[15px] ${data.weakest_skill === skill.key ? 'text-blue-900 dark:text-blue-100' : 'text-slate-700 dark:text-slate-300'}`}>
@@ -737,79 +654,6 @@ export default function Onboarding() {
           </StepContainer>
         );
 
-      // ═══ Q7: Specific Challenges ═══
-      case 'q7':
-        return (
-          <StepContainer
-            title={`What's your biggest challenge with ${data.weakest_skill ? data.weakest_skill.charAt(0).toUpperCase() + data.weakest_skill.slice(1) : ''}?`}
-            subtitle="Select up to 3"
-            icon={<BookOpen className="w-6 h-6" />}
-          >
-            <div className="flex flex-wrap gap-3">
-              {(CHALLENGES_BY_SKILL[data.weakest_skill || 'writing'] || []).map(challenge => {
-                const isSelected = data.specific_challenges.includes(challenge);
-                return (
-                  <ChipButton
-                    key={challenge}
-                    selected={isSelected}
-                    onClick={() => {
-                      setData(prev => {
-                        const challenges = [...prev.specific_challenges];
-                        if (isSelected) {
-                          return { ...prev, specific_challenges: challenges.filter(c => c !== challenge) };
-                        }
-                        if (challenges.length >= 3) return prev;
-                        return { ...prev, specific_challenges: [...challenges, challenge] };
-                      });
-                    }}
-                  >
-                    {challenge}
-                  </ChipButton>
-                );
-              })}
-            </div>
-
-            <div className="mt-5 pt-5 border-t border-slate-200 dark:border-slate-700">
-              <p className="text-sm font-semibold text-slate-600 dark:text-slate-300 mb-2">Or describe your challenge:</p>
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  placeholder="Type your own struggle here..."
-                  id="custom-challenge-input"
-                  className="flex-1 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-800 dark:text-slate-200 outline-none focus:border-blue-600 dark:focus:border-blue-500 transition-colors placeholder:text-slate-400 dark:placeholder:text-slate-500"
-                  onKeyDown={e => {
-                    if (e.key === 'Enter') {
-                      const input = e.currentTarget;
-                      const val = input.value.trim();
-                      if (val && data.specific_challenges.length < 3 && !data.specific_challenges.includes(val)) {
-                        setData(prev => ({ ...prev, specific_challenges: [...prev.specific_challenges, val] }));
-                        input.value = '';
-                      }
-                    }
-                  }}
-                />
-                <button
-                  type="button"
-                  onClick={() => {
-                    const input = document.getElementById('custom-challenge-input') as HTMLInputElement;
-                    const val = input?.value.trim();
-                    if (val && data.specific_challenges.length < 3 && !data.specific_challenges.includes(val)) {
-                      setData(prev => ({ ...prev, specific_challenges: [...prev.specific_challenges, val] }));
-                      input.value = '';
-                    }
-                  }}
-                  className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-colors shrink-0"
-                >
-                  Add
-                </button>
-              </div>
-            </div>
-
-            <p className="text-xs text-slate-400 dark:text-slate-500 mt-4 font-medium">
-              {data.specific_challenges.length}/3 selected {data.specific_challenges.length >= 3 && '(maximum reached)'}
-            </p>
-          </StepContainer>
-        );
 
       // ═══ Q8: Daily Minutes ═══
       case 'q8':
@@ -851,36 +695,124 @@ export default function Onboarding() {
 
 
 
-      // ═══ Summary ═══
-      case 'summary':
+      // ═══ Summary / Trust Screen ═══
+      case 'summary': {
+        // Calculate metrics for the trust screen
+        const startBand = data.current_scores
+          ? (data.current_scores.L + data.current_scores.R + data.current_scores.W) / 3
+          : data.self_assessment_level === 'A2' ? 4.0
+            : data.self_assessment_level === 'B1' ? 5.0
+              : data.self_assessment_level === 'B2' ? 6.0
+                : data.self_assessment_level === 'C1' ? 7.0
+                  : 5.5; // default fallback
+
+        const targetBand = data.target_overall || 7.0;
+        const gap = Math.max(0, targetBand - startBand);
+
+        const weeks = data.weeks_available || calcWeeksAvailable(data);
+        const months = Math.max(1, Math.round(weeks / 4));
+
+        const dailyHours = (data.daily_minutes || 60) / 60;
+        const dailyStr = dailyHours % 1 === 0 ? `${dailyHours} hour${dailyHours > 1 ? 's' : ''}` : `${dailyHours.toFixed(1)} hours`;
+
+        // Generate dynamic title based on slider choices
+        let strategyTitle = "Balanced Specialist";
+        if (data.calculated_targets) {
+          const t = data.calculated_targets;
+          if (t.R > t.W && t.L > t.W) strategyTitle = "Compensatory (Weak Writing)";
+          if (t.W >= 7.0 && t.W > t.R) strategyTitle = "Writing Focused";
+          if (t.S > t.W && t.L > t.R) strategyTitle = "Communicator (Speaking/Listening priority)";
+        }
+
         return (
-          <div className="w-full max-w-xl mx-auto animate-in fade-in slide-in-from-right-8 duration-500 space-y-6">
-            <div className="text-center mb-8">
+          <div className="w-full max-w-xl mx-auto animate-in fade-in slide-in-from-right-8 duration-500 space-y-8">
+            <div className="text-center mb-6">
               <div className="w-16 h-16 rounded-3xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-emerald-500/20">
                 <Sparkles className="w-8 h-8 text-white" />
               </div>
-              <h2 className="text-2xl lg:text-3xl font-black text-slate-900 dark:text-white">Your Study Profile</h2>
-              <p className="text-slate-500 dark:text-slate-400 mt-2 font-medium">Review your information before we build your plan</p>
+              <h2 className="text-2xl lg:text-3xl font-black text-slate-900 dark:text-white">Based on your answers, here is your situation:</h2>
             </div>
 
-            <div className="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm divide-y divide-slate-100 dark:divide-slate-700/50 overflow-hidden">
-              <SummaryRow label="Target Band" value={data.target_overall?.toFixed(1) || '—'} />
-              <SummaryRow label="Test Date" value={data.test_date || (data.test_date_type === 'flexible' ? 'Flexible' : `~${data.weeks_available || calcWeeksAvailable(data)} weeks`)} />
-              <SummaryRow label="Current Level" value={
-                data.current_scores
-                  ? `L:${data.current_scores.L} R:${data.current_scores.R} W:${data.current_scores.W}`
-                  : data.self_assessment_level || '—'
-              } />
-              {data.has_minimums && data.min_sections && (
-                <SummaryRow label="Minimums" value={`L:${data.min_sections.L} R:${data.min_sections.R} W:${data.min_sections.W}`} />
-              )}
-              {data.university_name && <SummaryRow label="University" value={data.university_name} />}
-              <SummaryRow label="Weakest Skill" value={data.weakest_skill ? data.weakest_skill.charAt(0).toUpperCase() + data.weakest_skill.slice(1) : '—'} />
-              <SummaryRow label="Challenges" value={data.specific_challenges.join(', ') || '—'} />
-              <SummaryRow label="Daily Study" value={`${data.daily_minutes} min × ${data.days_per_week} days`} />
+            <div className="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm p-6 overflow-hidden space-y-4 text-base font-semibold text-slate-800 dark:text-slate-200">
+              <div className="flex justify-between">
+                <span className="text-slate-500 dark:text-slate-400">Current estimated band:</span>
+                <span>~{startBand.toFixed(1)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500 dark:text-slate-400">Target band:</span>
+                <span>{targetBand.toFixed(1)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500 dark:text-slate-400">Gap to close:</span>
+                <span>{gap.toFixed(1)} bands</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500 dark:text-slate-400">Time available:</span>
+                <span>{months} month{months > 1 ? 's' : ''}</span>
+              </div>
+              <div className="flex justify-between pb-4 border-b border-slate-100 dark:border-slate-700">
+                <span className="text-slate-500 dark:text-slate-400">Daily study:</span>
+                <span>{dailyStr}</span>
+              </div>
+
+              <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 pt-2 font-bold text-lg">
+                <CheckCircle2 className="w-6 h-6" />
+                This is achievable.
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div className="flex flex-col gap-1">
+                <h3 className="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-blue-500" />
+                  Your Smart Strategy
+                </h3>
+                <p className="text-sm text-slate-500 dark:text-slate-400">Based on your profile, we recommend this path:</p>
+              </div>
+
+              <div className="bg-white dark:bg-slate-800/50 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+                <div className="p-6 border-b border-slate-100 dark:border-slate-700/50 bg-slate-50/50 dark:bg-transparent flex items-center justify-between">
+                  <div className="text-lg font-black text-blue-700 dark:text-blue-400 tracking-tight">
+                    {strategyTitle}
+                  </div>
+                  <div className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-[10px] font-bold rounded-full uppercase tracking-widest">
+                    Recommended
+                  </div>
+                </div>
+
+                <div className="p-6 space-y-6">
+                  {data.calculated_targets && (
+                    <div className="space-y-4">
+                      <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Calculated Target Map</p>
+
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        {[
+                          { label: 'L', icon: <Headphones className="w-4 h-4" />, score: data.calculated_targets.L, color: 'text-emerald-500' },
+                          { label: 'R', icon: <BookOpen className="w-4 h-4" />, score: data.calculated_targets.R, color: 'text-indigo-500' },
+                          { label: 'W', icon: <PenTool className="w-4 h-4" />, score: data.calculated_targets.W, color: 'text-amber-500' },
+                          { label: 'S', icon: <Speech className="w-4 h-4" />, score: data.calculated_targets.S || '-', color: 'text-rose-500' },
+                        ].map((skill) => (
+                          <div key={skill.label} className="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-4 border border-slate-100 dark:border-slate-800 flex flex-col items-center gap-2 transition-transform hover:scale-[1.02]">
+                            <div className={`${skill.color} opacity-80`}>{skill.icon}</div>
+                            <div className="text-[10px] font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">{skill.label}</div>
+                            <div className="text-xl font-black text-slate-900 dark:text-white">
+                              {typeof skill.score === 'number' ? skill.score.toFixed(1) : skill.score}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed italic">
+                    This strategy prioritizes your {data.weakest_skill || 'target'} score to balance your overall band while maximizing your strengths.
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         );
+      }
 
       default:
         return null;
@@ -891,6 +823,43 @@ export default function Onboarding() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col">
+      {/* Full-screen Loading Overlay */}
+      {isSubmitting && (
+        <div className="fixed inset-0 z-[100] bg-slate-900/80 backdrop-blur-md flex items-center justify-center animate-in fade-in duration-300">
+          <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 max-w-sm w-full mx-4 shadow-2xl flex flex-col items-center text-center space-y-6 animate-in zoom-in-95 duration-500">
+            <div className="relative w-24 h-24">
+              <div className="absolute inset-0 bg-blue-500/20 rounded-full animate-ping" style={{ animationDuration: '2s' }} />
+              <div className="absolute inset-2 bg-gradient-to-tr from-blue-600 to-emerald-500 rounded-full flex items-center justify-center animate-pulse shadow-lg shadow-blue-500/30">
+                <Sparkles className="w-10 h-10 text-white" />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Building Your Plan...</h3>
+              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                Analyzing your diagnostic data and generating a custom day-by-day roadmap.
+              </p>
+            </div>
+
+            {/* Steps simulation */}
+            <div className="w-full space-y-4 mt-2 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 text-left">
+              <div className="flex items-center gap-3 text-[13px] font-bold text-emerald-600 dark:text-emerald-400">
+                <CheckCircle2 className="w-4 h-4 shrink-0" />
+                Processing diagnostic data...
+              </div>
+              <div className="flex items-center gap-3 text-[13px] font-bold text-blue-600 dark:text-blue-400 animate-pulse">
+                <Loader2 className="w-4 h-4 shrink-0 animate-spin" />
+                Optimizing strategy engine...
+              </div>
+              <div className="flex items-center gap-3 text-[13px] font-bold text-slate-400 dark:text-slate-500">
+                <div className="w-4 h-4 shrink-0 rounded-full border-2 border-slate-200 dark:border-slate-700" />
+                Generating daily tasks...
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Progress Bar */}
       <div className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800">
         <div className="max-w-xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -921,11 +890,10 @@ export default function Onboarding() {
             type="button"
             onClick={goBack}
             disabled={currentStepIdx === 0}
-            className={`flex items-center gap-2 px-5 py-3 rounded-xl font-semibold text-sm transition-all ${
-              currentStepIdx === 0
+            className={`flex items-center gap-2 px-5 py-3 rounded-xl font-semibold text-sm transition-all ${currentStepIdx === 0
                 ? 'text-slate-300 dark:text-slate-600 cursor-not-allowed'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800'
-            }`}
+              }`}
           >
             <ChevronLeft className="w-4 h-4" /> Back
           </button>
@@ -940,7 +908,7 @@ export default function Onboarding() {
               {isSubmitting ? (
                 <><Loader2 className="w-5 h-5 animate-spin" /> Building your plan...</>
               ) : (
-                <><Sparkles className="w-5 h-5" /> Build My Plan</>
+                <>Start My Plan <ChevronRight className="w-5 h-5" /></>
               )}
             </button>
           ) : (
@@ -948,11 +916,10 @@ export default function Onboarding() {
               type="button"
               onClick={goNext}
               disabled={!canGoNext()}
-              className={`flex items-center gap-2 px-8 py-3 rounded-xl font-bold text-sm transition-all ${
-                canGoNext()
+              className={`flex items-center gap-2 px-8 py-3 rounded-xl font-bold text-sm transition-all ${canGoNext()
                   ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-sm active:scale-[0.98]'
                   : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-600 cursor-not-allowed'
-              }`}
+                }`}
             >
               Continue <ChevronRight className="w-4 h-4" />
             </button>

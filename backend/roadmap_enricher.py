@@ -213,6 +213,7 @@ Return ONLY a valid JSON object:
           "title": "Specific task title with topic and focus area",
           "description": "What the student will do, how long, what to focus on",
           "tip": "One concrete, actionable tip",
+          "reason": "Why this task is assigned — strategic reasoning in 1 sentence (e.g. 'You need to improve T/F/NG accuracy from 60%% to 80%% to reach Band 6.5 in Reading')",
           "content_id": "<ID from the available content list if applicable (string), else null>"
         }}
       ]
@@ -254,13 +255,16 @@ async def enrich_roadmap(profile: StudentProfile, strategy: Strategy, roadmap: R
                     "difficulty": t.difficulty_band,
                     "chart_type": getattr(t, 'chart_type', None),
                     "essay_type": getattr(t, 'essay_type', None),
-                    "question_types": getattr(t, 'question_types', None)
+                    "question_types": getattr(t, 'question_types', None),
+                    "fallback_title": getattr(t, 'fallback_title', None),
+                    "fallback_desc": getattr(t, 'fallback_desc', None),
+                    "steps": getattr(t, 'steps', None),
                 } for t in w.tasks
             ]
         })
     
-    # 3. Process in batches of 3 weeks
-    BATCH_SIZE = 3
+    # 3. Process in batches of 1 week to avoid 4096-token limit
+    BATCH_SIZE = 1
     batches = [
         all_week_skeletons[i:i + BATCH_SIZE]
         for i in range(0, len(all_week_skeletons), BATCH_SIZE)
@@ -276,6 +280,17 @@ async def enrich_roadmap(profile: StudentProfile, strategy: Strategy, roadmap: R
         batch_num = batch_idx + 1
         logger.info(f"  Batch {batch_num}/{total_batches}: weeks {batch[0]['week_number']}-{batch[-1]['week_number']}")
         
+        # Strip verbose 'steps' field before sending to LLM to save tokens,
+        # but KEEP fallback_title and fallback_desc so the LLM knows the session structure.
+        llm_batch = []
+        for week in batch:
+            llm_week = {k: v for k, v in week.items() if k != 'tasks'}
+            llm_week['tasks'] = []
+            for t in week['tasks']:
+                llm_t = {k: v for k, v in t.items() if k != 'steps'}
+                llm_week['tasks'].append(llm_t)
+            llm_batch.append(llm_week)
+            
         user_prompt = BATCH_ENRICHMENT_USER.format(
             target_overall=profile.target_overall,
             L=profile.current_scores.get('L', 0),
@@ -289,7 +304,7 @@ async def enrich_roadmap(profile: StudentProfile, strategy: Strategy, roadmap: R
             days_per_week=profile.days_per_week,
             batch_num=batch_num,
             total_batches=total_batches,
-            batch_skeleton_json=json.dumps({"weeks": batch}, indent=2)
+            batch_skeleton_json=json.dumps({"weeks": llm_batch}, indent=2)
         )
         
         try:
@@ -311,6 +326,7 @@ async def enrich_roadmap(profile: StudentProfile, strategy: Strategy, roadmap: R
                 text = text[:-3]
             
             batch_data = json.loads(text.strip())
+            batch_weeks = batch_data.get("weeks", [])
         except Exception as e:
             logger.error(f"  Batch {batch_num} failed: {e}")
             batch_weeks = []
@@ -336,12 +352,18 @@ async def enrich_roadmap(profile: StudentProfile, strategy: Strategy, roadmap: R
                 llm_t = llm_tasks_dict.get(t_id, {})
                 
                 merged_task = skel_t.copy()  # Keeps skill, duration, etc.
+                fallback_title = skel_t.get("fallback_title", f"{skel_t['skill'].title()} Practice")
+                fallback_desc = skel_t.get("fallback_desc", f"{skel_t['duration']} minute {skel_t['skill']} practice session.")
                 merged_task.update({
-                    "title": llm_t.get("title", f"{skel_t['skill'].title()} Practice"),
-                    "description": llm_t.get("description", f"{skel_t['duration']} minute {skel_t['skill']} practice session."),
+                    "title": llm_t.get("title", fallback_title),
+                    "description": llm_t.get("description", fallback_desc),
                     "tip": llm_t.get("tip", "Focus on accuracy before speed."),
+                    "reason": llm_t.get("reason", "Scheduled by your AI coach based on your skill profile."),
                     "content_id": llm_t.get("content_id", None)
                 })
+                # Remove internal-only fields
+                merged_task.pop("fallback_title", None)
+                merged_task.pop("fallback_desc", None)
                 merged_week["tasks"].append(merged_task)
                 
             all_enriched_weeks.append(merged_week)

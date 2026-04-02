@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
-  GraduationCap,
   ArrowRight,
   TrendingUp,
   Target,
@@ -20,12 +19,14 @@ import {
   Headphones,
   X
 } from "lucide-react";
+import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/button";
 import { useUser } from "../contexts/UserContext";
 import { motion, Variants } from "framer-motion";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { GridBackground } from "@/components/ui/the-infinite-grid";
 import { DashboardMockup } from "@/components/ui/DashboardMockup";
+import { VocabularyShowcase } from "@/components/ui/VocabularyShowcase";
 
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
@@ -84,9 +85,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <div className="flex items-center gap-2 group cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
-              <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-blue-600 shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
-                <GraduationCap className="h-6 w-6 text-white" />
-              </div>
+              <Logo className="w-10 h-10 text-blue-500 shadow-blue-500/20 group-hover:scale-105 transition-transform drop-shadow-md" />
               <span className="text-2xl font-black tracking-tight text-white">
                 NewBand
               </span>
@@ -122,17 +121,17 @@ export default function LandingPage() {
                 >
                   <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 mb-6">
                     <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span className="text-sm font-bold text-emerald-400 uppercase tracking-wider">AI-Powered IELTS Diagnostic</span>
+                    <span className="text-sm font-bold text-emerald-400 uppercase tracking-wider">Your personal IELTS examiner — available 24/7</span>
                   </motion.div>
 
-                  <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl font-black tracking-tight mb-6 leading-[1.05] text-white">
-                    Reach Your Target Band.<br className="hidden md:block" />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">Stop Guessing.</span>
+                  <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl font-black tracking-tight mb-2 leading-[1.05] text-white">
+                    Everything you need for IELTS.<br className="hidden md:block" />
+                    One place.
                   </motion.h1>
 
-                  <motion.p variants={fadeInUp} className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-8 font-normal leading-relaxed">
-                    NewBand diagnoses your weaknesses, builds a daily study plan, and gives line-by-line feedback on every task — 24/7.
-                  </motion.p>
+
+
+
 
                   <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full mb-8">
                     <Button
@@ -140,14 +139,14 @@ export default function LandingPage() {
                       onClick={() => navigate('/register')}
                       className="w-full sm:w-auto bg-white text-slate-950 hover:bg-slate-100 rounded-lg px-8 h-14 text-lg font-black shadow-xl shadow-white/10 transition-all hover:scale-[1.03] group border-none"
                     >
-                      Start Free Diagnostic
+                      Start Free — No Card Needed
                       <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                     </Button>
                     <Button
                       size="lg"
                       variant="outline"
                       onClick={() => {
-                        document.getElementById('system')?.scrollIntoView({ behavior: 'smooth' });
+                        document.getElementById('strategy')?.scrollIntoView({ behavior: 'smooth' });
                       }}
                       className="w-full sm:w-auto rounded-lg px-8 h-14 text-lg font-semibold border-white/10 bg-white/5 hover:bg-white/10 transition-all text-white"
                     >
@@ -191,9 +190,7 @@ export default function LandingPage() {
             >
               <motion.div variants={fadeInUp} className="text-center mb-14">
                 <h2 className="text-3xl md:text-5xl font-black mb-4 text-white">Why Most Students Get Stuck</h2>
-                <p className="text-lg text-slate-400 max-w-xl mx-auto">
-                  Practicing without a strategy is the #1 reason scores plateau.
-                </p>
+
               </motion.div>
 
               <div className="grid md:grid-cols-2 gap-4 max-w-5xl mx-auto mb-12">
@@ -235,13 +232,7 @@ export default function LandingPage() {
                 </motion.div>
               </div>
 
-              <motion.div variants={fadeInUp} className="text-center">
-                <div className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600/10 border border-blue-500/20">
-                  <ArrowRight className="w-4 h-4 text-blue-400" />
-                  <span className="text-blue-400 font-bold text-sm">NewBand solves this</span>
-                  <span className="text-slate-400 text-sm">with structured AI training.</span>
-                </div>
-              </motion.div>
+
             </motion.div>
           </section>
 
@@ -411,22 +402,14 @@ export default function LandingPage() {
             </motion.div>
 
             <div className="max-w-6xl mx-auto">
-              {/* User Image 2: Features/Webapp UI */}
+              {/* Vocabulary Showcase UI */}
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
-                className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-white/5 backdrop-blur-sm mb-12"
               >
-                <img
-                  src="/images/landing-features.png"
-                  alt="NewBand Features and UI"
-                  className="w-full h-auto opacity-100"
-                  onError={(e) => {
-                    e.currentTarget.src = "https://placehold.co/1200x700/0f172a/64748b/png?text=Features+Preview";
-                  }}
-                />
+                <VocabularyShowcase />
               </motion.div>
 
               <motion.div
@@ -805,7 +788,7 @@ export default function LandingPage() {
                   <div className="p-4 md:p-5 text-center border-l border-white/5">
                     <div className="flex items-center justify-center gap-2 mb-1">
                       <div className="w-6 h-6 rounded-md bg-blue-600 flex items-center justify-center">
-                        <GraduationCap className="w-3.5 h-3.5 text-white" />
+                        <Logo className="w-4 h-4 text-blue-400" />
                       </div>
                       <span className="text-sm font-black text-white">NewBand</span>
                     </div>
@@ -1157,7 +1140,7 @@ export default function LandingPage() {
         >
           <div className="flex items-center justify-center gap-2 mb-4">
             <div className="flex items-center justify-center w-7 h-7 rounded-md bg-blue-600">
-              <GraduationCap className="h-4 w-4 text-white" />
+              <Logo className="h-5 w-5 text-blue-500" />
             </div>
             <span className="text-lg font-black tracking-tight text-white">NewBand</span>
           </div>

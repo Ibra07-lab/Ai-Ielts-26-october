@@ -1,7 +1,7 @@
 import { api, APIError } from "encore.dev/api";
 import { getAuthData } from "~encore/auth";
-import { AuthData } from "./auth";
-import { ieltsDB } from "./db";
+import { AuthData } from "../auth/auth";
+import { supabaseAdmin } from "./db";
 
 export interface SpeakingQuestion {
   part: number;
@@ -100,23 +100,36 @@ export const submitSpeaking = api<SpeakingSubmission, SpeakingFeedback>(
     ${grammarScore < 6 ? 'Pay attention to grammar accuracy, particularly with complex sentence structures.' : ''}
     ${pronunciationScore < 6 ? 'Work on pronunciation clarity and word stress.' : ''}`;
 
-    const session = await ieltsDB.queryRow<SpeakingFeedback>`
-      INSERT INTO speaking_sessions 
-      (user_id, part, question, transcription, audio_url, band_score, fluency_score, 
-       grammar_score, pronunciation_score, coherence_score, feedback)
-      VALUES (${req.userId}, ${req.part}, ${req.question}, ${req.transcription || null}, 
-              ${req.audioUrl || null}, ${bandScore}, ${fluencyScore}, ${grammarScore}, 
-              ${pronunciationScore}, ${coherenceScore}, ${feedback})
-      RETURNING id, band_score as "bandScore", fluency_score as "fluencyScore", 
-                grammar_score as "grammarScore", pronunciation_score as "pronunciationScore",
-                coherence_score as "coherenceScore", feedback, transcription
-    `;
+    const { data: session, error } = await supabaseAdmin
+      .from("speaking_sessions")
+      .insert({
+        user_id:             req.userId,
+        part:                req.part,
+        question:            req.question,
+        transcription:       req.transcription || null,
+        audio_url:           req.audioUrl || null,
+        band_score:          bandScore,
+        fluency_score:       fluencyScore,
+        grammar_score:       grammarScore,
+        pronunciation_score: pronunciationScore,
+        coherence_score:     coherenceScore,
+        feedback,
+      })
+      .select("id, band_score, fluency_score, grammar_score, pronunciation_score, coherence_score, feedback, transcription")
+      .single();
 
-    if (!session) {
-      throw new Error("Failed to save speaking session");
-    }
+    if (error || !session) throw new Error("Failed to save speaking session");
 
-    return session;
+    return {
+      id:                 session.id,
+      bandScore:          session.band_score,
+      fluencyScore:       session.fluency_score,
+      grammarScore:       session.grammar_score,
+      pronunciationScore: session.pronunciation_score,
+      coherenceScore:     session.coherence_score,
+      feedback:           session.feedback,
+      transcription:      session.transcription ?? undefined,
+    };
   }
 );
 
@@ -129,16 +142,29 @@ export const getSpeakingSessions = api<{ userId: string }, { sessions: SpeakingS
       throw APIError.permissionDenied("You can only access your own speaking sessions");
     }
 
-    const sessions = await ieltsDB.queryAll<SpeakingSession>`
-      SELECT id, part, question, transcription, audio_url as "audioUrl",
-             band_score as "bandScore", fluency_score as "fluencyScore",
-             grammar_score as "grammarScore", pronunciation_score as "pronunciationScore",
-             coherence_score as "coherenceScore", feedback, created_at as "createdAt"
-      FROM speaking_sessions 
-      WHERE user_id = ${userId}
-      ORDER BY created_at DESC
-      LIMIT 20
-    `;
+    const { data: rows, error } = await supabaseAdmin
+      .from("speaking_sessions")
+      .select("id, part, question, transcription, audio_url, band_score, fluency_score, grammar_score, pronunciation_score, coherence_score, feedback, created_at")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(20);
+
+    if (error) throw APIError.internal(error.message);
+
+    const sessions: SpeakingSession[] = (rows || []).map((row: any) => ({
+      id:                 row.id,
+      part:               row.part,
+      question:           row.question,
+      transcription:      row.transcription ?? undefined,
+      audioUrl:           row.audio_url ?? undefined,
+      bandScore:          row.band_score ?? undefined,
+      fluencyScore:       row.fluency_score ?? undefined,
+      grammarScore:       row.grammar_score ?? undefined,
+      pronunciationScore: row.pronunciation_score ?? undefined,
+      coherenceScore:     row.coherence_score ?? undefined,
+      feedback:           row.feedback ?? undefined,
+      createdAt:          row.created_at,
+    }));
 
     return { sessions };
   }

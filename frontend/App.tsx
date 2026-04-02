@@ -35,9 +35,13 @@ const queryClient = new QueryClient({
     queries: {
       staleTime: 5 * 60 * 1000, // 5 minutes
       retry: 1,
+      retryDelay: 500, // ✅ Wait 500ms before retrying
     },
   },
 });
+
+import { useState, useEffect } from "react";
+import { supabase } from "./lib/supabase";
 
 function AppInner() {
   return (
@@ -81,6 +85,23 @@ function AppInner() {
 }
 
 export default function App() {
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    // Wait for initial session load before rendering the app
+    supabase.auth.getSession().then(() => {
+      setIsReady(true);
+    });
+  }, []);
+
+  if (!isReady) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>

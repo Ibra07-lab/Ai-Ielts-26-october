@@ -478,5 +478,5 @@ Your role is to score strictly using official IELTS band descriptors. You will N
 
 {CALIBRATION_REMINDER}
 
-Remember: Return ONLY valid JSON. No other text.
+IMPORTANT: Return raw JSON only. No markdown code fences. No explanation before or after. The first character must be {{ and the last must be }}.
 """

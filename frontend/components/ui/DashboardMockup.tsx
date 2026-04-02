@@ -1,16 +1,16 @@
 "use client";
 import React from "react";
-import { 
-  BarChart3, 
-  BookOpen, 
-  Headphones, 
-  Mic, 
-  PenTool, 
-  Play, 
-  Star, 
-  Target, 
-  TrendingUp, 
-  CheckCircle2 
+import {
+  BarChart3,
+  BookOpen,
+  Headphones,
+  Mic,
+  PenTool,
+  Play,
+  Star,
+  Target,
+  TrendingUp,
+  CheckCircle2
 } from "lucide-react";
 
 export const DashboardMockup = () => {
@@ -39,7 +39,7 @@ export const DashboardMockup = () => {
           {/* Masterclasses Mockup */}
           <div className="rounded-[2rem] bg-[#151624] border border-white/10 p-6 shadow-2xl relative overflow-hidden group">
             <div className="absolute -top-24 -right-24 w-64 h-64 bg-red-500/10 rounded-full blur-[80px]"></div>
-            
+
             <div className="flex items-center gap-2 mb-4">
               <div className="p-2 rounded-xl bg-red-500/20 text-red-500 border border-red-500/10">
                 <Play size={16} fill="currentColor" />
@@ -65,20 +65,20 @@ export const DashboardMockup = () => {
 
           {/* Progress Card Mockup */}
           <div className="rounded-[2rem] bg-gradient-to-br from-blue-600/20 to-purple-600/20 border border-blue-500/30 p-8 relative overflow-hidden">
-             <div className="relative z-10">
-                <div className="flex justify-between items-end mb-4">
-                   <div>
-                      <h4 className="text-slate-400 text-sm font-medium mb-1">Weekly Target</h4>
-                      <p className="text-4xl font-black text-white">83%</p>
-                   </div>
-                   <div className="text-right">
-                      <p className="text-blue-400 text-sm font-bold">12 / 15 Tasks</p>
-                   </div>
+            <div className="relative z-10">
+              <div className="flex justify-between items-end mb-4">
+                <div>
+                  <h4 className="text-slate-400 text-sm font-medium mb-1">Weekly Target</h4>
+                  <p className="text-4xl font-black text-white">83%</p>
                 </div>
-                <div className="h-3 w-full bg-white/10 rounded-full overflow-hidden">
-                   <div className="h-full w-[83%] bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full shadow-[0_0_20px_rgba(59,130,246,0.5)]"></div>
+                <div className="text-right">
+                  <p className="text-blue-400 text-sm font-bold">12 / 15 Tasks</p>
                 </div>
-             </div>
+              </div>
+              <div className="h-3 w-full bg-white/10 rounded-full overflow-hidden">
+                <div className="h-full w-[83%] bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full shadow-[0_0_20px_rgba(59,130,246,0.5)]"></div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -102,34 +102,34 @@ export const DashboardMockup = () => {
               </div>
             </div>
           ))}
-          
+
           {/* Overall Progress pill */}
           <div className="col-span-2 h-16 rounded-[2rem] bg-white/5 border border-white/10 flex items-center justify-between px-6">
-             <div className="flex items-center gap-3">
-                <BarChart3 className="text-blue-400 h-5 w-5" />
-                <span className="text-sm font-bold">Overall Progress</span>
-             </div>
-             <div className="h-8 w-16 bg-white rounded-full flex items-center justify-center text-black text-[10px] font-black">
-                OPEN
-             </div>
+            <div className="flex items-center gap-3">
+              <BarChart3 className="text-blue-400 h-5 w-5" />
+              <span className="text-sm font-bold">Overall Progress</span>
+            </div>
+            <div className="h-8 w-16 bg-white rounded-full flex items-center justify-center text-black text-[10px] font-black">
+              OPEN
+            </div>
           </div>
         </div>
       </div>
 
       {/* Vocabulary Builder Preview at Bottom */}
       <div className="mt-8 p-6 rounded-[2.5rem] bg-gradient-to-r from-sky-500/10 to-blue-500/10 border border-sky-400/20 flex items-center justify-between">
-         <div className="flex items-center gap-4">
-            <div className="h-12 w-12 rounded-2xl bg-sky-500/20 flex items-center justify-center text-sky-400">
-               <Star size={24} fill="currentColor" />
-            </div>
-            <div>
-               <h3 className="font-black text-lg">Vocabulary Builder</h3>
-               <p className="text-slate-400 text-xs mt-0.5">Spaced repetition learning</p>
-            </div>
-         </div>
-         <div className="h-10 px-6 rounded-xl bg-sky-600 flex items-center justify-center font-bold text-sm shadow-lg shadow-sky-500/20">
-            Start Learning
-         </div>
+        <div className="flex items-center gap-4">
+          <div className="h-12 w-12 rounded-2xl bg-sky-500/20 flex items-center justify-center text-sky-400">
+            <Star size={24} fill="currentColor" />
+          </div>
+          <div>
+            <h3 className="font-black text-lg">Vocabulary Builder</h3>
+            <p className="text-slate-400 text-xs mt-0.5">Spaced repetition learning</p>
+          </div>
+        </div>
+        <div className="h-10 px-6 rounded-xl bg-sky-600 flex items-center justify-center font-bold text-sm shadow-lg shadow-sky-500/20">
+          Start Learning
+        </div>
       </div>
     </div>
   );

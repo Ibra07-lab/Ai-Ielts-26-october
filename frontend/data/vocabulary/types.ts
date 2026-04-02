@@ -13,7 +13,7 @@ export interface WordData {
     collocations?: string[];
     synonyms?: { word: string; level: string }[];
     // New enhanced fields
-    type?: "academic" | "phrasal_verb" | "idiom";
+    type?: "academic" | "phrasal_verb" | "idiom" | "spoken";
     cefrLevel?: string;  // e.g., "C1", "B2"
     speakingExample?: string;
     writingExample?: string;
@@ -89,7 +89,7 @@ export interface ContextTetrisExercise {
     items?: Array<{
         item_id: number;
         gap_sentence: string;
-        answer: string;
+        answer: string | string[];
     }>;
 }
 

@@ -33,8 +33,9 @@ class StudentProfile:
     
     @property
     def current_overall(self) -> float:
-        s = sum(self.current_scores.values())
-        return round_ielts(s / 3)  # 3 sections (L, R, W)
+        # Only use L, R, W for the overall calculation (3 sections)
+        s = sum(self.current_scores.get(k, 5.0) for k in ["L", "R", "W"])
+        return round_ielts(s / 3)
 
 
 @dataclass 
@@ -267,7 +268,8 @@ def calculate_balanced_targets(profile: StudentProfile) -> Dict[str, float]:
 def calculate_weekly_allocation(
     targets: Dict[str, float],
     current: Dict[str, float],
-    difficulty: Dict[str, float]
+    difficulty: Dict[str, float],
+    weakest_skill: str = ""
 ) -> Dict[str, float]:
     """
     Distribute weekly study time across skills.
@@ -291,6 +293,19 @@ def calculate_weekly_allocation(
         "W_T1": gaps["W"] * difficulty["W"] * 0.33,  # Task 1 = 33%
     }
     
+    # ── Applying Student-Defined Priority ──────────────────────
+    # If the student manually flagged a skill as "hardest", 
+    # we boost its effort to ensure more study time.
+    priority_multiplier = 1.2 # +20% focus
+    
+    if weakest_skill == "reading":
+        efforts["R"] *= priority_multiplier
+    elif weakest_skill == "listening":
+        efforts["L"] *= priority_multiplier
+    elif weakest_skill == "writing":
+        efforts["W_T1"] *= priority_multiplier
+        efforts["W_T2"] *= priority_multiplier
+
     total_effort = sum(efforts.values())
     
     # Fixed allocations (percentage)
@@ -332,51 +347,67 @@ def calculate_weekly_allocation(
     return allocation
 
 
-def calculate_phases(total_weeks: int) -> List[dict]:
+def calculate_phases(total_weeks: int, current_overall: float = 5.0, gap: float = 2.0) -> List[dict]:
     """
-    Split the plan into 4 phases.
-    Adjusts distribution based on total weeks.
+    Split the plan into phases with names that reflect the student's level.
+    - High-level students (6.5+, small gap): Refinement → Precision → Exam Simulation → Peak
+    - Mid-level students (5.0-6.5): Skill Building → Acceleration → Test Conditions → Peak
+    - Low-level students (<5.0 or big gap): Fundamentals → Core Building → Practice → Peak
     """
+    
+    # Choose phase name set based on student level
+    if current_overall >= 6.5 and gap <= 1.5:
+        # Advanced student, small gap
+        names = ["Refinement", "Precision", "Exam Simulation", "Peak"]
+        names_short = ["Intensive Refinement", "Peak"]
+    elif current_overall >= 5.0:
+        # Intermediate student
+        names = ["Skill Building", "Acceleration", "Test Conditions", "Peak"]
+        names_short = ["Intensive Practice", "Peak"]
+    else:
+        # Beginner / large gap
+        names = ["Fundamentals", "Core Building", "Practice Mode", "Exam Prep"]
+        names_short = ["Foundation & Practice", "Exam Prep"]
     
     if total_weeks >= 16:
         return [
-            {"name": "Foundation",    "weeks_start": 1,  
+            {"name": names[0],  "weeks_start": 1,  
              "weeks_end": 4,  "focus": "core_skills"},
-            {"name": "Acceleration",  "weeks_start": 5,  
+            {"name": names[1],  "weeks_start": 5,  
              "weeks_end": 8,  "focus": "push_primary"},
-            {"name": "Performance",   "weeks_start": 9,  
+            {"name": names[2],  "weeks_start": 9,  
              "weeks_end": 12, "focus": "test_conditions"},
-            {"name": "Peak",          "weeks_start": 13, 
+            {"name": names[3],  "weeks_start": 13, 
              "weeks_end": total_weeks, "focus": "mock_polish"},
         ]
     elif total_weeks >= 12:
         return [
-            {"name": "Foundation",    "weeks_start": 1,  
+            {"name": names[0],  "weeks_start": 1,  
              "weeks_end": 3,  "focus": "core_skills"},
-            {"name": "Acceleration",  "weeks_start": 4,  
+            {"name": names[1],  "weeks_start": 4,  
              "weeks_end": 6,  "focus": "push_primary"},
-            {"name": "Performance",   "weeks_start": 7,  
+            {"name": names[2],  "weeks_start": 7,  
              "weeks_end": 9,  "focus": "test_conditions"},
-            {"name": "Peak",          "weeks_start": 10, 
+            {"name": names[3],  "weeks_start": 10, 
              "weeks_end": total_weeks, "focus": "mock_polish"},
         ]
     elif total_weeks >= 8:
         return [
-            {"name": "Foundation",    "weeks_start": 1,  
+            {"name": names[0],  "weeks_start": 1,  
              "weeks_end": 2,  "focus": "core_skills"},
-            {"name": "Acceleration",  "weeks_start": 3,  
+            {"name": names[1],  "weeks_start": 3,  
              "weeks_end": 4,  "focus": "push_primary"},
-            {"name": "Performance",   "weeks_start": 5,  
+            {"name": names[2],  "weeks_start": 5,  
              "weeks_end": 6,  "focus": "test_conditions"},
-            {"name": "Peak",          "weeks_start": 7,  
+            {"name": names[3],  "weeks_start": 7,  
              "weeks_end": total_weeks, "focus": "mock_polish"},
         ]
     else:  # 4-7 weeks — compressed
         mid = total_weeks // 2
         return [
-            {"name": "Intensive",     "weeks_start": 1,  
+            {"name": names_short[0],  "weeks_start": 1,  
              "weeks_end": mid, "focus": "core_skills"},
-            {"name": "Peak",          "weeks_start": mid + 1, 
+            {"name": names_short[1],  "weeks_start": mid + 1, 
              "weeks_end": total_weeks, "focus": "mock_polish"},
         ]
 
@@ -402,6 +433,11 @@ def build_strategy(profile: StudentProfile, strategy_preference: str = "compensa
     returns a complete strategy object.
     """
     
+    # ── Cap at 10 weeks (current content limit) ────────────────
+    MAX_PLAN_WEEKS = 10
+    if profile.weeks_available > MAX_PLAN_WEEKS:
+        profile.weeks_available = MAX_PLAN_WEEKS
+    
     difficulty = get_difficulty_weights(
         profile.l1_language, profile.current_scores
     )
@@ -412,10 +448,14 @@ def build_strategy(profile: StudentProfile, strategy_preference: str = "compensa
         optimal_targets = calculate_optimal_targets(profile)
     
     allocation = calculate_weekly_allocation(
-        optimal_targets, profile.current_scores, difficulty
+        optimal_targets, profile.current_scores, difficulty, profile.weakest_skill
     )
     
-    phases = calculate_phases(profile.weeks_available)
+    phases = calculate_phases(
+        profile.weeks_available,
+        current_overall=profile.current_overall,
+        gap=profile.target_overall - profile.current_overall
+    )
     
     min_sum = minimum_sum_for_overall(profile.target_overall)
     current_sum = sum(profile.current_scores.values())

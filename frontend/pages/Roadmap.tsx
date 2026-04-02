@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
   CalendarDays, BarChart2, Home, CheckSquare, MoreHorizontal,
-  Flame, Zap, BookOpen, PenTool, Headphones, ListFilter, PlayCircle, Trophy, Target, ArrowRight, X, Clock, AlertTriangle, Lightbulb, Map, FileText, CalendarCheck, FileQuestion, BookMarked, Layers, BarChart, FileSignature, Edit3, Speech, RotateCcw, Library, CheckCircle2, Lock, XCircle, RefreshCw, ChevronDown, ChevronUp, TrendingUp
+  Flame, Zap, BookOpen, PenTool, Headphones, ListFilter, PlayCircle, Trophy, Target, ArrowRight, X, Clock, AlertTriangle, Lightbulb, Map, FileText, CalendarCheck, FileQuestion, BookMarked, Layers, BarChart, FileSignature, Edit3, Speech, RotateCcw, Library, CheckCircle2, Lock, XCircle, RefreshCw, ChevronDown, ChevronUp, ChevronRight, TrendingUp
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
@@ -12,17 +12,31 @@ type TabType = 'plan' | 'stats' | 'today' | 'tasks' | 'more';
 type SkillType = 'reading' | 'writing' | 'vocabulary' | 'listening' | 'strategy';
 type TaskStatus = 'done' | 'today' | 'locked' | 'missed';
 
+interface SessionStep {
+  step_number: number;
+  name: string;
+  what: string;
+  why: string;
+  duration_minutes: number;
+  speed?: string;
+  target_part?: number;
+}
+
 interface DailyTask {
   id: string;
   type: SkillType;
   title: string;
   subtitle: string;
+  description?: string;
+  tip?: string;
+  reason?: string;
   duration: number;
   status: TaskStatus;
   score?: string | number;
   detailedScore?: { tr?: number; cc?: number; lr?: number; gra?: number };
   isRecovery?: boolean;
   contentId?: string;
+  steps?: SessionStep[];
 }
 
 interface DayPlan {
@@ -133,8 +147,8 @@ const SkillAccentColor = (type: SkillType) => {
 export default function Roadmap() {
   const { user } = useUser();
   const navigate = useNavigate();
-  const [weeksData, setWeeksData] = useState<WeekPlan[]>(MOCK_WEEKS);
-  const [isLoading, setIsLoading] = useState(false);
+  const [weeksData, setWeeksData] = useState<WeekPlan[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [fetchError, setFetchError] = useState(false);
   const [isRetrying, setIsRetrying] = useState(false);
 
@@ -177,10 +191,14 @@ export default function Roadmap() {
         type: (t.skill || t.type || 'strategy') as SkillType,
         title: t.title || t.description || 'Task',
         subtitle: t.subtitle || t.details || '',
+        description: t.description || '',
+        tip: t.tip || '',
+        reason: t.reason || '',
         duration: t.duration || t.minutes || 20,
-        status: (t.status || (idx === 0 ? 'today' : 'locked')) as TaskStatus,
+        status: (t.status === 'done' ? 'done' : (t.status === 'missed' ? 'missed' : 'today')) as TaskStatus,
         score: t.score,
         contentId: t.content_id || t.contentId,
+        steps: t.steps || undefined,
       }));
 
       // Group tasks into days (distribute evenly or put all in one day)
@@ -202,7 +220,7 @@ export default function Roadmap() {
         week_number: week.week_number || idx + 1,
         title: week.title || week.goal || week.focus || `Week ${idx + 1}`,
         dateRange: week.dateRange || week.date_range || '',
-        status: week.status || (idx === 0 ? 'in_progress' : 'locked') as 'done' | 'in_progress' | 'locked',
+        status: (week.status === 'locked' ? 'in_progress' : (week.status || 'in_progress')) as 'done' | 'in_progress' | 'locked',
         progress: week.progress,
         totalTasks,
         completedTasks: week.completedTasks || mappedTasks.filter(t => t.status === 'done').length,
@@ -368,6 +386,32 @@ export default function Roadmap() {
   }, [weeksData]);
 
   const renderMobileTodayView = () => {
+    if (isLoading) {
+      return (
+        <div className="flex-1 flex flex-col items-center justify-center p-16 gap-4">
+          <RefreshCw className="w-8 h-8 animate-spin text-blue-500" />
+          <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Loading your study plan...</p>
+        </div>
+      );
+    }
+
+    if (fetchError || weeksData.length === 0) {
+      return (
+        <div className="flex-1 flex flex-col items-center justify-center p-16 gap-5">
+          <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center">
+            <Target className="w-8 h-8 text-blue-500" />
+          </div>
+          <div className="text-center">
+            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">No study plan yet</h3>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Complete onboarding to get your personalized daily tasks.</p>
+          </div>
+          <button onClick={handleRetakeOnboarding} className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-xl transition-colors">
+            Start Onboarding
+          </button>
+        </div>
+      );
+    }
+
     const todayTasks = weeksData.find(w => w.status === 'in_progress')?.days?.find(d => d.isToday)?.tasks || [];
     const isRecoveryDay = weeksData.find(w => w.status === 'in_progress')?.days?.find(d => d.isToday)?.hasRecoveryTask;
     
@@ -402,6 +446,57 @@ export default function Roadmap() {
                         {task.isRecovery && <span className="text-[10px] text-amber-600 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/30 px-2 py-0.5 rounded uppercase tracking-wider font-bold">Catch-up</span>}
                       </h3>
                       <p className="text-slate-600 dark:text-slate-400 mt-1">{task.subtitle}</p>
+                      {task.description && task.description !== task.title && (
+                        <p className="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed bg-slate-50 dark:bg-slate-900/30 rounded-lg px-3 py-2 border border-slate-100 dark:border-slate-700/50">
+                          {task.description}
+                        </p>
+                      )}
+                      {task.reason && (
+                        <p className="text-xs text-blue-600 dark:text-blue-400 mt-2 font-medium flex items-start gap-1.5">
+                          <span className="flex-shrink-0 mt-0.5">💡</span>
+                          <span>{task.reason}</span>
+                        </p>
+                      )}
+                      {task.tip && (
+                        <p className="text-xs text-amber-700 dark:text-amber-400 mt-1.5 font-medium flex items-start gap-1.5">
+                          <span className="flex-shrink-0 mt-0.5">⭐</span>
+                          <span>Tip: {task.tip}</span>
+                        </p>
+                      )}
+
+                      {/* Multi-step listening session (mobile) */}
+                      {task.steps && task.steps.length > 0 && (
+                        <div className="mt-3 space-y-0 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden bg-slate-50/50 dark:bg-slate-900/20">
+                          <div className="px-3 py-2 bg-teal-50 dark:bg-teal-900/20 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
+                            <span className="text-xs font-bold text-teal-700 dark:text-teal-400 uppercase tracking-wider">Session Steps</span>
+                            <span className="text-xs font-bold text-slate-500 dark:text-slate-400">{task.steps.length} steps · {task.duration} min</span>
+                          </div>
+                          {task.steps.map((step, stepIdx) => (
+                            <details key={step.step_number} className={`group ${stepIdx > 0 ? 'border-t border-slate-200 dark:border-slate-700/30' : ''}`}>
+                              <summary className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-slate-100/50 dark:hover:bg-slate-800/30 transition-colors list-none [&::-webkit-details-marker]:hidden">
+                                <div className="w-6 h-6 rounded-full bg-teal-100 dark:bg-teal-900/30 border border-teal-200 dark:border-teal-800 flex items-center justify-center flex-shrink-0">
+                                  <span className="text-xs font-black text-teal-700 dark:text-teal-400">{step.step_number}</span>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <span className="text-sm font-bold text-slate-800 dark:text-slate-200">{step.name}</span>
+                                  {step.speed && <span className="ml-2 text-[10px] font-bold text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 px-1.5 py-0.5 rounded-full border border-orange-200 dark:border-orange-800/50">{step.speed}</span>}
+                                </div>
+                                <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded flex-shrink-0">{step.duration_minutes} min</span>
+                                <ChevronRight className="w-3.5 h-3.5 text-slate-400 transition-transform group-open:rotate-90 flex-shrink-0" />
+                              </summary>
+                              <div className="px-3 pb-3 pt-1 ml-9 space-y-2">
+                                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{step.what}</p>
+                                <div className="bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/30 rounded-lg px-3 py-2">
+                                  <p className="text-xs text-blue-700 dark:text-blue-400 leading-relaxed">
+                                    <span className="font-bold">Why: </span>{step.why}
+                                  </p>
+                                </div>
+                              </div>
+                            </details>
+                          ))}
+                        </div>
+                      )}
+
                       <div className="flex items-center gap-3 mt-3 text-sm font-medium text-slate-500 dark:text-slate-400">
                         <span className="bg-slate-100 dark:bg-slate-700/50 px-2.5 py-1 rounded-md text-slate-700 dark:text-slate-300">{task.duration} min</span>
                       </div>
@@ -465,6 +560,57 @@ export default function Roadmap() {
                           {task.isRecovery && <span className="text-[10px] text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/30 px-2 py-0.5 rounded shadow-sm uppercase tracking-wider font-bold">Catch-up</span>}
                       </div>
                       <div className="text-sm text-slate-600 dark:text-slate-400 leading-snug mt-1 max-w-md">{task.subtitle}</div>
+                      {task.description && task.description !== task.title && (
+                        <p className="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed bg-slate-50 dark:bg-slate-900/30 rounded-lg px-3 py-2 border border-slate-100 dark:border-slate-700/50">
+                          {task.description}
+                        </p>
+                      )}
+                      {task.reason && (
+                        <p className="text-xs text-blue-600 dark:text-blue-400 mt-2 font-medium flex items-start gap-1.5">
+                          <span className="flex-shrink-0 mt-0.5">💡</span>
+                          <span>{task.reason}</span>
+                        </p>
+                      )}
+                      {task.tip && (
+                        <p className="text-xs text-amber-700 dark:text-amber-400 mt-1.5 font-medium flex items-start gap-1.5">
+                          <span className="flex-shrink-0 mt-0.5">⭐</span>
+                          <span>Tip: {task.tip}</span>
+                        </p>
+                      )}
+
+                      {/* Multi-step listening session */}
+                      {task.steps && task.steps.length > 0 && (
+                        <div className="mt-3 space-y-0 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden bg-slate-50/50 dark:bg-slate-900/20">
+                          <div className="px-3 py-2 bg-teal-50 dark:bg-teal-900/20 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
+                            <span className="text-xs font-bold text-teal-700 dark:text-teal-400 uppercase tracking-wider">Study Session Steps</span>
+                            <span className="text-xs font-bold text-slate-500 dark:text-slate-400">{task.steps.length} steps · {task.duration} min total</span>
+                          </div>
+                          {task.steps.map((step, stepIdx) => (
+                            <details key={step.step_number} className={`group ${stepIdx > 0 ? 'border-t border-slate-200 dark:border-slate-700/30' : ''}`}>
+                              <summary className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-slate-100/50 dark:hover:bg-slate-800/30 transition-colors list-none [&::-webkit-details-marker]:hidden">
+                                <div className="w-6 h-6 rounded-full bg-teal-100 dark:bg-teal-900/30 border border-teal-200 dark:border-teal-800 flex items-center justify-center flex-shrink-0">
+                                  <span className="text-xs font-black text-teal-700 dark:text-teal-400">{step.step_number}</span>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <span className="text-sm font-bold text-slate-800 dark:text-slate-200">{step.name}</span>
+                                  {step.speed && <span className="ml-2 text-[10px] font-bold text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 px-1.5 py-0.5 rounded-full border border-orange-200 dark:border-orange-800/50">{step.speed}</span>}
+                                </div>
+                                <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded flex-shrink-0">{step.duration_minutes} min</span>
+                                <ChevronRight className="w-3.5 h-3.5 text-slate-400 transition-transform group-open:rotate-90 flex-shrink-0" />
+                              </summary>
+                              <div className="px-3 pb-3 pt-1 ml-9 space-y-2">
+                                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{step.what}</p>
+                                <div className="bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/30 rounded-lg px-3 py-2">
+                                  <p className="text-xs text-blue-700 dark:text-blue-400 leading-relaxed">
+                                    <span className="font-bold">Why: </span>{step.why}
+                                  </p>
+                                </div>
+                              </div>
+                            </details>
+                          ))}
+                        </div>
+                      )}
+
                       <div className="mt-2 text-xs xl:text-sm flex flex-wrap items-center gap-2 font-medium">
                           <span className={`${task.status === 'missed' ? 'text-red-500 dark:text-red-400' : 'text-slate-500 dark:text-slate-400'} bg-slate-100 dark:bg-slate-800/80 border dark:border-slate-700 px-2 py-0.5 rounded`}>{task.duration} min</span>
                           {task.status === 'done' && <span className="flex items-center gap-1 text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded font-bold border border-emerald-100 dark:border-emerald-800/50"><CheckCircle2 className="w-3.5 h-3.5" /> {task.score}</span>}
@@ -481,7 +627,7 @@ export default function Roadmap() {
                               Preview <ArrowRight className="w-4 h-4 text-slate-400 dark:text-slate-500" />
                           </button>
                       )}
-                      {task.status === 'today' && day.isToday && (
+                      {task.status === 'today' && (
                           <button onClick={() => navigate(getTaskRoute(task))} className="mt-4 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-sm px-5 py-2 rounded-lg transition-colors flex items-center gap-1.5 w-max">
                               Start Task <ArrowRight className="w-4 h-4" />
                           </button>
@@ -581,7 +727,29 @@ export default function Roadmap() {
 
         <div className="max-w-2xl mx-auto p-4 space-y-4">
           {isLoading ? (
-            <div className="flex justify-center p-10"><RefreshCw className="w-8 h-8 animate-spin text-blue-500" /></div>
+            <div className="flex flex-col items-center justify-center p-16 gap-4">
+              <RefreshCw className="w-8 h-8 animate-spin text-blue-500" />
+              <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Loading your study plan...</p>
+            </div>
+          ) : fetchError || weeksData.length === 0 ? (
+            <div className="flex flex-col items-center justify-center p-16 gap-5 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700">
+              <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center">
+                <AlertTriangle className="w-8 h-8 text-amber-500" />
+              </div>
+              <div className="text-center">
+                <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">No study plan found</h3>
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Complete onboarding to generate your personalized roadmap.</p>
+              </div>
+              <div className="flex gap-3">
+                <button onClick={retryGeneration} disabled={isRetrying} className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-xl transition-colors flex items-center gap-2">
+                  {isRetrying ? <RefreshCw className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
+                  Retry
+                </button>
+                <button onClick={handleRetakeOnboarding} className="px-5 py-2.5 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 text-sm font-bold rounded-xl transition-colors">
+                  Retake Onboarding
+                </button>
+              </div>
+            </div>
           ) : weeksData.map((week) => {
             const isExpanded = expandedWeeks.has(week.week_number);
             const isCurrent = week.status === 'in_progress';
@@ -847,7 +1015,7 @@ export default function Roadmap() {
                 const isSelected = selectedDesktopWeek === w.week_number;
                 const isDone = w.status === 'done';
                 const isCurrent = w.status === 'in_progress';
-                const isLocked = w.status === 'locked';
+                const isLocked = false; // Forced unlock for all weeks
 
                 return (
                  <button 

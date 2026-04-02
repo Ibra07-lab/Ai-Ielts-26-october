@@ -11,59 +11,54 @@ export default function Subscription() {
 
   const plans = [
     {
-      id: "free",
-      name: "Free",
-      price: "$0",
-      period: "forever",
-      description: "Perfect for getting started with IELTS preparation",
+      id: "basic",
+      name: "Basic",
+      price: "79,000",
+      period: "UZS/month",
+      description: "See if the system works for you.",
       features: [
-        "5 practice sessions per day",
-        "Basic AI feedback",
-        "Limited vocabulary words",
-        "Standard support",
-        "Basic progress tracking"
+        "Personalized IELTS roadmap",
+        "15 essay evaluations",
+        "300 reading agent messages",
+        "All reading tests",
+        "All listening tests",
+        "Limited podcast exercises"
       ],
-      limitations: [
-        "Limited daily usage",
-        "Basic features only"
-      ],
+      limitations: [],
       popular: false,
       color: "gray"
     },
     {
-      id: "premium",
-      name: "Premium",
-      price: "$19.99",
-      period: "per month",
-      description: "Comprehensive IELTS preparation with advanced features",
+      id: "pro",
+      name: "Pro",
+      price: "149,000",
+      period: "UZS/month",
+      description: "Serious prep for an upcoming test.",
       features: [
-        "Unlimited practice sessions",
-        "Advanced AI feedback with detailed analysis",
-        "Complete vocabulary database",
-        "Priority support",
-        "Advanced progress analytics",
-        "Personalized study plans",
-        "Writing detailed corrections"
+        "Everything in Basic",
+        "40 essay evaluations",
+        "800 reading agent messages",
+        "Full podcast library",
+        "Detailed band score breakdown",
+        "Weak-area training"
       ],
       limitations: [],
       popular: true,
       color: "sky"
     },
     {
-      id: "pro",
-      name: "Pro",
-      price: "$39.99",
-      period: "per month",
-      description: "Ultimate IELTS preparation with premium coaching",
+      id: "pro_plus",
+      name: "Pro+",
+      price: "249,000",
+      period: "UZS/month",
+      description: "The ultimate unlimited system.",
       features: [
-        "Everything in Premium",
-        "1-on-1 AI coaching sessions",
-        "Exam simulation mode",
-        "Custom practice materials",
-        "Advanced analytics dashboard",
-        "Priority feature requests",
-        "Early access to new features",
-        "Dedicated account manager"
+        "Everything in Pro",
+        "80 essay evaluations",
+        "Unlimited reading agent messages",
+        "Advanced feedback",
+        "Priority AI evaluation",
+        "Full mock exam simulation"
       ],
       limitations: [],
       popular: false,
@@ -128,9 +123,9 @@ export default function Subscription() {
 
               <CardHeader className="text-center pb-4">
                 <div className="flex justify-center mb-4">
-                  {plan.id === "free" && <CreditCard className="h-12 w-12 text-gray-500" />}
-                  {plan.id === "premium" && <Crown className="h-12 w-12 text-sky-600" />}
-                  {plan.id === "pro" && <Star className="h-12 w-12 text-purple-600" />}
+                  {plan.id === "basic" && <CreditCard className="h-12 w-12 text-gray-500" />}
+                  {plan.id === "pro" && <Crown className="h-12 w-12 text-sky-600" />}
+                  {plan.id === "pro_plus" && <Star className="h-12 w-12 text-purple-600" />}
                 </div>
                 
                 <CardTitle className="text-2xl font-bold">{plan.name}</CardTitle>
@@ -179,22 +174,18 @@ export default function Subscription() {
                 <Button
                   onClick={() => handleSubscribe(plan.id)}
                   disabled={selectedPlan === plan.id}
-                  className={`w-full ${getButtonColor(plan)} text-white`}
+                  className={`w-full ${getButtonColor(plan)} text-white mt-4`}
                 >
                   {selectedPlan === plan.id ? (
                     "Processing..."
-                  ) : plan.id === "free" ? (
-                    "Get Started Free"
+                  ) : plan.id === "basic" ? (
+                    "Start Basic"
+                  ) : plan.id === "pro" ? (
+                    "Get Pro Now"
                   ) : (
-                    `Subscribe to ${plan.name}`
+                    "Get Pro+"
                   )}
                 </Button>
-
-                {plan.id === "premium" && (
-                  <p className="text-xs text-center text-gray-500 dark:text-gray-400">
-                    Cancel anytime • 7-day free trial
-                  </p>
-                )}
               </CardContent>
             </Card>
           ))}

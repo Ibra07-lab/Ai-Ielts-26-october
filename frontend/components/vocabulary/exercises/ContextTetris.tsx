@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 // Legacy format interfaces
 interface Gap {
     id: string;
-    correctWordId: string;
+    correctWordIds: string[];
     placeholder: string;
 }
 
@@ -22,7 +22,7 @@ interface WordBubble {
 interface NewFormatItem {
     item_id: number;
     gap_sentence: string;
-    answer: string;
+    answer: string | string[];
 }
 
 interface ContextTetrisProps {
@@ -63,11 +63,15 @@ export default function ContextTetris(props: ContextTetrisProps) {
 
     const { paragraph, gaps, bubbles, instruction } = useMemo(() => {
         if (isNewFormat && props.items && props.word_bank) {
-            const internalGaps: Gap[] = props.items.map((item, index) => ({
-                id: `gap-${index + 1}`,
-                correctWordId: `word-${props.word_bank!.indexOf(item.answer)}`,
-                placeholder: "___"
-            }));
+            const internalGaps: Gap[] = props.items.map((item, index) => {
+                const answers = Array.isArray(item.answer) ? item.answer : [item.answer];
+                const correctWordIds = answers.map(ans => `word-${props.word_bank!.indexOf(ans)}`);
+                return {
+                    id: `gap-${index + 1}`,
+                    correctWordIds,
+                    placeholder: "___"
+                };
+            });
 
             const internalBubbles: WordBubble[] = props.word_bank.map((word, index) => ({
                 id: `word-${index}`,
@@ -138,9 +142,9 @@ export default function ContextTetris(props: ContextTetrisProps) {
                 setFeedback("Please fill all gaps first.");
                 return;
             }
-            const correctBubble = bubbles.find(b => b.id === gap.correctWordId);
-            const isCorrect = bubbleId === gap.correctWordId;
-            results[gap.id] = { isCorrect, correctWord: correctBubble?.text || "" };
+            const correctBubbles = bubbles.filter(b => gap.correctWordIds.includes(b.id));
+            const isCorrect = gap.correctWordIds.includes(bubbleId);
+            results[gap.id] = { isCorrect, correctWord: correctBubbles[0]?.text || "" };
             if (isCorrect) correctCount++;
             else allCorrect = false;
         }

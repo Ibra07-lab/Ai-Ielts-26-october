@@ -18,6 +18,7 @@ import { environmentTopicData } from "./environment";
 import { educationTopicData } from "./education";
 import { speakingPart1TopicData } from "./speaking_part1";
 import { speakingPart2TopicData } from "./speaking_part2";
+import { speakingPart3TopicData } from "./speaking-part3";
 
 // Export all topics
 export const allTopics: TopicData[] = [
@@ -26,6 +27,7 @@ export const allTopics: TopicData[] = [
     educationTopicData,
     speakingPart1TopicData,
     speakingPart2TopicData,
+    speakingPart3TopicData,
 ];
 
 // Helper functions to get specific data

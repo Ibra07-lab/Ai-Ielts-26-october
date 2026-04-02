@@ -150,8 +150,7 @@ export function Pricing({
                       isMonthly ? Number(plan.price) : Number(plan.yearlyPrice)
                     }
                     format={{
-                      style: "currency",
-                      currency: "USD",
+                      style: "decimal",
                       minimumFractionDigits: 0,
                       maximumFractionDigits: 0,
                     }}
@@ -164,8 +163,8 @@ export function Pricing({
                   />
                 </span>
                 {plan.period !== "Next 3 months" && (
-                  <span className="text-sm font-semibold leading-6 tracking-wide text-muted-foreground">
-                    / {plan.period}
+                  <span className="text-sm font-semibold leading-6 tracking-wide text-muted-foreground mt-2 ml-1">
+                    UZS/{plan.period}
                   </span>
                 )}
               </div>

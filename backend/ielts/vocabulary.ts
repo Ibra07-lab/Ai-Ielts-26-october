@@ -1,7 +1,7 @@
 import { api, APIError } from "encore.dev/api";
 import { getAuthData } from "~encore/auth";
-import { AuthData } from "./auth";
-import { ieltsDB } from "./db";
+import { AuthData } from "../auth/auth";
+import { supabaseAdmin } from "./db";
 
 export interface VocabularyWord {
   id: number;
@@ -32,27 +32,53 @@ export const getVocabularyWords = api<{ userId: string; topic?: string; limit?: 
       throw APIError.permissionDenied("You can only access your own vocabulary");
     }
 
-    let query = `
-      SELECT v.id, v.word, v.definition, v.example_sentence as "exampleSentence", 
-             v.topic, v.difficulty_level as "difficultyLevel", v.audio_url as "audioUrl",
-             uv.status, uv.next_review_date as "nextReviewDate", uv.review_count as "reviewCount"
-      FROM vocabulary_words v
-      LEFT JOIN user_vocabulary uv ON v.id = uv.word_id AND uv.user_id = $1
-    `;
+    // Fetch all vocabulary words (with optional topic filter), then join user_vocabulary separately
+    let wordsQuery = supabaseAdmin
+      .from("vocabulary_words")
+      .select("id, word, definition, example_sentence, topic, difficulty_level, audio_url")
+      .limit(limit);
 
-    const params: any[] = [userId];
+    if (topic) wordsQuery = wordsQuery.eq("topic", topic);
 
-    if (topic) {
-      query += ` WHERE v.topic = $${params.length + 1}`;
-      params.push(topic);
-    }
+    // Supabase doesn't support ORDER BY RANDOM() via API, so we shuffle in JS
+    const { data: words, error: wordsErr } = await wordsQuery;
+    if (wordsErr) throw APIError.internal(wordsErr.message);
 
-    query += ` ORDER BY RANDOM() LIMIT $${params.length + 1}`;
-    params.push(limit);
+    const wordList = words || [];
 
-    const words = await ieltsDB.rawQueryAll<VocabularyWord>(query, ...params);
+    // Shuffle randomly
+    wordList.sort(() => Math.random() - 0.5);
 
-    return { words };
+    if (wordList.length === 0) return { words: [] };
+
+    // Fetch user vocabulary status for these words
+    const wordIds = wordList.map((w: any) => w.id);
+    const { data: uvRows } = await supabaseAdmin
+      .from("user_vocabulary")
+      .select("word_id, status, next_review_date, review_count")
+      .eq("user_id", userId)
+      .in("word_id", wordIds);
+
+    const uvMap = new Map<number, any>();
+    for (const uv of (uvRows || [])) uvMap.set(uv.word_id, uv);
+
+    const result: VocabularyWord[] = wordList.map((w: any) => {
+      const uv = uvMap.get(w.id);
+      return {
+        id:              w.id,
+        word:            w.word,
+        definition:      w.definition,
+        exampleSentence: w.example_sentence,
+        topic:           w.topic,
+        difficultyLevel: w.difficulty_level,
+        audioUrl:        w.audio_url ?? undefined,
+        status:          uv?.status ?? undefined,
+        nextReviewDate:  uv?.next_review_date ?? undefined,
+        reviewCount:     uv?.review_count ?? undefined,
+      };
+    });
+
+    return { words: result };
   }
 );
 
@@ -65,20 +91,30 @@ export const updateVocabularyStatus = api<{ userId: string; wordId: number; stat
       throw APIError.permissionDenied("You can only update your own vocabulary status");
     }
 
-    const nextReviewDate = status === 'review'
-      ? new Date(Date.now() + 24 * 60 * 60 * 1000) // Tomorrow
+    const nextReviewDate = status === "review"
+      ? new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
       : null;
 
-    await ieltsDB.exec`
-      INSERT INTO user_vocabulary (user_id, word_id, status, next_review_date, review_count)
-      VALUES (${userId}, ${wordId}, ${status}, ${nextReviewDate}, 1)
-      ON CONFLICT (user_id, word_id)
-      DO UPDATE SET 
-        status = ${status},
-        next_review_date = ${nextReviewDate},
-        review_count = user_vocabulary.review_count + 1,
-        updated_at = NOW()
-    `;
+    const { data: existing } = await supabaseAdmin
+      .from("user_vocabulary")
+      .select("review_count")
+      .eq("user_id", userId)
+      .eq("word_id", wordId)
+      .maybeSingle();
+
+    await supabaseAdmin
+      .from("user_vocabulary")
+      .upsert(
+        {
+          user_id:          userId,
+          word_id:          wordId,
+          status,
+          next_review_date: nextReviewDate,
+          review_count:     (existing?.review_count ?? 0) + 1,
+          updated_at:       new Date().toISOString(),
+        },
+        { onConflict: "user_id,word_id" }
+      );
   }
 );
 
@@ -91,17 +127,30 @@ export const getVocabularyProgress = api<{ userId: string }, VocabularyProgress>
       throw APIError.permissionDenied("You can only access your own vocabulary progress");
     }
 
-    const progress = await ieltsDB.queryRow<VocabularyProgress>`
-      SELECT 
-        COUNT(*) as "totalWords",
-        COUNT(CASE WHEN uv.status = 'known' THEN 1 END) as "knownWords",
-        COUNT(CASE WHEN uv.status = 'learning' THEN 1 END) as "learningWords",
-        COUNT(CASE WHEN uv.status = 'review' THEN 1 END) as "reviewWords"
-      FROM vocabulary_words v
-      LEFT JOIN user_vocabulary uv ON v.id = uv.word_id AND uv.user_id = ${userId}
-    `;
+    // Total words
+    const { count: totalWords } = await supabaseAdmin
+      .from("vocabulary_words")
+      .select("id", { count: "exact", head: true });
 
-    return progress || { totalWords: 0, knownWords: 0, learningWords: 0, reviewWords: 0 };
+    // Known / learning / review per status
+    const { data: uvRows } = await supabaseAdmin
+      .from("user_vocabulary")
+      .select("status")
+      .eq("user_id", userId);
+
+    let knownWords = 0, learningWords = 0, reviewWords = 0;
+    for (const row of (uvRows || [])) {
+      if (row.status === "known")    knownWords++;
+      if (row.status === "learning") learningWords++;
+      if (row.status === "review")   reviewWords++;
+    }
+
+    return {
+      totalWords:    totalWords ?? 0,
+      knownWords,
+      learningWords,
+      reviewWords,
+    };
   }
 );
 
@@ -109,11 +158,13 @@ export const getVocabularyProgress = api<{ userId: string }, VocabularyProgress>
 export const getVocabularyTopics = api<void, { topics: string[] }>(
   { expose: true, method: "GET", path: "/vocabulary/topics" },
   async () => {
-    const topics = await ieltsDB.queryAll<{ topic: string }>`
-      SELECT DISTINCT topic FROM vocabulary_words ORDER BY topic
-    `;
+    const { data: rows, error } = await supabaseAdmin
+      .from("vocabulary_words")
+      .select("topic");
 
-    return { topics: topics.map(t => t.topic) };
+    if (error) throw APIError.internal(error.message);
+
+    const topics = [...new Set((rows || []).map((r: any) => r.topic))].sort();
+    return { topics };
   }
 );
-

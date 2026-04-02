@@ -1,4 +1,4 @@
-import { ieltsDB } from "./db";
+import { supabaseAdmin } from "./db";
 
 export type TaskCategory = "reading" | "writing" | "speaking" | "listening" | "vocabulary" | "grammar";
 export type TaskDifficulty = "easy" | "medium" | "hard";
@@ -68,18 +68,20 @@ const CATEGORY_TEMPLATES: Record<TaskCategory, string[]> = {
 
 export async function computeWeakAreas(userId: string): Promise<TaskCategory[]> {
 	// Simple heuristic: count completions in last 14 days per category; fewer completions -> weaker.
-	const rows = await ieltsDB.queryAll<{ category: TaskCategory; cnt: number }>`
-		SELECT category, COUNT(*)::int AS cnt
-		FROM tasks
-		WHERE user_id = ${userId}
-		  AND status = 'completed'
-		  AND completed_at >= NOW() - INTERVAL '14 days'
-		GROUP BY category
-	`;
+	const fourteenDaysAgo = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString();
+	const { data: rows } = await supabaseAdmin
+		.from("tasks")
+		.select("category")
+		.eq("user_id", userId)
+		.eq("status", "completed")
+		.gte("completed_at", fourteenDaysAgo);
+
 	const counts: Record<TaskCategory, number> = {
 		reading: 0, writing: 0, speaking: 0, listening: 0, vocabulary: 0, grammar: 0,
 	};
-	for (const r of rows) counts[r.category] = r.cnt;
+	for (const r of (rows || [])) {
+		if (r.category in counts) counts[r.category as TaskCategory]++;
+	}
 	// Sort ascending (lowest activity first)
 	return (Object.keys(counts) as TaskCategory[]).sort((a, b) => counts[a] - counts[b]);
 }

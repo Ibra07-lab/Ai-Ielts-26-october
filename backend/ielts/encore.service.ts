@@ -1,4 +1,3 @@
-import { authHandler } from "./auth";
 import { Service } from "encore.dev/service";
 
 export default new Service("ielts");

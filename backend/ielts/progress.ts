@@ -1,7 +1,7 @@
 import { api, APIError } from "encore.dev/api";
 import { getAuthData } from "~encore/auth";
-import { AuthData } from "./auth";
-import { ieltsDB } from "./db";
+import { AuthData } from "../auth/auth";
+import { supabaseAdmin } from "./db";
 
 export interface UserProgress {
   skill: string;
@@ -34,28 +34,26 @@ export const getProgress = api<{ userId: string }, ProgressOverview>(
       throw APIError.permissionDenied("You can only access your own progress");
     }
 
-    const progress = await ieltsDB.queryAll<UserProgress>`
-      SELECT skill, estimated_band as "estimatedBand", practice_count as "practiceCount", 
-             last_practice_date as "lastPracticeDate"
-      FROM user_progress 
-      WHERE user_id = ${userId}
-      ORDER BY skill
-    `;
+    const { data, error } = await supabaseAdmin
+      .from("user_progress")
+      .select("skill, estimated_band, practice_count, last_practice_date")
+      .eq("user_id", userId)
+      .order("skill");
 
-    // Calculate weekly activity (mock calculation)
-    const weeklyActivity = 75; // Percentage
+    if (error) throw APIError.internal(error.message);
 
-    // Calculate study streak (mock calculation)
-    const studyStreak = 5; // Days
-
-    // Calculate total practice time (mock calculation)
-    const totalPracticeTime = 120; // Minutes
+    const progress: UserProgress[] = (data || []).map((row: any) => ({
+      skill:            row.skill,
+      estimatedBand:    row.estimated_band ?? undefined,
+      practiceCount:    row.practice_count,
+      lastPracticeDate: row.last_practice_date ?? undefined,
+    }));
 
     return {
-      overall: progress,
-      weeklyActivity,
-      studyStreak,
-      totalPracticeTime,
+      overall:           progress,
+      weeklyActivity:    75,
+      studyStreak:       5,
+      totalPracticeTime: 120,
     };
   }
 );
@@ -69,16 +67,23 @@ export const updateProgress = api<{ userId: string; skill: string; estimatedBand
       throw APIError.permissionDenied("You can only update your own progress");
     }
 
-    await ieltsDB.exec`
-      INSERT INTO user_progress (user_id, skill, estimated_band, practice_count, last_practice_date)
-      VALUES (${userId}, ${skill}, ${estimatedBand || null}, 1, CURRENT_DATE)
-      ON CONFLICT (user_id, skill)
-      DO UPDATE SET 
-        estimated_band = COALESCE(${estimatedBand || null}, user_progress.estimated_band),
-        practice_count = user_progress.practice_count + 1,
-        last_practice_date = CURRENT_DATE,
-        updated_at = NOW()
-    `;
+    const today = new Date().toISOString().split("T")[0];
+
+    const { error } = await supabaseAdmin
+      .from("user_progress")
+      .upsert(
+        {
+          user_id:            userId,
+          skill,
+          estimated_band:     estimatedBand ?? null,
+          practice_count:     1,
+          last_practice_date: today,
+          updated_at:         new Date().toISOString(),
+        },
+        { onConflict: "user_id,skill" }
+      );
+
+    if (error) throw APIError.internal(error.message);
   }
 );
 
@@ -91,49 +96,48 @@ export const getDailyGoal = api<{ userId: string }, DailyGoal>(
       throw APIError.permissionDenied("You can only access your own daily goals");
     }
 
-    // 1. Try fetching the existing goal for today
-    const goal = await ieltsDB.queryRow<DailyGoal>`
-      SELECT goal_date as "goalDate", target_minutes as "targetMinutes", 
-             completed_minutes as "completedMinutes", activities_completed as "activitiesCompleted",
-             target_activities as "targetActivities"
-      FROM daily_goals 
-      WHERE user_id = ${userId} AND goal_date = CURRENT_DATE
-    `;
+    const today = new Date().toISOString().split("T")[0];
 
-    if (goal) {
-      return goal;
-    }
+    // 1. Try fetching existing goal for today
+    const { data: existing } = await supabaseAdmin
+      .from("daily_goals")
+      .select("goal_date, target_minutes, completed_minutes, activities_completed, target_activities")
+      .eq("user_id", userId)
+      .eq("goal_date", today)
+      .maybeSingle();
 
-    // 2. Insert new daily goal (and gracefully handle foreign key violation if the user doesn't exist yet)
+    if (existing) return mapGoal(existing);
+
+    // 2. Insert new daily goal (auto-create user row if missing)
     try {
-      const newGoal = await ieltsDB.queryRow<DailyGoal>`
-        INSERT INTO daily_goals (user_id, goal_date, target_minutes, target_activities)
-        VALUES (${userId}, CURRENT_DATE, 30, 3)
-        RETURNING goal_date as "goalDate", target_minutes as "targetMinutes", 
-                  completed_minutes as "completedMinutes", activities_completed as "activitiesCompleted",
-                  target_activities as "targetActivities"
-      `;
-      return newGoal!;
-    } catch (error: any) {
-      // If it's a foreign key constraint violation (code 23503), the user doesn't exist in our table.
-      if (error?.code === "23503" || error?.message?.includes("foreign key constraint")) {
-        await ieltsDB.exec`
-          INSERT INTO users (id, name, target_band, language, theme)
-          VALUES (${userId}, 'Student', 7.0, 'en', 'light')
-          ON CONFLICT (id) DO NOTHING
-        `;
+      const { data: newGoal, error } = await supabaseAdmin
+        .from("daily_goals")
+        .insert({ user_id: userId, goal_date: today, target_minutes: 30, target_activities: 3 })
+        .select("goal_date, target_minutes, completed_minutes, activities_completed, target_activities")
+        .single();
 
-        // Retry creating the daily goal
-        const retryGoal = await ieltsDB.queryRow<DailyGoal>`
-          INSERT INTO daily_goals (user_id, goal_date, target_minutes, target_activities)
-          VALUES (${userId}, CURRENT_DATE, 30, 3)
-          RETURNING goal_date as "goalDate", target_minutes as "targetMinutes", 
-                    completed_minutes as "completedMinutes", activities_completed as "activitiesCompleted",
-                    target_activities as "targetActivities"
-        `;
-        return retryGoal!;
+      if (error) {
+        // FK violation — user row missing, create stub then retry
+        if (error.code === "23503" || error.message?.includes("foreign key")) {
+          await supabaseAdmin.from("users").insert({
+            id: userId, name: "Student", target_band: 7.0, language: "en", theme: "light"
+          }).select().single();
+
+          const { data: retry, error: retryErr } = await supabaseAdmin
+            .from("daily_goals")
+            .insert({ user_id: userId, goal_date: today, target_minutes: 30, target_activities: 3 })
+            .select("goal_date, target_minutes, completed_minutes, activities_completed, target_activities")
+            .single();
+
+          if (retryErr) throw APIError.internal(retryErr.message);
+          return mapGoal(retry);
+        }
+        throw APIError.internal(error.message);
       }
-      throw error;
+
+      return mapGoal(newGoal);
+    } catch (err: any) {
+      throw APIError.internal(err?.message ?? "Unknown error");
     }
   }
 );
@@ -147,12 +151,37 @@ export const updateDailyGoal = api<{ userId: string; minutesCompleted: number; a
       throw APIError.permissionDenied("You can only update your own daily goals");
     }
 
-    await ieltsDB.exec`
-      UPDATE daily_goals 
-      SET completed_minutes = completed_minutes + ${minutesCompleted},
-          activities_completed = activities_completed + ${activitiesCompleted}
-      WHERE user_id = ${userId} AND goal_date = CURRENT_DATE
-    `;
+    const today = new Date().toISOString().split("T")[0];
+
+    // Fetch current values first, then increment
+    const { data: current } = await supabaseAdmin
+      .from("daily_goals")
+      .select("completed_minutes, activities_completed")
+      .eq("user_id", userId)
+      .eq("goal_date", today)
+      .single();
+
+    if (!current) return; // No goal for today — silently ignore
+
+    await supabaseAdmin
+      .from("daily_goals")
+      .update({
+        completed_minutes:    (current.completed_minutes || 0) + minutesCompleted,
+        activities_completed: (current.activities_completed || 0) + activitiesCompleted,
+      })
+      .eq("user_id", userId)
+      .eq("goal_date", today);
   }
 );
 
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+function mapGoal(row: any): DailyGoal {
+  return {
+    goalDate:            row.goal_date,
+    targetMinutes:       row.target_minutes,
+    completedMinutes:    row.completed_minutes ?? 0,
+    activitiesCompleted: row.activities_completed ?? 0,
+    targetActivities:    row.target_activities,
+  };
+}

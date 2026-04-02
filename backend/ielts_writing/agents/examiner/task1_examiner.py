@@ -209,7 +209,7 @@ class Task1Examiner(ExaminerAgent):
                 system_prompt=system_prompt,
                 user_prompt=user_prompt,
                 temperature=0.1,
-                max_tokens=2048,
+                max_tokens=4096,
                 image_data=image_data
             )
         else:
@@ -218,25 +218,15 @@ class Task1Examiner(ExaminerAgent):
                 system_prompt=system_prompt,
                 user_prompt=user_prompt,
                 temperature=0.1,
-                max_tokens=2048
+                max_tokens=4096
             )
 
         # Parse JSON response
+        from ielts_writing.utils.json_parser import extract_json
         try:
-            content = response_text.strip()
-            if "```json" in content:
-                content = content.split("```json")[1].split("```")[0].strip()
-            elif "```" in content:
-                content = content.split("```")[1].split("```")[0].strip()
-
-            if "{" in content and "}" in content:
-                start = content.find("{")
-                end = content.rfind("}") + 1
-                content = content[start:end]
-
-            result = json.loads(content)
-        except (json.JSONDecodeError, IndexError):
-            raise ValueError(f"Failed to parse JSON response: {response_text}")
+            result = extract_json(response_text)
+        except (json.JSONDecodeError, IndexError, ValueError) as e:
+            raise ValueError(f"Failed to parse JSON response: {response_text}. Error: {e}")
 
         # Calculate overall band if not present
         if "overall_band" not in result and "criterion_scores" in result:
