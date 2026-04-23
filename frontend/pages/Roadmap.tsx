@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { 
+import {
   CalendarDays, BarChart2, Home, CheckSquare, MoreHorizontal,
   Flame, Zap, BookOpen, PenTool, Headphones, ListFilter, PlayCircle, Trophy, Target, ArrowRight, X, Clock, AlertTriangle, Lightbulb, Map, FileText, CalendarCheck, FileQuestion, BookMarked, Layers, BarChart, FileSignature, Edit3, Speech, RotateCcw, Library, CheckCircle2, Lock, XCircle, RefreshCw, ChevronDown, ChevronUp, ChevronRight, TrendingUp
 } from 'lucide-react';
@@ -157,9 +157,9 @@ export default function Roadmap() {
     const type = task.type;
     const title = (task.title || '').toLowerCase();
     const cid = task.contentId;
-    
+
     switch (type) {
-      case 'reading': 
+      case 'reading':
         if (title.includes('alex') || title.includes('tutor')) return '/reading/tutor-chat';
         return cid ? `/reading/${cid}` : '/reading';
       case 'writing':
@@ -241,13 +241,13 @@ export default function Roadmap() {
             authHeaders['Authorization'] = `Bearer ${session.access_token}`;
           }
 
-          const res = await fetch(`http://localhost:8002/api/onboarding/${user.id}`, {
+          const res = await fetch(`/api/onboarding/${user.id}`, {
             headers: authHeaders
           });
-          
+
           if (!res.ok) throw new Error("Study plan not found");
           const data = await res.json();
-          
+
           if (data && data.weeks) {
             const mapped = mapApiWeeksToWeekPlans(data.weeks);
             setWeeksData(mapped);
@@ -264,7 +264,7 @@ export default function Roadmap() {
           setIsLoading(false);
         }
       };
-      
+
       fetchData();
     }
   }, [user]);
@@ -277,10 +277,10 @@ export default function Roadmap() {
         navigate('/onboarding');
         return;
       }
-      
+
       const parsedData = JSON.parse(profileData);
       const payload = { ...parsedData, userId: user.id };
-      
+
       const { data: { session } } = await supabase.auth.getSession();
       const authHeaders: Record<string, string> = {
         'Content-Type': 'application/json',
@@ -289,14 +289,14 @@ export default function Roadmap() {
         authHeaders['Authorization'] = `Bearer ${session.access_token}`;
       }
 
-      const res = await fetch('http://localhost:8002/api/onboarding/generate', {
+      const res = await fetch('/api/onboarding/generate', {
         method: 'POST',
         headers: authHeaders,
         body: JSON.stringify(payload)
       });
-      
+
       if (!res.ok) throw new Error("Failed to generate");
-      
+
       const data = await res.json();
       if (data && data.weeks) {
         setWeeksData(mapApiWeeksToWeekPlans(data.weeks));
@@ -335,9 +335,9 @@ export default function Roadmap() {
   };
 
   const jumpToWeekNative = (id: number) => {
-     setActiveTab('plan');
-     setExpandedWeeks(new Set([id]));
-     setTimeout(() => document.getElementById(`week-mob-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    setActiveTab('plan');
+    setExpandedWeeks(new Set([id]));
+    setTimeout(() => document.getElementById(`week-mob-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
   };
 
   const userGoalScore = user?.targetBand || 7.0;
@@ -346,17 +346,17 @@ export default function Roadmap() {
 
   const chartData = React.useMemo(() => {
     const totalW = currentPlanWeeks;
-    const points = Array.from(new Set([1, Math.max(2, Math.floor(totalW * 0.25)), Math.max(3, Math.floor(totalW * 0.5)), Math.max(4, Math.floor(totalW * 0.75)), totalW])).sort((a,b) => a-b);
-    
+    const points = Array.from(new Set([1, Math.max(2, Math.floor(totalW * 0.25)), Math.max(3, Math.floor(totalW * 0.5)), Math.max(4, Math.floor(totalW * 0.75)), totalW])).sort((a, b) => a - b);
+
     return points.map(w => {
-        const progress = totalW <= 1 ? 1 : (w - 1) / (totalW - 1);
-        const val = userStartScore + (userGoalScore - userStartScore) * progress;
-        const rounded = Math.round(val * 2) / 2;
-        return {
-           week: `W${w}`,
-           current: w === 1 ? userStartScore : (w === 2 ? Math.round((userStartScore + 0.1)*10)/10 : null),
-           projected: w === 1 ? userStartScore : rounded
-        };
+      const progress = totalW <= 1 ? 1 : (w - 1) / (totalW - 1);
+      const val = userStartScore + (userGoalScore - userStartScore) * progress;
+      const rounded = Math.round(val * 2) / 2;
+      return {
+        week: `W${w}`,
+        current: w === 1 ? userStartScore : (w === 2 ? Math.round((userStartScore + 0.1) * 10) / 10 : null),
+        projected: w === 1 ? userStartScore : rounded
+      };
     });
   }, [userStartScore, userGoalScore, currentPlanWeeks]);
 
@@ -414,7 +414,7 @@ export default function Roadmap() {
 
     const todayTasks = weeksData.find(w => w.status === 'in_progress')?.days?.find(d => d.isToday)?.tasks || [];
     const isRecoveryDay = weeksData.find(w => w.status === 'in_progress')?.days?.find(d => d.isToday)?.hasRecoveryTask;
-    
+
     return (
       <div className="flex-1 overflow-y-auto pb-24 bg-slate-50 dark:bg-slate-900 animate-in fade-in duration-300">
         <div className="p-6 max-w-2xl mx-auto space-y-8">
@@ -511,20 +511,20 @@ export default function Roadmap() {
           </section>
 
           <section className="bg-gradient-to-br from-blue-900 to-indigo-900 dark:from-blue-950 dark:to-indigo-950 rounded-2xl p-6 shadow-lg text-white relative overflow-hidden border border-blue-800/50 dark:border-blue-900/50">
-             <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-5 rounded-full -translate-y-8 translate-x-8 blur-2xl"></div>
-             <h2 className="text-lg font-bold text-blue-100 mb-4 flex items-center gap-2">
-               <CheckCircle2 className="w-5 h-5 text-emerald-400" /> Band Projection
-             </h2>
-             <div className="space-y-3">
-               <div className="flex justify-between items-center bg-white/10 p-3 rounded-xl backdrop-blur-sm border border-white/5">
-                 <span className="font-medium text-blue-100">At this pace</span>
-                 <span className="font-bold text-xl">Band {(userStartScore + 1.0).toFixed(1)} <span className="text-sm font-medium text-blue-200">by W{Math.max(1, currentPlanWeeks - 2)}</span></span>
-               </div>
-               <div className="flex justify-between items-center px-3 py-1">
-                 <span className="font-medium text-blue-300">Target</span>
-                 <span className="font-semibold text-blue-200">Band {userGoalScore.toFixed(1)} by W{currentPlanWeeks}</span>
-               </div>
-             </div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-5 rounded-full -translate-y-8 translate-x-8 blur-2xl"></div>
+            <h2 className="text-lg font-bold text-blue-100 mb-4 flex items-center gap-2">
+              <CheckCircle2 className="w-5 h-5 text-emerald-400" /> Band Projection
+            </h2>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center bg-white/10 p-3 rounded-xl backdrop-blur-sm border border-white/5">
+                <span className="font-medium text-blue-100">At this pace</span>
+                <span className="font-bold text-xl">Band {(userStartScore + 1.0).toFixed(1)} <span className="text-sm font-medium text-blue-200">by W{Math.max(1, currentPlanWeeks - 2)}</span></span>
+              </div>
+              <div className="flex justify-between items-center px-3 py-1">
+                <span className="font-medium text-blue-300">Target</span>
+                <span className="font-semibold text-blue-200">Band {userGoalScore.toFixed(1)} by W{currentPlanWeeks}</span>
+              </div>
+            </div>
           </section>
         </div>
       </div>
@@ -532,373 +532,373 @@ export default function Roadmap() {
   };
 
   const renderDayTasks = (day: DayPlan) => (
-      <div className={`rounded-2xl border p-4 xl:p-6 relative overflow-hidden transition-all ${day.isToday ? 'bg-blue-50/80 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 shadow-[0_2px_15px_-4px_rgba(37,99,235,0.15)]' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm'}`}>
-         <h4 className={`text-sm font-bold mb-4 flex items-center gap-2 ${day.isToday ? 'text-blue-800 dark:text-blue-400' : 'text-slate-800 dark:text-slate-200'}`}>
-            {day.isToday && <span className="w-2.5 h-2.5 rounded-full bg-blue-600 dark:bg-blue-500 animate-pulse"></span>}
-            {day.date} {day.isToday && "— TODAY"}
-         </h4>
+    <div className={`rounded-2xl border p-4 xl:p-6 relative overflow-hidden transition-all ${day.isToday ? 'bg-blue-50/80 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 shadow-[0_2px_15px_-4px_rgba(37,99,235,0.15)]' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm'}`}>
+      <h4 className={`text-sm font-bold mb-4 flex items-center gap-2 ${day.isToday ? 'text-blue-800 dark:text-blue-400' : 'text-slate-800 dark:text-slate-200'}`}>
+        {day.isToday && <span className="w-2.5 h-2.5 rounded-full bg-blue-600 dark:bg-blue-500 animate-pulse"></span>}
+        {day.date} {day.isToday && "— TODAY"}
+      </h4>
 
-         {day.hasRecoveryTask && (
-            <div className="mb-5 bg-amber-50/80 dark:bg-amber-900/20 border border-amber-200/80 dark:border-amber-800/50 rounded-xl p-4 shadow-sm animate-in zoom-in-95 duration-500 origin-top">
-               <div className="flex items-center gap-2 font-bold text-amber-800 dark:text-amber-400 text-sm mb-1.5">
-                  <AlertTriangle className="w-4 h-4" /> Yesterday's task was missed
-               </div>
-               <p className="text-xs font-medium text-amber-700 dark:text-amber-500">Your AI coach adjusted today's load to help you catch up gradually without feeling overwhelmed.</p>
+      {day.hasRecoveryTask && (
+        <div className="mb-5 bg-amber-50/80 dark:bg-amber-900/20 border border-amber-200/80 dark:border-amber-800/50 rounded-xl p-4 shadow-sm animate-in zoom-in-95 duration-500 origin-top">
+          <div className="flex items-center gap-2 font-bold text-amber-800 dark:text-amber-400 text-sm mb-1.5">
+            <AlertTriangle className="w-4 h-4" /> Yesterday's task was missed
+          </div>
+          <p className="text-xs font-medium text-amber-700 dark:text-amber-500">Your AI coach adjusted today's load to help you catch up gradually without feeling overwhelmed.</p>
+        </div>
+      )}
+
+      <div className="space-y-4">
+        {day.tasks.map(task => (
+          <div key={task.id} className="flex gap-4 group">
+            <div className={`flex-shrink-0 mt-0.5 ${task.status === 'locked' ? 'opacity-40' : task.status === 'missed' ? 'opacity-60' : ''}`}>
+              {task.status === 'locked' ? <Lock className="w-5 h-5 text-slate-400 dark:text-slate-500" /> :
+                task.status === 'missed' ? <XCircle className="w-5 h-5 text-red-500 dark:text-red-400" /> : <SkillIcon type={task.type} className="w-5 h-5 lg:w-6 lg:h-6" />}
             </div>
-         )}
+            <div className="flex-1">
+              <div className={`font-bold text-[15px] xl:text-[16px] flex items-center flex-wrap gap-2 ${task.status === 'missed' ? 'text-red-900 dark:text-red-400 line-through opacity-70' : 'text-slate-800 dark:text-slate-200'}`}>
+                {task.title}
+                {task.isRecovery && <span className="text-[10px] text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/30 px-2 py-0.5 rounded shadow-sm uppercase tracking-wider font-bold">Catch-up</span>}
+              </div>
+              <div className="text-sm text-slate-600 dark:text-slate-400 leading-snug mt-1 max-w-md">{task.subtitle}</div>
+              {task.description && task.description !== task.title && (
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed bg-slate-50 dark:bg-slate-900/30 rounded-lg px-3 py-2 border border-slate-100 dark:border-slate-700/50">
+                  {task.description}
+                </p>
+              )}
+              {task.reason && (
+                <p className="text-xs text-blue-600 dark:text-blue-400 mt-2 font-medium flex items-start gap-1.5">
+                  <span className="flex-shrink-0 mt-0.5">💡</span>
+                  <span>{task.reason}</span>
+                </p>
+              )}
+              {task.tip && (
+                <p className="text-xs text-amber-700 dark:text-amber-400 mt-1.5 font-medium flex items-start gap-1.5">
+                  <span className="flex-shrink-0 mt-0.5">⭐</span>
+                  <span>Tip: {task.tip}</span>
+                </p>
+              )}
 
-         <div className="space-y-4">
-            {day.tasks.map(task => (
-               <div key={task.id} className="flex gap-4 group">
-                  <div className={`flex-shrink-0 mt-0.5 ${task.status === 'locked' ? 'opacity-40' : task.status === 'missed' ? 'opacity-60' : ''}`}>
-                      {task.status === 'locked' ? <Lock className="w-5 h-5 text-slate-400 dark:text-slate-500" /> : 
-                       task.status === 'missed' ? <XCircle className="w-5 h-5 text-red-500 dark:text-red-400" /> : <SkillIcon type={task.type} className="w-5 h-5 lg:w-6 lg:h-6" />}
+              {/* Multi-step listening session */}
+              {task.steps && task.steps.length > 0 && (
+                <div className="mt-3 space-y-0 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden bg-slate-50/50 dark:bg-slate-900/20">
+                  <div className="px-3 py-2 bg-teal-50 dark:bg-teal-900/20 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
+                    <span className="text-xs font-bold text-teal-700 dark:text-teal-400 uppercase tracking-wider">Study Session Steps</span>
+                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400">{task.steps.length} steps · {task.duration} min total</span>
                   </div>
-                  <div className="flex-1">
-                      <div className={`font-bold text-[15px] xl:text-[16px] flex items-center flex-wrap gap-2 ${task.status === 'missed' ? 'text-red-900 dark:text-red-400 line-through opacity-70' : 'text-slate-800 dark:text-slate-200'}`}>
-                          {task.title}
-                          {task.isRecovery && <span className="text-[10px] text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/30 px-2 py-0.5 rounded shadow-sm uppercase tracking-wider font-bold">Catch-up</span>}
-                      </div>
-                      <div className="text-sm text-slate-600 dark:text-slate-400 leading-snug mt-1 max-w-md">{task.subtitle}</div>
-                      {task.description && task.description !== task.title && (
-                        <p className="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed bg-slate-50 dark:bg-slate-900/30 rounded-lg px-3 py-2 border border-slate-100 dark:border-slate-700/50">
-                          {task.description}
-                        </p>
-                      )}
-                      {task.reason && (
-                        <p className="text-xs text-blue-600 dark:text-blue-400 mt-2 font-medium flex items-start gap-1.5">
-                          <span className="flex-shrink-0 mt-0.5">💡</span>
-                          <span>{task.reason}</span>
-                        </p>
-                      )}
-                      {task.tip && (
-                        <p className="text-xs text-amber-700 dark:text-amber-400 mt-1.5 font-medium flex items-start gap-1.5">
-                          <span className="flex-shrink-0 mt-0.5">⭐</span>
-                          <span>Tip: {task.tip}</span>
-                        </p>
-                      )}
-
-                      {/* Multi-step listening session */}
-                      {task.steps && task.steps.length > 0 && (
-                        <div className="mt-3 space-y-0 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden bg-slate-50/50 dark:bg-slate-900/20">
-                          <div className="px-3 py-2 bg-teal-50 dark:bg-teal-900/20 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
-                            <span className="text-xs font-bold text-teal-700 dark:text-teal-400 uppercase tracking-wider">Study Session Steps</span>
-                            <span className="text-xs font-bold text-slate-500 dark:text-slate-400">{task.steps.length} steps · {task.duration} min total</span>
-                          </div>
-                          {task.steps.map((step, stepIdx) => (
-                            <details key={step.step_number} className={`group ${stepIdx > 0 ? 'border-t border-slate-200 dark:border-slate-700/30' : ''}`}>
-                              <summary className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-slate-100/50 dark:hover:bg-slate-800/30 transition-colors list-none [&::-webkit-details-marker]:hidden">
-                                <div className="w-6 h-6 rounded-full bg-teal-100 dark:bg-teal-900/30 border border-teal-200 dark:border-teal-800 flex items-center justify-center flex-shrink-0">
-                                  <span className="text-xs font-black text-teal-700 dark:text-teal-400">{step.step_number}</span>
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                  <span className="text-sm font-bold text-slate-800 dark:text-slate-200">{step.name}</span>
-                                  {step.speed && <span className="ml-2 text-[10px] font-bold text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 px-1.5 py-0.5 rounded-full border border-orange-200 dark:border-orange-800/50">{step.speed}</span>}
-                                </div>
-                                <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded flex-shrink-0">{step.duration_minutes} min</span>
-                                <ChevronRight className="w-3.5 h-3.5 text-slate-400 transition-transform group-open:rotate-90 flex-shrink-0" />
-                              </summary>
-                              <div className="px-3 pb-3 pt-1 ml-9 space-y-2">
-                                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{step.what}</p>
-                                <div className="bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/30 rounded-lg px-3 py-2">
-                                  <p className="text-xs text-blue-700 dark:text-blue-400 leading-relaxed">
-                                    <span className="font-bold">Why: </span>{step.why}
-                                  </p>
-                                </div>
-                              </div>
-                            </details>
-                          ))}
+                  {task.steps.map((step, stepIdx) => (
+                    <details key={step.step_number} className={`group ${stepIdx > 0 ? 'border-t border-slate-200 dark:border-slate-700/30' : ''}`}>
+                      <summary className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-slate-100/50 dark:hover:bg-slate-800/30 transition-colors list-none [&::-webkit-details-marker]:hidden">
+                        <div className="w-6 h-6 rounded-full bg-teal-100 dark:bg-teal-900/30 border border-teal-200 dark:border-teal-800 flex items-center justify-center flex-shrink-0">
+                          <span className="text-xs font-black text-teal-700 dark:text-teal-400">{step.step_number}</span>
                         </div>
-                      )}
-
-                      <div className="mt-2 text-xs xl:text-sm flex flex-wrap items-center gap-2 font-medium">
-                          <span className={`${task.status === 'missed' ? 'text-red-500 dark:text-red-400' : 'text-slate-500 dark:text-slate-400'} bg-slate-100 dark:bg-slate-800/80 border dark:border-slate-700 px-2 py-0.5 rounded`}>{task.duration} min</span>
-                          {task.status === 'done' && <span className="flex items-center gap-1 text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded font-bold border border-emerald-100 dark:border-emerald-800/50"><CheckCircle2 className="w-3.5 h-3.5" /> {task.score}</span>}
-                          {task.status === 'missed' && <span className="flex items-center gap-1 text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-2 py-0.5 rounded font-bold border border-red-100 dark:border-red-800/50"><XCircle className="w-3.5 h-3.5" /> Missed</span>}
+                        <div className="flex-1 min-w-0">
+                          <span className="text-sm font-bold text-slate-800 dark:text-slate-200">{step.name}</span>
+                          {step.speed && <span className="ml-2 text-[10px] font-bold text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 px-1.5 py-0.5 rounded-full border border-orange-200 dark:border-orange-800/50">{step.speed}</span>}
+                        </div>
+                        <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded flex-shrink-0">{step.duration_minutes} min</span>
+                        <ChevronRight className="w-3.5 h-3.5 text-slate-400 transition-transform group-open:rotate-90 flex-shrink-0" />
+                      </summary>
+                      <div className="px-3 pb-3 pt-1 ml-9 space-y-2">
+                        <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{step.what}</p>
+                        <div className="bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/30 rounded-lg px-3 py-2">
+                          <p className="text-xs text-blue-700 dark:text-blue-400 leading-relaxed">
+                            <span className="font-bold">Why: </span>{step.why}
+                          </p>
+                        </div>
                       </div>
+                    </details>
+                  ))}
+                </div>
+              )}
 
-                      {task.status === 'done' && (
-                          <button onClick={() => navigate(getTaskRoute(task))} className="mt-4 text-sm font-bold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-600 shadow-sm px-4 py-2 rounded-lg transition-colors flex items-center gap-1.5 w-max">
-                              Review <ArrowRight className="w-4 h-4 text-slate-400 dark:text-slate-500" />
-                          </button>
-                      )}
-                      {task.status === 'locked' && (
-                          <button onClick={() => navigate(getTaskRoute(task))} className="mt-4 text-sm font-bold text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700/50 px-4 py-2 rounded-lg transition-colors flex items-center gap-1.5 w-max">
-                              Preview <ArrowRight className="w-4 h-4 text-slate-400 dark:text-slate-500" />
-                          </button>
-                      )}
-                      {task.status === 'today' && (
-                          <button onClick={() => navigate(getTaskRoute(task))} className="mt-4 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-sm px-5 py-2 rounded-lg transition-colors flex items-center gap-1.5 w-max">
-                              Start Task <ArrowRight className="w-4 h-4" />
-                          </button>
-                      )}
-                  </div>
-               </div>
-            ))}
-         </div>
-         
-         {day.hasRecoveryTask && day.isToday && (
-             <div className="mt-5 pt-4 border-t border-amber-200/50 dark:border-amber-800/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-amber-50/30 dark:bg-amber-900/10 -mx-4 -mb-4 xl:-mx-6 xl:-mb-6 p-4 xl:p-5 rounded-b-2xl">
-                 <span className="font-bold text-amber-900 dark:text-amber-500 text-sm">Total: 35 min <span className="text-amber-700 dark:text-amber-600 font-medium ml-1">(just 15 min extra)</span></span>
-                 <button onClick={() => setActiveTab('today')} className="bg-amber-100 hover:bg-amber-200 active:bg-amber-300 dark:bg-amber-600/20 dark:hover:bg-amber-600/30 text-amber-900 dark:text-amber-100 border-amber-200/60 dark:border-amber-500/30 shadow-sm text-sm font-bold px-5 py-2.5 rounded-xl transition-all w-full sm:w-auto text-center">Start Today's Block →</button>
-             </div>
-         )}
+              <div className="mt-2 text-xs xl:text-sm flex flex-wrap items-center gap-2 font-medium">
+                <span className={`${task.status === 'missed' ? 'text-red-500 dark:text-red-400' : 'text-slate-500 dark:text-slate-400'} bg-slate-100 dark:bg-slate-800/80 border dark:border-slate-700 px-2 py-0.5 rounded`}>{task.duration} min</span>
+                {task.status === 'done' && <span className="flex items-center gap-1 text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded font-bold border border-emerald-100 dark:border-emerald-800/50"><CheckCircle2 className="w-3.5 h-3.5" /> {task.score}</span>}
+                {task.status === 'missed' && <span className="flex items-center gap-1 text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-2 py-0.5 rounded font-bold border border-red-100 dark:border-red-800/50"><XCircle className="w-3.5 h-3.5" /> Missed</span>}
+              </div>
+
+              {task.status === 'done' && (
+                <button onClick={() => navigate(getTaskRoute(task))} className="mt-4 text-sm font-bold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-600 shadow-sm px-4 py-2 rounded-lg transition-colors flex items-center gap-1.5 w-max">
+                  Review <ArrowRight className="w-4 h-4 text-slate-400 dark:text-slate-500" />
+                </button>
+              )}
+              {task.status === 'locked' && (
+                <button onClick={() => navigate(getTaskRoute(task))} className="mt-4 text-sm font-bold text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700/50 px-4 py-2 rounded-lg transition-colors flex items-center gap-1.5 w-max">
+                  Preview <ArrowRight className="w-4 h-4 text-slate-400 dark:text-slate-500" />
+                </button>
+              )}
+              {task.status === 'today' && (
+                <button onClick={() => navigate(getTaskRoute(task))} className="mt-4 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-sm px-5 py-2 rounded-lg transition-colors flex items-center gap-1.5 w-max">
+                  Start Task <ArrowRight className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
+
+      {day.hasRecoveryTask && day.isToday && (
+        <div className="mt-5 pt-4 border-t border-amber-200/50 dark:border-amber-800/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-amber-50/30 dark:bg-amber-900/10 -mx-4 -mb-4 xl:-mx-6 xl:-mb-6 p-4 xl:p-5 rounded-b-2xl">
+          <span className="font-bold text-amber-900 dark:text-amber-500 text-sm">Total: 35 min <span className="text-amber-700 dark:text-amber-600 font-medium ml-1">(just 15 min extra)</span></span>
+          <button onClick={() => setActiveTab('today')} className="bg-amber-100 hover:bg-amber-200 active:bg-amber-300 dark:bg-amber-600/20 dark:hover:bg-amber-600/30 text-amber-900 dark:text-amber-100 border-amber-200/60 dark:border-amber-500/30 shadow-sm text-sm font-bold px-5 py-2.5 rounded-xl transition-all w-full sm:w-auto text-center">Start Today's Block →</button>
+        </div>
+      )}
+    </div>
   );
 
   const renderMobilePlanView = () => (
-      <div className="flex-1 overflow-y-auto pb-24 bg-slate-50 dark:bg-slate-900 animate-in slide-in-from-right-4 duration-300">
-        <div className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 pt-8 pb-6 px-4 md:px-8">
-          <div className="max-w-2xl mx-auto relative">
-            
-            {showUpdateBanner && (
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/40 dark:to-indigo-900/40 border border-blue-100 dark:border-blue-800/50 rounded-2xl p-4 mb-6 shadow-sm relative animate-in fade-in slide-in-from-top-4 duration-500 overflow-hidden group">
-                <div className="absolute right-0 top-0 w-32 h-32 bg-blue-300 dark:bg-blue-600 opacity-10 rounded-full blur-2xl -translate-y-10"></div>
-                <div className="flex items-start gap-4 relative z-10">
-                  <div className="bg-white dark:bg-slate-800 p-2 rounded-full shadow-sm">
-                      <RefreshCw className="w-5 h-5 text-blue-600 dark:text-blue-400 animate-spin-slow" />
-                  </div>
-                  <div>
-                      <h4 className="font-bold text-blue-900 dark:text-blue-100">🔄 Your plan was updated</h4>
-                      <p className="text-sm font-medium text-blue-800 dark:text-blue-200 mt-1">"Reading practice increased for Week 3 based on your Week 2 performance."</p>
-                      <button onClick={() => setShowUpdateBanner(false)} className="mt-3 text-sm font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1">
-                          See changes <ArrowRight className="w-4 h-4" />
-                      </button>
-                  </div>
-                </div>
-              </div>
-            )}
+    <div className="flex-1 overflow-y-auto pb-24 bg-slate-50 dark:bg-slate-900 animate-in slide-in-from-right-4 duration-300">
+      <div className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 pt-8 pb-6 px-4 md:px-8">
+        <div className="max-w-2xl mx-auto relative">
 
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight text-center mb-6">Your Personalized Plan ✨</h1>
-            
-            <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 mb-6 col-span-full shadow-sm">
-              <div className="flex items-center justify-between mx-4 mb-4">
-                <div className="text-center">
-                  <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 mb-1 uppercase tracking-wider">Current</p>
-                  <div className="text-3xl font-black text-slate-800 dark:text-slate-100">{userStartScore.toFixed(1)}</div>
+          {showUpdateBanner && (
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/40 dark:to-indigo-900/40 border border-blue-100 dark:border-blue-800/50 rounded-2xl p-4 mb-6 shadow-sm relative animate-in fade-in slide-in-from-top-4 duration-500 overflow-hidden group">
+              <div className="absolute right-0 top-0 w-32 h-32 bg-blue-300 dark:bg-blue-600 opacity-10 rounded-full blur-2xl -translate-y-10"></div>
+              <div className="flex items-start gap-4 relative z-10">
+                <div className="bg-white dark:bg-slate-800 p-2 rounded-full shadow-sm">
+                  <RefreshCw className="w-5 h-5 text-blue-600 dark:text-blue-400 animate-spin-slow" />
                 </div>
-                <div className="flex-1 flex justify-center items-center">
-                  <div className="h-0.5 w-12 bg-slate-300 dark:bg-slate-600 relative">
-                    <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-2 h-2 border-t-2 border-r-2 border-slate-300 dark:border-slate-600 rotate-45"></div>
-                  </div>
-                </div>
-                <div className="text-center">
-                  <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 mb-1 uppercase tracking-wider">Target</p>
-                  <div className="text-3xl font-black text-blue-600 dark:text-blue-500">{userGoalScore.toFixed(1)}</div>
+                <div>
+                  <h4 className="font-bold text-blue-900 dark:text-blue-100">🔄 Your plan was updated</h4>
+                  <p className="text-sm font-medium text-blue-800 dark:text-blue-200 mt-1">"Reading practice increased for Week 3 based on your Week 2 performance."</p>
+                  <button onClick={() => setShowUpdateBanner(false)} className="mt-3 text-sm font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1">
+                    See changes <ArrowRight className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
             </div>
-            
-            {/* Priority Bars */}
-            <div className="grid grid-cols-3 gap-3">
-              <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-3 shadow-sm">
-                <div className="flex justify-between items-end mb-2"><span className="font-bold text-slate-800 dark:text-slate-200 text-sm">Write</span><span className="font-semibold text-purple-600 dark:text-purple-400 text-sm">40%</span></div>
-                <div className="h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden"><div className="h-full bg-purple-500 w-[40%] rounded-full"></div></div>
-              </div>
-              <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-3 shadow-sm">
-                <div className="flex justify-between items-end mb-2"><span className="font-bold text-slate-800 dark:text-slate-200 text-sm">Read</span><span className="font-semibold text-blue-600 dark:text-blue-400 text-sm">30%</span></div>
-                <div className="h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden"><div className="h-full bg-blue-500 w-[30%] rounded-full"></div></div>
-              </div>
-              <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-3 shadow-sm">
-                <div className="flex justify-between items-end mb-2"><span className="font-bold text-slate-800 dark:text-slate-200 text-sm">Vocab</span><span className="font-semibold text-amber-600 dark:text-amber-400 text-sm">20%</span></div>
-                <div className="h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden"><div className="h-full bg-amber-500 w-[20%] rounded-full"></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
+          )}
 
-        <div className="sticky top-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 z-10 px-4 py-3 shadow-sm">
-          <div className="max-w-2xl mx-auto flex gap-2 overflow-x-auto no-scrollbar pb-1">
-            {[1, 2, 3, 4, 16].map((weekNum) => {
-              const currentWeek = 2;
-              const isCurrent = weekNum === currentWeek;
-              const isPast = weekNum < currentWeek;
-              return (
-                <button 
-                  key={weekNum} onClick={() => jumpToWeekNative(weekNum)}
-                  className={`flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-semibold whitespace-nowrap outline-none ${isCurrent ? 'bg-blue-600 text-white shadow-sm' : isPast ? 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300' : 'bg-slate-50 dark:bg-slate-900/50 text-slate-400 dark:text-slate-500 border border-slate-200 dark:border-slate-700'}`}
-                >
-                  W{weekNum} {isCurrent && <span className="ml-1 opacity-70">↓</span>}
-                </button>
-              );
-            })}
-          </div>
-        </div>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight text-center mb-6">Your Personalized Plan ✨</h1>
 
-        <div className="max-w-2xl mx-auto p-4 space-y-4">
-          {isLoading ? (
-            <div className="flex flex-col items-center justify-center p-16 gap-4">
-              <RefreshCw className="w-8 h-8 animate-spin text-blue-500" />
-              <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Loading your study plan...</p>
-            </div>
-          ) : fetchError || weeksData.length === 0 ? (
-            <div className="flex flex-col items-center justify-center p-16 gap-5 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700">
-              <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center">
-                <AlertTriangle className="w-8 h-8 text-amber-500" />
+          <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 mb-6 col-span-full shadow-sm">
+            <div className="flex items-center justify-between mx-4 mb-4">
+              <div className="text-center">
+                <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 mb-1 uppercase tracking-wider">Current</p>
+                <div className="text-3xl font-black text-slate-800 dark:text-slate-100">{userStartScore.toFixed(1)}</div>
+              </div>
+              <div className="flex-1 flex justify-center items-center">
+                <div className="h-0.5 w-12 bg-slate-300 dark:bg-slate-600 relative">
+                  <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-2 h-2 border-t-2 border-r-2 border-slate-300 dark:border-slate-600 rotate-45"></div>
+                </div>
               </div>
               <div className="text-center">
-                <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">No study plan found</h3>
-                <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Complete onboarding to generate your personalized roadmap.</p>
-              </div>
-              <div className="flex gap-3">
-                <button onClick={retryGeneration} disabled={isRetrying} className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-xl transition-colors flex items-center gap-2">
-                  {isRetrying ? <RefreshCw className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
-                  Retry
-                </button>
-                <button onClick={handleRetakeOnboarding} className="px-5 py-2.5 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 text-sm font-bold rounded-xl transition-colors">
-                  Retake Onboarding
-                </button>
+                <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 mb-1 uppercase tracking-wider">Target</p>
+                <div className="text-3xl font-black text-blue-600 dark:text-blue-500">{userGoalScore.toFixed(1)}</div>
               </div>
             </div>
-          ) : weeksData.map((week) => {
-            const isExpanded = expandedWeeks.has(week.week_number);
-            const isCurrent = week.status === 'in_progress';
-            const isDone = week.status === 'done';
-            return (
-              <div key={week.week_number} id={`week-mob-${week.week_number}`} className={`bg-white dark:bg-slate-800 rounded-2xl border transition-all duration-300 overflow-hidden shadow-sm ${isCurrent ? 'border-blue-300 dark:border-blue-500/50 ring-4 ring-blue-50 dark:ring-blue-900/20' : 'border-slate-200 dark:border-slate-700'}`}>
-                <button onClick={() => week.status !== 'locked' && toggleWeek(week.week_number)} className={`w-full text-left p-5 flex items-start gap-4 ${week.status === 'locked' ? 'cursor-default opacity-70' : 'cursor-pointer'}`}>
-                  <div className="mt-1 flex-shrink-0">
-                    {isDone ? <CheckCircle2 className="w-6 h-6 text-emerald-500 fill-emerald-50 dark:fill-emerald-900/30" /> : isCurrent ? <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900/30 border-4 border-blue-600 dark:border-blue-500 shadow-sm" /> : <Lock className="w-6 h-6 text-slate-300 dark:text-slate-600" />}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className={`font-bold text-lg truncate ${isCurrent ? 'text-blue-900 dark:text-blue-100' : isDone ? 'text-slate-800 dark:text-slate-200' : 'text-slate-500 dark:text-slate-400'}`}>WEEK {week.week_number} — {week.title}</h3>
-                    <p className={`text-sm mt-1 font-medium ${isCurrent ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500 dark:text-slate-400'}`}>{week.dateRange} <span className="mx-1.5 opacity-50">•</span> {week.status === 'locked' ? 'Locked' : `${week.completedTasks}/${week.totalTasks} tasks`}</p>
-                    {isCurrent && (
-                      <div className="mt-4 flex items-center gap-3">
-                        <div className="flex-1 h-2 bg-blue-100 dark:bg-blue-900/50 rounded-full overflow-hidden"><div className="h-full bg-blue-600 dark:bg-blue-500 rounded-full" style={{ width: `${week.progress}%` }}></div></div>
-                        <span className="text-xs font-bold text-blue-800 dark:text-blue-300">{week.progress}%</span>
-                      </div>
-                    )}
-                  </div>
-                  {week.status !== 'locked' && <div className="flex-shrink-0 text-slate-400 dark:text-slate-500 mt-1">{isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}</div>}
-                </button>
+          </div>
 
-                {isExpanded && week.status !== 'locked' && (
-                  <div className="px-3 pb-5 border-t border-slate-100 dark:border-slate-700 pt-4 bg-slate-50/30 dark:bg-slate-900/30">
-                    {week.goal && (
-                      <div className="mb-5 mx-2 bg-indigo-50/50 dark:bg-indigo-900/20 rounded-xl p-4 border border-indigo-100 dark:border-indigo-800/50">
-                        <p className="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-1">This week's goal</p>
-                        <p className="text-indigo-900 dark:text-indigo-200 font-medium italic">"{week.goal}"</p>
-                      </div>
-                    )}
-                    <div className="space-y-4 mx-2">
-                      {week.days.map((day, dIdx) => <React.Fragment key={dIdx}>{renderDayTasks(day)}</React.Fragment>)}
-                    </div>
-                  </div>
-                )}
-              </div>
+          {/* Priority Bars */}
+          <div className="grid grid-cols-3 gap-3">
+            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-3 shadow-sm">
+              <div className="flex justify-between items-end mb-2"><span className="font-bold text-slate-800 dark:text-slate-200 text-sm">Write</span><span className="font-semibold text-purple-600 dark:text-purple-400 text-sm">40%</span></div>
+              <div className="h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden"><div className="h-full bg-purple-500 w-[40%] rounded-full"></div></div>
+            </div>
+            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-3 shadow-sm">
+              <div className="flex justify-between items-end mb-2"><span className="font-bold text-slate-800 dark:text-slate-200 text-sm">Read</span><span className="font-semibold text-blue-600 dark:text-blue-400 text-sm">30%</span></div>
+              <div className="h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden"><div className="h-full bg-blue-500 w-[30%] rounded-full"></div></div>
+            </div>
+            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-3 shadow-sm">
+              <div className="flex justify-between items-end mb-2"><span className="font-bold text-slate-800 dark:text-slate-200 text-sm">Vocab</span><span className="font-semibold text-amber-600 dark:text-amber-400 text-sm">20%</span></div>
+              <div className="h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden"><div className="h-full bg-amber-500 w-[20%] rounded-full"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="sticky top-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 z-10 px-4 py-3 shadow-sm">
+        <div className="max-w-2xl mx-auto flex gap-2 overflow-x-auto no-scrollbar pb-1">
+          {[1, 2, 3, 4, 16].map((weekNum) => {
+            const currentWeek = 2;
+            const isCurrent = weekNum === currentWeek;
+            const isPast = weekNum < currentWeek;
+            return (
+              <button
+                key={weekNum} onClick={() => jumpToWeekNative(weekNum)}
+                className={`flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-semibold whitespace-nowrap outline-none ${isCurrent ? 'bg-blue-600 text-white shadow-sm' : isPast ? 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300' : 'bg-slate-50 dark:bg-slate-900/50 text-slate-400 dark:text-slate-500 border border-slate-200 dark:border-slate-700'}`}
+              >
+                W{weekNum} {isCurrent && <span className="ml-1 opacity-70">↓</span>}
+              </button>
             );
           })}
         </div>
       </div>
+
+      <div className="max-w-2xl mx-auto p-4 space-y-4">
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center p-16 gap-4">
+            <RefreshCw className="w-8 h-8 animate-spin text-blue-500" />
+            <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Loading your study plan...</p>
+          </div>
+        ) : fetchError || weeksData.length === 0 ? (
+          <div className="flex flex-col items-center justify-center p-16 gap-5 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700">
+            <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center">
+              <AlertTriangle className="w-8 h-8 text-amber-500" />
+            </div>
+            <div className="text-center">
+              <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">No study plan found</h3>
+              <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Complete onboarding to generate your personalized roadmap.</p>
+            </div>
+            <div className="flex gap-3">
+              <button onClick={retryGeneration} disabled={isRetrying} className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-xl transition-colors flex items-center gap-2">
+                {isRetrying ? <RefreshCw className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
+                Retry
+              </button>
+              <button onClick={handleRetakeOnboarding} className="px-5 py-2.5 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 text-sm font-bold rounded-xl transition-colors">
+                Retake Onboarding
+              </button>
+            </div>
+          </div>
+        ) : weeksData.map((week) => {
+          const isExpanded = expandedWeeks.has(week.week_number);
+          const isCurrent = week.status === 'in_progress';
+          const isDone = week.status === 'done';
+          return (
+            <div key={week.week_number} id={`week-mob-${week.week_number}`} className={`bg-white dark:bg-slate-800 rounded-2xl border transition-all duration-300 overflow-hidden shadow-sm ${isCurrent ? 'border-blue-300 dark:border-blue-500/50 ring-4 ring-blue-50 dark:ring-blue-900/20' : 'border-slate-200 dark:border-slate-700'}`}>
+              <button onClick={() => week.status !== 'locked' && toggleWeek(week.week_number)} className={`w-full text-left p-5 flex items-start gap-4 ${week.status === 'locked' ? 'cursor-default opacity-70' : 'cursor-pointer'}`}>
+                <div className="mt-1 flex-shrink-0">
+                  {isDone ? <CheckCircle2 className="w-6 h-6 text-emerald-500 fill-emerald-50 dark:fill-emerald-900/30" /> : isCurrent ? <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900/30 border-4 border-blue-600 dark:border-blue-500 shadow-sm" /> : <Lock className="w-6 h-6 text-slate-300 dark:text-slate-600" />}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className={`font-bold text-lg truncate ${isCurrent ? 'text-blue-900 dark:text-blue-100' : isDone ? 'text-slate-800 dark:text-slate-200' : 'text-slate-500 dark:text-slate-400'}`}>WEEK {week.week_number} — {week.title}</h3>
+                  <p className={`text-sm mt-1 font-medium ${isCurrent ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500 dark:text-slate-400'}`}>{week.dateRange} <span className="mx-1.5 opacity-50">•</span> {week.status === 'locked' ? 'Locked' : `${week.completedTasks}/${week.totalTasks} tasks`}</p>
+                  {isCurrent && (
+                    <div className="mt-4 flex items-center gap-3">
+                      <div className="flex-1 h-2 bg-blue-100 dark:bg-blue-900/50 rounded-full overflow-hidden"><div className="h-full bg-blue-600 dark:bg-blue-500 rounded-full" style={{ width: `${week.progress}%` }}></div></div>
+                      <span className="text-xs font-bold text-blue-800 dark:text-blue-300">{week.progress}%</span>
+                    </div>
+                  )}
+                </div>
+                {week.status !== 'locked' && <div className="flex-shrink-0 text-slate-400 dark:text-slate-500 mt-1">{isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}</div>}
+              </button>
+
+              {isExpanded && week.status !== 'locked' && (
+                <div className="px-3 pb-5 border-t border-slate-100 dark:border-slate-700 pt-4 bg-slate-50/30 dark:bg-slate-900/30">
+                  {week.goal && (
+                    <div className="mb-5 mx-2 bg-indigo-50/50 dark:bg-indigo-900/20 rounded-xl p-4 border border-indigo-100 dark:border-indigo-800/50">
+                      <p className="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-1">This week's goal</p>
+                      <p className="text-indigo-900 dark:text-indigo-200 font-medium italic">"{week.goal}"</p>
+                    </div>
+                  )}
+                  <div className="space-y-4 mx-2">
+                    {week.days.map((day, dIdx) => <React.Fragment key={dIdx}>{renderDayTasks(day)}</React.Fragment>)}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 
   const renderStatsSidebar = () => (
     <div className="space-y-6 animate-in slide-in-from-right-8 duration-500 fade-in w-full pb-8 pr-1 lg:pr-2 h-full">
-       
-       {/* GOAL CARD */}
-       <section className="bg-gradient-to-br from-indigo-900 via-blue-900 to-blue-800 dark:from-indigo-950 dark:via-blue-950 dark:to-blue-900 rounded-3xl p-6 shadow-md border border-blue-800 dark:border-blue-800/50 relative overflow-hidden group">
-          <div className="absolute right-0 top-0 w-32 h-32 bg-white opacity-5 rounded-full blur-2xl -translate-y-8 translate-x-8"></div>
-          <div className="relative z-10 flex items-center justify-between">
-              <div>
-                  <p className="text-blue-200 text-sm font-semibold mb-1 uppercase tracking-widest">Current Band</p>
-                  <p className="text-white text-4xl font-black">{userStartScore.toFixed(1)} <span className="text-emerald-400 text-sm font-bold ml-2 bg-emerald-400/20 px-2 py-0.5 rounded align-middle">+0.1 this week</span></p>
-              </div>
+
+      {/* GOAL CARD */}
+      <section className="bg-gradient-to-br from-indigo-900 via-blue-900 to-blue-800 dark:from-indigo-950 dark:via-blue-950 dark:to-blue-900 rounded-3xl p-6 shadow-md border border-blue-800 dark:border-blue-800/50 relative overflow-hidden group">
+        <div className="absolute right-0 top-0 w-32 h-32 bg-white opacity-5 rounded-full blur-2xl -translate-y-8 translate-x-8"></div>
+        <div className="relative z-10 flex items-center justify-between">
+          <div>
+            <p className="text-blue-200 text-sm font-semibold mb-1 uppercase tracking-widest">Current Band</p>
+            <p className="text-white text-4xl font-black">{userStartScore.toFixed(1)} <span className="text-emerald-400 text-sm font-bold ml-2 bg-emerald-400/20 px-2 py-0.5 rounded align-middle">+0.1 this week</span></p>
           </div>
-          <div className="h-px w-full bg-blue-800/50 my-5 relative z-10"></div>
-          <div className="relative z-10 flex items-center justify-between">
-              <div>
-                  <p className="text-blue-300 text-xs font-semibold uppercase tracking-wider">Target Band</p>
-                  <p className="text-white text-lg font-bold">{userGoalScore.toFixed(1)}</p>
-              </div>
+        </div>
+        <div className="h-px w-full bg-blue-800/50 my-5 relative z-10"></div>
+        <div className="relative z-10 flex items-center justify-between">
+          <div>
+            <p className="text-blue-300 text-xs font-semibold uppercase tracking-wider">Target Band</p>
+            <p className="text-white text-lg font-bold">{userGoalScore.toFixed(1)}</p>
+          </div>
+          <div className="text-right">
+            <p className="text-blue-300 text-xs font-semibold uppercase tracking-wider">Projected ETA</p>
+            <p className="text-white text-lg font-bold">Week {currentPlanWeeks}</p>
+          </div>
+        </div>
+      </section>
+
+      {/* SKILL PROGRESS */}
+      <section className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+        <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100 mb-5 flex items-center gap-2">
+          <span className="w-1 h-5 bg-purple-500 rounded-full"></span> Skill Progress
+        </h2>
+        <div className="space-y-5">
+          <div>
+            <div className="flex justify-between items-end mb-1.5">
+              <span className="text-slate-700 dark:text-slate-300 font-bold text-sm">Writing</span>
               <div className="text-right">
-                  <p className="text-blue-300 text-xs font-semibold uppercase tracking-wider">Projected ETA</p>
-                  <p className="text-white text-lg font-bold">Week {currentPlanWeeks}</p>
+                <span className="text-slate-400 dark:text-slate-500 font-medium text-xs mr-2 border-r border-slate-200 dark:border-slate-700 pr-2">{skillProgress.writing}%</span>
+                <span className="text-purple-700 dark:text-purple-300 font-bold text-sm bg-purple-50 dark:bg-purple-900/20 px-1.5 py-0.5 rounded shadow-sm border border-purple-100 dark:border-purple-800/30">+0.25 band</span>
               </div>
+            </div>
+            <div className="h-2 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden"><div className="h-full bg-purple-500 rounded-full transition-all duration-1000" style={{ width: `${skillProgress.writing}%` }}></div></div>
           </div>
-       </section>
+          <div>
+            <div className="flex justify-between items-end mb-1.5">
+              <span className="text-slate-700 dark:text-slate-300 font-bold text-sm">Reading</span>
+              <div className="text-right">
+                <span className="text-slate-400 dark:text-slate-500 font-medium text-xs mr-2 border-r border-slate-200 dark:border-slate-700 pr-2">{skillProgress.reading}%</span>
+                <span className="text-blue-700 dark:text-blue-300 font-bold text-sm bg-blue-50 dark:bg-blue-900/20 px-1.5 py-0.5 rounded shadow-sm border border-blue-100 dark:border-blue-800/30">+5% var.</span>
+              </div>
+            </div>
+            <div className="h-2 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden"><div className="h-full bg-blue-500 rounded-full transition-all duration-1000" style={{ width: `${skillProgress.reading}%` }}></div></div>
+          </div>
+          <div>
+            <div className="flex justify-between items-end mb-1.5">
+              <span className="text-slate-700 dark:text-slate-300 font-bold text-sm">Vocabulary</span>
+              <div className="text-right">
+                <span className="text-slate-400 dark:text-slate-500 font-medium text-xs mr-2 border-r border-slate-200 dark:border-slate-700 pr-2">{skillProgress.vocab}%</span>
+                <span className="text-amber-700 dark:text-amber-300 font-bold text-sm bg-amber-50 dark:bg-amber-900/20 px-1.5 py-0.5 rounded shadow-sm border border-amber-100 dark:border-amber-800/30">95% retention</span>
+              </div>
+            </div>
+            <div className="h-2 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden"><div className="h-full bg-amber-500 rounded-full transition-all duration-1000" style={{ width: `${skillProgress.vocab}%` }}></div></div>
+          </div>
+          <div>
+            <div className="flex justify-between items-end mb-1.5">
+              <span className="text-slate-700 dark:text-slate-300 font-bold text-sm">Listening</span>
+              <div className="text-right">
+                <span className="text-slate-400 dark:text-slate-500 font-medium text-xs mr-2 border-r border-slate-200 dark:border-slate-700 pr-2">{skillProgress.listening}%</span>
+                <span className="text-teal-700 dark:text-teal-300 font-bold text-sm bg-teal-50 dark:bg-teal-900/20 px-1.5 py-0.5 rounded shadow-sm border border-teal-100 dark:border-teal-800/30">On Track</span>
+              </div>
+            </div>
+            <div className="h-2 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden"><div className="h-full bg-teal-500 rounded-full transition-all duration-1000" style={{ width: `${skillProgress.listening}%` }}></div></div>
+          </div>
+        </div>
+      </section>
 
-       {/* SKILL PROGRESS */}
-       <section className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
-          <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100 mb-5 flex items-center gap-2">
-            <span className="w-1 h-5 bg-purple-500 rounded-full"></span> Skill Progress
-          </h2>
-          <div className="space-y-5">
-            <div>
-              <div className="flex justify-between items-end mb-1.5">
-                  <span className="text-slate-700 dark:text-slate-300 font-bold text-sm">Writing</span>
-                  <div className="text-right">
-                      <span className="text-slate-400 dark:text-slate-500 font-medium text-xs mr-2 border-r border-slate-200 dark:border-slate-700 pr-2">{skillProgress.writing}%</span>
-                      <span className="text-purple-700 dark:text-purple-300 font-bold text-sm bg-purple-50 dark:bg-purple-900/20 px-1.5 py-0.5 rounded shadow-sm border border-purple-100 dark:border-purple-800/30">+0.25 band</span>
-                  </div>
-              </div>
-              <div className="h-2 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden"><div className="h-full bg-purple-500 rounded-full transition-all duration-1000" style={{ width: `${skillProgress.writing}%` }}></div></div>
-            </div>
-            <div>
-              <div className="flex justify-between items-end mb-1.5">
-                  <span className="text-slate-700 dark:text-slate-300 font-bold text-sm">Reading</span>
-                  <div className="text-right">
-                      <span className="text-slate-400 dark:text-slate-500 font-medium text-xs mr-2 border-r border-slate-200 dark:border-slate-700 pr-2">{skillProgress.reading}%</span>
-                      <span className="text-blue-700 dark:text-blue-300 font-bold text-sm bg-blue-50 dark:bg-blue-900/20 px-1.5 py-0.5 rounded shadow-sm border border-blue-100 dark:border-blue-800/30">+5% var.</span>
-                  </div>
-              </div>
-              <div className="h-2 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden"><div className="h-full bg-blue-500 rounded-full transition-all duration-1000" style={{ width: `${skillProgress.reading}%` }}></div></div>
-            </div>
-            <div>
-              <div className="flex justify-between items-end mb-1.5">
-                  <span className="text-slate-700 dark:text-slate-300 font-bold text-sm">Vocabulary</span>
-                  <div className="text-right">
-                      <span className="text-slate-400 dark:text-slate-500 font-medium text-xs mr-2 border-r border-slate-200 dark:border-slate-700 pr-2">{skillProgress.vocab}%</span>
-                      <span className="text-amber-700 dark:text-amber-300 font-bold text-sm bg-amber-50 dark:bg-amber-900/20 px-1.5 py-0.5 rounded shadow-sm border border-amber-100 dark:border-amber-800/30">95% retention</span>
-                  </div>
-              </div>
-              <div className="h-2 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden"><div className="h-full bg-amber-500 rounded-full transition-all duration-1000" style={{ width: `${skillProgress.vocab}%` }}></div></div>
-            </div>
-            <div>
-              <div className="flex justify-between items-end mb-1.5">
-                  <span className="text-slate-700 dark:text-slate-300 font-bold text-sm">Listening</span>
-                  <div className="text-right">
-                      <span className="text-slate-400 dark:text-slate-500 font-medium text-xs mr-2 border-r border-slate-200 dark:border-slate-700 pr-2">{skillProgress.listening}%</span>
-                      <span className="text-teal-700 dark:text-teal-300 font-bold text-sm bg-teal-50 dark:bg-teal-900/20 px-1.5 py-0.5 rounded shadow-sm border border-teal-100 dark:border-teal-800/30">On Track</span>
-                  </div>
-              </div>
-              <div className="h-2 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden"><div className="h-full bg-teal-500 rounded-full transition-all duration-1000" style={{ width: `${skillProgress.listening}%` }}></div></div>
-            </div>
-          </div>
-        </section>
+      {/* PREDICTED BAND SCORE */}
+      <section className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 relative overflow-hidden group">
+        <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100 mb-2 flex items-center gap-2 relative z-10">
+          <TrendingUp className="w-5 h-5 text-emerald-500" /> Predicted Band Score
+        </h3>
+        <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 mb-6 relative z-10">
+          <span className="text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 rounded-md font-bold">On track</span> to reach Band {userGoalScore.toFixed(1)} by Week {currentPlanWeeks}.
+        </p>
 
-       {/* PREDICTED BAND SCORE */}
-       <section className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 relative overflow-hidden group">
-          <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100 mb-2 flex items-center gap-2 relative z-10">
-              <TrendingUp className="w-5 h-5 text-emerald-500" /> Predicted Band Score
-          </h3>
-          <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 mb-6 relative z-10">
-              <span className="text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 rounded-md font-bold">On track</span> to reach Band {userGoalScore.toFixed(1)} by Week {currentPlanWeeks}.
-          </p>
-          
-          <div className="h-[200px] w-full relative z-10">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={chartData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" className="dark:opacity-20" />
-                    <XAxis dataKey="week" axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 11, fontWeight: 500}} dy={10} />
-                    <YAxis domain={['auto', 'auto']} axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 11, fontWeight: 600}} />
-                    <Tooltip contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontWeight: 'bold' }} cursor={{stroke: '#cbd5e1', strokeWidth: 1, strokeDasharray: '4 4'}} />
-                    
-                    <ReferenceLine y={userGoalScore} stroke="#10B981" strokeDasharray="4 4" label={{ position: 'insideTopLeft', value: `Target ${userGoalScore.toFixed(1)}`, fill: '#10B981', fontSize: 11, fontWeight: 'bold', dy: -10 }} />
-                    
-                    {/* The Projection line */}
-                    <Line type="monotone" dataKey="projected" stroke="#cbd5e1" className="dark:opacity-30" strokeWidth={3} strokeDasharray="6 6" dot={false} name="Projected" activeDot={false} />
-                    {/* The Actual Realized Data */}
-                    <Line type="monotone" dataKey="current" stroke="#2563EB" strokeWidth={4} dot={{r: 4, fill: '#2563EB', strokeWidth: 2, stroke: '#fff'}} activeDot={{r: 6, stroke: '#fff', strokeWidth: 3}} name="Current Level" />
-                </LineChart>
-              </ResponsiveContainer>
-          </div>
-          
-          <div className="flex items-center gap-4 mt-4 text-xs font-semibold text-slate-500 dark:text-slate-400 relative z-10">
-              <div className="flex items-center gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-blue-600"></div> Current</div>
-              <div className="flex items-center gap-1.5"><div className="w-3 h-[3px] border-t-2 border-dashed border-slate-300 dark:border-slate-600"></div> Projection</div>
-          </div>
-       </section>
+        <div className="h-[200px] w-full relative z-10">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={chartData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" className="dark:opacity-20" />
+              <XAxis dataKey="week" axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 11, fontWeight: 500 }} dy={10} />
+              <YAxis domain={['auto', 'auto']} axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 11, fontWeight: 600 }} />
+              <Tooltip contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontWeight: 'bold' }} cursor={{ stroke: '#cbd5e1', strokeWidth: 1, strokeDasharray: '4 4' }} />
+
+              <ReferenceLine y={userGoalScore} stroke="#10B981" strokeDasharray="4 4" label={{ position: 'insideTopLeft', value: `Target ${userGoalScore.toFixed(1)}`, fill: '#10B981', fontSize: 11, fontWeight: 'bold', dy: -10 }} />
+
+              {/* The Projection line */}
+              <Line type="monotone" dataKey="projected" stroke="#cbd5e1" className="dark:opacity-30" strokeWidth={3} strokeDasharray="6 6" dot={false} name="Projected" activeDot={false} />
+              {/* The Actual Realized Data */}
+              <Line type="monotone" dataKey="current" stroke="#2563EB" strokeWidth={4} dot={{ r: 4, fill: '#2563EB', strokeWidth: 2, stroke: '#fff' }} activeDot={{ r: 6, stroke: '#fff', strokeWidth: 3 }} name="Current Level" />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="flex items-center gap-4 mt-4 text-xs font-semibold text-slate-500 dark:text-slate-400 relative z-10">
+          <div className="flex items-center gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-blue-600"></div> Current</div>
+          <div className="flex items-center gap-1.5"><div className="w-3 h-[3px] border-t-2 border-dashed border-slate-300 dark:border-slate-600"></div> Projection</div>
+        </div>
+      </section>
 
     </div>
   );
@@ -914,7 +914,7 @@ export default function Roadmap() {
           <p className="text-slate-500 dark:text-slate-400 mb-8 leading-relaxed">
             We experienced an issue creating your personalized study plan. Don't worry, your answers were saved safely on your device!
           </p>
-          <button 
+          <button
             onClick={retryGeneration}
             disabled={isRetrying}
             className="w-full bg-blue-600 hover:bg-blue-700 active:scale-95 transition-all text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 shadow-sm"
@@ -932,7 +932,7 @@ export default function Roadmap() {
 
   return (
     <div className="h-full min-h-[calc(100vh-4rem)] flex flex-col w-full relative overflow-hidden bg-slate-50 dark:bg-slate-900">
-      
+
       {/* 
         ========================================
         MOBILE LAYOUT (max-width: md)
@@ -942,11 +942,11 @@ export default function Roadmap() {
         {activeTab === 'today' && renderMobileTodayView()}
         {activeTab === 'plan' && renderMobilePlanView()}
         {activeTab === 'stats' && (
-           <div className="flex-1 overflow-y-auto pb-24 bg-slate-50 dark:bg-slate-900 p-4">
-               {renderStatsSidebar()}
-           </div>
+          <div className="flex-1 overflow-y-auto pb-24 bg-slate-50 dark:bg-slate-900 p-4">
+            {renderStatsSidebar()}
+          </div>
         )}
-        
+
         {['tasks', 'more'].includes(activeTab) && (
           <div className="flex-1 flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-900 pb-24">
             <div className="w-16 h-16 bg-slate-200 dark:bg-slate-800 rounded-2xl mb-4 flex items-center justify-center opacity-50"><CheckSquare className="w-8 h-8" /></div>
@@ -988,235 +988,235 @@ export default function Roadmap() {
         ========================================
       */}
       <div className="hidden md:flex flex-1 w-full max-w-[1600px] mx-auto p-4 lg:p-6 xl:p-8 gap-4 lg:gap-6 xl:gap-8 overflow-hidden h-full">
-        
+
         {/* COL 1: Week List (Sidebar) */}
         <div className="w-[280px] lg:w-[320px] flex-shrink-0 flex flex-col overflow-hidden bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm relative z-10">
-           
-           <div className="p-5 lg:p-6 border-b border-slate-100 dark:border-slate-700/50 bg-slate-50/50 dark:bg-slate-900/50 flex items-center justify-between">
-              <div>
-                 <h2 className="text-lg lg:text-xl font-bold text-slate-800 dark:text-slate-100 tracking-tight flex items-center gap-2">
-                     <CalendarDays className="w-5 h-5 text-blue-600 dark:text-blue-500" /> My Roadmap
-                 </h2>
-                 <p className="text-slate-500 dark:text-slate-400 font-medium text-xs lg:text-sm mt-1">Select a week to view plan</p>
-              </div>
-              
-              <button 
-                onClick={handleRetakeOnboarding}
-                className="p-2 text-slate-400 dark:text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors flex items-center xl:gap-1.5" 
-                title="Retake Onboarding (Generate new roadmap)"
-              >
-                  <RotateCcw className="w-5 h-5" />
-                  <span className="hidden xl:block text-[13px] font-bold">Retake</span>
-              </button>
-           </div>
-           
-           <div className="flex-1 overflow-y-auto no-scrollbar py-2">
-             {weeksData.map((w, i) => {
-                const isSelected = selectedDesktopWeek === w.week_number;
-                const isDone = w.status === 'done';
-                const isCurrent = w.status === 'in_progress';
-                const isLocked = false; // Forced unlock for all weeks
 
-                return (
-                 <button 
-                  key={w.week_number} 
+          <div className="p-5 lg:p-6 border-b border-slate-100 dark:border-slate-700/50 bg-slate-50/50 dark:bg-slate-900/50 flex items-center justify-between">
+            <div>
+              <h2 className="text-lg lg:text-xl font-bold text-slate-800 dark:text-slate-100 tracking-tight flex items-center gap-2">
+                <CalendarDays className="w-5 h-5 text-blue-600 dark:text-blue-500" /> My Roadmap
+              </h2>
+              <p className="text-slate-500 dark:text-slate-400 font-medium text-xs lg:text-sm mt-1">Select a week to view plan</p>
+            </div>
+
+            <button
+              onClick={handleRetakeOnboarding}
+              className="p-2 text-slate-400 dark:text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors flex items-center xl:gap-1.5"
+              title="Retake Onboarding (Generate new roadmap)"
+            >
+              <RotateCcw className="w-5 h-5" />
+              <span className="hidden xl:block text-[13px] font-bold">Retake</span>
+            </button>
+          </div>
+
+          <div className="flex-1 overflow-y-auto no-scrollbar py-2">
+            {weeksData.map((w, i) => {
+              const isSelected = selectedDesktopWeek === w.week_number;
+              const isDone = w.status === 'done';
+              const isCurrent = w.status === 'in_progress';
+              const isLocked = false; // Forced unlock for all weeks
+
+              return (
+                <button
+                  key={w.week_number}
                   onClick={() => !isLocked && setSelectedDesktopWeek(w.week_number)}
                   className={`w-full text-left p-4 lg:p-5 border-b border-slate-50/50 dark:border-slate-700/50 flex items-start gap-3.5 transition-all outline-none
                     ${isLocked ? 'opacity-60 cursor-default hover:bg-transparent' : 'cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/30'}
                     ${isSelected ? 'bg-blue-50/50 dark:bg-blue-900/20' : ''}
                   `}
-                 >
-                    {/* Compact Status Indicator */}
-                    <div className="mt-0.5 flex-shrink-0">
-                      {isDone ? <CheckCircle2 className={`w-5 h-5 ${isSelected ? 'text-emerald-500 dark:text-emerald-400' : 'text-slate-300 dark:text-slate-600'}`} /> :
-                       isCurrent ? <div className={`w-3 h-3 mt-1 rounded-full ${isSelected ? 'bg-blue-600 dark:bg-blue-500 shadow-[0_0_0_4px_rgba(37,99,235,0.1)] dark:shadow-[0_0_0_4px_rgba(59,130,246,0.2)]' : 'bg-blue-400 dark:bg-blue-500'}`} /> : 
-                       <Lock className="w-4 h-4 text-slate-300 dark:text-slate-600 mt-0.5" />}
-                    </div>
-                    
-                    <div className="flex-1 min-w-0 pr-2">
-                      <h3 className={`font-bold text-[14px] lg:text-[15px] truncate flex items-center gap-2 ${isSelected ? 'text-blue-900 dark:text-blue-100' : isDone ? 'text-slate-700 dark:text-slate-300' : 'text-slate-600 dark:text-slate-400'}`}>
-                        Week {w.week_number}: {w.title}
-                        {isLocked && <Lock className="w-3 h-3 text-slate-300 dark:text-slate-600" />}
-                      </h3>
-                      
-                      {isLocked ? (
-                        <p className="text-[11px] lg:text-[12px] mt-1 font-medium text-slate-400 dark:text-slate-500">
-                           Unlock after Week {w.week_number - 1} · {w.dateRange}
-                        </p>
-                      ) : (
-                        <p className={`text-[11px] lg:text-[12px] mt-1 font-semibold ${isSelected ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500 dark:text-slate-400'}`}>
-                           {w.dateRange} <span className="mx-1 opacity-50">•</span> {w.completedTasks} of {w.totalTasks} Tasks
-                        </p>
-                      )}
+                >
+                  {/* Compact Status Indicator */}
+                  <div className="mt-0.5 flex-shrink-0">
+                    {isDone ? <CheckCircle2 className={`w-5 h-5 ${isSelected ? 'text-emerald-500 dark:text-emerald-400' : 'text-slate-300 dark:text-slate-600'}`} /> :
+                      isCurrent ? <div className={`w-3 h-3 mt-1 rounded-full ${isSelected ? 'bg-blue-600 dark:bg-blue-500 shadow-[0_0_0_4px_rgba(37,99,235,0.1)] dark:shadow-[0_0_0_4px_rgba(59,130,246,0.2)]' : 'bg-blue-400 dark:bg-blue-500'}`} /> :
+                        <Lock className="w-4 h-4 text-slate-300 dark:text-slate-600 mt-0.5" />}
+                  </div>
 
-                      {/* Single small progress bar only if selected AND in progress */}
-                      {isSelected && isCurrent && (
-                        <div className="mt-3 flex items-center gap-2">
-                          <div className="flex-1 h-1 bg-blue-100 dark:bg-blue-900/50 rounded-full overflow-hidden"><div className="h-full bg-blue-600 dark:bg-blue-500 rounded-full" style={{ width: `${w.progress}%` }}></div></div>
-                        </div>
-                      )}
-                    </div>
-                 </button>
-                )
-             })}
-           </div>
+                  <div className="flex-1 min-w-0 pr-2">
+                    <h3 className={`font-bold text-[14px] lg:text-[15px] truncate flex items-center gap-2 ${isSelected ? 'text-blue-900 dark:text-blue-100' : isDone ? 'text-slate-700 dark:text-slate-300' : 'text-slate-600 dark:text-slate-400'}`}>
+                      Week {w.week_number}: {w.title}
+                      {isLocked && <Lock className="w-3 h-3 text-slate-300 dark:text-slate-600" />}
+                    </h3>
+
+                    {isLocked ? (
+                      <p className="text-[11px] lg:text-[12px] mt-1 font-medium text-slate-400 dark:text-slate-500">
+                        Unlock after Week {w.week_number - 1} · {w.dateRange}
+                      </p>
+                    ) : (
+                      <p className={`text-[11px] lg:text-[12px] mt-1 font-semibold ${isSelected ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500 dark:text-slate-400'}`}>
+                        {w.dateRange} <span className="mx-1 opacity-50">•</span> {w.completedTasks} of {w.totalTasks} Tasks
+                      </p>
+                    )}
+
+                    {/* Single small progress bar only if selected AND in progress */}
+                    {isSelected && isCurrent && (
+                      <div className="mt-3 flex items-center gap-2">
+                        <div className="flex-1 h-1 bg-blue-100 dark:bg-blue-900/50 rounded-full overflow-hidden"><div className="h-full bg-blue-600 dark:bg-blue-500 rounded-full" style={{ width: `${w.progress}%` }}></div></div>
+                      </div>
+                    )}
+                  </div>
+                </button>
+              )
+            })}
+          </div>
         </div>
 
         {/* COL 2: Day Details (Main View) */}
         <div className="flex-1 flex flex-col bg-slate-50/50 dark:bg-slate-900/50 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-inner overflow-hidden min-w-[350px] lg:min-w-[450px]">
-           <div className="flex-1 overflow-y-auto p-5 md:p-6 lg:p-8 xl:p-10 space-y-6 xl:space-y-8 bg-gradient-to-b from-white to-transparent dark:from-slate-800/80 dark:to-transparent">
-              
-              {/* TOP: Week Header Summary */}
-              {weeksData.find(w => w.week_number === selectedDesktopWeek) && (() => {
-                 const currentWeekInfo = weeksData.find(w => w.week_number === selectedDesktopWeek) || weeksData[0];
-                 return (
-                  <div className="space-y-6">
-                    <div className="flex items-start justify-between">
-                        <div>
-                          <h1 className="text-2xl xl:text-3xl font-black text-slate-900 dark:text-white tracking-tight mb-2">
-                            Week {currentWeekInfo.week_number}: {currentWeekInfo.title}
-                          </h1>
-                          <p className="text-slate-600 dark:text-slate-400 font-medium flex flex-wrap items-center gap-2 lg:gap-3 text-sm lg:text-base">
-                             <span>{currentWeekInfo.dateRange}</span>
-                             <span className="w-1 h-1 bg-slate-400 dark:bg-slate-600 rounded-full"></span>
-                             <span className="font-bold text-slate-800 dark:text-slate-200">{currentWeekInfo.completedTasks}/{currentWeekInfo.totalTasks} tasks complete</span>
-                             <span className="w-1 h-1 bg-slate-400 dark:bg-slate-600 rounded-full"></span>
-                             <span className="text-blue-700 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-900/20 px-2 py-0.5 rounded-md">{currentWeekInfo.totalTasks - currentWeekInfo.completedTasks} tasks left</span>
-                          </p>
-                        </div>
-                        {selectedDesktopWeek === 2 && (
-                          <div className="inline-flex items-center gap-2 bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-900/20 dark:to-amber-900/20 text-orange-700 dark:text-orange-400 px-4 py-2 rounded-xl font-bold border border-orange-100/60 dark:border-orange-800/30 shadow-sm animate-in zoom-in-95 shrink-0 hidden sm:flex">
-                            <Flame className="w-4 h-4 fill-orange-500 text-orange-500 dark:fill-orange-400 dark:text-orange-400" /> 4-day streak!
-                          </div>
-                        )}
+          <div className="flex-1 overflow-y-auto p-5 md:p-6 lg:p-8 xl:p-10 space-y-6 xl:space-y-8 bg-gradient-to-b from-white to-transparent dark:from-slate-800/80 dark:to-transparent">
+
+            {/* TOP: Week Header Summary */}
+            {weeksData.find(w => w.week_number === selectedDesktopWeek) && (() => {
+              const currentWeekInfo = weeksData.find(w => w.week_number === selectedDesktopWeek) || weeksData[0];
+              return (
+                <div className="space-y-6">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <h1 className="text-2xl xl:text-3xl font-black text-slate-900 dark:text-white tracking-tight mb-2">
+                        Week {currentWeekInfo.week_number}: {currentWeekInfo.title}
+                      </h1>
+                      <p className="text-slate-600 dark:text-slate-400 font-medium flex flex-wrap items-center gap-2 lg:gap-3 text-sm lg:text-base">
+                        <span>{currentWeekInfo.dateRange}</span>
+                        <span className="w-1 h-1 bg-slate-400 dark:bg-slate-600 rounded-full"></span>
+                        <span className="font-bold text-slate-800 dark:text-slate-200">{currentWeekInfo.completedTasks}/{currentWeekInfo.totalTasks} tasks complete</span>
+                        <span className="w-1 h-1 bg-slate-400 dark:bg-slate-600 rounded-full"></span>
+                        <span className="text-blue-700 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-900/20 px-2 py-0.5 rounded-md">{currentWeekInfo.totalTasks - currentWeekInfo.completedTasks} tasks left</span>
+                      </p>
                     </div>
-
-                    {/* Continue Next Task CTA (Only if current week) */}
-                    {currentWeekInfo.status === 'in_progress' && (() => {
-                        const nextTask = currentWeekInfo.days.flatMap((d: DayPlan) => d.tasks).find((t: DailyTask) => t.status === 'today');
-                        if (!nextTask) return null;
-                        return (
-                          <div className="bg-white dark:bg-slate-800 border-2 border-blue-600 dark:border-blue-500 rounded-2xl p-5 lg:p-6 shadow-[0_10px_30px_-10px_rgba(37,99,235,0.2)] dark:shadow-[0_10px_30px_-10px_rgba(59,130,246,0.15)] relative overflow-hidden group animate-in slide-in-from-bottom-4 duration-500">
-                            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50/50 dark:bg-blue-900/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
-                            
-                            <p className="text-sm font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-                               <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 animate-pulse"></span> Continue next task
-                            </p>
-                            
-                            <div className="flex items-start gap-4 mb-6 lg:mb-8 relative z-10">
-                               <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-700/50 shadow-sm shrink-0">
-                                   <SkillIcon type={nextTask.type} className="w-8 h-8 lg:w-10 lg:h-10" />
-                               </div>
-                               <div>
-                                   <h3 className="text-xl lg:text-2xl font-bold text-slate-900 dark:text-white leading-tight mb-2">{nextTask.title}</h3>
-                                   <div className="flex flex-wrap items-center gap-2 text-[13px] lg:text-sm font-semibold">
-                                       <span className="bg-slate-100 dark:bg-slate-700/50 text-slate-700 dark:text-slate-300 px-2.5 py-1 rounded-md">{nextTask.duration} min</span>
-                                       <span className="bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 px-2.5 py-1 rounded-md flex items-center gap-1.5 border border-blue-100 dark:border-blue-800/30"><TrendingUp className="w-3.5 h-3.5" /> Recommended next</span>
-                                       <span className="bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 px-2.5 py-1 rounded-md flex items-center gap-1.5 border border-amber-100 dark:border-amber-800/30"><CalendarDays className="w-3.5 h-3.5" /> Due today</span>
-                                   </div>
-                               </div>
-                            </div>
-                            
-                            <div className="flex flex-col sm:flex-row items-center gap-3 relative z-10">
-                               <button 
-                                 onClick={() => navigate(getTaskRoute(nextTask))}
-                                 className="w-full sm:flex-1 bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white font-bold py-3.5 lg:py-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm"
-                               >
-                                   Start task <ArrowRight className="w-4 h-4 ml-0.5" />
-                               </button>
-                               <button 
-                                  onClick={() => document.getElementById(`day-view-start`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-                                  className="w-full sm:w-auto sm:px-8 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 active:bg-slate-100 dark:active:bg-slate-600 text-slate-700 dark:text-slate-300 font-bold py-3.5 lg:py-4 rounded-xl border-2 border-slate-200 dark:border-slate-600 flex items-center justify-center gap-2 transition-all"
-                               >
-                                   View week plan
-                               </button>
-                            </div>
-                          </div>
-                        );
-                    })()}
-
-                    {/* AI Update Collapsed */}
-                    {showUpdateBanner && selectedDesktopWeek === 2 && (
-                      <div className="bg-indigo-50/50 dark:bg-indigo-900/20 border border-indigo-100/80 dark:border-indigo-800/50 rounded-2xl p-4 lg:p-5 shadow-sm relative group cursor-pointer hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:border-indigo-200 dark:hover:border-indigo-700/50 transition-all animate-in zoom-in-95 duration-500" onClick={() => setShowUpdateBanner(false)}>
-                        <div className="flex items-center justify-between gap-4">
-                          <div className="flex items-center gap-3 lg:gap-4">
-                              <div className="bg-white dark:bg-slate-800 p-2 lg:p-2.5 text-indigo-600 dark:text-indigo-400 rounded-full shadow-[0_2px_8px_-2px_rgba(79,70,229,0.2)] dark:shadow-[0_2px_8px_-2px_rgba(99,102,241,0.15)] border border-indigo-50 dark:border-indigo-900/50 shrink-0">
-                                  <RefreshCw className="w-4 h-4 lg:w-5 lg:h-5 animate-spin-slow" />
-                              </div>
-                              <div>
-                                  <p className="font-bold text-indigo-900 dark:text-indigo-100 text-sm lg:text-[15px]">Study plan updated based on your performance</p>
-                                  <p className="text-xs lg:text-sm font-medium text-indigo-600/80 dark:text-indigo-400/80 mt-0.5 max-w-md truncate hidden sm:block">"Based on your performance in Writing Task 1..."</p>
-                              </div>
-                          </div>
-                          <button className="text-[13px] lg:text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg flex items-center gap-1.5 transition-colors shadow-sm shrink-0 whitespace-nowrap">
-                              View changes <ArrowRight className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
+                    {selectedDesktopWeek === 2 && (
+                      <div className="inline-flex items-center gap-2 bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-900/20 dark:to-amber-900/20 text-orange-700 dark:text-orange-400 px-4 py-2 rounded-xl font-bold border border-orange-100/60 dark:border-orange-800/30 shadow-sm animate-in zoom-in-95 shrink-0 hidden sm:flex">
+                        <Flame className="w-4 h-4 fill-orange-500 text-orange-500 dark:fill-orange-400 dark:text-orange-400" /> 4-day streak!
                       </div>
                     )}
                   </div>
-                 );
-              })()}
 
-              {/* Categorized Days List */}
-              <div id="day-view-start" className="space-y-10 xl:space-y-12 pb-12 pt-4">
-                {weeksData.find(w => w.week_number === selectedDesktopWeek) && (() => {
-                    const days = weeksData.find(w => w.week_number === selectedDesktopWeek)?.days || [];
-                    
-                    const todayDays = days.filter(d => d.isToday);
-                    const completedDays = days.filter(d => !d.isToday && d.tasks.every(t => t.status === 'done' || t.status === 'missed'));
-                    const upcomingDays = days.filter(d => !d.isToday && d.tasks.some(t => t.status === 'locked' || t.status === 'today'));
-
+                  {/* Continue Next Task CTA (Only if current week) */}
+                  {currentWeekInfo.status === 'in_progress' && (() => {
+                    const nextTask = currentWeekInfo.days.flatMap((d: DayPlan) => d.tasks).find((t: DailyTask) => t.status === 'today');
+                    if (!nextTask) return null;
                     return (
-                      <>
-                        {/* TODAY SECTION */}
-                        {todayDays.length > 0 && (
-                          <div className="space-y-4">
-                             <div className="flex items-center gap-3">
-                                 <h3 className="text-[13px] font-black tracking-widest text-slate-400 dark:text-slate-500 uppercase">Today</h3>
-                                 <div className="h-px bg-slate-200 dark:bg-slate-700/50 flex-1"></div>
-                             </div>
-                             <div className="space-y-4">
-                               {todayDays.map((day, dIdx) => <React.Fragment key={dIdx}>{renderDayTasks(day)}</React.Fragment>)}
-                             </div>
-                          </div>
-                        )}
+                      <div className="bg-white dark:bg-slate-800 border-2 border-blue-600 dark:border-blue-500 rounded-2xl p-5 lg:p-6 shadow-[0_10px_30px_-10px_rgba(37,99,235,0.2)] dark:shadow-[0_10px_30px_-10px_rgba(59,130,246,0.15)] relative overflow-hidden group animate-in slide-in-from-bottom-4 duration-500">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50/50 dark:bg-blue-900/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
 
-                        {/* UPCOMING SECTION */}
-                        {upcomingDays.length > 0 && (
-                          <div className="space-y-4">
-                             <div className="flex items-center gap-3">
-                                 <h3 className="text-[13px] font-black tracking-widest text-slate-400 dark:text-slate-500 uppercase">Upcoming</h3>
-                                 <div className="h-px bg-slate-200 dark:bg-slate-700/50 flex-1"></div>
-                             </div>
-                             <div className="space-y-4">
-                               {upcomingDays.map((day, dIdx) => <React.Fragment key={dIdx}>{renderDayTasks(day)}</React.Fragment>)}
-                             </div>
-                          </div>
-                        )}
+                        <p className="text-sm font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                          <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 animate-pulse"></span> Continue next task
+                        </p>
 
-                        {/* COMPLETED SECTION */}
-                        {completedDays.length > 0 && (
-                          <div className="space-y-4 opacity-80">
-                             <div className="flex items-center gap-3">
-                                 <h3 className="text-[13px] font-black tracking-widest text-slate-400 dark:text-slate-500 uppercase">Completed</h3>
-                                 <div className="h-px bg-slate-200 dark:bg-slate-700/50 flex-1"></div>
-                             </div>
-                             <div className="space-y-4">
-                               {completedDays.map((day, dIdx) => <React.Fragment key={dIdx}>{renderDayTasks(day)}</React.Fragment>)}
-                             </div>
+                        <div className="flex items-start gap-4 mb-6 lg:mb-8 relative z-10">
+                          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-700/50 shadow-sm shrink-0">
+                            <SkillIcon type={nextTask.type} className="w-8 h-8 lg:w-10 lg:h-10" />
                           </div>
-                        )}
-                      </>
+                          <div>
+                            <h3 className="text-xl lg:text-2xl font-bold text-slate-900 dark:text-white leading-tight mb-2">{nextTask.title}</h3>
+                            <div className="flex flex-wrap items-center gap-2 text-[13px] lg:text-sm font-semibold">
+                              <span className="bg-slate-100 dark:bg-slate-700/50 text-slate-700 dark:text-slate-300 px-2.5 py-1 rounded-md">{nextTask.duration} min</span>
+                              <span className="bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 px-2.5 py-1 rounded-md flex items-center gap-1.5 border border-blue-100 dark:border-blue-800/30"><TrendingUp className="w-3.5 h-3.5" /> Recommended next</span>
+                              <span className="bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 px-2.5 py-1 rounded-md flex items-center gap-1.5 border border-amber-100 dark:border-amber-800/30"><CalendarDays className="w-3.5 h-3.5" /> Due today</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col sm:flex-row items-center gap-3 relative z-10">
+                          <button
+                            onClick={() => navigate(getTaskRoute(nextTask))}
+                            className="w-full sm:flex-1 bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white font-bold py-3.5 lg:py-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm"
+                          >
+                            Start task <ArrowRight className="w-4 h-4 ml-0.5" />
+                          </button>
+                          <button
+                            onClick={() => document.getElementById(`day-view-start`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                            className="w-full sm:w-auto sm:px-8 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 active:bg-slate-100 dark:active:bg-slate-600 text-slate-700 dark:text-slate-300 font-bold py-3.5 lg:py-4 rounded-xl border-2 border-slate-200 dark:border-slate-600 flex items-center justify-center gap-2 transition-all"
+                          >
+                            View week plan
+                          </button>
+                        </div>
+                      </div>
                     );
-                })()}
-              </div>
-           </div>
+                  })()}
+
+                  {/* AI Update Collapsed */}
+                  {showUpdateBanner && selectedDesktopWeek === 2 && (
+                    <div className="bg-indigo-50/50 dark:bg-indigo-900/20 border border-indigo-100/80 dark:border-indigo-800/50 rounded-2xl p-4 lg:p-5 shadow-sm relative group cursor-pointer hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:border-indigo-200 dark:hover:border-indigo-700/50 transition-all animate-in zoom-in-95 duration-500" onClick={() => setShowUpdateBanner(false)}>
+                      <div className="flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-3 lg:gap-4">
+                          <div className="bg-white dark:bg-slate-800 p-2 lg:p-2.5 text-indigo-600 dark:text-indigo-400 rounded-full shadow-[0_2px_8px_-2px_rgba(79,70,229,0.2)] dark:shadow-[0_2px_8px_-2px_rgba(99,102,241,0.15)] border border-indigo-50 dark:border-indigo-900/50 shrink-0">
+                            <RefreshCw className="w-4 h-4 lg:w-5 lg:h-5 animate-spin-slow" />
+                          </div>
+                          <div>
+                            <p className="font-bold text-indigo-900 dark:text-indigo-100 text-sm lg:text-[15px]">Study plan updated based on your performance</p>
+                            <p className="text-xs lg:text-sm font-medium text-indigo-600/80 dark:text-indigo-400/80 mt-0.5 max-w-md truncate hidden sm:block">"Based on your performance in Writing Task 1..."</p>
+                          </div>
+                        </div>
+                        <button className="text-[13px] lg:text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg flex items-center gap-1.5 transition-colors shadow-sm shrink-0 whitespace-nowrap">
+                          View changes <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
+
+            {/* Categorized Days List */}
+            <div id="day-view-start" className="space-y-10 xl:space-y-12 pb-12 pt-4">
+              {weeksData.find(w => w.week_number === selectedDesktopWeek) && (() => {
+                const days = weeksData.find(w => w.week_number === selectedDesktopWeek)?.days || [];
+
+                const todayDays = days.filter(d => d.isToday);
+                const completedDays = days.filter(d => !d.isToday && d.tasks.every(t => t.status === 'done' || t.status === 'missed'));
+                const upcomingDays = days.filter(d => !d.isToday && d.tasks.some(t => t.status === 'locked' || t.status === 'today'));
+
+                return (
+                  <>
+                    {/* TODAY SECTION */}
+                    {todayDays.length > 0 && (
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-3">
+                          <h3 className="text-[13px] font-black tracking-widest text-slate-400 dark:text-slate-500 uppercase">Today</h3>
+                          <div className="h-px bg-slate-200 dark:bg-slate-700/50 flex-1"></div>
+                        </div>
+                        <div className="space-y-4">
+                          {todayDays.map((day, dIdx) => <React.Fragment key={dIdx}>{renderDayTasks(day)}</React.Fragment>)}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* UPCOMING SECTION */}
+                    {upcomingDays.length > 0 && (
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-3">
+                          <h3 className="text-[13px] font-black tracking-widest text-slate-400 dark:text-slate-500 uppercase">Upcoming</h3>
+                          <div className="h-px bg-slate-200 dark:bg-slate-700/50 flex-1"></div>
+                        </div>
+                        <div className="space-y-4">
+                          {upcomingDays.map((day, dIdx) => <React.Fragment key={dIdx}>{renderDayTasks(day)}</React.Fragment>)}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* COMPLETED SECTION */}
+                    {completedDays.length > 0 && (
+                      <div className="space-y-4 opacity-80">
+                        <div className="flex items-center gap-3">
+                          <h3 className="text-[13px] font-black tracking-widest text-slate-400 dark:text-slate-500 uppercase">Completed</h3>
+                          <div className="h-px bg-slate-200 dark:bg-slate-700/50 flex-1"></div>
+                        </div>
+                        <div className="space-y-4">
+                          {completedDays.map((day, dIdx) => <React.Fragment key={dIdx}>{renderDayTasks(day)}</React.Fragment>)}
+                        </div>
+                      </div>
+                    )}
+                  </>
+                );
+              })()}
+            </div>
+          </div>
         </div>
 
         {/* COL 3: Stats / Band Projection Dashboard */}
         <div className="hidden lg:flex w-[320px] xl:w-[380px] 2xl:w-[420px] flex-shrink-0 flex-col overflow-y-auto no-scrollbar">
-            {renderStatsSidebar()}
+          {renderStatsSidebar()}
         </div>
 
       </div>

@@ -189,17 +189,17 @@ class ExaminerAgent:
         # Remove leading slash if present
         clean_path = image_url.lstrip("/")
 
-        # Try multiple potential locations
+        # Try multiple potential locations — use normpath for Windows compatibility
         possible_paths = [
-            os.path.join(os.getcwd(), "frontend", "public", clean_path),
-            os.path.join(
+            os.path.normpath(os.path.join(os.getcwd(), "frontend", "public", clean_path)),
+            os.path.normpath(os.path.join(
                 os.getcwd(),
                 "..",
                 "frontend",
                 "public",
                 clean_path,
-            ),
-            os.path.join(
+            )),
+            os.path.normpath(os.path.join(
                 os.path.dirname(__file__),
                 "..",
                 "..",
@@ -207,25 +207,29 @@ class ExaminerAgent:
                 "frontend",
                 "public",
                 clean_path,
-            ),
+            )),
         ]
 
         for full_path in possible_paths:
-            if os.path.exists(full_path):
-                with open(full_path, "rb") as f:
-                    image_data = base64.b64encode(f.read()).decode("utf-8")
-                    # Detect image type from extension
-                    ext = os.path.splitext(full_path)[1].lower().lstrip(".")
-                    # Map extensions to MIME types
-                    mime_map = {
-                        "jpg": "image/jpeg",
-                        "jpeg": "image/jpeg",
-                        "png": "image/png",
-                        "gif": "image/gif",
-                        "webp": "image/webp",
-                    }
-                    mime_type = mime_map.get(ext, "image/png")
-                    return f"data:{mime_type};base64,{image_data}"
+            try:
+                if os.path.exists(full_path):
+                    with open(full_path, "rb") as f:
+                        image_data = base64.b64encode(f.read()).decode("utf-8")
+                        # Detect image type from extension
+                        ext = os.path.splitext(full_path)[1].lower().lstrip(".")
+                        # Map extensions to MIME types
+                        mime_map = {
+                            "jpg": "image/jpeg",
+                            "jpeg": "image/jpeg",
+                            "png": "image/png",
+                            "gif": "image/gif",
+                            "webp": "image/webp",
+                        }
+                        mime_type = mime_map.get(ext, "image/png")
+                        return f"data:{mime_type};base64,{image_data}"
+            except OSError as e:
+                print(f"Warning: OSError opening image {full_path}: {e}")
+                continue
 
         # If file not found, log warning and return original
         print(f"Warning: Image file not found at any location: {image_url}")

@@ -1,0 +1,31 @@
+EXPLAINER CRASH at evaluate_async
+
+Traceback (most recent call last):
+  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\pipelines\task1_pipeline.py", line 160, in evaluate_async
+    explainer_output = await asyncio.wait_for(
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Python313\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\Python313\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\pipelines\task1_pipeline.py", line 163, in <lambda>
+    lambda: self.explainer.explain(
+            ~~~~~~~~~~~~~~~~~~~~~~^
+        essay=essay,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        visual_description=examiner_result.get("visual_description")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\agents\explainer\task1_explainer.py", line 88, in explain
+    user_prompt = build_task1_explainer_user_prompt(
+        essay=essay,
+    ...<3 lines>...
+        visual_description=vis_desc
+    )
+TypeError: build_task1_explainer_user_prompt() got an unexpected keyword argument 'chart_type'

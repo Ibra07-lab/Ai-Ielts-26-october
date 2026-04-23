@@ -101,6 +101,21 @@ class BandUpgrade(BaseModel):
     what_changed: str  # Brief explanation (vocabulary/grammar/tone)
 
 
+class TenseExample(BaseModel):
+    """Correct and incorrect tense usage for the specific chart."""
+    correct: str
+    incorrect: str
+    explanation: Optional[str] = None
+
+
+class TenseApplicability(BaseModel):
+    """Mapping of tense to specific contexts in Task 1."""
+    tense: str
+    context: str
+    is_correct: bool
+    reason: str
+
+
 class WeaknessPattern(BaseModel):
     """A recurring error pattern."""
     pattern_name: str  # e.g., "Missing Articles with Data"
@@ -279,6 +294,13 @@ class GrammaticalRangeFeedback(BaseModel):
     article_accuracy: bool       # Common Task 1 issue
     sentence_variety: Literal["excellent", "good", "adequate", "limited"]
     
+    # NEW: Enhanced Tense Guidance
+    recommended_tense: Optional[str] = None
+    tense_rule_summary: Optional[str] = None
+    tense_examples: List[TenseExample] = Field(default_factory=list)
+    tense_applicability: List[TenseApplicability] = Field(default_factory=list)
+    student_tense_error_count: int = 0
+    
     what_it_measures: List[str]
 
     weakness_patterns: List[WeaknessPattern] = Field(
@@ -299,7 +321,7 @@ class GrammaticalRangeFeedback(BaseModel):
 class OverallSummary(BaseModel):
     """Overall summary at the top of the report."""
     
-    personal_note: str  # 2-3 sentences using student name
+    score_overview: str  # 5-sentence descriptive score summary
     
     scores: List[CriterionScore]
     estimated_overall: float = Field(ge=0, le=9)

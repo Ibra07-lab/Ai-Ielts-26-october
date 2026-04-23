@@ -100,3 +100,42 @@ async def get_all_writing_history(auth: dict = Depends(require_auth), limit: int
     except Exception as e:
         logger.error(f"[API] Error fetching history: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+@router.delete("/history/session/{session_id}")
+async def delete_writing_session(session_id: int, auth: dict = Depends(require_auth)):
+    """
+    Delete a single writing evaluation by its ID (with ownership check).
+    """
+    import traceback
+    try:
+        from ..supabase_client import get_supabase
+        supabase = get_supabase()
+        
+        # First check ownership without single() to avoid APIError on missing record
+        result = supabase.table("writing_evaluations") \
+            .select("user_id") \
+            .eq("id", session_id) \
+            .execute()
+            
+        if not result.data or len(result.data) == 0:
+            raise HTTPException(status_code=404, detail="Session not found")
+            
+        session_owner = result.data[0].get("user_id")
+        if session_owner != auth["uid"]:
+            raise HTTPException(status_code=403, detail="Access denied to delete this session")
+            
+        # Delete the session
+        delete_result = supabase.table("writing_evaluations") \
+            .delete() \
+            .eq("id", session_id) \
+            .execute()
+            
+        return {
+            "success": True,
+            "message": "Session deleted successfully"
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"[API] Error deleting session {session_id}:\n{traceback.format_exc()}")
+        raise HTTPException(status_code=500, detail=str(e))

@@ -10,7 +10,7 @@
  */
 export type BaseURL = string
 
-export const Local: BaseURL = "http://localhost:4000"
+export const Local: BaseURL = typeof window !== 'undefined' ? window.location.origin : "http://localhost:4000"
 
 /**
  * Environment returns a BaseURL for calling the cloud environment with the given name.
@@ -150,17 +150,17 @@ export namespace agents {
          * console.log(`Service status: ${health.status}`);
          */
         public async checkAIFeedbackHealth(): Promise<{
-    status: string
-    version: string
-    model: string
-}> {
+            status: string
+            version: string
+            model: string
+        }> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("GET", `/reading/ai-feedback/health`)
             return await resp.json() as {
-    status: string
-    version: string
-    model: string
-}
+                status: string
+                version: string
+                model: string
+            }
         }
 
         /**
@@ -210,35 +210,35 @@ export namespace agents {
          * generate AI feedback for each incorrect answer.
          */
         public async submitReadingWithAIFeedback(params: {
-    testId: number
-    passageId: number
-    answers: { [key: number]: string }
-}): Promise<{
-    score: number
-    totalQuestions: number
-    correctAnswers: number
-    results: {
-        questionId: number
-        isCorrect: boolean
-        correctAnswer: string
-        studentAnswer: string
-        aiFeedback?: FeedbackResponse
-    }[]
-}> {
+            testId: number
+            passageId: number
+            answers: { [key: number]: string }
+        }): Promise<{
+            score: number
+            totalQuestions: number
+            correctAnswers: number
+            results: {
+                questionId: number
+                isCorrect: boolean
+                correctAnswer: string
+                studentAnswer: string
+                aiFeedback?: FeedbackResponse
+            }[]
+        }> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("POST", `/reading/submit-with-ai`, JSON.stringify(params))
             return await resp.json() as {
-    score: number
-    totalQuestions: number
-    correctAnswers: number
-    results: {
-        questionId: number
-        isCorrect: boolean
-        correctAnswer: string
-        studentAnswer: string
-        aiFeedback?: FeedbackResponse
-    }[]
-}
+                score: number
+                totalQuestions: number
+                correctAnswers: number
+                results: {
+                    questionId: number
+                    isCorrect: boolean
+                    correctAnswer: string
+                    studentAnswer: string
+                    aiFeedback?: FeedbackResponse
+                }[]
+            }
         }
     }
 }
@@ -591,6 +591,34 @@ export namespace ielts {
                 hard: number
             }
         }
+    }
+
+    export interface ProxyChatMessage {
+        role: "user" | "assistant" | "system"
+        content: string
+    }
+
+    export interface ProxyChatRequest {
+        userId: string
+        session_id: string
+        messages: ProxyChatMessage[]
+        dropped_question_id?: string | null
+    }
+
+    export interface ProxyTrainingStartRequest {
+        userId: string
+        session_id: string
+        skill: string
+        student_id: string
+        accuracy: number
+        total_attempted: number
+        correct: number
+        recent_errors: any[]
+    }
+
+    export interface ProxyTrainingStartResponse {
+        session_id: string
+        first_message: string
     }
 
     export interface QuickRecognition {
@@ -983,6 +1011,7 @@ export namespace ielts {
         plan: string
         essaysUsed: number
         activeAnalysis: boolean
+        readingCreditsUsed: number
         createdAt: string
         updatedAt: string
     }
@@ -1140,51 +1169,54 @@ export namespace ielts {
             this.updateTask = this.updateTask.bind(this)
             this.updateUser = this.updateUser.bind(this)
             this.updateVocabularyStatus = this.updateVocabularyStatus.bind(this)
+            this.proxyReadingChat = this.proxyReadingChat.bind(this)
+            this.proxyTrainingStart = this.proxyTrainingStart.bind(this)
+            this.proxyReadingFeedback = this.proxyReadingFeedback.bind(this)
         }
 
         /**
          * POST /progress/ai/accept
          */
         public async acceptTaskSuggestions(params: {
-    userId: string
-    suggestions: TaskSuggestion[]
-}): Promise<{
-    tasks: Task[]
-}> {
+            userId: string
+            suggestions: TaskSuggestion[]
+        }): Promise<{
+            tasks: Task[]
+        }> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("POST", `/progress/ai/accept`, JSON.stringify(params))
             return await resp.json() as {
-    tasks: Task[]
-}
+                tasks: Task[]
+            }
         }
 
         /**
          * Adds highlighted text to user's vocabulary.
          */
         public async addToVocabulary(params: AddToVocabularyRequest): Promise<{
-    /**
-     * Adds highlighted text to user's vocabulary.
-     */
-    success: boolean
+            /**
+             * Adds highlighted text to user's vocabulary.
+             */
+            success: boolean
 
-    /**
-     * Adds highlighted text to user's vocabulary.
-     */
-    wordId: number
-}> {
+            /**
+             * Adds highlighted text to user's vocabulary.
+             */
+            wordId: number
+        }> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("POST", `/reading/add-to-vocabulary`, JSON.stringify(params))
             return await resp.json() as {
-    /**
-     * Adds highlighted text to user's vocabulary.
-     */
-    success: boolean
+                /**
+                 * Adds highlighted text to user's vocabulary.
+                 */
+                success: boolean
 
-    /**
-     * Adds highlighted text to user's vocabulary.
-     */
-    wordId: number
-}
+                /**
+                 * Adds highlighted text to user's vocabulary.
+                 */
+                wordId: number
+            }
         }
 
         /**
@@ -1208,11 +1240,11 @@ export namespace ielts {
          * Unlocks the user after analysis. Increments essay credit only on success.
          */
         public async completeEssayAnalysis(params: {
-    /**
-     * Unlocks the user after analysis. Increments essay credit only on success.
-     */
-    success: boolean
-}): Promise<void> {
+            /**
+             * Unlocks the user after analysis. Increments essay credit only on success.
+             */
+            success: boolean
+        }): Promise<void> {
             await this.baseClient.callTypedAPI("POST", `/essay-limits/complete`, JSON.stringify(params))
         }
 
@@ -1229,32 +1261,32 @@ export namespace ielts {
          * API endpoint to create a new reading passage
          */
         public async createReadingPassage(params: ReadingPassage): Promise<{
-    /**
-     * API endpoint to create a new reading passage
-     */
-    id: number
-}> {
+            /**
+             * API endpoint to create a new reading passage
+             */
+            id: number
+        }> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("POST", `/reading/passages`, JSON.stringify(params))
             return await resp.json() as {
-    /**
-     * API endpoint to create a new reading passage
-     */
-    id: number
-}
+                /**
+                 * API endpoint to create a new reading passage
+                 */
+                id: number
+            }
         }
 
         /**
          * POST /progress/tasks
          */
         public async createTask(params: {
-    userId: string
-    name: string
-    category: TaskCategory
-    difficulty: TaskDifficulty
-    estimatedMinutes?: number
-    dueAt?: string
-}): Promise<Task> {
+            userId: string
+            name: string
+            category: TaskCategory
+            difficulty: TaskDifficulty
+            estimatedMinutes?: number
+            dueAt?: string
+        }): Promise<Task> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("POST", `/progress/tasks`, JSON.stringify(params))
             return await resp.json() as Task
@@ -1287,18 +1319,18 @@ export namespace ielts {
          * POST /progress/ai/generate
          */
         public async generateTaskSuggestions(params: {
-    userId: string
-    range: SummaryRange
-    timeAvailableMinutes: number
-    targetBand?: number
-}): Promise<{
-    suggestions: TaskSuggestion[]
-}> {
+            userId: string
+            range: SummaryRange
+            timeAvailableMinutes: number
+            targetBand?: number
+        }): Promise<{
+            suggestions: TaskSuggestion[]
+        }> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("POST", `/progress/ai/generate`, JSON.stringify(params))
             return await resp.json() as {
-    suggestions: TaskSuggestion[]
-}
+                suggestions: TaskSuggestion[]
+            }
         }
 
         /**
@@ -1314,116 +1346,84 @@ export namespace ielts {
          * Returns the current essay usage and plan limits for a user.
          */
         public async getEssayLimits(id: string): Promise<{
-    /**
-     * Returns the current essay usage and plan limits for a user.
-     */
-    plan: string
-
-    /**
-     * Returns the current essay usage and plan limits for a user.
-     */
-    essaysUsed: number
-
-    /**
-     * Returns the current essay usage and plan limits for a user.
-     */
-    limit: number
-
-    /**
-     * Returns the current essay usage and plan limits for a user.
-     */
-    remaining: number
-
-    /**
-     * Returns the current essay usage and plan limits for a user.
-     */
-    activeAnalysis: boolean
-}> {
+            plan: string
+            essaysUsed: number
+            limit: number
+            remaining: number
+            activeAnalysis: boolean
+            readingCreditsUsed: number
+            readingCreditsLimit: number
+            readingCreditsRemaining: number
+        }> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(id)}/essay-limits`)
             return await resp.json() as {
-    /**
-     * Returns the current essay usage and plan limits for a user.
-     */
-    plan: string
-
-    /**
-     * Returns the current essay usage and plan limits for a user.
-     */
-    essaysUsed: number
-
-    /**
-     * Returns the current essay usage and plan limits for a user.
-     */
-    limit: number
-
-    /**
-     * Returns the current essay usage and plan limits for a user.
-     */
-    remaining: number
-
-    /**
-     * Returns the current essay usage and plan limits for a user.
-     */
-    activeAnalysis: boolean
-}
+                plan: string
+                essaysUsed: number
+                limit: number
+                remaining: number
+                activeAnalysis: boolean
+                readingCreditsUsed: number
+                readingCreditsLimit: number
+                readingCreditsRemaining: number
+            }
         }
 
         /**
          * Retrieves highlights for a specific passage and user.
          */
         public async getHighlights(userId: string, passageTitle: string): Promise<{
-    /**
-     * Retrieves highlights for a specific passage and user.
-     */
-    highlights: ReadingHighlight[]
-}> {
+            /**
+             * Retrieves highlights for a specific passage and user.
+             */
+            highlights: ReadingHighlight[]
+        }> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(userId)}/reading/highlights/${encodeURIComponent(passageTitle)}`)
             return await resp.json() as {
-    /**
-     * Retrieves highlights for a specific passage and user.
-     */
-    highlights: ReadingHighlight[]
-}
+                /**
+                 * Retrieves highlights for a specific passage and user.
+                 */
+                highlights: ReadingHighlight[]
+            }
         }
 
         /**
          * Retrieves the latest reading session for a specific test and passage.
          */
         public async getLatestReadingSession(userId: string, params: {
-    testId: number
-    passageId: number
-}): Promise<{
-    id: number
-    userId: string
-    testId: number
-    passageId: number
-    userAnswers: { [key: number]: string }
-    correctAnswers: { [key: number]: string }
-    score: number
-    totalQuestions: number
-    createdAt: string
-}> {
+            testId: number
+            passageId: number
+        }): Promise<{
+            id: number
+            userId: string
+            testId: number
+            passageId: number
+            userAnswers: { [key: number]: string }
+            correctAnswers: { [key: number]: string }
+            score: number
+            totalQuestions: number
+            createdAt: string
+        }> {
             // Convert our params into the objects we need for the request
             const query = makeRecord<string, string | string[]>({
                 passageId: String(params.passageId),
-                testId:    String(params.testId),
+                testId: String(params.testId),
             })
 
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(userId)}/reading/sessions/latest`, undefined, {query})
+            const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(userId)}/reading/sessions/latest`, undefined, { query })
             return await resp.json() as {
-    id: number
-    userId: string
-    testId: number
-    passageId: number
-    userAnswers: { [key: number]: string }
-    correctAnswers: { [key: number]: string }
-    score: number
-    totalQuestions: number
-    createdAt: string
-}
+                id: number
+                userId: string
+                testId: number
+                passageId: number
+                userAnswers: { [key: number]: string }
+                correctAnswers: { [key: number]: string }
+                score: number
+                totalQuestions: number
+                createdAt: string
+            }
         }
 
         /**
@@ -1439,19 +1439,19 @@ export namespace ielts {
          * Get user's listening session history
          */
         public async getListeningSessions(userId: string): Promise<{
-    /**
-     * Get user's listening session history
-     */
-    sessions: ListeningSession[]
-}> {
+            /**
+             * Get user's listening session history
+             */
+            sessions: ListeningSession[]
+        }> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(userId)}/listening/sessions`)
             return await resp.json() as {
-    /**
-     * Get user's listening session history
-     */
-    sessions: ListeningSession[]
-}
+                /**
+                 * Get user's listening session history
+                 */
+                sessions: ListeningSession[]
+            }
         }
 
         /**
@@ -1467,48 +1467,48 @@ export namespace ielts {
          * Get list of all available listening tests
          */
         public async getListeningTests(): Promise<{
-    /**
-     * Get list of all available listening tests
-     */
-    tests: ListeningTestMeta[]
-}> {
+            /**
+             * Get list of all available listening tests
+             */
+            tests: ListeningTestMeta[]
+        }> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("GET", `/listening/tests`)
             return await resp.json() as {
-    /**
-     * Get list of all available listening tests
-     */
-    tests: ListeningTestMeta[]
-}
+                /**
+                 * Get list of all available listening tests
+                 */
+                tests: ListeningTestMeta[]
+            }
         }
 
         /**
          * Get transcript for a test (can be shown after submission or during practice based on settings)
          */
         public async getListeningTranscript(testId: number): Promise<{
-    /**
-     * Get transcript for a test (can be shown after submission or during practice based on settings)
-     */
-    transcript: ListeningTranscriptLine[]
+            /**
+             * Get transcript for a test (can be shown after submission or during practice based on settings)
+             */
+            transcript: ListeningTranscriptLine[]
 
-    /**
-     * Get transcript for a test (can be shown after submission or during practice based on settings)
-     */
-    transcripts?: ListeningTranscriptSection[]
-}> {
+            /**
+             * Get transcript for a test (can be shown after submission or during practice based on settings)
+             */
+            transcripts?: ListeningTranscriptSection[]
+        }> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("GET", `/listening/tests/${encodeURIComponent(testId)}/transcript`)
             return await resp.json() as {
-    /**
-     * Get transcript for a test (can be shown after submission or during practice based on settings)
-     */
-    transcript: ListeningTranscriptLine[]
+                /**
+                 * Get transcript for a test (can be shown after submission or during practice based on settings)
+                 */
+                transcript: ListeningTranscriptLine[]
 
-    /**
-     * Get transcript for a test (can be shown after submission or during practice based on settings)
-     */
-    transcripts?: ListeningTranscriptSection[]
-}
+                /**
+                 * Get transcript for a test (can be shown after submission or during practice based on settings)
+                 */
+                transcripts?: ListeningTranscriptSection[]
+            }
         }
 
         /**
@@ -1524,17 +1524,17 @@ export namespace ielts {
          * GET /progress/summary
          */
         public async getProgressSummary(params: {
-    userId: string
-    range?: SummaryRange
-}): Promise<ProgressSummary> {
+            userId: string
+            range?: SummaryRange
+        }): Promise<ProgressSummary> {
             // Convert our params into the objects we need for the request
             const query = makeRecord<string, string | string[]>({
-                range:  params.range === undefined ? undefined : String(params.range),
+                range: params.range === undefined ? undefined : String(params.range),
                 userId: params.userId,
             })
 
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI("GET", `/progress/summary`, undefined, {query})
+            const resp = await this.baseClient.callTypedAPI("GET", `/progress/summary`, undefined, { query })
             return await resp.json() as ProgressSummary
         }
 
@@ -1542,13 +1542,44 @@ export namespace ielts {
          * Get deeper AI feedback for a specific question
          */
         public async getReadingDeeperFeedback(params: {
-    userId: string
-    testId: number
-    passageId: number
-    questionId: number
-}): Promise<DeeperFeedbackResponse> {
+            userId: string
+            testId: number
+            passageId: number
+            questionId: number
+        }): Promise<DeeperFeedbackResponse> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("POST", `/reading/deeper-feedback`, JSON.stringify(params))
+            return await resp.json() as DeeperFeedbackResponse
+        }
+
+        /**
+         * Proxies chat messages to the AI Tutor.
+         */
+        public async proxyReadingChat(params: ProxyChatRequest): Promise<ProxyChatMessage> {
+            const resp = await this.baseClient.callTypedAPI("POST", `/reading/chat`, JSON.stringify(params))
+            return await resp.json() as ProxyChatMessage
+        }
+
+        /**
+         * Proxies training start requests.
+         */
+        public async proxyTrainingStart(params: ProxyTrainingStartRequest): Promise<ProxyTrainingStartResponse> {
+            const resp = await this.baseClient.callTypedAPI("POST", `/reading/training/start`, JSON.stringify(params))
+            return await resp.json() as ProxyTrainingStartResponse
+        }
+
+        /**
+         * Proxies deeper feedback requests.
+         */
+        public async proxyReadingFeedback(params: {
+            userId: string;
+            passage: string;
+            question: string;
+            question_type: string;
+            correct_answer: string;
+            student_answer: string;
+        }): Promise<DeeperFeedbackResponse> {
+            const resp = await this.baseClient.callTypedAPI("POST", `/reading/feedback`, JSON.stringify(params))
             return await resp.json() as DeeperFeedbackResponse
         }
 
@@ -1574,57 +1605,57 @@ export namespace ielts {
          * API endpoint to get all reading passages
          */
         public async getReadingPassages(): Promise<{
-    /**
-     * API endpoint to get all reading passages
-     */
-    passages: ReadingPassage[]
-}> {
+            /**
+             * API endpoint to get all reading passages
+             */
+            passages: ReadingPassage[]
+        }> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("GET", `/reading/passages`)
             return await resp.json() as {
-    /**
-     * API endpoint to get all reading passages
-     */
-    passages: ReadingPassage[]
-}
+                /**
+                 * API endpoint to get all reading passages
+                 */
+                passages: ReadingPassage[]
+            }
         }
 
         /**
          * Retrieves user's reading session history.
          */
         public async getReadingSessions(userId: string): Promise<{
-    /**
-     * Retrieves user's reading session history.
-     */
-    sessions: ReadingSession[]
-}> {
+            /**
+             * Retrieves user's reading session history.
+             */
+            sessions: ReadingSession[]
+        }> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(userId)}/reading/sessions`)
             return await resp.json() as {
-    /**
-     * Retrieves user's reading session history.
-     */
-    sessions: ReadingSession[]
-}
+                /**
+                 * Retrieves user's reading session history.
+                 */
+                sessions: ReadingSession[]
+            }
         }
 
         /**
          * Retrieves aggregated reading skills data.
          */
         public async getReadingSkills(userId: string): Promise<{
-    /**
-     * Retrieves aggregated reading skills data.
-     */
-    skills: ReadingSkill[]
-}> {
+            /**
+             * Retrieves aggregated reading skills data.
+             */
+            skills: ReadingSkill[]
+        }> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(userId)}/reading/skills`)
             return await resp.json() as {
-    /**
-     * Retrieves aggregated reading skills data.
-     */
-    skills: ReadingSkill[]
-}
+                /**
+                 * Retrieves aggregated reading skills data.
+                 */
+                skills: ReadingSkill[]
+            }
         }
 
         /**
@@ -1640,19 +1671,19 @@ export namespace ielts {
          * NEW: Get list of all tests
          */
         public async getReadingTests(): Promise<{
-    /**
-     * NEW: Get list of all tests
-     */
-    tests: ReadingTestMeta[]
-}> {
+            /**
+             * NEW: Get list of all tests
+             */
+            tests: ReadingTestMeta[]
+        }> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("GET", `/reading/tests`)
             return await resp.json() as {
-    /**
-     * NEW: Get list of all tests
-     */
-    tests: ReadingTestMeta[]
-}
+                /**
+                 * NEW: Get list of all tests
+                 */
+                tests: ReadingTestMeta[]
+            }
         }
 
         /**
@@ -1668,19 +1699,19 @@ export namespace ielts {
          * NEW: Get list of all theory question types
          */
         public async getReadingTheoryList(): Promise<{
-    /**
-     * NEW: Get list of all theory question types
-     */
-    theories: TheoryListItem[]
-}> {
+            /**
+             * NEW: Get list of all theory question types
+             */
+            theories: TheoryListItem[]
+        }> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("GET", `/reading/theory`)
             return await resp.json() as {
-    /**
-     * NEW: Get list of all theory question types
-     */
-    theories: TheoryListItem[]
-}
+                /**
+                 * NEW: Get list of all theory question types
+                 */
+                theories: TheoryListItem[]
+            }
         }
 
         /**
@@ -1696,38 +1727,38 @@ export namespace ielts {
          * Retrieves user's speaking session history.
          */
         public async getSpeakingSessions(userId: string): Promise<{
-    /**
-     * Retrieves user's speaking session history.
-     */
-    sessions: SpeakingSession[]
-}> {
+            /**
+             * Retrieves user's speaking session history.
+             */
+            sessions: SpeakingSession[]
+        }> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(userId)}/speaking/sessions`)
             return await resp.json() as {
-    /**
-     * Retrieves user's speaking session history.
-     */
-    sessions: SpeakingSession[]
-}
+                /**
+                 * Retrieves user's speaking session history.
+                 */
+                sessions: SpeakingSession[]
+            }
         }
 
         /**
          * NEW: Get all struggle modules
          */
         public async getStruggleModules(): Promise<{
-    /**
-     * NEW: Get all struggle modules
-     */
-    modules: { [key: string]: ModuleCollection }
-}> {
+            /**
+             * NEW: Get all struggle modules
+             */
+            modules: { [key: string]: ModuleCollection }
+        }> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("GET", `/reading/struggle-modules`)
             return await resp.json() as {
-    /**
-     * NEW: Get all struggle modules
-     */
-    modules: { [key: string]: ModuleCollection }
-}
+                /**
+                 * NEW: Get all struggle modules
+                 */
+                modules: { [key: string]: ModuleCollection }
+            }
         }
 
         /**
@@ -1761,40 +1792,40 @@ export namespace ielts {
          * Retrieves vocabulary topics.
          */
         public async getVocabularyTopics(): Promise<{
-    /**
-     * Retrieves vocabulary topics.
-     */
-    topics: string[]
-}> {
+            /**
+             * Retrieves vocabulary topics.
+             */
+            topics: string[]
+        }> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("GET", `/vocabulary/topics`)
             return await resp.json() as {
-    /**
-     * Retrieves vocabulary topics.
-     */
-    topics: string[]
-}
+                /**
+                 * Retrieves vocabulary topics.
+                 */
+                topics: string[]
+            }
         }
 
         /**
          * Retrieves vocabulary words for practice.
          */
         public async getVocabularyWords(userId: string, params: {
-    /**
-     * Retrieves vocabulary words for practice.
-     */
-    topic?: string
+            /**
+             * Retrieves vocabulary words for practice.
+             */
+            topic?: string
 
-    /**
-     * Retrieves vocabulary words for practice.
-     */
-    limit?: number
-}): Promise<{
-    /**
-     * Retrieves vocabulary words for practice.
-     */
-    words: VocabularyWord[]
-}> {
+            /**
+             * Retrieves vocabulary words for practice.
+             */
+            limit?: number
+        }): Promise<{
+            /**
+             * Retrieves vocabulary words for practice.
+             */
+            words: VocabularyWord[]
+        }> {
             // Convert our params into the objects we need for the request
             const query = makeRecord<string, string | string[]>({
                 limit: params.limit === undefined ? undefined : String(params.limit),
@@ -1802,85 +1833,85 @@ export namespace ielts {
             })
 
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(userId)}/vocabulary`, undefined, {query})
+            const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(userId)}/vocabulary`, undefined, { query })
             return await resp.json() as {
-    /**
-     * Retrieves vocabulary words for practice.
-     */
-    words: VocabularyWord[]
-}
+                /**
+                 * Retrieves vocabulary words for practice.
+                 */
+                words: VocabularyWord[]
+            }
         }
 
         /**
          * Retrieves a random writing prompt for a specific task type.
          */
         public async getWritingPrompt(taskType: number, params: {
-    /**
-     * Retrieves a random writing prompt for a specific task type.
-     */
-    "test_id"?: number
-}): Promise<WritingPrompt> {
+            /**
+             * Retrieves a random writing prompt for a specific task type.
+             */
+            "test_id"?: number
+        }): Promise<WritingPrompt> {
             // Convert our params into the objects we need for the request
             const query = makeRecord<string, string | string[]>({
                 "test_id": params["test_id"] === undefined ? undefined : String(params["test_id"]),
             })
 
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI("GET", `/writing/prompt/${encodeURIComponent(taskType)}`, undefined, {query})
+            const resp = await this.baseClient.callTypedAPI("GET", `/writing/prompt/${encodeURIComponent(taskType)}`, undefined, { query })
             return await resp.json() as WritingPrompt
         }
 
         public async getWritingSessionById(id: number): Promise<{
-    session: WritingSession | null
-}> {
+            session: WritingSession | null
+        }> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("GET", `/writing/sessions/${encodeURIComponent(id)}`)
             return await resp.json() as {
-    session: WritingSession | null
-}
+                session: WritingSession | null
+            }
         }
 
         /**
          * Retrieves user's writing session history.
          */
         public async getWritingSessions(userId: string): Promise<{
-    /**
-     * Retrieves user's writing session history.
-     */
-    sessions: WritingSession[]
-}> {
+            /**
+             * Retrieves user's writing session history.
+             */
+            sessions: WritingSession[]
+        }> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("GET", `/users/${encodeURIComponent(userId)}/writing/sessions`)
             return await resp.json() as {
-    /**
-     * Retrieves user's writing session history.
-     */
-    sessions: WritingSession[]
-}
+                /**
+                 * Retrieves user's writing session history.
+                 */
+                sessions: WritingSession[]
+            }
         }
 
         /**
          * GET /progress/tasks
          */
         public async listTasks(params: {
-    userId: string
-    range?: "daily" | "weekly" | "monthly"
-    status?: "all" | "planned" | "in-progress" | "completed"
-}): Promise<{
-    tasks: Task[]
-}> {
+            userId: string
+            range?: "daily" | "weekly" | "monthly"
+            status?: "all" | "planned" | "in-progress" | "completed"
+        }): Promise<{
+            tasks: Task[]
+        }> {
             // Convert our params into the objects we need for the request
             const query = makeRecord<string, string | string[]>({
-                range:  params.range === undefined ? undefined : String(params.range),
+                range: params.range === undefined ? undefined : String(params.range),
                 status: params.status === undefined ? undefined : String(params.status),
                 userId: params.userId,
             })
 
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI("GET", `/progress/tasks`, undefined, {query})
+            const resp = await this.baseClient.callTypedAPI("GET", `/progress/tasks`, undefined, { query })
             return await resp.json() as {
-    tasks: Task[]
-}
+                tasks: Task[]
+            }
         }
 
         /**
@@ -1932,16 +1963,16 @@ export namespace ielts {
          * Updates daily goal progress.
          */
         public async updateDailyGoal(userId: string, params: {
-    /**
-     * Updates daily goal progress.
-     */
-    minutesCompleted: number
+            /**
+             * Updates daily goal progress.
+             */
+            minutesCompleted: number
 
-    /**
-     * Updates daily goal progress.
-     */
-    activitiesCompleted: number
-}): Promise<void> {
+            /**
+             * Updates daily goal progress.
+             */
+            activitiesCompleted: number
+        }): Promise<void> {
             await this.baseClient.callTypedAPI("POST", `/users/${encodeURIComponent(userId)}/daily-goal/update`, JSON.stringify(params))
         }
 
@@ -1949,11 +1980,11 @@ export namespace ielts {
          * Updates user progress for a specific skill.
          */
         public async updateProgress(userId: string, skill: string, params: {
-    /**
-     * Updates user progress for a specific skill.
-     */
-    estimatedBand?: number
-}): Promise<void> {
+            /**
+             * Updates user progress for a specific skill.
+             */
+            estimatedBand?: number
+        }): Promise<void> {
             await this.baseClient.callTypedAPI("POST", `/users/${encodeURIComponent(userId)}/progress/${encodeURIComponent(skill)}`, JSON.stringify(params))
         }
 
@@ -1961,10 +1992,10 @@ export namespace ielts {
          * PATCH /progress/tasks/:id
          */
         public async updateTask(id: string, params: {
-    progress?: number
-    status?: "planned" | "in-progress" | "completed"
-    completedAt?: string
-}): Promise<Task> {
+            progress?: number
+            status?: "planned" | "in-progress" | "completed"
+            completedAt?: string
+        }): Promise<Task> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("PATCH", `/progress/tasks/${encodeURIComponent(id)}`, JSON.stringify(params))
             return await resp.json() as Task
@@ -1983,11 +2014,11 @@ export namespace ielts {
          * Updates user's vocabulary word status.
          */
         public async updateVocabularyStatus(userId: string, wordId: number, params: {
-    /**
-     * Updates user's vocabulary word status.
-     */
-    status: string
-}): Promise<void> {
+            /**
+             * Updates user's vocabulary word status.
+             */
+            status: string
+        }): Promise<void> {
             await this.baseClient.callTypedAPI("POST", `/users/${encodeURIComponent(userId)}/vocabulary/${encodeURIComponent(wordId)}/status`, JSON.stringify(params))
         }
     }
@@ -1998,7 +2029,7 @@ export namespace ielts {
 function encodeQuery(parts: Record<string, string | string[]>): string {
     const pairs: string[] = []
     for (const key in parts) {
-        const val = (Array.isArray(parts[key]) ?  parts[key] : [parts[key]]) as string[]
+        const val = (Array.isArray(parts[key]) ? parts[key] : [parts[key]]) as string[]
         for (const v of val) {
             pairs.push(`${key}=${encodeURIComponent(v)}`)
         }
@@ -2021,9 +2052,9 @@ function makeRecord<K extends string | number | symbol, V>(record: Record<K, V |
 function encodeWebSocketHeaders(headers: Record<string, string>) {
     // url safe, no pad
     const base64encoded = btoa(JSON.stringify(headers))
-      .replaceAll("=", "")
-      .replaceAll("+", "-")
-      .replaceAll("/", "_");
+        .replaceAll("=", "")
+        .replaceAll("+", "-")
+        .replaceAll("/", "_");
     return "encore.dev.headers." + base64encoded;
 }
 
@@ -2199,9 +2230,9 @@ type CallParameters = Omit<RequestInit, "method" | "body" | "headers"> & {
 
 // AuthDataGenerator is a function that returns a new instance of the authentication data required by this API
 export type AuthDataGenerator = () =>
-  | auth.AuthParams
-  | Promise<auth.AuthParams | undefined>
-  | undefined;
+    | auth.AuthParams
+    | Promise<auth.AuthParams | undefined>
+    | undefined;
 
 // A fetcher is the prototype for the inbuilt Fetch function
 export type Fetcher = typeof fetch;
@@ -2281,10 +2312,10 @@ class BaseClient {
         // If we now have authentication data, add it to the request
         if (authData) {
             if (authData.query) {
-                query = {...query, ...authData.query};
+                query = { ...query, ...authData.query };
             }
             if (authData.headers) {
-                headers = {...headers, ...authData.headers};
+                headers = { ...headers, ...authData.headers };
             }
         }
 
@@ -2302,10 +2333,10 @@ class BaseClient {
         // If we now have authentication data, add it to the request
         if (authData) {
             if (authData.query) {
-                query = {...query, ...authData.query};
+                query = { ...query, ...authData.query };
             }
             if (authData.headers) {
-                headers = {...headers, ...authData.headers};
+                headers = { ...headers, ...authData.headers };
             }
         }
 
@@ -2323,10 +2354,10 @@ class BaseClient {
         // If we now have authentication data, add it to the request
         if (authData) {
             if (authData.query) {
-                query = {...query, ...authData.query};
+                query = { ...query, ...authData.query };
             }
             if (authData.headers) {
-                headers = {...headers, ...authData.headers};
+                headers = { ...headers, ...authData.headers };
             }
         }
 
@@ -2353,7 +2384,7 @@ class BaseClient {
         }
 
         // Merge our headers with any predefined headers
-        init.headers = {...this.headers, ...init.headers, ...headers}
+        init.headers = { ...this.headers, ...init.headers, ...headers }
 
         // Fetch auth data if there is any
         const authData = await this.getAuthData();
@@ -2361,16 +2392,16 @@ class BaseClient {
         // If we now have authentication data, add it to the request
         if (authData) {
             if (authData.query) {
-                query = {...query, ...authData.query};
+                query = { ...query, ...authData.query };
             }
             if (authData.headers) {
-                init.headers = {...init.headers, ...authData.headers};
+                init.headers = { ...init.headers, ...authData.headers };
             }
         }
 
         // Make the actual request
         const queryString = query ? '?' + encodeQuery(query) : ''
-        const response = await this.fetcher(this.baseURL+path+queryString, init)
+        const response = await this.fetcher(this.baseURL + path + queryString, init)
 
         // handle any error responses
         if (!response.ok) {
@@ -2416,8 +2447,8 @@ function isAPIErrorResponse(err: any): err is APIErrorResponse {
     return (
         err !== undefined && err !== null &&
         isErrCode(err.code) &&
-        typeof(err.message) === "string" &&
-        (err.details === undefined || err.details === null || typeof(err.details) === "object")
+        typeof (err.message) === "string" &&
+        (err.details === undefined || err.details === null || typeof (err.details) === "object")
     )
 }
 
@@ -2451,8 +2482,8 @@ export class APIError extends Error {
         // set error name as constructor name, make it not enumerable to keep native Error behavior
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new.target#new.target_in_constructors
         Object.defineProperty(this, 'name', {
-            value:        'APIError',
-            enumerable:   false,
+            value: 'APIError',
+            enumerable: false,
             configurable: true,
         })
 

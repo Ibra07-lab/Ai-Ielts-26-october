@@ -19,6 +19,9 @@ import { educationTopicData } from "./education";
 import { speakingPart1TopicData } from "./speaking_part1";
 import { speakingPart2TopicData } from "./speaking_part2";
 import { speakingPart3TopicData } from "./speaking-part3";
+import { shoppingTopicData } from "./shopping";
+import { transportMobilityTopicData } from "./transport-mobility";
+import { healthSocietyTopicData } from "./health-society";
 
 // Export all topics
 export const allTopics: TopicData[] = [
@@ -28,6 +31,9 @@ export const allTopics: TopicData[] = [
     speakingPart1TopicData,
     speakingPart2TopicData,
     speakingPart3TopicData,
+    shoppingTopicData,
+    transportMobilityTopicData,
+    healthSocietyTopicData,
 ];
 
 // Helper functions to get specific data

@@ -687,6 +687,38 @@ This is a table titled "The Proportions of Pupils Attending Four Secondary Schoo
 1. **Shift in Dominance:** In 2000, Voluntary-controlled schools were the most popular (52%). By 2009, Community schools became the most popular (58%).
 2. **Opposite Trends:** Community schools showed a massive increase (from 12% to 58%), while all other school types experienced declines.
 3. **Convergence/Divergence:** Specialist and Community schools started at the same level in 2000 (12%), but diverged greatly by 2009 (10% vs 58%).`
+  },
+  42: {
+    taskType: 1,
+    prompt: "The maps below show the changes that have taken place in Meadowside village and Fonton, a neighbouring town, since 1962. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.",
+    chartMetadata: `**Chart Type and Title**
+The maps illustrate the development of Meadowside and its surroundings across three time periods: 1962, 1985, and the present day ("Now").
+
+**Overall Trend:**
+The area has undergone dramatic urban expansion, transforming from a small rural village into a large suburban hub that has completely merged with the neighbouring town of Fonton, accompanied by significant commercial and transport infrastructure developments.
+
+**1962 Details:**
+- The area was largely undeveloped. 
+- Meadowside existed as a small, isolated settlement called Meadowside Village. 
+- A single small road passed through Meadowside Village. 
+- The town of Fonton was already established to the northeast.
+- A railway line ran from north to south through Fonton, but it did not reach Meadowside.
+
+**1985 Details:**
+- Meadowside Village expanded significantly in size.
+- A "Leisure Complex" was built within the village.
+- A "Housing Estate" emerged to the west.
+- A "Super-store" was constructed to the south.
+- The transport network was upgraded: a major new road was built running horizontally east-west, connecting Meadowside Village directly to Fonton.
+
+**NOW (Present Day) Details:**
+- The area has grown so much that Meadowside and Fonton have merged into one contiguous urban area. 
+- The area previously known as Meadowside Village has been renamed "Meadowside Suburbs".
+- The Leisure Complex, Housing Estate, and Super-store remain in their previous locations.
+- The railway line from Fonton was extended westward.
+- A "Station" was built on this new railway line.
+- A "Hotel" was constructed just north of the new station.
+- A large "Business Park" was established to the south of the main road, opposite the station.`
   }
 };
 

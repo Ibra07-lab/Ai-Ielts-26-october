@@ -16,6 +16,8 @@ export const useHighlighter = () => {
 
     const triggerRefresh = useCallback(() => setRefresh(prev => prev + 1), []);
 
+    const contextMenuRef = useRef<HTMLDivElement>(null);
+
     // Inject CSS for highlight pseudo-element
     useEffect(() => {
         const style = document.createElement("style");
@@ -28,15 +30,21 @@ export const useHighlighter = () => {
         `;
         document.head.appendChild(style);
 
-        const handleClickOutside = () => setContextMenu(null);
-        document.addEventListener('click', handleClickOutside);
+        const handleClickOutside = (e: MouseEvent) => {
+            // Don't close if clicking inside the context menu itself
+            if (contextMenuRef.current && contextMenuRef.current.contains(e.target as Node)) {
+                return;
+            }
+            setContextMenu(null);
+        };
+        document.addEventListener('mousedown', handleClickOutside);
 
         return () => {
             const existingStyle = document.getElementById("yellow-highlighter-style");
             if (existingStyle) {
                 document.head.removeChild(existingStyle);
             }
-            document.removeEventListener('click', handleClickOutside);
+            document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
 
@@ -179,6 +187,7 @@ export const useHighlighter = () => {
 
     return {
         containerRef,
+        contextMenuRef,
         contextMenu,
         setContextMenu,
         applyHighlight,

@@ -221,7 +221,8 @@ The drill must include:
 1. **Clear instructions** (what to do)
 2. **Practice content** (actual text/prompts to work with — derived from their essay)
 3. **Success criteria** (how to know if they did it right)
-4. **Time limit** (creates urgency)
+4. **Examiner Insight** (A personalized, 1-2 sentence explanation of WHY an examiner looks for this specific sub-skill and how it explicitly impacts the band score).
+5. **Time limit** (creates urgency)
 
 ---
 
@@ -362,6 +363,7 @@ You must output a single valid JSON object following this EXACT structure:
     "drill_name": "<name>",
     "time_limit_minutes": 5,
     "purpose": "<purpose>",
+    "examiner_insight": "<Personalized explanation of why examiners care about this sub-skill and how it moves the score>",
     "instructions": "<steps>",
     "practice_content": "<content>",
     "success_criteria": [

@@ -19,7 +19,7 @@ export default function Subscription() {
       features: [
         "Personalized IELTS roadmap",
         "15 essay evaluations",
-        "300 reading agent messages",
+        "300 reading agent credits (1 credit = 1 message)",
         "All reading tests",
         "All listening tests",
         "Limited podcast exercises"
@@ -37,7 +37,7 @@ export default function Subscription() {
       features: [
         "Everything in Basic",
         "40 essay evaluations",
-        "800 reading agent messages",
+        "800 reading agent credits (1 credit = 1 message)",
         "Full podcast library",
         "Detailed band score breakdown",
         "Weak-area training"
@@ -55,7 +55,7 @@ export default function Subscription() {
       features: [
         "Everything in Pro",
         "80 essay evaluations",
-        "Unlimited reading agent messages",
+        "Unlimited reading agent credits",
         "Advanced feedback",
         "Priority AI evaluation",
         "Full mock exam simulation"

@@ -35,7 +35,7 @@ export interface TaskSuggestion {
 }
 
 // Base origin for backend API calls.
-const API_ORIGIN = (import.meta as any).env?.VITE_BACKEND_BASE_URL || "http://localhost:4000";
+const API_ORIGIN = (import.meta as any).env?.VITE_BACKEND_BASE_URL || (typeof window !== 'undefined' ? window.location.origin : "http://localhost:4000");
 
 // Helper: get auth headers for Encore API calls
 import { supabase } from "../lib/supabase";

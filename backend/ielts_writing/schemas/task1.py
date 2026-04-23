@@ -83,6 +83,7 @@ class Task1ExaminerResponse(BaseModel):
     # Scores
     overall_band: float = Field(ge=0, le=9)
     band_range: BandRange
+    score_overview: Optional[str] = Field(default=None, description="5-sentence direct score summary")
     criterion_scores: List[Task1CriterionScore] = Field(min_length=4, max_length=4)
     
     # Word count analysis
@@ -170,10 +171,10 @@ class Task1CriterionFeedback(BaseModel):
 class Task1OverallSummary(BaseModel):
     """Overall summary section of teacher feedback."""
     
-    personal_note: str = Field(
-        description="2-3 sentences addressing student by name",
+    score_overview: str = Field(
+        description="Write exactly 5 sentences. Sentence 1: State the overall band and the single strongest thing the essay did. Sentence 2: Explain the main reason the essay did NOT score higher — be direct. Sentence 3: Identify the weakest criterion by name and why it pulled the score down. Sentence 4: Name one specific thing in the writing that caused the weakness (mechanical listing, missing overview, inaccurate data, etc). Sentence 5: State what the student must fix first to move to the next band. Do not use encouragement. Do not soften criticism. Be honest and direct like a real examiner.",
         min_length=50,
-        max_length=500
+        max_length=1500
     )
     
     scores: List[Task1CriterionScore]

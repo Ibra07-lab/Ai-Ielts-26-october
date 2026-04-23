@@ -90,6 +90,7 @@ export interface EvaluationResult {
     criterion_scores: CriterionScore[];
     word_count: number;
     word_count_ok: boolean;
+    score_overview?: string;
     // New fields for split feedback flow
     teacher_feedback_status?: 'complete' | 'timeout' | 'error' | 'loading' | 'not_requested';
     teacher_feedback_message?: string;
@@ -129,7 +130,7 @@ export interface DetailedFeedback {
 }
 
 // ----------------------------------------------------------------------------
-// Idea Development Analysis (from Explainer)
+// Idea Development Analysis (from Explainer - Task 2)
 // ----------------------------------------------------------------------------
 
 export interface IdeaNode {
@@ -192,6 +193,111 @@ export interface LexicalBreakdown {
 }
 
 // ----------------------------------------------------------------------------
+// Task 1 Explainer Outputs
+// ----------------------------------------------------------------------------
+
+export interface Task1OverviewFeedback {
+    original_overview: string;
+    improved_overview: string;
+    diagnosis: string;
+}
+
+export interface DataAccuracyFix {
+    original_sentence: string;
+    issue_description: string;
+    corrected_data: string;
+}
+
+export interface DataCoverageItem {
+    feature_description: string;
+    covered_in_essay: boolean;
+    how_covered?: string;
+    why_important: string;
+    suggested_sentence?: string;
+}
+
+export interface Task1DataCoverageAnalysis {
+    total_key_features: number;
+    features_covered: number;
+    features_missed: number;
+    feature_map: DataCoverageItem[];
+    data_accuracy_issues: DataAccuracyFix[];
+    ignored_dual_chart: boolean;
+    has_personal_opinion: boolean;
+    opinion_sentence?: string;
+    overall_assessment: string;
+}
+
+export interface Task1TrendDescriptionFix {
+    original_description: string;
+    improved_description: string;
+    why_better: string;
+}
+
+// ----------------------------------------------------------------------------
+// Task 1 Coherence & Cohesion (New Pipeline)
+// ----------------------------------------------------------------------------
+
+export interface ParagraphStructureFeedback {
+    paragraph_count: number;
+    has_clear_breaks: boolean;
+    expected_structure: string[];
+    detected_structure: string[];
+    feedback_message: string;
+}
+
+export interface Task1OverviewPositionFeedback {
+    overview_present: boolean;
+    position_correct: boolean;
+    detected_position: string | null;
+    overview_quality: string;
+    original_overview: string | null;
+    issues: string[];
+    improved_overview: string | null;
+    key_changes_made: string[];
+}
+
+export interface DataGroupingFix {
+    scattered_sentences: string[];
+    grouped_sentence: string;
+    explanation: string;
+}
+
+export interface ReferencingError {
+    original_sentence: string;
+    ambiguous_pronoun: string;
+    corrected_sentence: string;
+}
+
+export interface ConnectorAnalysis {
+    overused_connectors: string[];
+    cohesion_fixes: CohesionIssueFix[]; // renamed slightly to avoid confusion, or use existing if any
+}
+
+export interface CohesionIssueFix {
+    original_sentence: string;
+    mechanical_linker_used: string;
+    improved_sentence: string;
+    technique_used: string;
+    technique_explanation: string;
+}
+
+export interface ComparisonLanguage {
+    comparisons_used: string[];
+    missing_comparisons: string[];
+    feedback_message: string;
+}
+
+export interface Task1CoherenceFeedback {
+    paragraph_structure: ParagraphStructureFeedback;
+    overview_feedback: Task1OverviewPositionFeedback;
+    data_grouping_fixes: DataGroupingFix[];
+    referencing_errors: ReferencingError[];
+    connector_analysis: ConnectorAnalysis;
+    comparison_language: ComparisonLanguage;
+}
+
+// ----------------------------------------------------------------------------
 // Coaching Result (Tutor Output)
 // ----------------------------------------------------------------------------
 
@@ -213,6 +319,7 @@ export interface CoherenceIssue {
     suggestion?: string;  // Legacy field
     corrected?: string;   // New field - the improved version
     reason: string;
+    type?: string;        // 'mapping', 'connector', 'grouping', 'referencing'
 }
 
 export interface TopicAnalysis {
@@ -294,6 +401,7 @@ export interface MicroDrill {
     drill_name: string;
     time_limit_minutes: number;
     purpose: string;
+    examiner_insight?: string;
     instructions: string;
     practice_content: string;
     success_criteria: SuccessCriterion[];

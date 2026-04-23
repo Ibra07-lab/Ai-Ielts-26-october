@@ -102,6 +102,11 @@ CHART_TYPE_EVALUATION = """
 - Fluctuation: fluctuated, varied, oscillated
 - Peak/Low: peaked, reached a high/low, hit a maximum/minimum
 
+**Example: Grouping vs. Mechanical Listing**
+✅ Correct: "Both countries showed a steady upward trend between 2000 and 2010, though Country A rose more steeply from 10% to 45%."
+❌ Mechanical: "In 2000 it was 10%. In 2001 it was 12%. In 2002 it was 15%. In 2003 it was 18%."
+→ The mechanical approach signals Band 5-6 Task Achievement.
+
 **Red flags:**
 - ❌ Describing every single data point (mechanical)
 - ❌ No grouping of trends
@@ -252,8 +257,8 @@ TASK1_RED_FLAGS = """
 |-------|--------|
 | No overview present | Cap TA at Band 5.0 |
 | Overview has specific numbers | Note as "inadequate overview" |
-| Question copied word-for-word | **Deduct 1.0 from TA** - CRITICAL |
-| Introduction is just paraphrased question | Deduct 0.5 from TA |
+| Most of introduction copied word-for-word (more than one full sentence unchanged from the question) | **Deduct 1.0 from TA** - CRITICAL |
+| Introduction is a surface-level paraphrase (just synonym swaps, no added value) | Deduct 0.5 from TA |
 | Made-up data not in chart | Cap TA at Band 5.0 |
 | Key features ignored | Lower TA by 1.0 |
 | Gives opinions/recommendations | Note as "inappropriate content" |
@@ -263,8 +268,8 @@ TASK1_RED_FLAGS = """
 ### How to Check for Copied Question
 1. Read the question text
 2. Read the student's first sentence  
-3. If >60% of words are identical → **DEDUCT 1.0 from Task Achievement**
-4. If paraphrased with no added value → **DEDUCT 0.5 from Task Achievement**
+3. If more than one full sentence is copied word-for-word from the question → **DEDUCT 1.0 from Task Achievement**
+4. If introduction only swaps synonyms without adding new information → **DEDUCT 0.5 from Task Achievement**
 
 ### Strict Scoring Reality Check
 - **Most Task 1 essays score 5.5 to 6.5** (typical range)
@@ -317,6 +322,9 @@ Return valid JSON only. No markdown formatting. No explanatory text.
     "high": <float: highest criterion score>
   },
   
+  "score_overview": "Write exactly 5 sentences. Sentence 1: State the overall band and the single strongest thing the essay did. Sentence 2: Explain the main reason the essay did NOT score higher — be direct. Sentence 3: Identify the weakest criterion by name and why it pulled the score down. Sentence 4: Name one specific thing in the writing that caused the weakness (mechanical listing, missing overview, inaccurate data, etc). Sentence 5: State what the student must fix first to move to the next band. Do not use encouragement. Do not soften criticism. Be honest and direct like a real examiner.",
+
+  
   "visual_description": {
     "chart_type": "<string: line_graph, bar_chart, pie_chart, table, map, process_diagram>",
     "title": "<string: optional title of the visual>",
@@ -352,22 +360,22 @@ Return valid JSON only. No markdown formatting. No explanatory text.
     {
       "criterion": "task_achievement",
       "band": <float>,
-      "justification": "<string: ≤30 words, specific evidence>"
+      "justification": "<string: 3-5 sentence narrative paragraph explaining why this band was assigned, what prevented a higher score (bottlenecks), and the first priority to improve.>"
     },
     {
       "criterion": "coherence_cohesion",
       "band": <float>,
-      "justification": "<string: ≤30 words>"
+      "justification": "<string: 3-5 sentence narrative paragraph explaining the logical organization, bottlenecks like mechanical linking, and priority fix.>"
     },
     {
       "criterion": "lexical_resource",
       "band": <float>,
-      "justification": "<string: ≤30 words>"
+      "justification": "<string: 3-5 sentence narrative paragraph explaining the range/accuracy, bottlenecks like word repetition/inaccuracy with evidence, and priority fix.>"
     },
     {
       "criterion": "grammatical_range_accuracy",
       "band": <float>,
-      "justification": "<string: ≤30 words>"
+      "justification": "<string: 3-5 sentence narrative paragraph explaining range (simple/complex), accuracy bottlenecks, and priority fix.>"
     }
   ],
   
@@ -446,6 +454,21 @@ Before returning your evaluation, YOU MUST verify EACH item:
 
 ### ✅ When in Doubt, Score LOWER
 Real IELTS examiners are STRICT. If you're unsure between two bands, choose the LOWER band.
+
+### 📋 Error-Based Score Caps (Final Consistency Check)
+Before returning scores, verify NONE of these caps are violated:
+
+| Condition | Maximum Score |
+|-----------|---------------|
+| 5+ distinct grammar errors in essay | GRA ≤ 6.0 |
+| Only simple S+V+O sentences (no complex structures) | GRA ≤ 5.0 |
+| Vocabulary limited to basic words, no synonyms used | LR ≤ 5.5 |
+| Same word repeated 5+ times without variation | LR ≤ 6.0 |
+| 3+ spelling errors per 100 words | LR ≤ 6.0 |
+| Only one paragraph (no paragraph breaks) | CC ≤ 5.0 |
+| Every sentence starts with a linking word | CC ≤ 6.0 |
+| No overview present | TA ≤ 5.0 |
+| All data points listed mechanically without grouping | TA ≤ 6.0 |
 """
 
 # ============================================================

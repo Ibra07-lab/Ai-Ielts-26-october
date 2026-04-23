@@ -55,7 +55,6 @@ interface TableCompletionQuestion {
   }>;
 }
 
-// Collapsible question result component - Eye-comfortable design
 function QuestionResult({
   question,
   answer,
@@ -64,6 +63,8 @@ function QuestionResult({
   aiFeedback,
   onGetAIFeedback,
   isLoadingFeedback,
+  remainingCredits,
+  creditsLimit,
   textSize = 'regular'
 }: {
   question: any;
@@ -73,6 +74,8 @@ function QuestionResult({
   aiFeedback?: any;
   onGetAIFeedback?: () => void;
   isLoadingFeedback?: boolean;
+  remainingCredits?: number;
+  creditsLimit?: number;
   textSize?: TextSizeOption;
 }) {
   const [expanded, setExpanded] = useState(false);
@@ -229,18 +232,40 @@ function QuestionResult({
               {/* AI Feedback Section - Deeper Analysis */}
               {onGetAIFeedback && (
                 <div className="pt-6">
-                  {!aiFeedback && !isLoadingFeedback && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onGetAIFeedback();
-                      }}
-                      className="w-full px-6 py-3 bg-slate-700 hover:bg-slate-600 dark:bg-slate-600 dark:hover:bg-slate-500 text-white rounded-md transition-colors font-medium text-base flex items-center justify-center gap-2"
-                    >
-                      <Sparkles className="w-5 h-5" />
-                      Get Deeper AI Analysis
-                    </button>
-                  )}
+                    <div className="space-y-3">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (remainingCredits === 0) {
+                            // User should see upgrade toast anyway if backend fails
+                          }
+                          onGetAIFeedback();
+                        }}
+                        disabled={remainingCredits === 0}
+                        className={`w-full px-6 py-3 rounded-md transition-colors font-medium text-base flex items-center justify-center gap-2 ${
+                          remainingCredits === 0 
+                            ? 'bg-slate-400 cursor-not-allowed text-white/80' 
+                            : 'bg-slate-700 hover:bg-slate-600 dark:bg-slate-600 dark:hover:bg-slate-500 text-white'
+                        }`}
+                      >
+                        <Sparkles className="w-5 h-5" />
+                        Get Deeper AI Analysis
+                      </button>
+                      
+                      {creditsLimit !== undefined && (
+                        <div className="flex justify-center">
+                          <Badge variant="outline" className="text-[10px] uppercase tracking-wider py-0 px-2 border-slate-200 dark:border-slate-800 text-slate-500">
+                            {creditsLimit === -1 ? (
+                              "Unlimited Credits"
+                            ) : (
+                              `${remainingCredits} credits remaining`
+                            )}
+                          </Badge>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
 
                   {isLoadingFeedback && (
                     <div className="text-center py-4">
@@ -304,8 +329,6 @@ function QuestionResult({
                           </div>
                         </details>
                       </div>
-                    </div>
-                  )}
                 </div>
               )}
             </div>
@@ -1103,6 +1126,12 @@ export default function ReadingPractice() {
     queryFn: () => backend.ielts.getReadingTests(),
   });
 
+  const { data: usageLimits, refetch: refetchUsage } = useQuery({
+    queryKey: ["usage-limits", user?.id],
+    queryFn: () => user?.id ? backend.ielts.getEssayLimits(user.id) : Promise.resolve(null),
+    enabled: !!user?.id,
+  });
+
   const { id: urlId } = useParams<{ id: string }>();
 
   // Selected test id (initialize after tests list loads)
@@ -1210,6 +1239,7 @@ export default function ReadingPractice() {
       }
 
       const feedback = await getAIFeedback({
+        userId: user.id,
         passage: passageText,
         question: questionText,
         question_type: questionType,
@@ -1226,6 +1256,9 @@ export default function ReadingPractice() {
         title: "AI Feedback Ready",
         description: "Scroll down to see detailed feedback",
       });
+      
+      // Refresh usage after credit consumption
+      refetchUsage();
     } catch (error) {
       console.error("Error getting AI feedback:", error);
       toast({
@@ -2397,6 +2430,8 @@ export default function ReadingPractice() {
                                         result.correctAnswers[q.id]
                                       )}
                                       isLoadingFeedback={loadingFeedback.has(q.id)}
+                                      remainingCredits={usageLimits?.readingCreditsRemaining}
+                                      creditsLimit={usageLimits?.readingCreditsLimit}
                                       textSize={textSize}
                                     />
                                   ))

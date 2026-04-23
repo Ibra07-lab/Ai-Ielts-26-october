@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="Windows-1252">
+<title>404 - Page not found</title>
+<meta content="Sorry, an error has occurred, Requested page not found" name="description">
+<link href="//www.ielts-writing.info/images/favicon.ico" rel="shortcut icon">
+<!--[if lt IE 9]>
+<script src="/js/html5shiv.js"></script>
+<![endif]-->
+<meta content="width=device-width, initial-scale=1" name="viewport">
+<link id="bootstrap-css" href="//www.ielts-writing.info/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
+<link id="ielts-css" href="//www.ielts-writing.info/css/st-6.min.css" media="all" rel="stylesheet" type="text/css" />
+<link id="fonts-css" href="//www.ielts-writing.info/css/fn.min.css" media="all" rel="stylesheet" type="text/css" />
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9NJ1MFGJDH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-9NJ1MFGJDH');
+</script>
+</head>
+<body>
+<div class="container">
+	<div id="header" class="header row" role="banner">
+		<header>
+			<div class="site-branding">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="error-template">
+							<h1>Oops!</h1>
+							<h2>404 Not Found</h2>
+							<div class="error-details">
+								Sorry, an error has occurred, the page cannot be found! </div>
+							<div class="error-actions">
+								<a class="btn btn-default" href="https://www.ielts-writing.info/EXAM">
+								<span class="glyphicon glyphicon-home"></span> Take 
+								Me Home </a>
+								<a class="btn btn-default" href="https://www.ielts-writing.info/EXAM/Contact-us">
+								<span class="glyphicon glyphicon-envelope">
+								</span> Contact Support </a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+	</div>
+</div>
+</body>
+</html>

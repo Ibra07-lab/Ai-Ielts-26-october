@@ -2,12 +2,70 @@ import { api, APIError } from "encore.dev/api";
 import { getAuthData } from "~encore/auth";
 import { AuthData } from "../auth/auth";
 import { supabaseAdmin } from "./db";
+import { getReadingLimit } from "./limits";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { promisify } from "node:util";
 import { execFile } from "node:child_process";
 
 const execFileAsync = promisify(execFile);
+
+// --- Shared Credit Logic ---
+async function checkAndVerifyCredits(userId: string) {
+  const { data: userData, error: userError } = await supabaseAdmin
+    .from("users")
+    .select("plan, reading_credits_used")
+    .eq("id", userId)
+    .single();
+
+  if (userError || !userData) {
+    throw APIError.notFound("User profile not found");
+  }
+
+  const limit = getReadingLimit(userData.plan);
+  const used = userData.reading_credits_used ?? 0;
+
+  if (limit !== -1 && used >= limit) {
+    throw APIError.resourceExhausted(
+      `Reading credit limit reached (${used}/${limit}). Please upgrade your plan to continue chatting with the reading agent.`
+    );
+  }
+  return userData;
+}
+
+// --- Proxy Config ---
+const TUTOR_SERVICE_URL = "http://localhost:8001";
+const FEEDBACK_SERVICE_URL = "http://localhost:8002";
+
+// --- Chat Interfaces ---
+export interface ProxyChatMessage {
+  role: "user" | "assistant" | "system";
+  content: string;
+}
+
+export interface ProxyChatRequest {
+  userId: string;
+  session_id: string;
+  messages: ProxyChatMessage[];
+  dropped_question_id?: string | null;
+}
+
+export interface ProxyTrainingStartRequest {
+  userId: string;
+  session_id: string;
+  skill: string;
+  student_id: string;
+  accuracy: number;
+  total_attempted: number;
+  correct: number;
+  recent_errors: any[];
+}
+
+export interface ProxyTrainingStartResponse {
+  session_id: string;
+  first_message: string;
+}
+
 // Deeper AI feedback response shape (matches Python JSON)
 export interface DeeperFeedbackResponse {
   verdict: string;
@@ -65,6 +123,10 @@ export const getReadingDeeperFeedback = api<
     if (auth?.userID !== userId) {
       throw APIError.permissionDenied("You can only request feedback for your own questions");
     }
+
+    // Check reading credits
+    await checkAndVerifyCredits(userId);
+
     // Path to the Python script (relative to project root)
     const scriptPath = path.join(__dirname, "../agents/openai_direct_feedback.py");
 
@@ -84,6 +146,10 @@ export const getReadingDeeperFeedback = api<
       );
 
       const feedback = JSON.parse(stdout) as DeeperFeedbackResponse;
+
+      // Increment credits on success
+      await supabaseAdmin.rpc("increment_reading_credits", { user_id: userId });
+
       return feedback;
     } catch (error: any) {
       console.error("[DeeperFeedback] Error calling Python script:", error);
@@ -93,6 +159,142 @@ export const getReadingDeeperFeedback = api<
     }
   }
 );
+
+/**
+ * Proxies deeper feedback requests to the Python Reading Feedback service (Port 8002).
+ * This handles the "In-Practice" AI analysis.
+ */
+export const proxyReadingFeedback = api<
+  {
+    userId: string;
+    passage: string;
+    question: string;
+    question_type: string;
+    correct_answer: string;
+    student_answer: string;
+  },
+  DeeperFeedbackResponse
+>(
+  { expose: true, method: "POST", path: "/reading/feedback", auth: true },
+  async (payload) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== payload.userId) {
+      throw APIError.permissionDenied("Identity mismatch");
+    }
+
+    // 1. Check credits
+    await checkAndVerifyCredits(payload.userId);
+
+    // 2. Proxy to Port 8002
+    const response = await fetch(`${FEEDBACK_SERVICE_URL}/api/feedback`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        passage: payload.passage,
+        question: payload.question,
+        question_type: payload.question_type,
+        correct_answer: payload.correct_answer,
+        student_answer: payload.student_answer,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("[ProxyFeedback] Python service error:", errorText);
+      throw APIError.internal("The Reading Analyst is temporarily unavailable.");
+    }
+
+    const data = (await response.json()) as DeeperFeedbackResponse;
+
+    // 3. Decrement credit
+    await supabaseAdmin.rpc("increment_reading_credits", { user_id: payload.userId });
+
+    return data;
+  }
+);
+
+/**
+ * Proxies chat messages to the Python AI Tutor service (Port 8001).
+ * Enforces credit limits and decrements balance.
+ */
+export const proxyReadingChat = api<ProxyChatRequest, ProxyChatMessage>(
+  { expose: true, method: "POST", path: "/reading/chat", auth: true },
+  async ({ userId, session_id, messages, dropped_question_id }) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== userId) {
+      throw APIError.permissionDenied("Identity mismatch");
+    }
+
+    // 1. Check credits
+    await checkAndVerifyCredits(userId);
+
+    // 2. Proxy to Port 8001
+    const response = await fetch(`${TUTOR_SERVICE_URL}/api/chat/message`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ session_id, messages, dropped_question_id }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("[ProxyChat] Python service error:", errorText);
+      throw APIError.internal("The AI Tutor is temporarily unavailable.");
+    }
+
+    const aiMessage = (await response.json()) as ProxyChatMessage;
+
+    // 3. Decrement credit (increment used)
+    await supabaseAdmin.rpc("increment_reading_credits", { user_id: userId });
+
+    return aiMessage;
+  }
+);
+
+/**
+ * Proxies training session starts to the Python AI Tutor service (Port 8001).
+ * Costs 1 credit to start a specialized training session.
+ */
+export const proxyTrainingStart = api<ProxyTrainingStartRequest, ProxyTrainingStartResponse>(
+  { expose: true, method: "POST", path: "/reading/training/start", auth: true },
+  async (payload) => {
+    const auth = getAuthData() as AuthData | null;
+    if (auth?.userID !== payload.userId) {
+      throw APIError.permissionDenied("Identity mismatch");
+    }
+
+    // 1. Check credits
+    await checkAndVerifyCredits(payload.userId);
+
+    // 2. Proxy to Port 8001
+    const response = await fetch(`${TUTOR_SERVICE_URL}/api/training/start`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        session_id: payload.session_id,
+        skill: payload.skill,
+        student_id: payload.student_id,
+        accuracy: payload.accuracy,
+        total_attempted: payload.total_attempted,
+        correct: payload.correct,
+        recent_errors: payload.recent_errors,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("[ProxyTraining] Python service error:", errorText);
+      throw APIError.internal("Failed to start training session.");
+    }
+
+    const data = (await response.json()) as ProxyTrainingStartResponse;
+
+    // 3. Decrement credit
+    await supabaseAdmin.rpc("increment_reading_credits", { user_id: payload.userId });
+
+    return data;
+  }
+);
+
 
 export interface ReadingPassage {
   id: number;
@@ -1096,15 +1298,15 @@ export const submitReading = api<ReadingSubmission, ReadingResult>(
     const { data: session, error: sessionErr } = await supabaseAdmin
       .from("reading_sessions")
       .insert({
-        user_id:         req.userId,
-        passage_title:   req.passageTitle,
+        user_id: req.userId,
+        passage_title: req.passageTitle,
         passage_content: req.passageContent,
-        questions:       JSON.stringify(req.questions),
-        user_answers:    JSON.stringify(req.userAnswers),
+        questions: JSON.stringify(req.questions),
+        user_answers: JSON.stringify(req.userAnswers),
         correct_answers: JSON.stringify(correctAnswers),
         score,
         total_questions: req.questions.length,
-        time_taken:      req.timeTaken || null,
+        time_taken: req.timeTaken || null,
       })
       .select("id")
       .single();
@@ -1139,12 +1341,12 @@ export const getReadingSessions = api<{ userId: string }, { sessions: ReadingSes
     if (error) throw APIError.internal(error.message);
 
     const sessions: ReadingSession[] = (rows || []).map((row: any) => ({
-      id:             row.id,
-      passageTitle:   row.passage_title,
-      score:          row.score,
+      id: row.id,
+      passageTitle: row.passage_title,
+      score: row.score,
       totalQuestions: row.total_questions,
-      timeTaken:      row.time_taken ?? undefined,
-      createdAt:      row.created_at,
+      timeTaken: row.time_taken ?? undefined,
+      createdAt: row.created_at,
     }));
 
     return { sessions };
@@ -1261,15 +1463,15 @@ export const getLatestReadingSession = api<
     if (!session) throw new Error(`No session found for user ${userId}, test ${testId}, passage ${passageId}`);
 
     return {
-      id:             session.id,
-      userId:         session.user_id,
+      id: session.id,
+      userId: session.user_id,
       testId,
       passageId,
-      userAnswers:    JSON.parse(session.user_answers),
+      userAnswers: JSON.parse(session.user_answers),
       correctAnswers: JSON.parse(session.correct_answers),
-      score:          session.score,
+      score: session.score,
       totalQuestions: session.total_questions,
-      createdAt:      session.created_at,
+      createdAt: session.created_at,
     };
   }
 );
@@ -1286,13 +1488,13 @@ export const createHighlight = api<CreateHighlightRequest, ReadingHighlight>(
       .from("reading_highlights")
       .upsert(
         {
-          user_id:          req.userId,
-          passage_title:    req.passageTitle,
+          user_id: req.userId,
+          passage_title: req.passageTitle,
           highlighted_text: req.highlightedText,
-          start_position:   req.startPosition,
-          end_position:     req.endPosition,
-          highlight_type:   req.highlightType,
-          highlight_color:  req.highlightColor || "yellow",
+          start_position: req.startPosition,
+          end_position: req.endPosition,
+          highlight_type: req.highlightType,
+          highlight_color: req.highlightColor || "yellow",
         },
         { onConflict: "user_id,passage_title,start_position,end_position" }
       )
@@ -1302,13 +1504,13 @@ export const createHighlight = api<CreateHighlightRequest, ReadingHighlight>(
     if (error || !highlight) throw new Error("Failed to create highlight");
 
     return {
-      id:              highlight.id,
+      id: highlight.id,
       highlightedText: highlight.highlighted_text,
-      startPosition:   highlight.start_position,
-      endPosition:     highlight.end_position,
-      highlightType:   highlight.highlight_type,
-      highlightColor:  highlight.highlight_color,
-      createdAt:       highlight.created_at,
+      startPosition: highlight.start_position,
+      endPosition: highlight.end_position,
+      highlightType: highlight.highlight_type,
+      highlightColor: highlight.highlight_color,
+      createdAt: highlight.created_at,
     };
   }
 );
@@ -1331,13 +1533,13 @@ export const getHighlights = api<{ userId: string; passageTitle: string }, { hig
     if (error) throw APIError.internal(error.message);
 
     const highlights: ReadingHighlight[] = (rows || []).map((row: any) => ({
-      id:              row.id,
+      id: row.id,
       highlightedText: row.highlighted_text,
-      startPosition:   row.start_position,
-      endPosition:     row.end_position,
-      highlightType:   row.highlight_type,
-      highlightColor:  row.highlight_color,
-      createdAt:       row.created_at,
+      startPosition: row.start_position,
+      endPosition: row.end_position,
+      highlightType: row.highlight_type,
+      highlightColor: row.highlight_color,
+      createdAt: row.created_at,
     }));
 
     return { highlights };
@@ -1548,10 +1750,10 @@ export const addToVocabulary = api<AddToVocabularyRequest, { success: boolean; w
       const { data: newWord, error: wordErr } = await supabaseAdmin
         .from("vocabulary_words")
         .insert({
-          word:             req.text,
-          definition:       req.definition,
+          word: req.text,
+          definition: req.definition,
           example_sentence: req.exampleSentence,
-          topic:            req.topic || "Reading",
+          topic: req.topic || "Reading",
           difficulty_level: 2,
         })
         .select("id")

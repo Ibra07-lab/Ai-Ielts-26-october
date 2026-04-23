@@ -1,6 +1,4 @@
-// API client for FastAPI chat backend
-
-const API_BASE_URL = 'http://localhost:8001/api';
+import backend from '@/backend';
 
 // Types matching backend Pydantic models
 export interface ChatMessage {
@@ -9,108 +7,42 @@ export interface ChatMessage {
 }
 
 export interface ChatRequest {
+  userId: string;
   session_id: string;
   messages: ChatMessage[];
   dropped_question_id?: string | null;
 }
 
-export interface DeeperFeedbackRequest {
-  passage_id: string;
-  question_id: string;
-  student_answer: string;
-}
-
-export interface DeeperFeedbackResponse {
-  errorAnalysis: string;
-  strategyTip: string;
-  evidenceQuote: string;
-  motivationalMessage: string;
-}
-
-// Send a chat message and get AI response
+/**
+ * Send a chat message and get AI response through Encore proxy (metered)
+ */
 export async function sendChatMessage(request: ChatRequest): Promise<ChatMessage> {
+  console.log('Sending chat message through Encore proxy:', request);
   try {
-    const response = await fetch(`${API_BASE_URL}/chat/message`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(request),
+    const aiMessage = await backend.ielts.proxyReadingChat({
+      userId: request.userId,
+      session_id: request.session_id,
+      messages: request.messages as any[],
+      dropped_question_id: request.dropped_question_id,
     });
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error('Error sending chat message:', error);
-    throw error;
-  }
-}
-
-// Get deeper feedback for a specific question
-export async function getDeeperFeedback(
-  request: DeeperFeedbackRequest
-): Promise<DeeperFeedbackResponse> {
-  try {
-    const response = await fetch(`${API_BASE_URL}/feedback/deeper`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(request),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error('Error getting deeper feedback:', error);
-    throw error;
+    return aiMessage as ChatMessage;
+  } catch (error: any) {
+    console.error('Error sending chat message through Encore:', error);
+    throw new Error(error.message || 'Failed to send chat message');
   }
 }
 
 // Stream chat messages in real-time
+// NOTE: Temporarily falling back to non-streaming via the proxy to ensure credit enforcement.
+// We can implement streaming in Encore later if needed.
 export async function streamChatMessage(
   request: ChatRequest,
   onChunk: (text: string) => void,
 ): Promise<void> {
-  const response = await fetch(`${API_BASE_URL}/chat/stream`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(request),
-  });
-
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
-  }
-
-  if (!response.body) {
-    throw new Error('Streaming is not supported by this browser or server.');
-  }
-
-  const reader = response.body.getReader();
-  const decoder = new TextDecoder();
-  let done = false;
-
-  while (!done) {
-    const { value, done: doneReading } = await reader.read();
-    done = doneReading;
-    if (value) {
-      const chunk = decoder.decode(value, { stream: !done });
-      if (chunk) {
-        onChunk(chunk);
-      }
-    }
-  }
+  console.log('Streaming requested, but using metered proxy (non-streaming) for now');
+  const aiMessage = await sendChatMessage(request);
+  onChunk(aiMessage.content);
 }
 
 // Generate a unique session ID
@@ -131,6 +63,7 @@ export interface RecentError {
 }
 
 export interface TrainingStartRequest {
+  userId: string;
   session_id: string;
   skill: string;
   student_id: string;
@@ -145,27 +78,26 @@ export interface TrainingStartResponse {
   first_message: string;
 }
 
-// Start a multi-phase training session
+// Start a multi-phase training session through Encore proxy (metered)
 export async function startTrainingSession(
   request: TrainingStartRequest
 ): Promise<TrainingStartResponse> {
+  console.log('Starting training session through Encore proxy:', request);
   try {
-    const response = await fetch(`${API_BASE_URL}/training/start`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(request),
+    const data = await backend.ielts.proxyTrainingStart({
+      userId: request.userId,
+      session_id: request.session_id,
+      skill: request.skill,
+      student_id: request.student_id,
+      accuracy: request.accuracy,
+      total_attempted: request.total_attempted,
+      correct: request.correct,
+      recent_errors: request.recent_errors,
     });
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error('Error starting training session:', error);
-    throw error;
+    return data as TrainingStartResponse;
+  } catch (error: any) {
+    console.error('Error starting training session through Encore:', error);
+    throw new Error(error.message || 'Failed to start training session');
   }
 }

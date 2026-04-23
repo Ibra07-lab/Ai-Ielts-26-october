@@ -1,7 +1,4 @@
-/**
- * AI Feedback Service
- * Connects to the Python LangChain feedback API
- */
+import backend from '@/backend';
 
 const FEEDBACK_API_URL = 'http://localhost:8000';
 
@@ -25,41 +22,25 @@ export interface FeedbackResponse {
 /**
  * Get AI-powered feedback for a student's answer
  */
-export async function getAIFeedback(request: FeedbackRequest): Promise<FeedbackResponse> {
-  // Log outgoing request for debugging 422 issues
-  console.log('Sending AI Feedback request:', request);
+export async function getAIFeedback(request: FeedbackRequest & { userId: string }): Promise<FeedbackResponse> {
+  // Log outgoing request for debugging
+  console.log('Sending AI Feedback request through Encore:', request);
 
-  const response = await fetch(`${FEEDBACK_API_URL}/api/feedback`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(request),
-  });
+  try {
+    const feedback = await backend.ielts.proxyReadingFeedback({
+      userId: request.userId,
+      passage: request.passage,
+      question: request.question,
+      question_type: request.question_type,
+      correct_answer: request.correct_answer,
+      student_answer: request.student_answer,
+    });
 
-  if (!response.ok) {
-    // Try to read detailed error from backend
-    let errorDetail = response.statusText;
-    try {
-      const errorData = await response.json();
-      console.error('AI Feedback API error details:', errorData);
-      if (typeof errorData === 'string') {
-        errorDetail = errorData;
-      } else if (errorData?.detail) {
-        errorDetail = Array.isArray(errorData.detail)
-          ? errorData.detail.map((d: any) => d.msg || JSON.stringify(d)).join('; ')
-          : errorData.detail;
-      } else if (errorData?.message) {
-        errorDetail = errorData.message;
-      }
-    } catch {
-      // ignore JSON parse errors, fall back to statusText
-    }
-
-    throw new Error(`AI Feedback API error: ${errorDetail}`);
+    return feedback as FeedbackResponse;
+  } catch (error: any) {
+    console.error('AI Feedback error through Encore:', error);
+    throw new Error(error.message || "Failed to get AI feedback");
   }
-
-  return response.json();
 }
 
 /**

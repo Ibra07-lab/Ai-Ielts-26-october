@@ -80,7 +80,7 @@ export default function ListeningPractice() {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   // Highlighting Logic
-  const { containerRef, contextMenu, applyHighlight, clearHighlights, hasHighlights, isSupported } = useHighlighter();
+  const { containerRef, contextMenuRef, contextMenu, applyHighlight, clearHighlights, hasHighlights, isSupported } = useHighlighter();
 
   useEffect(() => {
     if (isTestStarted && !isSupported) {
@@ -563,7 +563,8 @@ export default function ListeningPractice() {
           {/* Custom Context Menu */}
           {contextMenu && (
             <div
-              className="fixed z-[100] bg-white border border-slate-200 shadow-xl rounded-lg py-1 min-w-[140px] animate-in fade-in zoom-in-95 duration-100"
+              ref={contextMenuRef}
+              className="fixed z-[100] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-xl rounded-lg py-1 min-w-[160px] animate-in fade-in zoom-in-95 duration-100"
               style={{ top: contextMenu.y, left: contextMenu.x }}
             >
               <button

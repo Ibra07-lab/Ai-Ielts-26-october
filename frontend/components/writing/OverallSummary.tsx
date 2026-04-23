@@ -284,8 +284,8 @@ export const OverallSummary: React.FC<OverallSummaryProps> = ({ result }) => {
 
                     {(() => {
                         const finalComment = teacherFeedback.teachers_final_comment;
-                        const personalNote = summary.personal_note;
-                        const displayText = finalComment || personalNote || "Feedback processing...";
+                        const scoreOverview = result.score_overview || summary.score_overview;
+                        const displayText = scoreOverview || finalComment || "Feedback processing...";
 
                         if (hasError) {
                             return (

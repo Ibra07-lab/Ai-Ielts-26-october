@@ -185,75 +185,83 @@ class Task1Examiner(ExaminerAgent):
         
         Returns dict (not ExaminerEvaluation) for pipeline compatibility.
         """
-        # Use Task 1 specific system prompt with calibration reminder
-        system_prompt = get_task1_examiner_system_prompt()
-        
-        # Use Task 1 specific user prompt builder
-        user_prompt = build_task1_examiner_user_prompt(
-            question=question,
-            essay=essay,
-            image_url=image_url,
-            chart_type=chart_type,
-            image_description=image_description,
-        )
-
-        # Only process image if image_description is not provided
-        image_data = None
-        if image_url and not image_description:
-            image_data = self._prepare_image(image_url)
-
-        # Call direct client
-        if "claude" in self.model.lower():
-            response_text = self.client.call_anthropic(
-                model=self.model,
-                system_prompt=system_prompt,
-                user_prompt=user_prompt,
-                temperature=0.1,
-                max_tokens=4096,
-                image_data=image_data
-            )
-        else:
-            response_text = self.client.call_openai(
-                model=self.model,
-                system_prompt=system_prompt,
-                user_prompt=user_prompt,
-                temperature=0.1,
-                max_tokens=4096
-            )
-
-        # Parse JSON response
-        from ielts_writing.utils.json_parser import extract_json
         try:
-            result = extract_json(response_text)
-        except (json.JSONDecodeError, IndexError, ValueError) as e:
-            raise ValueError(f"Failed to parse JSON response: {response_text}. Error: {e}")
+            # Use Task 1 specific system prompt with calibration reminder
+            system_prompt = get_task1_examiner_system_prompt()
+            
+            # Use Task 1 specific user prompt builder
+            user_prompt = build_task1_examiner_user_prompt(
+                question=question,
+                essay=essay,
+                image_url=image_url,
+                chart_type=chart_type,
+                image_description=image_description,
+            )
 
-        # Calculate overall band if not present
-        if "overall_band" not in result and "criterion_scores" in result:
-            scores = [s["band"] for s in result["criterion_scores"]]
-            avg = sum(scores) / len(scores)
-            result["overall_band"] = round(avg * 2) / 2  # Round to nearest 0.5
+            # Only process image if image_description is not provided
+            image_data = None
+            if image_url and not image_description:
+                image_data = self._prepare_image(image_url)
 
-        # Calculate band_range if not present
-        if "band_range" not in result and "overall_band" in result:
-            overall = result["overall_band"]
-            result["band_range"] = {
-                "low": max(0.0, overall - 0.5),
-                "high": min(9.0, overall + 0.5),
-            }
+            # Call direct client
+            if "claude" in self.model.lower():
+                response_text = self.client.call_anthropic(
+                    model=self.model,
+                    system_prompt=system_prompt,
+                    user_prompt=user_prompt,
+                    temperature=0.1,
+                    max_tokens=4096,
+                    image_data=image_data
+                )
+            else:
+                response_text = self.client.call_openai(
+                    model=self.model,
+                    system_prompt=system_prompt,
+                    user_prompt=user_prompt,
+                    temperature=0.1,
+                    max_tokens=4096
+                )
 
-        # Add safety defaults for pipeline access
-        result.setdefault("word_count", len(essay.split()))
-        result.setdefault("word_count_ok", result["word_count"] >= 150)
-        result.setdefault("word_count_penalty", not result["word_count_ok"])
-        result.setdefault("overview_present", None)
-        result.setdefault("overview_quality", None)
-        result.setdefault("data_accuracy", None)
-        result.setdefault("key_features_covered", None)
-        result.setdefault("comparisons_made", None)
-        result.setdefault("red_flags", [])
+            # Parse JSON response
+            from ielts_writing.utils.json_parser import extract_json
+            try:
+                result = extract_json(response_text)
+            except (json.JSONDecodeError, IndexError, ValueError) as e:
+                raise ValueError(f"Failed to parse JSON response: {response_text}. Error: {e}")
 
-        return result
+            # Calculate overall band if not present
+            if "overall_band" not in result and "criterion_scores" in result:
+                scores = [s["band"] for s in result["criterion_scores"]]
+                avg = sum(scores) / len(scores)
+                result["overall_band"] = round(avg * 2) / 2  # Round to nearest 0.5
+
+            # Calculate band_range if not present
+            if "band_range" not in result and "overall_band" in result:
+                overall = result["overall_band"]
+                result["band_range"] = {
+                    "low": max(0.0, overall - 0.5),
+                    "high": min(9.0, overall + 0.5),
+                }
+
+            # Add safety defaults for pipeline access
+            result.setdefault("word_count", len(essay.split()))
+            result.setdefault("word_count_ok", result["word_count"] >= 150)
+            result.setdefault("word_count_penalty", not result["word_count_ok"])
+            result.setdefault("overview_present", None)
+            result.setdefault("overview_quality", None)
+            result.setdefault("data_accuracy", None)
+            result.setdefault("key_features_covered", None)
+            result.setdefault("comparisons_made", None)
+            result.setdefault("red_flags", [])
+
+            return result
+        except Exception as e:
+            import traceback
+            import logging
+            logging.getLogger(__name__).error(
+                f"Task1Examiner.evaluate FAILED:\n{traceback.format_exc()}"
+            )
+            raise
 
     async def evaluate_task(
         self,
@@ -283,6 +291,9 @@ class Task1Examiner(ExaminerAgent):
         Detects MIME type from content to handle mismatched extensions.
         """
         import base64
+        import traceback as tb
+        import logging
+        _logger = logging.getLogger(__name__)
 
         # If it's already a URL, return as is
         if image_url.startswith("http"):
@@ -291,17 +302,17 @@ class Task1Examiner(ExaminerAgent):
         # Handle local file path
         clean_path = image_url.lstrip("/")
 
-        # Try multiple potential locations
+        # Try multiple potential locations — use normpath to fix Windows Unicode issues
         possible_paths = [
-            os.path.join(os.getcwd(), "frontend", "public", clean_path),
-            os.path.join(
+            os.path.normpath(os.path.join(os.getcwd(), "frontend", "public", clean_path)),
+            os.path.normpath(os.path.join(
                 os.getcwd(),
                 "..",
                 "frontend",
                 "public",
                 clean_path,
-            ),
-            os.path.join(
+            )),
+            os.path.normpath(os.path.join(
                 os.path.dirname(__file__),
                 "..",
                 "..",
@@ -309,39 +320,44 @@ class Task1Examiner(ExaminerAgent):
                 "frontend",
                 "public",
                 clean_path,
-            ),
+            )),
         ]
 
         for full_path in possible_paths:
-            if os.path.exists(full_path):
-                with open(full_path, "rb") as f:
-                    header = f.read(12)
-                    f.seek(0)
-                    image_data = base64.b64encode(f.read()).decode("utf-8")
-                    
-                    # Detect MIME type from magic bytes
-                    mime_type = "image/png" # Default
-                    if header.startswith(b'\xff\xd8\xff'):
-                        mime_type = "image/jpeg"
-                    elif header.startswith(b'\x89PNG\r\n\x1a\n'):
-                        mime_type = "image/png"
-                    elif header.startswith(b'GIF87a') or header.startswith(b'GIF89a'):
-                        mime_type = "image/gif"
-                    elif header.startswith(b'RIFF') and header[8:12] == b'WEBP':
-                        mime_type = "image/webp"
-                    else:
-                        # Fallback to extension if signature unknown
-                        ext = os.path.splitext(full_path)[1].lower().lstrip(".")
-                        mime_map = {
-                            "jpg": "image/jpeg",
-                            "jpeg": "image/jpeg",
-                            "png": "image/png",
-                            "gif": "image/gif",
-                            "webp": "image/webp",
-                        }
-                        mime_type = mime_map.get(ext, "image/png")
+            try:
+                if os.path.exists(full_path):
+                    with open(full_path, "rb") as f:
+                        header = f.read(12)
+                        f.seek(0)
+                        image_data = base64.b64encode(f.read()).decode("utf-8")
                         
-                    return f"data:{mime_type};base64,{image_data}"
+                        # Detect MIME type from magic bytes
+                        mime_type = "image/png" # Default
+                        if header.startswith(b'\xff\xd8\xff'):
+                            mime_type = "image/jpeg"
+                        elif header.startswith(b'\x89PNG\r\n\x1a\n'):
+                            mime_type = "image/png"
+                        elif header.startswith(b'GIF87a') or header.startswith(b'GIF89a'):
+                            mime_type = "image/gif"
+                        elif header.startswith(b'RIFF') and header[8:12] == b'WEBP':
+                            mime_type = "image/webp"
+                        else:
+                            # Fallback to extension if signature unknown
+                            ext = os.path.splitext(full_path)[1].lower().lstrip(".")
+                            mime_map = {
+                                "jpg": "image/jpeg",
+                                "jpeg": "image/jpeg",
+                                "png": "image/png",
+                                "gif": "image/gif",
+                                "webp": "image/webp",
+                            }
+                            mime_type = mime_map.get(ext, "image/png")
+                            
+                        return f"data:{mime_type};base64,{image_data}"
+            except OSError as e:
+                _logger.error(f"[_prepare_image] OSError opening {full_path}: {e}")
+                _logger.error(f"[_prepare_image] Full traceback:\n{tb.format_exc()}")
+                continue
 
         # If file not found, log warning and return original
         print(f"Warning: Image file not found at any location: {image_url}")

@@ -2,7 +2,7 @@ import { api, APIError } from "encore.dev/api";
 import { getAuthData } from "~encore/auth";
 import { AuthData } from "../auth/auth";
 import { supabaseAdmin } from "./db";
-import { getPlanLimit } from "./limits";
+import { getPlanLimit, getReadingLimit } from "./limits";
 
 export interface User {
   id: string;
@@ -13,17 +13,21 @@ export interface User {
   theme: string;
   plan: string;
   essaysUsed: number;
+  readingCreditsUsed: number;
   activeAnalysis: boolean;
   createdAt: string;
   updatedAt: string;
 }
 
-export interface EssayLimits {
+export interface UsageLimits {
   plan: string;
   essaysUsed: number;
   limit: number;
   remaining: number;
   activeAnalysis: boolean;
+  readingCreditsUsed: number;
+  readingCreditsLimit: number; // can be -1 for unlimited
+  readingCreditsRemaining: number;
 }
 
 export interface CreateUserRequest {
@@ -63,7 +67,7 @@ export const createUser = api<CreateUserRequest, User>(
         language: req.language || "en",
         theme: req.theme || "light",
       })
-      .select("id, name, target_band, exam_date, language, theme, plan, essays_used, active_analysis, created_at, updated_at")
+      .select("id, name, target_band, exam_date, language, theme, plan, essays_used, reading_credits_used, active_analysis, created_at, updated_at")
       .single();
 
     if (error) throw APIError.internal(`Failed to create user: ${error.message}`);
@@ -83,7 +87,7 @@ export const getUser = api<{ id: string }, User>(
 
     const { data, error } = await supabaseAdmin
       .from("users")
-      .select("id, name, target_band, exam_date, language, theme, plan, essays_used, active_analysis, created_at, updated_at")
+      .select("id, name, target_band, exam_date, language, theme, plan, essays_used, reading_credits_used, active_analysis, created_at, updated_at")
       .eq("id", id)
       .single();
 
@@ -117,7 +121,7 @@ export const updateUser = api<UpdateUserRequest, User>(
       .from("users")
       .update(updates)
       .eq("id", req.id)
-      .select("id, name, target_band, exam_date, language, theme, plan, essays_used, active_analysis, created_at, updated_at")
+      .select("id, name, target_band, exam_date, language, theme, plan, essays_used, reading_credits_used, active_analysis, created_at, updated_at")
       .single();
 
     if (error || !data) throw APIError.notFound("User not found");
@@ -129,7 +133,7 @@ export const updateUser = api<UpdateUserRequest, User>(
 // ─── Essay Limit Endpoints ────────────────────────────────────────────────────
 
 // Returns the current essay usage and plan limits for a user.
-export const getEssayLimits = api<{ id: string }, { plan: string; essaysUsed: number; limit: number; remaining: number; activeAnalysis: boolean }>(
+export const getEssayLimits = api<{ id: string }, UsageLimits>(
   { expose: true, method: "GET", path: "/users/:id/essay-limits", auth: true },
   async ({ id }) => {
     const auth = getAuthData() as AuthData | null;
@@ -139,19 +143,25 @@ export const getEssayLimits = api<{ id: string }, { plan: string; essaysUsed: nu
 
     const { data, error } = await supabaseAdmin
       .from("users")
-      .select("plan, essays_used, active_analysis")
+      .select("plan, essays_used, active_analysis, reading_credits_used")
       .eq("id", id)
       .single();
 
     if (error || !data) throw APIError.notFound("User not found");
 
     const limit = getPlanLimit(data.plan);
+    const readingLimit = getReadingLimit(data.plan);
+    const readingUsed = data.reading_credits_used ?? 0;
+
     return {
       plan:           data.plan,
       essaysUsed:     data.essays_used,
       limit,
       remaining:      Math.max(0, limit - data.essays_used),
       activeAnalysis: data.active_analysis,
+      readingCreditsUsed: readingUsed,
+      readingCreditsLimit: readingLimit,
+      readingCreditsRemaining: readingLimit === -1 ? -1 : Math.max(0, readingLimit - readingUsed),
     };
   }
 );
@@ -218,6 +228,7 @@ function mapUser(row: any): User {
     theme:          row.theme,
     plan:           row.plan ?? "free",
     essaysUsed:     row.essays_used ?? 0,
+    readingCreditsUsed: row.reading_credits_used ?? 0,
     activeAnalysis: row.active_analysis ?? false,
     createdAt:      row.created_at,
     updatedAt:      row.updated_at,

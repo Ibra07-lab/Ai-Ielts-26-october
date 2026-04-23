@@ -86,7 +86,7 @@ export const HighlightedEssay: React.FC<HighlightedEssayProps> = ({
 
         if (validCorrections.length === 0) {
             return (
-                <div className="font-serif text-base md:text-[18px] leading-[1.7] md:leading-[1.8] text-slate-800 dark:text-slate-100/90 tracking-wide selection:bg-teal-500/30 overflow-y-auto custom-scrollbar relative">
+                <div className="font-serif text-base md:text-[18px] leading-[1.7] md:leading-[1.8] text-slate-800 dark:text-slate-100/90 tracking-wide selection:bg-teal-500/30 overflow-y-auto custom-scrollbar relative whitespace-pre-line text-justify">
                     {improvedText}
                 </div>
             );
@@ -99,7 +99,7 @@ export const HighlightedEssay: React.FC<HighlightedEssayProps> = ({
 
         return (
             <Tooltip.Provider delayDuration={200}>
-                <div className="font-serif text-base md:text-[18px] leading-[1.7] md:leading-[1.8] text-slate-800 dark:text-slate-100/90 tracking-wide selection:bg-teal-500/30 overflow-y-auto custom-scrollbar relative">
+                <div className="font-serif text-base md:text-[18px] leading-[1.7] md:leading-[1.8] text-slate-800 dark:text-slate-100/90 tracking-wide selection:bg-teal-500/30 overflow-y-auto custom-scrollbar relative whitespace-pre-line text-justify">
                     <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')] dark:hidden" />
 
                     <div className="relative z-10">
@@ -200,7 +200,7 @@ export const HighlightedEssay: React.FC<HighlightedEssayProps> = ({
 
     if (uniquePatterns.length === 0) {
         return (
-            <div className="font-serif text-base md:text-[18px] leading-[1.7] md:leading-[1.8] text-slate-800 dark:text-slate-100/90 tracking-wide selection:bg-teal-500/30 overflow-y-auto custom-scrollbar relative">
+            <div className="font-serif text-base md:text-[18px] leading-[1.7] md:leading-[1.8] text-slate-800 dark:text-slate-100/90 tracking-wide selection:bg-teal-500/30 overflow-y-auto custom-scrollbar relative whitespace-pre-line text-justify">
                 {essayText}
             </div>
         );
@@ -212,7 +212,7 @@ export const HighlightedEssay: React.FC<HighlightedEssayProps> = ({
 
     return (
         <Tooltip.Provider delayDuration={200}>
-            <div className="font-serif text-[20px] leading-[1.8] text-slate-800 dark:text-slate-100/90 tracking-wide selection:bg-teal-500/30 overflow-y-auto custom-scrollbar relative">
+            <div className="font-serif text-[20px] leading-[1.8] text-slate-800 dark:text-slate-100/90 tracking-wide selection:bg-teal-500/30 overflow-y-auto custom-scrollbar relative whitespace-pre-line text-justify">
                 {/* Subtle Paper Texture for Light Mode */}
                 <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')] dark:hidden" />
 

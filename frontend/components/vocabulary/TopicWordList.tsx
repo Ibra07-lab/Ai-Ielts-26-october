@@ -1,10 +1,10 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Play, BookOpen, MessageSquare, Mic, Layers, ArrowRight, ChevronDown, ChevronUp, PenTool, ArrowLeftRight, Link2, Search, Filter, CheckCircle2, Volume2, Heart, ArrowLeft, Quote, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
+import { cn, speakText } from "@/lib/utils";
 import type { WordData } from "@/data/vocabulary/types";
 
 interface TopicWordListProps {
@@ -32,7 +32,17 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
     const [selectedWordId, setSelectedWordId] = useState<number | null>(words[0]?.id || null);
     const [searchQuery, setSearchQuery] = useState("");
     const [filterStatus, setFilterStatus] = useState<"all" | "speaking" | "writing">("all");
+    const [selectedSubcategory, setSelectedSubcategory] = useState<string>("All");
     const [bookmarkedWords, setBookmarkedWords] = useState<Set<number>>(new Set());
+
+    useEffect(() => {
+        setSelectedSubcategory("All");
+    }, [words]);
+
+    const subcategories = useMemo(() => {
+        const topics = Array.from(new Set(words.map(w => w.topic))).filter(Boolean);
+        return topics.length > 1 ? topics : [];
+    }, [words]);
 
     const toggleBookmark = (e: React.MouseEvent, wordId: number) => {
         e.stopPropagation();
@@ -48,9 +58,7 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
     };
 
     const playAudio = (text: string) => {
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-GB';
-        window.speechSynthesis.speak(utterance);
+        speakText(text);
     };
 
     const filteredWords = useMemo(() => {
@@ -62,9 +70,14 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
             if (filterStatus === "speaking") matchesFilter = !!word.speakingExample;
             else if (filterStatus === "writing") matchesFilter = !!word.writingExample;
 
-            return matchesSearch && matchesFilter;
+            let matchesSubcategory = true;
+            if (selectedSubcategory !== "All") {
+                matchesSubcategory = word.topic === selectedSubcategory;
+            }
+
+            return matchesSearch && matchesFilter && matchesSubcategory;
         });
-    }, [words, searchQuery, filterStatus]);
+    }, [words, searchQuery, filterStatus, selectedSubcategory]);
 
     // Update selected word if the list changes or filter causes current selection to disappear
     // But try to keep selection if possible
@@ -86,23 +99,57 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
                     Back to Topics
                 </Button>
             </div>
-            <h1 className="text-3xl font-serif font-bold text-gray-900 dark:text-white">
-                {topicName}
-            </h1>
+
 
             {/* Master-Detail Layout */}
             <div className="grid grid-cols-12 gap-8 h-full">
                 {/* Left Sidebar: Word List */}
-                <div className="col-span-4 flex flex-col bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-white/5 shadow-sm overflow-hidden">
+                <div className="col-span-4 flex flex-col bg-white dark:bg-[#151624] dark:backdrop-blur-xl rounded-2xl border border-gray-200 dark:border-white/5 shadow-sm overflow-hidden">
                     <div className="p-3 border-b border-gray-100 dark:border-white/5 sticky top-0 bg-white/95 dark:bg-card/95 backdrop-blur z-10 space-y-2">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-wider">
-                                <BookOpen className="h-4 w-4" /> Word List
+                                <BookOpen className="h-4 w-4" />
                             </div>
                             <Badge variant="secondary" className="bg-gray-100 text-gray-600 dark:bg-white/10 dark:text-gray-300">
                                 {filteredWords.length}
                             </Badge>
                         </div>
+
+                        {/* Subcategory Filter Tabs (Parts) */}
+                        {subcategories.length > 0 && (
+                            <div className="flex flex-wrap gap-1">
+                                <button
+                                    onClick={() => setSelectedSubcategory("All")}
+                                    className={cn(
+                                        "px-2 py-1 text-[10px] font-bold rounded-md transition-all uppercase tracking-wider",
+                                        selectedSubcategory === "All"
+                                            ? "bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400"
+                                            : "bg-gray-100 text-gray-500 hover:bg-gray-200 dark:bg-white/5 dark:text-gray-400 dark:hover:bg-white/10"
+                                    )}
+                                >
+                                    All Parts
+                                </button>
+                                {subcategories.map(sub => {
+                                    const match = sub.match(/Part\s*\d/i);
+                                    const label = match ? match[0] : sub.replace(topicName, "").replace(/[()-]/g, "").trim() || sub;
+
+                                    return (
+                                        <button
+                                            key={sub}
+                                            onClick={() => setSelectedSubcategory(sub)}
+                                            className={cn(
+                                                "px-2 py-1 text-[10px] font-bold rounded-md transition-all uppercase tracking-wider",
+                                                selectedSubcategory === sub
+                                                    ? "bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400"
+                                                    : "bg-gray-100 text-gray-500 hover:bg-gray-200 dark:bg-white/5 dark:text-gray-400 dark:hover:bg-white/10"
+                                            )}
+                                        >
+                                            {label}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        )}
 
                         {/* Filter Tabs - Only show if there's a mix of speaking and writing words */}
                         {hasWritingWords && hasSpeakingWords && (
@@ -133,7 +180,7 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
                                 className={cn(
                                     "p-4 rounded-xl cursor-pointer transition-all duration-200 group border text-left",
                                     selectedWordId === word.id
-                                        ? "bg-blue-50/80 dark:bg-blue-500/10 border-blue-200 dark:border-blue-500/20 shadow-sm"
+                                        ? "bg-blue-50/80 dark:bg-white/10 border-blue-200 dark:border-white/20 shadow-sm dark:shadow-[0_0_15px_rgba(0,210,255,0.1)]"
                                         : "bg-transparent border-transparent hover:bg-gray-50 dark:hover:bg-white/5 hover:border-gray-200 dark:hover:border-white/10"
                                 )}
                             >
@@ -141,7 +188,7 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
                                     <h3 className={cn(
                                         "font-bold text-lg font-serif transition-colors",
                                         selectedWordId === word.id
-                                            ? "text-blue-700 dark:text-blue-400"
+                                            ? "text-blue-700 dark:neon-glow dark:text-white"
                                             : "text-gray-900 dark:text-white"
                                     )}>
                                         {word.word}
@@ -171,11 +218,11 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
                 </div>
 
                 {/* Right Panel: Word Detail */}
-                <div className="col-span-8 overflow-y-auto custom-scrollbar pr-2 pb-8">
+                <div className="col-span-8 overflow-y-auto custom-scrollbar pr-2">
                     {activeWord ? (
-                        <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
+                        <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300 pb-20">
                             {/* Word Card */}
-                            <div className="bg-white dark:bg-card rounded-3xl border border-gray-200 dark:border-white/5 shadow-sm overflow-hidden relative">
+                            <div className="bg-white dark:bg-[#151624]/90 dark:backdrop-blur-xl rounded-3xl border border-gray-200 dark:border-white/5 dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.8)] shadow-sm overflow-hidden relative">
                                 {/* Decorative blob */}
                                 <div className="absolute top-0 right-0 w-64 h-64 bg-slate-50 dark:bg-slate-800/50 rounded-bl-full -mr-16 -mt-16 pointer-events-none" />
 
@@ -183,7 +230,7 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
                                     {/* Header Row */}
                                     <div className="flex items-start justify-between mb-4">
                                         <div className="flex items-center gap-4">
-                                            <h2 className="text-4xl font-serif font-bold text-gray-900 dark:text-white tracking-tight">
+                                            <h2 className="text-4xl font-serif font-bold text-gray-900 premium-gradient-text tracking-tight">
                                                 {activeWord.word}
                                             </h2>
                                             <button

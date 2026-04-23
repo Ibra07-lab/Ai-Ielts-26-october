@@ -9,6 +9,9 @@ import { cn } from "@/lib/utils";
 import { sendChatMessage, streamChatMessage, generateSessionId, startTrainingSession, ChatMessage as APIChatMessage } from "@/services/chatApi";
 import ReactMarkdown from "react-markdown";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { useUser } from "../contexts/UserContext";
+import backend from "@/backend";
 
 type GreetingStyle = "short" | "medium" | "ultra";
 const greetingStyles = ["short", "medium", "ultra"] as const;
@@ -62,6 +65,7 @@ export default function ReadingTutor() {
 	const [messages, setMessages] = useState<ChatMessage[]>([]);
 	const [input, setInput] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
+	const [usageLimits, setUsageLimits] = useState<{ readingCreditsUsed: number; readingCreditsLimit: number; readingCreditsRemaining: number } | null>(null);
 	const [sessionId] = useState(() => generateSessionId());
 	const listRef = useRef<HTMLDivElement | null>(null);
 	const inputRef = useRef<HTMLTextAreaElement | null>(null);
@@ -74,6 +78,25 @@ export default function ReadingTutor() {
 	const isTrainingSession = !!trainingState?.skill;
 	const [isTrainingInit, setIsTrainingInit] = useState(false);
 	const [sessionResult, setSessionResult] = useState<SessionResult | null>(null);
+	const { user } = useUser();
+
+	const fetchUsage = async () => {
+		if (!user?.id) return;
+		try {
+			const limits = await backend.ielts.getEssayLimits(user.id);
+			setUsageLimits({
+				readingCreditsUsed: limits.readingCreditsUsed,
+				readingCreditsLimit: limits.readingCreditsLimit,
+				readingCreditsRemaining: limits.readingCreditsRemaining,
+			});
+		} catch (err) {
+			console.error("Failed to fetch usage limits:", err);
+		}
+	};
+
+	useEffect(() => {
+		fetchUsage();
+	}, [user?.id]);
 
 	// Auto-start training session when navigated with training state
 	useEffect(() => {
@@ -82,6 +105,7 @@ export default function ReadingTutor() {
 			setIsTrainingInit(true);
 			try {
 				const response = await startTrainingSession({
+					userId: user?.id || "",
 					session_id: sessionId,
 					skill: trainingState.skill,
 					student_id: trainingState.studentId,
@@ -281,16 +305,18 @@ export default function ReadingTutor() {
 				}, 80);
 
 				try {
-					await streamChatMessage({ session_id: sessionId, messages: apiMessages, dropped_question_id: null }, (chunk) => { buffer += chunk; });
+					await streamChatMessage({ userId: user?.id || "", session_id: sessionId, messages: apiMessages, dropped_question_id: null }, (chunk) => { buffer += chunk; });
 				} finally {
 					isStreaming = false;
 					if (buffer.length > 0) setMessages((m) => m.map((msg) => msg.id === assistantId ? { ...msg, content: msg.content + buffer } : msg));
 					clearInterval(flushInterval);
 				}
 			} else {
-				const resp = await sendChatMessage({ session_id: sessionId, messages: apiMessages, dropped_question_id: null });
+				const resp = await sendChatMessage({ userId: user?.id || "", session_id: sessionId, messages: apiMessages, dropped_question_id: null });
 				setMessages((m) => [...m, { id: crypto.randomUUID(), role: "assistant", content: resp.content }]);
 			}
+			// Refresh credits after message
+			fetchUsage();
 		} catch (e) {
 			setMessages((m) => [...m, { id: crypto.randomUUID(), role: "assistant", content: "Sorry, I encountered an error. Please try again." }]);
 		} finally {
@@ -334,7 +360,32 @@ export default function ReadingTutor() {
 							<span className="text-xs text-indigo-500/70 dark:text-indigo-400/60">
 								• {trainingState?.accuracy}% accuracy • {trainingState?.correct}/{trainingState?.totalAttempted} correct
 							</span>
+							<div className="ml-auto">
+								{usageLimits && (
+									<Badge variant="outline" className="bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-200/50 dark:border-indigo-700/50">
+										{usageLimits.readingCreditsLimit === -1 ? (
+											"Unlimited Credits"
+										) : (
+											`${usageLimits.readingCreditsRemaining} credits remaining`
+										)}
+									</Badge>
+								)}
+							</div>
 						</div>
+					</div>
+				)}
+
+				{!isTrainingSession && (
+					<div className="px-4 pt-3 pb-1 flex-shrink-0 flex justify-end">
+						{usageLimits && (
+							<Badge variant="secondary" className="bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 text-slate-600 dark:text-slate-400">
+								{usageLimits.readingCreditsLimit === -1 ? (
+									"Unlimited Credits"
+								) : (
+									`${usageLimits.readingCreditsRemaining} credits remaining`
+								)}
+							</Badge>
+						)}
 					</div>
 				)}
 

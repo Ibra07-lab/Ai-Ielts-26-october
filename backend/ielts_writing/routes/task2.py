@@ -20,6 +20,20 @@ from typing import Optional, List
 import asyncio
 import logging
 import time
+import json
+from datetime import datetime, date
+
+def json_serializable(obj):
+    """Convert objects that are not JSON serializable."""
+    if isinstance(obj, (datetime, date)):
+        return obj.isoformat()
+    raise TypeError(f"Object of type {type(obj)} is not JSON serializable")
+
+def make_serializable(data):
+    """Recursively convert a dict to be JSON serializable."""
+    if data is None:
+        return None
+    return json.loads(json.dumps(data, default=json_serializable))
 
 from ..task2_pipeline import Task2Pipeline
 from ..auth import require_auth
@@ -110,6 +124,7 @@ async def evaluate_task2(request: Task2EvaluationRequest, auth: dict = Depends(r
             from ..supabase_client import get_supabase
             supabase = get_supabase()
             
+            user_id = auth.get("uid")
             band_scores = result["evaluation"].band_scores
             save_result = supabase.table("writing_evaluations").insert({
                 "user_id": user_id,
@@ -121,9 +136,9 @@ async def evaluate_task2(request: Task2EvaluationRequest, auth: dict = Depends(r
                 "coherence_cohesion_band": band_scores.coherence_cohesion,
                 "lexical_resource_band": band_scores.lexical_resource,
                 "grammar_band": band_scores.grammatical_range_accuracy,
-                "evaluation_json": result["evaluation"].model_dump(),
-                "explanation_json": result["explanation"].model_dump(),
-                "coaching_json": result["coaching"].model_dump() if request.include_coaching else None,
+                "evaluation_json": make_serializable(result["evaluation"].model_dump()),
+                "explanation_json": make_serializable(result["explanation"].model_dump()),
+                "coaching_json": make_serializable(result["coaching"].model_dump()) if request.include_coaching and result.get("coaching") else None,
                 "total_seconds": round(total_time, 2),
                 "student_name": request.student_name,
             }).execute()

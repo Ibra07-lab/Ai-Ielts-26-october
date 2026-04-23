@@ -384,7 +384,7 @@ export default function Onboarding() {
           authHeaders['Authorization'] = `Bearer ${session.access_token}`;
         }
 
-        const res = await fetch('http://localhost:8002/api/onboarding/generate', {
+        const res = await fetch('/api/onboarding/generate', {
           method: 'POST',
           headers: authHeaders,
           body: JSON.stringify(payload)

@@ -1,17 +1,38 @@
 """
-Task 1 API Routes - FIXED TIMEOUT VERSION
+Task 1 API Routes — 3-Agent Pipeline
 
-Key changes:
-1. Separate endpoints for quick vs full evaluation
-2. Better error messages
-3. Timing info in response
+Runs the complete Task 1 evaluation pipeline:
+1. Examiner (Agent 1): Scores the essay
+2. Explainer (Agent 2): Generates detailed feedback  
+3. Coach (Agent 3): Creates focused action plan
+
+Response structure aligned with Task 2 route:
+- evaluation: Band scores, analysis
+- explanation: Detailed feedback with rewrites
+- coaching: One big change, drills, plan
+- Each with independent _status fields
 """
 
-from fastapi import APIRouter, HTTPException, BackgroundTasks, Depends
+from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 from typing import Optional, List
 import asyncio
 import logging
+import time
+import json
+from datetime import datetime, date
+
+def json_serializable(obj):
+    """Convert objects that are not JSON serializable."""
+    if isinstance(obj, (datetime, date)):
+        return obj.isoformat()
+    raise TypeError(f"Object of type {type(obj)} is not JSON serializable")
+
+def make_serializable(data):
+    """Recursively convert a dict to be JSON serializable."""
+    if data is None:
+        return None
+    return json.loads(json.dumps(data, default=json_serializable))
 
 from ..pipelines.task1_pipeline import Task1Pipeline
 from ..auth import require_auth
@@ -39,20 +60,22 @@ class Task1EvaluationRequest(BaseModel):
 @router.post("/evaluate")
 async def evaluate_task1(request: Task1EvaluationRequest, auth: dict = Depends(require_auth)):
     """
-    Full Task 1 evaluation.
+    Full Task 1 evaluation pipeline (3 agents).
     
-    Timeout behavior:
-    - Examiner: 30s max (required)
-    - Teacher: 45s max (optional, will return examiner results if timeout)
+    Runs three agents in sequence:
+    1. Examiner: Scores the essay (TA, CC, LR, GRA)
+    2. Explainer: Generates actionable feedback with rewrites
+    3. Coach: Creates "One Big Change" action plan
     
     Response includes:
-    - scores: Always present if examiner succeeds
-    - teacher_feedback: Present if teacher succeeds
-    - teacher_feedback_status: "complete", "timeout", or "error"
+    - evaluation: Always present if examiner succeeds
+    - explanation: Present or None with status
+    - coaching: Present or None with status
     - timing: How long each step took
     """
     
     logger.info(f"[API] Task 1 evaluate request for {request.student_name}")
+    start_time = time.time()
     
     try:
         result = await pipeline.evaluate_async(
@@ -69,10 +92,12 @@ async def evaluate_task1(request: Task1EvaluationRequest, auth: dict = Depends(r
         )
         
         if not result.get("success"):
+            logger.error(f"[API] Pipeline returned failure: {result.get('error')}")
             raise HTTPException(
                 status_code=500,
                 detail={
                     "error": result.get("error"),
+                    "traceback": result.get("traceback", "No traceback available"),
                     "message": "Evaluation failed. Please try again."
                 }
             )
@@ -80,24 +105,34 @@ async def evaluate_task1(request: Task1EvaluationRequest, auth: dict = Depends(r
         # ── Save to Supabase ──
         try:
             from ..supabase_client import get_supabase
-            import time as _time
             supabase = get_supabase()
             
-            # Extract band scores from result
+            user_id = auth.get("uid")
             scores = result.get("scores", {})
+            
+            # Extract queryable fields from coaching data
+            coaching_data = result.get("coaching")
+            root_cause = None
+            weakest_criterion = None
+            if coaching_data and isinstance(coaching_data, dict):
+                root_cause = coaching_data.get("root_cause_analysis", {}).get("root_cause_type")
+                weakest_criterion = coaching_data.get("score_context", {}).get("lowest_criterion")
+            
             save_data = {
                 "user_id": user_id,
                 "task_type": "task1",
                 "question": request.question,
                 "essay": request.essay,
-                "overall_band": scores.get("overall"),
-                "task_response_band": scores.get("task_achievement") or scores.get("task_response"),
+                "overall_band": scores.get("overall_band") or scores.get("overall"),
+                "task_response_band": scores.get("task_achievement"),
                 "coherence_cohesion_band": scores.get("coherence_cohesion"),
                 "lexical_resource_band": scores.get("lexical_resource"),
                 "grammar_band": scores.get("grammatical_range_accuracy"),
-                "evaluation_json": result.get("scores"),
-                "explanation_json": result.get("teacher_feedback"),
-                "coaching_json": None,
+                # Full JSON blobs for rendering
+                "evaluation_json": make_serializable(result.get("evaluation")),
+                "explanation_json": make_serializable(result.get("explanation")),
+                "coaching_json": make_serializable(coaching_data),
+                # Queryable columns for analytics
                 "total_seconds": result.get("timing", {}).get("total_seconds"),
                 "student_name": request.student_name,
             }
@@ -109,8 +144,18 @@ async def evaluate_task1(request: Task1EvaluationRequest, auth: dict = Depends(r
             logger.warning(f"[API] ⚠️ Failed to save Task 1 to Supabase: {db_err}")
             result["saved_id"] = None
         
+        total_time = time.time() - start_time
+        logger.info(
+            f"[API] Task 1 evaluation complete in {total_time:.2f}s - "
+            f"Band: {result.get('scores', {}).get('overall_band')} | "
+            f"Explainer: {result.get('explanation_status', 'unknown')} | "
+            f"Coach: {result.get('coaching_status', 'unknown')}"
+        )
+        
         return result
         
+    except HTTPException:
+        raise
     except asyncio.TimeoutError:
         raise HTTPException(
             status_code=504,
@@ -120,12 +165,21 @@ async def evaluate_task1(request: Task1EvaluationRequest, auth: dict = Depends(r
             }
         )
     except Exception as e:
-        logger.error(f"[API] Error evaluating: {type(e).__name__}: {str(e)}", exc_info=True)
+        import traceback
+        tb_text = traceback.format_exc()
+        logger.error(f"FULL ERROR TRACEBACK:\n{tb_text}")
+        try:
+            with open("task1_crash.txt", "w", encoding="utf-8") as f:
+                f.write(tb_text)
+        except Exception:
+            pass
+
         raise HTTPException(
             status_code=500,
             detail={
                 "error": str(e),
-                "message": f"An error occurred: {str(e)}"
+                "traceback": tb_text,
+                "message": "Evaluation failed. Please try again."
             }
         )
 
@@ -136,9 +190,12 @@ async def health_check():
     return {
         "status": "healthy",
         "task_type": "task1",
+        "agents": ["examiner", "explainer", "coach"],
+        "pipeline": "ready",
         "timeouts": {
             "examiner": f"{pipeline.EXAMINER_TIMEOUT}s",
-            "teacher": f"{pipeline.TEACHER_TIMEOUT}s",
+            "explainer": f"{pipeline.EXPLAINER_TIMEOUT}s",
+            "coach": f"{pipeline.COACH_TIMEOUT}s",
             "total": f"{pipeline.TOTAL_TIMEOUT}s"
         }
     }
@@ -146,30 +203,33 @@ async def health_check():
 
 @router.get("/health/detailed")
 async def detailed_health():
-    """Check if Anthropic API is responsive."""
-    import time
+    """Check if LLM API is responsive."""
+    import time as _time
     
     try:
-        start = time.time()
-        response = pipeline.teacher.client.messages.create(
-            model=pipeline.teacher.model,
-            max_tokens=10,
-            messages=[{"role": "user", "content": "Say 'OK'"}]
+        start = _time.time()
+        # Quick ping through the client
+        response = pipeline.explainer.client.call_openrouter(
+            model="openai/gpt-4.1",
+            system_prompt="Say OK",
+            user_prompt="Reply with just 'OK'",
+            temperature=0,
+            max_tokens=5,
+            timeout=10.0
         )
-        latency = time.time() - start
+        latency = _time.time() - start
         
         return {
             "status": "healthy",
-            "anthropic_latency": f"{latency:.2f}s",
-            "anthropic_status": "responsive",
-            "cache_size": len(pipeline.teacher.cache),
-            "cache_max": pipeline.teacher.cache.maxsize
+            "llm_latency": f"{latency:.2f}s",
+            "llm_status": "responsive",
+            "pipeline_agents": ["examiner", "explainer", "coach"]
         }
         
     except Exception as e:
         logger.error(f"[API] Health check failed: {e}")
         return {
             "status": "degraded",
-            "anthropic_status": "error",
+            "llm_status": "error",
             "error": str(e)
         }

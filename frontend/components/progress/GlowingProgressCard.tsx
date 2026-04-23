@@ -199,7 +199,7 @@ export default function GlowingProgressCard({
     queryKey: ["study-plan-today", user?.id],
     queryFn: async () => {
       if (!user) return null;
-      const res = await fetch(`http://localhost:8002/api/onboarding/${user.id}`, {
+      const res = await fetch(`/api/onboarding/${user.id}`, {
         headers: {
           'Authorization': `Bearer ${session?.access_token || ''}`
         }

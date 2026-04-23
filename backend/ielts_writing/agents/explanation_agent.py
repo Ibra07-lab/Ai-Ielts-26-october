@@ -158,67 +158,75 @@ class Task1ExplanationAgent:
         Returns:
             WritingExplanations object with all 4 criterion explanations
         """
-        logger.info("Generating explanations for all 4 criteria IN PARALLEL...")
-        
-        # Extract criterion scores
-        criterion_scores = {
-            score['criterion']: score
-            for score in examiner_scores.get('criterion_scores', [])
-        }
-        
-        # Create all 4 tasks to run in parallel
-        ta_task = self._safe_generate_explanation_async(
-            criterion="task_achievement",
-            essay=essay,
-            question=question,
-            band=criterion_scores.get('task_achievement', {}).get('band', 5.0),
-            examiner_notes=self._extract_ta_notes(examiner_scores),
-            visual_description=visual_description,
-            schema_class=TaskAchievementExplanation
-        )
-        
-        cc_task = self._safe_generate_explanation_async(
-            criterion="coherence_cohesion",
-            essay=essay,
-            question=question,
-            band=criterion_scores.get('coherence_cohesion', {}).get('band', 5.0),
-            examiner_notes=self._extract_cc_notes(examiner_scores),
-            schema_class=CoherenceCohesionExplanation
-        )
-        
-        lr_task = self._safe_generate_explanation_async(
-            criterion="lexical_resource",
-            essay=essay,
-            question=question,
-            band=criterion_scores.get('lexical_resource', {}).get('band', 5.0),
-            examiner_notes=self._extract_lr_notes(examiner_scores),
-            schema_class=LexicalResourceExplanation
-        )
-        
-        gra_task = self._safe_generate_explanation_async(
-            criterion="grammatical_range_accuracy",
-            essay=essay,
-            question=question,
-            band=criterion_scores.get('grammatical_range_accuracy', {}).get('band', 5.0),
-            examiner_notes=self._extract_gra_notes(examiner_scores),
-            schema_class=GrammaticalRangeExplanation
-        )
-        
-        # Run all 4 in parallel - this is the key speedup!
-        ta_explanation, cc_explanation, lr_explanation, gra_explanation = await asyncio.gather(
-            ta_task, cc_task, lr_task, gra_task
-        )
-        
-        # Combine into WritingExplanations
-        explanations = WritingExplanations(
-            task_achievement=ta_explanation,
-            coherence_cohesion=cc_explanation,
-            lexical_resource=lr_explanation,
-            grammatical_range_accuracy=gra_explanation
-        )
-        
-        logger.info("Successfully generated all 4 explanations IN PARALLEL")
-        return explanations
+        try:
+            logger.info("Generating explanations for all 4 criteria IN PARALLEL...")
+            
+            # Extract criterion scores
+            criterion_scores = {
+                score['criterion']: score
+                for score in examiner_scores.get('criterion_scores', [])
+            }
+            
+            # Create all 4 tasks to run in parallel
+            ta_task = self._safe_generate_explanation_async(
+                criterion="task_achievement",
+                essay=essay,
+                question=question,
+                band=criterion_scores.get('task_achievement', {}).get('band', 5.0),
+                examiner_notes=self._extract_ta_notes(examiner_scores),
+                visual_description=visual_description,
+                schema_class=TaskAchievementExplanation
+            )
+            
+            cc_task = self._safe_generate_explanation_async(
+                criterion="coherence_cohesion",
+                essay=essay,
+                question=question,
+                band=criterion_scores.get('coherence_cohesion', {}).get('band', 5.0),
+                examiner_notes=self._extract_cc_notes(examiner_scores),
+                schema_class=CoherenceCohesionExplanation
+            )
+            
+            lr_task = self._safe_generate_explanation_async(
+                criterion="lexical_resource",
+                essay=essay,
+                question=question,
+                band=criterion_scores.get('lexical_resource', {}).get('band', 5.0),
+                examiner_notes=self._extract_lr_notes(examiner_scores),
+                schema_class=LexicalResourceExplanation
+            )
+            
+            gra_task = self._safe_generate_explanation_async(
+                criterion="grammatical_range_accuracy",
+                essay=essay,
+                question=question,
+                band=criterion_scores.get('grammatical_range_accuracy', {}).get('band', 5.0),
+                examiner_notes=self._extract_gra_notes(examiner_scores),
+                schema_class=GrammaticalRangeExplanation
+            )
+            
+            # Run all 4 in parallel - this is the key speedup!
+            ta_explanation, cc_explanation, lr_explanation, gra_explanation = await asyncio.gather(
+                ta_task, cc_task, lr_task, gra_task
+            )
+            
+            # Combine into WritingExplanations
+            explanations = WritingExplanations(
+                task_achievement=ta_explanation,
+                coherence_cohesion=cc_explanation,
+                lexical_resource=lr_explanation,
+                grammatical_range_accuracy=gra_explanation
+            )
+            
+            logger.info("Successfully generated all 4 explanations IN PARALLEL")
+            return explanations
+        except Exception as e:
+            import traceback
+            import logging
+            logging.getLogger(__name__).error(
+                f"ExplanationAgent FAILED:\n{traceback.format_exc()}"
+            )
+            raise
     
     async def _safe_generate_explanation_async(
         self,

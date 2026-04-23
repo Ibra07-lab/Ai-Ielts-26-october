@@ -21,6 +21,7 @@ export function FeedbackContainer({ evaluation, coaching, essay, taskType, onBac
                     evaluation={evaluation}
                     coaching={coaching}
                     activeCriterion={activeCriterion}
+                    taskType={taskType}
                     onBack={onBack || (() => { })}
                     onCriterionChange={setActiveCriterion}
                 />

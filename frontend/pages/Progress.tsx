@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import {
   TrendingUp,
@@ -13,6 +13,7 @@ import {
   Flame,
   CalendarDays,
   AlertCircle,
+  Trash2,
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useUser } from "../contexts/UserContext";
@@ -24,7 +25,28 @@ import ReadingProgressTracker from "../components/progress/ReadingProgressTracke
 export default function Progress() {
   const { user, session } = useUser();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [viewDays, setViewDays] = useState(14);
+
+  const deleteSessionMutation = useMutation({
+    mutationFn: async (sessionId: number | string) => {
+      const response = await fetch(`/writing/history/session/${sessionId}`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${session?.access_token || ""}`,
+        },
+      });
+      if (!response.ok) throw new Error("Failed to delete session");
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["writingSessions", user?.id] });
+    },
+    onError: (error) => {
+      console.error("Error deleting session:", error);
+      alert("Failed to delete the session. Please try again.");
+    }
+  });
 
   const { data: progress } = useQuery({
     queryKey: ["progress", user?.id],
@@ -37,7 +59,7 @@ export default function Progress() {
     queryFn: async () => {
       if (!user) return null;
       try {
-        const response = await fetch(`http://localhost:8002/writing/history/${user.id}`, {
+        const response = await fetch(`/writing/history/${user.id}`, {
           headers: {
             "Authorization": `Bearer ${session?.access_token || ""}`,
           },
@@ -295,6 +317,12 @@ export default function Progress() {
                       scoreLabel="Band"
                       accentColor="from-cyan-400 to-blue-500"
                       onClick={() => navigate(`/writing/feedback/${session.id}`)}
+                      onDelete={(e) => {
+                        e.stopPropagation();
+                        if (window.confirm("Are you sure you want to delete this writing session? This cannot be undone.")) {
+                          deleteSessionMutation.mutate(session.id);
+                        }
+                      }}
                     />
                   )}
                 />
@@ -378,6 +406,7 @@ function SessionRow({
   scoreLabel,
   accentColor,
   onClick,
+  onDelete,
 }: {
   label: string;
   date: string;
@@ -385,6 +414,7 @@ function SessionRow({
   scoreLabel: string;
   accentColor: string;
   onClick?: () => void;
+  onDelete?: (e: React.MouseEvent) => void;
 }) {
   return (
     <div
@@ -411,6 +441,18 @@ function SessionRow({
           <p className="text-base font-bold text-slate-900 dark:text-white tabular-nums">{score}</p>
           <p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold">{scoreLabel}</p>
         </div>
+        {onDelete && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(e);
+            }}
+            className="p-1.5 text-slate-300 dark:text-slate-600 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 rounded-md transition-colors"
+            title="Delete session"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
+        )}
         <ChevronRight className="w-4 h-4 text-muted-foreground/40 group-hover:text-blue-500 transition-all transform group-hover:translate-x-0.5" />
       </div>
     </div>

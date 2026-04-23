@@ -1,4 +1,4 @@
-﻿"""
+"""
 DEPRECATED: Legacy IELTS Writing routes.
 
 This module provides the old 2-agent pipeline (Examiner + Tutor).
@@ -25,7 +25,7 @@ from .models import (
     UserErrorProfile
 )
 try:
-    from .agents.pipeline import get_pipeline
+    from .agents.pipeline import get_pipeline  # type: ignore
 except ImportError:
     get_pipeline = None  # Legacy pipeline module removed
 

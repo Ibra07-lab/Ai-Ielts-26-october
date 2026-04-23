@@ -18,7 +18,7 @@ export default function WritingFeedbackHistory() {
         queryFn: async () => {
             if (!id) throw new Error('Missing session ID');
 
-            const response = await fetch(`http://localhost:8002/writing/history/session/${id}`, {
+            const response = await fetch(`/writing/history/session/${id}`, {
                 headers: {
                     'Authorization': `Bearer ${session?.access_token || ''}`
                 }
@@ -93,14 +93,134 @@ export default function WritingFeedbackHistory() {
         explanations: sessionData.explanation_json ? sessionData.explanation_json.explanations : []
     };
 
-    const coachingData = sessionData.coaching_json || {
-        action_plan: ["Historical session available."],
-        strengths: ["Evaluation loaded from history."],
-        weaknesses: ["Cannot regenerate micro feedback."],
-        grammar_errors: [],
-        vocabulary_suggestions: [],
-        coherence_issues: [],
+    // Normalize coaching data — must match the shape expected by FeedbackDeepDiveView
+    // The database stores raw agent outputs; we need to transform them into the CoachingResult interface.
+    const buildCoachingData = () => {
+        const coachData = sessionData.coaching_json || {};
+        const explainData = sessionData.explanation_json || {};
+        const isTask1 = sessionData.task_type === 'task1';
+
+        if (isTask1) {
+            return {
+                action_plan: coachData?.the_one_big_change ? [
+                    coachData.the_one_big_change.change_statement,
+                    coachData.micro_drill ? `Drill: ${coachData.micro_drill.drill_name}` : "",
+                ].filter(Boolean) : [],
+                strengths: [coachData?.diagnosis_summary?.strength_acknowledged].filter(Boolean),
+                weaknesses: [coachData?.diagnosis_summary?.core_limitation].filter(Boolean),
+                grammar_errors: (explainData.micro_fixes || [])
+                    .filter((f: any) => f.error_type === 'grammar' || f.error_type === 'punctuation' || f.error_type === 'style' || f.error_type === 'comparison' || f.error_type === 'tense')
+                    .map((f: any) => ({
+                        original: f.original_sentence,
+                        corrected: f.corrected_sentence,
+                        explanation: f.explanation,
+                        tip: f.specific_error || "Watch out for this error pattern.",
+                        specific_error: f.specific_error // Preserve for descriptive breakdown
+                    })),
+                vocabulary_suggestions: [
+                    ...(explainData.micro_fixes || [])
+                        .filter((f: any) => f.error_type === 'vocabulary')
+                        .map((f: any) => ({
+                            original: f.original_sentence,
+                            better_options: [f.corrected_sentence].filter(Boolean),
+                            context: f.explanation
+                        })),
+                    ...(explainData.vocabulary_feedback?.word_upgrades || [])
+                        .map((u: any) => ({
+                            original: u.basic_phrase,
+                            better_options: u.upgrade_options && u.upgrade_options.length > 0 ? u.upgrade_options : [u.best_fit],
+                            context: `Context: "${u.context_sentence}"\n\nImproved: "${u.improved_sentence}"`
+                        }))
+                ],
+                coherence_issues: (explainData.cohesion_fixes || []).map((c: any) => ({
+                    text: c.original_sentence || c.quote,
+                    suggestion: c.improved_sentence || c.corrected_sentence || c.suggestion,
+                    reason: c.technique_explanation || c.explanation
+                })),
+                raw_coach_output: coachData,
+                raw_explainer_output: explainData,
+                topic_analysis: coachData.topic_analysis || [],
+                topic_vocabulary: coachData.topic_vocabulary || undefined,
+                coherence_advice: coachData.coherence_advice || undefined,
+                score_context: coachData.score_context,
+                root_cause_analysis: coachData.root_cause_analysis,
+                diagnosis_summary: coachData.diagnosis_summary,
+                the_one_big_change: coachData.the_one_big_change,
+                pattern_breaker: coachData.pattern_breaker,
+                micro_drill: coachData.micro_drill,
+                next_essay_plan: coachData.next_essay_plan,
+                motivation: coachData.motivation,
+            };
+        } else {
+            // Task 2 normalization
+            return {
+                action_plan: [
+                    coachData.the_one_big_change ? coachData.the_one_big_change.change_statement : "",
+                    coachData.micro_drill ? `Drill: ${coachData.micro_drill.drill_name}` : "",
+                    coachData.score_context?.realistic_next_target ? `Next Target: Band ${coachData.score_context.realistic_next_target}` : "Keep practicing"
+                ].filter(Boolean),
+                strengths: [coachData.diagnosis_summary?.strength_acknowledged].filter(Boolean),
+                weaknesses: explainData.priority_summary
+                    ? explainData.priority_summary.map((p: any) =>
+                        `**${p.area}**: ${p.current_problem} ${p.action_step}`
+                    )
+                    : [coachData.diagnosis_summary?.core_limitation].filter(Boolean),
+                grammar_errors: (explainData.micro_feedback || explainData.micro_fixes || [])
+                    .filter((f: any) => (f.error_type === 'grammar' || f.error_type === 'punctuation' || f.error_type === 'tense' || f.error_type === 'article' || f.error_type === 'comparison' || f.error_type === 'style' || f.issue_type === 'grammar') && (f.corrected_sentence || f.correction || f.improved_sentence))
+                    .map((f: any) => ({
+                        original: f.original_sentence || f.quote,
+                        corrected: f.corrected_sentence || f.correction,
+                        explanation: f.explanation,
+                        tip: "Watch for this grammar pattern."
+                    })),
+                vocabulary_suggestions: [
+                    ...(explainData.micro_feedback || explainData.micro_fixes || [])
+                        .filter((f: any) => f.error_type === 'vocabulary' && (f.corrected_sentence || f.correction || f.improved_sentence))
+                        .map((f: any) => ({
+                            original: f.original_sentence || f.quote,
+                            better_options: [f.corrected_sentence || f.correction || f.improved_sentence],
+                            context: f.explanation
+                        })),
+                    ...(explainData.vocabulary_feedback?.word_upgrades || [])
+                        .filter((u: any) => u.upgrade_options && u.upgrade_options.length > 0)
+                        .map((u: any) => ({
+                            original: u.basic_word,
+                            better_options: u.upgrade_options,
+                            context: u.why_best_fit
+                        }))
+                ],
+                coherence_issues: [
+                    ...(explainData.micro_feedback || [])
+                        .filter((f: any) => f.error_type === 'cohesion' || f.error_type === 'coherence')
+                        .map((f: any) => ({
+                            text: f.original_sentence || f.quote,
+                            suggestion: f.corrected_sentence || f.correction,
+                            reason: f.explanation
+                        })),
+                    ...(explainData.cohesion_fixes || []).map((c: any) => ({
+                        text: c.original_sentence || c.quote,
+                        suggestion: c.improved_sentence || c.corrected_sentence || c.suggestion,
+                        reason: c.technique_explanation || c.explanation
+                    }))
+                ],
+                raw_coach_output: coachData,
+                raw_explainer_output: explainData,
+                topic_analysis: coachData.topic_analysis || [],
+                topic_vocabulary: coachData.topic_vocabulary || undefined,
+                coherence_advice: coachData.coherence_advice || undefined,
+                score_context: coachData.score_context,
+                root_cause_analysis: coachData.root_cause_analysis,
+                diagnosis_summary: coachData.diagnosis_summary,
+                the_one_big_change: coachData.the_one_big_change,
+                pattern_breaker: coachData.pattern_breaker,
+                micro_drill: coachData.micro_drill,
+                next_essay_plan: coachData.next_essay_plan,
+                motivation: coachData.motivation,
+            };
+        }
     };
+
+    const coachingData = buildCoachingData();
 
     return (
         <div className="w-full h-[calc(100vh-100px)] flex flex-col overflow-hidden animate-in fade-in duration-500">

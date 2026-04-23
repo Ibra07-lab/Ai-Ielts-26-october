@@ -21,7 +21,6 @@ import TownEvolutionMap from "@/components/writing/TownEvolutionMap";
 import CropYieldTable from "@/components/writing/CropYieldTable";
 import SecondarySchoolTable from "@/components/writing/SecondarySchoolTable";
 import { AnalysisLoader } from "@/components/ui/analysis-loader";
-import WritingSessionGuide from "@/components/writing/WritingSessionGuide";
 
 
 
@@ -49,6 +48,7 @@ const writingTests = [
   { id: 23, title: "Test 19", subtitle: "Coffee Production", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/coffee_production_simple.png", chartType: "Process Diagram" },
   { id: 24, title: "Test 20", subtitle: "Tech Access", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/tech_access_bar_chart.png", chartType: "Bar Chart" },
   { id: 41, title: "Test 21", subtitle: "The Proportions of Pupils Attending Four Secondary School Types Between Between 2000 and 2009.", type: "Task 1", questions: 1, time: 20, taskType: 1, chartType: "Table", component: "SecondarySchoolTable" },
+  { id: 42, title: "Test 22", subtitle: "Meadowside Village and Fonton Maps", type: "Task 1", questions: 1, time: 20, taskType: 1, imageUrl: "/charts/meadowside_fonton_maps.jpg", chartType: "Map" },
 
   // --- Task 2 Tests (20) ---
   { id: 2, title: "Test 1", subtitle: "Education: Homework", type: "Task 2", questions: 1, time: 40, taskType: 2, chartType: "Essay", imageUrl: undefined, component: undefined },
@@ -82,7 +82,6 @@ interface WritingTaskProps {
 export default function WritingTask({ defaultTab }: WritingTaskProps) {
   const [selectedTestId, setSelectedTestId] = useState<number | null>(null);
   const [isTestStarted, setIsTestStarted] = useState(false);
-  const [showSessionGuide, setShowSessionGuide] = useState(false);
   const [content, setContent] = useState("");
   const [aiAnalysis, setAiAnalysis] = useState<any>(null);
   // New State
@@ -149,9 +148,15 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
       // @ts-ignore
       await backend.ielts.checkAndLockEssay();
     } catch (lockErr: any) {
+      // Check if it's a real limit error (Resource Exhausted) or a connectivity error
+      const isLimitError = lockErr?.status === 429 || lockErr?.message?.toLowerCase().includes("limit");
+      const isOfflineError = lockErr?.status === 404 || lockErr?.status === 502 || lockErr?.status === 504 || lockErr?.message?.includes("offline");
+
       toast({
-        title: "Limit reached",
-        description: lockErr?.message ?? "Cannot start analysis.",
+        title: isLimitError ? "Limit reached" : isOfflineError ? "Connection lost" : "System busy",
+        description: isOfflineError 
+          ? "The server seems to be offline or the connection was lost. Please check your internet or refresh the page."
+          : (lockErr?.message ?? "Cannot start analysis."),
         variant: "destructive",
       });
       return;
@@ -165,8 +170,8 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
       // Use evaluate endpoint for Task 1, legacy for Task 2
       const isTask1 = taskType === 1;
       const endpoint = isTask1
-        ? "http://localhost:8002/task1/evaluate"
-        : "http://localhost:8002/task2/evaluate"; // Updated to new Task 2 pipeline
+        ? "/task1/evaluate"
+        : "/task2/evaluate"; // Updated to new Task 2 pipeline
 
       const requestBody = isTask1
         ? {
@@ -207,6 +212,12 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
         let message = "Analysis failed";
         try {
           const err = await response.json();
+          console.error("Backend Error Details:", err);
+          if (err?.detail?.traceback) {
+             console.error("BACKEND TRACEBACK:", err.detail.traceback);
+             // Dump to alert just to be absolutely sure user sees it if DevTools is closed
+             alert("BACKEND CRASH TRACEBACK:\n\n" + (err.detail.traceback.substring(0, 500) + "... Look in console for full trace"));
+          }
           message = err?.detail?.message || err?.detail?.error || err?.message || message;
         } catch {
           // ignore parse errors
@@ -218,29 +229,77 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
 
       // Normalize Result
       let result: any = {};
+      
+      const evalData = data.evaluation;
+      const explainData = data.explanation || {};
+      const coachData = data.coaching || {};
+
       if (isTask1) {
-        // Full evaluation response includes scores + teacher feedback
         result = {
           evaluation: {
-            ...data.scores,
-            word_count: content.split(/\s+/).length,
-            word_count_ok: true,
-            teacher_feedback_status: data.teacher_feedback_status, // Don't override! Backend sends correct status
-            feedback_markdown: data.feedback_markdown || null,
-            teacher_feedback: data.teacher_feedback || null,
-            // Add explanations from backend
-            explanations: data.explanations || null,
-            explanations_status: data.explanations_status || null,
-            explanations_message: data.explanations_message || null,
-            timing: data.timing || { examiner: 15.0, teacher: 30.0 }
+            overall_band: evalData.overall_band,
+            band_range: evalData.band_range,
+            criterion_scores: evalData.criterion_scores.map((c: any) => ({
+                criterion: c.criterion,
+                band: c.band,
+                justification: c.justification
+            })),
+            word_count: evalData.word_count,
+            word_count_ok: evalData.word_count_ok,
+            score_overview: evalData.score_overview,
+            teacher_feedback_status: 'complete',
           },
+          coaching: {
+            action_plan: coachData?.the_one_big_change ? [
+              coachData.the_one_big_change.change_statement,
+              coachData.micro_drill ? `Drill: ${coachData.micro_drill.drill_name} (${coachData.micro_drill.time_limit_minutes} min)` : "",
+            ].filter(Boolean) : [],
+            strengths: [coachData?.diagnosis_summary?.strength_acknowledged].filter(Boolean),
+            weaknesses: [coachData?.diagnosis_summary?.core_limitation].filter(Boolean),
+            grammar_errors: (explainData.micro_fixes || [])
+              .filter((f: any) => f.error_type === 'grammar' || f.error_type === 'punctuation' || f.error_type === 'style')
+              .map((f: any) => ({
+                original: f.original_sentence,
+                corrected: f.corrected_sentence,
+                explanation: f.explanation,
+                tip: f.specific_error || "Watch out for this error pattern."
+              })),
+            vocabulary_suggestions: [
+              ...(explainData.micro_fixes || [])
+                .filter((f: any) => f.error_type === 'vocabulary')
+                .map((f: any) => ({
+                  original: f.original_sentence,
+                  better_options: [f.corrected_sentence].filter(Boolean),
+                  context: f.explanation
+                })),
+              ...(explainData.vocabulary_feedback?.word_upgrades || [])
+                .map((u: any) => ({
+                  original: u.basic_phrase,
+                  better_options: u.upgrade_options && u.upgrade_options.length > 0 ? u.upgrade_options : [u.best_fit],
+                  context: `Context: "${u.context_sentence}"\n\nImproved: "${u.improved_sentence}"`
+                }))
+            ],
+            coherence_issues: (explainData.cohesion_fixes || []).map((c: any) => ({
+                text: c.original_sentence,
+                suggestion: c.improved_sentence,
+                reason: c.technique_explanation
+            })),
+            raw_coach_output: coachData,
+            raw_explainer_output: explainData,
+            topic_analysis: coachData?.topic_analysis || [],
+            topic_vocabulary: coachData?.topic_vocabulary || undefined,
+            coherence_advice: coachData?.coherence_advice || undefined,
+            score_context: coachData?.score_context,
+            root_cause_analysis: coachData?.root_cause_analysis,
+            diagnosis_summary: coachData?.diagnosis_summary,
+            the_one_big_change: coachData?.the_one_big_change,
+            pattern_breaker: coachData?.pattern_breaker,
+            micro_drill: coachData?.micro_drill,
+            next_essay_plan: coachData?.next_essay_plan,
+            motivation: coachData?.motivation,
+          }
         };
       } else {
-        // Map Task 2 new pipeline result to expected frontend format
-        const evalData = data.evaluation;
-        const explainData = data.explanation;
-        const coachData = data.coaching;
-
         result = {
           evaluation: {
             overall_band: evalData.band_scores.overall,
@@ -258,17 +317,16 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
           },
           coaching: {
             action_plan: [
-              coachData.the_one_big_change.change_statement,
-              `Drill: ${coachData.micro_drill.drill_name} (${coachData.micro_drill.time_limit_minutes} min)`,
-              coachData.score_context.realistic_next_target ? `Next Target: Band ${coachData.score_context.realistic_next_target}` : "Keep practicing"
-            ],
-            strengths: [coachData.diagnosis_summary.strength_acknowledged],
+              coachData.the_one_big_change ? coachData.the_one_big_change.change_statement : "",
+              coachData.micro_drill ? `Drill: ${coachData.micro_drill.drill_name} (${coachData.micro_drill.time_limit_minutes} min)` : "",
+              coachData.score_context?.realistic_next_target ? `Next Target: Band ${coachData.score_context.realistic_next_target}` : "Keep practicing"
+            ].filter(Boolean),
+            strengths: [coachData.diagnosis_summary?.strength_acknowledged].filter(Boolean),
             weaknesses: explainData.priority_summary
               ? explainData.priority_summary.map((p: any) =>
-                // Combine Area + Problem + Fix into a concise 2-3 sentence block
                 `**${p.area}**: ${p.current_problem} ${p.action_step}`
               )
-              : [coachData.diagnosis_summary.core_limitation],
+              : [coachData.diagnosis_summary?.core_limitation].filter(Boolean),
             grammar_errors: (explainData.micro_feedback || [])
               .filter((f: any) => (f.error_type === 'grammar' || f.error_type === 'punctuation' || f.issue_type === 'grammar') && f.corrected_sentence)
               .map((f: any) => ({
@@ -371,7 +429,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
     }));
 
     try {
-      const endpoint = "http://localhost:8002/task1/evaluate";
+      const endpoint = "/task1/evaluate";
       const requestBody = {
         essay: content.trim(),
         question: prompt?.prompt || "",
@@ -508,38 +566,25 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
     if (targetTestId) {
       setSelectedTestId(targetTestId);
     }
-    // Show session guide first, don't start writing yet
-    setShowSessionGuide(true);
+    
+    // Skip session guide and start writing immediately
     setContent("");
     setAiAnalysis(null);
-  };
-
-  const handleBeginWriting = () => {
-    setShowSessionGuide(false);
     setIsTestStarted(true);
 
-    // Start Timer
-    if (selectedTest) {
-      setTimeLeft(selectedTest.time * 60);
+    // Find test to set initial timer
+    const test = writingTests.find(t => t.id === targetTestId);
+    if (test) {
+      setTimeLeft(test.time * 60);
     }
   };
 
+
   const handleBackToMenu = () => {
     setIsTestStarted(false);
-    setShowSessionGuide(false);
     setSelectedTestId(null);
   };
 
-  // Session Guide: show before writing starts
-  if (showSessionGuide && !isTestStarted && selectedTest) {
-    return (
-      <WritingSessionGuide
-        taskType={selectedTest.taskType === 1 ? "task1" : "task2"}
-        taskTitle={`${selectedTest.title}: ${selectedTest.subtitle}`}
-        onStart={handleBeginWriting}
-      />
-    );
-  }
 
   return (
     <div className={isTestStarted ? cn("max-w-[95vw] mx-auto", viewMode === "feedback" ? "py-2" : "space-y-8 pb-32") : "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 pb-32"}>
@@ -761,13 +806,12 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
             <div className="flex-1 flex flex-col min-h-0 h-full overflow-hidden">
               <div className="flex-1 flex flex-col min-h-0 h-full overflow-hidden">
                 {taskType === 1 ? (
-                  <WritingFeedback
-                    result={aiAnalysis.evaluation as EvaluationResult}
-                    essayText={content}
-                    onRetryFeedback={handleGetDetailedFeedback}
-                    isLoadingFeedback={isGeneratingFeedback}
+                  <FeedbackContainer
+                    evaluation={aiAnalysis.evaluation as EvaluationResult}
+                    coaching={aiAnalysis.coaching}
+                    essay={content.trim()}
+                    taskType="task1"
                     onBack={() => setViewMode("editor")}
-                    taskType={taskType as 1 | 2}
                   />
                 ) : (
                   <FeedbackContainer

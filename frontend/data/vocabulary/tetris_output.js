@@ -1,0 +1,60 @@
+[
+    {
+      id: 1,
+      set_name: "Speaking Part 1",
+      instruction: "Fill in the missing words to complete the sentences.",
+      word_bank: ["window shopping", "splurge on", "bargain hunter", "impulse buy", "value for money", "shop around", "treat yourself", "second-hand", "retail therapy", "can't justify"],
+      items: [
+        { item_id: 1, gap_sentence: "I'm not really a big spender — I tend to go _____________ more than anything else, just enjoying looking without any real intention to buy.", answer: "window shopping" },
+        { item_id: 2, gap_sentence: "I would definitely describe myself as a bit of a _____________ — I genuinely love searching for great products at the lowest possible price.", answer: "bargain hunter" },
+        { item_id: 3, gap_sentence: "I don't usually spend much on clothes, but every now and then I'll _____________ something really special — usually when I feel I've genuinely earned a reward.", answer: "splurge on" },
+        { item_id: 4, gap_sentence: "That bag was a total _____________ — I had absolutely no plan to buy anything when I left the house that morning.", answer: "impulse buy" },
+        { item_id: 5, gap_sentence: "I always ask myself whether something is good _____________ before committing — I genuinely hate feeling like I have wasted my money.", answer: "value for money" },
+        { item_id: 6, gap_sentence: "I always _____________ carefully before making any significant purchase — I'll check at least four or five different websites to ensure I'm getting the very best deal.", answer: "shop around" },
+        { item_id: 7, gap_sentence: "I think it's completely healthy to _____________ occasionally — you work hard and you deserve to enjoy the rewards of that effort.", answer: "treat yourself" },
+        { item_id: 8, gap_sentence: "I've recently started buying _____________ clothes more regularly — it's environmentally responsible and you can find genuinely extraordinary pieces for almost nothing.", answer: "second-hand" },
+        { item_id: 9, gap_sentence: "I'll be completely honest — I do sometimes resort to a little _____________ when I'm feeling particularly stressed or overwhelmed — there's something genuinely mood-lifting about it.", answer: "retail therapy" },
+        { item_id: 10, gap_sentence: "I'd love to own designer sunglasses but I genuinely _____________ spending that much on something so easily lost or broken.", answer: "can't justify" },
+      ]
+    },
+    {
+      id: 2,
+      set_name: "Speaking Part 2",
+      instruction: "Fill in the missing words to complete the sentences.",
+      word_bank: ["stumble across", "catch my eye", "couldn't resist", "well worth the price", "a real find", "splashed out on", "browsing aimlessly", "sentimental value", "buyer's remorse", "once-in-a-lifetime purchase"],
+      items: [
+        { item_id: 11, gap_sentence: "I was just _____________ through the market without any particular goal when I suddenly came across this extraordinary little stall selling handmade leather goods.", answer: "browsing aimlessly" },
+        { item_id: 12, gap_sentence: "I was walking down a completely unfamiliar side street when I _____________ this incredible antique shop that nobody else seemed to know about.", answer: "stumbled across" },
+        { item_id: 13, gap_sentence: "I wasn't planning to buy anything at all, but this beautiful handmade necklace immediately _____________ and I stopped walking instantly.", answer: "caught my eye" },
+        { item_id: 14, gap_sentence: "I knew I didn't really need it, but I simply _____________ — it was exactly what I had wanted for months and the price was simply unbeatable.", answer: "couldn't resist" },
+        { item_id: 15, gap_sentence: "It cost more than I had originally planned to spend, but looking back on it now, it was absolutely _____________ — the quality has lasted for years.", answer: "well worth the price" },
+        { item_id: 16, gap_sentence: "That tiny boutique on the side street was _____________ — completely unknown, tucked away, and selling the most beautiful handmade ceramics.", answer: "a real find" },
+        { item_id: 17, gap_sentence: "It was my birthday present to myself — I completely _____________ a camera I had been dreaming about for the previous three years.", answer: "splashed out on" },
+        { item_id: 18, gap_sentence: "It isn't particularly expensive in financial terms, but it has enormous _____________ because it was the first thing I ever bought entirely with my own earned money.", answer: "sentimental value" },
+        { item_id: 19, gap_sentence: "I'll be honest — I had a brief moment of _____________ when I saw the total on the receipt, but that feeling disappeared almost immediately once I started using it.", answer: "buyer's remorse" },
+        { item_id: 20, gap_sentence: "For me, it genuinely felt like a _____________ — the kind of thing you save for years and then remember with deep satisfaction for the rest of your life.", answer: "once-in-a-lifetime purchase" },
+      ]
+    },
+    {
+      id: 3,
+      set_name: "Speaking Part 3",
+      instruction: "Fill in the missing words to complete the sentences.",
+      word_bank: ["consumerism", "high street retail", "fast fashion", "targeted advertising", "disposable culture", "ethical consumption", "brand loyalty", "instant gratification", "overconsumption", "vicious cycle of debt", "minimalism", "supply chain", "planned obsolescence", "the sharing economy"],
+      items: [
+        { item_id: 21, gap_sentence: "From my perspective, _____________ has become so deeply embedded in modern culture that many people genuinely cannot distinguish between what they want and what they actually need.", answer: "consumerism" },
+        { item_id: 22, gap_sentence: "The decline of _____________ is one of the most visible and troubling social changes of the past decade — walking through many town centres today is a genuinely sad experience.", answer: "high street retail" },
+        { item_id: 23, gap_sentence: "The _____________ industry is perhaps the most damaging manifestation of modern consumerism — it encourages people to buy clothes they will wear once and immediately discard.", answer: "fast fashion" },
+        { item_id: 24, gap_sentence: "_____________ has fundamentally changed the relationship between consumers and corporations — algorithms now know what we want before we even know ourselves.", answer: "Targeted advertising" },
+        { item_id: 25, gap_sentence: "The way I see it, we live in an increasingly _____________ where the very idea of repairing something rather than simply replacing it has become almost radical.", answer: "disposable culture" },
+        { item_id: 26, gap_sentence: "The fundamental issue with _____________ is that it often costs significantly more — effectively making it a privilege of the relatively wealthy rather than a genuine mass movement.", answer: "ethical consumption" },
+        { item_id: 27, gap_sentence: "_____________ is something corporations invest enormous resources in building — they want consumers to feel an emotional connection that goes far beyond simple rational product evaluation.", answer: "Brand loyalty" },
+        { item_id: 28, gap_sentence: "Online shopping has dramatically intensified the culture of _____________ — same-day delivery means the gap between desire and acquisition has almost completely disappeared.", answer: "instant gratification" },
+        { item_id: 29, gap_sentence: "The environmental crisis we face is, at its deepest root, a crisis of _____________ — we are simply buying, using, and discarding far more than the planet can sustainably absorb.", answer: "overconsumption" },
+        { item_id: 30, gap_sentence: "Easy access to credit cards and buy-now-pay-later schemes has trapped many vulnerable people in a _____________ — spending money they simply do not have on things they genuinely do not need.", answer: "vicious cycle of debt" },
+        { item_id: 31, gap_sentence: "The growing _____________ movement is, in many significant ways, a direct and conscious reaction against consumerism — people are actively choosing to own less and find genuine meaning in experiences.", answer: "minimalism" },
+        { item_id: 32, gap_sentence: "Most consumers have very little awareness of the _____________ behind the products they purchase — the human and environmental costs are effectively hidden behind attractive packaging and artificially low prices.", answer: "supply chain" },
+        { item_id: 33, gap_sentence: "_____________ is perhaps one of the most cynical practices in modern manufacturing — products are deliberately designed to fail so that consumers are perpetually forced to keep buying replacements.", answer: "Planned obsolescence" },
+        { item_id: 34, gap_sentence: "_____________ raises a genuinely profound question about whether the future of consumption might be fundamentally different from its past — perhaps ownership itself will become less central to how we live.", answer: "The sharing economy" },
+      ]
+    },
+]

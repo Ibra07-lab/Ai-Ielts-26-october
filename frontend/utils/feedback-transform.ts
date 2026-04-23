@@ -350,6 +350,79 @@ function transformCohesionFixes(
 }
 
 /**
+ * Transforms data grouping fixes into highlights
+ */
+function transformDataGroupingFixes(
+    essay: string,
+    groupingFixes: any[]
+): Highlight[] {
+    const highlights: Highlight[] = [];
+    let searchOffset = 0;
+
+    groupingFixes.forEach((item, index) => {
+        if (!item.scattered_sentences || item.scattered_sentences.length === 0) return;
+
+        // Highlight the first scattered sentence
+        const targetSentence = item.scattered_sentences[0];
+        const position = findTextPosition(essay, targetSentence, searchOffset);
+
+        if (position) {
+            highlights.push({
+                id: generateHighlightId("coherence", index + 850),
+                start: position.start,
+                end: position.end,
+                type: "coherence",
+                original: targetSentence,
+                corrected: item.grouped_sentence,
+                reason: item.explanation,
+                tip: "Group data points grammatically",
+                justification: item.explanation,
+                improvement_tip: `Instead of isolated sentences, try: "${item.grouped_sentence}"`,
+            });
+            searchOffset = position.end;
+        }
+    });
+
+    return highlights;
+}
+
+/**
+ * Transforms referencing errors into highlights
+ */
+function transformReferencingErrors(
+    essay: string,
+    referencingErrors: any[]
+): Highlight[] {
+    const highlights: Highlight[] = [];
+    let searchOffset = 0;
+
+    referencingErrors.forEach((item, index) => {
+        if (!item.original_sentence) return;
+
+        // Try to highlight just the ambiguous pronoun if possible, fallback to full sentence
+        const position = findTextPosition(essay, item.original_sentence, searchOffset);
+
+        if (position) {
+            highlights.push({
+                id: generateHighlightId("coherence", index + 875),
+                start: position.start,
+                end: position.end,
+                type: "coherence",
+                original: item.original_sentence,
+                corrected: item.corrected_sentence,
+                reason: `Ambiguous pronoun: "${item.ambiguous_pronoun}"`,
+                tip: "Specify the exact subject",
+                justification: "Using vague pronouns like 'it' or 'they' makes data description unclear.",
+                improvement_tip: `Replace "${item.ambiguous_pronoun}" with the specific feature, e.g., "${item.corrected_sentence}"`,
+            });
+            searchOffset = position.end;
+        }
+    });
+
+    return highlights;
+}
+
+/**
  * Transforms vocabulary_feedback.cliche_replacements into highlights
  */
 function transformClicheReplacements(
@@ -386,6 +459,68 @@ function transformClicheReplacements(
 }
 
 /**
+ * Transforms data accuracy issues into highlights
+ */
+function transformDataAccuracyIssues(
+    essay: string,
+    accuracyIssues: any[]
+): Highlight[] {
+    const highlights: Highlight[] = [];
+    let searchOffset = 0;
+
+    accuracyIssues.forEach((item, index) => {
+        if (!item.original_sentence) return;
+
+        const position = findTextPosition(essay, item.original_sentence, searchOffset);
+
+        if (position) {
+            highlights.push({
+                id: generateHighlightId("coherence", index + 900),
+                start: position.start,
+                end: position.end,
+                type: "coherence", // Renders warning amber overlay
+                original: item.original_sentence,
+                corrected: item.corrected_data,
+                reason: item.issue_description,
+                tip: `Use accurate data: ${item.corrected_data}`,
+                justification: item.issue_description,
+                improvement_tip: `Data Misread: ${item.issue_description}. Correct figure is ${item.corrected_data}.`,
+            });
+            searchOffset = position.end;
+        }
+    });
+
+    return highlights;
+}
+
+/**
+ * Transforms personal opinion sentence into highlights
+ */
+function transformOpinionSentence(
+    essay: string,
+    opinionSentence: string
+): Highlight[] {
+    const position = findTextPosition(essay, opinionSentence, 0);
+
+    if (position) {
+        return [{
+            id: generateHighlightId("coherence", 999),
+            start: position.start,
+            end: position.end,
+            type: "coherence",
+            original: opinionSentence,
+            corrected: "Remove this sentence.",
+            reason: "Task 1 is strict reporting. Personal opinions or speculation are penalized under Task Achievement.",
+            tip: "Remove personal opinion.",
+            justification: "Task 1 is strict reporting.",
+            improvement_tip: "Task 1 requires objective reporting. Do not speculate on reasons or add personal views.",
+        }];
+    }
+
+    return [];
+}
+
+/**
  * Transforms backend coaching result into an array of highlights
  * @param essay - The original essay text
  * @param coaching - The coaching result from backend
@@ -397,10 +532,16 @@ export function transformToHighlights(
 ): Highlight[] {
     const highlights: Highlight[] = [];
 
-    // 1. Transform basic coaching items
-    highlights.push(...transformGrammarErrors(essay, coaching.grammar_errors));
-    highlights.push(...transformVocabularySuggestions(essay, coaching.vocabulary_suggestions));
-    highlights.push(...transformCoherenceIssues(essay, coaching.coherence_issues));
+    // 1. Transform basic coaching items (guard against undefined for Task 1 pipeline)
+    if (coaching.grammar_errors?.length) {
+        highlights.push(...transformGrammarErrors(essay, coaching.grammar_errors));
+    }
+    if (coaching.vocabulary_suggestions?.length) {
+        highlights.push(...transformVocabularySuggestions(essay, coaching.vocabulary_suggestions));
+    }
+    if (coaching.coherence_issues?.length) {
+        highlights.push(...transformCoherenceIssues(essay, coaching.coherence_issues));
+    }
 
     // 2. Transform Explainer-specific feedback if available
     const explainerData = coaching.raw_explainer_output;
@@ -411,11 +552,35 @@ export function transformToHighlights(
         if (explainerData.macro_feedback) {
             highlights.push(...transformMacroFeedback(essay, explainerData.macro_feedback));
         }
-        if (explainerData.cohesion_fixes) {
+        if (explainerData.cohesion_fixes) { // Fallback for legacy Task 2
             highlights.push(...transformCohesionFixes(essay, explainerData.cohesion_fixes));
         }
+        
+        // Task 1 Coherence check
+        if (explainerData.coherence_feedback) {
+            if (explainerData.coherence_feedback.connector_analysis?.cohesion_fixes) {
+                highlights.push(...transformCohesionFixes(essay, explainerData.coherence_feedback.connector_analysis.cohesion_fixes));
+            }
+            if (explainerData.coherence_feedback.data_grouping_fixes) {
+                highlights.push(...transformDataGroupingFixes(essay, explainerData.coherence_feedback.data_grouping_fixes));
+            }
+            if (explainerData.coherence_feedback.referencing_errors) {
+                highlights.push(...transformReferencingErrors(essay, explainerData.coherence_feedback.referencing_errors));
+            }
+        }
+        
         if (explainerData.vocabulary_feedback?.cliche_replacements) {
             highlights.push(...transformClicheReplacements(essay, explainerData.vocabulary_feedback.cliche_replacements));
+        }
+
+        // Task 1 Data Coverage / TA check
+        if (explainerData.data_coverage) {
+            if (explainerData.data_coverage.data_accuracy_issues) {
+                highlights.push(...transformDataAccuracyIssues(essay, explainerData.data_coverage.data_accuracy_issues));
+            }
+            if (explainerData.data_coverage.opinion_sentence) {
+                highlights.push(...transformOpinionSentence(essay, explainerData.data_coverage.opinion_sentence));
+            }
         }
     }
 

@@ -37,6 +37,13 @@ EXAMINER_BASE_INSTRUCTIONS = """You are a certified IELTS examiner with 10+ year
 - Score above Band 7 unless essay is genuinely exceptional
 - Use phrases like "good effort" or "keep practicing"
 - Add commentary outside the JSON response
+
+### 5. Narrative Summary Standard (Score Overview)
+Every justification must be a professional examiner narrative (3-5 sentences), not a list of technical observations. 
+- **Tone**: Professional, firm, and objective.
+- **Perspective**: Speak directly to the student ("You used...", "Your essay demonstrates...").
+- **Duality**: Acknowledge what was achieved (Band score) while highlighting the specific "bottleneck" that prevented the next tier.
+- **Evidence**: Use narrative mentions of patterns (e.g. "repetitive trend language") instead of technical logs (e.g. "repeated 6 times"). Raw counts belong in specialized diagnostic panels, not the overview.
 """
 
 # ============================================================
@@ -195,11 +202,16 @@ Minimum: **150 words**
 OVERALL_BAND_CALCULATION = """
 ## Overall Band Calculation
 
+### Step 0: Valid Score Values
+All individual criterion scores (TA, CC, LR, GRA) MUST be in 0.5 increments ONLY:
+Valid: 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0
+Invalid: 6.3, 7.2, 5.8 — these are NOT valid IELTS scores. NEVER output them.
+
 ### Step 1: Score Each Criterion
-- Task Achievement (TA): X.X
-- Coherence & Cohesion (CC): X.X
-- Lexical Resource (LR): X.X
-- Grammatical Range & Accuracy (GRA): X.X
+- Task Achievement (TA): X.0 or X.5
+- Coherence & Cohesion (CC): X.0 or X.5
+- Lexical Resource (LR): X.0 or X.5
+- Grammatical Range & Accuracy (GRA): X.0 or X.5
 
 ### Step 2: Calculate Arithmetic Mean
 Mean = (TA + CC + LR + GRA) / 4
@@ -225,21 +237,18 @@ Mean = (TA + CC + LR + GRA) / 4
 JUSTIFICATION_GUIDELINES = """
 ## Justification Requirements
 
-Each criterion justification must be:
-1. **≤30 words** — concise and specific
-2. **Evidence-based** — quote or reference specific parts of the essay
-3. **Objective** — no encouragement or advice
+Each criterion justification must be a cohesive, examiner-style paragraph (approx. 3-5 sentences) that speaks directly to the student ("You achieved..."):
+1. **The Band & Strengths**: State the band achieved for this specific criterion and what they did well to earn it.
+2. **The Bottleneck (with evidence)**: Explain exactly what prevented a higher score in this specific criterion, using brief quoted evidence. 
+3. **The Fix**: Provide the single most important priority to reach the next band in this criterion.
 
-### Good Justification Examples ✅
-- "Clear overview identifies two trends. Data accurate (45% in 2010). Missing comparison between categories."
-- "Range adequate: 'witnessed,' 'fluctuated.' 3 spelling errors: 'goverment,' 'occured.' Word form error: 'dramaticly.'"
-- "Mix of simple/complex sentences. Subject-verb errors in 4 sentences ('data shows' repeated). Run-on in para 2."
+### Good Justification Example ✅
+"You achieved a Band 6.0 in Lexical Resource because your vocabulary is adequate for the task and generally conveys meaning clearly. However, a limited range and mechanical wording prevent a higher score, as seen in the frequent repetition of verbs like 'go down' and 'have'. Additionally, occasional word form errors like 'measure' instead of 'measured' limit your accuracy. To reach Band 7.0, your first priority is to replace repetitive verbs with more varied trend language."
 
 ### Bad Justification Examples ❌
-- "Good vocabulary usage overall." → Too vague
-- "The student tried hard but made errors." → Encouragement not allowed
-- "Band 6 because it matches the descriptor." → Circular reasoning
-- "Could improve with practice." → Advice not allowed
+- "Limited range: 'go down' repeated 6 times. Word form error: 'measure'. Adequate but repetitive." → Too robotic, reads like a debug log.
+- "Good vocabulary usage overall." → Too vague, no specific evidence.
+- "You got a 6.0. Try to use better words next time!" → Lacks specific bottlenecks and actionable fix.
 """
 
 # ============================================================

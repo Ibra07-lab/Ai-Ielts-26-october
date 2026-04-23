@@ -32,6 +32,7 @@ class TopicAnalysis(BaseModel):
 
 class RootCauseType(str, Enum):
     """Classification of the fundamental issue blocking score improvement."""
+    # Task 2 values
     STRUCTURAL_MISUNDERSTANDING = "structural_misunderstanding"  # Wrong essay type
     PROMPT_MISREADING = "prompt_misreading"                      # Off-topic
     LOGIC_GAP = "logic_gap"                                      # Underdeveloped arguments
@@ -39,6 +40,12 @@ class RootCauseType(str, Enum):
     GRAMMAR_PATTERN = "grammar_pattern"                          # Systematic errors
     TEMPLATE_DEPENDENCY = "template_dependency"                  # Cliché overuse
     POLISH_NEEDED = "polish_needed"                              # Minor refinements
+    # Task 1 values
+    MISSING_OVERVIEW = "missing_overview"                        # No overview paragraph
+    POOR_DATA_SELECTION = "poor_data_selection"                  # Missing key features
+    INACCURATE_REPORTING = "inaccurate_reporting"                # Wrong data/figures
+    WEAK_TREND_LANGUAGE = "weak_trend_language"                  # Vague descriptions
+    NO_COMPARISONS = "no_comparisons"                            # No comparisons made
 
 
 class DrillType(str, Enum):
@@ -238,6 +245,10 @@ class MicroDrill(BaseModel):
     purpose: str = Field(
         ...,
         description="What skill this drill develops (1 sentence)"
+    )
+    examiner_insight: str = Field(
+        description="A 1-2 sentence explanation of why examiners actively evaluate this exact skill, and how it directly impacts the band score.",
+        default="Examiners actively look for these specific skills to distinguish high-band essays. Mastering this exercise directly contributes to a higher score."
     )
     instructions: str = Field(
         ...,
@@ -568,6 +579,17 @@ class CoachOutput(BaseModel):
                     val = 'cohesion_crutch'
                 elif 'template' in val:
                     val = 'template_dependency'
+                # Task 1 fuzzy matching
+                elif 'overview' in val:
+                    val = 'missing_overview'
+                elif 'data' in val and ('select' in val or 'cover' in val):
+                    val = 'poor_data_selection'
+                elif 'accura' in val or 'inaccura' in val or 'wrong' in val:
+                    val = 'inaccurate_reporting'
+                elif 'trend' in val or 'descri' in val:
+                    val = 'weak_trend_language'
+                elif 'compar' in val:
+                    val = 'no_comparisons'
                 else:
                     # 3. Safe fallback
                     val = 'polish_needed'

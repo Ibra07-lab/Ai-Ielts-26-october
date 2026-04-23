@@ -460,25 +460,25 @@ The JSON MUST match this exact structure:
     "task_response": {
       "band": <float>,
       "summary": "<short verdict e.g. 'Good ideas but undeveloped'>",
-      "why_score_is_here": "<explanation of score level>",
-      "weak_spots": ["<specific weak point 1>", "<specific weak point 2>"]
+      "why_score_is_here": "<3-5 sentence narrative paragraph explaining exactly why this band was assigned, what prevented a higher score (bottlenecks), and the first priority to improve. Speak directly to the student.>",
+      "weak_spots": ["<specific evidence 1>", "<specific evidence 2>"]
     },
     "coherence": {
       "band": <float>,
       "summary": "<short verdict>",
-      "why_score_is_here": "<explanation>",
+      "why_score_is_here": "<3-5 sentence narrative paragraph explaining organization/cohesion bottlenecks and priority fix.>",
       "weak_spots": ["<weak point>"]
     },
     "lexical": {
       "band": <float>,
       "summary": "<short verdict>",
-      "why_score_is_here": "<explanation>",
+      "why_score_is_here": "<3-5 sentence narrative paragraph explaining vocabulary range/accuracy bottlenecks and priority fix.>",
       "weak_spots": ["<weak point>"]
     },
     "grammar": {
       "band": <float>,
       "summary": "<short verdict>",
-      "why_score_is_here": "<explanation>",
+      "why_score_is_here": "<3-5 sentence narrative paragraph explaining sentence range/accuracy bottlenecks and priority fix.>",
       "weak_spots": ["<weak point>"]
     }
   },

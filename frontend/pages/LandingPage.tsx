@@ -17,7 +17,9 @@ import {
   PenTool,
   BookOpen,
   Headphones,
-  X
+  X,
+  Calendar,
+  RefreshCw
 } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/button";
@@ -90,6 +92,23 @@ export default function LandingPage() {
                 NewBand
               </span>
             </div>
+
+            {/* Desktop Navigation Links */}
+            <div className="hidden lg:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+              <a href="#strategy" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
+                How it Works
+              </a>
+              <a href="#features" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
+                Features
+              </a>
+              <a href="#testimonials" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
+                Testimonials
+              </a>
+              <a href="#pricing" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
+                Pricing
+              </a>
+            </div>
+
             <div className="flex items-center gap-4">
               <Link to="/login" className="hidden md:block text-sm font-semibold text-white/70 hover:text-white transition-colors">
                 {user ? "Go to App" : "Sign In"}
@@ -124,7 +143,7 @@ export default function LandingPage() {
                     <span className="text-sm font-bold text-emerald-400 uppercase tracking-wider">Your personal IELTS examiner — available 24/7</span>
                   </motion.div>
 
-                  <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl font-black tracking-tight mb-2 leading-[1.05] text-white">
+                  <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl font-black tracking-tight mb-2 leading-[1.05] text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-200 to-emerald-400 animate-gradient-text">
                     Everything you need for IELTS.<br className="hidden md:block" />
                     One place.
                   </motion.h1>
@@ -148,7 +167,7 @@ export default function LandingPage() {
                       onClick={() => {
                         document.getElementById('strategy')?.scrollIntoView({ behavior: 'smooth' });
                       }}
-                      className="w-full sm:w-auto rounded-lg px-8 h-14 text-lg font-semibold border-white/10 bg-white/5 hover:bg-white/10 transition-all text-white"
+                      className="w-full sm:w-auto rounded-lg px-8 h-14 text-lg font-semibold border-white/10 bg-white/5 hover:bg-white hover:text-slate-900 transition-all text-white"
                     >
                       See How It Works
                     </Button>
@@ -180,61 +199,7 @@ export default function LandingPage() {
             </ContainerScroll>
           </section>
 
-          {/* --- 2. THE STUDENT PAIN SECTION --- */}
-          <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={staggerContainer}
-            >
-              <motion.div variants={fadeInUp} className="text-center mb-14">
-                <h2 className="text-3xl md:text-5xl font-black mb-4 text-white">Why Most Students Get Stuck</h2>
 
-              </motion.div>
-
-              <div className="grid md:grid-cols-2 gap-4 max-w-5xl mx-auto mb-12">
-                <motion.div variants={fadeInUp} className="flex gap-4 items-start p-6 rounded-lg bg-[#0f1118] border-l-4 border-amber-500 hover:bg-[#13151f] transition-colors">
-                  <div className="p-2.5 rounded-lg bg-amber-500/10 text-amber-400 mt-0.5">
-                    <Target className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold mb-1 text-white">You don't know your real level</h3>
-                    <p className="text-sm text-slate-400 leading-relaxed">Mock tests give a score, but never explain the underlying skill gap.</p>
-                  </div>
-                </motion.div>
-                <motion.div variants={fadeInUp} className="flex gap-4 items-start p-6 rounded-lg bg-[#0f1118] border-l-4 border-rose-500 hover:bg-[#13151f] transition-colors">
-                  <div className="p-2.5 rounded-lg bg-rose-500/10 text-rose-400 mt-0.5">
-                    <MessageSquareQuote className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold mb-1 text-white">Teachers give limited feedback</h3>
-                    <p className="text-sm text-slate-400 leading-relaxed">Tutors are expensive and can't analyze every grammar mistake in your essays.</p>
-                  </div>
-                </motion.div>
-                <motion.div variants={fadeInUp} className="flex gap-4 items-start p-6 rounded-lg bg-[#0f1118] border-l-4 border-blue-500 hover:bg-[#13151f] transition-colors">
-                  <div className="p-2.5 rounded-lg bg-blue-500/10 text-blue-400 mt-0.5">
-                    <TrendingUp className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold mb-1 text-white">You don't know what to study next</h3>
-                    <p className="text-sm text-slate-400 leading-relaxed">Wasting time deciding between Reading or Writing instead of following a proven path.</p>
-                  </div>
-                </motion.div>
-                <motion.div variants={fadeInUp} className="flex gap-4 items-start p-6 rounded-lg bg-[#0f1118] border-l-4 border-emerald-500 hover:bg-[#13151f] transition-colors">
-                  <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400 mt-0.5">
-                    <BrainCircuit className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold mb-1 text-white">Preparation feels random</h3>
-                    <p className="text-sm text-slate-400 leading-relaxed">Doing tests one after another doesn't fix your specific weak spots automatically.</p>
-                  </div>
-                </motion.div>
-              </div>
-
-
-            </motion.div>
-          </section>
 
           {/* --- 3. TRANSFORMATION SECTION --- */}
           <section className="py-20 px-4 overflow-hidden">
@@ -318,69 +283,175 @@ export default function LandingPage() {
           <section id="strategy" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative overflow-hidden">
             <div className="absolute left-1/2 top-0 bottom-0 w-px bg-slate-800 -translate-x-1/2 hidden md:block z-0"></div>
 
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={staggerContainer}
-              className="text-center xl:text-left mb-16 relative z-10"
-            >
-              <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight text-white uppercase tracking-tighter">
-                Not just practice.<br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-500">Pure Strategy.</span>
-              </motion.h2>
-            </motion.div>
 
-            <div className="space-y-16 md:space-y-20 relative z-10 pb-12">
-              {/* Step 1: Left */}
-              <motion.div
+
+            {/* Desktop Node Layout */}
+            <div className="hidden lg:block relative w-full max-w-5xl mx-auto h-[600px] mt-16 z-10 font-sans">
+              
+              {/* SVG Connections */}
+              <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.1" />
+                    <stop offset="50%" stopColor="#8b5cf6" stopOpacity="0.5" />
+                    <stop offset="100%" stopColor="#10b981" stopOpacity="0.1" />
+                  </linearGradient>
+                </defs>
+                
+                {/* SVG Paths for Curved Connections */}
+                <path d="M 220 200 C 400 200, 350 300, 500 300" fill="none" stroke="url(#lineGrad)" strokeWidth="3" />
+                <path d="M 220 400 C 400 400, 350 300, 500 300" fill="none" stroke="url(#lineGrad)" strokeWidth="3" />
+                <path d="M 500 300 C 650 300, 600 200, 780 200" fill="none" stroke="url(#lineGrad)" strokeWidth="3" />
+                <path d="M 500 300 C 650 300, 600 400, 780 400" fill="none" stroke="url(#lineGrad)" strokeWidth="3" />
+
+                {/* Animated Flow Dots */}
+                <circle r="4" fill="#60a5fa" className="animate-[dash_3s_linear_infinite]">
+                  <animateMotion dur="3s" repeatCount="indefinite" path="M 220 200 C 400 200, 350 300, 500 300" />
+                </circle>
+                <circle r="4" fill="#a78bfa" className="animate-[dash_3s_linear_infinite]">
+                  <animateMotion dur="3s" repeatCount="indefinite" path="M 220 400 C 400 400, 350 300, 500 300" begin="1.5s" />
+                </circle>
+                <circle r="4" fill="#34d399" className="animate-[dash_3s_linear_infinite]">
+                  <animateMotion dur="3s" repeatCount="indefinite" path="M 500 300 C 650 300, 600 200, 780 200" begin="0.5s" />
+                </circle>
+                <circle r="4" fill="#34d399" className="animate-[dash_3s_linear_infinite]">
+                  <animateMotion dur="3s" repeatCount="indefinite" path="M 500 300 C 650 300, 600 400, 780 400" begin="2s" />
+                </circle>
+              </svg>
+
+              {/* Center Node (The Strategy Engine) */}
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ type: 'spring', bounce: 0.5 }}
+                className="absolute top-[300px] left-[500px] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center"
+              >
+                <div className="w-48 h-48 rounded-full bg-slate-900 border-[8px] border-[#06080e] shadow-[0_0_80px_rgba(59,130,246,0.3)] flex items-center justify-center relative z-20 group cursor-default">
+                  <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-emerald-500/20 rounded-full group-hover:scale-110 transition-transform duration-500 blur-md"></div>
+                  <BrainCircuit className="w-20 h-20 text-white z-10 drop-shadow-lg transition-transform duration-300" />
+                </div>
+                <div className="mt-6 text-center">
+                  <h3 className="text-2xl font-black text-white leading-tight tracking-tight">The Strategy<br/>Engine</h3>
+                </div>
+              </motion.div>
+
+              {/* Left Top Node (Diagnostic) */}
+              <motion.div 
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-150px" }}
-                transition={{ duration: 0.8, type: "spring", bounce: 0.2 }}
-                className="md:w-2/3 lg:w-1/2 p-6 md:p-8 border-[3px] border-slate-700 bg-[#0a0c10] shadow-[12px_12px_0px_#1e293b] relative"
+                viewport={{ once: true }}
+                transition={{ type: 'spring', bounce: 0.2, delay: 0.2 }}
+                className="absolute top-[200px] left-[220px] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center"
               >
-                <div className="absolute -top-6 -left-6 bg-blue-600 text-white text-xl font-black w-14 h-14 flex items-center justify-center border-[3px] border-slate-700">
-                  01
+                <div className="w-24 h-24 rounded-full bg-[#0a0c10] border-2 border-slate-700 flex items-center justify-center shadow-lg relative z-20 hover:border-orange-500 transition-all cursor-default group">
+                  <Target className="w-8 h-8 text-orange-500 group-hover:scale-110 transition-transform" />
                 </div>
-                <h3 className="text-2xl md:text-3xl font-black mb-3 text-white uppercase tracking-wide">Algorithmic Diagnostics</h3>
-                <p className="text-base text-slate-400 font-medium leading-relaxed">
-                  We don't just ask for your target band. Our AI extracts your baseline by analyzing granular mechanics. We pinpoint exactly why your essays stall at 6.0 and why Multiple Choice questions cost you points in Reading.
-                </p>
+                <div className="mt-4 text-center max-w-[180px]">
+                  <h4 className="text-slate-300 font-bold mb-1 text-sm">Granular Diagnostic</h4>
+                  <p className="text-xs text-slate-500">Extracts your true baseline</p>
+                </div>
               </motion.div>
 
-              {/* Step 2: Right staggered */}
-              <motion.div
+              {/* Left Bottom Node (Asymmetric Scoring) */}
+              <motion.div 
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ type: 'spring', bounce: 0.2, delay: 0.3 }}
+                className="absolute top-[400px] left-[220px] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center"
+              >
+                <div className="w-24 h-24 rounded-full bg-[#0a0c10] border-2 border-slate-700 flex items-center justify-center shadow-lg relative z-20 hover:border-violet-500 transition-all cursor-default group">
+                  <BarChart3 className="w-8 h-8 text-violet-500 group-hover:scale-110 transition-transform" />
+                </div>
+                <div className="mt-4 text-center max-w-[180px]">
+                  <h4 className="text-slate-300 font-bold mb-1 text-sm">Asymmetric Scoring</h4>
+                  <p className="text-xs text-slate-500">Mathematical path to target</p>
+                </div>
+              </motion.div>
+
+              {/* Right Top Node (Living Roadmap) */}
+              <motion.div 
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-150px" }}
-                transition={{ duration: 0.8, type: "spring", bounce: 0.2 }}
-                className="md:w-2/3 lg:w-1/2 ml-auto p-6 md:p-8 border-[3px] border-emerald-500 bg-[#062016] shadow-[12px_12px_0px_#10b981] relative"
+                viewport={{ once: true }}
+                transition={{ type: 'spring', bounce: 0.2, delay: 0.4 }}
+                className="absolute top-[200px] left-[780px] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center"
               >
-                <div className="absolute -top-6 -right-6 bg-emerald-500 text-white text-xl font-black w-14 h-14 flex items-center justify-center border-[3px] border-emerald-500">
-                  02
+                <div className="w-24 h-24 rounded-full bg-[#0a0c10] border-2 border-slate-700 flex items-center justify-center shadow-lg relative z-20 hover:border-emerald-500 transition-all cursor-default group">
+                  <Calendar className="w-8 h-8 text-emerald-500 group-hover:scale-110 transition-transform" />
                 </div>
-                <h3 className="text-2xl md:text-3xl font-black mb-3 text-emerald-400 uppercase tracking-wide">The Living Roadmap</h3>
-                <p className="text-base text-emerald-500 font-medium leading-relaxed">
-                  Your study plan isn't a static PDF. It breathes. If you crush Vocabulary assignments early, the engine instantly reprioritizes your week to double down on Listening Practice. Complete personalization, updated daily.
-                </p>
+                <div className="mt-4 text-center max-w-[180px]">
+                  <h4 className="text-slate-300 font-bold mb-1 text-sm">Living Roadmap</h4>
+                  <p className="text-xs text-slate-500">Dynamic weekly plan</p>
+                </div>
               </motion.div>
 
-              {/* Step 3: Overlapping Center (Visual Tension) */}
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-150px" }}
-                transition={{ duration: 0.8, type: "spring", bounce: 0.2 }}
-                className="md:w-[85%] lg:w-[70%] mx-auto p-8 md:p-10 border-[3px] border-blue-600 bg-blue-600 text-white shadow-[12px_12px_0px_#0f172a] relative z-20"
+              {/* Right Bottom Node (Instant Feedback) */}
+              <motion.div 
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ type: 'spring', bounce: 0.2, delay: 0.5 }}
+                className="absolute top-[400px] left-[780px] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center"
               >
-                <h3 className="text-3xl md:text-4xl font-black mb-4 uppercase tracking-tight">Asymmetric Scoring</h3>
-                <p className="text-lg text-blue-100 font-medium leading-relaxed max-w-3xl">
-                  Scoring a Band 7.0 overall doesn't require a 7.0 in every skill.
-                  <br /><br />
-                  If hitting a 7.0 in Writing feels impossible in 4 weeks, our strategy engine pivots. We deliberately over-index your practice into Listening and Reading—pushing them towards an 8.0—to mathematically guarantee your Band 7.0 average without the frustration.
-                </p>
+                <div className="w-24 h-24 rounded-full bg-[#0a0c10] border-2 border-slate-700 flex items-center justify-center shadow-lg relative z-20 hover:border-blue-500 transition-all cursor-default group">
+                  <RefreshCw className="w-8 h-8 text-blue-500 group-hover:scale-110 transition-transform" />
+                </div>
+                <div className="mt-4 text-center max-w-[180px]">
+                  <h4 className="text-slate-300 font-bold mb-1 text-sm">Instant Feedback</h4>
+                  <p className="text-xs text-slate-500">Re-evaluates every action</p>
+                </div>
               </motion.div>
+            </div>
+
+            {/* Mobile Fallback Layout */}
+            <div className="flex flex-col lg:hidden gap-6 relative z-10 mt-12 pb-12">
+              <div className="p-6 border-2 border-slate-700 bg-[#0a0c10] rounded-xl flex items-center gap-4 shadow-lg">
+                <div className="w-14 h-14 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center flex-shrink-0">
+                  <Target className="w-6 h-6 text-orange-500" />
+                </div>
+                <div>
+                  <h4 className="text-white font-bold mb-1">Granular Diagnostic</h4>
+                  <p className="text-xs text-slate-400">Extracts your true baseline</p>
+                </div>
+              </div>
+              <div className="p-6 border-2 border-slate-700 bg-[#0a0c10] rounded-xl flex items-center gap-4 shadow-lg">
+                <div className="w-14 h-14 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center flex-shrink-0">
+                  <BarChart3 className="w-6 h-6 text-violet-500" />
+                </div>
+                <div>
+                  <h4 className="text-white font-bold mb-1">Asymmetric Scoring</h4>
+                  <p className="text-xs text-slate-400">Mathematical path to hit your target band</p>
+                </div>
+              </div>
+              <div className="p-6 border-2 border-blue-600 bg-blue-600/10 rounded-xl flex items-center gap-4 shadow-[0_0_20px_rgba(37,99,235,0.15)] my-2">
+                <div className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <BrainCircuit className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <h4 className="text-white font-black text-xl mb-1">Strategy Engine</h4>
+                  <p className="text-xs text-blue-200">The core AI routing algorithm</p>
+                </div>
+              </div>
+              <div className="p-6 border-2 border-slate-700 bg-[#0a0c10] rounded-xl flex items-center gap-4 shadow-lg">
+                <div className="w-14 h-14 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center flex-shrink-0">
+                  <Calendar className="w-6 h-6 text-emerald-500" />
+                </div>
+                <div>
+                  <h4 className="text-white font-bold mb-1">Living Roadmap</h4>
+                  <p className="text-xs text-slate-400">Dynamic weekly plan that reprioritizes</p>
+                </div>
+              </div>
+              <div className="p-6 border-2 border-slate-700 bg-[#0a0c10] rounded-xl flex items-center gap-4 shadow-lg">
+                <div className="w-14 h-14 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center flex-shrink-0">
+                  <RefreshCw className="w-6 h-6 text-blue-500" />
+                </div>
+                <div>
+                  <h4 className="text-white font-bold mb-1">Instant Feedback</h4>
+                  <p className="text-xs text-slate-400">Re-evaluates every action you take</p>
+                </div>
+              </div>
             </div>
           </section>
 
@@ -388,18 +459,7 @@ export default function LandingPage() {
           <section className="py-24 px-4 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
 
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={staggerContainer}
-              className="max-w-7xl mx-auto text-center mb-16"
-            >
-              <motion.h2 variants={fadeInUp} className="text-3xl md:text-5xl font-black mb-6 text-white">See the AI in Action</motion.h2>
-              <motion.p variants={fadeInUp} className="text-xl text-slate-400 max-w-2xl mx-auto font-light">
-                This isn't just a generic chatbot. It's a purpose-built IELTS grading engine.
-              </motion.p>
-            </motion.div>
+
 
             <div className="max-w-6xl mx-auto">
               {/* Vocabulary Showcase UI */}
@@ -412,35 +472,12 @@ export default function LandingPage() {
                 <VocabularyShowcase />
               </motion.div>
 
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-50px" }}
-                variants={staggerContainer}
-                className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center"
-              >
-                <motion.div variants={fadeInUp} className="p-6 rounded-xl bg-white/5 border border-white/10 shadow-sm hover:shadow-md transition-shadow">
-                  <FileText className="w-8 h-8 text-slate-300 mx-auto mb-3" />
-                  <h4 className="font-bold text-slate-200">Writing Feedback</h4>
-                </motion.div>
-                <motion.div variants={fadeInUp} className="p-6 rounded-xl bg-blue-600/10 border border-blue-500/20 shadow-sm hover:shadow-md transition-shadow">
-                  <BrainCircuit className="w-8 h-8 text-blue-400 mx-auto mb-3" />
-                  <h4 className="font-bold text-white">Reading Explanation</h4>
-                </motion.div>
-                <motion.div variants={fadeInUp} className="p-6 rounded-xl bg-white/5 border border-white/10 shadow-sm hover:shadow-md transition-shadow">
-                  <BarChart3 className="w-8 h-8 text-slate-300 mx-auto mb-3" />
-                  <h4 className="font-bold text-slate-200">Progress Dashboard</h4>
-                </motion.div>
-                <motion.div variants={fadeInUp} className="p-6 rounded-xl bg-orange-600/10 border border-orange-500/20 shadow-sm hover:shadow-md transition-shadow">
-                  <Target className="w-8 h-8 text-orange-400 mx-auto mb-3" />
-                  <h4 className="font-bold text-white">Skill Roadmap</h4>
-                </motion.div>
-              </motion.div>
+
             </div>
           </section>
 
           {/* --- 6. FEATURE SHOWCASE (Bento Grid) --- */}
-          <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto overflow-hidden">
+          <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto overflow-hidden">
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -621,7 +658,7 @@ export default function LandingPage() {
                 <h2 className="text-3xl md:text-5xl font-black mb-2 text-white">Pro-grade writing feedback.</h2>
                 <h2 className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400 mb-4">Zero guesswork.</h2>
                 <p className="text-lg text-slate-400 max-w-xl mx-auto">
-                  Every essay gets the same scrutiny an IELTS examiner would give — instantly.
+                  Every essay gets the same careful check an IELTS examiner would give — instantly.
                 </p>
               </motion.div>
 
@@ -946,7 +983,7 @@ export default function LandingPage() {
           </section>
 
           {/* --- 8. PRICING SECTION --- */}
-          <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto relative">
+          <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto relative">
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -978,7 +1015,7 @@ export default function LandingPage() {
                 <ul className="space-y-3 mb-8 flex-1">
                   <li className="flex items-center gap-2 text-sm text-slate-400"><CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Personalized IELTS roadmap</li>
                   <li className="flex items-center gap-2 text-sm text-slate-400"><CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" /> 15 essay evaluations</li>
-                  <li className="flex items-center gap-2 text-sm text-slate-400"><CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" /> 300 reading agent messages</li>
+                  <li className="flex items-center gap-2 text-sm text-slate-400"><CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" /> 300 reading agent credits (1 credit = 1 message)</li>
                   <li className="flex items-center gap-2 text-sm text-slate-400"><CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" /> All reading tests</li>
                   <li className="flex items-center gap-2 text-sm text-slate-400"><CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" /> All listening tests</li>
                   <li className="flex items-center gap-2 text-sm text-slate-400"><CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Limited podcast exercises</li>
@@ -1004,7 +1041,7 @@ export default function LandingPage() {
                 <ul className="space-y-3 mb-8 flex-1">
                   <li className="flex items-center gap-2 text-sm text-white font-medium"><CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0" /> Everything in Basic</li>
                   <li className="flex items-center gap-2 text-sm text-white font-medium"><CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0" /> 40 essay evaluations</li>
-                  <li className="flex items-center gap-2 text-sm text-white font-medium"><CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0" /> 800 reading agent messages</li>
+                  <li className="flex items-center gap-2 text-sm text-white font-medium"><CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0" /> 800 reading agent credits (1 credit = 1 message)</li>
                   <li className="flex items-center gap-2 text-sm text-white font-medium"><CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0" /> Full podcast library</li>
                   <li className="flex items-center gap-2 text-sm text-white font-medium"><CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0" /> Detailed band score breakdown</li>
                   <li className="flex items-center gap-2 text-sm text-white font-medium"><CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0" /> Weak-area training</li>
@@ -1028,7 +1065,7 @@ export default function LandingPage() {
                 <ul className="space-y-3 mb-8 flex-1">
                   <li className="flex items-center gap-2 text-sm text-slate-400"><CheckCircle2 className="w-4 h-4 text-violet-400 flex-shrink-0" /> Everything in Pro</li>
                   <li className="flex items-center gap-2 text-sm text-slate-400"><CheckCircle2 className="w-4 h-4 text-violet-400 flex-shrink-0" /> 80 essay evaluations</li>
-                  <li className="flex items-center gap-2 text-sm text-slate-400"><CheckCircle2 className="w-4 h-4 text-violet-400 flex-shrink-0" /> Unlimited reading agent messages</li>
+                  <li className="flex items-center gap-2 text-sm text-slate-400"><CheckCircle2 className="w-4 h-4 text-violet-400 flex-shrink-0" /> Unlimited reading agent credits</li>
                   <li className="flex items-center gap-2 text-sm text-slate-400"><CheckCircle2 className="w-4 h-4 text-violet-400 flex-shrink-0" /> Advanced feedback</li>
                   <li className="flex items-center gap-2 text-sm text-slate-400"><CheckCircle2 className="w-4 h-4 text-violet-400 flex-shrink-0" /> Priority AI evaluation</li>
                   <li className="flex items-center gap-2 text-sm text-slate-400"><CheckCircle2 className="w-4 h-4 text-violet-400 flex-shrink-0" /> Full mock exam simulation</li>
