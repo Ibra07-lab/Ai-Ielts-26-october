@@ -735,7 +735,8 @@ function SummaryStep({ lesson, onComplete, isCompleted }: { lesson: VideoLessonT
                 authHeaders['Authorization'] = `Bearer ${session.access_token}`;
             }
 
-            const response = await fetch('/podcast-summary/evaluate', {
+            const API_BASE = import.meta.env.VITE_FASTAPI_WRITING_URL || "";
+            const response = await fetch(`${API_BASE}/podcast-summary/evaluate`, {
                 method: 'POST',
                 headers: authHeaders,
                 body: JSON.stringify({

@@ -27,10 +27,6 @@ const authenticatedFetcher = async (input: RequestInfo | URL, init?: RequestInit
   try {
     const { data: { session } } = await supabase.auth.getSession();
 
-    // 🔍 DEBUG: Check if we have a session and token
-    console.log("TOKEN BEING SENT:", session?.access_token);
-    console.log("SESSION EXPIRES AT:", session?.expires_at);
-    console.log("USER ID:", session?.user?.id);
 
     if (session?.access_token) {
       modifiedInit.headers = {
@@ -47,7 +43,9 @@ const authenticatedFetcher = async (input: RequestInfo | URL, init?: RequestInit
   return fetch(input, modifiedInit);
 };
 
-const backend = new Client(Local, {
+const API_URL = import.meta.env.VITE_ENCORE_API_URL || Local;
+
+const backend = new Client(API_URL, {
   fetcher: authenticatedFetcher as any,
 });
 

@@ -1,7 +1,19 @@
 # AI IELTS App Startup Script for PowerShell
 # This script starts both the backend (Encore) and frontend (Vite) services
+#
+# Usage:
+#   .\start-app.ps1          # Production mode (multi-worker, no reload)
+#   .\start-app.ps1 -Dev     # Development mode (single worker, hot reload)
 
-Write-Host "Starting AI IELTS App..." -ForegroundColor Green
+param(
+    [switch]$Dev
+)
+
+if ($Dev) {
+    Write-Host "Starting AI IELTS App (DEVELOPMENT mode)..." -ForegroundColor Yellow
+} else {
+    Write-Host "Starting AI IELTS App (PRODUCTION mode)..." -ForegroundColor Green
+}
 
 # ========================================
 # CLEANUP: Kill old servers before starting new ones
@@ -47,20 +59,42 @@ Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd backend; encor
 
 # Start Backend (FastAPI Python) - Using port 8002 for Task 1 routes
 Write-Host "Starting Backend (FastAPI Python)..." -ForegroundColor Yellow
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd backend; python -m uvicorn main:app --reload --port 8002"
+if ($Dev) {
+    Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd backend; python -m uvicorn main:app --reload --port 8002"
+} else {
+    # Production: 4 workers, no reload — handles ~20 concurrent AI evaluations
+    Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd backend; python -m uvicorn main:app --workers 4 --port 8002 --host 0.0.0.0"
+}
 
 # Start AI Tutor Backend (App) - Using port 8001 for Reading Mentor
 Write-Host "Starting AI Tutor Backend (App)..." -ForegroundColor Yellow
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd app; python -m uvicorn main:app --reload --port 8001"
+if ($Dev) {
+    Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd app; python -m uvicorn main:app --reload --port 8001"
+} else {
+    # Production: 2 workers for chat (lighter workload)
+    Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd app; python -m uvicorn main:app --workers 2 --port 8001 --host 0.0.0.0"
+}
 
 # Wait a moment for backend to start
 Start-Sleep -Seconds 3
 
 # Start Frontend (Vite)
 Write-Host "Starting Frontend (Vite)..." -ForegroundColor Yellow
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "Set-Location frontend; bun install; bun run dev"
+if ($Dev) {
+    Start-Process powershell -ArgumentList "-NoExit", "-Command", "Set-Location frontend; bun install; bun run dev"
+} else {
+    # Production: build and serve with preview (or use Nginx/Caddy in real production)
+    Start-Process powershell -ArgumentList "-NoExit", "-Command", "Set-Location frontend; bun install; bun run build; bun run preview --host 0.0.0.0"
+}
 
 Write-Host "`nAll services starting..." -ForegroundColor Green
+if ($Dev) {
+    Write-Host "  Mode:               DEVELOPMENT (hot reload)" -ForegroundColor Yellow
+} else {
+    Write-Host "  Mode:               PRODUCTION (multi-worker)" -ForegroundColor Green
+    Write-Host "  Writing workers:    4" -ForegroundColor Green
+    Write-Host "  AI Tutor workers:   2" -ForegroundColor Green
+}
 Write-Host "Backend (Encore):     http://localhost:4000" -ForegroundColor Cyan
 Write-Host "Backend (FastAPI):    http://localhost:8002" -ForegroundColor Cyan
 Write-Host "Frontend:             http://localhost:5173" -ForegroundColor Cyan

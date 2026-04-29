@@ -16,12 +16,13 @@ app = FastAPI(
 )
 
 # Configure CORS for frontend
+# Set CORS_ORIGINS env var to add your deployed domain: "https://yourdomain.com,http://localhost:5173"
+import os
+ALLOWED_ORIGINS = os.getenv("CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",  # Vite dev server
-        "http://127.0.0.1:5173",
-    ],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

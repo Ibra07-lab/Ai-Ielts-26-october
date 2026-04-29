@@ -315,20 +315,7 @@ function QuestionResult({
                         </p>
                       </div>
 
-                      {/* Strategy Tip (collapsible) */}
-                      <div className="pt-6">
-                        <details className="cursor-pointer group">
-                          <summary className="text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 flex items-center gap-2">
-                            <Sparkles className="w-4 h-4" />
-                            View Strategy Tips for This Question Type
-                          </summary>
-                          <div className="mt-4 pl-6 border-l-2 border-slate-200 dark:border-slate-700">
-                            <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-                              {aiFeedback.strategy_tip}
-                            </p>
-                          </div>
-                        </details>
-                      </div>
+
                 </div>
               )}
             </div>
@@ -952,7 +939,7 @@ export default function ReadingPractice() {
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [startTime, setStartTime] = useState<number | null>(null);
   const [result, setResult] = useState<any>(null);
-  const [highlights, setHighlights] = useState<Highlight[]>([]);
+  const [highlightsBySlide, setHighlightsBySlide] = useState<Record<number, Highlight[]>>({});
   const [questionHighlights, setQuestionHighlights] = useState<Record<number, Highlight[]>>({});
 
   const [selectedTestIndex, setSelectedTestIndex] = useState<number | null>(null);
@@ -1057,7 +1044,8 @@ export default function ReadingPractice() {
   const summaryInputRefs = useRef<Record<number, HTMLInputElement | null>>({});
 
   // Per-question highlights helpers (keep question highlights isolated by id)
-  const getQHighlights = (qid: number) => questionHighlights[qid] || [];
+  const EMPTY_HIGHLIGHTS: Highlight[] = [];
+  const getQHighlights = (qid: number) => questionHighlights[qid] || EMPTY_HIGHLIGHTS;
   const setQHighlightsFor = (qid: number) => (hs: Highlight[]) =>
     setQuestionHighlights(prev => ({ ...prev, [qid]: hs }));
 
@@ -1158,7 +1146,7 @@ export default function ReadingPractice() {
             setActiveSlideIndex(0);
             setAnswers({});
             setResult(null);
-            setHighlights([]);
+            setHighlightsBySlide({});
             return;
           }
         }
@@ -1192,7 +1180,7 @@ export default function ReadingPractice() {
     setActiveSlideIndex(0);
     setAnswers({});
     setResult(null);
-    setHighlights([]);
+    setHighlightsBySlide({});
   };
 
   const backToMenu = () => {
@@ -1200,12 +1188,20 @@ export default function ReadingPractice() {
     setActiveSlideIndex(0);
     setAnswers({});
     setResult(null);
-    setHighlights([]);
+    setHighlightsBySlide({});
     setRemainingSeconds(60 * 60);
     setStartTime(null);
   };
 
   const handleGetAIFeedback = async (questionId: number, question: any, studentAnswer: string, correctAnswer: string) => {
+    if (!user) {
+      toast({
+        title: "Error",
+        description: "You must be logged in to use AI feedback.",
+        variant: "destructive"
+      });
+      return;
+    }
     setLoadingFeedback(prev => new Set(prev).add(questionId));
 
     try {
@@ -1303,20 +1299,9 @@ export default function ReadingPractice() {
     return quotes;
   }, [result, passage?.questions]);
 
-  // Load highlights for the current passage
-  const { data: highlightsData } = useQuery<{ highlights: Highlight[] }>({
-    queryKey: ["readingHighlights", user?.id, passage?.title],
-    queryFn: () => user && passage ? backend.ielts.getHighlights(user.id, passage.title) : Promise.resolve({ highlights: [] }),
-    enabled: !!user && !!passage,
-  });
 
-  // Reset view state when passage changes (but keep answers and result across slides)
-  useEffect(() => {
-    if (passage) {
-      // Don't clear answers or result - keep them across slides for review
-      setHighlights([]);
-    }
-  }, [passage?.title]);
+
+  // Highlights are now stored per-slide, no clearing needed on slide change
 
   // Countdown timer: tick every second while a test is active; auto-submit at 0
   useEffect(() => {
@@ -1335,12 +1320,7 @@ export default function ReadingPractice() {
     return () => clearInterval(id);
   }, [selectedTestIndex, startTime]);
 
-  // Load highlights into state when fetched
-  useEffect(() => {
-    if (highlightsData?.highlights) {
-      setHighlights(highlightsData.highlights);
-    }
-  }, [highlightsData?.highlights]);
+
 
   const submitReadingMutation = useMutation({
     mutationFn: backend.ielts.submitReading,
@@ -1479,7 +1459,7 @@ export default function ReadingPractice() {
   };
 
   const handleHighlightsChange = (newHighlights: Highlight[]) => {
-    setHighlights(newHighlights);
+    setHighlightsBySlide(prev => ({ ...prev, [activeSlideIndex]: newHighlights }));
   };
 
   const renderQuestion = (question: any) => {
@@ -2161,7 +2141,7 @@ export default function ReadingPractice() {
                         setActiveSlideIndex(0);
                         setAnswers({});
                         setResult(null);
-                        setHighlights([]);
+                        setHighlightsBySlide({});
                       });
                       setTimeout(() => enterTest(0), 50);
                     }}
@@ -2177,7 +2157,7 @@ export default function ReadingPractice() {
                           setActiveSlideIndex(0);
                           setAnswers({});
                           setResult(null);
-                          setHighlights([]);
+                          setHighlightsBySlide({});
                         });
                         setTimeout(() => enterTest(0), 50);
                       }
@@ -2290,8 +2270,6 @@ export default function ReadingPractice() {
                           size="sm"
                           onClick={() => {
                             setActiveSlideIndex(idx);
-                            // Keep answers and result when switching slides
-                            setHighlights([]);
                           }}
                           aria-pressed={activeSlideIndex === idx}
                           aria-label={`Show Slide ${idx + 1}`}
@@ -2310,7 +2288,7 @@ export default function ReadingPractice() {
                 </Button>
                 <Badge variant="outline" className="flex items-center gap-1">
                   <Highlighter className="h-3 w-3" />
-                  {highlights.length} highlights
+                  {(highlightsBySlide[activeSlideIndex] || []).length} highlights
                 </Badge>
                 <Badge
                   variant="secondary"
@@ -2357,7 +2335,7 @@ export default function ReadingPractice() {
                     <TextHighlighter
                       content={passage.paragraphs?.map((p: { text: string }) => p.text).join('\n\n') || ''}
                       passageTitle={passage.title}
-                      highlights={highlights}
+                      highlights={highlightsBySlide[activeSlideIndex] || EMPTY_HIGHLIGHTS}
                       onHighlightsChange={handleHighlightsChange}
                       evidenceQuotes={evidenceQuotes}
                       showEvidenceHighlights={showEvidenceHighlights}
@@ -2693,10 +2671,7 @@ export default function ReadingPractice() {
                                               showLabels={false} className={getQuestionTextSize()}
                                             />
                                           </div>
-                                          <select
-                                            value={answers[q.id] || ""}
-                                            onChange={(e) => handleAnswerChange(q.id, e.target.value)}
-                                            className={`px-3 py-2 border rounded min-w-[100px] ${getInputSizeClass()}`}
+                                          <select value={answers[q.id] || ""} onChange={(e) => handleAnswerChange(q.id, e.target.value)} className={`px-3 py-2 border rounded bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 ${getInputSizeClass()} leading-normal`} style={{ minHeight: "44px", minWidth: "160px", paddingBottom: "4px" }}
                                           >
                                             <option value="">Select...</option>
                                             {questionGroup.paragraphs_list?.map((para: string) => (
@@ -3066,3 +3041,8 @@ export default function ReadingPractice() {
     </>
   );
 }
+
+
+
+
+

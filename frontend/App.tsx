@@ -28,6 +28,7 @@ import VideoLesson from "./pages/VideoLesson";
 import FeedbackSummaryDemo from "./pages/FeedbackSummaryDemo";
 import Roadmap from "./pages/Roadmap";
 import Onboarding from "./pages/Onboarding";
+import AdminDashboard from "./pages/AdminDashboard";
 import ErrorBoundary from "./components/ErrorBoundary";
 
 const queryClient = new QueryClient({
@@ -78,6 +79,7 @@ function AppInner() {
           <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
           <Route path="/subscription" element={<ProtectedRoute><Subscription /></ProtectedRoute>} />
           <Route path="/video-lesson/:id" element={<ProtectedRoute><VideoLesson /></ProtectedRoute>} />
+          <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
         </Routes>
       </Layout>
     </Router>

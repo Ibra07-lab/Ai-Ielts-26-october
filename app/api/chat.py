@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Response
 from fastapi.responses import StreamingResponse
+from langchain_community.callbacks.manager import get_openai_callback
 
 from app.services.agent_service import AgentService, DeeperFeedbackResponse
 from app.models.chat_models import (
@@ -47,17 +48,21 @@ async def get_deeper_feedback(
 @router.post("/chat/message", response_model=ChatMessage)
 async def post_chat_message(
     request: ChatRequest,
+    response: Response,
     service: AgentService = Depends(get_agent_service)
 ):
     """
     This is the main endpoint for the interactive chat.
     It receives the current conversation history and returns the agent's next message.
     """
-    response_message = await service.handle_chat_message(
-        session_id=request.session_id,
-        messages=request.messages,
-        dropped_question_id=request.dropped_question_id
-    )
+    with get_openai_callback() as cb:
+        response_message = await service.handle_chat_message(
+            session_id=request.session_id,
+            messages=request.messages,
+            dropped_question_id=request.dropped_question_id
+        )
+    
+    response.headers["X-API-Cost"] = str(cb.total_cost)
     return response_message
 
 
@@ -85,6 +90,7 @@ async def post_chat_message_stream(
 @router.post("/training/start", response_model=TrainingStartResponse)
 async def start_training(
     request: TrainingStartRequest,
+    response: Response,
     service: AgentService = Depends(get_agent_service)
 ):
     """
@@ -100,11 +106,14 @@ async def start_training(
         "recent_errors": [e.model_dump() for e in request.recent_errors],
     }
     
-    first_message = await service.start_training_session(
-        session_id=request.session_id,
-        skill=request.skill,
-        context_payload=context_payload,
-    )
+    with get_openai_callback() as cb:
+        first_message = await service.start_training_session(
+            session_id=request.session_id,
+            skill=request.skill,
+            context_payload=context_payload,
+        )
+    
+    response.headers["X-API-Cost"] = str(cb.total_cost)
     
     return TrainingStartResponse(
         session_id=request.session_id,

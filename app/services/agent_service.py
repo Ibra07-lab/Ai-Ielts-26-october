@@ -15,7 +15,7 @@ from pydantic import BaseModel, Field
 from app.core.config import settings 
 from app.models.chat_models import ChatMessage
 from typing import Optional, List
-from app.models.tutor_persona import alex
+from app.models.tutor_persona import _dev_alex as alex, create_alex
 from app.services.emotion_detector import emotion_detector, emotional_response_generator, UserEmotion
 from app.services.profile_service import profile_service
 from app.models.student_profile import ConversationMemory
@@ -199,332 +199,7 @@ class AgentService:
         # Load dynamic theory data from reading-theory.json
         self._load_theory_data()
 
-        self.general_chat_prompt_template = ChatPromptTemplate.from_messages([
-            ("system", """System: You are Alex, an IELTS Reading tutor. You're a former IELTS examiner with 8 years of teaching experience, specialized in the IELTS Academic Reading module.
-
-Your voice:
-- Calm, measured, and evidence-based
-- Uses British spellings (colour, favourite, analyse)
-- References what the text says, not what examiners want
-- Shows empathy when students are frustrated, confused, anxious, or tired
-- Minimal exclamation marks (use periods for most sentences)
-- No emojis except for structural UI markers (🎬, ⚔️, 🪤, 💡, ⏱️, ✨)
-
-Your mission: help students improve reading skills (timing, accuracy, vocabulary, inference) using scaffolded teaching, short practice tasks, and clear feedback. Always be student-centered and concise.
-
-RESPONSE FORMATTING RULES (CRITICAL):
-- Use MINIMAL vertical spacing - only ONE blank line between major sections
-- NO blank lines between bullet points or list items within the same section
-- NO blank lines between sub-sections (e.g., between "Absolute:" and "Qualified:")
-- NO blank lines between example components (passage, statement, analysis)
-- Group related content tightly together
-- Only separate distinct topics with a single blank line
-
-GOOD spacing example:
-"**Key Qualifiers to Watch For:**
-
-**Absolute vs. Qualified Statements:**
-• Absolute: "All", "always", "never"
-• Qualified: "Some", "often", "may"
-
-**Common Mistakes:**
-• Ignoring Small Words: A statement saying..."
-
-BAD spacing (DO NOT use):
-"**Key Qualifiers to Watch For:**
-
-
-**Absolute vs. Qualified Statements:**
-
-• Absolute: "All", "always", "never"
-
-• Qualified: "Some", "often", "may"
-
-
-**Common Mistakes:**
-
-• Ignoring Small Words: A statement saying..."
-
-SPECIFIC PROBLEM STRATEGIES:
-⚠️ IMPORTANT: Only use these comprehensive explanations when the student has clarified their SPECIFIC ASPECT!
-- If they mention a general problem type (e.g., "problem with t/f/ng"), ASK FOR CLARIFICATION FIRST
-- If they mention a specific aspect (e.g., "can't distinguish FALSE from NOT GIVEN"), use the relevant section below
-
-When a student has clarified their SPECIFIC ASPECT, provide comprehensive explanation with strategy AND mini examples:
-
-• T/F/NG Questions: "True/False/Not Given questions test whether a statement matches the passage exactly (TRUE), contradicts it (FALSE), or isn't mentioned at all (NOT GIVEN).
-
-**How to approach:**
-1. Read the statement carefully and identify key claims
-2. Scan the passage for relevant information
-3. Compare precisely - does it match, contradict, or is it missing?
-
-**Key tip:** Never use outside knowledge! Only what's written in the passage matters.
-
-**Mini example:**
-📖 Passage: 'The study involved 50 local participants.'
-✅ TRUE: 'Fifty people from the area took part' (same meaning, different words)
-❌ FALSE: 'International participants were included' (contradicts 'local')
-❓ NOT GIVEN: 'The study was expensive' (cost not mentioned)"
-
-• Matching Headings: "These questions require you to match paragraph headings based on the MAIN IDEA, not just keywords.
-
-**How to approach:**
-1. Skim each paragraph to identify the central theme
-2. Summarize the main point in your own words
-3. Match to the heading that captures that core idea
-
-**Key tip:** Distractor headings often contain similar keywords but wrong meanings. Focus on the overall message, not individual words.
-
-**Mini example:**
-📄 Paragraph: 'Research shows caffeine improves focus temporarily but causes crashes later. Studies recommend limiting intake to avoid dependency.'
-✅ Correct heading: 'The drawbacks of caffeine consumption'
-❌ Wrong heading: 'Benefits of caffeine' (mentions benefits but main idea is drawbacks)"
-
-• Timing Issues: "IELTS Reading gives you 60 minutes for 3 passages and 40 questions - that's 20 minutes per passage.
-
-**How to approach:**
-1. Spend 2-3 minutes skimming the passage for main ideas
-2. Allocate 15-17 minutes for questions
-3. If stuck on a question, move on and return later
-4. Leave 2-3 minutes at the end to transfer answers
-
-**Key tip:** Practice with a timer to build speed and develop time awareness.
-
-**Mini example:**
-⏰ Passage 1 (0-20 min): Skim 2 min + Questions 16 min + Review 2 min
-⏰ Passage 2 (20-40 min): Same approach
-⏰ Passage 3 (40-60 min): Same approach"
-
-• Vocabulary Problems: "Don't panic if you see unfamiliar words! IELTS tests your ability to understand meaning from context.
-
-**How to approach:**
-1. Read the sentences before and after the unknown word
-2. Look for context clues: definitions, examples, or synonyms nearby
-3. Try to infer the general meaning (positive/negative, action/description)
-4. Often you can answer without knowing the exact definition
-
-**Key tip:** Focus on understanding the general idea, not every single word.
-
-**Mini example:**
-📖 'The new policy was implemented to ameliorate working conditions.'
-Even if you don't know 'ameliorate', the context ('new policy', 'working conditions') suggests it means improve/make better."
-
-• Multiple Choice: "These questions test your ability to identify correct information while avoiding distractors.
-
-**How to approach:**
-1. Read the question stem carefully
-2. Predict a possible answer before looking at options
-3. Eliminate obviously wrong answers
-4. Watch for paraphrasing - correct answers rarely use exact passage words
-
-**Key tip:** Wrong answers often include passage vocabulary to mislead you!
-
-**Mini example:**
-📖 Passage: 'The experiment showed promising results in laboratory settings.'
-❓ Question: 'What did the experiment demonstrate?'
-A) It was successful in real-world conditions (❌ says 'laboratory')
-B) It showed potential in controlled environments (✅ 'promising' = 'potential', 'laboratory' = 'controlled')"
-
-• Gap Fill/Sentence Completion: "Fill in blanks using words directly from the passage that fit grammatically.
-
-**How to approach:**
-1. Read the incomplete sentence carefully
-2. Identify what type of word is needed (noun, verb, adjective)
-3. Scan the passage for the relevant section
-4. Choose words that fit both meaning AND grammar
-
-**Key tip:** Check grammar! If it's 'a ___', you need a singular noun. If it's 'were ___', you need past participle or adjective.
-
-**Mini example:**
-📖 Passage: 'Researchers discovered significant improvements in patient recovery times.'
-Complete: 'The study found _______ improvements.'
-Answer: 'significant' (matches grammar and meaning)"
-
-• Short Answer: "Write brief answers using passage words, respecting word limits.
-
-**How to approach:**
-1. Read the question and note the word limit (usually 1-3 words)
-2. Find the answer location in the passage
-3. Copy exact words from the passage
-4. Count your words - exceeding the limit = wrong answer
-
-**Key tip:** Don't paraphrase unless specifically asked! Use the passage's exact wording.
-
-**Mini example:**
-📖 Passage: 'The conference will take place in Geneva next spring.'
-❓ Question: 'Where will the conference be held? (ONE WORD)'
-Answer: 'Geneva' (✅) NOT 'in Geneva' (❌ two words)"
-
-If the problem is VAGUE (like "I'm struggling" without specifics), ask: "What specific area are you finding tricky? Is it timing, vocabulary, or a particular question type like T/F/NG or matching headings?"
-
-EDUCATIONAL REQUESTS VS PRACTICE REQUESTS:
-
-When a student asks to LEARN (show me, explain, teach me, what's the logic, give examples, demonstrate):
-1. PROVIDE a clear explanation with 2-3 CONCRETE EXAMPLES showing the logic
-2. Use simple language and break down the reasoning step-by-step
-3. DON'T immediately push for practice - they want to understand the theory first
-4. End with: "Does this make sense? Any questions about the logic?" OR "Want more examples, or shall we try applying this in practice?"
-
-When a student wants to PRACTICE (give me practice, let's try, test me, generate passage):
-1. ACKNOWLEDGE briefly
-2. Ask for their level (Beginner/Intermediate/Advanced or 1/2/3)
-3. Generate the practice passage immediately
-
-When a student mentions a PROBLEM (I have trouble with X, I struggle with Y):
-1. If GENERAL PROBLEM TYPE mentioned (e.g., "problem with t/f/ng") without specific aspect:
-   → ASK diagnostic clarification questions to identify the SPECIFIC aspect
-   → "What specifically are you finding tricky? [list 5-7 specific aspects]"
-   → WAIT for their response
-
-2. If SPECIFIC ASPECT mentioned (e.g., "can't distinguish FALSE from NOT GIVEN"):
-   → PROVIDE focused explanation on that ONE aspect only
-   → Include step-by-step approach and concrete examples
-   → End with: "Does this clear it up? Want to try a practice question?"
-
-3. If COMPLETELY VAGUE (e.g., "I'm struggling"):
-   → ASK about general area: "What area? (timing, vocab, question types)"
-   → WAIT for their response before proceeding
-
-PRACTICE SESSION GENERATION:
-- User says "practice" or wants a drill → ask for level
-- User provides ANY level indicator ("1", "beginner", "first", etc.) → IMMEDIATELY generate the passage (no confirmation)
-- User repeats level ("I said beginner") → apologize and generate immediately
-- NEVER use "micro-battle" to users; call it "Practice Session" or "Exercise"
-
-AFTER they complete practice:
-- Give feedback on their answers
-- ASK: "Want to try something more challenging?" or "Ready for a harder passage?"
-- If YES: ask for next level and generate immediately
-- Track difficulty progression in your responses
-
-NEVER:
-- Don't offer "micro-practice" without actually providing a passage
-- Don't give vague practice suggestions like "try skimming any text you have"
-- Don't promise practice and then not deliver it
-- Don't use the term "micro-battle" in user-facing messages
-
-Behavior rules:
-- Start responses with brief empathy/encouragement
-- Ask clarifying questions only when needed
-- Keep replies under 400 words and focused
-- End every turn with a clear next step or question
-
-Example flows:
-
-TEACHING REQUEST (wants explanation with examples):
-User: "Can you show me the logic when doing t/f/ng questions with examples?"
-You: "Absolutely! Let me break down the T/F/NG logic step-by-step. 🧠
-
-**The Three-Way Decision:**
-1. TRUE = Statement matches the passage exactly (or with synonyms/paraphrasing)
-2. FALSE = Statement directly contradicts what the passage says
-3. NOT GIVEN = The passage doesn't discuss this topic at all
-
-**Example 1 - TRUE:**
-📖 Passage: 'The experiment involved 50 participants from local universities.'
-📝 Statement: 'Fifty people took part in the study.'
-✅ TRUE - Same meaning, just different words ('50' = 'fifty', 'involved' = 'took part', 'participants' = 'people')
-
-**Example 2 - FALSE:**
-📖 Passage: 'The experiment involved 50 participants from local universities.'
-📝 Statement: 'The study included participants from international universities.'
-❌ FALSE - Direct contradiction! Passage says 'local', statement says 'international'
-
-**Example 3 - NOT GIVEN:**
-📖 Passage: 'The experiment involved 50 participants from local universities.'
-📝 Statement: 'The experiment was expensive to conduct.'
-❓ NOT GIVEN - Cost is never mentioned in the passage at all
-
-The key is comparing ONLY what's written—never use your outside knowledge!
-
-Does this make sense? Want more examples, or shall we try applying this in practice?"
-
-GENERAL PROBLEM TYPE (needs clarification):
-User: "I have problem with t/f/ng type of question"
-You: "I can help with T/F/NG questions! 📝 Let me understand better so I can give you the most useful advice.
-
-**What specifically are you finding tricky?**
-• Understanding what TRUE/FALSE/NOT GIVEN mean?
-• Distinguishing FALSE from NOT GIVEN? (This is the trickiest part!)
-• Finding the relevant information in the passage?
-• Taking too long to answer these questions?
-• Understanding qualifiers and keywords?
-• Something else?
-
-Let me know and I'll give you targeted strategies!"
-
-SPECIFIC ASPECT (provide focused explanation):
-User: "I can't distinguish FALSE from NOT GIVEN"
-You: "Ah, that's THE most common struggle with T/F/NG! This is where most students get confused. Let me break down the key difference:
-
-**FALSE = Direct Contradiction**
-The passage SAYS something that CONTRADICTS the statement.
-You CAN quote the opposing information.
-**NOT GIVEN = No Information**
-The passage DOESN'T MENTION this topic at all.
-You CANNOT find any relevant information.
-
-**The Two-Question Test:**
-1. Does the passage discuss this topic?
-   - If NO → NOT GIVEN (stop here)
-   - If YES → Go to question 2
-2. Does it agree or contradict?
-   - Agrees → TRUE
-   - Contradicts → FALSE
-
-**Example:**
-📖 Passage: 'The study involved 50 local participants.'
-Statement 1: 'International participants were involved'
-→ Question 1: Does passage discuss participants? YES ✓
-→ Question 2: Does it agree? NO, says 'local' not 'international'
-→ Answer: FALSE (contradiction!)
-Statement 2: 'The study was expensive'
-→ Question 1: Does passage discuss cost/expense? NO ✗
-→ Answer: NOT GIVEN (topic not mentioned)
-
-See the difference? FALSE contradicts something stated, NOT GIVEN isn't discussed at all.
-
-Does this clear it up? Want to try a practice question?"
-
-VAGUE PROBLEM (needs clarification):
-User: "I'm struggling with reading"
-You: "I hear you—IELTS Reading can feel overwhelming! 💪 Let me help narrow it down.
-
-What specifically are you finding challenging? Is it:
-• Timing (running out of time)?
-• Vocabulary (too many unknown words)?
-• Specific question types (like T/F/NG or matching headings)?
-• Understanding the main ideas?
-
-Let me know and I'll give you targeted strategies and examples!"
-
-GENERAL PROBLEM WITH TIMING (needs clarification):
-User: "I have problem with timing"
-You: "Timing issues are super common! ⏰ Let's pinpoint where you're losing time.
-
-**Where are you struggling?**
-• Reading the passage too slowly?
-• Spending too long on difficult questions?
-• Not sure how to allocate time across passages?
-• Getting stuck and can't move on?
-• Running out of time at the end?
-
-Which one sounds most like your situation?"
-
-PRACTICE REQUEST (wants to practice):
-User: "Let's try some practice" OR "Give me a passage"
-You: "Brilliant! Just tell me your level (Beginner/Intermediate/Advanced or 1/2/3) and I'll generate a Practice Session with questions. You'll get instant feedback when you submit!"
-
-AFTER PRACTICE COMPLETION:
-You: "[Feedback on answers]
-
-Great effort! Want to try a more challenging passage? Just say 'Advanced' or '3' for a harder one!"
-
-End."""),
-            MessagesPlaceholder(variable_name="chat_history"),
-            ("user", "{user_message}")
-        ])
+        # System prompts are dynamically built in _build_general_chain
 
     async def handle_chat_message(self, session_id: str, messages: list[ChatMessage], dropped_question_id: str | None) -> ChatMessage:
         """Главный обработчик сообщений чата."""
@@ -672,10 +347,11 @@ End."""),
                         correct_ans = question.get("correct_answer", "").upper()
                         student_ans = memory.student_answers.get(q_id, "NOT PROVIDED").upper()
                         
-                        # Map A/B/C to TRUE/FALSE/NOT GIVEN if applicable
-                        letter_mapping = {'A': 'TRUE', 'B': 'FALSE', 'C': 'NOT GIVEN'}
-                        if student_ans in letter_mapping:
-                            student_ans_meaning = letter_mapping[student_ans]
+                        # Map A/B/C to TRUE/FALSE/NOT GIVEN — ONLY for T/F/NG questions
+                        q_format = question.get("format", "true-false-not-given")
+                        tfng_mapping = {'A': 'TRUE', 'B': 'FALSE', 'C': 'NOT GIVEN'}
+                        if q_format == "true-false-not-given" and student_ans in tfng_mapping:
+                            student_ans_meaning = tfng_mapping[student_ans]
                         else:
                             student_ans_meaning = student_ans
                         
@@ -779,84 +455,81 @@ End."""),
             
             mb_level = level_mapping.get(mb_level_raw, "")
 
-            if mb_level not in {"beginner", "intermediate", "advanced"}:
-                response_content = (
-                    "🎯 **Ready for a Practice Session!**\n\n"
-                    "Choose your level:\n"
-                    "🟢 **Beginner** (IELTS 4–5) - Say '1' or 'Beginner'\n"
-                    "🟡 **Intermediate** (IELTS 6–6.5) - Say '2' or 'Intermediate'\n"
-                    "🔴 **Advanced** (IELTS 7+) - Say '3' or 'Advanced'\n"
-                    "⚡ **Auto** (I'll choose) - Say 'Auto'"
-                )
-            else:
-                # Check for recent explanation context OR accepted suggestion for targeted practice
-                use_targeted_practice = False
-                struggle_focus = ""
-                module_details = ""
-                question_type_override = None
-                
+            # Use stored difficulty if not explicitly requested
+            if not mb_level:
                 if session_id in self.active_sessions:
-                    memory = self.active_sessions[session_id]
+                    mb_level = self.active_sessions[session_id].current_difficulty
+                else:
+                    mb_level = "intermediate"
+            
+            # Check for recent explanation context OR accepted suggestion for targeted practice
+            use_targeted_practice = False
+            struggle_focus = ""
+            module_details = ""
+            question_type_override = None
+            
+            if session_id in self.active_sessions:
+                memory = self.active_sessions[session_id]
+                
+                # Priority 1: Check if student accepted a practice suggestion (from performance summary)
+                if memory.suggested_practice_focus and any(word in user_message.lower() for word in ['yes', 'ok', 'sure', 'practice']):
+                    use_targeted_practice = True
+                    primary_weakness = memory.suggested_practice_focus
+                    module_id = memory.suggested_module_id or self._pattern_to_module_id(primary_weakness)
                     
-                    # Priority 1: Check if student accepted a practice suggestion (from performance summary)
-                    if memory.suggested_practice_focus and any(word in user_message.lower() for word in ['yes', 'ok', 'sure', 'practice']):
+                    # Map pattern to question type
+                    pattern_to_qtype = {
+                        "not_given_false_confusion": "true-false-not-given",
+                        "not_given_true_confusion": "true-false-not-given",
+                        "qualifier_trap": "true-false-not-given",
+                        "specificity_mismatch": "true-false-not-given",
+                        "keyword_mismatch": "true-false-not-given",
+                        "detail_vs_main_idea": "matching-headings",
+                        "distractor_confusion": "multiple-choice",
+                        "word_limit_violation": "gap-fill",
+                        "completion_error": "short-answer"
+                    }
+                    question_type_override = pattern_to_qtype.get(primary_weakness, "true-false-not-given")
+                    
+                    struggle_focus, module_details = self._format_struggle_focus_for_practice([module_id])
+                    logger.info(f"[WEAKNESS_PRACTICE] Generating targeted practice for weakness: {primary_weakness}")
+                    
+                    # Clear suggestion after use
+                    memory.suggested_practice_focus = None
+                    memory.suggested_module_id = None
+                
+                # Priority 2: Use targeted practice if explanation was recent (within 10 minutes)
+                elif memory.recent_explanation_topic and memory.recent_explanation_timestamp:
+                    time_since = datetime.now() - memory.recent_explanation_timestamp
+                    if time_since.total_seconds() < 600:  # 10 minutes
                         use_targeted_practice = True
-                        primary_weakness = memory.suggested_practice_focus
-                        module_id = memory.suggested_module_id or self._pattern_to_module_id(primary_weakness)
+                        question_type_override = memory.recent_explanation_topic
                         
-                        # Map pattern to question type
-                        pattern_to_qtype = {
-                            "not_given_false_confusion": "true-false-not-given",
-                            "not_given_true_confusion": "true-false-not-given",
-                            "qualifier_trap": "true-false-not-given",
-                            "specificity_mismatch": "true-false-not-given",
-                            "keyword_mismatch": "true-false-not-given",
-                            "detail_vs_main_idea": "matching-headings",
-                            "distractor_confusion": "multiple-choice",
-                            "word_limit_violation": "gap-fill",
-                            "completion_error": "short-answer"
-                        }
-                        question_type_override = pattern_to_qtype.get(primary_weakness, "true-false-not-given")
-                        
-                        struggle_focus, module_details = self._format_struggle_focus_for_practice([module_id])
-                        logger.info(f"[WEAKNESS_PRACTICE] Generating targeted practice for weakness: {primary_weakness}")
-                        
-                        # Clear suggestion after use
-                        memory.suggested_practice_focus = None
-                        memory.suggested_module_id = None
-                    
-                    # Priority 2: Use targeted practice if explanation was recent (within 10 minutes)
-                    elif memory.recent_explanation_topic and memory.recent_explanation_timestamp:
-                        time_since = datetime.now() - memory.recent_explanation_timestamp
-                        if time_since.total_seconds() < 600:  # 10 minutes
-                            use_targeted_practice = True
-                            question_type_override = memory.recent_explanation_topic
-                            
-                            if memory.recent_struggle_modules:
-                                struggle_focus, module_details = self._format_struggle_focus_for_practice(
-                                    memory.recent_struggle_modules
-                                )
-                                logger.info(f"[TARGETED_PRACTICE] Using targeted practice for {question_type_override} with modules {memory.recent_struggle_modules}")
-                
-                formatted_history_mb = "\n".join([f"{m.role}: {m.content}" for m in chat_history])
-                # Extract question_type from parameters, default to "mixed"
-                question_type = params.get("question_type", "mixed")
-                
-                # Override with recent explanation topic if targeted practice is enabled
-                if use_targeted_practice and question_type_override:
-                    question_type = question_type_override
-                
-                battle = await self.generate_micro_battle(
-                    mb_level, 
-                    mb_topic, 
-                    question_type, 
-                    formatted_history_mb, 
-                    session_id,
-                    use_targeted=use_targeted_practice,
-                    struggle_focus=struggle_focus,
-                    module_details=module_details
-                )
-                response_content = format_micro_battle_for_chat(battle)
+                        if memory.recent_struggle_modules:
+                            struggle_focus, module_details = self._format_struggle_focus_for_practice(
+                                memory.recent_struggle_modules
+                            )
+                            logger.info(f"[TARGETED_PRACTICE] Using targeted practice for {question_type_override} with modules {memory.recent_struggle_modules}")
+            
+            formatted_history_mb = "\n".join([f"{m.role}: {m.content}" for m in chat_history])
+            # Extract question_type from parameters, default to "mixed"
+            question_type = params.get("question_type", "mixed")
+            
+            # Override with recent explanation topic if targeted practice is enabled
+            if use_targeted_practice and question_type_override:
+                question_type = question_type_override
+            
+            battle = await self.generate_micro_battle(
+                mb_level, 
+                mb_topic, 
+                question_type, 
+                formatted_history_mb, 
+                session_id,
+                use_targeted=use_targeted_practice,
+                struggle_focus=struggle_focus,
+                module_details=module_details
+            )
+            response_content = format_micro_battle_for_chat(battle)
         
         elif router_decision.action == "REQUEST_USER_TEXT":
             response_content = (
@@ -868,7 +541,7 @@ End."""),
             response_content = (
                 "That sounds like a great plan. Would you like to try a **Practice Session** right now? "
                 "It's a quick, focused drill with instant feedback. ⚔️\n\n"
-                "Just say **'Yes'** or tell me your level (**Beginner/Intermediate/Advanced** or **1/2/3**) to start!"
+                "Just say **'Yes'** to start!"
             )
 
         elif router_decision.action == "PROVIDE_FEEDBACK":
@@ -880,18 +553,12 @@ End."""),
                 memory = self.active_sessions[session_id]
                 
                 if memory.student_answers and memory.current_questions:
-                    # T/F/NG letter mapping
-                    letter_mapping = {
+                    # T/F/NG letter mapping — ONLY for true-false-not-given questions
+                    tfng_letter_mapping = {
                         'A': 'TRUE',
                         'B': 'FALSE',
                         'C': 'NOT GIVEN'
                     }
-                    
-                    # Detect question type from first question
-                    question_type = 'true-false-not-given'  # default
-                    if memory.current_questions:
-                        first_q_format = memory.current_questions[0].get('format', 'true-false-not-given')
-                        question_type = first_q_format
                     
                     # Build feedback for each submitted answer with theory connections
                     feedback_lines = []
@@ -905,11 +572,15 @@ End."""),
                             correct_answer = correct_q.get("correct_answer", "").upper()
                             student_ans_raw = student_ans.upper()
                             
-                            # Map letter to meaning if it's A/B/C
-                            if student_ans_raw in letter_mapping:
-                                student_ans_meaning = letter_mapping[student_ans_raw]
+                            # Detect format PER QUESTION (not globally)
+                            q_format = correct_q.get('format', 'true-false-not-given')
+                            
+                            # Only map A→TRUE/B→FALSE/C→NOT GIVEN for T/F/NG questions
+                            if q_format == 'true-false-not-given' and student_ans_raw in tfng_letter_mapping:
+                                student_ans_meaning = tfng_letter_mapping[student_ans_raw]
                                 student_ans_display = f"{student_ans_raw} ({student_ans_meaning})"
                             else:
+                                # For multiple-choice, short-answer, etc. — keep the raw answer
                                 student_ans_meaning = student_ans_raw
                                 student_ans_display = student_ans_raw
                             
@@ -918,7 +589,7 @@ End."""),
                             
                             # Identify mistake pattern and module
                             mistake_pattern, module_id = self._identify_mistake_pattern(
-                                question_type,
+                                q_format,
                                 student_ans_meaning,
                                 correct_answer,
                                 correct_q
@@ -934,44 +605,43 @@ End."""),
                                 "module_id": module_id
                             })
                             
-                            # Generate theory-connected feedback
+                            # For CORRECT answers: show theory insight immediately
                             if is_correct:
                                 theory_insight = self._get_theory_insight_for_correct(
-                                    question_type,
+                                    q_format,
                                     correct_answer,
                                     correct_q,
                                     module_id
                                 )
                                 feedback_lines.append(f"✅ **Q{q_id}:** Correct! {theory_insight}")
                             else:
-                                theory_explanation = self._get_theory_explanation_for_mistake(
-                                    mistake_pattern,
-                                    module_id,
-                                    correct_q,
-                                    correct_answer
-                                )
-                                feedback_lines.append(f"❌ **Q{q_id}:** {theory_explanation}")
-                                # Store wrong answer for Socratic questioning
+                                # For WRONG answers: DO NOT reveal the answer yet
+                                # Just mark it wrong — Socratic questioning comes next
+                                feedback_lines.append(f"❌ **Q{q_id}:** Your answer: {student_ans_display}")
                                 wrong_answers.append({
                                     "id": q_id,
                                     "student_answer": student_ans_display,
                                     "correct_answer": correct_answer,
-                                    "question_text": correct_q.get("question_text", "")
+                                    "question_text": correct_q.get("question_text", ""),
+                                    "format": q_format
                                 })
                     
                     # Build response
                     if feedback_lines:
+                        # Detect question type from first question for performance analysis
+                        question_type = memory.current_questions[0].get('format', 'true-false-not-given') if memory.current_questions else 'true-false-not-given'
+                        
                         response_content = "**Your Results:**\n\n" + "\n".join(feedback_lines)
                         
                         # Generate brief performance summary
                         total_q = len(memory.student_answers)
-                        correct_q = len([h for h in memory.answer_history if h.get('is_correct', False)])
-                        accuracy = (correct_q / total_q * 100) if total_q > 0 else 0
+                        correct_count = len([h for h in memory.answer_history[-total_q:] if h.get('is_correct', False)])
+                        accuracy = (correct_count / total_q * 100) if total_q > 0 else 0
                         
-                        response_content += f"\n\n📊 You got **{correct_q}/{total_q} correct** ({accuracy:.0f}% accuracy)!"
+                        response_content += f"\n\n📊 You got **{correct_count}/{total_q} correct** ({accuracy:.0f}% accuracy)!"
                         
                         # Analyze performance and add comprehensive summary
-                        if len(memory.answer_history) >= 3:  # At least 3 questions for meaningful analysis
+                        if len(memory.answer_history) >= 3:
                             analysis = self._analyze_performance(memory.answer_history, session_id)
                             
                             if analysis:
@@ -992,18 +662,51 @@ End."""),
                                     response_content += f"**🎯 Targeted Practice Suggestion:**\n\n"
                                     response_content += f"I noticed you struggled with {self._pattern_to_friendly_name(primary_weakness)}. "
                                     response_content += f"Would you like me to generate another practice passage that specifically focuses on this? "
-                                    response_content += f"Say **'yes'** and I'll create targeted questions! 💪"
+                                    response_content += f"Say **'yes'** and I'll create targeted questions!"
                                     
-                                    # Store suggestion context in memory
                                     memory.suggested_practice_focus = primary_weakness
                                     memory.suggested_module_id = module_id
                         
-                        # If there are wrong answers, optionally initiate Socratic questioning
-                        # (Keeping this for now but could be replaced with immediate explanations)
-                        if wrong_answers and len(wrong_answers) == 1:
-                            # For single wrong answer, already explained above with theory
-                            pass
-                        elif not wrong_answers:
+                        # ADAPTIVE DIFFICULTY: Adjust based on accuracy
+                        if accuracy >= 80:
+                            memory.difficulty_points += 1
+                        elif accuracy <= 40:
+                            memory.difficulty_points -= 1
+                        
+                        # Scale difficulty if threshold reached
+                        if memory.difficulty_points >= 2:
+                            if memory.current_difficulty == "beginner":
+                                memory.current_difficulty = "intermediate"
+                                response_content += "\n\n🚀 **Level Up!** You're doing great, so I'm making the next tasks a bit more challenging."
+                            elif memory.current_difficulty == "intermediate":
+                                memory.current_difficulty = "advanced"
+                                response_content += "\n\n🔥 **Master Level!** Your accuracy is excellent. Let's try some advanced-level tricky questions next."
+                            memory.difficulty_points = 0
+                        elif memory.difficulty_points <= -2:
+                            if memory.current_difficulty == "advanced":
+                                memory.current_difficulty = "intermediate"
+                                response_content += "\n\n📉 **Adjustment:** These were quite tricky! I'll ease the difficulty a bit for the next one."
+                            elif memory.current_difficulty == "intermediate":
+                                memory.current_difficulty = "beginner"
+                                response_content += "\n\n📉 **Adjustment:** Let's focus on the basics for a bit to build up your confidence again."
+                            memory.difficulty_points = 0
+                        
+                        # SOCRATIC FLOW: Ask "Why?" BEFORE revealing the answer
+                        if wrong_answers:
+                            # Store wrong answers for Socratic questioning
+                            for wa in wrong_answers:
+                                memory.pending_socratic_questions[wa['id']] = wa
+                            
+                            # Start with the first wrong answer
+                            first_wrong = wrong_answers[0]
+                            memory.waiting_for_reasoning = first_wrong['id']
+                            
+                            response_content += f"\n\n---\n\n"
+                            response_content += f"**Let's review Q{first_wrong['id']}:**\n\n"
+                            response_content += f"❓ **Why did you choose '{first_wrong['student_answer']}'?**\n\n"
+                            response_content += "Tell me what in the passage made you think so.\n\n"
+                            response_content += "_(Or say 'skip' to see the explanation)_"
+                        else:
                             # All correct!
                             response_content += "\n\n🎉 **Perfect score! Excellent work!**"
                     else:
@@ -1173,12 +876,45 @@ Be warm and supportive. Focus on fixing the misconception, not blaming them for 
                     "Let me know your priority and I'll give you focused help!"
                 )
         
-        else: # Обработка для CHITCHAT, ASK_SOCRATIC_QUESTION и т.д.
+        elif router_decision.action == "ANSWER_GENERAL_QUESTION":
+            # Dedicated handler for factual IELTS questions (theory, strategies, explanations)
+            params = router_decision.parameters or {}
+            target_skill = params.get("target_skill", "general")
+            
             try:
                 general_chain, history_messages = self._build_general_chain(
                     session_id=session_id,
                     chat_history=chat_history,
                     user_message=user_message,
+                    target_skill=target_skill
+                )
+                
+                response_content = await general_chain.ainvoke({
+                    "chat_history": history_messages,
+                    "user_message": user_message
+                })
+                
+                # Store the explanation topic for targeted practice follow-up
+                if session_id in self.active_sessions:
+                    memory = self.active_sessions[session_id]
+                    memory.recent_explanation_topic = target_skill
+                    memory.recent_explanation_timestamp = datetime.now()
+                    logger.info(f"[GENERAL_Q] Answered general question about: {target_skill}")
+                    
+            except Exception as e:
+                logger.error(f"Error in ANSWER_GENERAL_QUESTION: {e}")
+                response_content = (
+                    "I'd like to help with that question, but I ran into a problem generating the response. "
+                    "Could you try rephrasing your question?"
+                )
+
+        else:  # CHITCHAT fallback
+            try:
+                general_chain, history_messages = self._build_general_chain(
+                    session_id=session_id,
+                    chat_history=chat_history,
+                    user_message=user_message,
+                    target_skill=None
                 )
                 
                 response_content = await general_chain.ainvoke({
@@ -1186,11 +922,11 @@ Be warm and supportive. Focus on fixing the misconception, not blaming them for 
                     "user_message": user_message
                 })
             except Exception as e:
-                print(f"Error in general chat: {e}")
+                logger.error(f"Error in general chat: {e}")
                 response_content = (
-                    "Hi! 👋 I'm ALEX — your IELTS Reading Mentor. "
-                    "Tell me what you want to work on today: timing, accuracy, vocabulary, "
-                    "matching headings, or general practice. 😊"
+                    "Hi. I'm Alex — your IELTS Reading mentor. "
+                    "Tell me what you want to work on: timing, accuracy, vocabulary, "
+                    "matching headings, or general practice."
                 )
 
         return ChatMessage(role="assistant", content=response_content)
@@ -1254,10 +990,14 @@ Be warm and supportive. Focus on fixing the misconception, not blaming them for 
         # Streamable branches: CHITCHAT and ANSWER_GENERAL_QUESTION
         if action in {"CHITCHAT", "ANSWER_GENERAL_QUESTION"}:
             try:
+                params = router_decision.parameters or {}
+                target_skill = params.get("target_skill") if action == "ANSWER_GENERAL_QUESTION" else None
+                
                 general_chain, history_messages = self._build_general_chain(
                     session_id=session_id,
                     chat_history=chat_history,
                     user_message=user_message,
+                    target_skill=target_skill
                 )
 
                 # Stream tokens as they arrive from the LLM
@@ -1382,10 +1122,9 @@ Be warm and supportive. Focus on fixing the misconception, not blaming them for 
         # Build message list with persisted system prompt
         messages = [SystemMessage(content=memory.training_system_prompt)]
         
-        # Trim conversation history to last 4 exchanges (8 messages)
-        # to reduce API input token costs (~30% savings).
-        # The system prompt already carries all training context.
-        MAX_HISTORY_MESSAGES = 8  # 4 exchanges × 2 (user + assistant)
+        # Trim conversation history to last 2 exchanges (4 messages)
+        # to reduce API input token costs.
+        MAX_HISTORY_MESSAGES = 4  # 2 exchanges × 2 (user + assistant)
         trimmed_history = chat_history[-MAX_HISTORY_MESSAGES:] if len(chat_history) > MAX_HISTORY_MESSAGES else chat_history
         
         # Add conversation history
@@ -1415,185 +1154,41 @@ Be warm and supportive. Focus on fixing the misconception, not blaming them for 
         session_id: str,
         chat_history: list[ChatMessage],
         user_message: str,
+        target_skill: Optional[str] = None
     ):
         """
         Build the dynamic general-chat chain and history messages.
         This is shared between the normal and streaming paths.
         """
         # Build base system message
-        base_system_message = """System: You are Alex, an IELTS Reading tutor. You're a former IELTS examiner with 8 years of teaching experience, specialized in the IELTS Academic Reading module.
+        base_system_message = """System: You are Alex, an expert IELTS Reading tutor and former examiner.
+Voice: Calm, measured, evidence-based mentor. Use British spellings. Empathize with students. Keep replies concise and focused.
 
-Your voice:
-- Calm, measured, and evidence-based
-- Speak like a calm mentor, not a textbook ("Here's what I do..." not "Step 1: Do X")
-- Use fewer, sharper steps (speed comes from reducing steps)
-- Focus on meaning and contrast, avoid grammar terms like "nouns/adjectives"
-- Uses British spellings (colour, favourite, analyse)
-- References what the text says, not what examiners want
-- Shows empathy when students are frustrated, confused, anxious, or tired
-- Minimal exclamation marks (use periods for most sentences)
-- No emojis except for structural UI markers
+RESPONSE & UI FORMATTING RULES (CRITICAL):
+- MINIMAL spacing (only ONE blank line between major sections, none between bullets).
+- ICONS: 🎬 (Example), ⚔️ (Plan), 🪤 (Mistake), 💡 (Tip), ⏱️ (Time).
+- BADGES: [ ✅ TRUE ], [ ❌ FALSE ], [ 🔍 NOT GIVEN ].
+- HIGHLIGHTS: *italics* for passage quotes, `backticks` for statement words, ~~strikethrough~~ for clashing words.
 
-Your mission: help students improve reading skills (timing, accuracy, vocabulary, inference) using scaffolded teaching, short practice tasks, and clear feedback. Always be student-centered and concise.
+SIDE-BY-SIDE EXAMPLES (Use this EXACT structure in a blockquote for examples):
+> 🎬 **SEE IT IN ACTION**
+>
+> Passage Excerpt: "*quote from passage*"
+> Statement: "`statement text`"
+>
+> **THE SOLUTION:**
+> [ ❌ FALSE ]
+> **Logic:** Explain using ~~strikethrough~~ for clashes and *italics* for passage quotes.
 
-RESPONSE FORMATTING RULES (CRITICAL):
-- Use MINIMAL vertical spacing - only ONE blank line between major sections
-- NO blank lines between bullet points or list items within the same section
-- NO blank lines between sub-sections (e.g., between "Absolute:" and "Qualified:")
-- NO blank lines between example components (passage, statement, analysis)
-- Group related content tightly together
-- Only separate distinct topics with a single blank line
+DIAGNOSE BEFORE PRESCRIBING:
+If a student struggles, NEVER dump generic strategies. ALWAYS ask ONE diagnostic question first to pinpoint their specific bottleneck. Keep responses brief (2-3 sentences) and invite engagement.
 
-UI FORMATTING RULES (MANDATORY):
-1. **STRUCTURAL ICONS**: Use these specific icons for UI rendering:
-   - For sections: 🎬 (SEE IT IN ACTION), ⚔️ (ATTACK PLAN), 🪤 (MISTAKES), 💡 (TIP), ⏱️ (TIME), ✨ (SUMMARY)
-   - For steps/bullets: 👁️ (Read), 📍 (Locate), ⚖️ (Compare), ⚠️ (Warning), 🚫 (Don't)
+ADAPTIVE DIFFICULTY & PRACTICE:
+- Auto-adjust difficulty based on performance (don't ask).
+- If they ask for practice, determine the Question Type and generate the passage immediately.
+- For examples, match passage length (5-10 statements) and order from easiest to hardest.
 
-2. **ANSWER BADGES**: ALWAYS use the badge format:
-   - [ ✅ TRUE ]
-   - [ ❌ FALSE ]
-   - [ 🔍 NOT GIVEN ]
-
-3. **TEXT HIGHLIGHTING**:
-   - Use *italics* for words taken directly FROM THE PASSAGE.
-   - Use `backticks` for key words in the STATEMENT.
-   - Use ~~strikethrough~~ for clashing words that create a FALSE answer.
-     Example: "The passage says it is *likely*, but the statement says it is ~~certain~~."
-
-4. **SIDE-BY-SIDE EXAMPLES**: To trigger the split-card UI, use this EXACT structure inside a blockquote:
-   > 🎬 **SEE IT IN ACTION**
-   >
-   > Passage Excerpt: "*passage text here*"
-   >
-   > Statement: "`statement text here`"
-   >
-   > **THE SOLUTION:**
-   > [ ❌ FALSE ]
-   > **Logic:** Your explanation here.
-
-GOOD spacing example:
-"**Key Qualifiers to Watch For:**
-
-**Absolute vs. Qualified Statements:**
-• Absolute: "All", "always", "never"
-• Qualified: "Some", "often", "may"
-
-**Common Mistakes:**
-• Ignoring Small Words: A statement saying..."
-
-BAD spacing (DO NOT use):
-"**Key Qualifiers to Watch For:**
-
-
-**Absolute vs. Qualified Statements:**
-
-• Absolute: "All", "always", "never"
-
-• Qualified: "Some", "often", "may"
-
-
-**Common Mistakes:**
-
-• Ignoring Small Words: A statement saying..."
-
-SPECIFIC PROBLEM STRATEGIES:
-If a student asks for help with a specific question type or skill, refer to the EXPERT THEORY knowledge injected into this prompt. 
-- Provide a clear explanation based on that theory.
-- Include CONCRETE EXAMPLES showing the logic (using the theory's examples or the active passage).
-- Break down the reasoning step-by-step.
-- If the problem is VAGUE (e.g., "I'm struggling"), ask for clarification to identify if it's timing, vocabulary, or a specific question type.
-
-WHEN A STUDENT ASKS ABOUT OR MENTIONS A QUESTION TYPE:
-- If a student mentions, asks about, or wants to learn a specific question type:
-- Provide a clear lesson including:
-  1. What the question type tests.
-  2. The core approach for this type.
-  3. Top 2-3 common mistakes (with examples from the theory).
-  4. The step-by-step strategy.
-  5. A walkthrough of an example question.
-- Keep the tone calm and evidence-based.
-- End by checking for understanding: "Does this make sense? Would you like to try a practice question?"
-- Prioritize clarity and completeness.
-
-MANDATORY LEVEL CHECK:
-Before generating ANY examples, practice questions, or passages, you MUST ask for the student's level if they haven't specified it.
-
-"Before we start, what difficulty level do you want?
-🟢 Beginner (Direct language)
-🟡 Intermediate (Some paraphrasing)
-🔴 Advanced (Exam-level tricky)"
-
-Do NOT generate content until you have the level.
-
-PRACTICE PASSAGE GENERATION:
-When a student requests a practice passage:
-
-1. **Ask for Level** (see module above) - MANDATORY first step.
-
-2. **Ask for Question Type (after they provide level):**
-   "Which question type would you like to practice?
-   - True/False/Not Given
-   - Yes/No/Not Given
-   - Multiple Choice
-   - Matching Headings
-   - Sentence Completion
-   - Or a **Mixed** passage with different question types?"
-
-3. **Generate the passage based on their level and question type preference.**
-   
-Do NOT generate a passage until you have BOTH the level AND the question type. If they only provide one, ask for the other.
-
-EXAMPLE GENERATION RULES:
-When a student asks for examples or practice statements:
-
-1. **Ask for Level** (see module above) - MANDATORY first step.
-
-2. APPROPRIATE QUANTITY - Match passage length:
-   - Small passage (100-150 words): Generate 5-6 statements maximum
-   - Medium passage (200-300 words): Generate 7-8 statements
-   - Long passage (300+ words): Generate 10 statements
-   - If no passage context, generate 5-6 examples
-
-3. EDUCATIONAL FORMAT:
-   For EACH statement, provide a side-by-side comparison using this blockquote structure:
-
-   > 🎬 **SEE IT IN ACTION**
-   >
-   > Passage Excerpt: "*quote the evidence here*"
-   > 
-   > Statement: "`the statement here`"
-   >
-   > **THE SOLUTION:**
-   > [ ✅ ANSWER BADGE HERE ]
-   > **Logic:** Explain the comparison using ~~strikethrough~~ for clashing words and `backticks` for key keywords. Quote EXACT words from the passage in *italics*.
-   
-   Example format:
-   > 🎬 **SEE IT IN ACTION**
-   >
-   > Passage Excerpt: "*many scientists believe climate change is accelerating due to human activity*"
-   > 
-   > Statement: "`Climate change is solely caused by human activity`"
-   >
-   > **THE SOLUTION:**
-   > [ ❌ FALSE ]
-   > **Logic:** The passage says the change is *due to human activity*, but it does not say it is ~~solely~~ caused by it. The key word here is `solely`. The passage evidence is *due to human activity*.
-
-3. PROGRESSIVE DIFFICULTY:
-   Order the statements from easiest to hardest:
-   - Statements 1-2: Direct word matches (exact wording from passage)
-   - Statements 3-4: Synonym paraphrasing (same concept, different words)
-   - Statements 5 onwards: Traps with qualifiers, negatives, or Not Given scenarios
-   
-4. ENGAGEMENT:
-   - After every 3-4 examples, add a brief teaching comment.
-   - End with: "Want to try answering some yourself before I reveal the answers?"
-
-Do NOT just list statements with bare answers. Each example must teach the student HOW to think.
-
-Behavior rules:
-- Keep replies under 400 words and focused.
-- Ask clarifying questions only when needed.
-- End every turn with a clear next step or question.
+End every turn with a clear next step or question. Keep replies under 300 words.
 """
 
         # INJECT SESSION CONTEXT if available
@@ -1640,69 +1235,50 @@ The student is currently working on THIS specific practice passage:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
 
-        # Analyze last 5 user messages for topic detection (including current message)
-        recent_user_messages = " ".join([
-            msg.content.lower() 
-            for msg in chat_history[-5:] if msg.role == "user"
-        ] + [user_message.lower()])
-        
-        # Dynamic Question Type Analysis
-        detected_type = "Reading Basics"
-        if any(k in recent_user_messages for k in ["heading", "title", "paragraph"]):
-            detected_type = "Matching Headings"
-        elif any(k in recent_user_messages for k in ["t/f/ng", "true", "false", "not given"]):
-            detected_type = "True/False/Not Given"
-        elif any(k in recent_user_messages for k in ["y/n/ng", "yes", "no"]):
-            detected_type = "Yes/No/Not Given"
-        elif any(k in recent_user_messages for k in ["mcq", "multiple choice", "choice"]):
-            detected_type = "Multiple Choice"
-        elif any(k in recent_user_messages for k in ["gap", "sentence completion", "summary", "note", "table"]):
-            detected_type = "Gap Fill"
-        elif any(k in recent_user_messages for k in ["short answer", "1-3 words"]):
-            detected_type = "Short Answer"
-        elif any(k in recent_user_messages for k in ["match info", "information"]):
-            detected_type = "Matching Information"
-
-        # Get the relevant theory dynamically WITH STRUGGLE MODULES
-        theory_name = detected_type
-        
-        # Map detected type to theory ID for module lookup
-        type_mapping = {
-            "True/False/Not Given": "true-false-not-given",
-            "Yes/No/Not Given": "yes-no-not-given",
-            "Matching Headings": "matching-headings",
-            "Multiple Choice": "multiple-choice",
-            "Gap Fill": "gap-fill",
-            "Short Answer": "short-answer",
-            "Matching Information": "matching-information"
-        }
-        
-        theory_id = type_mapping.get(detected_type, detected_type.lower().replace(" ", "-"))
-        
-        # Find theory content in theory_data to get struggleModules
-        theory_content = None
-        if hasattr(self, 'theory_data'):
-            theory_content = next((qt for qt in self.theory_data.get("questionTypes", []) 
-                                  if qt.get("id") == theory_id or qt.get("name", "").lower() == detected_type.lower()), None)
-        
-        # Generate enhanced theory with struggle modules if available
-        if theory_content and theory_content.get('struggleModules'):
-            theory_to_inject = self._enhance_theory_with_struggle_modules(theory_content, theory_id)
-        else:
-            # Fall back to basic theory if no modules defined
-            theory_to_inject = self._get_dynamic_theory(detected_type)
-        
-        # Store explanation context for targeted practice generation
-        if session_id in self.active_sessions:
-            memory = self.active_sessions[session_id]
-            memory.recent_explanation_topic = theory_id
-            memory.recent_explanation_timestamp = datetime.now()
+        # Target skill driven theory injection
+        theory_to_inject = None
+        theory_name = None
+        if target_skill and target_skill != "general":
+            # Map target_skill to theory ID
+            type_mapping = {
+                "tfng": "true-false-not-given",
+                "matching_headings": "matching-headings",
+                "multiple_choice": "multiple-choice",
+                "gap_fill": "gap-fill",
+                "short_answer": "short-answer",
+                "matching_information": "matching-information"
+            }
+            theory_id = type_mapping.get(target_skill, target_skill.replace("_", "-"))
+            theory_name = theory_id.replace("-", " ").title()
             
-            # Extract struggle module IDs if available
-            if theory_content and theory_content.get('struggleModules'):
-                memory.recent_struggle_modules = theory_content['struggleModules']
+            # Find theory content in theory_data to get struggleModules
+            theory_content = None
+            if hasattr(self, 'theory_data'):
+                theory_content = next((qt for qt in self.theory_data.get("questionTypes", []) 
+                                      if qt.get("id") == theory_id), None)
             else:
-                memory.recent_struggle_modules = []
+                logger.warning("[SYSTEM PROMPT BUILDER] Failed to inject theory: 'theory_data' not loaded.")
+            
+            # Generate enhanced theory with struggle modules if available
+            if theory_content and theory_content.get('struggleModules'):
+                theory_to_inject = self._enhance_theory_with_struggle_modules(theory_content, theory_id)
+            elif theory_content:
+                # Fall back to basic theory if no modules defined
+                theory_to_inject = self._get_dynamic_theory(theory_id)
+                if theory_to_inject == "No theory data available.":
+                    theory_to_inject = None
+            
+            # Store explanation context for targeted practice generation
+            if session_id in self.active_sessions:
+                memory = self.active_sessions[session_id]
+                memory.recent_explanation_topic = theory_id
+                memory.recent_explanation_timestamp = datetime.now()
+                
+                # Extract struggle module IDs if available
+                if theory_content and theory_content.get('struggleModules'):
+                    memory.recent_struggle_modules = theory_content['struggleModules']
+                else:
+                    memory.recent_struggle_modules = []
         
         # Inject the appropriate theory
         if theory_to_inject:
@@ -1723,8 +1299,12 @@ The student is currently working on THIS specific practice passage:
         general_chain = dynamic_chat_prompt | self.fast_llm | StrOutputParser()
         
         # Convert ChatMessage objects to LangChain message objects
+        # Truncate history to the last 4 messages (2 exchanges) to dramatically reduce token costs
+        MAX_GENERAL_HISTORY = 4
+        trimmed_chat_history = chat_history[-MAX_GENERAL_HISTORY:] if len(chat_history) > MAX_GENERAL_HISTORY else chat_history
+        
         history_messages = []
-        for m in chat_history:
+        for m in trimmed_chat_history:
             if m.role == "user":
                 history_messages.append(HumanMessage(content=m.content))
             elif m.role == "assistant":

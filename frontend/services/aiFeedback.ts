@@ -1,6 +1,6 @@
 import backend from '@/backend';
 
-const FEEDBACK_API_URL = 'http://localhost:8000';
+const FEEDBACK_API_URL = import.meta.env.VITE_FASTAPI_TUTOR_URL || 'http://localhost:8001';
 
 export interface FeedbackRequest {
   passage: string;
@@ -36,7 +36,7 @@ export async function getAIFeedback(request: FeedbackRequest & { userId: string 
       student_answer: request.student_answer,
     });
 
-    return feedback as FeedbackResponse;
+    return feedback as unknown as FeedbackResponse;
   } catch (error: any) {
     console.error('AI Feedback error through Encore:', error);
     throw new Error(error.message || "Failed to get AI feedback");

@@ -82,14 +82,15 @@ Writing Task 1 (Academic):
 - Line Graph, Bar Chart, Pie Chart, Data Table, Process Diagram, Map Comparison, Mixed Data
 
 Writing Task 2 (Essays) & Vocabulary Themes (USE EXACTLY THESE):
+- Business
 - Environment
-- Business & Economy
 - Education
-- Crime & Law
-- Media & Advertising
-- Health & Diet
-- Technology
-- Space Exploration
+- Shopping
+- Transport & Mobility
+- Health & Society
+- Speaking Part 1 Topics (Everyday Life)
+- Speaking Part 2 Topics (Storytelling & Experiences)
+- Speaking Part 3 Topics (Abstract & Social Issues)
 """
 
 ROADMAP_ENRICHMENT_USER = """
@@ -259,6 +260,7 @@ async def enrich_roadmap(profile: StudentProfile, strategy: Strategy, roadmap: R
                     "fallback_title": getattr(t, 'fallback_title', None),
                     "fallback_desc": getattr(t, 'fallback_desc', None),
                     "steps": getattr(t, 'steps', None),
+                    "content_id": getattr(t, 'content_id', None),
                 } for t in w.tasks
             ]
         })
@@ -359,7 +361,7 @@ async def enrich_roadmap(profile: StudentProfile, strategy: Strategy, roadmap: R
                     "description": llm_t.get("description", fallback_desc),
                     "tip": llm_t.get("tip", "Focus on accuracy before speed."),
                     "reason": llm_t.get("reason", "Scheduled by your AI coach based on your skill profile."),
-                    "content_id": llm_t.get("content_id", None)
+                    "content_id": llm_t.get("content_id") or skel_t.get("content_id")
                 })
                 # Remove internal-only fields
                 merged_task.pop("fallback_title", None)

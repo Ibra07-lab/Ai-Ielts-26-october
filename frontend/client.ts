@@ -32,6 +32,7 @@ const BROWSER = typeof globalThis === "object" && ("window" in globalThis);
  * Client is an API client for the ai-ielts-app-ybri Encore application.
  */
 export default class Client {
+    public readonly admin: admin.ServiceClient
     public readonly agents: agents.ServiceClient
     public readonly frontend: frontend.ServiceClient
     public readonly ielts: ielts.ServiceClient
@@ -49,6 +50,7 @@ export default class Client {
         this.target = target
         this.options = options ?? {}
         const base = new BaseClient(this.target, this.options)
+        this.admin = new admin.ServiceClient(base)
         this.agents = new agents.ServiceClient(base)
         this.frontend = new frontend.ServiceClient(base)
         this.ielts = new ielts.ServiceClient(base)
@@ -87,6 +89,39 @@ export interface ClientOptions {
      * a function which returns a new object for each request.
      */
     auth?: auth.AuthParams | AuthDataGenerator
+}
+
+export namespace admin {
+    export interface AdminStatsResponse {
+        totalUsers: number
+        totalEssaysUsed: number
+        totalReadingMessages: number
+        totalApiCostUsd: number
+        currentMonthApiCostUsd: number
+        topExpensiveUsers: {
+            id: string
+            email: string
+            plan: string
+            cumulative_api_cost: number
+            current_month_cost: number
+            reading_credits_used: number
+            essays_used: number
+        }[]
+    }
+
+    export class ServiceClient {
+        private baseClient: BaseClient
+
+        constructor(baseClient: BaseClient) {
+            this.baseClient = baseClient
+            this.getAdminStats = this.getAdminStats.bind(this)
+        }
+
+        public async getAdminStats(): Promise<AdminStatsResponse> {
+            const resp = await this.baseClient.callTypedAPI("GET", `/admin/stats`)
+            return await resp.json() as AdminStatsResponse
+        }
+    }
 }
 
 export namespace agents {

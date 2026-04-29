@@ -3,6 +3,7 @@ uvicorn
 langchain-openai
 langchain
 langchain-core
+langchain-community
 pydantic
 pydantic-settings
 SQLAlchemy

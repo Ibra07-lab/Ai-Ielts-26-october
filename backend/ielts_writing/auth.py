@@ -53,3 +53,43 @@ async def require_auth(
     if not user_id:
         raise HTTPException(status_code=401, detail="Authentication required")
     return {"uid": user_id}
+
+WRITING_PLAN_LIMITS = {
+    "free": 2,
+    "basic": 15,
+    "pro": 40,
+    "pro_plus": 80,
+}
+
+async def check_writing_credits(
+    user_id: str | None = Depends(get_current_user),
+) -> dict:
+    """Check if user has enough writing credits based on their plan."""
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Authentication required")
+        
+    try:
+        supabase = get_supabase()
+        response = supabase.table("users").select("plan, essays_used").eq("id", user_id).execute()
+        
+        if not response.data:
+            raise HTTPException(status_code=404, detail="User profile not found")
+            
+        user_data = response.data[0]
+        plan = user_data.get("plan") or "free"
+        used = user_data.get("essays_used") or 0
+        limit = WRITING_PLAN_LIMITS.get(plan, 2)
+        
+        if used >= limit:
+            raise HTTPException(
+                status_code=429,
+                detail=f"Writing credit limit reached ({used}/{limit}). Please upgrade your plan to evaluate more essays."
+            )
+            
+        return {"uid": user_id, "plan": plan, "essays_used": used}
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error checking writing credits: {e}")
+        # Fail safe - allow request if DB check fails temporarily
+        return {"uid": user_id}

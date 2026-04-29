@@ -30,7 +30,8 @@ export default function Progress() {
 
   const deleteSessionMutation = useMutation({
     mutationFn: async (sessionId: number | string) => {
-      const response = await fetch(`/writing/history/session/${sessionId}`, {
+      const API_BASE = import.meta.env.VITE_FASTAPI_WRITING_URL || "";
+      const response = await fetch(`${API_BASE}/writing/history/session/${sessionId}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${session?.access_token || ""}`,
@@ -59,7 +60,8 @@ export default function Progress() {
     queryFn: async () => {
       if (!user) return null;
       try {
-        const response = await fetch(`/writing/history/${user.id}`, {
+        const API_BASE = import.meta.env.VITE_FASTAPI_WRITING_URL || "";
+        const response = await fetch(`${API_BASE}/writing/history/${user.id}`, {
           headers: {
             "Authorization": `Bearer ${session?.access_token || ""}`,
           },

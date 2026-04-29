@@ -11,6 +11,26 @@ export default function Subscription() {
 
   const plans = [
     {
+      id: "free",
+      name: "Free",
+      price: "$0",
+      period: "/month",
+      description: "Get a taste of AI-powered IELTS prep.",
+      features: [
+        "2 writing analyze",
+        "10 reading messages",
+        "2 video lessons",
+        "Access to all reading tests",
+        "Access to all listening tests"
+      ],
+      limitations: [
+        "No personalized roadmap",
+        "No priority AI evaluation"
+      ],
+      popular: false,
+      color: "slate"
+    },
+    {
       id: "basic",
       name: "Basic",
       price: "79,000",
@@ -71,28 +91,30 @@ export default function Subscription() {
     // Mock subscription process
     setTimeout(() => {
       toast({
-        title: "Subscription Successful!",
-        description: `You've successfully subscribed to the ${plans.find(p => p.id === planId)?.name} plan.`,
+        title: planId === "free" ? "Plan Selected!" : "Subscription Successful!",
+        description: `You've successfully selected the ${plans.find(p => p.id === planId)?.name} plan.`,
       });
       setSelectedPlan(null);
     }, 2000);
   };
 
   const getButtonColor = (plan: any) => {
-    if (plan.color === "sky") return "bg-sky-600 hover:bg-sky-700";
-    if (plan.color === "purple") return "bg-purple-600 hover:bg-purple-700";
-    return "bg-gray-600 hover:bg-gray-700";
+    if (plan.color === "sky") return "bg-sky-600 hover:bg-sky-700 text-white";
+    if (plan.color === "purple") return "bg-purple-600 hover:bg-purple-700 text-white";
+    if (plan.color === "slate") return "bg-slate-200 hover:bg-slate-300 text-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-white";
+    return "bg-gray-600 hover:bg-gray-700 text-white";
   };
 
   const getCardBorder = (plan: any) => {
     if (plan.popular) return "border-sky-500 shadow-sky-500/20 shadow-lg";
     if (plan.color === "purple") return "border-purple-200 dark:border-purple-800";
+    if (plan.color === "slate") return "border-slate-200 dark:border-slate-800 opacity-90 hover:opacity-100";
     return "border-gray-200 dark:border-gray-700";
   };
 
   return (
     <>
-      <div className="max-w-6xl mx-auto space-y-8 pb-32">
+      <div className="max-w-7xl xl:max-w-[1400px] mx-auto space-y-8 pb-32 px-4">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
             Choose Your IELTS Plan
@@ -106,11 +128,11 @@ export default function Subscription() {
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {plans.map((plan) => (
             <Card 
               key={plan.id} 
-              className={`relative transition-all duration-300 hover:scale-105 ${getCardBorder(plan)}`}
+              className={`relative transition-all duration-300 hover:scale-105 flex flex-col ${getCardBorder(plan)}`}
             >
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
@@ -123,15 +145,16 @@ export default function Subscription() {
 
               <CardHeader className="text-center pb-4">
                 <div className="flex justify-center mb-4">
-                  {plan.id === "basic" && <CreditCard className="h-12 w-12 text-gray-500" />}
-                  {plan.id === "pro" && <Crown className="h-12 w-12 text-sky-600" />}
-                  {plan.id === "pro_plus" && <Star className="h-12 w-12 text-purple-600" />}
+                  {plan.id === "free" && <Star className="h-10 w-10 text-slate-400" />}
+                  {plan.id === "basic" && <CreditCard className="h-10 w-10 text-gray-500" />}
+                  {plan.id === "pro" && <Crown className="h-10 w-10 text-sky-600" />}
+                  {plan.id === "pro_plus" && <Star className="h-10 w-10 text-purple-600" />}
                 </div>
                 
                 <CardTitle className="text-2xl font-bold">{plan.name}</CardTitle>
-                <CardDescription className="text-sm">{plan.description}</CardDescription>
+                <CardDescription className="text-sm h-10 flex items-center justify-center">{plan.description}</CardDescription>
                 
-                <div className="mt-4">
+                <div className="mt-4 flex items-baseline justify-center">
                   <span className="text-4xl font-bold text-gray-900 dark:text-white">
                     {plan.price}
                   </span>
@@ -141,9 +164,9 @@ export default function Subscription() {
                 </div>
               </CardHeader>
 
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-6 flex-1 flex flex-col">
                 {/* Features */}
-                <div className="space-y-3">
+                <div className="space-y-3 flex-1">
                   <h4 className="font-semibold text-gray-900 dark:text-white">Features included:</h4>
                   <ul className="space-y-2">
                     {plan.features.map((feature, index) => (
@@ -157,7 +180,7 @@ export default function Subscription() {
 
                 {/* Limitations */}
                 {plan.limitations.length > 0 && (
-                  <div className="space-y-3">
+                  <div className="space-y-3 mt-4">
                     <h4 className="font-semibold text-gray-900 dark:text-white">Limitations:</h4>
                     <ul className="space-y-2">
                       {plan.limitations.map((limitation, index) => (
@@ -171,21 +194,25 @@ export default function Subscription() {
                 )}
 
                 {/* Subscribe Button */}
-                <Button
-                  onClick={() => handleSubscribe(plan.id)}
-                  disabled={selectedPlan === plan.id}
-                  className={`w-full ${getButtonColor(plan)} text-white mt-4`}
-                >
-                  {selectedPlan === plan.id ? (
-                    "Processing..."
-                  ) : plan.id === "basic" ? (
-                    "Start Basic"
-                  ) : plan.id === "pro" ? (
-                    "Get Pro Now"
-                  ) : (
-                    "Get Pro+"
-                  )}
-                </Button>
+                <div className="mt-auto pt-6">
+                  <Button
+                    onClick={() => handleSubscribe(plan.id)}
+                    disabled={selectedPlan === plan.id}
+                    className={`w-full ${getButtonColor(plan)} mt-4`}
+                  >
+                    {selectedPlan === plan.id ? (
+                      "Processing..."
+                    ) : plan.id === "free" ? (
+                      "Get Started Free"
+                    ) : plan.id === "basic" ? (
+                      "Start Basic"
+                    ) : plan.id === "pro" ? (
+                      "Get Pro Now"
+                    ) : (
+                      "Get Pro+"
+                    )}
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           ))}

@@ -157,11 +157,10 @@ export default function TextHighlighter({
   const createHighlight = async (color: 'yellow' | 'blue' | 'green' | 'orange' = 'yellow') => {
     if (!popupMenu || !user) return;
 
-    // --- OPTIMISTIC UI FIX ---
-    // Generate a temporary negative ID so it doesn't collide with future DB IDs
+    // Generate a temporary negative ID since we are keeping it local
     const tempId = -Date.now();
     
-    const optimisticHighlight: Highlight = {
+    const newHighlight: Highlight = {
       id: tempId,
       highlightedText: popupMenu.selectedText,
       startPosition: popupMenu.startPosition,
@@ -170,77 +169,26 @@ export default function TextHighlighter({
       highlightColor: color,
     };
 
-    // Save previous state for rollback
-    const previousHighlights = [...currentHighlights];
-    
-    // Apply immediately to UI for instant feedback
-    const optimisticList = [...currentHighlights, optimisticHighlight];
-    setCurrentHighlights(optimisticList);
-    onHighlightsChange?.(optimisticList);
+    // Apply immediately to UI
+    const newList = [...currentHighlights, newHighlight];
+    setCurrentHighlights(newList);
+    onHighlightsChange?.(newList);
     setPopupMenu(null);
-
-    try {
-      // Send the real request in the background
-      const realHighlight = await backend.ielts.createHighlight({
-        userId: user.id,
-        passageTitle,
-        highlightedText: popupMenu.selectedText,
-        startPosition: popupMenu.startPosition,
-        endPosition: popupMenu.endPosition,
-        highlightType: popupMenu.highlightType,
-        highlightColor: color,
-      });
-
-      // Replace the placeholder shadow highlight with the real one silently
-      setCurrentHighlights(prev => {
-        const substituted = prev.map(h => (h.id === tempId ? realHighlight : h));
-        onHighlightsChange?.(substituted);
-        return substituted;
-      });
-
-    } catch (error) {
-      console.error("Failed to create highlight:", error);
-      toast({
-        title: "Error",
-        description: "Failed to create highlight. Reverting change.",
-        variant: "destructive",
-      });
-      // Rollback to previous state if the API fails
-      setCurrentHighlights(previousHighlights);
-      onHighlightsChange?.(previousHighlights);
-    }
   };
 
   const deleteHighlight = async (highlightId: number) => {
     if (!user) return;
 
-    // --- OPTIMISTIC UI FIX ---
-    const previousHighlights = [...currentHighlights];
     const newHighlights = currentHighlights.filter(h => h.id !== highlightId);
     
     // Remove instantly from UI
     setCurrentHighlights(newHighlights);
     onHighlightsChange?.(newHighlights);
 
-    try {
-      // Send real delete request in background
-      await backend.ielts.deleteHighlight(user.id, highlightId);
-
-      toast({
-        title: "Highlight Removed",
-        description: "The highlight has been removed.",
-      });
-    } catch (error) {
-      console.error("Failed to delete highlight:", error);
-      toast({
-        title: "Error",
-        description: "Failed to remove highlight. Restoring it.",
-        variant: "destructive",
-      });
-      // Rollback on failure
-      setCurrentHighlights(previousHighlights);
-      onHighlightsChange?.(previousHighlights);
-    }
+    toast({
+      title: "Highlight Removed",
+      description: "The highlight has been removed.",
+    });
   };
 
 

@@ -18,7 +18,8 @@ export default function WritingFeedbackHistory() {
         queryFn: async () => {
             if (!id) throw new Error('Missing session ID');
 
-            const response = await fetch(`/writing/history/session/${id}`, {
+            const API_BASE = import.meta.env.VITE_FASTAPI_WRITING_URL || "";
+            const response = await fetch(`${API_BASE}/writing/history/session/${id}`, {
                 headers: {
                     'Authorization': `Bearer ${session?.access_token || ''}`
                 }

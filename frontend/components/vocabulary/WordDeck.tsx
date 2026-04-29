@@ -23,10 +23,15 @@ export default function WordDeck({ word, onKnow, onDontKnow, onBack, remainingCo
     const x = useMotionValue(0);
     const opacityKnow = useTransform(x, [50, 150], [0, 1]);
     const opacityDontKnow = useTransform(x, [-50, -150], [0, 1]);
+    const [isEntering, setIsEntering] = useState(true);
 
     // Reset flip state when word changes
     useEffect(() => {
         setIsFlipped(false);
+        setExitDirection(null);
+        setIsEntering(true);
+        const timer = setTimeout(() => setIsEntering(false), 600);
+        return () => clearTimeout(timer);
     }, [word.id]);
 
     const handleFlip = () => setIsFlipped(!isFlipped);
@@ -186,22 +191,26 @@ export default function WordDeck({ word, onKnow, onDontKnow, onBack, remainingCo
                             className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing"
                         >
                         {/* Swipe Feedback Overlays */}
-                        <motion.div
-                            className="absolute inset-0 z-50 pointer-events-none rounded-3xl flex items-center justify-center border-4 border-emerald-500 bg-emerald-500/20"
-                            style={{ opacity: opacityKnow }}
-                        >
-                            <div className="bg-emerald-500 text-white px-6 py-3 rounded-full font-bold text-2xl shadow-lg transform rotate-12">
-                                I KNOW
-                            </div>
-                        </motion.div>
-                        <motion.div
-                            className="absolute inset-0 z-50 pointer-events-none rounded-3xl flex items-center justify-center border-4 border-rose-500 bg-rose-500/20"
-                            style={{ opacity: opacityDontKnow }}
-                        >
-                            <div className="bg-rose-500 text-white px-6 py-3 rounded-full font-bold text-2xl shadow-lg transform -rotate-12">
-                                NOT YET
-                            </div>
-                        </motion.div>
+                        {!isEntering && (
+                            <>
+                                <motion.div
+                                    className="absolute inset-0 z-50 pointer-events-none rounded-3xl flex items-center justify-center border-4 border-emerald-500 bg-emerald-500/20"
+                                    style={{ opacity: opacityKnow }}
+                                >
+                                    <div className="bg-emerald-500 text-white px-6 py-3 rounded-full font-bold text-2xl shadow-lg transform rotate-12">
+                                        I KNOW
+                                    </div>
+                                </motion.div>
+                                <motion.div
+                                    className="absolute inset-0 z-50 pointer-events-none rounded-3xl flex items-center justify-center border-4 border-rose-500 bg-rose-500/20"
+                                    style={{ opacity: opacityDontKnow }}
+                                >
+                                    <div className="bg-rose-500 text-white px-6 py-3 rounded-full font-bold text-2xl shadow-lg transform -rotate-12">
+                                        NOT YET
+                                    </div>
+                                </motion.div>
+                            </>
+                        )}
                         
                         {/* Springy Flip Container */}
                         <motion.div

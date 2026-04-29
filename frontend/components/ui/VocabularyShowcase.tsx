@@ -9,9 +9,9 @@ const topics = [
 ];
 
 const vocabulary = [
-  { word: 'Ubiquitous', level: 'C1', definition: 'Present, appearing, or found everywhere.' },
-  { word: 'Mitigate', level: 'C1', definition: 'Make less severe, serious, or painful.' },
-  { word: 'Pedagogy', level: 'C2', definition: 'The method and practice of teaching.' },
+  { word: 'Common', level: 'B1', definition: 'Occurring, found, or done often; prevalent.' },
+  { word: 'Crucial', level: 'B2', definition: 'Extremely important or necessary.' },
+  { word: 'Widespread', level: 'B2', definition: 'Found or distributed over a large area or number of people.' },
 ];
 
 const exercises = [

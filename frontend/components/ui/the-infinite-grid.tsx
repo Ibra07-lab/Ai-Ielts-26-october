@@ -61,7 +61,7 @@ export const GridBackground = ({ children }: { children?: React.ReactNode }) => 
     <div
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="relative w-full min-h-screen overflow-hidden bg-slate-950 text-white"
+      className="relative w-full min-h-screen overflow-clip bg-slate-950 text-white"
     >
       <div className="absolute inset-0 z-0 opacity-[0.03]">
         <GridPattern offsetX={gridOffsetX} offsetY={gridOffsetY} />

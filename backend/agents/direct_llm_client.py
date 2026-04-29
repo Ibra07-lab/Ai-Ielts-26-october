@@ -5,6 +5,19 @@ import time
 import asyncio
 import httpx
 from typing import List, Dict, Any, Optional
+import contextvars
+
+# Context variable to track total cost per request
+request_cost = contextvars.ContextVar('request_cost', default=0.0)
+
+def add_request_cost(cost: float):
+    current = request_cost.get()
+    request_cost.set(current + cost)
+
+def get_and_reset_request_cost() -> float:
+    current = request_cost.get()
+    request_cost.set(0.0)
+    return current
 
 # Retry configuration
 MAX_RETRIES = 3
@@ -172,6 +185,7 @@ class DirectLLMClient:
                     cache_write_cost = (cache_creation_tokens / 1_000_000 * CLAUDE_CACHE_WRITE_PRICE)
                     output_cost = (output_tokens / 1_000_000 * CLAUDE_SONNET_OUTPUT_PRICE)
                     total_cost = input_cost + cached_cost + cache_write_cost + output_cost
+                    add_request_cost(total_cost)
                     
                     # Calculate savings from caching
                     cost_without_cache = (input_tokens / 1_000_000 * CLAUDE_SONNET_INPUT_PRICE) + output_cost
@@ -239,6 +253,7 @@ class DirectLLMClient:
             input_tokens = usage.get("prompt_tokens", 0)
             output_tokens = usage.get("completion_tokens", 0)
             cost = (input_tokens / 1_000_000 * GPT4O_INPUT_PRICE) + (output_tokens / 1_000_000 * GPT4O_OUTPUT_PRICE)
+            add_request_cost(cost)
             logger.info(f"[TOKEN_USAGE] OpenAI | Model: {model} | Input: {input_tokens} | Output: {output_tokens} | Cost: ${cost:.4f}")
             
             return response_json["choices"][0]["message"]["content"]
@@ -272,9 +287,23 @@ class DirectLLMClient:
         }
 
         with httpx.Client(timeout=timeout) as client:
-            response = client.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data)
+            response = client.post(
+                "https://openrouter.ai/api/v1/chat/completions",
+                headers=headers,
+                json=data,
+            )
             response.raise_for_status()
-            return response.json()["choices"][0]["message"]["content"]
+            response_json = response.json()
+            
+            # Log token usage and cost
+            usage = response_json.get("usage", {})
+            input_tokens = usage.get("prompt_tokens", 0)
+            output_tokens = usage.get("completion_tokens", 0)
+            cost = (input_tokens / 1_000_000 * GPT41_INPUT_PRICE) + (output_tokens / 1_000_000 * GPT41_OUTPUT_PRICE)
+            add_request_cost(cost)
+            logger.info(f"[TOKEN_USAGE] OpenRouter | Model: {model} | Input: {input_tokens} | Output: {output_tokens} | Cost: ${cost:.4f}")
+            
+            return response_json["choices"][0]["message"]["content"]
 
     # ============== ASYNC METHODS FOR PARALLEL EXECUTION ==============
     
@@ -384,6 +413,7 @@ class DirectLLMClient:
                     cache_write_cost = (cache_creation_tokens / 1_000_000 * CLAUDE_CACHE_WRITE_PRICE)
                     output_cost = (output_tokens / 1_000_000 * CLAUDE_SONNET_OUTPUT_PRICE)
                     total_cost = input_cost + cached_cost + cache_write_cost + output_cost
+                    add_request_cost(total_cost)
                     
                     # Calculate savings from caching
                     cost_without_cache = (input_tokens / 1_000_000 * CLAUDE_SONNET_INPUT_PRICE) + output_cost
@@ -451,6 +481,7 @@ class DirectLLMClient:
             input_tokens = usage.get("prompt_tokens", 0)
             output_tokens = usage.get("completion_tokens", 0)
             cost = (input_tokens / 1_000_000 * GPT4O_INPUT_PRICE) + (output_tokens / 1_000_000 * GPT4O_OUTPUT_PRICE)
+            add_request_cost(cost)
             logger.info(f"[TOKEN_USAGE] OpenAI Async | Model: {model} | Input: {input_tokens} | Output: {output_tokens} | Cost: ${cost:.4f}")
             
             return response_json["choices"][0]["message"]["content"]
@@ -504,6 +535,7 @@ class DirectLLMClient:
             input_tokens = usage.get("prompt_tokens", 0)
             output_tokens = usage.get("completion_tokens", 0)
             cost = (input_tokens / 1_000_000 * GPT41_INPUT_PRICE) + (output_tokens / 1_000_000 * GPT41_OUTPUT_PRICE)
+            add_request_cost(cost)
             logger.info(f"[TOKEN_USAGE] OpenRouter Async | Model: {model} | Input: {input_tokens} | Output: {output_tokens} | Cost: ${cost:.4f}")
             
             return response_json["choices"][0]["message"]["content"]

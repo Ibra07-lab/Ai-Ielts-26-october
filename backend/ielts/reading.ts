@@ -25,7 +25,7 @@ async function checkAndVerifyCredits(userId: string) {
   const limit = getReadingLimit(userData.plan);
   const used = userData.reading_credits_used ?? 0;
 
-  if (limit !== -1 && used >= limit) {
+  if (used >= limit) {
     throw APIError.resourceExhausted(
       `Reading credit limit reached (${used}/${limit}). Please upgrade your plan to continue chatting with the reading agent.`
     );
@@ -83,6 +83,15 @@ export interface DeeperFeedbackResponse {
     steps: string[];
   };
   personalizedAdvice: string;
+}
+
+export interface ProxyFeedbackResponse {
+  is_correct: boolean;
+  feedback: string;
+  reasoning: string;
+  strategy_tip: string;
+  passage_reference: string;
+  confidence?: string;
 }
 
 // Struggle Module Interfaces
@@ -173,7 +182,7 @@ export const proxyReadingFeedback = api<
     correct_answer: string;
     student_answer: string;
   },
-  DeeperFeedbackResponse
+  ProxyFeedbackResponse
 >(
   { expose: true, method: "POST", path: "/reading/feedback", auth: true },
   async (payload) => {
@@ -204,7 +213,7 @@ export const proxyReadingFeedback = api<
       throw APIError.internal("The Reading Analyst is temporarily unavailable.");
     }
 
-    const data = (await response.json()) as DeeperFeedbackResponse;
+    const data = (await response.json()) as ProxyFeedbackResponse;
 
     // 3. Decrement credit
     await supabaseAdmin.rpc("increment_reading_credits", { user_id: payload.userId });
@@ -242,8 +251,17 @@ export const proxyReadingChat = api<ProxyChatRequest, ProxyChatMessage>(
     }
 
     const aiMessage = (await response.json()) as ProxyChatMessage;
+    const costHeader = response.headers.get("X-API-Cost");
+    
+    // 3. Update token economics
+    if (costHeader) {
+      const costUsd = parseFloat(costHeader);
+      if (!isNaN(costUsd) && costUsd > 0) {
+        await supabaseAdmin.rpc("add_api_cost", { user_id: userId, cost_usd: costUsd });
+      }
+    }
 
-    // 3. Decrement credit (increment used)
+    // 4. Decrement credit (increment used)
     await supabaseAdmin.rpc("increment_reading_credits", { user_id: userId });
 
     return aiMessage;
@@ -287,8 +305,17 @@ export const proxyTrainingStart = api<ProxyTrainingStartRequest, ProxyTrainingSt
     }
 
     const data = (await response.json()) as ProxyTrainingStartResponse;
+    const costHeader = response.headers.get("X-API-Cost");
+    
+    // 3. Update token economics
+    if (costHeader) {
+      const costUsd = parseFloat(costHeader);
+      if (!isNaN(costUsd) && costUsd > 0) {
+        await supabaseAdmin.rpc("add_api_cost", { user_id: payload.userId, cost_usd: costUsd });
+      }
+    }
 
-    // 3. Decrement credit
+    // 4. Decrement credit
     await supabaseAdmin.rpc("increment_reading_credits", { user_id: payload.userId });
 
     return data;

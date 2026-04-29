@@ -241,7 +241,8 @@ export default function Roadmap() {
             authHeaders['Authorization'] = `Bearer ${session.access_token}`;
           }
 
-          const res = await fetch(`/api/onboarding/${user.id}`, {
+          const API_BASE = import.meta.env.VITE_FASTAPI_WRITING_URL || "";
+          const res = await fetch(`${API_BASE}/api/onboarding/${user.id}`, {
             headers: authHeaders
           });
 
@@ -289,7 +290,8 @@ export default function Roadmap() {
         authHeaders['Authorization'] = `Bearer ${session.access_token}`;
       }
 
-      const res = await fetch('/api/onboarding/generate', {
+      const API_BASE = import.meta.env.VITE_FASTAPI_WRITING_URL || "";
+      const res = await fetch(`${API_BASE}/api/onboarding/generate`, {
         method: 'POST',
         headers: authHeaders,
         body: JSON.stringify(payload)
@@ -618,17 +620,17 @@ export default function Roadmap() {
               </div>
 
               {task.status === 'done' && (
-                <button onClick={() => navigate(getTaskRoute(task))} className="mt-4 text-sm font-bold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-600 shadow-sm px-4 py-2 rounded-lg transition-colors flex items-center gap-1.5 w-max">
+                <button onClick={() => navigate(getTaskRoute(task), { state: { roadmapTask: task } })} className="mt-4 text-sm font-bold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-600 shadow-sm px-4 py-2 rounded-lg transition-colors flex items-center gap-1.5 w-max">
                   Review <ArrowRight className="w-4 h-4 text-slate-400 dark:text-slate-500" />
                 </button>
               )}
               {task.status === 'locked' && (
-                <button onClick={() => navigate(getTaskRoute(task))} className="mt-4 text-sm font-bold text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700/50 px-4 py-2 rounded-lg transition-colors flex items-center gap-1.5 w-max">
+                <button onClick={() => navigate(getTaskRoute(task), { state: { roadmapTask: task } })} className="mt-4 text-sm font-bold text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700/50 px-4 py-2 rounded-lg transition-colors flex items-center gap-1.5 w-max">
                   Preview <ArrowRight className="w-4 h-4 text-slate-400 dark:text-slate-500" />
                 </button>
               )}
               {task.status === 'today' && (
-                <button onClick={() => navigate(getTaskRoute(task))} className="mt-4 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-sm px-5 py-2 rounded-lg transition-colors flex items-center gap-1.5 w-max">
+                <button onClick={() => navigate(getTaskRoute(task), { state: { roadmapTask: task } })} className="mt-4 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-sm px-5 py-2 rounded-lg transition-colors flex items-center gap-1.5 w-max">
                   Start Task <ArrowRight className="w-4 h-4" />
                 </button>
               )}

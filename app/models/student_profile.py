@@ -236,6 +236,10 @@ class ConversationMemory(BaseModel):
     suggested_practice_focus: Optional[str] = None
     suggested_module_id: Optional[str] = None
     
+    # Difficulty tracking (adaptive logic)
+    current_difficulty: str = "intermediate"  # beginner, intermediate, advanced
+    difficulty_points: int = 0  # Internal points to track when to scale up/down
+    
     # Training session state (multi-phase skill training)
     training_mode: bool = False  # Is this a training session?
     training_system_prompt: Optional[str] = None  # Full combined prompt (persisted across turns)

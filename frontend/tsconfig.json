@@ -39,8 +39,7 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "**/*.d.ts",
-    "../backend/ielts/*.ts"
+    "**/*.d.ts"
   ],
   "exclude": [
     "node_modules",

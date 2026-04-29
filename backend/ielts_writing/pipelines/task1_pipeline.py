@@ -23,7 +23,8 @@ from ..agents.coach.task1_coach import Task1Coach
 logger = logging.getLogger(__name__)
 
 # Thread pool for running sync code in async context
-executor = ThreadPoolExecutor(max_workers=4)
+# 8 workers allows multiple users' pipelines to run concurrently
+executor = ThreadPoolExecutor(max_workers=8)
 
 
 class Task1Pipeline:
@@ -43,9 +44,9 @@ class Task1Pipeline:
     
     # Timeout configuration
     EXAMINER_TIMEOUT = 30.0      # 30s for examiner
-    EXPLAINER_TIMEOUT = 90.0     # 90s for explainer
-    COACH_TIMEOUT = 60.0         # 60s for coach
-    TOTAL_TIMEOUT = 240.0        # Safety net for entire pipeline
+    EXPLAINER_TIMEOUT = 180.0    # 180s for explainer (OpenRouter can take 90-120s for long essays)
+    COACH_TIMEOUT = 120.0        # 120s for coach (must match httpx client timeout)
+    TOTAL_TIMEOUT = 360.0        # Safety net for entire pipeline
     
     def __init__(self, model: str = None):
         self.examiner = Task1Examiner(model=model)

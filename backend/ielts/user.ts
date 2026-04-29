@@ -161,7 +161,7 @@ export const getEssayLimits = api<{ id: string }, UsageLimits>(
       activeAnalysis: data.active_analysis,
       readingCreditsUsed: readingUsed,
       readingCreditsLimit: readingLimit,
-      readingCreditsRemaining: readingLimit === -1 ? -1 : Math.max(0, readingLimit - readingUsed),
+      readingCreditsRemaining: Math.max(0, readingLimit - readingUsed),
     };
   }
 );

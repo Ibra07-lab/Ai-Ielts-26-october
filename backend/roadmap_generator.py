@@ -178,6 +178,49 @@ CHART_TYPE_ROTATION = [
     "mixed_charts",
 ]
 
+# Hardcoded test IDs mapped by exact type to match frontend existing tests
+TASK1_TEST_IDS = {
+    "bar_chart": ["3", "5", "14", "15", "16", "24"],
+    "line_graph": ["1", "7", "11", "12"],
+    "pie_chart": ["17", "18", "19"],
+    "table": ["10", "20", "21", "41"],
+    "map": ["42"],
+    "process_diagram": ["22", "23"],
+    "mixed_charts": ["9", "13"]
+}
+
+TASK2_TEST_IDS = {
+    "agree_disagree": ["2", "4", "6", "8"],
+    "discuss_both_views": ["25", "26", "27", "28"],
+    "advantages_disadvantages": ["29", "30", "31", "32"],
+    "problem_solution": ["33", "34", "35", "36"],
+    "two_part_question": ["37", "38", "39", "40"]
+}
+
+TEST_TOPICS = {
+    "1": "Internet Access in Countries", "3": "Teenagers Daily Activities",
+    "5": "Water Consumption in Cities", "7": "Transport Commuters",
+    "9": "Energy Consumption and Bills", "10": "Crop Yields and Farming Methods",
+    "11": "Cinema Attendance by Age", "12": "Ocean Temperature Anomalies",
+    "13": "Screen Time: Phone vs Computer", "14": "Carbon Emissions by Sector",
+    "15": "University Applications", "16": "Municipal Waste Composition",
+    "17": "National Budget Allocation", "18": "Tourist Spending Patterns",
+    "19": "Marine Plastic Pollution", "20": "Healthcare Metrics",
+    "21": "Museum Statistics and Satisfaction", "22": "Rainwater Harvesting System",
+    "23": "Coffee Production Process", "24": "Access to Technology",
+    "41": "Secondary School Types", "42": "Town Development Map",
+    "2": "Education: Homework", "4": "Technology: AI & Jobs",
+    "6": "Environment: Carbon Footprint", "8": "Health: Sports Facilities",
+    "25": "Urbanization: Traffic", "26": "Globalization: Local Economies",
+    "27": "Education: Foreign Languages", "28": "Crime: Purpose of Prison",
+    "29": "Technology: Social Media", "30": "Work: Remote Work",
+    "31": "Education: Online Courses", "32": "Tourism: Historic Sites",
+    "33": "Environment: Air Pollution", "34": "Health: Obesity Rates",
+    "35": "Urbanization: Housing", "36": "Education: Youth Employment",
+    "37": "Technology: Online Shopping", "38": "Family: Working Parents",
+    "39": "Environment: Water Shortages", "40": "Culture: Traditional Festivals"
+}
+
 # Listening section types
 LISTENING_SECTIONS = [
     {"section": 1, "type": "conversation", "context": "everyday"},
@@ -272,6 +315,7 @@ def distribute_tasks_across_days(
     target_sections: dict = None,
     weeks_available: int = 12,
     strategy_type: str = "balanced",
+    rotations: dict = None,
 ) -> List[Task]:
     """
     Takes weekly allocation percentages and produces
@@ -299,6 +343,7 @@ def distribute_tasks_across_days(
         target_sections=target_sections or {},
         weeks_available=weeks_available,
         strategy_type=strategy_type,
+        rotations=rotations,
     )
     
     # Distribute tasks across days
@@ -365,7 +410,7 @@ def distribute_tasks_across_days(
             tip="",             # AI fills this
             duration_minutes=spec["duration"],
             difficulty_band=spec["difficulty"],
-            content_id=None,    # Content DB fills this
+            content_id=spec.get("content_id"),    # Set by specs, or content DB fills this later
             status="pending",
             chart_type=spec.get("chart_type"),
             essay_type=spec.get("essay_type"),
@@ -614,6 +659,7 @@ def _get_task_specs(
     target_sections: dict = None,
     weeks_available: int = 12,
     strategy_type: str = "balanced",
+    rotations: dict = None,
 ) -> List[dict]:
     """
     Convert allocated minutes per skill into concrete task specs.
@@ -625,10 +671,11 @@ def _get_task_specs(
     specs: List[dict] = []
     
     # Track rotation indices (in production, persist these per student)
-    rotations = {
-        "reading_q": 0, "essay": 0, "chart": 0, 
-        "listening": 0, "vocab": 0
-    }
+    if rotations is None:
+        rotations = {
+            "reading_q": 0, "essay": 0, "chart": 0, 
+            "listening": 0, "vocab": 0
+        }
     
     for skill_key, minutes in skill_minutes.items():
         if minutes <= 0:
@@ -729,16 +776,24 @@ def _get_task_specs(
                 e_idx = (rotations["essay"] + i) % len(
                     ESSAY_TYPE_ROTATION
                 )
-                essay_label = ESSAY_TYPE_ROTATION[e_idx].replace("_", " ").title()
+                essay_type = ESSAY_TYPE_ROTATION[e_idx]
+                essay_label = essay_type.replace("_", " ").title()
                 duration_val = _round_5(max(25, min(50, per_task)))
+                
+                type_ids = TASK2_TEST_IDS[essay_type]
+                t2_id_idx = (rotations["essay"] + i) % len(type_ids)
+                content_id_val = type_ids[t2_id_idx]
+                topic_str = TEST_TOPICS.get(content_id_val, essay_label)
+                
                 specs.append({
                     "skill": "writing",
                     "task_type": "writing_task2",
                     "duration": duration_val,
                     "difficulty": 6.0,
-                    "essay_type": ESSAY_TYPE_ROTATION[e_idx],
-                    "fallback_title": f"Writing Task 2: {essay_label} Essay",
-                    "fallback_desc": f"Write a full Task 2 essay ({essay_label}). {duration_val} min timed.",
+                    "essay_type": essay_type,
+                    "fallback_title": f"Writing Task 2: {essay_label} ({topic_str})",
+                    "fallback_desc": f"Write a full Task 2 essay on: {topic_str}. {duration_val} min timed.",
+                    "content_id": content_id_val,
                 })
             rotations["essay"] += num_tasks
             
@@ -751,16 +806,24 @@ def _get_task_specs(
                 c_idx = (rotations["chart"] + i) % len(
                     CHART_TYPE_ROTATION
                 )
-                chart_label = CHART_TYPE_ROTATION[c_idx].replace("_", " ").title()
+                chart_type = CHART_TYPE_ROTATION[c_idx]
+                chart_label = chart_type.replace("_", " ").title()
                 duration_val = _round_5(max(15, min(30, per_task)))
+                
+                type_ids = TASK1_TEST_IDS[chart_type]
+                t1_id_idx = (rotations["chart"] + i) % len(type_ids)
+                content_id_val = type_ids[t1_id_idx]
+                topic_str = TEST_TOPICS.get(content_id_val, chart_label)
+                
                 specs.append({
                     "skill": "writing",
                     "task_type": "writing_task1",
                     "duration": duration_val,
                     "difficulty": 6.0,
-                    "chart_type": CHART_TYPE_ROTATION[c_idx],
-                    "fallback_title": f"Writing Task 1: {chart_label} Report",
-                    "fallback_desc": f"Write a Task 1 report describing a {chart_label}. {duration_val} min.",
+                    "chart_type": chart_type,
+                    "fallback_title": f"Writing Task 1: {chart_label} ({topic_str})",
+                    "fallback_desc": f"Write a Task 1 report describing: {topic_str}. {duration_val} min.",
+                    "content_id": content_id_val,
                 })
             rotations["chart"] += num_tasks
             
@@ -876,6 +939,11 @@ def build_roadmap(profile: StudentProfile,
     
     weeks: List[WeekPlan] = []
     
+    rotations = {
+        "reading_q": 0, "essay": 0, "chart": 0, 
+        "listening": 0, "vocab": 0
+    }
+    
     for week_num in range(1, strategy.total_weeks + 1):
         
         # Determine which phase this week belongs to
@@ -925,6 +993,7 @@ def build_roadmap(profile: StudentProfile,
             target_sections=strategy.target_sections,
             weeks_available=strategy.total_weeks - week_num + 1,
             strategy_type=strategy.strategy_type,
+            rotations=rotations,
         )
         
         # Update task difficulties based on skill

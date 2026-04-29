@@ -69,8 +69,17 @@ Write-Host "`n🚀 Starting backend on port 8002..." -ForegroundColor Cyan
 Write-Host "=" * 60
 Write-Host ""
 
-# Start with reload enabled for development
-python -m uvicorn main:app --reload --port 8002
+# Check for --dev flag
+$isDev = $args -contains "--dev" -or $args -contains "-Dev"
+
+if ($isDev) {
+    Write-Host "  Mode: DEVELOPMENT (hot reload, 1 worker)" -ForegroundColor Yellow
+    python -m uvicorn main:app --reload --port 8002
+} else {
+    Write-Host "  Mode: PRODUCTION (4 workers, no reload)" -ForegroundColor Green
+    Write-Host "  Handles ~20 concurrent AI evaluations" -ForegroundColor Green
+    python -m uvicorn main:app --workers 4 --port 8002 --host 0.0.0.0
+}
 
 # This line will only execute if uvicorn exits
 Write-Host "`n⚠️  Backend stopped" -ForegroundColor Yellow

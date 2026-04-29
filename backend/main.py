@@ -124,8 +124,12 @@ from ielts_writing.routes.history import router as history_router
 from ielts_writing.routes.podcast_summary import router as podcast_summary_router
 from ielts_writing.routes.onboarding import router as onboarding_router
 
-# Configure CORS - restrict to known origins
-ALLOWED_ORIGINS = os.getenv("CORS_ORIGINS", "http://localhost:5173,http://localhost:4000,http://127.0.0.1:5173").split(",")
+# Configure CORS - allow production domain + local dev
+# Set CORS_ORIGINS env var to add your deployed domain: "https://yourdomain.com,http://localhost:5173"
+ALLOWED_ORIGINS = os.getenv(
+    "CORS_ORIGINS",
+    "http://localhost:5173,http://localhost:4000,http://127.0.0.1:5173"
+).split(",")
 
 app.add_middleware(
     CORSMiddleware,
@@ -242,7 +246,7 @@ async def health_check():
         500: {"model": ErrorResponse, "description": "Internal server error"},
     }
 )
-@limiter.limit("10/minute")
+@limiter.limit("30/minute")
 async def generate_feedback(request: Request, feedback_input: FeedbackInput):
     """
     Generate intelligent feedback for an IELTS Reading answer.

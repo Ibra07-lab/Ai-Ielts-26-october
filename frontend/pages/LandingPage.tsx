@@ -19,7 +19,8 @@ import {
   Headphones,
   X,
   Calendar,
-  RefreshCw
+  RefreshCw,
+  Calculator
 } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/button";
@@ -29,6 +30,8 @@ import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { GridBackground } from "@/components/ui/the-infinite-grid";
 import { DashboardMockup } from "@/components/ui/DashboardMockup";
 import { VocabularyShowcase } from "@/components/ui/VocabularyShowcase";
+import { LandingCalculator } from "@/components/ui/LandingCalculator";
+import { AnimatedNavigationTabs } from "@/components/ui/animated-navigation-tabs";
 
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
@@ -80,7 +83,7 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-slate-950 overflow-hidden font-sans selection:bg-blue-100">
+    <div className="min-h-screen bg-white text-slate-950 overflow-clip font-sans selection:bg-blue-100">
 
       {/* --- NAVBAR --- */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-[#06080e]/90 backdrop-blur-lg border-b border-white/5' : 'bg-transparent'}`}>
@@ -94,19 +97,15 @@ export default function LandingPage() {
             </div>
 
             {/* Desktop Navigation Links */}
-            <div className="hidden lg:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
-              <a href="#strategy" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
-                How it Works
-              </a>
-              <a href="#features" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
-                Features
-              </a>
-              <a href="#testimonials" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
-                Testimonials
-              </a>
-              <a href="#pricing" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
-                Pricing
-              </a>
+            <div className="hidden lg:flex items-center absolute left-1/2 -translate-x-1/2">
+              <AnimatedNavigationTabs
+                items={[
+                  { id: 'strategy', title: 'How it Works', href: '#strategy' },
+                  { id: 'features', title: 'Features', href: '#features' },
+                  { id: 'testimonials', title: 'Testimonials', href: '#testimonials' },
+                  { id: 'pricing', title: 'Pricing', href: '#pricing' }
+                ]}
+              />
             </div>
 
             <div className="flex items-center gap-4">
@@ -280,14 +279,14 @@ export default function LandingPage() {
           </section>
 
           {/* --- 4. THE STRATEGY ENGINE --- */}
-          <section id="strategy" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative overflow-hidden">
+          <section id="strategy" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative overflow-clip scroll-mt-24">
             <div className="absolute left-1/2 top-0 bottom-0 w-px bg-slate-800 -translate-x-1/2 hidden md:block z-0"></div>
 
 
 
             {/* Desktop Node Layout */}
             <div className="hidden lg:block relative w-full max-w-5xl mx-auto h-[600px] mt-16 z-10 font-sans">
-              
+
               {/* SVG Connections */}
               <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
                 <defs>
@@ -297,7 +296,7 @@ export default function LandingPage() {
                     <stop offset="100%" stopColor="#10b981" stopOpacity="0.1" />
                   </linearGradient>
                 </defs>
-                
+
                 {/* SVG Paths for Curved Connections */}
                 <path d="M 220 200 C 400 200, 350 300, 500 300" fill="none" stroke="url(#lineGrad)" strokeWidth="3" />
                 <path d="M 220 400 C 400 400, 350 300, 500 300" fill="none" stroke="url(#lineGrad)" strokeWidth="3" />
@@ -320,7 +319,7 @@ export default function LandingPage() {
               </svg>
 
               {/* Center Node (The Strategy Engine) */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
@@ -332,12 +331,12 @@ export default function LandingPage() {
                   <BrainCircuit className="w-20 h-20 text-white z-10 drop-shadow-lg transition-transform duration-300" />
                 </div>
                 <div className="mt-6 text-center">
-                  <h3 className="text-2xl font-black text-white leading-tight tracking-tight">The Strategy<br/>Engine</h3>
+                  <h3 className="text-2xl font-black text-white leading-tight tracking-tight">The Strategy<br />Engine</h3>
                 </div>
               </motion.div>
 
               {/* Left Top Node (Diagnostic) */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -354,7 +353,7 @@ export default function LandingPage() {
               </motion.div>
 
               {/* Left Bottom Node (Asymmetric Scoring) */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -371,7 +370,7 @@ export default function LandingPage() {
               </motion.div>
 
               {/* Right Top Node (Living Roadmap) */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -388,7 +387,7 @@ export default function LandingPage() {
               </motion.div>
 
               {/* Right Bottom Node (Instant Feedback) */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -455,6 +454,30 @@ export default function LandingPage() {
             </div>
           </section>
 
+          {/* --- 4.5. INTERACTIVE CALCULATOR --- */}
+          <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative overflow-hidden">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={staggerContainer}
+              className="flex flex-col items-center gap-12 text-center"
+            >
+              <div className="space-y-6 max-w-3xl">
+                <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                  <Calculator className="w-4 h-4 text-blue-400" />
+                  <span className="text-xs font-bold text-blue-400 uppercase tracking-wider">Asymmetric Scoring</span>
+                </motion.div>
+                <motion.h2 variants={fadeInUp} className="text-3xl md:text-5xl font-black text-white leading-tight mb-4">
+                  Build the ideal strategy for your target score.
+                </motion.h2>
+              </div>
+              <motion.div variants={fadeInUp} className="w-full">
+                <LandingCalculator />
+              </motion.div>
+            </motion.div>
+          </section>
+
           {/* --- 5. PRODUCT DEMO SECTION --- */}
           <section className="py-24 px-4 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
@@ -477,7 +500,7 @@ export default function LandingPage() {
           </section>
 
           {/* --- 6. FEATURE SHOWCASE (Bento Grid) --- */}
-          <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto overflow-hidden">
+          <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto overflow-clip scroll-mt-24">
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -898,7 +921,7 @@ export default function LandingPage() {
           </section>
 
           {/* --- 7. TRUST & TESTIMONIALS --- */}
-          <section className="py-20 px-4">
+          <section id="testimonials" className="py-20 px-4 scroll-mt-24">
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -983,7 +1006,7 @@ export default function LandingPage() {
           </section>
 
           {/* --- 8. PRICING SECTION --- */}
-          <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto relative">
+          <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl xl:max-w-[1400px] mx-auto relative scroll-mt-24">
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -1002,8 +1025,33 @@ export default function LandingPage() {
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               variants={staggerContainer}
-              className="grid md:grid-cols-3 gap-4 items-stretch"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch"
             >
+              {/* Free Tier */}
+              <motion.div variants={fadeInUp} className="p-7 rounded-xl bg-[#0f1118] border border-white/5 flex flex-col hover:border-white/10 transition-colors">
+                <h3 className="text-xl font-black mb-1 text-white">Free</h3>
+                <p className="text-sm text-slate-500 mb-6">Get a taste of AI-powered IELTS prep.</p>
+                <div className="mb-6 flex items-baseline">
+                  <span className="text-4xl font-black text-white">$0</span>
+                  <span className="text-slate-500 text-sm font-medium ml-1">/month</span>
+                </div>
+                <ul className="space-y-3 mb-8 flex-1">
+                  <li className="flex items-center gap-2 text-sm text-slate-400"><CheckCircle2 className="w-4 h-4 text-slate-500 flex-shrink-0" /> 2 writing analyze</li>
+                  <li className="flex items-center gap-2 text-sm text-slate-400"><CheckCircle2 className="w-4 h-4 text-slate-500 flex-shrink-0" /> 10 reading messages</li>
+                  <li className="flex items-center gap-2 text-sm text-slate-400"><CheckCircle2 className="w-4 h-4 text-slate-500 flex-shrink-0" /> 2 video lessons</li>
+                  <li className="flex items-center gap-2 text-sm text-slate-400"><CheckCircle2 className="w-4 h-4 text-slate-500 flex-shrink-0" /> Access to all reading & listening tests</li>
+                </ul>
+                <div className="mt-auto">
+                  <Button
+                    variant="outline"
+                    className="w-full bg-white/5 border-white/10 text-white rounded-lg h-12 font-bold hover:bg-white/10 transition-all"
+                    onClick={() => navigate('/register')}
+                  >
+                    Get Started Free
+                  </Button>
+                </div>
+              </motion.div>
+
               {/* Basic Tier */}
               <motion.div variants={fadeInUp} className="p-7 rounded-xl bg-[#0f1118] border border-white/5 flex flex-col hover:border-white/10 transition-colors">
                 <h3 className="text-xl font-black mb-1 text-white">Basic</h3>

@@ -11,7 +11,8 @@ import { useUser } from "../contexts/UserContext";
 import { useTheme } from "../contexts/ThemeContext";
 import backend from "@/backend";
 import { useNavigate } from "react-router-dom";
-import type { UpdateUserRequest } from "~backend/ielts/user";
+import { ielts } from "@/client";
+type UpdateUserRequest = ielts.UpdateUserRequest;
 
 export default function Settings() {
   const { user, setUser } = useUser();

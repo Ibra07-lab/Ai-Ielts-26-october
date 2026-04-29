@@ -384,7 +384,8 @@ export default function Onboarding() {
           authHeaders['Authorization'] = `Bearer ${session.access_token}`;
         }
 
-        const res = await fetch('/api/onboarding/generate', {
+        const API_BASE = import.meta.env.VITE_FASTAPI_WRITING_URL || "";
+        const res = await fetch(`${API_BASE}/api/onboarding/generate`, {
           method: 'POST',
           headers: authHeaders,
           body: JSON.stringify(payload)
@@ -767,16 +768,12 @@ export default function Onboarding() {
                   <Sparkles className="w-5 h-5 text-blue-500" />
                   Your Smart Strategy
                 </h3>
-                <p className="text-sm text-slate-500 dark:text-slate-400">Based on your profile, we recommend this path:</p>
               </div>
 
               <div className="bg-white dark:bg-slate-800/50 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
                 <div className="p-6 border-b border-slate-100 dark:border-slate-700/50 bg-slate-50/50 dark:bg-transparent flex items-center justify-between">
                   <div className="text-lg font-black text-blue-700 dark:text-blue-400 tracking-tight">
                     {strategyTitle}
-                  </div>
-                  <div className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-[10px] font-bold rounded-full uppercase tracking-widest">
-                    Recommended
                   </div>
                 </div>
 
@@ -804,9 +801,6 @@ export default function Onboarding() {
                     </div>
                   )}
 
-                  <div className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed italic">
-                    This strategy prioritizes your {data.weakest_skill || 'target'} score to balance your overall band while maximizing your strengths.
-                  </div>
                 </div>
               </div>
             </div>

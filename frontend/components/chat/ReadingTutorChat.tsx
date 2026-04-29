@@ -7,37 +7,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { sendChatMessage, streamChatMessage, generateSessionId, ChatMessage } from '@/services/chatApi';
 import { useToast } from '@/components/ui/use-toast';
 import ReactMarkdown from 'react-markdown';
+import { useUser } from '@/contexts/UserContext';
 
-type GreetingStyle = 'short' | 'medium' | 'ultra';
-const GREETING_STYLE: GreetingStyle = ['short', 'medium', 'ultra'][Math.floor(Math.random() * 3)] as GreetingStyle;
-
-const getGreeting = (style: GreetingStyle): string => {
-  switch (style) {
-    case 'short':
-      return `✅ SHORT GREETING (clean & professional)
-
-Hi! 👋 I'm ALEX — your IELTS Reading Mentor.  
-Ready to improve your reading skills, understand passages, and build confidence?  
-Tell me what you want to work on today. 😊`;
-    case 'ultra':
-      return `✅ ULTRA-FRIENDLY GREETING (encouraging & warm)
-
-Hey there! 😊 I’m ALEX — your friendly IELTS Reading Mentor.
-No stress, no pressure — just a supportive guide to help you understand passages, fix mistakes, beat timing problems, and grow your confidence.
-Drop a question, share your answer, or tell me what you’re struggling with.  
-We’ll improve your reading step by step. 💪📚`;
-    default:
-      return `✅ MEDIUM GREETING (balanced & helpful)
-
-Hello! 👋 I’m ALEX — your Personal IELTS Reading Mentor.
-I can help you with:
-• Explanations of your answers  
-• Hints and clues  
-• Reading strategies  
-• Practice and confidence-building  
-Drag a question here or tell me what you'd like to focus on today. 😊`;
-  }
-};
 
 const ExerciseCard = ({ content, onAnswer }: { content: string, onAnswer: (ans: string) => void }) => {
   const lines = content.split('\n');
@@ -153,6 +124,7 @@ interface ReadingTutorChatProps {
 }
 
 export default function ReadingTutorChat({ droppedQuestionId, streamingEnabled = true }: ReadingTutorChatProps) {
+  const { user } = useUser();
   const { toast } = useToast();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -160,14 +132,7 @@ export default function ReadingTutorChat({ droppedQuestionId, streamingEnabled =
   const [sessionId] = useState(() => generateSessionId());
 
   // Chat state
-  const [messages, setMessages] = useState<(ChatMessage & { id: string; timestamp: Date })[]>([
-    {
-      id: '1',
-      role: 'assistant',
-      content: getGreeting(GREETING_STYLE),
-      timestamp: new Date(),
-    },
-  ]);
+  const [messages, setMessages] = useState<(ChatMessage & { id: string; timestamp: Date })[]>([]);
 
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -297,6 +262,7 @@ export default function ReadingTutorChat({ droppedQuestionId, streamingEnabled =
         try {
           await streamChatMessage(
             {
+              userId: user?.id || 'anonymous',
               session_id: sessionId,
               messages: apiMessages,
               dropped_question_id: droppedQuestionId,
@@ -323,6 +289,7 @@ export default function ReadingTutorChat({ droppedQuestionId, streamingEnabled =
       } else {
         // Non-streaming: full response at once
         const response = await sendChatMessage({
+          userId: user?.id || 'anonymous',
           session_id: sessionId,
           messages: apiMessages,
           dropped_question_id: droppedQuestionId,

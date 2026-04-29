@@ -13,21 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { useUser } from "../contexts/UserContext";
 import backend from "@/backend";
 
-type GreetingStyle = "short" | "medium" | "ultra";
-const greetingStyles = ["short", "medium", "ultra"] as const;
-const pickRandomGreetingStyle = (): GreetingStyle =>
-	greetingStyles[Math.floor(Math.random() * greetingStyles.length)];
 
-const getGreeting = (style: GreetingStyle): string => {
-	switch (style) {
-		case "short":
-			return `Hi! 👋 I'm ALEX — your IELTS Reading Mentor. Ready to improve your reading skills, understand passages, and build confidence? Tell me what you want to work on today. 😊`;
-		case "ultra":
-			return `Hey there! 😊 I'm ALEX — your friendly IELTS Reading Mentor. No stress, no pressure — just a supportive guide to help you understand passages, fix mistakes, beat timing problems, and grow your confidence. Drop a question, share your answer, or tell me what you're struggling with. We'll improve your reading step by step. 💪📚`;
-		default:
-			return `Hello! 👋 I'm ALEX — your Personal IELTS Reading Mentor. I can help you with explanations of your answers, hints and clues, reading strategies, and practice. Drag a question here or tell me what you'd like to focus on today. 😊`;
-	}
-};
 
 type ChatMessage = {
 	id: string;
@@ -275,20 +261,12 @@ export default function ReadingTutor() {
 
 		const userMsg: ChatMessage = { id: crypto.randomUUID(), role: "user", content: textToSend };
 
-		if (messages.length === 0) {
-			const greeting: ChatMessage = { id: crypto.randomUUID(), role: "assistant", content: getGreeting(pickRandomGreetingStyle()) };
-			setMessages([greeting, userMsg]);
-		} else {
-			setMessages((m) => [...m, userMsg]);
-		}
+		setMessages((m) => [...m, userMsg]);
 
 		setInput("");
 		setIsLoading(true);
 		try {
-			const apiMessages: APIChatMessage[] = (messages.length === 0 ? [
-				{ role: "assistant" as const, content: getGreeting(pickRandomGreetingStyle()) },
-				{ role: "user" as const, content: textToSend }
-			] : [...messages, userMsg]).map((m) => ({ role: m.role as "user" | "assistant", content: m.content }));
+			const apiMessages: APIChatMessage[] = [...messages, userMsg].map((m) => ({ role: m.role as "user" | "assistant", content: m.content }));
 
 			if (streamingEnabled) {
 				const assistantId = crypto.randomUUID();

@@ -10,7 +10,7 @@ export const READING_LIMITS: Record<string, number> = {
   free:     15,
   basic:    300,
   pro:      800,
-  pro_plus: -1, // -1 means unlimited
+  pro_plus: 4000,
 };
 
 export function getPlanLimit(plan: string): number {

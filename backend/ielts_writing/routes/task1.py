@@ -35,7 +35,8 @@ def make_serializable(data):
     return json.loads(json.dumps(data, default=json_serializable))
 
 from ..pipelines.task1_pipeline import Task1Pipeline
-from ..auth import require_auth
+from ..auth import check_writing_credits
+from agents.direct_llm_client import get_and_reset_request_cost
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/task1", tags=["IELTS Writing Task 1"])
@@ -58,7 +59,7 @@ class Task1EvaluationRequest(BaseModel):
 
 
 @router.post("/evaluate")
-async def evaluate_task1(request: Task1EvaluationRequest, auth: dict = Depends(require_auth)):
+async def evaluate_task1(request: Task1EvaluationRequest, auth: dict = Depends(check_writing_credits)):
     """
     Full Task 1 evaluation pipeline (3 agents).
     
@@ -140,6 +141,17 @@ async def evaluate_task1(request: Task1EvaluationRequest, auth: dict = Depends(r
             saved_id = save_result.data[0]["id"] if save_result.data else None
             result["saved_id"] = saved_id
             logger.info(f"[API] ✅ Task 1 evaluation saved to Supabase (id={saved_id})")
+            
+            # Update token cost and decrement credit (increment essays_used)
+            try:
+                cost_usd = get_and_reset_request_cost()
+                if cost_usd > 0:
+                    supabase.rpc("add_api_cost", {"user_id": user_id, "cost_usd": cost_usd}).execute()
+                supabase.rpc("increment_essays_used", {"user_id": user_id}).execute()
+                logger.info(f"[API] 💰 Cost logged: ${cost_usd:.4f}. Credit used.")
+            except Exception as cost_err:
+                logger.error(f"[API] ⚠️ Failed to log cost or update credits: {cost_err}")
+
         except Exception as db_err:
             logger.warning(f"[API] ⚠️ Failed to save Task 1 to Supabase: {db_err}")
             result["saved_id"] = None

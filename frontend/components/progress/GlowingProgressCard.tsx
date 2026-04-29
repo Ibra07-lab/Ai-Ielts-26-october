@@ -199,7 +199,8 @@ export default function GlowingProgressCard({
     queryKey: ["study-plan-today", user?.id],
     queryFn: async () => {
       if (!user) return null;
-      const res = await fetch(`/api/onboarding/${user.id}`, {
+      const API_BASE = import.meta.env.VITE_FASTAPI_WRITING_URL || "";
+      const res = await fetch(`${API_BASE}/api/onboarding/${user.id}`, {
         headers: {
           'Authorization': `Bearer ${session?.access_token || ''}`
         }

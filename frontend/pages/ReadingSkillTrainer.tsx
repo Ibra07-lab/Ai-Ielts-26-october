@@ -21,7 +21,7 @@ import {
     ChatMessage,
 } from '@/services/chatApi';
 import ReactMarkdown from 'react-markdown';
-
+import { useUser } from '@/contexts/UserContext';
 // Types
 type Message = {
     id: string;
@@ -76,6 +76,7 @@ export default function ReadingSkillTrainer() {
     const location = useLocation();
     const navigate = useNavigate();
     const state = location.state as LocationState | undefined;
+    const { user } = useUser();
 
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState('');
@@ -96,6 +97,7 @@ export default function ReadingSkillTrainer() {
             setIsInitializing(true);
             try {
                 const response = await startTrainingSession({
+                    userId: user?.id || 'anonymous',
                     session_id: sessionId,
                     skill: state.skill,
                     student_id: state.studentId,
@@ -174,7 +176,7 @@ export default function ReadingSkillTrainer() {
 
             try {
                 await streamChatMessage(
-                    { session_id: sessionId, messages: apiMessages, dropped_question_id: null },
+                    { userId: user?.id || 'anonymous', session_id: sessionId, messages: apiMessages, dropped_question_id: null },
                     (chunk) => {
                         buffer += chunk;
                     }

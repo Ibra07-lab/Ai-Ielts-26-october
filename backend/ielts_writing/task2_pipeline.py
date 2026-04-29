@@ -37,7 +37,8 @@ from .agents.coach.task2_coach import Task2Coach
 logger = logging.getLogger(__name__)
 
 # Thread pool for offloading sync LLM calls
-_executor = ThreadPoolExecutor(max_workers=4)
+# 8 workers allows multiple users' pipelines to run concurrently
+_executor = ThreadPoolExecutor(max_workers=8)
 
 
 class PipelineResult(TypedDict):

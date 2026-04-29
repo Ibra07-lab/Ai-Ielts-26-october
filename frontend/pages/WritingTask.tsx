@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { PenTool, RotateCcw, Send, Clock, TrendingUp, Star, Target, Sparkles, BookOpen, GraduationCap, ArrowLeft, ArrowRight, CheckCircle, Timer as TimerIcon, Maximize2, X, Save } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -80,8 +81,39 @@ interface WritingTaskProps {
 }
 
 export default function WritingTask({ defaultTab }: WritingTaskProps) {
-  const [selectedTestId, setSelectedTestId] = useState<number | null>(null);
-  const [isTestStarted, setIsTestStarted] = useState(false);
+  const location = useLocation();
+  const roadmapTask = location.state?.roadmapTask;
+
+  // Derive a custom test if roadmapTask exists (fallback for old roadmaps)
+  const customTest = React.useMemo(() => {
+    if (!roadmapTask) return null;
+    
+    // If backend provided a real contentId, we don't need a custom test
+    if (roadmapTask.contentId && !isNaN(Number(roadmapTask.contentId))) {
+      return null;
+    }
+
+    const isTask1 = defaultTab === "task-1" || (roadmapTask.title || '').toLowerCase().includes('task 1');
+    return {
+      id: 99999,
+      title: roadmapTask.title || (isTask1 ? "Task 1" : "Task 2"),
+      subtitle: roadmapTask.subtitle || "Personalized Practice",
+      type: isTask1 ? "Task 1" : "Task 2",
+      questions: 1,
+      time: isTask1 ? 20 : 40,
+      taskType: isTask1 ? 1 : 2,
+      chartType: "Essay",
+      customPrompt: roadmapTask.description || roadmapTask.subtitle || "Practice Question",
+      imageUrl: undefined,
+    };
+  }, [roadmapTask, defaultTab]);
+
+  const initialTestId = roadmapTask?.contentId && !isNaN(Number(roadmapTask.contentId))
+    ? Number(roadmapTask.contentId)
+    : (customTest ? customTest.id : null);
+
+  const [selectedTestId, setSelectedTestId] = useState<number | null>(initialTestId);
+  const [isTestStarted, setIsTestStarted] = useState(!!roadmapTask);
   const [content, setContent] = useState("");
   const [aiAnalysis, setAiAnalysis] = useState<any>(null);
   // New State
@@ -108,20 +140,27 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
     staleTime: 0,
   });
 
-  const limitRemaining  = essayLimits?.remaining  ?? null;
-  const limitPlan       = essayLimits?.plan       ?? "free";
-  const limitTotal      = essayLimits?.limit      ?? 2;
-  const limitUsed       = essayLimits?.essaysUsed ?? 0;
+  const limitRemaining = essayLimits?.remaining ?? null;
+  const limitPlan = essayLimits?.plan ?? "free";
+  const limitTotal = essayLimits?.limit ?? 2;
+  const limitUsed = essayLimits?.essaysUsed ?? 0;
 
 
-  const selectedTest = writingTests.find(t => t.id === selectedTestId);
+  const selectedTest = (customTest && selectedTestId === customTest.id) 
+    ? customTest 
+    : writingTests.find(t => t.id === selectedTestId);
   const taskType = selectedTest?.taskType || 1;
   // @ts-ignore
   const hasVisualContent = taskType === 1 || !!selectedTest?.imageUrl || !!selectedTest?.component;
 
   const { data: prompt, refetch: getNewPrompt } = useQuery({
     queryKey: ["writingPrompt", taskType, selectedTest?.id],
-    queryFn: () => {
+    queryFn: async () => {
+      // @ts-ignore
+      if (selectedTest?.customPrompt) {
+        // @ts-ignore
+        return { prompt: selectedTest.customPrompt, chartMetadata: null };
+      }
       // @ts-ignore: Adding test_id to supported extended backend
       return backend.ielts.getWritingPrompt(taskType, { test_id: selectedTest?.id });
     },
@@ -154,7 +193,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
 
       toast({
         title: isLimitError ? "Limit reached" : isOfflineError ? "Connection lost" : "System busy",
-        description: isOfflineError 
+        description: isOfflineError
           ? "The server seems to be offline or the connection was lost. Please check your internet or refresh the page."
           : (lockErr?.message ?? "Cannot start analysis."),
         variant: "destructive",
@@ -169,9 +208,10 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
     try {
       // Use evaluate endpoint for Task 1, legacy for Task 2
       const isTask1 = taskType === 1;
+      const API_BASE = import.meta.env.VITE_FASTAPI_WRITING_URL || "";
       const endpoint = isTask1
-        ? "/task1/evaluate"
-        : "/task2/evaluate"; // Updated to new Task 2 pipeline
+        ? `${API_BASE}/task1/evaluate`
+        : `${API_BASE}/task2/evaluate`; // Updated to new Task 2 pipeline
 
       const requestBody = isTask1
         ? {
@@ -214,9 +254,9 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
           const err = await response.json();
           console.error("Backend Error Details:", err);
           if (err?.detail?.traceback) {
-             console.error("BACKEND TRACEBACK:", err.detail.traceback);
-             // Dump to alert just to be absolutely sure user sees it if DevTools is closed
-             alert("BACKEND CRASH TRACEBACK:\n\n" + (err.detail.traceback.substring(0, 500) + "... Look in console for full trace"));
+            console.error("BACKEND TRACEBACK:", err.detail.traceback);
+            // Dump to alert just to be absolutely sure user sees it if DevTools is closed
+            alert("BACKEND CRASH TRACEBACK:\n\n" + (err.detail.traceback.substring(0, 500) + "... Look in console for full trace"));
           }
           message = err?.detail?.message || err?.detail?.error || err?.message || message;
         } catch {
@@ -229,7 +269,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
 
       // Normalize Result
       let result: any = {};
-      
+
       const evalData = data.evaluation;
       const explainData = data.explanation || {};
       const coachData = data.coaching || {};
@@ -240,9 +280,9 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
             overall_band: evalData.overall_band,
             band_range: evalData.band_range,
             criterion_scores: evalData.criterion_scores.map((c: any) => ({
-                criterion: c.criterion,
-                band: c.band,
-                justification: c.justification
+              criterion: c.criterion,
+              band: c.band,
+              justification: c.justification
             })),
             word_count: evalData.word_count,
             word_count_ok: evalData.word_count_ok,
@@ -280,9 +320,9 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                 }))
             ],
             coherence_issues: (explainData.cohesion_fixes || []).map((c: any) => ({
-                text: c.original_sentence,
-                suggestion: c.improved_sentence,
-                reason: c.technique_explanation
+              text: c.original_sentence,
+              suggestion: c.improved_sentence,
+              reason: c.technique_explanation
             })),
             raw_coach_output: coachData,
             raw_explainer_output: explainData,
@@ -429,7 +469,8 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
     }));
 
     try {
-      const endpoint = "/task1/evaluate";
+      const API_BASE = import.meta.env.VITE_FASTAPI_WRITING_URL || "";
+      const endpoint = `${API_BASE}/task1/evaluate`;
       const requestBody = {
         essay: content.trim(),
         question: prompt?.prompt || "",
@@ -523,6 +564,17 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
     };
   }, [isTestStarted, timeLeft, aiAnalysis]);
 
+  // Set initial timer if loaded from roadmap customTest or backend contentId
+  useEffect(() => {
+    if (roadmapTask && isTestStarted && timeLeft === 0 && !aiAnalysis) {
+      if (customTest) {
+        setTimeLeft(customTest.time * 60);
+      } else if (selectedTest) {
+        setTimeLeft(selectedTest.time * 60);
+      }
+    }
+  }, [customTest, selectedTest, isTestStarted, roadmapTask]);
+
   // Autosave Simulation
   useEffect(() => {
     if (content) {
@@ -566,14 +618,16 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
     if (targetTestId) {
       setSelectedTestId(targetTestId);
     }
-    
+
     // Skip session guide and start writing immediately
     setContent("");
     setAiAnalysis(null);
     setIsTestStarted(true);
 
     // Find test to set initial timer
-    const test = writingTests.find(t => t.id === targetTestId);
+    const test = (customTest && targetTestId === customTest.id) 
+      ? customTest 
+      : writingTests.find(t => t.id === targetTestId);
     if (test) {
       setTimeLeft(test.time * 60);
     }
@@ -778,13 +832,12 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
 
                 {/* Essay Limit Pill */}
                 {limitRemaining !== null && (
-                  <div className={`flex items-center gap-2 px-4 py-2 rounded-full border shadow-sm font-bold text-xs ${
-                    limitRemaining === 0
+                  <div className={`flex items-center gap-2 px-4 py-2 rounded-full border shadow-sm font-bold text-xs ${limitRemaining === 0
                       ? "bg-rose-50 border-rose-200 text-rose-600 dark:bg-rose-900/20 dark:border-rose-800 dark:text-rose-400"
                       : limitRemaining === 1
                         ? "bg-amber-50 border-amber-200 text-amber-600 dark:bg-amber-900/20 dark:border-amber-800 dark:text-amber-400"
                         : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300"
-                  }`}>
+                    }`}>
                     <span className="uppercase tracking-wider">Essays</span>
                     <span className="font-mono text-base font-black leading-none">{limitUsed}</span>
                     <span className="opacity-60">/ {limitTotal}</span>
@@ -927,7 +980,8 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                       placeholder="Start writing your response here..."
                       value={content}
                       onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value)}
-                      className="flex-1 w-full mx-auto resize-none border-0 focus-visible:ring-0 p-8 text-lg leading-loose font-mono text-slate-800 dark:text-slate-200 placeholder:text-slate-300 dark:placeholder:text-slate-700 bg-transparent custom-scrollbar"
+                      className="flex-1 w-full mx-auto resize-none border-0 focus-visible:ring-0 p-8 leading-loose text-slate-800 dark:text-slate-200 placeholder:text-slate-300 dark:placeholder:text-slate-700 bg-transparent custom-scrollbar"
+                      style={{ fontFamily: 'Arial, sans-serif', fontSize: '16px' }}
                       spellCheck={false}
                     />
                     {/* Floating Gradient Bottom Overlay */}

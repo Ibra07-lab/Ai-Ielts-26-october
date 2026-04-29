@@ -102,7 +102,7 @@ class Task1Coach:
             system_prompt=TASK1_COACH_SYSTEM_PROMPT,
             user_prompt=user_content,
             temperature=0.3,
-            max_tokens=8000
+            max_tokens=4000
         )
 
         # Parse JSON response

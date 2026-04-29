@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
-import { Play, BookOpen, MessageSquare, Mic, Layers, ArrowRight, ChevronDown, ChevronUp, PenTool, ArrowLeftRight, Link2, Search, Filter, CheckCircle2, Volume2, Heart, ArrowLeft, Quote, MoreHorizontal } from "lucide-react";
+import { Play, BookOpen, MessageSquare, Mic, Layers, ArrowRight, ChevronDown, ChevronUp, PenTool, ArrowLeftRight, Link2, Search, Filter, CheckCircle2, Volume2, ArrowLeft, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -33,7 +33,7 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
     const [searchQuery, setSearchQuery] = useState("");
     const [filterStatus, setFilterStatus] = useState<"all" | "speaking" | "writing">("all");
     const [selectedSubcategory, setSelectedSubcategory] = useState<string>("All");
-    const [bookmarkedWords, setBookmarkedWords] = useState<Set<number>>(new Set());
+
 
     useEffect(() => {
         setSelectedSubcategory("All");
@@ -44,18 +44,7 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
         return topics.length > 1 ? topics : [];
     }, [words]);
 
-    const toggleBookmark = (e: React.MouseEvent, wordId: number) => {
-        e.stopPropagation();
-        setBookmarkedWords(prev => {
-            const next = new Set(prev);
-            if (next.has(wordId)) {
-                next.delete(wordId);
-            } else {
-                next.add(wordId);
-            }
-            return next;
-        });
-    };
+
 
     const playAudio = (text: string) => {
         speakText(text);
@@ -193,9 +182,7 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
                                     )}>
                                         {word.word}
                                     </h3>
-                                    {bookmarkedWords.has(word.id) && (
-                                        <Heart className="h-3 w-3 text-rose-500 fill-current" />
-                                    )}
+
                                 </div>
                                 <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed">
                                     {word.definition}
@@ -240,22 +227,7 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
                                                 <Volume2 className="h-5 w-5" />
                                             </button>
                                         </div>
-                                        <div className="flex gap-2">
-                                            <button
-                                                onClick={(e) => toggleBookmark(e, activeWord.id)}
-                                                className={cn(
-                                                    "p-2 rounded-full transition-colors",
-                                                    bookmarkedWords.has(activeWord.id)
-                                                        ? "text-rose-500 bg-rose-50 dark:bg-rose-500/10"
-                                                        : "text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5"
-                                                )}
-                                            >
-                                                <Heart className={cn("h-6 w-6", bookmarkedWords.has(activeWord.id) && "fill-current")} />
-                                            </button>
-                                            <button className="p-2 text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 rounded-full">
-                                                <MoreHorizontal className="h-6 w-6" />
-                                            </button>
-                                        </div>
+
                                     </div>
 
                                     {/* Tags */}
