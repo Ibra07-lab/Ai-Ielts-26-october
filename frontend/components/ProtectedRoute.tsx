@@ -27,11 +27,17 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
 
     const isCurrentlyOnboarding = location.pathname.startsWith('/onboarding');
     
-    if (!user.onboardingCompleted && !isCurrentlyOnboarding) {
+    // Free users skip onboarding until they purchase a plan
+    if (!user.onboardingCompleted && !isCurrentlyOnboarding && user.plan !== 'free') {
         return <Navigate to="/onboarding" replace />;
     }
 
     if (user.onboardingCompleted && isCurrentlyOnboarding) {
+        return <Navigate to="/dashboard" replace />;
+    }
+
+    // Prevent free users from manually accessing the onboarding page
+    if (user.plan === 'free' && isCurrentlyOnboarding) {
         return <Navigate to="/dashboard" replace />;
     }
 

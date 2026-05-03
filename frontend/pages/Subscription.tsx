@@ -283,7 +283,7 @@ export default function Subscription() {
           <p className="text-gray-600 dark:text-gray-300 mb-6">
             Our team is here to help you find the perfect plan for your IELTS preparation needs.
           </p>
-          <Button variant="outline" size="lg">
+          <Button variant="outline" size="lg" onClick={() => window.open("https://t.me/NewBand0", "_blank")}>
             Contact Support
           </Button>
         </div>

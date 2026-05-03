@@ -1,7 +1,19 @@
 EXPLAINER CRASH at evaluate_async
 
 Traceback (most recent call last):
-  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\pipelines\task1_pipeline.py", line 160, in evaluate_async
+  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\agents\explainer\task1_explainer.py", line 245, in _parse_response
+    return Task1ExplainerOutput(**data)
+  File "C:\Users\Honor\AppData\Roaming\Python\Python313\site-packages\pydantic\main.py", line 250, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for Task1ExplainerOutput
+coherence_feedback.comparison_language
+  Field required [type=missing, input_value={'paragraph_structure': {...rengthen your essay."}}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\pipelines\task1_pipeline.py", line 161, in evaluate_async
     explainer_output = await asyncio.wait_for(
                        ^^^^^^^^^^^^^^^^^^^^^^^
     ...<11 lines>...
@@ -12,7 +24,7 @@ Traceback (most recent call last):
            ^^^^^^^^^
   File "C:\Python313\Lib\concurrent\futures\thread.py", line 59, in run
     result = self.fn(*self.args, **self.kwargs)
-  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\pipelines\task1_pipeline.py", line 163, in <lambda>
+  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\pipelines\task1_pipeline.py", line 164, in <lambda>
     lambda: self.explainer.explain(
             ~~~~~~~~~~~~~~~~~~~~~~^
         essay=essay,
@@ -22,10 +34,11 @@ Traceback (most recent call last):
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     )
     ^
-  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\agents\explainer\task1_explainer.py", line 88, in explain
-    user_prompt = build_task1_explainer_user_prompt(
-        essay=essay,
-    ...<3 lines>...
-        visual_description=vis_desc
-    )
-TypeError: build_task1_explainer_user_prompt() got an unexpected keyword argument 'chart_type'
+  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\agents\explainer\task1_explainer.py", line 109, in explain
+    output = self._parse_response(response_text)
+  File "C:\Users\Honor\Desktop\Новая папка (4)\Ai-Ielts-26-october\backend\ielts_writing\agents\explainer\task1_explainer.py", line 292, in _parse_response
+    raise ValueError(f"JSON parsed but validation failed: {e}")
+ValueError: JSON parsed but validation failed: 1 validation error for Task1ExplainerOutput
+coherence_feedback.comparison_language
+  Field required [type=missing, input_value={'paragraph_structure': {...rengthen your essay."}}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing

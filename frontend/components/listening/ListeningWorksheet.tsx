@@ -335,45 +335,7 @@ const ListeningWorksheet: React.FC<ListeningWorksheetProps> = ({
 
     return (
         <div className="relative pb-24">
-            {/* Pagination Tabs */}
-            <div className="flex justify-center mb-6 gap-3">
-                <button
-                    onClick={() => setActivePart(1)}
-                    className={`px-4 py-1.5 rounded-full text-sm font-bold transition-all ${activePart === 1
-                        ? 'bg-blue-600 text-white shadow-md scale-105'
-                        : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
-                        }`}
-                >
-                    Part 1
-                </button>
-                <button
-                    onClick={() => setActivePart(2)}
-                    className={`px-4 py-1.5 rounded-full text-sm font-bold transition-all ${activePart === 2
-                        ? 'bg-blue-600 text-white shadow-md scale-105'
-                        : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
-                        }`}
-                >
-                    Part 2
-                </button>
-                <button
-                    onClick={() => setActivePart(3)}
-                    className={`px-4 py-1.5 rounded-full text-sm font-bold transition-all ${activePart === 3
-                        ? 'bg-blue-600 text-white shadow-md scale-105'
-                        : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
-                        }`}
-                >
-                    Part 3
-                </button>
-                <button
-                    onClick={() => setActivePart(4)}
-                    className={`px-4 py-1.5 rounded-full text-sm font-bold transition-all ${activePart === 4
-                        ? 'bg-blue-600 text-white shadow-md scale-105'
-                        : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
-                        }`}
-                >
-                    Part 4
-                </button>
-            </div>
+
 
             {/* Worksheet Content */}
             <div
@@ -1917,142 +1879,56 @@ const ListeningWorksheet: React.FC<ListeningWorksheetProps> = ({
                                 </p>
 
                                 <div className="border border-slate-800 p-8 pt-4 bg-white shadow-sm max-w-3xl mx-auto">
-                                    <h3 className="text-2xl font-bold text-center mb-8 text-slate-700">Local food shops</h3>
+                                    <h3 className="text-2xl font-bold text-center mb-8 text-slate-700">Notes</h3>
 
                                     <div className="space-y-8">
-                                        {/* Where to go Section */}
                                         <div className="space-y-4">
-                                            <h4 className="font-bold text-lg">Where to go</h4>
+                                            <h4 className="font-bold text-lg">Tuning guitars</h4>
                                             <ul className="list-disc ml-6 space-y-4">
                                                 <li className="text-lg">
                                                     <div className="flex items-baseline flex-wrap gap-x-2">
-                                                        <span>Kite Place – near the</span>
-                                                        {renderBlank(10, "w-48")}
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                        {/* Fish market Section */}
-                                        <div className="space-y-4">
-                                            <h4 className="font-bold text-lg">Fish market</h4>
-                                            <ul className="list-disc ml-6 space-y-4">
-                                                <li className="text-lg">
-                                                    <div className="flex items-baseline flex-wrap gap-x-2">
-                                                        <span>cross the</span>
-                                                        {renderBlank(9, "w-64")}
-                                                        <span>and turn right</span>
-                                                    </div>
-                                                </li>
-                                                <li className="text-lg">
-                                                    <div className="flex items-baseline flex-wrap gap-x-2">
-                                                        <span>best to go before</span>
-                                                        {renderBlank(8, "w-28")}
-                                                        <span>pm, earlier than closing time</span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                        {/* Organic shop Section */}
-                                        <div className="space-y-4">
-                                            <h4 className="font-bold text-lg">Organic shop</h4>
-                                            <ul className="list-disc ml-6 space-y-4">
-                                                <li className="text-lg">
-                                                    <div className="flex items-baseline flex-wrap gap-x-2">
-                                                        <span>called '</span>
+                                                        <span>using an app or by</span>
                                                         {renderBlank(7, "w-40")}
-                                                        <span>'</span>
-                                                    </div>
-                                                </li>
-                                                <li className="text-lg text-slate-600">below a restaurant in the large, grey building</li>
-                                                <li className="text-lg">
-                                                    <div className="flex items-baseline flex-wrap gap-x-2">
-                                                        <span>look for the large</span>
-                                                        {renderBlank(6, "w-44")}
-                                                        <span>outside</span>
                                                     </div>
                                                 </li>
                                             </ul>
                                         </div>
 
-                                        {/* Supermarket Section */}
                                         <div className="space-y-4">
-                                            <h4 className="font-bold text-lg">Supermarket</h4>
+                                            <h4 className="font-bold text-lg">Strumming chords</h4>
                                             <ul className="list-disc ml-6 space-y-4">
                                                 <li className="text-lg">
                                                     <div className="flex items-baseline flex-wrap gap-x-2">
-                                                        <span>take a</span>
-                                                        {renderBlank(5, "w-28")}
-                                                        <span>minibus, number 289</span>
+                                                        <span>keeping time while the teacher is</span>
+                                                        {renderBlank(8, "w-48")}
                                                     </div>
                                                 </li>
                                             </ul>
                                         </div>
-                                    </div>
-                                </div>
 
-                                <div className="mt-12">
-                                    <p className="italic mb-2">Questions 7–10</p>
-                                    <p className="italic mb-2">Complete the table below.</p>
-                                    <p className="italic mb-6">
-                                        Write <strong>ONE WORD ONLY</strong> for each answer.
-                                    </p>
-
-                                    <div className="max-w-4xl mx-auto border-x border-t border-slate-950">
-                                        <div className="bg-white">
-                                            <div className="border-b border-slate-950 p-3 text-center font-bold text-xl uppercase tracking-wider bg-slate-50/30">
-                                                Shopping
-                                            </div>
-                                            <div className="grid grid-cols-[1fr_2fr_2fr] border-b border-slate-950 font-bold text-lg bg-slate-50/30">
-                                                <div className="p-4 border-r border-slate-950"></div>
-                                                <div className="p-4 border-r border-slate-950 text-center">To buy</div>
-                                                <div className="p-4 text-center">Other ideas</div>
-                                            </div>
-
-                                            {/* Fish market Row */}
-                                            <div className="grid grid-cols-[1fr_2fr_2fr] border-b border-slate-950 text-lg">
-                                                <div className="p-4 border-r border-slate-950 font-bold">Fish market</div>
-                                                <div className="p-4 border-r border-slate-950">a dozen prawns</div>
-                                                <div className="p-4">
-                                                    <div className="flex flex-wrap items-baseline gap-1">
-                                                        <span>a handful of</span>
-                                                        {renderBlank(4, "w-32")}
-                                                        <span>(type of seaweed)</span>
+                                        <div className="space-y-4">
+                                            <h4 className="font-bold text-lg">Playing songs</h4>
+                                            <ul className="list-disc ml-6 space-y-4">
+                                                <li className="text-lg">
+                                                    <div className="flex items-baseline flex-wrap gap-x-2">
+                                                        <span>often listening to a</span>
+                                                        {renderBlank(9, "w-40")}
+                                                        <span>of a song</span>
                                                     </div>
-                                                </div>
-                                            </div>
+                                                </li>
+                                            </ul>
+                                        </div>
 
-                                            {/* Organic shop Row */}
-                                            <div className="grid grid-cols-[1fr_2fr_2fr] border-b border-slate-950 text-lg">
-                                                <div className="p-4 border-r border-slate-950 font-bold">Organic shop</div>
-                                                <div className="p-4 border-r border-slate-950">
-                                                    <div className="flex flex-wrap items-baseline gap-1">
-                                                        <span>beans and a</span>
-                                                        {renderBlank(3, "w-32")}
-                                                        <span>for dessert</span>
+                                        <div className="space-y-4">
+                                            <h4 className="font-bold text-lg">Playing single notes</h4>
+                                            <ul className="list-disc ml-6 space-y-4">
+                                                <li className="text-lg">
+                                                    <div className="flex items-baseline flex-wrap gap-x-2">
+                                                        <span>playing together, then</span>
+                                                        {renderBlank(10, "w-40")}
                                                     </div>
-                                                </div>
-                                                <div className="p-4">
-                                                    <div className="flex flex-wrap items-baseline gap-1">
-                                                        <span>spices and</span>
-                                                        {renderBlank(2, "w-32")}
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            {/* Bakery Row */}
-                                            <div className="grid grid-cols-[1fr_2fr_2fr] border-b border-slate-950 text-lg">
-                                                <div className="p-4 border-r border-slate-950 font-bold">Bakery</div>
-                                                <div className="p-4 border-r border-slate-950">a brown loaf</div>
-                                                <div className="p-4">
-                                                    <div className="flex flex-wrap items-baseline gap-1">
-                                                        <span>a</span>
-                                                        {renderBlank(1, "w-32")}
-                                                        <span>tart</span>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -7868,26 +7744,42 @@ const ListeningWorksheet: React.FC<ListeningWorksheetProps> = ({
                 }
 
                 {/* Pagination Controls */}
-                <div className="flex justify-between max-w-4xl mx-auto mt-6 px-4">
+                <div className="flex justify-center mt-6 gap-3">
                     <button
-                        onClick={() => setActivePart(Math.max(1, activePart - 1))}
-                        disabled={activePart === 1}
-                        className={`px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all ${activePart === 1
-                            ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
-                            : 'bg-white hover:bg-slate-50 text-slate-700 shadow-sm border border-slate-200'
+                        onClick={() => setActivePart(1)}
+                        className={`px-4 py-1.5 rounded-full text-sm font-bold transition-all ${activePart === 1
+                            ? 'bg-blue-600 text-white shadow-md scale-105'
+                            : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
                             }`}
                     >
-                        <span>←</span> Previous Part
+                        Part 1
                     </button>
                     <button
-                        onClick={() => setActivePart(Math.min(4, activePart + 1))}
-                        disabled={activePart === 4}
-                        className={`px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all ${activePart === 4
-                            ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
-                            : 'bg-white hover:bg-slate-50 text-slate-700 shadow-sm border border-slate-200'
+                        onClick={() => setActivePart(2)}
+                        className={`px-4 py-1.5 rounded-full text-sm font-bold transition-all ${activePart === 2
+                            ? 'bg-blue-600 text-white shadow-md scale-105'
+                            : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
                             }`}
                     >
-                        Next Part <span>→</span>
+                        Part 2
+                    </button>
+                    <button
+                        onClick={() => setActivePart(3)}
+                        className={`px-4 py-1.5 rounded-full text-sm font-bold transition-all ${activePart === 3
+                            ? 'bg-blue-600 text-white shadow-md scale-105'
+                            : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+                            }`}
+                    >
+                        Part 3
+                    </button>
+                    <button
+                        onClick={() => setActivePart(4)}
+                        className={`px-4 py-1.5 rounded-full text-sm font-bold transition-all ${activePart === 4
+                            ? 'bg-blue-600 text-white shadow-md scale-105'
+                            : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+                            }`}
+                    >
+                        Part 4
                     </button>
                 </div>
             </div>

@@ -4,7 +4,7 @@
     "section": 1,
     "difficulty": "medium",
     "audioFile": "/audio/Test-3.mp3",
-    "duration": 300,
+    "duration": 1800,
     "instructions": "Listen to the audio and answer the questions.",
     "transcripts": [
         {

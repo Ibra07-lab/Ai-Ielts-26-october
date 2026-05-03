@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Calendar, Target, Clock, TrendingUp, BookOpen, Mic, PenTool, Headphones, Star, Award, CheckCircle, Plus, Wand2, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { Calendar, Target, Clock, TrendingUp, BookOpen, Mic, PenTool, Headphones, Star, Award, CheckCircle, Plus, Wand2, ArrowRight, ChevronLeft, ChevronRight, X, Info } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -24,6 +24,7 @@ export default function Dashboard() {
   const qc = useQueryClient();
   const [addOpen, setAddOpen] = useState(false);
   const [aiOpen, setAiOpen] = useState(false);
+  const [showPaymentNotice, setShowPaymentNotice] = useState(true);
   const [range] = useState<"daily">("daily");
   const dueISO = new Date().toISOString();
 
@@ -147,10 +148,29 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-8 mt-6">
         <div className="space-y-6 pb-32">
-
-
+          
+          {showPaymentNotice && (
+            <div className="relative rounded-2xl bg-gradient-to-r from-slate-100 via-white to-amber-50 dark:from-slate-700 dark:via-slate-600 dark:to-amber-700/80 border border-slate-300 dark:border-amber-400/50 p-4 sm:p-5 flex items-start gap-4 shadow-md animate-in fade-in slide-in-from-top-4 duration-500">
+              <div className="p-2 rounded-full bg-gradient-to-br from-slate-200 to-amber-200 dark:from-slate-400 dark:to-amber-500 text-amber-700 dark:text-white mt-0.5 shrink-0 shadow-sm border border-white/50 dark:border-amber-300/50">
+                <Info className="h-5 w-5" />
+              </div>
+              <div className="flex-1 pr-6">
+                <h3 className="text-[15px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-slate-800 to-amber-700 dark:from-white dark:to-amber-200">Payment integration coming soon!</h3>
+                <p className="text-[14px] text-slate-700 dark:text-slate-100 mt-1 leading-relaxed">
+                  We're currently finalizing our payment gateway. All premium features, including the personalized roadmap and video podcasts, will be available for purchase very soon. Stay tuned!
+                </p>
+              </div>
+              <button 
+                onClick={() => setShowPaymentNotice(false)} 
+                className="absolute top-4 right-4 p-1.5 rounded-full text-slate-400 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-200 hover:bg-amber-100/50 dark:hover:bg-amber-400/30 transition-colors"
+                aria-label="Dismiss notice"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+          )}
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 

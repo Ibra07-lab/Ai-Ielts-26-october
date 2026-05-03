@@ -11,6 +11,7 @@ interface AppUser {
   language: string;
   theme: string;
   onboardingCompleted: boolean;
+  plan?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -37,6 +38,7 @@ function supabaseUserToAppUser(supabaseUser: SupabaseUser): AppUser {
     language: supabaseUser.user_metadata?.language || "en",
     theme: supabaseUser.user_metadata?.theme || "light",
     onboardingCompleted: supabaseUser.user_metadata?.onboardingCompleted || false,
+    plan: supabaseUser.user_metadata?.plan || "free",
     createdAt: supabaseUser.created_at,
     updatedAt: supabaseUser.updated_at || supabaseUser.created_at,
   };
@@ -83,7 +85,10 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
       email,
       password,
       options: {
-        data: { name: name || email.split("@")[0] },
+        data: { 
+          name: name || email.split("@")[0],
+          plan: "free"
+        },
       },
     });
     return { error: error?.message || null };

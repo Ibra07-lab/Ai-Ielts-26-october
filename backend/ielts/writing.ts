@@ -163,26 +163,29 @@ const testSpecificPrompts: Record<number, WritingPrompt> = {
   3: {
     taskType: 1,
     prompt: "The bar chart compares the average daily time spent on four activities by teenagers in 2010 and 2020, measured in minutes per day. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.",
-    chartMetadata: `**Chart Type:** Bar Chart (Clustered)
-**Title:** Daily Activity Time for Teenagers (2010 vs 2020)
+    chartMetadata: `**Chart Type:** Bar Chart (Clustered/Grouped)
+**Title:** Average Daily Time Spent on Activities by Teenagers (2010 vs 2020)
 
 **Categories (Activities):**
-1. Watching TV
-2. Playing Games
-3. Studying
-4. Socializing
+1. Studying
+2. Sports
+3. Social Media
+4. Television
 
 **Data:**
-- **Watching TV:** 25 mins (2010) -> 15 mins (2020) [Decrease]
-- **Playing Games:** 20 mins (2010) -> 45 mins (2020) [Major Increase]
-- **Studying:** 35 mins (2010) -> 30 mins (2020) [Slight Decrease]
-- **Socializing:** 30 mins (2010) -> 25 mins (2020) [Slight Decrease]
+- **Studying:** 95 mins (2010) -> 110 mins (2020) [Increase]
+- **Sports:** 65 mins (2010) -> 45 mins (2020) [Decrease]
+- **Social Media:** 20 mins (2010) -> 105 mins (2020) [Major Increase — 5.25x the original]
+- **Television:** 90 mins (2010) -> 50 mins (2020) [Decrease]
 
 **Key Features:**
-1. Gaming time more than doubled.
-2. Traditional activities (TV, Socializing) saw a decline.
-3. Studying remained relatively stable but slightly lower.`
-  },
+1. Social Media time surged dramatically, rising from 20 to 105 minutes (over 5 times the original amount).
+2. Studying saw a moderate increase of 15 minutes, becoming the top activity in 2020.
+3. Television viewing dropped significantly by 40 minutes, falling from most popular to least popular.
+4. Sports participation declined by 20 minutes, representing the lowest value in 2020.
+5. Screen-based activities shifted from traditional TV to digital social media platforms.
+6. Academic and digital activities gained prominence while physical and passive entertainment declined.
+`},
   5: {
     taskType: 1,
     prompt: "The bar chart shows the average daily water consumption per person in five cities in 2010 and 2020, measured in litres per person per day.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.",

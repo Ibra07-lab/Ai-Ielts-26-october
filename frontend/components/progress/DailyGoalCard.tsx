@@ -97,10 +97,6 @@ export default function DailyGoalCard({ tasks, dailyGoal = 5 }: DailyGoalCardPro
                             <Plus className="w-4 h-4" />
                             Add Task
                         </Button>
-                        <Button variant="outline" className="bg-slate-900/50 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white rounded-full gap-2 px-5">
-                            <Sparkles className="w-4 h-4 text-purple-400" />
-                            AI Suggest
-                        </Button>
                     </div>
 
                     <Button variant="ghost" className="text-slate-400 hover:text-white gap-2">

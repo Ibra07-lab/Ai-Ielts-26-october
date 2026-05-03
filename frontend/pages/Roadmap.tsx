@@ -4,7 +4,7 @@ import {
   Flame, Zap, BookOpen, PenTool, Headphones, ListFilter, PlayCircle, Trophy, Target, ArrowRight, X, Clock, AlertTriangle, Lightbulb, Map, FileText, CalendarCheck, FileQuestion, BookMarked, Layers, BarChart, FileSignature, Edit3, Speech, RotateCcw, Library, CheckCircle2, Lock, XCircle, RefreshCw, ChevronDown, ChevronUp, ChevronRight, TrendingUp
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useUser } from '../contexts/UserContext';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 
@@ -152,6 +152,26 @@ export default function Roadmap() {
   const [fetchError, setFetchError] = useState(false);
   const [isRetrying, setIsRetrying] = useState(false);
 
+  if (user?.plan === 'free' || !user?.plan) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#030712] text-gray-900 dark:text-white px-4">
+        <div className="text-center space-y-4 max-w-md mx-auto">
+          <div className="text-6xl mb-6">🗺️</div>
+          <h1 className="text-2xl sm:text-3xl font-bold">Personalized Roadmap Locked</h1>
+          <p className="text-slate-500 dark:text-slate-400 leading-relaxed">
+            Your AI-generated personalized study plan is only available on Basic, Pro, and Premium plans. Upgrade to unlock your step-by-step IELTS preparation journey.
+          </p>
+          <Link to="/subscription" className="inline-block mt-4 w-full px-6 py-3.5 bg-blue-600 text-white rounded-xl hover:bg-blue-500 transition-colors font-bold shadow-lg shadow-blue-500/20">
+            View Upgrade Options
+          </Link>
+          <Link to="/dashboard" className="block mt-4 text-sm text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 font-medium">
+            Return to Dashboard
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   // Map task skill type to its route
   const getTaskRoute = (task: DailyTask): string => {
     const type = task.type;
@@ -185,36 +205,44 @@ export default function Roadmap() {
       const apiTasks = week.tasks || [];
       const totalTasks = apiTasks.length;
 
-      // Map flat tasks into DailyTask format
-      const mappedTasks: DailyTask[] = apiTasks.map((t: any, i: number) => ({
-        id: t.id || `w${week.week_number || idx + 1}t${i}`,
-        type: (t.skill || t.type || 'strategy') as SkillType,
-        title: t.title || t.description || 'Task',
-        subtitle: t.subtitle || t.details || '',
-        description: t.description || '',
-        tip: t.tip || '',
-        reason: t.reason || '',
-        duration: t.duration || t.minutes || 20,
-        status: (t.status === 'done' ? 'done' : (t.status === 'missed' ? 'missed' : 'today')) as TaskStatus,
-        score: t.score,
-        contentId: t.content_id || t.contentId,
-        steps: t.steps || undefined,
-      }));
-
-      // Group tasks into days (distribute evenly or put all in one day)
-      const daysPerWeek = Math.max(1, Math.ceil(totalTasks / 3)); // ~3 tasks per day
-      const days: DayPlan[] = [];
-      const dayNames = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
-      for (let d = 0; d < Math.min(daysPerWeek, 7); d++) {
-        const dayTasks = mappedTasks.slice(d * 3, (d + 1) * 3);
-        if (dayTasks.length > 0) {
-          days.push({
-            date: dayNames[d] || `Day ${d + 1}`,
-            tasks: dayTasks,
-            isToday: idx === 0 && d === 0,
-          });
+      // Group tasks into days based on backend assigned day
+      const tasksByDay: Record<number, { dayName: string, tasks: DailyTask[] }> = {};
+      
+      apiTasks.forEach((t: any, i: number) => {
+        const dayNum = t.day || 1;
+        const dayNameRaw = t.day_name || 'Monday';
+        const dayNameShort = dayNameRaw.substring(0, 3).toUpperCase();
+        
+        if (!tasksByDay[dayNum]) {
+            tasksByDay[dayNum] = { dayName: dayNameShort, tasks: [] };
         }
-      }
+        
+        tasksByDay[dayNum].tasks.push({
+          id: t.id || `w${week.week_number || idx + 1}t${i}`,
+          type: (t.skill || t.type || 'strategy') as SkillType,
+          title: t.title || t.description || 'Task',
+          subtitle: t.subtitle || t.details || '',
+          description: t.description || '',
+          tip: t.tip || '',
+          reason: t.reason || '',
+          duration: t.duration || t.minutes || t.duration_minutes || 20,
+          status: (t.status === 'done' ? 'done' : (t.status === 'missed' ? 'missed' : 'today')) as TaskStatus,
+          score: t.score,
+          contentId: t.content_id || t.contentId,
+          steps: t.steps || undefined,
+        });
+      });
+
+      const days: DayPlan[] = [];
+      const sortedDays = Object.keys(tasksByDay).map(Number).sort((a, b) => a - b);
+      
+      sortedDays.forEach((dayNum, dayIdx) => {
+          days.push({
+              date: tasksByDay[dayNum].dayName,
+              tasks: tasksByDay[dayNum].tasks,
+              isToday: idx === 0 && dayIdx === 0,
+          });
+      });
 
       return {
         week_number: week.week_number || idx + 1,
@@ -223,7 +251,7 @@ export default function Roadmap() {
         status: (week.status === 'locked' ? 'in_progress' : (week.status || 'in_progress')) as 'done' | 'in_progress' | 'locked',
         progress: week.progress,
         totalTasks,
-        completedTasks: week.completedTasks || mappedTasks.filter(t => t.status === 'done').length,
+        completedTasks: week.completedTasks || apiTasks.filter((t: any) => t.status === 'done').length,
         days,
         goal: week.goal || week.ai_coach_message || '',
       };

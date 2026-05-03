@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getLessonById, VideoLesson as VideoLessonType, ComprehensionQuestion, VocabularyItem, VocabExercise } from '../data/videoLessons';
 import { supabase } from '../lib/supabase';
+import { useUser } from '../contexts/UserContext';
 
 // ─── Step Status Types ─────────────────────────────────────────────────
 type StepStatus = 'locked' | 'current' | 'completed';
@@ -23,10 +24,31 @@ const STEPS: StepDef[] = [
 // ─── Main Component ────────────────────────────────────────────────────
 export default function VideoLesson() {
     const { id } = useParams<{ id: string }>();
+    const { user } = useUser();
     const lesson = getLessonById(id || '');
 
     const [currentStep, setCurrentStep] = useState(1);
     const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
+
+    if (user?.plan === 'free' || user?.plan === 'basic' || !user?.plan) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#030712] text-gray-900 dark:text-white px-4">
+                <div className="text-center space-y-4 max-w-md mx-auto">
+                    <div className="text-6xl mb-6">🔒</div>
+                    <h1 className="text-2xl sm:text-3xl font-bold">Premium Feature</h1>
+                    <p className="text-slate-500 dark:text-slate-400 leading-relaxed">
+                        Interactive Video Podcasts are only available on the Pro and Premium plans. Upgrade to unlock comprehension tests, vocabulary builders, and AI-powered summary feedback.
+                    </p>
+                    <Link to="/subscription" className="inline-block mt-4 w-full px-6 py-3.5 bg-blue-600 text-white rounded-xl hover:bg-blue-500 transition-colors font-bold shadow-lg shadow-blue-500/20">
+                        Upgrade Plan
+                    </Link>
+                    <Link to="/dashboard" className="block mt-4 text-sm text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 font-medium">
+                        Return to Dashboard
+                    </Link>
+                </div>
+            </div>
+        );
+    }
 
     if (!lesson) {
         return (

@@ -97,13 +97,13 @@ export const SignUpCard = () => {
       setServerError(error);
       setIsSubmitting(false);
     } else {
-      setSuccessMessage('Account created successfully! Redirecting...');
+      setSuccessMessage('Account created successfully! A confirmation email has been sent to your email address. Redirecting...');
       setEmail('');
       setPassword('');
       setConfirmPassword('');
       setIsSubmitting(false);
       // Redirect to login after a short delay
-      setTimeout(() => navigate('/login'), 2000);
+      setTimeout(() => navigate('/login'), 4000);
     }
   };
 

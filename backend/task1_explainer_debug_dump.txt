@@ -1,0 +1,292 @@
+{
+  "essay_word_count": 178,
+  "current_overall_band": 6.5,
+  "target_band_demonstrated": 7.5,
+  "priority_summary": [
+    {
+      "rank": 1,
+      "area": "Overview Data Accuracy",
+      "current_problem": "Overview incorrectly states that Medicine applications fell, when they actually increased significantly. Also claims two subjects fell, but only Arts declined.",
+      "score_impact": "Caps Task Achievement at Band 6.0; cannot reach Band 7+ with factual errors in overview.",
+      "action_step": "Rewrite overview to accurately summarize the main trends: only Arts declined, all other subjects rose, with Computer Science showing the most dramatic growth.",
+      "where_to_look": "Paragraph 2 (Overview)"
+    },
+    {
+      "rank": 2,
+      "area": "Data Consistency",
+      "current_problem": "Contradicts overview in body: overview says Medicine fell, body says it grew moderately.",
+      "score_impact": "Undermines reliability and coherence; reduces Task Achievement.",
+      "action_step": "Ensure all statements about Medicine are consistent and match the chart.",
+      "where_to_look": "Paragraphs 2 and 5"
+    },
+    {
+      "rank": 3,
+      "area": "Trend Description Precision",
+      "current_problem": "Some trend sentences are mechanical or vague (e.g., 'rose in three subjects'), and some comparisons could be more explicit.",
+      "score_impact": "Prevents Band 8+ for Coherence and Task Achievement.",
+      "action_step": "Use more precise, comparative trend language and avoid listing.",
+      "where_to_look": "Body paragraphs"
+    },
+    {
+      "rank": 4,
+      "area": "Vocabulary Range",
+      "current_problem": "Repetition of 'applications' and 'most popular'; some awkward collocations.",
+      "score_impact": "Caps Lexical Resource at Band 7.",
+      "action_step": "Use more varied synonyms and natural collocations for high-frequency words.",
+      "where_to_look": "Throughout essay"
+    }
+  ],
+  "coherence_feedback": {
+    "paragraph_structure": {
+      "paragraph_count": 4,
+      "has_clear_breaks": true,
+      "expected_structure": ["Introduction", "Overview", "Body 1", "Body 2"],
+      "detected_structure": ["Introduction", "Overview", "Body 1", "Body 2"],
+      "feedback_message": "Your structure is strong: keep the overview as a separate paragraph after the introduction. This supports logical progression."
+    },
+    "overview_feedback": {
+      "overview_present": true,
+      "position_correct": true,
+      "detected_position": "start",
+      "overview_quality": "weak",
+      "original_overview": "Overall, applications rose in three subjects (Computer Science, Business, and Engineering) but fell in two (Medicine and Arts). Business attracted the highest number of applicants in both years, while Arts had the fewest in 2023.",
+      "issues": [
+        "Factual error: Medicine actually increased, not fell.",
+        "Incorrect summary: Only Arts declined, not two subjects.",
+        "Overview contradicts body data."
+      ],
+      "improved_overview": "Overall, applications increased in all subjects except Arts, which was the only field to experience a decline. Business remained the most popular subject throughout, while Computer Science showed the most dramatic growth, and Arts became the least popular by 2023.",
+      "key_changes_made": [
+        "Corrected the number of subjects that declined (only Arts).",
+        "Accurately described Medicine as increasing.",
+        "Highlighted Computer Science's dramatic growth.",
+        "Maintained focus on most/least popular subjects."
+      ]
+    },
+    "data_grouping_fixes": [
+      {
+        "scattered_sentences": [
+          "In 2020, Business was the most popular subject with 45,000 applications, followed by Engineering at 28,000 and Arts at 22,000.",
+          "Medicine and Computer Science received 15,000 and 12,000 applications respectively, making them the least sought-after fields that year."
+        ],
+        "grouped_sentence": "In 2020, Business led with 45,000 applications, followed by Engineering (28,000), Arts (22,000), Medicine (15,000), and Computer Science (12,000), with the latter two being the least popular choices.",
+        "explanation": "Combining these sentences creates a clear ranking and avoids mechanical listing."
+      }
+    ],
+    "referencing_errors": [],
+    "connector_analysis": {
+      "overused_connectors": [],
+      "cohesion_fixes": [],
+      "comparison_language": {
+        "comparisons_used": ["while", "followed by", "overtook", "in contrast"],
+        "missing_comparisons": ["whereas", "by comparison"],
+        "feedback_message": "Good use of comparison language, but adding more varied structures (e.g., 'whereas', 'by comparison') would further strengthen your essay."
+      }
+    }
+  },
+  "data_coverage": {
+    "total_key_features": 4,
+    "features_covered": 3,
+    "features_missed": 1,
+    "feature_map": [
+      {
+        "feature_description": "Computer Science shows over 3x growth (12k to 38k) - most dramatic increase",
+        "covered_in_essay": true,
+        "how_covered": "Computer Science saw the most dramatic growth, more than tripling from 12,000 to 38,000.",
+        "why_important": "This is the most significant trend in the data.",
+        "suggested_sentence": null
+      },
+      {
+        "feature_description": "Business had highest applications in both years (45k in 2020, 62k in 2023)",
+        "covered_in_essay": true,
+        "how_covered": "Business attracted the highest number of applicants in both years.",
+        "why_important": "Shows the leading subject and overall trend.",
+        "suggested_sentence": null
+      },
+      {
+        "feature_description": "Arts is the only category that decreased (22k to 19k)",
+        "covered_in_essay": true,
+        "how_covered": "Arts dropped by 3,000 from 22,000 to 19,000, becoming the least popular subject in 2023.",
+        "why_important": "Highlights the only decline and shift in popularity.",
+        "suggested_sentence": null
+      },
+      {
+        "feature_description": "Medicine increased significantly from 15k to 27k (80% growth)",
+        "covered_in_essay": false,
+        "how_covered": "Overview incorrectly states Medicine fell; body says 'grew moderately' (understates growth).",
+        "why_important": "Significant growth in Medicine is a key feature; misreporting undermines accuracy.",
+        "suggested_sentence": "Medicine applications rose substantially from 15,000 to 27,000, representing an 80% increase."
+      }
+    ],
+    "data_accuracy_issues": [
+      {
+        "original_sentence": "Overall, applications rose in three subjects (Computer Science, Business, and Engineering) but fell in two (Medicine and Arts).",
+        "issue_description": "Medicine actually increased from 15,000 to 27,000; only Arts declined.",
+        "corrected_data": "Applications rose in four subjects (Computer Science, Business, Engineering, and Medicine), while only Arts declined."
+      }
+    ],
+    "ignored_dual_chart": false,
+    "has_personal_opinion": false,
+    "opinion_sentence": null,
+    "overall_assessment": "Most key features are covered, but a critical error about Medicine's trend in the overview prevents full credit for Task Achievement."
+  },
+  "trend_fixes": [
+    {
+      "original_sentence": "Overall, applications rose in three subjects (Computer Science, Business, and Engineering) but fell in two (Medicine and Arts).",
+      "issue": "inaccurate_figure",
+      "corrected_sentence": "Overall, applications increased in all subjects except Arts, which experienced a decline.",
+      "explanation": "Corrects the factual error regarding Medicine and accurately summarizes the main trends.",
+      "paragraph_location": 2
+    },
+    {
+      "original_sentence": "Medicine applications grew moderately from 15,000 to 27,000, while Arts dropped by 3,000 from 22,000 to 19,000, becoming the least popular subject in 2023.",
+      "issue": "vague_trend",
+      "corrected_sentence": "Medicine applications rose sharply from 15,000 to 27,000, an increase of about 80%, whereas Arts declined by 3,000 to become the least popular subject in 2023.",
+      "explanation": "Describes the Medicine trend more accurately and uses a comparative structure.",
+      "paragraph_location": 5
+    }
+  ],
+  "micro_fixes": [
+    {
+      "original_sentence": "Medicine applications grew moderately from 15,000 to 27,000, while Arts dropped by 3,000 from 22,000 to 19,000, becoming the least popular subject in 2023.",
+      "corrected_sentence": "Medicine applications rose sharply from 15,000 to 27,000, an increase of about 80%, whereas Arts declined by 3,000 to become the least popular subject in 2023.",
+      "error_type": "grammar",
+      "specific_error": "vague_trend",
+      "explanation": "Replaces 'grew moderately' with a more accurate and specific description of the increase.",
+      "priority": "P2_important",
+      "paragraph_location": 4
+    }
+  ],
+  "vocabulary_feedback": {
+    "trend_vocabulary_used": ["rose", "fell", "jumped", "grew", "dropped", "increased", "experienced", "tripling"],
+    "comparison_vocabulary_used": ["while", "in contrast", "followed by", "overtook"],
+    "missing_trend_words": ["surged", "plateaued"],
+    "missing_comparison_words": ["whereas", "by comparison"],
+    "word_upgrades": [
+      {
+        "basic_phrase": "applications rose in three subjects",
+        "context_sentence": "Overall, applications rose in three subjects (Computer Science, Business, and Engineering) but fell in two (Medicine and Arts).",
+        "upgrade_options": ["applications increased in all but one subject", "applications surged in most fields"],
+        "best_fit": "applications increased in all but one subject",
+        "improved_sentence": "Overall, applications increased in all but one subject, with only Arts experiencing a decline."
+      },
+      {
+        "basic_phrase": "most popular subject",
+        "context_sentence": "Business was the most popular subject with 45,000 applications",
+        "upgrade_options": ["leading subject", "the top choice"],
+        "best_fit": "leading subject",
+        "improved_sentence": "Business was the leading subject with 45,000 applications"
+      }
+    ],
+    "topic_word_bank": {
+      "chart_type": "bar_chart",
+      "essential_words": ["applications", "subject area", "increase", "decline", "peak", "lowest", "highest", "trend", "figure"],
+      "useful_collocations": ["dramatic growth", "significant increase", "sharp decline", "remained the most popular", "overtook", "least popular", "rose sharply", "fell slightly"]
+    }
+  },
+  "grammar_feedback": {
+    "pattern_lessons": [
+      {
+        "error_pattern": "grew moderately",
+        "pattern_name_friendly": "Vague Trend Description",
+        "examples_from_essay": [
+          {
+            "original": "Medicine applications grew moderately from 15,000 to 27,000",
+            "corrected": "Medicine applications rose sharply from 15,000 to 27,000, an increase of about 80%",
+            "error_highlighted": "'grew moderately' is too vague and understates the actual increase"
+          }
+        ],
+        "the_rule": "Use precise adverbs and percentages to describe significant changes.",
+        "memory_trick": "If the number nearly doubles, call it 'sharply' or 'significantly', not 'moderately'.",
+        "practice_tip": "Practice describing changes with both numbers and adjectives (e.g., 'rose by 80%', 'doubled', 'surged')."
+      }
+    ],
+    "complexity_suggestions": [
+      {
+        "simple_sentences": [
+          "Business was the most popular subject with 45,000 applications.",
+          "Engineering had 28,000 applications."
+        ],
+        "complex_version": "Business was the most popular subject with 45,000 applications, while Engineering attracted a lower figure of 28,000.",
+        "structures_demonstrated": ["while", "comparative clause"],
+        "explanation": "Combining sentences with 'while' creates a direct comparison and shows grammatical range."
+      }
+    ],
+    "tense_consistency_issues": [],
+    "passive_voice_usage": "appropriate",
+    "grammar_priority": "important",
+    "simple_sentence_count": 8,
+    "complex_sentence_count": 2,
+    "recommended_tense": "past_simple",
+    "tense_rule_summary": "Use past simple for all data from 2020 and 2023, as these are completed time periods.",
+    "tense_examples": [
+      {
+        "correct": "Water consumption in City A stood at 190 litres in 2010.",
+        "incorrect": "Water consumption in City A stands at 190 litres in 2010.",
+        "explanation": "Use past simple for historical data."
+      }
+    ],
+    "tense_applicability": [
+      {
+        "tense": "Past Simple",
+        "context": "All 2020 and 2023 data",
+        "is_correct": true,
+        "reason": "Data is from a completed past timeframe."
+      },
+      {
+        "tense": "Present Simple",
+        "context": "Comparing cities in the chart description",
+        "is_correct": false,
+        "reason": "Data points themselves are historical, not eternal truths."
+      },
+      {
+        "tense": "Present Perfect",
+        "context": "Changes up to now",
+        "is_correct": false,
+        "reason": "The chart only shows data up to 2023, not the current moment."
+      }
+    ],
+    "student_tense_error_count": 0
+  },
+  "score_projections": [
+    {
+      "criterion": "Task Achievement",
+      "current_score": 6.0,
+      "achievable_score": 7.0,
+      "key_changes_needed": [
+        "Correct the overview to match the chart: only Arts declined, Medicine increased.",
+        "Ensure all trend descriptions are consistent and accurate."
+      ]
+    },
+    {
+      "criterion": "Coherence & Cohesion",
+      "current_score": 7.0,
+      "achievable_score": 8.0,
+      "key_changes_needed": [
+        "Add more varied and natural comparison structures.",
+        "Reduce any mechanical use of time markers."
+      ]
+    },
+    {
+      "criterion": "Lexical Resource",
+      "current_score": 7.0,
+      "achievable_score": 8.0,
+      "key_changes_needed": [
+        "Use more synonyms for high-frequency words.",
+        "Refine collocations for complete naturalness."
+      ]
+    },
+    {
+      "criterion": "Grammatical Range & Accuracy",
+      "current_score": 7.0,
+      "achievable_score": 8.0,
+      "key_changes_needed": [
+        "Eliminate minor awkwardness in complex structures.",
+        "Increase variety of complex sentences with accurate comparisons."
+      ]
+    }
+  ],
+  "one_thing_done_well": "You clearly identified and described the most dramatic trend (Computer Science tripling in applications), using strong comparative language.",
+  "immediate_focus": "Fix all factual errors in your overview—always double-check that every summary statement matches the chart exactly.",
+  "practice_suggestion": "Before writing your overview, list each subject's trend (up/down/flat) on scrap paper to ensure your summary is 100% accurate. Practice writing 2-sentence overviews for different charts using only correct, general trends."
+}

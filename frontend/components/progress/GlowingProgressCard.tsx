@@ -388,19 +388,6 @@ export default function GlowingProgressCard({
             <Plus className="h-3.5 w-3.5 mr-1.5" />
             Add Task
           </Button>
-          <Button
-            size="sm"
-            onClick={() => onAiSuggest?.()}
-            className={cn(
-              "h-9 rounded-full border font-medium px-4 transition-all",
-              theme === "dark"
-                ? "bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 border-indigo-500/20 hover:text-indigo-200"
-                : "bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-600 border-indigo-500/20 hover:text-indigo-700"
-            )}
-          >
-            <Wand2 className="h-3.5 w-3.5 mr-1.5" />
-            AI Suggest
-          </Button>
         </div>
 
       </div>
