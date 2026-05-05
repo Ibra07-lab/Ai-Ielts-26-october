@@ -6,7 +6,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig(({ command }) => {
   const isBuild = command === 'build'
   return {
-    base: isBuild ? '/frontend/' : '/',
+    base: '/',
     resolve: {
       alias: {
         '@': path.resolve(__dirname),
@@ -232,7 +232,7 @@ export default defineConfig(({ command }) => {
     },
     build: {
       minify: isBuild ? 'esbuild' : false,
-      outDir: '../backend/frontend/dist',
+      outDir: 'dist',
     },
   }
 })
