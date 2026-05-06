@@ -882,7 +882,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
             <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-4 lg:gap-8 lg:h-full lg:overflow-hidden pb-6">
 
               {/* Left Column: Prompt & Chart (Flex Column, No page scroll on LG) */}
-              <div className="w-full lg:w-[45%] flex-shrink-0 min-w-0 h-[400px] lg:h-full flex flex-col lg:pr-1 gap-4">
+              <div className="w-full lg:w-[45%] flex-shrink-0 min-w-0 h-[250px] sm:h-[400px] lg:h-full flex flex-col lg:pr-1 gap-2 sm:gap-4">
                 <Card className="flex-1 border-0 shadow-none bg-transparent flex flex-col min-h-0">
                   <div className="flex flex-col h-full gap-4">
                     {/* Collapsible Prompt Info - Compact Header */}
@@ -950,7 +950,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                         {/* If no visual content/Task 2, this expands to fill space (flex-1). Otherwise compact (flex-none) */}
                         <div className={`
                           ${hasVisualContent ? "flex-none max-h-[30%]" : "flex-none h-fit w-full"} 
-                          bg-blue-50/50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-100 dark:border-blue-800/40 shadow-sm overflow-y-auto
+                          bg-blue-50/50 dark:bg-blue-900/20 p-4 sm:p-6 rounded-xl border border-blue-100 dark:border-blue-800/40 shadow-sm overflow-y-auto
                         `}>
                           <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-4 flex items-center gap-2 text-sm">
                             <BookOpen className="w-4 h-4" />
@@ -971,7 +971,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
               </div>
 
               {/* Right Column: Editor Area (Wide & Clean) */}
-              <div className="flex-1 min-w-0 h-[500px] lg:h-full flex flex-col min-h-0">
+              <div className="flex-1 min-w-0 h-[350px] sm:h-[500px] lg:h-full flex flex-col min-h-0 mt-2 sm:mt-0">
 
                 {/* Editor Container (Centered & Constrained) */}
                 <Card className="flex-1 flex flex-col h-full border border-slate-300 dark:border-slate-700 shadow-sm overflow-hidden bg-white dark:bg-slate-900 rounded-xl">
@@ -980,7 +980,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                       placeholder="Start writing your response here..."
                       value={content}
                       onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value)}
-                      className="flex-1 w-full mx-auto resize-none border-0 focus-visible:ring-0 p-8 leading-loose text-slate-800 dark:text-slate-200 placeholder:text-slate-300 dark:placeholder:text-slate-700 bg-transparent custom-scrollbar"
+                      className="flex-1 w-full mx-auto resize-none border-0 focus-visible:ring-0 p-4 sm:p-8 leading-relaxed sm:leading-loose text-slate-800 dark:text-slate-200 placeholder:text-slate-300 dark:placeholder:text-slate-700 bg-transparent custom-scrollbar"
                       style={{ fontFamily: 'Arial, sans-serif', fontSize: '16px' }}
                       spellCheck={false}
                     />
