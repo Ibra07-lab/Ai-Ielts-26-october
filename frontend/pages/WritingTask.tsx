@@ -882,8 +882,8 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
             <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-4 lg:gap-8 lg:h-full lg:overflow-hidden pb-6">
 
               {/* Left Column: Prompt & Chart (Flex Column, No page scroll on LG) */}
-              <div className="w-full lg:w-[45%] flex-none lg:flex-shrink-0 min-w-0 h-[300px] sm:h-[400px] lg:h-full flex flex-col lg:pr-1 gap-2 sm:gap-4">
-                <Card className="flex-1 border-0 shadow-none bg-transparent flex flex-col min-h-0">
+              <div className="w-full lg:w-[45%] flex-none lg:flex-shrink-0 min-w-0 h-auto lg:h-full flex flex-col lg:pr-1 gap-2 sm:gap-4">
+                <Card className="flex-none lg:flex-1 border-0 shadow-none bg-transparent flex flex-col min-h-0">
                   <div className="flex flex-col h-full gap-4">
                     {/* Collapsible Prompt Info - Compact Header */}
                     <details className="group bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 open:pb-4 transition-all flex-none">
@@ -899,10 +899,10 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                     </details>
 
                     {prompt ? (
-                      <div className="flex-1 flex flex-col gap-4 min-h-0">
+                      <div className="flex-none lg:flex-1 flex flex-col gap-4 min-h-0">
                         {/* 1. VISUAL CONTENT (Main Focus, Flex-1) - Only show if exists */}
                         {hasVisualContent && (
-                          <div className="flex-1 min-h-0 relative rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-black/40 shadow-sm overflow-hidden flex flex-col">
+                          <div className="h-[250px] sm:h-[300px] lg:h-auto lg:flex-1 min-h-0 relative rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-black/40 shadow-sm overflow-hidden flex flex-col">
                             <div className="flex-1 overflow-y-auto custom-scrollbar">
                               {/* Task Image */}
                               {
@@ -949,7 +949,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                         {/* 2. QUESTION BOX (Bottom) */}
                         {/* If no visual content/Task 2, this expands to fill space (flex-1). Otherwise compact (flex-none) */}
                         <div className={`
-                          ${hasVisualContent ? "flex-none max-h-[30%]" : "flex-none h-fit w-full"} 
+                          ${hasVisualContent ? "flex-none max-h-[250px] lg:max-h-[30%]" : "flex-none h-fit w-full"} 
                           bg-blue-50/50 dark:bg-blue-900/20 p-4 sm:p-6 rounded-xl border border-blue-100 dark:border-blue-800/40 shadow-sm overflow-y-auto
                         `}>
                           <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-4 flex items-center gap-2 text-sm">
