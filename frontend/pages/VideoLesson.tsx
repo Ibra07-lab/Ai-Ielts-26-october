@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getLessonById, VideoLesson as VideoLessonType, ComprehensionQuestion, VocabularyItem, VocabExercise } from '../data/videoLessons';
+import { getLessonById, VideoLesson as VideoLessonType, ComprehensionQuestion, VocabularyItem, VocabExercise, videoLessons } from '../data/videoLessons';
 import { supabase } from '../lib/supabase';
 import { useUser } from '../contexts/UserContext';
 
@@ -26,11 +26,15 @@ export default function VideoLesson() {
     const { id } = useParams<{ id: string }>();
     const { user } = useUser();
     const lesson = getLessonById(id || '');
+    
+    const lessonIndex = videoLessons.findIndex(l => l.id === id);
+    const isFreeTier = !user?.plan || user.plan === 'free' || user.plan === 'basic';
+    const isLocked = isFreeTier && lessonIndex >= 2;
 
     const [currentStep, setCurrentStep] = useState(1);
     const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
 
-    if (user?.plan === 'free' || user?.plan === 'basic' || !user?.plan) {
+    if (isLocked) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#030712] text-gray-900 dark:text-white px-4">
                 <div className="text-center space-y-4 max-w-md mx-auto">

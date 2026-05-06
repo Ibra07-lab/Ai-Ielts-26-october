@@ -145,6 +145,7 @@ export default function Dashboard() {
   ];
 
   const dailyMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+  const isFreeTier = !user?.plan || user.plan === 'free' || user.plan === 'basic';
 
   return (
     <>
@@ -216,63 +217,49 @@ export default function Dashboard() {
                     <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-r from-white dark:from-[#151624] to-transparent z-20 pointer-events-none -ml-5 sm:-ml-8 transition-colors"></div>
                     <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-l from-white dark:from-[#151624] to-transparent z-20 pointer-events-none -mr-5 sm:-mr-8 transition-colors"></div>
                     <div ref={scrollRef} className="flex overflow-x-auto gap-4 sm:gap-6 pb-6 pt-2 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pr-[20%]">
-                      <Link to="/video-lesson/benefits-of-doing-nothing" className="shrink-0 w-[200px] sm:w-[240px] snap-start group cursor-pointer">
-                        <div className="aspect-[16/10] flex items-center justify-center w-full rounded-xl overflow-hidden ring-1 ring-slate-200 dark:ring-white/10 shadow-md dark:shadow-lg bg-slate-50 dark:bg-[#0c0e14] relative z-10 transition-transform duration-500 group-hover:scale-[1.02]">
-                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/Y681hXWwhQY?si=FdjQAajOcGjPlTu4" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin" allowFullScreen></iframe>
-                        </div>
-                        <h3 className="text-slate-900 dark:text-white font-bold mt-3 text-sm line-clamp-2 leading-tight group-hover:text-red-500 dark:group-hover:text-red-400 transition-colors">The benefits of doing nothing</h3>
-                        <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Listening Practice • 6 mins</p>
-                      </Link>
-                      <Link to="/video-lesson/inflation-explained" className="shrink-0 w-[200px] sm:w-[240px] snap-start group cursor-pointer">
-                        <div className="aspect-[16/10] flex items-center justify-center w-full rounded-xl overflow-hidden ring-1 ring-slate-200 dark:ring-white/10 shadow-md dark:shadow-lg bg-slate-50 dark:bg-[#0c0e14] relative z-10 transition-transform duration-500 group-hover:scale-[1.02]">
-                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/FKwmUNffu7M?si=vsIdP35yfvOW9ChB" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin" allowFullScreen></iframe>
-                        </div>
-                        <h3 className="text-slate-900 dark:text-white font-bold mt-3 text-sm line-clamp-2 leading-tight group-hover:text-red-500 dark:group-hover:text-red-400 transition-colors">6 Minute English: Inflation</h3>
-                        <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Listening Practice • 14 mins</p>
-                      </Link>
-                      <Link to="/video-lesson/following-your-dreams" className="shrink-0 w-[200px] sm:w-[240px] snap-start group cursor-pointer">
-                        <div className="aspect-[16/10] flex items-center justify-center w-full rounded-xl overflow-hidden ring-1 ring-slate-200 dark:ring-white/10 shadow-md dark:shadow-lg bg-slate-50 dark:bg-[#0c0e14] relative z-10 transition-transform duration-500 group-hover:scale-[1.02]">
-                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/26PrgjTboVQ?si=6dCJb1_0crdo8zu1" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin" allowFullScreen></iframe>
-                        </div>
-                        <h3 className="text-slate-900 dark:text-white font-bold mt-3 text-sm line-clamp-2 leading-tight group-hover:text-red-500 dark:group-hover:text-red-400 transition-colors">Are you following your dreams?</h3>
-                        <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Listening Practice • 13 mins</p>
-                      </Link>
-                      <Link to="/video-lesson/social-media-health" className="shrink-0 w-[200px] sm:w-[240px] snap-start group cursor-pointer">
-                        <div className="aspect-[16/10] flex items-center justify-center w-full rounded-xl overflow-hidden ring-1 ring-slate-200 dark:ring-white/10 shadow-md dark:shadow-lg bg-slate-50 dark:bg-[#0c0e14] relative z-10 transition-transform duration-500 group-hover:scale-[1.02]">
-                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/g8q-Nq-ajx8?si=Q_cngTG6MqqkJrZr" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin" allowFullScreen></iframe>
-                        </div>
-                        <h3 className="text-slate-900 dark:text-white font-bold mt-3 text-sm line-clamp-2 leading-tight group-hover:text-red-500 dark:group-hover:text-red-400 transition-colors">Social media and teenage health</h3>
-                        <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Listening Practice • 6 mins</p>
-                      </Link>
-                      <Link to="/video-lesson/fast-fashion" className="shrink-0 w-[200px] sm:w-[240px] snap-start group cursor-pointer">
-                        <div className="aspect-[16/10] flex items-center justify-center w-full rounded-xl overflow-hidden ring-1 ring-slate-200 dark:ring-white/10 shadow-md dark:shadow-lg bg-slate-50 dark:bg-[#0c0e14] relative z-10 transition-transform duration-500 group-hover:scale-[1.02]">
-                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/3-icphihD6Y?si=vUbZtotp6FSyG26I" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin" allowFullScreen></iframe>
-                        </div>
-                        <h3 className="text-slate-900 dark:text-white font-bold mt-3 text-sm line-clamp-2 leading-tight group-hover:text-red-500 dark:group-hover:text-red-400 transition-colors">Could you give up fast fashion?</h3>
-                        <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Listening Practice • 6 mins</p>
-                      </Link>
-                      <Link to="/video-lesson/cities-future" className="shrink-0 w-[200px] sm:w-[240px] snap-start group cursor-pointer">
-                        <div className="aspect-[16/10] flex items-center justify-center w-full rounded-xl overflow-hidden ring-1 ring-slate-200 dark:ring-white/10 shadow-md dark:shadow-lg bg-slate-50 dark:bg-[#0c0e14] relative z-10 transition-transform duration-500 group-hover:scale-[1.02]">
-                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/3kS0cMziUJY?si=JvBm9-qF9eBPcxId" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin" allowFullScreen></iframe>
-                        </div>
-                        <h3 className="text-slate-900 dark:text-white font-bold mt-3 text-sm line-clamp-2 leading-tight group-hover:text-red-500 dark:group-hover:text-red-400 transition-colors">Cities of the future</h3>
-                        <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Listening Practice • 6 mins</p>
-                      </Link>
+                      {[ 
+                        { id: 'benefits-of-doing-nothing', yt: 'Y681hXWwhQY?si=FdjQAajOcGjPlTu4', title: 'The benefits of doing nothing', category: 'Listening Practice • 6 mins' },
+                        { id: 'inflation-explained', yt: 'FKwmUNffu7M?si=vsIdP35yfvOW9ChB', title: '6 Minute English: Inflation', category: 'Listening Practice • 14 mins' },
+                        { id: 'following-your-dreams', yt: '26PrgjTboVQ?si=6dCJb1_0crdo8zu1', title: 'Are you following your dreams?', category: 'Listening Practice • 13 mins' },
+                        { id: 'social-media-health', yt: 'g8q-Nq-ajx8?si=Q_cngTG6MqqkJrZr', title: 'Social media and teenage health', category: 'Listening Practice • 6 mins' },
+                        { id: 'fast-fashion', yt: '3-icphihD6Y?si=vUbZtotp6FSyG26I', title: 'Could you give up fast fashion?', category: 'Listening Practice • 6 mins' },
+                        { id: 'cities-future', yt: '3kS0cMziUJY?si=JvBm9-qF9eBPcxId', title: 'Cities of the future', category: 'Listening Practice • 6 mins' },
+                        { id: 'university-worth', yt: '_O48-ao5_40?si=6Y4ak03zak_e5KLj', title: 'Is it still worth going to university?', category: 'Economics • 7 mins' },
+                        { id: 'future-work', yt: 's1HxJVusR2w?si=f-2lEo4fhOnFfULz', title: 'What is the future of work?', category: 'Workplace • 6 mins' }
+                      ].map((vid, index) => {
+                        const isLocked = (!user?.plan || user.plan === 'free') && index >= 2;
+                        const content = (
+                          <>
+                            <div className={`aspect-[16/10] flex items-center justify-center w-full rounded-xl overflow-hidden ring-1 ring-slate-200 dark:ring-white/10 shadow-md dark:shadow-lg bg-slate-50 dark:bg-[#0c0e14] relative z-10 transition-transform duration-500 ${!isLocked && 'group-hover:scale-[1.02]'}`}>
+                              <iframe className="w-full aspect-video pointer-events-none" src={`https://www.youtube.com/embed/${vid.yt}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin" allowFullScreen></iframe>
+                              {isLocked && (
+                                <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-[2px] flex items-center justify-center z-20">
+                                  <div className="bg-slate-900/80 px-3 py-1.5 rounded-full flex items-center gap-2 border border-white/10 text-white/90 shadow-lg backdrop-blur-md">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                    <span className="text-xs font-bold tracking-wide uppercase">Pro</span>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                            <h3 className={`font-bold mt-3 text-sm line-clamp-2 leading-tight transition-colors ${isLocked ? 'text-slate-400 dark:text-slate-500' : 'text-slate-900 dark:text-white group-hover:text-red-500 dark:group-hover:text-red-400'}`}>{vid.title}</h3>
+                            <p className={`text-xs mt-1 ${isLocked ? 'text-slate-400/50 dark:text-slate-500/50' : 'text-slate-500 dark:text-slate-400'}`}>{vid.category}</p>
+                          </>
+                        );
 
-                      <Link to="/video-lesson/university-worth" className="shrink-0 w-[200px] sm:w-[240px] snap-start group cursor-pointer">
-                        <div className="aspect-[16/10] flex items-center justify-center w-full rounded-xl overflow-hidden ring-1 ring-slate-200 dark:ring-white/10 shadow-md dark:shadow-lg bg-slate-50 dark:bg-[#0c0e14] relative z-10 transition-transform duration-500 group-hover:scale-[1.02]">
-                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/_O48-ao5_40?si=6Y4ak03zak_e5KLj" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin" allowFullScreen></iframe>
-                        </div>
-                        <h3 className="text-slate-900 dark:text-white font-bold mt-3 text-sm line-clamp-2 leading-tight group-hover:text-red-500 dark:group-hover:text-red-400 transition-colors">Is it still worth going to university?</h3>
-                        <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Economics • 7 mins</p>
-                      </Link>
-                      <Link to="/video-lesson/future-work" className="shrink-0 w-[200px] sm:w-[240px] snap-start group cursor-pointer">
-                        <div className="aspect-[16/10] flex items-center justify-center w-full rounded-xl overflow-hidden ring-1 ring-slate-200 dark:ring-white/10 shadow-md dark:shadow-lg bg-slate-50 dark:bg-[#0c0e14] relative z-10 transition-transform duration-500 group-hover:scale-[1.02]">
-                          <iframe className="w-full aspect-video pointer-events-none" src="https://www.youtube.com/embed/s1HxJVusR2w?si=f-2lEo4fhOnFfULz" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin" allowFullScreen></iframe>
-                        </div>
-                        <h3 className="text-slate-900 dark:text-white font-bold mt-3 text-sm line-clamp-2 leading-tight group-hover:text-red-500 dark:group-hover:text-red-400 transition-colors">What is the future of work?</h3>
-                        <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Workplace • 6 mins</p>
-                      </Link>
+                        if (isLocked) {
+                          return (
+                            <div key={vid.id} onClick={() => navigate('/subscription')} className="shrink-0 w-[200px] sm:w-[240px] snap-start group cursor-pointer grayscale opacity-75 hover:opacity-100 transition-opacity">
+                              {content}
+                            </div>
+                          );
+                        }
+
+                        return (
+                          <Link key={vid.id} to={`/video-lesson/${vid.id}`} className="shrink-0 w-[200px] sm:w-[240px] snap-start group cursor-pointer">
+                            {content}
+                          </Link>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
@@ -448,12 +435,16 @@ export default function Dashboard() {
               <div className="space-y-3">
                 {/* Personalized Plan Button */}
                 <Button
-                  onClick={() => navigate('/plan')}
-                  className="w-full h-14 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white border-0 font-bold text-base shadow-xl shadow-blue-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                  onClick={() => isFreeTier ? navigate('/subscription') : navigate('/plan')}
+                  className={`w-full h-14 rounded-2xl border-0 font-bold text-base shadow-xl transition-all ${isFreeTier ? 'bg-slate-300 dark:bg-slate-800 text-slate-500 dark:text-slate-400 grayscale opacity-75 hover:opacity-100' : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-blue-500/20 hover:scale-[1.02] active:scale-[0.98]'}`}
                 >
-                  <Calendar className="h-5 w-5 mr-3" />
+                  {isFreeTier ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mr-3"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  ) : (
+                    <Calendar className="h-5 w-5 mr-3" />
+                  )}
                   My Personalized Plan
-                  <div className="px-2 py-0.5 ml-3 bg-white/20 rounded text-[10px] uppercase tracking-wider">New</div>
+                  <div className={`px-2 py-0.5 ml-3 rounded text-[10px] uppercase tracking-wider ${isFreeTier ? 'bg-slate-400/20 dark:bg-slate-700 text-slate-600 dark:text-slate-300' : 'bg-white/20 text-white'}`}>{isFreeTier ? 'Pro' : 'New'}</div>
                   <ArrowRight className="h-5 w-5 ml-auto opacity-80" />
                 </Button>
 

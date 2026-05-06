@@ -152,14 +152,14 @@ export default function Roadmap() {
   const [fetchError, setFetchError] = useState(false);
   const [isRetrying, setIsRetrying] = useState(false);
 
-  if (user?.plan === 'free' || !user?.plan) {
+  if (user?.plan === 'free' || user?.plan === 'basic' || !user?.plan) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#030712] text-gray-900 dark:text-white px-4">
         <div className="text-center space-y-4 max-w-md mx-auto">
           <div className="text-6xl mb-6">🗺️</div>
           <h1 className="text-2xl sm:text-3xl font-bold">Personalized Roadmap Locked</h1>
           <p className="text-slate-500 dark:text-slate-400 leading-relaxed">
-            Your AI-generated personalized study plan is only available on Basic, Pro, and Premium plans. Upgrade to unlock your step-by-step IELTS preparation journey.
+            Your AI-generated personalized study plan is only available on Pro and Premium plans. Upgrade to unlock your step-by-step IELTS preparation journey.
           </p>
           <Link to="/subscription" className="inline-block mt-4 w-full px-6 py-3.5 bg-blue-600 text-white rounded-xl hover:bg-blue-500 transition-colors font-bold shadow-lg shadow-blue-500/20">
             View Upgrade Options
