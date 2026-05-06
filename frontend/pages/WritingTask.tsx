@@ -804,7 +804,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
       {isTestStarted && selectedTest && (
         <div className={cn(
           "w-full animate-in fade-in duration-500 flex flex-col transition-all duration-300",
-          viewMode === "feedback" ? "h-[calc(100vh-130px)]" : "min-h-[calc(100vh-140px)] lg:h-[calc(100vh-140px)] px-4 md:px-8 max-w-full ml-0"
+          viewMode === "feedback" ? "min-h-[100dvh] lg:h-[calc(100vh-130px)]" : "min-h-[100dvh] lg:h-[calc(100vh-140px)] px-4 md:px-8 max-w-full ml-0"
         )}>
 
           {/* Top Bar Navigation (Minimal) - Hide in feedback mode */}
@@ -882,7 +882,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
             <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-4 lg:gap-8 lg:h-full lg:overflow-hidden pb-6">
 
               {/* Left Column: Prompt & Chart (Flex Column, No page scroll on LG) */}
-              <div className="w-full lg:w-[45%] flex-shrink-0 min-w-0 h-[250px] sm:h-[400px] lg:h-full flex flex-col lg:pr-1 gap-2 sm:gap-4">
+              <div className="w-full lg:w-[45%] flex-none lg:flex-shrink-0 min-w-0 h-[300px] sm:h-[400px] lg:h-full flex flex-col lg:pr-1 gap-2 sm:gap-4">
                 <Card className="flex-1 border-0 shadow-none bg-transparent flex flex-col min-h-0">
                   <div className="flex flex-col h-full gap-4">
                     {/* Collapsible Prompt Info - Compact Header */}
@@ -971,7 +971,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
               </div>
 
               {/* Right Column: Editor Area (Wide & Clean) */}
-              <div className="flex-1 min-w-0 h-[350px] sm:h-[500px] lg:h-full flex flex-col min-h-0 mt-2 sm:mt-0">
+              <div className="w-full lg:flex-1 flex-none lg:min-w-0 h-[400px] sm:h-[500px] lg:h-full flex flex-col min-h-0 mt-2 sm:mt-0">
 
                 {/* Editor Container (Centered & Constrained) */}
                 <Card className="flex-1 flex flex-col h-full border border-slate-300 dark:border-slate-700 shadow-sm overflow-hidden bg-white dark:bg-slate-900 rounded-xl">
