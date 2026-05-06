@@ -142,7 +142,7 @@ export default function LandingPage() {
                     <span className="text-sm font-bold text-emerald-400 uppercase tracking-wider">Your personal IELTS examiner — available 24/7</span>
                   </motion.div>
 
-                  <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl font-black tracking-tight mb-2 leading-[1.05] text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-200 to-emerald-400 animate-gradient-text">
+                  <motion.h1 variants={fadeInUp} className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight mb-2 leading-[1.05] text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-200 to-emerald-400 animate-gradient-text">
                     Everything you need for IELTS.<br className="hidden md:block" />
                     One place.
                   </motion.h1>
@@ -245,9 +245,9 @@ export default function LandingPage() {
                   layout
                   animate={{ opacity: isAfterVisible ? 1 : 0, scale: isAfterVisible ? 1 : 0.95 }}
                   transition={{ layout: { type: "spring", stiffness: 45, damping: 14 }, duration: 0.6 }}
-                  className={`rounded-lg bg-[#0f1118] border-emerald-500/80 relative overflow-hidden shadow-[0_0_30px_rgba(16,185,129,0.1)] flex-shrink-0 origin-bottom md:origin-right z-10 ${isAfterVisible ? 'w-full md:w-[65%] max-h-[1000px] p-8 border-[3px] mt-6 md:mt-0 md:ml-6' : 'w-full md:w-[0%] max-h-[0px] md:max-h-[1000px] p-0 border-[0px] mt-0 md:ml-0'}`}
+                  className={`rounded-lg bg-[#0f1118] border-emerald-500/80 relative overflow-hidden shadow-[0_0_30px_rgba(16,185,129,0.1)] flex-shrink-0 origin-bottom md:origin-right z-10 ${isAfterVisible ? 'w-full md:w-[65%] max-h-[1000px] p-8 border-[3px] mt-6 md:mt-0 md:ml-6' : 'w-full md:w-[0%] max-h-[0px] md:max-h-[1000px] p-0 border-[0px] mt-0 md:ml-0 md:p-0'}`}
                 >
-                  <div className="min-w-[300px] md:min-w-[500px] h-full relative">
+                  <div className="min-w-[280px] md:min-w-[500px] h-full relative">
                     <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-blue-500/5 pointer-events-none"></div>
                     <div className="absolute top-3 right-3">
                       <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-emerald-500 text-white text-xs font-bold uppercase tracking-wider">
@@ -841,73 +841,75 @@ export default function LandingPage() {
                 </p>
               </motion.div>
 
-              <motion.div variants={fadeInUp} className="rounded-xl bg-[#0f1118] border border-white/5 overflow-hidden shadow-2xl shadow-blue-500/5">
-                {/* Table Header */}
-                <div className="grid grid-cols-4 border-b border-white/5 bg-white/[0.02]">
-                  <div className="p-4 md:p-5"></div>
-                  <div className="p-4 md:p-5 text-center border-l border-white/5">
-                    <div className="flex items-center justify-center gap-2 mb-1">
-                      <div className="w-6 h-6 rounded-md bg-blue-600 flex items-center justify-center">
-                        <Logo className="w-4 h-4 text-blue-400" />
+              <motion.div variants={fadeInUp} className="rounded-xl bg-[#0f1118] border border-white/5 shadow-2xl shadow-blue-500/5 overflow-x-auto">
+                <div className="min-w-[600px]">
+                  {/* Table Header */}
+                  <div className="grid grid-cols-4 border-b border-white/5 bg-white/[0.02]">
+                    <div className="p-4 md:p-5"></div>
+                    <div className="p-4 md:p-5 text-center border-l border-white/5">
+                      <div className="flex items-center justify-center gap-2 mb-1">
+                        <div className="w-6 h-6 rounded-md bg-blue-600 flex items-center justify-center">
+                          <Logo className="w-4 h-4 text-blue-400" />
+                        </div>
+                        <span className="text-sm font-black text-white">NewBand</span>
                       </div>
-                      <span className="text-sm font-black text-white">NewBand</span>
+                    </div>
+                    <div className="p-4 md:p-5 text-center border-l border-white/5">
+                      <span className="text-sm font-bold text-slate-400">Generic AI (ChatGPT)</span>
+                    </div>
+                    <div className="p-4 md:p-5 text-center border-l border-white/5">
+                      <span className="text-sm font-bold text-slate-400">Traditional Courses</span>
                     </div>
                   </div>
-                  <div className="p-4 md:p-5 text-center border-l border-white/5">
-                    <span className="text-sm font-bold text-slate-400">Generic AI (ChatGPT)</span>
-                  </div>
-                  <div className="p-4 md:p-5 text-center border-l border-white/5">
-                    <span className="text-sm font-bold text-slate-400">Traditional Courses</span>
-                  </div>
-                </div>
 
-                {/* Table Rows */}
-                {[
-                  { feature: "Writing band evaluation (TR, CC, LR, GRA)", newband: "full", ai: "no", tutor: "full" },
-                  { feature: "Essay error highlighting", newband: "full", ai: "no", tutor: "partial" },
-                  { feature: "Band 8 rewrite examples", newband: "full", ai: "partial", tutor: "partial" },
-                  { feature: "Reading answer explanation", newband: "✔ Passage-based", ai: "❌ Often vague", tutor: "full" },
-                  { feature: "Mistake tracking by question type", newband: "full", ai: "no", tutor: "partial" },
-                  { feature: "Personalized IELTS study roadmap", newband: "full", ai: "no", tutor: "partial" },
-                  { feature: "Band progress tracking", newband: "full", ai: "no", tutor: "partial" },
-                  { feature: "Unlimited essay evaluation", newband: "full", ai: "full", tutor: "no" },
-                ].map((row, i) => (
-                  <div key={i} className={`grid grid-cols-4 ${i < 7 ? 'border-b border-white/5' : ''} hover:bg-white/[0.02] transition-colors`}>
-                    <div className="p-4 md:p-5 flex items-center">
-                      <span className="text-xs md:text-sm text-slate-300 font-medium">{row.feature}</span>
-                    </div>
-                    {["newband", "ai", "tutor"].map((col) => {
-                      const val = row[col as keyof typeof row];
-                      return (
-                        <div key={col} className="p-4 md:p-5 flex items-center justify-center border-l border-white/5 text-center">
-                          {val === "full" ? (
-                            <div className="w-6 h-6 rounded-full bg-emerald-500/10 flex items-center justify-center shadow-[0_0_15px_rgba(52,211,153,0.15)]">
-                              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                            </div>
-                          ) : val === "partial" ? (
-                            <div className="w-5 h-0.5 rounded-full bg-amber-400/60"></div>
-                          ) : val === "no" ? (
-                            <span className="text-sm text-slate-600">✕</span>
-                          ) : val.startsWith("✔") ? (
-                            <div className="flex flex-col items-center gap-1">
+                  {/* Table Rows */}
+                  {[
+                    { feature: "Writing band evaluation (TR, CC, LR, GRA)", newband: "full", ai: "no", tutor: "full" },
+                    { feature: "Essay error highlighting", newband: "full", ai: "no", tutor: "partial" },
+                    { feature: "Band 8 rewrite examples", newband: "full", ai: "partial", tutor: "partial" },
+                    { feature: "Reading answer explanation", newband: "✔ Passage-based", ai: "❌ Often vague", tutor: "full" },
+                    { feature: "Mistake tracking by question type", newband: "full", ai: "no", tutor: "partial" },
+                    { feature: "Personalized IELTS study roadmap", newband: "full", ai: "no", tutor: "partial" },
+                    { feature: "Band progress tracking", newband: "full", ai: "no", tutor: "partial" },
+                    { feature: "Unlimited essay evaluation", newband: "full", ai: "full", tutor: "no" },
+                  ].map((row, i) => (
+                    <div key={i} className={`grid grid-cols-4 ${i < 7 ? 'border-b border-white/5' : ''} hover:bg-white/[0.02] transition-colors`}>
+                      <div className="p-4 md:p-5 flex items-center">
+                        <span className="text-xs md:text-sm text-slate-300 font-medium">{row.feature}</span>
+                      </div>
+                      {["newband", "ai", "tutor"].map((col) => {
+                        const val = row[col as keyof typeof row];
+                        return (
+                          <div key={col} className="p-4 md:p-5 flex items-center justify-center border-l border-white/5 text-center">
+                            {val === "full" ? (
                               <div className="w-6 h-6 rounded-full bg-emerald-500/10 flex items-center justify-center shadow-[0_0_15px_rgba(52,211,153,0.15)]">
                                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                               </div>
-                              <span className="text-[10px] sm:text-xs font-bold text-emerald-400 tracking-tight">{val.replace("✔ ", "")}</span>
-                            </div>
-                          ) : val.startsWith("❌") ? (
-                            <div className="flex flex-col items-center gap-1">
-                              <span className="text-sm text-slate-600 leading-none">✕</span>
-                              <span className="text-[10px] sm:text-xs font-medium text-slate-500 tracking-tight">{val.replace("❌ ", "")}</span>
-                            </div>
-                          ) : (
-                            <span className={`text-xs font-black ${col === "newband" ? "text-emerald-400" : "text-slate-400"}`}>{val}</span>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                ))}
+                            ) : val === "partial" ? (
+                              <div className="w-5 h-0.5 rounded-full bg-amber-400/60"></div>
+                            ) : val === "no" ? (
+                              <span className="text-sm text-slate-600">✕</span>
+                            ) : val.startsWith("✔") ? (
+                              <div className="flex flex-col items-center gap-1">
+                                <div className="w-6 h-6 rounded-full bg-emerald-500/10 flex items-center justify-center shadow-[0_0_15px_rgba(52,211,153,0.15)]">
+                                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                                </div>
+                                <span className="text-[10px] sm:text-xs font-bold text-emerald-400 tracking-tight">{val.replace("✔ ", "")}</span>
+                              </div>
+                            ) : val.startsWith("❌") ? (
+                              <div className="flex flex-col items-center gap-1">
+                                <span className="text-sm text-slate-600 leading-none">✕</span>
+                                <span className="text-[10px] sm:text-xs font-medium text-slate-500 tracking-tight">{val.replace("❌ ", "")}</span>
+                              </div>
+                            ) : (
+                              <span className={`text-xs font-black ${col === "newband" ? "text-emerald-400" : "text-slate-400"}`}>{val}</span>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ))}
+                </div>
               </motion.div>
 
               <motion.p variants={fadeInUp} className="text-center mt-6 text-xs text-slate-500">

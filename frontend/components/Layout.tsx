@@ -24,7 +24,6 @@ const navigation = [
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { user, signOut } = useUser();
@@ -45,16 +44,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {/* Top bar (Hidden on Landing Page) */}
         {!isLandingPage && (
           <div className="sticky top-0 z-40 flex h-16 items-center px-4 sm:px-6 lg:px-8 border-b border-gray-200 bg-white/50 backdrop-blur-md shadow-sm dark:border-gray-700 dark:bg-gray-800/50">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="lg:hidden"
-              onClick={() => setSidebarOpen(true)}
-              aria-label="Open sidebar"
-            >
-              <Menu className="h-5 w-5" />
-            </Button>
-
             <div className="flex flex-1 items-center justify-between">
               
               {/* Left: Logo */}

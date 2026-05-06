@@ -30,6 +30,7 @@ const typeLabels: Record<string, string> = {
 
 export default function TopicWordList({ topicName, words, onStartLearning, onStartExercise, onBack }: TopicWordListProps) {
     const [selectedWordId, setSelectedWordId] = useState<number | null>(words[0]?.id || null);
+    const [isMobileDetailOpen, setIsMobileDetailOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [filterStatus, setFilterStatus] = useState<"all" | "speaking" | "writing">("all");
     const [selectedSubcategory, setSelectedSubcategory] = useState<string>("All");
@@ -77,7 +78,7 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
 
     return (
         <div className="w-full h-full flex flex-col space-y-2">
-            <div className="flex items-center">
+            <div className={cn("flex items-center", isMobileDetailOpen ? "hidden lg:flex" : "flex")}>
                 <Button
                     variant="ghost"
                     size="sm"
@@ -91,9 +92,12 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
 
 
             {/* Master-Detail Layout */}
-            <div className="grid grid-cols-12 gap-8 h-full">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-8 h-full overflow-hidden">
                 {/* Left Sidebar: Word List */}
-                <div className="col-span-4 flex flex-col bg-white dark:bg-[#151624] dark:backdrop-blur-xl rounded-2xl border border-gray-200 dark:border-white/5 shadow-sm overflow-hidden">
+                <div className={cn(
+                    "lg:col-span-4 flex-col bg-white dark:bg-[#151624] dark:backdrop-blur-xl rounded-2xl border border-gray-200 dark:border-white/5 shadow-sm overflow-hidden h-full",
+                    isMobileDetailOpen ? "hidden lg:flex" : "flex"
+                )}>
                     <div className="p-3 border-b border-gray-100 dark:border-white/5 sticky top-0 bg-white/95 dark:bg-card/95 backdrop-blur z-10 space-y-2">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-wider">
@@ -165,7 +169,10 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
                         {filteredWords.map((word) => (
                             <div
                                 key={word.id}
-                                onClick={() => setSelectedWordId(word.id)}
+                                onClick={() => {
+                                    setSelectedWordId(word.id);
+                                    setIsMobileDetailOpen(true);
+                                }}
                                 className={cn(
                                     "p-4 rounded-xl cursor-pointer transition-all duration-200 group border text-left",
                                     selectedWordId === word.id
@@ -205,29 +212,37 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
                 </div>
 
                 {/* Right Panel: Word Detail */}
-                <div className="col-span-8 overflow-y-auto custom-scrollbar pr-2">
+                <div className={cn(
+                    "lg:col-span-8 overflow-y-auto custom-scrollbar pr-0 lg:pr-2 h-full",
+                    !isMobileDetailOpen ? "hidden lg:block" : "block"
+                )}>
                     {activeWord ? (
                         <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300 pb-20">
                             {/* Word Card */}
-                            <div className="bg-white dark:bg-[#151624]/90 dark:backdrop-blur-xl rounded-3xl border border-gray-200 dark:border-white/5 dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.8)] shadow-sm overflow-hidden relative">
+                            <div className="bg-white dark:bg-[#151624]/90 dark:backdrop-blur-xl rounded-2xl lg:rounded-3xl border border-gray-200 dark:border-white/5 dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.8)] shadow-sm overflow-hidden relative">
                                 {/* Decorative blob */}
                                 <div className="absolute top-0 right-0 w-64 h-64 bg-slate-50 dark:bg-slate-800/50 rounded-bl-full -mr-16 -mt-16 pointer-events-none" />
 
-                                <div className="p-6 relative z-10">
+                                <div className="p-5 lg:p-6 relative z-10">
                                     {/* Header Row */}
-                                    <div className="flex items-start justify-between mb-4">
-                                        <div className="flex items-center gap-4">
-                                            <h2 className="text-4xl font-serif font-bold text-gray-900 premium-gradient-text tracking-tight">
+                                    <div className="flex flex-col mb-4">
+                                        <button 
+                                            onClick={() => setIsMobileDetailOpen(false)}
+                                            className="lg:hidden flex items-center text-sm font-medium text-gray-500 mb-4 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white bg-gray-100 dark:bg-white/5 w-fit px-3 py-1.5 rounded-lg transition-colors"
+                                        >
+                                            <ArrowLeft className="w-4 h-4 mr-1.5" /> Back to words
+                                        </button>
+                                        <div className="flex items-center justify-between gap-4">
+                                            <h2 className="text-3xl sm:text-4xl font-serif font-bold text-gray-900 premium-gradient-text tracking-tight leading-tight">
                                                 {activeWord.word}
                                             </h2>
                                             <button
                                                 onClick={() => playAudio(activeWord.word)}
-                                                className="p-3 rounded-full bg-gray-100 dark:bg-white/10 hover:bg-blue-100 dark:hover:bg-blue-500/20 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all"
+                                                className="p-2.5 sm:p-3 rounded-full bg-gray-100 dark:bg-white/10 hover:bg-blue-100 dark:hover:bg-blue-500/20 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all flex-shrink-0"
                                             >
                                                 <Volume2 className="h-5 w-5" />
                                             </button>
                                         </div>
-
                                     </div>
 
                                     {/* Tags */}
@@ -243,19 +258,19 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
 
                                     {/* Definition */}
                                     <div className="mb-6">
-                                        <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Definition</div>
-                                        <p className="text-2xl text-gray-900 dark:text-gray-100 font-serif leading-relaxed">
+                                        <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 sm:mb-3">Definition</div>
+                                        <p className="text-xl sm:text-2xl text-gray-900 dark:text-gray-100 font-serif leading-relaxed">
                                             {activeWord.definition}
                                         </p>
                                     </div>
 
                                     {/* Example Usage */}
-                                    <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6 border border-gray-100 dark:border-white/5 mb-6">
-                                        <div className="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
+                                    <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-4 sm:p-6 border border-gray-100 dark:border-white/5 mb-6">
+                                        <div className="flex items-center gap-2 text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 sm:mb-4">
                                             <Quote className="h-3 w-3" /> Example Usage
                                         </div>
                                         <div className="space-y-2">
-                                            <p className="text-lg text-gray-700 dark:text-gray-300 font-serif italic">
+                                            <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 font-serif italic">
                                                 "{activeWord.exampleSentence.split(new RegExp(`(${activeWord.word})`, 'gi')).map((part, i) =>
                                                     part.toLowerCase() === activeWord.word.toLowerCase()
                                                         ? <span key={i} className="text-blue-600 dark:text-blue-400 font-semibold bg-blue-50 dark:bg-blue-500/10 px-1 rounded">{part}</span>
@@ -294,10 +309,10 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
                                     </div>
 
                                     {/* Synonyms & Collocations */}
-                                    <div className="grid grid-cols-2 gap-8 mt-8 pt-8 border-t border-gray-100 dark:border-white/5">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-100 dark:border-white/5">
                                         {activeWord.synonyms && activeWord.synonyms.length > 0 && (
                                             <div>
-                                                <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Synonyms</div>
+                                                <div className="text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 sm:mb-3">Synonyms</div>
                                                 <div className="flex flex-wrap gap-2">
                                                     {activeWord.synonyms.map((syn, i) => (
                                                         <span key={i} className="px-3 py-1.5 bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 text-sm font-medium rounded-lg border border-transparent hover:border-gray-200 dark:hover:border-white/10">
@@ -324,14 +339,14 @@ export default function TopicWordList({ topicName, words, onStartLearning, onSta
                             </div>
 
                             {/* Exercise Hub */}
-                            <div className="bg-white dark:bg-card rounded-3xl border border-gray-200 dark:border-white/5 shadow-sm p-6">
+                            <div className="bg-white dark:bg-card rounded-2xl lg:rounded-3xl border border-gray-200 dark:border-white/5 shadow-sm p-5 lg:p-6">
                                 <div className="flex items-center justify-between mb-4">
-                                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">Exercise Hub</h3>
-                                    <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400">
+                                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">Exercise Hub</h3>
+                                    <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400 text-[10px] sm:text-xs">
                                         3 Available
                                     </Badge>
                                 </div>
-                                <div className="grid grid-cols-3 gap-4">
+                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                                     <button
                                         onClick={() => onStartExercise("flashcards" as any)}
                                         className="flex flex-col items-center justify-center p-4 rounded-2xl bg-gray-50 dark:bg-white/5 hover:bg-amber-50 dark:hover:bg-amber-500/10 border border-transparent hover:border-amber-200 dark:hover:border-amber-500/20 transition-all group"

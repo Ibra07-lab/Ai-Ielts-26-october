@@ -112,7 +112,7 @@ export function TopicCard({ topic, onClick, index = 0 }: TopicCardProps) {
     return (
         <Card
             className={cn(
-                "group relative cursor-pointer overflow-hidden border-2 border-b-[6px] transition-all duration-300 hover:shadow-xl hover:-translate-y-1 rounded-[1.5rem] shadow-sm",
+                "group relative cursor-pointer overflow-hidden border-2 border-b-[4px] sm:border-b-[6px] transition-all duration-300 hover:shadow-xl hover:-translate-y-1 rounded-[1.25rem] sm:rounded-[1.5rem] shadow-sm",
                 "opacity-0 animate-[fadeSlideUp_0.5s_ease-out_forwards]",
                 colors.border,
                 colors.hoverShadow,
@@ -126,28 +126,28 @@ export function TopicCard({ topic, onClick, index = 0 }: TopicCardProps) {
             <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 blur-2xl rounded-full translate-x-12 -translate-y-12 pointer-events-none" />
             
             {/* Inner highlight for dark mode depth */}
-            <div className="absolute inset-0 border border-white/5 rounded-[1.5rem] pointer-events-none" />
+            <div className="absolute inset-0 border border-white/5 rounded-[1.25rem] sm:rounded-[1.5rem] pointer-events-none" />
 
-            <CardContent className="p-7 relative z-10">
-                <div className="flex justify-between items-start mb-6">
-                    <div className={cn("w-14 h-14 rounded-[1rem] flex items-center justify-center text-3xl shadow-sm group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300", colors.iconBg)}>
+            <CardContent className="p-4 sm:p-7 relative z-10">
+                <div className="flex justify-between items-start mb-3 sm:mb-6">
+                    <div className={cn("w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-[1rem] flex items-center justify-center text-xl sm:text-3xl shadow-sm group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300", colors.iconBg)}>
                         {topic.icon}
                     </div>
                 </div>
 
-                <div className="mb-6">
-                    <h3 className="font-black text-xl text-slate-900 dark:text-white mb-1 group-hover:text-slate-800 dark:group-hover:text-slate-200 transition-colors">{topic.name}</h3>
-                    <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">
+                <div className="mb-4 sm:mb-6">
+                    <h3 className="font-black text-lg sm:text-xl text-slate-900 dark:text-white mb-0.5 sm:mb-1 group-hover:text-slate-800 dark:group-hover:text-slate-200 transition-colors">{topic.name}</h3>
+                    <p className="text-[8px] sm:text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">
                         Band 7.5+ • Advanced
                     </p>
                 </div>
 
-                <div className="space-y-3 mb-6">
+                <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
                     <div className="flex justify-between items-end mb-1">
-                        <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Mastery</span>
-                        <span className="text-sm font-black text-slate-900 dark:text-white">{percentage}%</span>
+                        <span className="text-[9px] sm:text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Mastery</span>
+                        <span className="text-xs sm:text-sm font-black text-slate-900 dark:text-white">{percentage}%</span>
                     </div>
-                    <div className="h-2.5 w-full bg-slate-100/80 dark:bg-white/5 rounded-full overflow-hidden shadow-inner flex">
+                    <div className="h-1.5 sm:h-2.5 w-full bg-slate-100/80 dark:bg-white/5 rounded-full overflow-hidden shadow-inner flex">
                         <div
                             className={cn("h-full rounded-full transition-all duration-1000 bg-gradient-to-r relative", colors.bar)}
                             style={{ width: `${percentage}%` }}
@@ -159,12 +159,12 @@ export function TopicCard({ topic, onClick, index = 0 }: TopicCardProps) {
 
                 {/* Preview Word Chips */}
                 {topic.previewWords && topic.previewWords.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5 mb-5">
+                    <div className="flex flex-wrap gap-1 sm:gap-1.5 mb-3 sm:mb-5">
                         {topic.previewWords.slice(0, 3).map((word) => (
                             <span
                                 key={word}
                                 className={cn(
-                                    "text-[10px] font-semibold px-2.5 py-1 rounded-full italic",
+                                    "text-[9px] sm:text-[10px] font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full italic",
                                     colors.chipBg,
                                     colors.chipText
                                 )}
@@ -176,11 +176,11 @@ export function TopicCard({ topic, onClick, index = 0 }: TopicCardProps) {
                 )}
 
                 <div className="flex justify-between items-center pt-2 border-t border-slate-50 dark:border-white/5">
-                    <div className="flex items-center gap-1.5 text-slate-400 dark:text-slate-500">
-                        <Clock className="w-3.5 h-3.5" />
-                        <span className="text-xs font-bold">12 to review</span>
+                    <div className="flex items-center gap-1 sm:gap-1.5 text-slate-400 dark:text-slate-500">
+                        <Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                        <span className="text-[10px] sm:text-xs font-bold">12 to review</span>
                     </div>
-                    <span className="text-xs font-bold text-slate-400 dark:text-slate-500">{topic.wordsCount} Total</span>
+                    <span className="text-[10px] sm:text-xs font-bold text-slate-400 dark:text-slate-500">{topic.wordsCount} Total</span>
                 </div>
             </CardContent>
         </Card>

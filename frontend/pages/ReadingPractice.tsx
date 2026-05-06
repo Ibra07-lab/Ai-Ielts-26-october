@@ -1798,7 +1798,7 @@ export default function ReadingPractice() {
 
   return (
     <>
-      <div className="max-w-7xl mx-auto space-y-8 pb-32">
+      <div className={selectedTestIndex !== null ? `w-full mx-auto ${result ? "py-2" : ""}` : "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 pb-32"}>
         {/* Hero Section */}
         {!showBasics && selectedTestIndex === null && (
           <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 to-indigo-700 dark:from-blue-900 dark:to-indigo-900 text-white shadow-xl">
@@ -2211,12 +2211,11 @@ export default function ReadingPractice() {
         )}
 
         {selectedTestIndex !== null && passage && (
-          <div className="space-y-6">
-              <div className="flex items-center justify-end">
-
-              <div className="flex items-center gap-2">
+          <div className={`w-full animate-in fade-in duration-500 flex flex-col transition-all duration-300 ${result ? "" : "min-h-[calc(100vh-140px)] lg:h-[calc(100vh-100px)] max-w-full"}`}>
+            <div className="flex items-center justify-start sm:justify-end mb-4 flex-none px-2 lg:px-4">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 w-full sm:w-auto">
                 {/* Text size selector for Normal View */}
-                <div ref={textSizeRefNormal} className="relative">
+                <div ref={textSizeRefNormal} className="relative z-50">
                   <Button
                     variant="outline"
                     size="sm"
@@ -2253,8 +2252,8 @@ export default function ReadingPractice() {
                 </div>
 
                 {tests && tests.length > 1 && (
-                  <>
-                    <div className="flex gap-1 mr-2" role="tablist" aria-label="Reading slides">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <div className="flex flex-wrap gap-1" role="tablist" aria-label="Reading slides">
                       {tests.map((_: any, idx: number) => (
                         <Button
                           key={idx}
@@ -2265,37 +2264,41 @@ export default function ReadingPractice() {
                           }}
                           aria-pressed={activeSlideIndex === idx}
                           aria-label={`Show Slide ${idx + 1}`}
+                          className="h-9 px-3"
                         >
                           Slide {idx + 1}
                         </Button>
                       ))}
                     </div>
-                    <Badge variant="outline" className="text-xs">
+                    <Badge variant="outline" className="text-xs h-9 px-3 flex items-center bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
                       Overall: {answeredQuestionsAllSlides}/{totalQuestionsAllSlides}
                     </Badge>
-                  </>
+                  </div>
                 )}
-                <Button variant="outline" size="sm" onClick={backToMenu}>
-                  Back to Test Menu
-                </Button>
-                <Badge
-                  variant="secondary"
-                  className="ml-2 font-mono flex items-center gap-1 text-base md:text-lg px-3 py-1.5"
-                >
-                  <Clock className="h-4 w-4" />
-                  {formatTime(remainingSeconds)}
-                </Badge>
+                
+                <div className="flex items-center gap-2 mt-2 sm:mt-0 ml-auto sm:ml-0">
+                  <Button variant="outline" size="sm" onClick={backToMenu} className="h-9 px-3 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
+                    Back
+                  </Button>
+                  <Badge
+                    variant="secondary"
+                    className="font-mono flex items-center gap-1.5 text-sm sm:text-base md:text-lg h-9 px-3 sm:px-4"
+                  >
+                    <Clock className="h-4 w-4" />
+                    {formatTime(remainingSeconds)}
+                  </Badge>
+                </div>
               </div>
             </div>
 
             {/* Split View Mode - Full Width Professional Layout */}
             <div 
               ref={splitContainerRef} 
-              className="fixed inset-x-0 top-[140px] bottom-0 flex flex-col lg:flex-row bg-white dark:bg-gray-900"
+              className="flex-1 min-h-0 flex flex-col lg:flex-row bg-white dark:bg-gray-900 border-t border-slate-200 dark:border-slate-800"
               style={{ '--split-ratio': `${splitRatio}%` } as React.CSSProperties}
             >
               {/* Left Pane - Reading Passage */}
-              <div className="w-full h-1/2 lg:h-full lg:w-[var(--split-ratio)] flex flex-col border-b border-gray-200 dark:border-gray-800 lg:border-b-0">
+              <div className="w-full h-[400px] lg:h-full lg:w-[var(--split-ratio)] flex flex-col border-b border-gray-200 dark:border-gray-800 lg:border-b-0">
                 {/* Header */}
                 <div className="flex-shrink-0 px-4 sm:px-6 py-2 sm:py-3 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900">
                   <div className="flex items-center justify-between">
@@ -2350,7 +2353,7 @@ export default function ReadingPractice() {
               </div>
 
               {/* Right Pane - Questions / Results */}
-              <div className="w-full h-1/2 lg:h-full lg:w-[calc(100%-var(--split-ratio))] flex flex-col bg-slate-50 dark:bg-gray-900">
+              <div className="w-full h-[500px] lg:h-full lg:w-[calc(100%-var(--split-ratio))] flex flex-col bg-slate-50 dark:bg-gray-900">
                 {/* Header */}
                 <div className="flex-shrink-0 px-6 py-3 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900">
                   <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{result ? 'Test Results' : 'Questions'}</h2>

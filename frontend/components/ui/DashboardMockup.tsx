@@ -33,9 +33,9 @@ export const DashboardMockup = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
         {/* Left Section: Masterclasses & Progress */}
-        <div className="col-span-7 space-y-6">
+        <div className="col-span-1 md:col-span-7 space-y-6">
           {/* Masterclasses Mockup */}
           <div className="rounded-[2rem] bg-[#151624] border border-white/10 p-6 shadow-2xl relative overflow-hidden group">
             <div className="absolute -top-24 -right-24 w-64 h-64 bg-red-500/10 rounded-full blur-[80px]"></div>
@@ -64,7 +64,7 @@ export const DashboardMockup = () => {
           </div>
 
           {/* Progress Card Mockup */}
-          <div className="rounded-[2rem] bg-gradient-to-br from-blue-600/20 to-purple-600/20 border border-blue-500/30 p-8 relative overflow-hidden">
+          <div className="rounded-[2rem] bg-gradient-to-br from-blue-600/20 to-purple-600/20 border border-blue-500/30 p-8 relative overflow-hidden hidden sm:block">
             <div className="relative z-10">
               <div className="flex justify-between items-end mb-4">
                 <div>
@@ -83,7 +83,7 @@ export const DashboardMockup = () => {
         </div>
 
         {/* Right Section: Practice Cards */}
-        <div className="col-span-5 grid grid-cols-2 gap-4">
+        <div className="col-span-1 md:col-span-5 grid grid-cols-2 gap-4">
           {[
             { icon: Mic, color: "text-rose-500", label: "Speaking" },
             { icon: PenTool, color: "text-blue-500", label: "Writing" },
@@ -104,7 +104,7 @@ export const DashboardMockup = () => {
           ))}
 
           {/* Overall Progress pill */}
-          <div className="col-span-2 h-16 rounded-[2rem] bg-white/5 border border-white/10 flex items-center justify-between px-6">
+          <div className="col-span-2 h-16 rounded-[2rem] bg-white/5 border border-white/10 flex items-center justify-between px-6 hidden sm:flex">
             <div className="flex items-center gap-3">
               <BarChart3 className="text-blue-400 h-5 w-5" />
               <span className="text-sm font-bold">Overall Progress</span>

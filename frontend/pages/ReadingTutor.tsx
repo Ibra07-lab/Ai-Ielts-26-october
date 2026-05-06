@@ -419,18 +419,18 @@ export default function ReadingTutor() {
 					</ScrollArea>
 				</div>
 
-				<div className={cn("transition-all duration-700 ease-in-out", isLanding ? "flex-1" : "h-0")} />
+				<div className={cn("transition-all duration-700 ease-in-out", isLanding ? "flex-[0.5] sm:flex-[1.5]" : "h-0")} />
 
 				<div className={cn(
-					"space-y-6 text-center px-4 transition-all duration-700 ease-in-out overflow-hidden flex-shrink-0",
-					isLanding ? "max-h-[500px] opacity-100 mb-10" : "max-h-0 opacity-0 mb-0"
+					"space-y-3 sm:space-y-6 text-center px-4 transition-all duration-700 ease-in-out overflow-hidden flex-shrink-0",
+					isLanding ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0 mb-0"
 				)}>
-					<div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50/80 dark:bg-blue-900/20 border border-blue-100/50 dark:border-blue-500/20 text-blue-600 dark:text-blue-400 text-[10px] font-bold uppercase tracking-[0.2em] shadow-sm backdrop-blur-md">
-						<Sparkles className="h-3 w-3 fill-current" />
+					<div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-blue-50/80 dark:bg-slate-800 border border-blue-100/50 dark:border-slate-700 text-blue-600 dark:text-blue-400 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] shadow-sm backdrop-blur-md">
+						<Sparkles className="h-2.5 w-2.5 sm:h-3 sm:w-3 fill-current" />
 						AI Reading Mentor
 					</div>
-					<h1 className="text-5xl sm:text-6xl font-black text-[#111827] dark:text-white tracking-tight leading-[1.1] drop-shadow-sm">
-						What can I <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">help</span> with?
+					<h1 className="text-2xl sm:text-5xl font-black text-[#111827] dark:text-white tracking-tight leading-[1.1] drop-shadow-sm">
+						What can I help with?
 					</h1>
 				</div>
 
@@ -469,66 +469,70 @@ export default function ReadingTutor() {
 					</div>
 				)}
 
-				<div className={cn(
-					"w-full px-4 transition-all duration-700 ease-in-out z-20 flex-shrink-0",
-					!isLanding && "pb-6 pt-2"
-				)}>
-					<div className="relative group max-w-xl mx-auto w-full">
-						<div className={cn(
-							"absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-[32px] blur transition duration-1000",
-							isLanding ? "opacity-10 group-focus-within:opacity-20" : "opacity-0"
-						)}></div>
-						<div className={cn(
-							"relative bg-white/80 dark:bg-slate-900/60 backdrop-blur-xl shadow-[0_8px_40px_rgba(0,0,0,0.08)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white dark:border-slate-800 transition-all flex items-center overflow-hidden",
-							isLanding ? "rounded-[28px] p-2 pr-4 min-h-[72px]" : "rounded-[24px] p-1.5 pr-3 min-h-[56px] border border-slate-700/50"
-						)}>
-							<Input
-								value={input}
-								onChange={(e) => setInput(e.target.value)}
-								placeholder={isLanding ? "Ask ALEX anything about IELTS Reading..." : "Ask a follow-up question..."}
-								className={cn(
-									"border-none shadow-none focus-visible:ring-0 bg-transparent h-auto dark:text-white dark:placeholder:text-slate-500 font-medium transition-all",
-									isLanding ? "text-lg py-5 pl-7" : "text-base py-3 pl-4"
-								)}
-								onKeyDown={(e) => e.key === "Enter" && send()}
-							/>
-							<div className="flex items-center gap-2.5">
-								<Button
-									size="icon"
-									className={cn(
-										"rounded-full transition-all duration-500",
-										input.trim() ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/40 scale-100' : 'bg-gray-100 dark:bg-slate-800 text-gray-300 scale-95 opacity-50',
-										isLanding ? "h-12 w-12" : "h-9 w-9"
-									)}
-									disabled={!input.trim()}
-									onClick={() => send()}
-								>
-									{isLanding ? <ArrowUp className="h-6 w-6" /> : <Send className="h-4 w-4" />}
-								</Button>
-							</div>
-						</div>
-					</div>
-				</div>
+				<div className={cn("transition-all duration-700 ease-in-out", isLanding ? "flex-[0.5] sm:flex-1" : "h-0")} />
 
+				{/* Suggested Topics - Moved above the input box */}
 				<div className={cn(
-					"flex flex-col items-center gap-6 mt-10 px-4 transition-all duration-700 ease-in-out overflow-hidden flex-shrink-0",
-					isLanding ? "max-h-[300px] opacity-100" : "max-h-0 opacity-0 mt-0"
+					"w-full max-w-2xl mx-auto px-4 transition-all duration-700 ease-in-out overflow-hidden flex-shrink-0 mb-2 sm:mb-4",
+					isLanding ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0 mb-0"
 				)}>
-					<p className="text-[10px] font-bold text-gray-400 dark:text-slate-500 uppercase tracking-[0.3em]">Suggested topics</p>
-					<div className="flex flex-wrap justify-center gap-4">
+					<div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
 						{suggestions.map((item, i) => (
-							<button key={i} onClick={() => send(item.text)} className="search-chip group">
-								<div className="p-1.5 rounded-lg bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all">
-									<item.icon className="h-4 w-4" />
+							<button key={i} onClick={() => send(item.text)} className="flex items-center sm:items-start gap-2.5 sm:gap-3 p-2.5 sm:p-4 text-left rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all shadow-sm hover:shadow-md cursor-pointer group">
+								<div className="sm:mt-0.5 p-1 sm:p-1.5 rounded-md sm:rounded-lg bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all flex-shrink-0">
+									<item.icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
 								</div>
-								<span className="font-semibold text-gray-700 dark:text-slate-300 group-hover:text-gray-900 dark:group-hover:text-white">{item.text}</span>
-								<ChevronRight className="h-4 w-4 opacity-0 group-hover:opacity-100 -ml-1 group-hover:ml-0 transition-all text-blue-500" />
+								<div className="flex-1">
+									<span className="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white leading-tight block">{item.text}</span>
+								</div>
 							</button>
 						))}
 					</div>
 				</div>
 
-				<div className={cn("transition-all duration-700 ease-in-out", isLanding ? "flex-1" : "h-0")} />
+				<div className={cn(
+					"w-full px-4 transition-all duration-700 ease-in-out z-20 flex-shrink-0",
+					!isLanding && "pb-4 sm:pb-6 pt-2"
+				)}>
+					<div className="relative group max-w-2xl mx-auto w-full mb-2 sm:mb-6">
+						<div className={cn(
+							"relative bg-white dark:bg-slate-800/90 backdrop-blur-xl shadow-lg border border-slate-200 dark:border-slate-700/80 transition-all flex items-center overflow-hidden focus-within:border-indigo-500/50 focus-within:ring-1 focus-within:ring-indigo-500/50",
+							isLanding ? "rounded-3xl sm:rounded-[32px] p-1.5 sm:p-2 pr-2 sm:pr-3 min-h-[52px] sm:min-h-[72px]" : "rounded-3xl p-1.5 pr-2 min-h-[44px] sm:min-h-[56px]"
+						)}>
+							<Input
+								value={input}
+								onChange={(e) => setInput(e.target.value)}
+								placeholder={isLanding ? "Message AI Mentor..." : "Ask a follow-up..."}
+								className={cn(
+									"border-none shadow-none focus-visible:ring-0 bg-transparent h-auto dark:text-white dark:placeholder:text-slate-400 font-medium transition-all w-full",
+									isLanding ? "text-[14px] sm:text-lg py-2.5 sm:py-4 pl-3 sm:pl-5" : "text-[14px] sm:text-base py-2 sm:py-3 pl-3 sm:pl-4"
+								)}
+								onKeyDown={(e) => e.key === "Enter" && send()}
+							/>
+							<div className="flex items-center gap-2">
+								<Button
+									size="icon"
+									className={cn(
+										"rounded-full transition-all duration-300 flex-shrink-0 flex items-center justify-center",
+										input.trim() ? 'bg-indigo-600 dark:bg-white text-white dark:text-slate-900 shadow-md scale-100 hover:opacity-90' : 'bg-slate-100 dark:bg-slate-700/60 text-slate-400 dark:text-slate-500 scale-95 opacity-50',
+										isLanding ? "h-9 w-9 sm:h-12 sm:w-12" : "h-7 w-7 sm:h-9 sm:w-9"
+									)}
+									disabled={!input.trim()}
+									onClick={() => send()}
+								>
+									{isLanding ? <ArrowUp className="h-4 w-4 sm:h-6 sm:w-6" /> : <Send className="h-3 w-3 sm:h-4 sm:w-4" />}
+								</Button>
+							</div>
+						</div>
+						{isLanding && (
+							<p className="text-center text-[10px] sm:text-[11px] text-slate-400/80 mt-2 pb-1 w-full">
+								AI can make mistakes. Check important info.
+							</p>
+						)}
+					</div>
+				</div>
+
+				<div className={cn("transition-all duration-700 ease-in-out", isLanding ? "h-1 sm:h-2" : "h-0")} />
 			</div>
 		</div>
 	);
