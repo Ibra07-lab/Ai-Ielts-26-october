@@ -803,51 +803,51 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
       {/* Writing Interface - Show when test is started */}
       {isTestStarted && selectedTest && (
         <div className={cn(
-          "min-h-[600px] w-full animate-in fade-in duration-500 flex flex-col transition-all duration-300",
-          viewMode === "feedback" ? "h-[calc(100vh-130px)]" : "h-[calc(100vh-140px)] px-4 md:px-8 max-w-full ml-0"
+          "w-full animate-in fade-in duration-500 flex flex-col transition-all duration-300",
+          viewMode === "feedback" ? "h-[calc(100vh-130px)]" : "min-h-[calc(100vh-140px)] lg:h-[calc(100vh-140px)] px-4 md:px-8 max-w-full ml-0"
         )}>
 
           {/* Top Bar Navigation (Minimal) - Hide in feedback mode */}
           {viewMode !== "feedback" && (
-            <div className="flex items-center justify-between mb-4 flex-none px-1">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 flex-none px-1 gap-4 sm:gap-0">
               <div className="flex items-center gap-4">
-                <Button variant="ghost" onClick={handleBackToMenu} className="gap-2 pl-0 hover:pl-2 transition-all text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">
+                <Button variant="ghost" onClick={handleBackToMenu} className="gap-2 pl-0 hover:pl-2 transition-all text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white shrink-0">
                   <ArrowLeft className="w-4 h-4" />
-                  Back to Tests
+                  <span className="hidden sm:inline">Back</span>
                 </Button>
-                <div className="h-4 w-px bg-slate-200 dark:bg-slate-700"></div>
-                <h2 className="text-lg font-bold text-slate-900 dark:text-white truncate max-w-[300px] lg:max-w-none">
+                <div className="h-4 w-px bg-slate-200 dark:bg-slate-700 hidden sm:block"></div>
+                <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white truncate max-w-[200px] sm:max-w-[300px] lg:max-w-none">
                   {selectedTest.title}: {selectedTest.subtitle}
                 </h2>
               </div>
 
               {/* Stats (Timer & Word Count & Essay Limit) - Always Visible */}
-              <div className="flex items-center gap-4">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-4">
                 {/* Word Count Pill */}
-                <div className={`flex items-center gap-2 px-4 py-2 rounded-full border shadow-sm transition-colors ${wordCountColor}`}>
-                  <span className="text-xs font-bold uppercase tracking-wider">Words</span>
-                  <span className="text-base font-mono font-bold leading-none">{wordCount}</span>
-                  <span className="text-[10px] opacity-60 font-semibold">/ {minWords}</span>
+                <div className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border shadow-sm transition-colors ${wordCountColor}`}>
+                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider hidden sm:inline">Words</span>
+                  <span className="text-sm sm:text-base font-mono font-bold leading-none">{wordCount}</span>
+                  <span className="text-[10px] opacity-60 font-semibold hidden sm:inline">/ {minWords}</span>
                 </div>
 
                 {/* Essay Limit Pill */}
                 {limitRemaining !== null && (
-                  <div className={`flex items-center gap-2 px-4 py-2 rounded-full border shadow-sm font-bold text-xs ${limitRemaining === 0
+                  <div className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border shadow-sm font-bold text-[10px] sm:text-xs ${limitRemaining === 0
                       ? "bg-rose-50 border-rose-200 text-rose-600 dark:bg-rose-900/20 dark:border-rose-800 dark:text-rose-400"
                       : limitRemaining === 1
                         ? "bg-amber-50 border-amber-200 text-amber-600 dark:bg-amber-900/20 dark:border-amber-800 dark:text-amber-400"
                         : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300"
                     }`}>
-                    <span className="uppercase tracking-wider">Essays</span>
-                    <span className="font-mono text-base font-black leading-none">{limitUsed}</span>
-                    <span className="opacity-60">/ {limitTotal}</span>
+                    <span className="uppercase tracking-wider hidden sm:inline">Essays</span>
+                    <span className="font-mono text-sm sm:text-base font-black leading-none">{limitUsed}</span>
+                    <span className="opacity-60 hidden sm:inline">/ {limitTotal}</span>
                   </div>
                 )}
 
                 {/* Timer Pill */}
-                <div className={`flex items-center gap-3 px-4 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm ${timeLeft < 300 ? "animate-pulse border-rose-200 dark:border-rose-900" : ""}`}>
-                  <TimerIcon className={`w-4 h-4 ${timeLeft < 300 ? "text-rose-500" : "text-slate-400"}`} />
-                  <span className={`text-base font-mono font-bold leading-none ${timeLeft < 300 ? "text-rose-600 dark:text-rose-400" : "text-slate-700 dark:text-slate-200"}`}>
+                <div className={`flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm ${timeLeft < 300 ? "animate-pulse border-rose-200 dark:border-rose-900" : ""}`}>
+                  <TimerIcon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${timeLeft < 300 ? "text-rose-500" : "text-slate-400"}`} />
+                  <span className={`text-sm sm:text-base font-mono font-bold leading-none ${timeLeft < 300 ? "text-rose-600 dark:text-rose-400" : "text-slate-700 dark:text-slate-200"}`}>
                     {formatTime(timeLeft)}
                   </span>
                 </div>
@@ -879,10 +879,10 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
             </div>
           ) : (
             /* Main Split Layout */
-            <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-8 h-full overflow-hidden pb-6">
+            <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-4 lg:gap-8 lg:h-full lg:overflow-hidden pb-6">
 
-              {/* Left Column: Prompt & Chart (Flex Column, No page scroll) */}
-              <div className="lg:w-[45%] flex-shrink-0 min-w-0 h-full flex flex-col pr-1 gap-4">
+              {/* Left Column: Prompt & Chart (Flex Column, No page scroll on LG) */}
+              <div className="w-full lg:w-[45%] flex-shrink-0 min-w-0 h-[400px] lg:h-full flex flex-col lg:pr-1 gap-4">
                 <Card className="flex-1 border-0 shadow-none bg-transparent flex flex-col min-h-0">
                   <div className="flex flex-col h-full gap-4">
                     {/* Collapsible Prompt Info - Compact Header */}
@@ -971,7 +971,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
               </div>
 
               {/* Right Column: Editor Area (Wide & Clean) */}
-              <div className="flex-1 min-w-0 h-full flex flex-col min-h-0">
+              <div className="flex-1 min-w-0 h-[500px] lg:h-full flex flex-col min-h-0">
 
                 {/* Editor Container (Centered & Constrained) */}
                 <Card className="flex-1 flex flex-col h-full border border-slate-300 dark:border-slate-700 shadow-sm overflow-hidden bg-white dark:bg-slate-900 rounded-xl">
@@ -989,16 +989,16 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                   </div>
 
                   {/* Editor Footer Action Bar - Redesigned */}
-                  <div className="p-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/80 backdrop-blur-sm flex items-center justify-between">
-                    <div className="text-xs text-slate-400 flex items-center gap-2 font-medium">
+                  <div className="p-3 sm:p-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/80 backdrop-blur-sm flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-0">
+                    <div className="text-xs text-slate-400 flex items-center gap-2 font-medium w-full sm:w-auto justify-center sm:justify-start">
                       {lastSaved && <span className="flex items-center gap-1.5"><Save className="w-3.5 h-3.5 text-emerald-500" /> Saved {lastSaved.toLocaleTimeString()}</span>}
                     </div>
-                    <div className="flex gap-4">
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full sm:w-auto">
                       {aiAnalysis && (
                         <Button
                           variant="ghost"
                           onClick={() => setViewMode("feedback")}
-                          className="h-10 text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-800"
+                          className="h-10 text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-800 w-full sm:w-auto"
                         >
                           View Previous Feedback
                         </Button>
@@ -1006,18 +1006,18 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
 
                       {/* Last-essay warning */}
                       {limitRemaining === 1 && (
-                        <span className="text-xs font-semibold text-amber-500 dark:text-amber-400 flex items-center gap-1">
+                        <span className="text-xs font-semibold text-amber-500 dark:text-amber-400 flex items-center justify-center gap-1">
                           ⚠️ Last free analysis
                         </span>
                       )}
 
                       {/* No essays left — show upgrade link instead of button */}
                       {limitRemaining === 0 ? (
-                        <div className="flex flex-col items-end gap-1">
+                        <div className="flex flex-col items-center sm:items-end gap-1 w-full sm:w-auto">
                           <Button
                             disabled
                             aria-label="Upgrade to analyze more"
-                            className="h-10 px-8 bg-slate-300 dark:bg-slate-700 text-slate-500 dark:text-slate-400 text-sm font-bold uppercase tracking-wide rounded-lg cursor-not-allowed"
+                            className="h-10 px-8 w-full sm:w-auto bg-slate-300 dark:bg-slate-700 text-slate-500 dark:text-slate-400 text-sm font-bold uppercase tracking-wide rounded-lg cursor-not-allowed"
                           >
                             Upgrade to analyze more
                           </Button>
@@ -1030,7 +1030,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
                           onClick={handleQuickAnalysis}
                           disabled={!content.trim() || isAnalyzing}
                           aria-label="Analyze Essay"
-                          className="h-10 px-8 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white text-sm font-bold uppercase tracking-wide shadow-lg shadow-purple-500/20 rounded-lg transition-all transform hover:scale-[1.02]"
+                          className="h-10 px-8 w-full sm:w-auto bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white text-sm font-bold uppercase tracking-wide shadow-lg shadow-purple-500/20 rounded-lg transition-all transform hover:scale-[1.02]"
                         >
                           {isAnalyzing ? (
                             <AnalysisLoader />

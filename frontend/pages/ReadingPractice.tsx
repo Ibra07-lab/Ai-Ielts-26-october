@@ -2289,37 +2289,41 @@ export default function ReadingPractice() {
             </div>
 
             {/* Split View Mode - Full Width Professional Layout */}
-            <div ref={splitContainerRef} className="fixed inset-x-0 top-[140px] bottom-0 flex bg-white dark:bg-gray-900">
+            <div 
+              ref={splitContainerRef} 
+              className="fixed inset-x-0 top-[140px] bottom-0 flex flex-col lg:flex-row bg-white dark:bg-gray-900"
+              style={{ '--split-ratio': `${splitRatio}%` } as React.CSSProperties}
+            >
               {/* Left Pane - Reading Passage */}
-              <div style={{ width: `${splitRatio}%` }} className="h-full flex flex-col">
+              <div className="w-full h-1/2 lg:h-full lg:w-[var(--split-ratio)] flex flex-col border-b border-gray-200 dark:border-gray-800 lg:border-b-0">
                 {/* Header */}
-                <div className="flex-shrink-0 px-6 py-3 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900">
+                <div className="flex-shrink-0 px-4 sm:px-6 py-2 sm:py-3 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900">
                   <div className="flex items-center justify-between">
-                    <h2 className="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
-                      <BookOpen className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                      {passage.title}
+                    <h2 className="flex items-center gap-2 text-base sm:text-lg font-semibold text-gray-900 dark:text-white truncate">
+                      <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 dark:text-blue-400 shrink-0" />
+                      <span className="truncate">{passage.title}</span>
                     </h2>
                   </div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                  <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1 hidden sm:block">
                     Select text to highlight, translate, or add to vocabulary.
                   </p>
                   {result && evidenceQuotes.length > 0 && (
                     <button
                       onClick={() => setShowEvidenceHighlights(!showEvidenceHighlights)}
-                      className="mt-2 flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg
+                      className="mt-2 flex items-center gap-2 px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg
                                  bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300
                                  hover:bg-orange-200 dark:hover:bg-orange-900/50 transition-colors"
                     >
                       {showEvidenceHighlights ? (
-                        <><Eye className="w-4 h-4" /> Hide Evidence</>
+                        <><Eye className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Hide Evidence</>
                       ) : (
-                        <><EyeOff className="w-4 h-4" /> Show Evidence</>
+                        <><EyeOff className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Show Evidence</>
                       )}
                     </button>
                   )}
                 </div>
                 {/* Scrollable Content */}
-                <div className="flex-1 overflow-y-auto px-8 py-6">
+                <div className="flex-1 overflow-y-auto px-4 sm:px-8 py-4 sm:py-6 relative">
                   <TextHighlighter
                     content={passage.paragraphs?.map((p: { text: string }) => p.text).join('\n\n') || ''}
                     passageTitle={passage.title}
@@ -2332,10 +2336,10 @@ export default function ReadingPractice() {
                 </div>
               </div>
 
-              {/* Draggable Divider */}
+              {/* Draggable Divider (Vertical on LG, hidden on mobile) */}
               <div
                 onMouseDown={() => setIsDragging(true)}
-                className={`relative flex-shrink-0 w-[2px] cursor-col-resize group z-30
+                className={`hidden lg:block relative flex-shrink-0 w-[2px] cursor-col-resize group z-30
                     ${isDragging
                     ? 'bg-blue-500 dark:bg-blue-400'
                     : 'bg-gray-200 dark:bg-gray-700 hover:bg-blue-400 dark:hover:bg-blue-500'
@@ -2346,7 +2350,7 @@ export default function ReadingPractice() {
               </div>
 
               {/* Right Pane - Questions / Results */}
-              <div style={{ width: `${100 - splitRatio}%` }} className="h-full flex flex-col bg-white dark:bg-gray-900">
+              <div className="w-full h-1/2 lg:h-full lg:w-[calc(100%-var(--split-ratio))] flex flex-col bg-slate-50 dark:bg-gray-900">
                 {/* Header */}
                 <div className="flex-shrink-0 px-6 py-3 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900">
                   <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{result ? 'Test Results' : 'Questions'}</h2>
