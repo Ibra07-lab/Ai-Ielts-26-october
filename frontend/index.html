@@ -4,10 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' http://localhost:* https://*.supabase.co https://*.openai.com wss://*.supabase.co https://*.encr.app https://*.onrender.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com; media-src 'self' https:;" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: https://www.google-analytics.com; connect-src 'self' http://localhost:* https://*.supabase.co https://*.openai.com wss://*.supabase.co https://*.encr.app https://*.onrender.com https://www.google-analytics.com https://analytics.google.com https://googletagmanager.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com; media-src 'self' https:;" />
     <title>NewBand</title>
     <!-- SVG favicon as data URI -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%232563eb'><polygon points='76,22 96,14 96,82 76,90' /><polygon points='53,31 73,23 73,91 53,99' /><polygon points='30,40 50,32 50,85 30,65' /><path d='M7 50 L26 42 L26 62 L15 73 L15 94 L7 97 Z' /></svg>" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-34GSJMXSL4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-34GSJMXSL4');
+    </script>
   </head>
   <body>
     <div id="root"></div>
