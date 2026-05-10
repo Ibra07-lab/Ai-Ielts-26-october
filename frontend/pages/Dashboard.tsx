@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Calendar, Target, Clock, TrendingUp, BookOpen, Mic, PenTool, Headphones, Star, Award, CheckCircle, Plus, Wand2, ArrowRight, ChevronLeft, ChevronRight, X, Info } from "lucide-react";
+import { Calendar, Target, Clock, TrendingUp, BookOpen, Mic, PenTool, Headphones, Star, Award, CheckCircle, Plus, Wand2, ArrowRight, ChevronLeft, ChevronRight, X, Info, Eye, Lock } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -18,33 +18,71 @@ import SpeakingPracticeCard from "@/components/SpeakingPracticeCard";
 import WritingPracticeCard from "@/components/WritingPracticeCard";
 import ListeningPracticeCard from "@/components/ListeningPracticeCard";
 
-export default function Dashboard() {
-  const { user } = useUser();
+/* ─── Preview Signup Modal ─── */
+function PreviewSignupModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const nav = useNavigate();
+  if (!open) return null;
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-in fade-in duration-200" onClick={onClose}>
+      <div onClick={e => e.stopPropagation()} className="relative w-[90%] max-w-md bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-2xl border border-slate-200 dark:border-white/10 animate-in zoom-in-95 duration-300">
+        <button onClick={onClose} className="absolute top-4 right-4 p-1.5 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"><X className="w-5 h-5" /></button>
+        <div className="text-center space-y-4">
+          <div className="mx-auto w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
+            <Lock className="w-7 h-7 text-white" />
+          </div>
+          <h2 className="text-2xl font-black text-slate-900 dark:text-white">Create your free account</h2>
+          <p className="text-slate-600 dark:text-slate-400 leading-relaxed">Start practicing, save your progress, and unlock NewBand's IELTS preparation system.</p>
+          <div className="space-y-3 pt-2">
+            <Button onClick={() => nav("/register")} className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-base rounded-xl shadow-lg shadow-blue-500/20 border-none">
+              Create Free Account <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+            <Button onClick={onClose} variant="ghost" className="w-full h-11 text-slate-500 hover:text-slate-700 dark:text-slate-400 font-medium">
+              Continue Preview
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const MOCK_USER = { id: "preview", email: "student@newband.ai", name: "Student", plan: "free" } as any;
+
+export default function Dashboard({ isPreview = false }: { isPreview?: boolean }) {
+  const { user: authUser } = useUser();
+  const user = isPreview ? MOCK_USER : authUser;
   const navigate = useNavigate();
   const qc = useQueryClient();
   const [addOpen, setAddOpen] = useState(false);
   const [aiOpen, setAiOpen] = useState(false);
-  const [showPaymentNotice, setShowPaymentNotice] = useState(true);
+  const [showPaymentNotice, setShowPaymentNotice] = useState(!isPreview);
+  const [showSignupModal, setShowSignupModal] = useState(false);
   const [range] = useState<"daily">("daily");
   const dueISO = new Date().toISOString();
+
+  // In preview mode, intercept navigation with signup modal
+  const previewNav = (path: string) => {
+    if (isPreview) { setShowSignupModal(true); return; }
+    navigate(path);
+  };
 
   const { data: progress } = useQuery({
     queryKey: ["progress", user?.id],
     queryFn: () => user ? backend.ielts.getProgress(user.id) : null,
-    enabled: !!user,
+    enabled: !!user && !isPreview,
   });
 
   const { data: dailyGoal } = useQuery({
     queryKey: ["dailyGoal", user?.id],
     queryFn: () => user ? backend.ielts.getDailyGoal(user.id) : null,
-    enabled: !!user,
+    enabled: !!user && !isPreview,
   });
 
   // Dashboard tasks (compact list)
   const { data: dashTasksRes } = useQuery({
     queryKey: ["glow-tasks", user?.id, range],
     queryFn: () => user ? progressApi.listTasks(user.id, range, "all") : Promise.resolve({ tasks: [] }),
-    enabled: !!user,
+    enabled: !!user && !isPreview,
   });
   const dashTasks = dashTasksRes?.tasks ?? [];
 
@@ -78,7 +116,7 @@ export default function Dashboard() {
     }
   };
 
-  if (!user) {
+  if (!user && !isPreview) {
     return (
       <>
         <div className="flex items-center justify-center min-h-[400px]">
@@ -149,6 +187,17 @@ export default function Dashboard() {
 
   return (
     <>
+      {isPreview && <PreviewSignupModal open={showSignupModal} onClose={() => setShowSignupModal(false)} />}
+      {isPreview && (
+        <div className="sticky top-16 z-30 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-center py-2.5 px-4 flex items-center justify-center gap-3 text-sm font-medium shadow-lg">
+          <Eye className="w-4 h-4 shrink-0 opacity-80" />
+          <span>You're viewing a preview</span>
+          <span className="hidden sm:inline opacity-60">·</span>
+          <button onClick={() => navigate("/register")} className="font-bold underline underline-offset-2 hover:opacity-80 transition-opacity">
+            Create a free account to start practicing
+          </button>
+        </div>
+      )}
       <div className="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-8 mt-6">
         <div className="space-y-6 pb-32">
           
@@ -248,13 +297,17 @@ export default function Dashboard() {
 
                         if (isLocked) {
                           return (
-                            <div key={vid.id} onClick={() => navigate('/subscription')} className="shrink-0 w-[200px] sm:w-[240px] snap-start group cursor-pointer grayscale opacity-75 hover:opacity-100 transition-opacity">
+                            <div key={vid.id} onClick={() => previewNav('/subscription')} className="shrink-0 w-[200px] sm:w-[240px] snap-start group cursor-pointer grayscale opacity-75 hover:opacity-100 transition-opacity">
                               {content}
                             </div>
                           );
                         }
 
-                        return (
+                        return isPreview ? (
+                          <div key={vid.id} onClick={() => setShowSignupModal(true)} className="shrink-0 w-[200px] sm:w-[240px] snap-start group cursor-pointer">
+                            {content}
+                          </div>
+                        ) : (
                           <Link key={vid.id} to={`/video-lesson/${vid.id}`} className="shrink-0 w-[200px] sm:w-[240px] snap-start group cursor-pointer">
                             {content}
                           </Link>
@@ -394,7 +447,7 @@ export default function Dashboard() {
                         {isReadingPractice ? (
                           <>
                             <Button
-                              onClick={() => navigate(area.href)}
+                              onClick={() => previewNav(area.href)}
                               className={`w-full ${theme.btn} text-white border-0 shadow-lg shadow-black/5 dark:shadow-black/20 text-xs font-medium h-9`}
                             >
                               Start Practice
@@ -403,7 +456,7 @@ export default function Dashboard() {
                               <Button
                                 variant="outline"
                                 size="sm"
-                                onClick={(e) => { e.stopPropagation(); navigate('/reading/theory'); }}
+                                onClick={(e) => { e.stopPropagation(); previewNav('/reading/theory'); }}
                                 className="border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white text-[10px] h-7"
                               >
                                 Basics
@@ -411,7 +464,7 @@ export default function Dashboard() {
                               <Button
                                 variant="outline"
                                 size="sm"
-                                onClick={(e) => { e.stopPropagation(); navigate('/reading/tutor-chat'); }}
+                                onClick={(e) => { e.stopPropagation(); previewNav('/reading/tutor-chat'); }}
                                 className="border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white text-[10px] h-7"
                               >
                                 AI Tutor
@@ -420,7 +473,7 @@ export default function Dashboard() {
                           </>
                         ) : (
                           <Button
-                            onClick={() => navigate(area.href)}
+                            onClick={() => previewNav(area.href)}
                             className={`w-full ${theme.btn} text-white border-0 shadow-lg shadow-black/5 dark:shadow-black/20 text-xs font-medium group-hover:brightness-110 transition-all h-9`}
                           >
                             Start Practice <span className="ml-1 opacity-70 transition-transform group-hover:translate-x-1">→</span>
@@ -435,7 +488,7 @@ export default function Dashboard() {
               <div className="space-y-3">
                 {/* Personalized Plan Button */}
                 <Button
-                  onClick={() => isFreeTier ? navigate('/subscription') : navigate('/plan')}
+                  onClick={() => isFreeTier ? previewNav('/subscription') : previewNav('/plan')}
                   className={`w-full h-14 rounded-2xl border-0 font-bold text-base shadow-xl transition-all ${isFreeTier ? 'bg-slate-300 dark:bg-slate-800 text-slate-500 dark:text-slate-400 grayscale opacity-75 hover:opacity-100' : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-blue-500/20 hover:scale-[1.02] active:scale-[0.98]'}`}
                 >
                   {isFreeTier ? (
@@ -450,7 +503,7 @@ export default function Dashboard() {
 
                 {/* Progress Roadmap Button */}
                 <Button
-                  onClick={() => navigate('/progress')}
+                  onClick={() => previewNav('/progress')}
                   className="w-full h-12 rounded-2xl bg-slate-800 hover:bg-slate-900 dark:bg-slate-800/80 dark:hover:bg-slate-700 text-white dark:text-slate-300 border-0 font-bold text-sm shadow-lg shadow-slate-900/10 dark:shadow-none transition-all hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <TrendingUp className="h-4 w-4 mr-2" />
@@ -516,7 +569,7 @@ export default function Dashboard() {
                   </div>
 
                   <Button
-                    onClick={() => navigate("/vocabulary")}
+                    onClick={() => previewNav("/vocabulary")}
                     size="lg"
                     className="shimmer-btn h-16 px-10 text-lg font-black rounded-2xl bg-gradient-to-r from-sky-500 to-blue-500 hover:from-sky-600 hover:to-blue-600 text-white shadow-xl shadow-sky-500/20 hover:shadow-sky-500/40 hover:-translate-y-1 transition-all duration-300 border-0"
                   >

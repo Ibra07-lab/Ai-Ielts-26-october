@@ -20,7 +20,8 @@ import {
   X,
   Calendar,
   RefreshCw,
-  Calculator
+  Calculator,
+  Eye
 } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/button";
@@ -163,12 +164,11 @@ export default function LandingPage() {
                     <Button
                       size="lg"
                       variant="outline"
-                      onClick={() => {
-                        document.getElementById('strategy')?.scrollIntoView({ behavior: 'smooth' });
-                      }}
-                      className="w-full sm:w-auto rounded-lg px-8 h-14 text-lg font-semibold border-white/10 bg-white/5 hover:bg-white hover:text-slate-900 transition-all text-white"
+                      onClick={() => navigate('/preview')}
+                      className="w-full sm:w-auto rounded-lg px-8 h-14 text-lg font-semibold border-white/20 bg-white/10 hover:bg-white hover:text-slate-900 transition-all text-white backdrop-blur-sm"
                     >
-                      See How It Works
+                      <Eye className="mr-2 h-5 w-5" />
+                      Explore Preview
                     </Button>
                   </motion.div>
 
