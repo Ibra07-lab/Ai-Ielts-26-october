@@ -2,8 +2,13 @@ import React from 'react';
 import { BookOpen, Newspaper, FileText, PenTool, Book } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-const ReadingPracticeCard = () => {
+interface Props {
+    onNavigate?: (path: string) => void;
+}
+
+const ReadingPracticeCard = ({ onNavigate }: Props = {}) => {
     const navigate = useNavigate();
+    const nav = onNavigate || navigate;
 
     return (
         <div className="relative group w-full mx-auto h-full">
@@ -66,7 +71,7 @@ const ReadingPracticeCard = () => {
                     {/* Buttons */}
                     <div className="mt-auto space-y-3">
                         <button
-                            onClick={() => navigate('/reading')}
+                            onClick={() => nav('/reading')}
                             className="w-full py-2.5 px-3 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white rounded-xl font-medium transition-colors shadow-lg shadow-emerald-900/20 flex items-center justify-center gap-2 group/btn text-xs sm:text-sm"
                         >
                             Start Practice
@@ -83,13 +88,13 @@ const ReadingPracticeCard = () => {
 
                         <div className="grid grid-cols-2 gap-2 mt-1">
                             <button
-                                onClick={() => navigate('/reading/theory')}
+                                onClick={() => nav('/reading/theory')}
                                 className="py-2 px-2.5 rounded-xl border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 font-medium hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white transition-colors text-xs hover:border-slate-300"
                             >
                                 Basics
                             </button>
                             <button
-                                onClick={() => navigate('/reading/tutor-chat')}
+                                onClick={() => nav('/reading/tutor-chat')}
                                 className="relative inline-flex h-full w-full overflow-hidden rounded-xl p-[1px] focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-slate-50 group/magic"
                             >
                                 <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#34d399_0%,#6366f1_50%,#34d399_100%)]" />

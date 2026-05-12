@@ -19,6 +19,7 @@ import ReadingTheoryQuiz from "@/components/ReadingTheoryQuiz";
 import backend, { Local } from "@/backend";
 import { getAIFeedback } from '../services/aiFeedback';
 import NoteCompletion from "@/components/questions/NoteCompletion";
+import { PreviewSignupModal } from "@/components/PreviewSignupModal";
 
 interface Highlight {
   id: number;
@@ -934,7 +935,10 @@ const TEXT_SIZE_CLASSES: Record<TextSizeOption, string> = {
   'extra-large': 'prose prose-2xl max-w-none dark:prose-invert leading-relaxed [&_p]:text-2xl [&_p]:leading-[2]',
 };
 
-export default function ReadingPractice() {
+const MOCK_USER = { id: "preview", email: "student@newband.ai", name: "Student", plan: "free" } as any;
+
+export default function ReadingPractice({ isPreview = false }: { isPreview?: boolean }) {
+  const [showSignupModal, setShowSignupModal] = useState(false);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [startTime, setStartTime] = useState<number | null>(null);
   const [result, setResult] = useState<any>(null);
@@ -1036,7 +1040,8 @@ export default function ReadingPractice() {
       document.body.style.userSelect = '';
     };
   }, [isDragging]);
-  const { user } = useUser();
+  const { user: authUser } = useUser();
+  const user = isPreview ? MOCK_USER : authUser;
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -1173,6 +1178,10 @@ export default function ReadingPractice() {
   const passage = selectedTestIndex != null ? tests[activeSlideIndex] : undefined;
 
   const enterTest = (idx: number) => {
+    if (isPreview) {
+      setShowSignupModal(true);
+      return;
+    }
     setRemainingSeconds(60 * 60);
     setStartTime(Date.now());
     setSelectedTestIndex(idx);
@@ -3033,6 +3042,7 @@ export default function ReadingPractice() {
           </div>
         )}
       </div>
+      <PreviewSignupModal open={showSignupModal} onClose={() => setShowSignupModal(false)} />
     </>
   );
 }

@@ -54,6 +54,13 @@ function AppInner() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/preview" element={<Dashboard isPreview />} />
+          <Route path="/preview/reading" element={<ReadingPractice isPreview />} />
+          <Route path="/preview/listening" element={<ListeningPractice isPreview />} />
+          <Route path="/preview/writing" element={<WritingTask isPreview />} />
+          <Route path="/preview/writing/task-1" element={<WritingTask defaultTab="task-1" isPreview />} />
+          <Route path="/preview/writing/task-2" element={<WritingTask defaultTab="task-2" isPreview />} />
+          <Route path="/preview/speaking" element={<SpeakingPractice isPreview />} />
+          <Route path="/preview/vocabulary" element={<VocabularyBuilder isPreview />} />
 
           {/* Protected routes */}
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />

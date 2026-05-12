@@ -2,8 +2,13 @@ import React from 'react';
 import { PenTool, FileText, Edit3, Keyboard, Book } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-const WritingPracticeCard = () => {
+interface Props {
+    onNavigate?: (path: string) => void;
+}
+
+const WritingPracticeCard = ({ onNavigate }: Props = {}) => {
     const navigate = useNavigate();
+    const nav = onNavigate || navigate;
 
     return (
         <div className="relative group w-full mx-auto h-full">
@@ -60,7 +65,7 @@ const WritingPracticeCard = () => {
                     <div className="mt-auto flex flex-col gap-3">
                         {/* Task 1 Button */}
                         <button
-                            onClick={() => navigate('/writing/task-1')}
+                            onClick={() => nav('/writing/task-1')}
                             className="w-full py-2.5 px-3 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white rounded-xl font-medium transition-all shadow-lg shadow-blue-900/20 group/btn1 relative overflow-hidden text-left"
                         >
                             <div className="flex items-center justify-between relative z-10">
@@ -79,7 +84,7 @@ const WritingPracticeCard = () => {
 
                         {/* Task 2 Button */}
                         <button
-                            onClick={() => navigate('/writing/task-2')}
+                            onClick={() => nav('/writing/task-2')}
                             className="w-full py-2.5 px-3 bg-transparent hover:bg-blue-50 border-2 border-blue-500/30 hover:border-blue-500 text-blue-600 hover:text-blue-700 rounded-xl font-medium transition-all group/btn2 text-left"
                         >
                             <div className="flex items-center justify-between">

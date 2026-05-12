@@ -9,8 +9,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "../contexts/UserContext";
 import backend from "@/backend";
+import { PreviewSignupModal } from "@/components/PreviewSignupModal";
 
-export default function SpeakingPractice() {
+const MOCK_USER = { id: "preview", email: "student@newband.ai", name: "Student", plan: "free" } as any;
+
+export default function SpeakingPractice({ isPreview = false }: { isPreview?: boolean }) {
+  const [showSignupModal, setShowSignupModal] = useState(false);
   const [selectedPart, setSelectedPart] = useState(1);
   const [isRecording, setIsRecording] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
@@ -18,7 +22,8 @@ export default function SpeakingPractice() {
   const [feedback, setFeedback] = useState<any>(null);
 
   const [transcription, setTranscription] = useState<string>("");
-  const { user } = useUser();
+  const { user: authUser } = useUser();
+  const user = isPreview ? MOCK_USER : authUser;
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -53,6 +58,10 @@ export default function SpeakingPractice() {
 
 
   const startRecording = () => {
+    if (isPreview) {
+      setShowSignupModal(true);
+      return;
+    }
     if (!question || !user) return;
 
     setIsRecording(true);
@@ -185,7 +194,7 @@ export default function SpeakingPractice() {
 
                       <Button
                         variant="outline"
-                        onClick={() => getNewQuestion()}
+                        onClick={() => isPreview ? setShowSignupModal(true) : getNewQuestion()}
                         disabled={isRecording}
                       >
                         <RotateCcw className="h-5 w-5 mr-2" />
@@ -279,6 +288,7 @@ export default function SpeakingPractice() {
           ))}
         </Tabs>
       </div>
+      <PreviewSignupModal open={showSignupModal} onClose={() => setShowSignupModal(false)} />
     </>
   );
 }

@@ -110,8 +110,8 @@ export default function LandingPage() {
             </div>
 
             <div className="flex items-center gap-4">
-              <Link to="/login" className="hidden md:block text-sm font-semibold text-white/70 hover:text-white transition-colors">
-                {user ? "Go to App" : "Sign In"}
+              <Link to="/preview" className="hidden md:block text-sm font-semibold text-white/70 hover:text-white transition-colors">
+                Dashboard
               </Link>
               <Button
                 onClick={() => navigate(user ? '/dashboard' : '/register')}

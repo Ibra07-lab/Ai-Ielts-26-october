@@ -2,14 +2,19 @@ import React from 'react';
 import { Headphones, Music, Radio, Volume2, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-const ListeningPracticeCard = () => {
+interface Props {
+    onNavigate?: (path: string) => void;
+}
+
+const ListeningPracticeCard = ({ onNavigate }: Props = {}) => {
     const navigate = useNavigate();
+    const nav = onNavigate || navigate;
 
     return (
         <div className="relative group w-full mx-auto h-full">
             {/* Container */}
             <div
-                onClick={() => navigate('/listening')}
+                onClick={() => nav('/listening')}
                 className="relative overflow-hidden rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-4 xl:p-5 shadow-xl h-full flex flex-col cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all duration-300"
             >
 
@@ -62,7 +67,7 @@ const ListeningPracticeCard = () => {
                     {/* Buttons */}
                     <div className="mt-auto space-y-3">
                         <button
-                            onClick={() => navigate('/listening')}
+                            onClick={(e) => { e.stopPropagation(); nav('/listening'); }}
                             className="w-full py-2.5 px-3 bg-violet-600 hover:bg-violet-700 text-white rounded-xl font-medium border border-violet-500 flex items-center justify-center gap-2 transition-colors text-xs sm:text-sm"
                         >
                             Start Practice

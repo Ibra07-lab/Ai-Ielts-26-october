@@ -7,14 +7,16 @@ import ContextTetris from "@/components/vocabulary/exercises/ContextTetris";
 import SpeakToUnlock from "@/components/vocabulary/exercises/SpeakToUnlock";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { PreviewSignupModal } from "@/components/PreviewSignupModal";
 import { getAllTopics, getWordsByTopicId, getExercisesByTopicId } from "@/data/vocabulary";
 import { shuffleArray } from "@/lib/utils";
 
 type ViewState = "dashboard" | "wordList" | "deck" | "exercise";
 type ExerciseType = "synonym" | "tetris" | "speak" | "flashcards";
 
-export default function VocabularyBuilder() {
+export default function VocabularyBuilder({ isPreview = false }: { isPreview?: boolean }) {
   const [view, setView] = useState<ViewState>("dashboard");
+  const [showSignupModal, setShowSignupModal] = useState(false);
   const [selectedTopicId, setSelectedTopicId] = useState<number | null>(null);
   const [currentExercise, setCurrentExercise] = useState<ExerciseType | null>(null);
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
@@ -60,12 +62,21 @@ export default function VocabularyBuilder() {
   };
 
   const handleStartLearning = () => {
+    if (isPreview) {
+      setShowSignupModal(true);
+      return;
+    }
     // Initialize queue with filtered words in random order
     setLearningQueue(shuffleArray([...filteredWords]));
     setView("deck");
   };
 
   const handleStartExercise = (type: ExerciseType) => {
+    if (isPreview) {
+      setShowSignupModal(true);
+      return;
+    }
+
     if (type === "flashcards") {
       handleStartLearning();
       return;
@@ -140,12 +151,18 @@ export default function VocabularyBuilder() {
 
   return (
     <div className="h-full overflow-hidden bg-gray-50 dark:bg-background">
+      <PreviewSignupModal 
+        open={showSignupModal} 
+        onClose={() => setShowSignupModal(false)} 
+      />
       <div className="w-full h-full">
         {view === "dashboard" && (
           <VocabularyDashboard
             topics={topics}
             allWords={allWords}
             onTopicSelect={handleTopicSelect}
+            isPreview={isPreview}
+            onShowSignupModal={() => setShowSignupModal(true)}
           />
         )}
 

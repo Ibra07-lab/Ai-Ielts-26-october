@@ -17,34 +17,7 @@ import ReadingPracticeCard from "@/components/ReadingPracticeCard";
 import SpeakingPracticeCard from "@/components/SpeakingPracticeCard";
 import WritingPracticeCard from "@/components/WritingPracticeCard";
 import ListeningPracticeCard from "@/components/ListeningPracticeCard";
-
-/* ─── Preview Signup Modal ─── */
-function PreviewSignupModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const nav = useNavigate();
-  if (!open) return null;
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-in fade-in duration-200" onClick={onClose}>
-      <div onClick={e => e.stopPropagation()} className="relative w-[90%] max-w-md bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-2xl border border-slate-200 dark:border-white/10 animate-in zoom-in-95 duration-300">
-        <button onClick={onClose} className="absolute top-4 right-4 p-1.5 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"><X className="w-5 h-5" /></button>
-        <div className="text-center space-y-4">
-          <div className="mx-auto w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
-            <Lock className="w-7 h-7 text-white" />
-          </div>
-          <h2 className="text-2xl font-black text-slate-900 dark:text-white">Create your free account</h2>
-          <p className="text-slate-600 dark:text-slate-400 leading-relaxed">Start practicing, save your progress, and unlock NewBand's IELTS preparation system.</p>
-          <div className="space-y-3 pt-2">
-            <Button onClick={() => nav("/register")} className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-base rounded-xl shadow-lg shadow-blue-500/20 border-none">
-              Create Free Account <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-            <Button onClick={onClose} variant="ghost" className="w-full h-11 text-slate-500 hover:text-slate-700 dark:text-slate-400 font-medium">
-              Continue Preview
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+import { PreviewSignupModal } from "@/components/PreviewSignupModal";
 
 const MOCK_USER = { id: "preview", email: "student@newband.ai", name: "Student", plan: "free" } as any;
 
@@ -60,10 +33,23 @@ export default function Dashboard({ isPreview = false }: { isPreview?: boolean }
   const [range] = useState<"daily">("daily");
   const dueISO = new Date().toISOString();
 
-  // In preview mode, intercept navigation with signup modal
+  // For preview mode, we intercept specific actions, but allow navigating to preview sub-pages.
   const previewNav = (path: string) => {
-    if (isPreview) { setShowSignupModal(true); return; }
-    navigate(path);
+    if (isPreview) {
+      const allowedPreviewPaths = [
+        '/reading', '/listening', '/writing', '/speaking',
+        '/writing/task-1', '/writing/task-2', '/vocabulary',
+        '/reading/theory', '/reading/tutor-chat'
+      ];
+      const cleanPath = path.split('?')[0].split('#')[0];
+      if (allowedPreviewPaths.includes(cleanPath)) {
+        navigate(`/preview${cleanPath}`);
+      } else {
+        setShowSignupModal(true);
+      }
+    } else {
+      navigate(path);
+    }
   };
 
   const { data: progress } = useQuery({
@@ -385,7 +371,7 @@ export default function Dashboard({ isPreview = false }: { isPreview?: boolean }
                   if (isReadingPractice) {
                     return (
                       <div key={area.title} className="h-full">
-                        <ReadingPracticeCard />
+                        <ReadingPracticeCard onNavigate={previewNav} />
                       </div>
                     );
                   }
@@ -401,7 +387,7 @@ export default function Dashboard({ isPreview = false }: { isPreview?: boolean }
                   if (area.title === "Writing Tasks") {
                     return (
                       <div key={area.title} className="h-full">
-                        <WritingPracticeCard />
+                        <WritingPracticeCard onNavigate={previewNav} />
                       </div>
                     );
                   }
@@ -409,7 +395,7 @@ export default function Dashboard({ isPreview = false }: { isPreview?: boolean }
                   if (area.title === "Listening Practice") {
                     return (
                       <div key={area.title} className="h-full">
-                        <ListeningPracticeCard />
+                        <ListeningPracticeCard onNavigate={previewNav} />
                       </div>
                     );
                   }
@@ -569,7 +555,7 @@ export default function Dashboard({ isPreview = false }: { isPreview?: boolean }
                   </div>
 
                   <Button
-                    onClick={() => previewNav("/vocabulary")}
+                    onClick={() => isPreview ? navigate("/preview/vocabulary") : navigate("/vocabulary")}
                     size="lg"
                     className="shimmer-btn h-16 px-10 text-lg font-black rounded-2xl bg-gradient-to-r from-sky-500 to-blue-500 hover:from-sky-600 hover:to-blue-600 text-white shadow-xl shadow-sky-500/20 hover:shadow-sky-500/40 hover:-translate-y-1 transition-all duration-300 border-0"
                   >

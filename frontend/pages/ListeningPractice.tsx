@@ -19,6 +19,7 @@ import backend from "@/backend";
 import ListeningWorksheet from "../components/listening/ListeningWorksheet";
 import ErrorBoundary from "../components/ErrorBoundary";
 import { useHighlighter } from "../hooks/useHighlighter";
+import { PreviewSignupModal } from "@/components/PreviewSignupModal";
 
 interface ListeningTestMeta {
   id: number;
@@ -67,7 +68,10 @@ interface TranscriptResponse {
   transcripts?: TranscriptSection[];
 }
 
-export default function ListeningPractice() {
+const MOCK_USER = { id: "preview", email: "student@newband.ai", name: "Student", plan: "free" } as any;
+
+export default function ListeningPractice({ isPreview = false }: { isPreview?: boolean }) {
+  const [showSignupModal, setShowSignupModal] = useState(false);
   const [selectedTestId, setSelectedTestId] = useState<number | null>(null);
   const [isTestStarted, setIsTestStarted] = useState(false);
   const [answers, setAnswers] = useState<Record<number, string>>({});
@@ -98,7 +102,8 @@ export default function ListeningPractice() {
     }
   }, [isTestStarted, isSupported]);
 
-  const { user } = useUser();
+  const { user: authUser } = useUser();
+  const user = isPreview ? MOCK_USER : authUser;
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -279,6 +284,10 @@ export default function ListeningPractice() {
   };
 
   const handleStartTest = (testId: number) => {
+    if (isPreview) {
+      setShowSignupModal(true);
+      return;
+    }
     console.log("🎯 [DEBUG] handleStartTest called with testId:", testId);
     setSelectedTestId(testId); // FIX: Set the test ID!
     setIsTestStarted(true);
@@ -859,6 +868,7 @@ export default function ListeningPractice() {
           )}
         </div>
       )}
+      <PreviewSignupModal open={showSignupModal} onClose={() => setShowSignupModal(false)} />
     </div>
   );
 }

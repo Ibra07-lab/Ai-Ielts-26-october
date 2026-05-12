@@ -16,9 +16,11 @@ interface VocabularyDashboardProps {
     topics: Topic[];
     allWords: WordData[];
     onTopicSelect: (topicId: number, mode?: "speaking" | "writing") => void;
+    isPreview?: boolean;
+    onShowSignupModal?: () => void;
 }
 
-export default function VocabularyDashboard({ topics, allWords, onTopicSelect }: VocabularyDashboardProps) {
+export default function VocabularyDashboard({ topics, allWords, onTopicSelect, isPreview = false, onShowSignupModal }: VocabularyDashboardProps) {
     const [isFlashcardSetupOpen, setIsFlashcardSetupOpen] = useState(false);
     const [flashcardWords, setFlashcardWords] = useState<WordData[] | null>(null);
     const { userProgress } = useVocabulary();
@@ -67,7 +69,7 @@ export default function VocabularyDashboard({ topics, allWords, onTopicSelect }:
 
                         {/* Start Flashcards Button */}
                         <button
-                            onClick={() => setIsFlashcardSetupOpen(true)}
+                            onClick={() => isPreview && onShowSignupModal ? onShowSignupModal() : setIsFlashcardSetupOpen(true)}
                             className="group flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-2xl font-bold text-sm shadow-lg hover:shadow-sky-500/30 hover:-translate-y-0.5 active:translate-y-0 transition-all"
                         >
                             <Layers className="w-5 h-5 group-hover:rotate-12 transition-transform" />

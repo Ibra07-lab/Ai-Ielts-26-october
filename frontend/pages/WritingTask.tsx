@@ -22,6 +22,7 @@ import TownEvolutionMap from "@/components/writing/TownEvolutionMap";
 import CropYieldTable from "@/components/writing/CropYieldTable";
 import SecondarySchoolTable from "@/components/writing/SecondarySchoolTable";
 import { AnalysisLoader } from "@/components/ui/analysis-loader";
+import { PreviewSignupModal } from "@/components/PreviewSignupModal";
 
 
 
@@ -76,11 +77,15 @@ const writingTests = [
 
 
 
+const MOCK_USER = { id: "preview", email: "student@newband.ai", name: "Student", plan: "free" } as any;
+
 interface WritingTaskProps {
   defaultTab?: "task-1" | "task-2";
+  isPreview?: boolean;
 }
 
-export default function WritingTask({ defaultTab }: WritingTaskProps) {
+export default function WritingTask({ defaultTab, isPreview = false }: WritingTaskProps) {
+  const [showSignupModal, setShowSignupModal] = useState(false);
   const location = useLocation();
   const roadmapTask = location.state?.roadmapTask;
 
@@ -124,7 +129,8 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const { user, session } = useUser();
+  const { user: authUser, session } = useUser();
+  const user = isPreview ? MOCK_USER : authUser;
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -614,6 +620,10 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
   };
 
   const handleStartTest = (testId?: number) => {
+    if (isPreview) {
+      setShowSignupModal(true);
+      return;
+    }
     const targetTestId = testId || selectedTestId;
     if (targetTestId) {
       setSelectedTestId(targetTestId);
@@ -1064,6 +1074,7 @@ export default function WritingTask({ defaultTab }: WritingTaskProps) {
           )}
         </div>
       )}
+      <PreviewSignupModal open={showSignupModal} onClose={() => setShowSignupModal(false)} />
     </div>
   );
 }

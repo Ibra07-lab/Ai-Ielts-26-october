@@ -47,7 +47,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div className="flex flex-1 items-center justify-between">
               
               {/* Left: Logo */}
-              <Link to="/dashboard" className="flex items-center gap-2 group w-1/3">
+              <Link to={location.pathname.startsWith('/preview') ? '/preview' : '/dashboard'} className="flex items-center gap-2 group w-1/3">
                 <Logo className="w-9 h-9 text-indigo-600 dark:text-indigo-500 group-hover:scale-105 transition-transform" />
                 <span className="text-xl font-black tracking-tight text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors hidden sm:block">
                   NewBand
@@ -92,16 +92,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     <span className="hidden sm:inline text-sm">{user.email?.split('@')[0] || 'ibragimkovalenko'}</span>
                     <LogOut className="h-4 w-4 ml-1 opacity-50" />
                   </Button>
-                ) : (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="flex items-center gap-2 h-9 px-4 rounded-xl bg-blue-600 text-white hover:bg-blue-700 font-bold transition-all shadow-sm"
-                    onClick={() => navigate('/login')}
-                  >
-                    Sign In
-                  </Button>
-                )}
+                ) : null}
               </div>
             </div>
           </div>
