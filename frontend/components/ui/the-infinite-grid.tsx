@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { 
   motion, 
   useMotionValue, 
@@ -32,7 +32,37 @@ export const GridPattern = ({ offsetX, offsetY }: { offsetX: any, offsetY: any }
   );
 };
 
-export const GridBackground = ({ children }: { children?: React.ReactNode }) => {
+// Static version for mobile — no animation, no mouse tracking
+const GridBackgroundMobile = ({ children }: { children?: React.ReactNode }) => {
+  return (
+    <div className="relative w-full min-h-screen overflow-clip bg-slate-950 text-white">
+      {/* Static grid at very low opacity — no animation */}
+      <div className="absolute inset-0 z-0 opacity-[0.03]">
+        <svg className="w-full h-full">
+          <defs>
+            <pattern id="grid-pattern-static" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="1" className="text-muted-foreground" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid-pattern-static)" />
+        </svg>
+      </div>
+
+      {/* Static ambient glow — no blur-[120px], use smaller radial gradients */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute right-[-20%] top-[-20%] w-[40%] h-[40%] rounded-full bg-orange-500/20 blur-[60px]" />
+        <div className="absolute left-[-10%] bottom-[-20%] w-[40%] h-[40%] rounded-full bg-blue-500/20 blur-[60px]" />
+      </div>
+      
+      <div className="relative z-10 w-full">
+        {children}
+      </div>
+    </div>
+  );
+};
+
+// Desktop version — full animation
+const GridBackgroundDesktop = ({ children }: { children?: React.ReactNode }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -84,6 +114,20 @@ export const GridBackground = ({ children }: { children?: React.ReactNode }) => 
       </div>
     </div>
   );
+};
+
+export const GridBackground = ({ children }: { children?: React.ReactNode }) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  if (isMobile) return <GridBackgroundMobile>{children}</GridBackgroundMobile>;
+  return <GridBackgroundDesktop>{children}</GridBackgroundDesktop>;
 };
 
 export const InfiniteGrid = () => {

@@ -266,10 +266,23 @@ export default function Dashboard({ isPreview = false }: { isPreview?: boolean }
                         const content = (
                           <>
                             <div className={`aspect-[16/10] flex items-center justify-center w-full rounded-xl overflow-hidden ring-1 ring-slate-200 dark:ring-white/10 shadow-md dark:shadow-lg bg-slate-50 dark:bg-[#0c0e14] relative z-10 transition-transform duration-500 ${!isLocked && 'group-hover:scale-[1.02]'}`}>
-                              <iframe className="w-full aspect-video pointer-events-none" src={`https://www.youtube.com/embed/${vid.yt}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin" allowFullScreen></iframe>
+                              {/* Lightweight thumbnail instead of iframe — saves ~50MB RAM per embed */}
+                              <img
+                                src={`https://img.youtube.com/vi/${vid.yt.split('?')[0]}/mqdefault.jpg`}
+                                alt={vid.title}
+                                className="w-full h-full object-cover"
+                                loading="lazy"
+                              />
+                              {!isLocked && (
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                  <div className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white" stroke="none"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                  </div>
+                                </div>
+                              )}
                               {isLocked && (
-                                <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-[2px] flex items-center justify-center z-20">
-                                  <div className="bg-slate-900/80 px-3 py-1.5 rounded-full flex items-center gap-2 border border-white/10 text-white/90 shadow-lg backdrop-blur-md">
+                                <div className="absolute inset-0 bg-slate-900/40 flex items-center justify-center z-20">
+                                  <div className="bg-slate-900/80 px-3 py-1.5 rounded-full flex items-center gap-2 border border-white/10 text-white/90 shadow-lg">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                                     <span className="text-xs font-bold tracking-wide uppercase">Pro</span>
                                   </div>
@@ -514,14 +527,14 @@ export default function Dashboard({ isPreview = false }: { isPreview?: boolean }
             </div>
 
             <div className="relative overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#151624] border border-slate-200 dark:border-white/10 shadow-xl dark:shadow-2xl transition-all duration-500 hover:shadow-sky-500/10">
-              {/* Animated Background Blobs */}
-              <div className="absolute top-0 right-0 -mt-20 -mr-20 w-96 h-96 bg-sky-500/10 dark:bg-sky-600/10 rounded-full blur-[100px] group-hover:bg-sky-500/20 dark:group-hover:bg-sky-600/20 transition-all duration-700"></div>
-              <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-blue-500/10 dark:bg-blue-600/10 rounded-full blur-[80px]"></div>
+              {/* Animated Background Blobs — lighter blur on mobile */}
+              <div className="absolute top-0 right-0 -mt-20 -mr-20 w-96 h-96 bg-sky-500/10 dark:bg-sky-600/10 rounded-full blur-[40px] md:blur-[100px] group-hover:bg-sky-500/20 dark:group-hover:bg-sky-600/20 transition-all duration-700"></div>
+              <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-blue-500/10 dark:bg-blue-600/10 rounded-full blur-[20px] md:blur-[80px]"></div>
 
               <div className="relative p-8 sm:p-12 flex flex-col lg:flex-row items-center justify-between gap-12">
                 <div className="flex-1 space-y-8 text-center lg:text-left">
                   <div className="space-y-4">
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-50 dark:bg-white/5 backdrop-blur-md border border-sky-200 dark:border-white/10 text-sky-600 dark:text-sky-400 text-xs font-bold uppercase tracking-widest shadow-sm ring-1 ring-sky-500/20">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-50 dark:bg-white/5 border border-sky-200 dark:border-white/10 text-sky-600 dark:text-sky-400 text-xs font-bold uppercase tracking-widest shadow-sm ring-1 ring-sky-500/20">
                       <Star className="h-3 w-3 fill-current animate-pulse" />
                       Premium Feature
                     </div>
@@ -534,19 +547,19 @@ export default function Dashboard({ isPreview = false }: { isPreview?: boolean }
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 auto-rows-fr">
-                    <div className="flex flex-col items-center lg:items-start gap-3 p-4 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 backdrop-blur-sm hover:bg-slate-100 dark:hover:bg-white/10 transition-colors">
+                    <div className="flex flex-col items-center lg:items-start gap-3 p-4 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors">
                       <div className="p-2 rounded-lg bg-sky-100 dark:bg-sky-500/20 text-sky-600 dark:text-sky-400">
                         <Target className="h-5 w-5" />
                       </div>
                       <span className="text-sm font-bold text-slate-800 dark:text-slate-200">Context Learning</span>
                     </div>
-                    <div className="flex flex-col items-center lg:items-start gap-3 p-4 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 backdrop-blur-sm hover:bg-slate-100 dark:hover:bg-white/10 transition-colors">
+                    <div className="flex flex-col items-center lg:items-start gap-3 p-4 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors">
                       <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400">
                         <Clock className="h-5 w-5" />
                       </div>
                       <span className="text-sm font-bold text-slate-800 dark:text-slate-200">Spaced Repetition</span>
                     </div>
-                    <div className="flex flex-col items-center lg:items-start gap-3 p-4 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 backdrop-blur-sm hover:bg-slate-100 dark:hover:bg-white/10 transition-colors">
+                    <div className="flex flex-col items-center lg:items-start gap-3 p-4 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors">
                       <div className="p-2 rounded-lg bg-violet-100 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400">
                         <Award className="h-5 w-5" />
                       </div>
@@ -564,7 +577,7 @@ export default function Dashboard({ isPreview = false }: { isPreview?: boolean }
                 </div>
 
                 {/* Visual Element: Premium Card Stack */}
-                <div className="relative w-full lg:w-80 h-80 perspective-container">
+                <div className="relative hidden lg:block w-80 h-80 perspective-container">
                   <div className="card-stack">
                     {/* Decorative Back Cards */}
                     <div className="card-stack-item card-stack-item-1 border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-neutral-800"></div>
@@ -574,7 +587,7 @@ export default function Dashboard({ isPreview = false }: { isPreview?: boolean }
                     <div className="card-stack-item card-stack-item-3 overflow-hidden bg-gradient-to-br from-white to-slate-50 dark:from-neutral-800 dark:to-neutral-900 border border-slate-200 dark:border-white/20 shadow-xl dark:shadow-2xl flex flex-col items-center justify-center group/card cursor-pointer">
                       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZmlsdGVyIGlkPSJ4Ij48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC42NSIgbnVtT2N0YXZlcz0iMyIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCN4KSIgb3BhY2l0eT0iMC40Ii8+PC9zdmc+')] opacity-[0.05] dark:opacity-20 pointer-events-none"></div>
                       <div className="relative z-10 text-center space-y-4 p-8">
-                        <div className="inline-block p-4 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 backdrop-blur-md mb-2 transition-transform group-hover/card:scale-110 duration-500">
+                        <div className="inline-block p-4 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 mb-2 transition-transform group-hover/card:scale-110 duration-500">
                           <BookOpen className="h-12 w-12 text-sky-500 dark:text-sky-400" />
                         </div>
                         <div className="space-y-1">
@@ -584,10 +597,10 @@ export default function Dashboard({ isPreview = false }: { isPreview?: boolean }
                       </div>
 
                       {/* Floating Premium Badges */}
-                      <div className="absolute top-6 right-6 px-3 py-1 bg-emerald-100 dark:bg-emerald-500/20 backdrop-blur-lg rounded-full border border-emerald-200 dark:border-emerald-500/30 text-[10px] font-black text-emerald-600 dark:text-emerald-400 flex items-center gap-1 shadow-md dark:shadow-lg animate-bounce">
+                      <div className="absolute top-6 right-6 px-3 py-1 bg-emerald-100 dark:bg-emerald-500/20 rounded-full border border-emerald-200 dark:border-emerald-500/30 text-[10px] font-black text-emerald-600 dark:text-emerald-400 flex items-center gap-1 shadow-md dark:shadow-lg md:animate-bounce">
                         <CheckCircle className="h-3 w-3" /> LEARNED
                       </div>
-                      <div className="absolute bottom-6 left-6 px-3 py-1 bg-indigo-100 dark:bg-indigo-500/20 backdrop-blur-lg rounded-full border border-indigo-200 dark:border-indigo-500/30 text-[10px] font-black text-indigo-600 dark:text-indigo-400 flex items-center gap-1 shadow-md dark:shadow-lg animate-bounce delay-700">
+                      <div className="absolute bottom-6 left-6 px-3 py-1 bg-indigo-100 dark:bg-indigo-500/20 rounded-full border border-indigo-200 dark:border-indigo-500/30 text-[10px] font-black text-indigo-600 dark:text-indigo-400 flex items-center gap-1 shadow-md dark:shadow-lg md:animate-bounce delay-700">
                         <TrendingUp className="h-3 w-3" /> +15 XP
                       </div>
                     </div>

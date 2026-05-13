@@ -40,9 +40,9 @@ export function LandingCalculator() {
   };
 
   return (
-    <div className="bg-[#06080e]/60 backdrop-blur-3xl rounded-[2.5rem] px-4 sm:px-8 md:px-16 py-8 md:py-10 w-full mx-auto shadow-[0_20px_80px_-20px_rgba(0,0,0,0.8)] relative overflow-hidden text-left">
-      {/* Background Aurora */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-gradient-to-r from-blue-600/10 via-emerald-600/10 to-violet-600/10 rounded-full blur-[120px] opacity-70 pointer-events-none"></div>
+    <div className="bg-[#06080e] md:bg-[#06080e]/60 md:backdrop-blur-3xl rounded-[2.5rem] px-4 sm:px-8 md:px-16 py-8 md:py-10 w-full mx-auto shadow-[0_20px_80px_-20px_rgba(0,0,0,0.8)] relative overflow-hidden text-left">
+      {/* Background Aurora — lighter blur on mobile */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-gradient-to-r from-blue-600/10 via-emerald-600/10 to-violet-600/10 rounded-full blur-[40px] md:blur-[120px] opacity-70 pointer-events-none"></div>
       
       <style>{`
         @keyframes flowData {
@@ -85,8 +85,8 @@ export function LandingCalculator() {
         </div>
 
         {/* Right: Glassmorphism Score Box (No borders) */}
-        <div className="w-full lg:w-80 px-6 sm:px-10 py-6 sm:py-8 rounded-[2rem] bg-gradient-to-b from-white/[0.04] to-transparent backdrop-blur-2xl shadow-[0_10px_40px_rgba(0,0,0,0.5)] flex-shrink-0 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-40 h-40 bg-blue-500/10 rounded-full blur-[50px]"></div>
+        <div className="w-full lg:w-80 px-6 sm:px-10 py-6 sm:py-8 rounded-[2rem] bg-[#0a0c12] md:bg-gradient-to-b md:from-white/[0.04] md:to-transparent md:backdrop-blur-2xl shadow-[0_10px_40px_rgba(0,0,0,0.5)] flex-shrink-0 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-40 h-40 bg-blue-500/10 rounded-full blur-[20px] md:blur-[50px]"></div>
           
           <div className="flex items-center justify-between mb-6 relative z-10">
             <span className="text-sm font-bold text-slate-400 uppercase tracking-widest">Simulation Output</span>

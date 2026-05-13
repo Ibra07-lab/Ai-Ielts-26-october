@@ -916,3 +916,53 @@
     transform: translateY(0);
   }
 }
+
+/* ================================================
+   MOBILE PERFORMANCE OPTIMIZATIONS
+   backdrop-blur is extremely expensive on mobile GPUs.
+   Large CSS blur() on decorative blobs also costs a lot.
+   We disable/reduce these on small screens.
+   ================================================ */
+@media (max-width: 768px) {
+  /* Kill all backdrop-blur on mobile — use solid backgrounds instead */
+  .glass-panel,
+  .glass-card,
+  .frosted-card,
+  .search-chip {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Reduce large decorative blur radii (120px→40px, 100px→30px, 80px→20px) */
+  [class*="blur-\[120px\]"],
+  [class*="blur-\[100px\]"] {
+    filter: blur(40px) !important;
+  }
+
+  [class*="blur-\[80px\]"] {
+    filter: blur(20px) !important;
+  }
+
+  /* Stop continuous animations that burn GPU (bounce, pulse, shimmer) */
+  .animate-bounce,
+  .animate-pulse {
+    animation: none !important;
+  }
+
+  .shimmer-btn::after {
+    animation: none !important;
+    display: none !important;
+  }
+}
+
+/* Respect user preference to reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

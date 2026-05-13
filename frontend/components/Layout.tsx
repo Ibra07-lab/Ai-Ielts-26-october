@@ -43,7 +43,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="w-full">
         {/* Top bar (Hidden on Landing Page) */}
         {!isLandingPage && (
-          <div className="sticky top-0 z-40 flex h-16 items-center px-4 sm:px-6 lg:px-8 border-b border-gray-200 bg-white/50 backdrop-blur-md shadow-sm dark:border-gray-700 dark:bg-gray-800/50">
+          <div className="sticky top-0 z-40 flex h-16 items-center px-4 sm:px-6 lg:px-8 border-b border-gray-200 bg-white md:bg-white/50 md:backdrop-blur-md shadow-sm dark:border-gray-700 dark:bg-gray-900 md:dark:bg-gray-800/50">
             <div className="flex flex-1 items-center justify-between">
               
               {/* Left: Logo */}

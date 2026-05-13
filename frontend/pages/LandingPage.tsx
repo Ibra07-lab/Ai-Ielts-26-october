@@ -87,7 +87,7 @@ export default function LandingPage() {
     <div className="min-h-screen bg-white text-slate-950 overflow-clip font-sans selection:bg-blue-100">
 
       {/* --- NAVBAR --- */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-[#06080e]/90 backdrop-blur-lg border-b border-white/5' : 'bg-transparent'}`}>
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-[#06080e] md:bg-[#06080e]/90 md:backdrop-blur-lg border-b border-white/5' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <div className="flex items-center gap-2 group cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
@@ -165,7 +165,7 @@ export default function LandingPage() {
                       size="lg"
                       variant="outline"
                       onClick={() => navigate('/preview')}
-                      className="w-full sm:w-auto rounded-lg px-8 h-14 text-lg font-semibold border-white/20 bg-white/10 hover:bg-white hover:text-slate-900 transition-all text-white backdrop-blur-sm"
+                      className="w-full sm:w-auto rounded-lg px-8 h-14 text-lg font-semibold border-white/20 bg-white/10 hover:bg-white hover:text-slate-900 transition-all text-white"
                     >
                       <Eye className="mr-2 h-5 w-5" />
                       Explore Preview
