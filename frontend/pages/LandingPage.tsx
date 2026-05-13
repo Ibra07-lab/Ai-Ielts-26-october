@@ -127,7 +127,7 @@ export default function LandingPage() {
       <main>
         <GridBackground>
           {/* --- 1. RESULT PROMISE (HERO) --- */}
-          <section className="pt-10 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center relative overflow-hidden">
+          <section className="pt-20 sm:pt-10 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center relative overflow-hidden">
 
             <ContainerScroll
               titleComponent={
@@ -138,12 +138,12 @@ export default function LandingPage() {
                   variants={staggerContainer}
                   className="flex flex-col items-center mb-6"
                 >
-                  <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 mb-6">
-                    <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span className="text-sm font-bold text-emerald-400 uppercase tracking-wider">Your personal IELTS examiner — available 24/7</span>
+                  <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 mb-4 sm:mb-6">
+                    <span className="flex h-2 w-2 rounded-full bg-emerald-400"></span>
+                    <span className="text-xs sm:text-sm font-bold text-emerald-400 uppercase tracking-wider">Your personal IELTS examiner — available 24/7</span>
                   </motion.div>
 
-                  <motion.h1 variants={fadeInUp} className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight mb-2 leading-[1.05] text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-200 to-emerald-400 animate-gradient-text">
+                  <motion.h1 variants={fadeInUp} className="text-3xl sm:text-5xl md:text-7xl font-black tracking-tight mb-2 leading-[1.05] text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-200 to-emerald-400 animate-gradient-text">
                     Everything you need for IELTS.<br className="hidden md:block" />
                     One place.
                   </motion.h1>
@@ -207,7 +207,7 @@ export default function LandingPage() {
                 <motion.div
                   onViewportEnter={() => setIsAfterVisible(true)}
                   onViewportLeave={() => setIsAfterVisible(false)}
-                  viewport={{ margin: "-250px 0px" }}
+                  viewport={{ margin: "-150px 0px" }}
                   className="absolute top-1/2 left-0 w-full h-10 pointer-events-none z-0"
                 />
 
@@ -215,7 +215,7 @@ export default function LandingPage() {
                   layout
                   animate={{ opacity: isAfterVisible ? 0.6 : 1, scale: isAfterVisible ? 0.98 : 1 }}
                   transition={{ layout: { type: "spring", stiffness: 45, damping: 14 }, duration: 0.6 }}
-                  className={`p-8 rounded-lg bg-[#0f1118] border-[3px] border-rose-500/30 relative flex-shrink-0 origin-top md:origin-left z-10 overflow-hidden ${isAfterVisible ? 'md:w-[35%]' : 'md:w-full'}`}
+                  className={`p-6 sm:p-8 rounded-lg bg-[#0f1118] border-2 md:border-[3px] border-rose-500/20 md:border-rose-500/30 relative flex-shrink-0 origin-top md:origin-left z-10 overflow-hidden ${isAfterVisible ? 'md:w-[35%]' : 'md:w-full'}`}
                 >
                   <div className="min-w-[280px]">
                     <div className="absolute top-3 right-3 w-8 h-8 rounded bg-rose-500/10 flex items-center justify-center">
@@ -245,7 +245,7 @@ export default function LandingPage() {
                   layout
                   animate={{ opacity: isAfterVisible ? 1 : 0, scale: isAfterVisible ? 1 : 0.95 }}
                   transition={{ layout: { type: "spring", stiffness: 45, damping: 14 }, duration: 0.6 }}
-                  className={`rounded-lg bg-[#0f1118] border-emerald-500/80 relative overflow-hidden shadow-[0_0_30px_rgba(16,185,129,0.1)] flex-shrink-0 origin-bottom md:origin-right z-10 ${isAfterVisible ? 'w-full md:w-[65%] max-h-[1000px] p-8 border-[3px] mt-6 md:mt-0 md:ml-6' : 'w-full md:w-[0%] max-h-[0px] md:max-h-[1000px] p-0 border-[0px] mt-0 md:ml-0 md:p-0'}`}
+                  className={`rounded-lg bg-[#0f1118] border-emerald-500/60 md:border-emerald-500/80 relative overflow-hidden shadow-[0_0_30px_rgba(16,185,129,0.1)] flex-shrink-0 origin-bottom md:origin-right z-10 ${isAfterVisible ? 'w-full md:w-[65%] max-h-[1000px] p-6 sm:p-8 border-2 md:border-[3px] mt-6 md:mt-0 md:ml-6' : 'w-full md:w-[0%] max-h-[0px] md:max-h-[1000px] p-0 border-[0px] mt-0 md:ml-0 md:p-0'}`}
                 >
                   <div className="min-w-[280px] md:min-w-[500px] h-full relative">
                     <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-blue-500/5 pointer-events-none"></div>
